@@ -5,7 +5,6 @@ import { NavLink } from "react-router-dom";
 import SVG from "react-inlinesvg";
 import { toAbsoluteUrl, checkIsActive } from "../../../../_helpers";
 import { getUserInfo } from "../../../../../utils/user.util";
-
 export function AsideMenuList({ layoutProps }) {
   const location = useLocation();
   let userInfo = getUserInfo();
@@ -55,6 +54,85 @@ export function AsideMenuList({ layoutProps }) {
             <span className="menu-text">User</span>
           </NavLink>
         </li>
+
+        <li
+            className={`menu-item menu-item-submenu ${getMenuItemActive(
+              "/",
+              true
+            )}`}
+            aria-haspopup="true"
+            data-menu-toggle="hover"
+          >
+            <NavLink className="menu-link menu-toggle" to="/">
+              <span className="svg-icon menu-icon">
+                <SVG
+                  src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
+                />
+              </span>
+              <span className="menu-text">Course Selection</span>
+              <i className="menu-arrow" />
+            </NavLink>
+            <div className="menu-submenu ">
+              <i className="menu-arrow" />
+              <ul className="menu-subnav">
+                {/* Inputs */}
+                {/*begin::2 Level*/}
+                <li
+                  className={`menu-item menu-item-submenu  ${getMenuItemActive(
+                    "/courseSelection/vehicleCategory",
+                    false
+                  )}`}
+                  aria-haspopup="true"
+                  data-menu-toggle="hover"
+                >
+                  <NavLink className="menu-link" to="/courseSelection/vehicleCategory">
+                    <i className="menu-bullet menu-bullet-dot">
+                      <span />
+                    </i>
+                    <span className="menu-text">Vehicle Category</span>
+                  </NavLink>
+                </li>
+
+                <li
+                  className={`menu-item menu-item-submenu  ${getMenuItemActive(
+                    "/courseSelection/courseType",
+                    false
+                  )}`}
+                  aria-haspopup="true"
+                  data-menu-toggle="hover"
+                >
+                  <NavLink
+                    className="menu-link"
+                    to="/courseSelection/courseType"
+                  >
+                    <i className="menu-bullet menu-bullet-dot">
+                      <span />
+                    </i>
+                    <span className="menu-text">Course Type</span>
+                  </NavLink>
+                </li>
+
+                <li
+                  className={`menu-item menu-item-submenu  ${getMenuItemActive(
+                    "/courseSelection/courseName",
+                    false
+                  )}`}
+                  aria-haspopup="true"
+                  data-menu-toggle="hover"
+                >
+                  <NavLink
+                    className="menu-link"
+                    to="/courseSelection/courseName"
+                  >
+                    <i className="menu-bullet menu-bullet-dot">
+                      <span />
+                    </i>
+                    <span className="menu-text">Course Name</span>
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
+          </li>
 
         <li
           className={`menu-item ${getMenuItemActive("/inventory", false)}`}
