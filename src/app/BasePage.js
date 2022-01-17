@@ -7,6 +7,9 @@ import MarketPlace from "../_metronic/components/MarketPlace/MarketPlace";
 import Order from "../_metronic/components/Order/Order";
 import DashboardPage from "./pages/DashboardPage";
 import CourseName from '../_metronic/components/CourseSelection/CourseName'
+import CourseType from '../_metronic/components/CourseSelection/CourseType'
+import VehicleCategory from '../_metronic/components/CourseSelection/VehicleCategory'
+
 import { getUserInfo } from "../../src/utils/user.util";
 export default function BasePage() {
   let userInfo = getUserInfo();
@@ -22,9 +25,9 @@ export default function BasePage() {
             <Redirect exact from="/OTP-verification" to="/dashboard" />
 
             <ContentRoute exact path="/dashboard" component={DashboardPage} />
-            <ContentRoute exact path="/courseSelection/courseName" component={CourseName} />
-            {/* <ContentRoute exact path="/courseType" component={CourseType} /> */}
-            {/* <ContentRoute exact path="/vehicleCategory" component={VehicleCategory} /> */}
+            <ContentRoute exact path="/courseselection/coursename" component={CourseName} />
+            <ContentRoute exact path="/courseselection/coursetype" component={CourseType} />
+            <ContentRoute exact path="/courseselection/vehiclecategory" component={VehicleCategory} />
 
             <ContentRoute exact path="/user" component={User} />
             <ContentRoute exact path="/inventory" component={Inventory} />

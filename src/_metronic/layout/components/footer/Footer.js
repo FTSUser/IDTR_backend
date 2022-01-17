@@ -22,7 +22,7 @@ export function Footer() {
       >
         <div className="text-dark order-2 order-md-1">
           <span className="text-muted font-weight-bold mr-2">
-            Copyright © {today.toString()} Canna Source Ltd
+            Copyright © {today.toString()} Honda Ltd
           </span>{" "}
         </div>
         <div className="nav nav-dark order-1 order-md-2">

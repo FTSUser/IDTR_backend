@@ -79,13 +79,13 @@ export function AsideMenuList({ layoutProps }) {
                 {/*begin::2 Level*/}
                 <li
                   className={`menu-item menu-item-submenu  ${getMenuItemActive(
-                    "/courseSelection/vehicleCategory",
+                    "/courseselection/vehiclecategory",
                     false
                   )}`}
                   aria-haspopup="true"
                   data-menu-toggle="hover"
                 >
-                  <NavLink className="menu-link" to="/courseSelection/vehicleCategory">
+                  <NavLink className="menu-link" to="/courseselection/vehiclecategory">
                     <i className="menu-bullet menu-bullet-dot">
                       <span />
                     </i>
@@ -95,7 +95,7 @@ export function AsideMenuList({ layoutProps }) {
 
                 <li
                   className={`menu-item menu-item-submenu  ${getMenuItemActive(
-                    "/courseSelection/courseType",
+                    "/courseselection/coursetype",
                     false
                   )}`}
                   aria-haspopup="true"
@@ -103,7 +103,7 @@ export function AsideMenuList({ layoutProps }) {
                 >
                   <NavLink
                     className="menu-link"
-                    to="/courseSelection/courseType"
+                    to="/courseselection/coursetype"
                   >
                     <i className="menu-bullet menu-bullet-dot">
                       <span />
@@ -114,7 +114,7 @@ export function AsideMenuList({ layoutProps }) {
 
                 <li
                   className={`menu-item menu-item-submenu  ${getMenuItemActive(
-                    "/courseSelection/courseName",
+                    "/courseselection/coursename",
                     false
                   )}`}
                   aria-haspopup="true"
@@ -122,7 +122,7 @@ export function AsideMenuList({ layoutProps }) {
                 >
                   <NavLink
                     className="menu-link"
-                    to="/courseSelection/courseName"
+                    to="/courseselection/coursename"
                   >
                     <i className="menu-bullet menu-bullet-dot">
                       <span />

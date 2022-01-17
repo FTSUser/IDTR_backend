@@ -59,7 +59,7 @@ const CourseName = () => {
   const [allCourseName, setAllCourseName] = useState();
 
   useEffect(() => {
-    getAllCourseType();
+    getAllCourseName();
   }, []);
 
   
@@ -196,17 +196,17 @@ const CourseName = () => {
 
   const handleShow = (id) => {
     setShow(true);
-    console.log("deleteid", id);
+    console.log("deleteid", pid);
     setPid(id);
   };
 
   const handleDeleteCourseName = async () => {
-    await ApiDelete(`courseName/deleteCourseName/id=${pid}`)
+    await ApiDelete(`courseName/deleteCourseName/${pid}`)
       .then((res) => {
         handleClose();
         setPid("");
         // setDataChange([...dataChange, "genre delete"]);
-        // console.log(res.data.data);
+         console.log(res.data.data);
         getAllCourseName();
         toast.success("Product Removed Successfully");
       })
@@ -355,7 +355,7 @@ const CourseName = () => {
       .then((res) => {
         setLoading(false);
         setOpenUpdate(false);
-        getProductData();
+        getAllCourseName();
         toast.success(" Product Updated Successfully");
       })
       .catch((err) => {
@@ -483,7 +483,8 @@ const CourseName = () => {
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
-                  handleShow(row._id);
+                    console.log("log",pid);
+                  handleShow(row?._id);
                 }}
               >
                 <Tooltip title="Delete Product" arrow>
@@ -574,7 +575,7 @@ const CourseName = () => {
           <div className="p-2 mb-2">
             <div className="row">
               <div className="col-md-7">
-                <h3 className="pt-2 pl-2">All Product</h3>
+                <h3 className="pt-2 pl-2">All Course</h3>
               </div>
 
               <div className="col-md-5">
@@ -592,7 +593,7 @@ const CourseName = () => {
                       handleClickOpen();
                     }}
                   >
-                    Add New Product
+                    Add New Course
                   </Button>
                 </div>
               </div>
@@ -644,7 +645,7 @@ const CourseName = () => {
         <Modal.Header closeButton>
           <Modal.Title className="text-danger">Alert!</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure to want to delete Product</Modal.Body>
+        <Modal.Body>Are you sure to want to delete Course</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Cancel
@@ -691,252 +692,39 @@ const CourseName = () => {
           <form>
             <div className="form ml-30 ">
               <div className="form-group row">
-                <label className="col-xl-3 col-lg-3 col-form-label">
-                  Product Name
-                </label>
-                <div className="col-lg-9 col-xl-6">
-                  <div>
-                    <input
-                      type="text"
-                      className={`form-control form-control-lg form-control-solid `}
-                      name="productName"
-                      value={productValues.productName}
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                      required
-                    />
-                  </div>
-                  <span
-                    style={{
-                      color: "red",
-                      top: "5px",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {productError.productName || ""}
-                  </span>
-                </div>
-              </div>
-
               <div className="form-group row">
-                <label className="col-xl-3 col-lg-3 col-form-label">
-                  Price
-                </label>
-                <div className="col-lg-9 col-xl-6">
-                  <div>
-                    <input
-                      type="text"
-                      className={`form-control form-control-lg form-control-solid `}
-                      name="price"
-                      value={productValues?.price}
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                      required
-                    />
-                  </div>
-                  <span
-                    style={{
-                      color: "red",
-                      top: "5px",
-                      fontSize: "12px",
+              <label className="col-xl-3 col-lg-3 col-form-label">
+              Course Name
+              </label>
+              <div className="col-lg-9 col-xl-6">
+                <div>
+                  <input
+                    type="text"
+                    className={`form-control form-control-lg form-control-solid `}
+                    name="productName"
+                    value={productValues.productName || ""}
+                    onChange={(e) => {
+                      setProductValues((cv) => {
+                        return { ...cv, courseName: e.target.value };
+                      });
+                      setProductError((cv) => {
+                        return { ...cv, courseName: "" };
+                      });
                     }}
-                  >
-                    {productError.price || ""}
-                  </span>
+                    required
+                  />
                 </div>
+                <span
+                  style={{
+                    color: "red",
+                    top: "5px",
+                    fontSize: "12px",
+                  }}
+                >
+                  {productError.courseName || ""}
+                </span>
               </div>
-
-              <div className="form-group row">
-                <label className="col-xl-3 col-lg-3 col-form-label">
-                  HSNcode
-                </label>
-                <div className="col-lg-9 col-xl-6">
-                  <div>
-                    <input
-                      type="text"
-                      className={`form-control form-control-lg form-control-solid `}
-                      name="HSNcode"
-                      value={productValues?.HSNcode}
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                    />
-                  </div>
-                  <span
-                    style={{
-                      color: "red",
-                      top: "5px",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {productError.HSNcode || ""}
-                  </span>
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label className="col-xl-3 col-lg-3 col-form-label">
-                  Product Point
-                </label>
-                <div className="col-lg-9 col-xl-6">
-                  <div>
-                    <input
-                      type="text"
-                      className={`form-control form-control-lg form-control-solid `}
-                      name="point"
-                      value={productValues?.point}
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                    />
-                  </div>
-                  <span
-                    style={{
-                      color: "red",
-                      top: "5px",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {productError.point || ""}
-                  </span>
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label className="col-xl-3 col-lg-3 col-form-label">
-                  Product Stock
-                </label>
-                <div className="col-lg-9 col-xl-6">
-                  <div>
-                    <input
-                      type="text"
-                      className={`form-control form-control-lg form-control-solid `}
-                      name="stock"
-                      value={productValues?.stock}
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                    />
-                  </div>
-                  <span
-                    style={{
-                      color: "red",
-                      top: "5px",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {productError.stock || ""}
-                  </span>
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label className="col-xl-3 col-lg-3 col-form-label">
-                  Product Description
-                </label>
-                <div className="col-lg-9 col-xl-6">
-                  <div>
-                    <input
-                      type="textarea"
-                      className={`form-control form-control-lg form-control-solid `}
-                      name="description"
-                      value={productValues.description}
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                      required
-                    />
-                  </div>
-                  <span
-                    style={{
-                      color: "red",
-                      top: "5px",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {productError.description || ""}
-                  </span>
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label className="col-xl-3 col-lg-3 col-form-label">
-                  Product Image
-                </label>
-                <div className="col-lg-9 col-xl-6">
-                  <div>
-                    <input
-                      type="file"
-                      multiple
-                      className={`form-control form-control-lg form-control-solid `}
-                      name="image"
-                      // value={productValues.image || null}
-                      onChange={(e) => {
-                        getImageArrayFromUpload(e);
-                        setProductError((cv) => {
-                          return { ...cv, image: "" };
-                        });
-                      }}
-                      accept="image/*"
-                      required
-                    />
-                  </div>
-                  <span
-                    style={{
-                      color: "red",
-                      top: "5px",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {productError.image || ""}
-                  </span>
-                </div>
-              </div>
-
-              
-
-              <div className="form-group row">
-                <label className="col-xl-3 col-lg-3 col-form-label">
-                  Select Category
-                </label>
-                <div className="col-lg-9 col-xl-6">
-                  <div>
-                    <div className="form-group fv-plugins-icon-container">
-                      <select
-                        className={`form-control form-control-lg form-control-solid `}
-                        name="categoryId"
-                        value={productValues.categoryId}
-                        onChange={(e) => {
-                          handleChange(e);
-                        }}
-                      >
-                        <option>Select Role...</option>
-                        {category.map((record, i) => {
-                          return (
-                            <option
-                              selected={productValues.categoryId === record._id}
-                              value={record._id}
-                            >
-                              {record.categoryName}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                  </div>
-                  <span
-                    style={{
-                      color: "red",
-                      top: "5px",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {productError.categoryId || ""}
-                  </span>
-                </div>
-              </div>
+            </div>
 
               <div className="d-flex align-items-center justify-content-center">
                 {submitValue && submitValue === true ? (
@@ -965,6 +753,8 @@ const CourseName = () => {
                   </button>
                 )}
               </div>
+
+              </div>
             </div>
           </form>
         </List>
@@ -991,7 +781,7 @@ const CourseName = () => {
           <div className="form ml-30 ">
             <div className="form-group row">
               <label className="col-xl-3 col-lg-3 col-form-label">
-                Product Name
+              Course Name
               </label>
               <div className="col-lg-9 col-xl-6">
                 <div>
@@ -1002,10 +792,10 @@ const CourseName = () => {
                     value={productValues.productName || ""}
                     onChange={(e) => {
                       setProductValues((cv) => {
-                        return { ...cv, productName: e.target.value };
+                        return { ...cv, courseName: e.target.value };
                       });
                       setProductError((cv) => {
-                        return { ...cv, productName: "" };
+                        return { ...cv, courseName: "" };
                       });
                     }}
                     required
@@ -1018,214 +808,12 @@ const CourseName = () => {
                     fontSize: "12px",
                   }}
                 >
-                  {productError.productName || ""}
+                  {productError.courseName || ""}
                 </span>
               </div>
             </div>
 
-            <div className="form-group row">
-              <label className="col-xl-3 col-lg-3 col-form-label">Price</label>
-              <div className="col-lg-9 col-xl-6">
-                <div>
-                  <input
-                    type="text"
-                    className={`form-control form-control-lg form-control-solid `}
-                    name="price"
-                    value={productValues.price || ""}
-                    onChange={(e) => {
-                      let val = e.target.value.replace(/\D/g, "");
-                      setProductValues((cv) => {
-                        return { ...cv, price: val };
-                      });
-                      setProductError((cv) => {
-                        return { ...cv, price: "" };
-                      });
-                    }}
-                    required
-                  />
-                </div>
-                <span
-                  style={{
-                    color: "red",
-                    top: "5px",
-                    fontSize: "12px",
-                  }}
-                >
-                  {productError.price || ""}
-                </span>
-              </div>
-            </div>
-
-            <div className="form-group row">
-              <label className="col-xl-3 col-lg-3 col-form-label">
-                HSNcode
-              </label>
-              <div className="col-lg-9 col-xl-6">
-                <div>
-                  <input
-                    type="text"
-                    className={`form-control form-control-lg form-control-solid `}
-                    name="HSNcode"
-                    value={productValues.HSNcode || ""}
-                    onChange={(e) => {
-                      setProductValues((cv) => {
-                        return { ...cv, HSNcode: e.target.value };
-                      });
-                      setProductError((cv) => {
-                        return { ...cv, HSNcode: "" };
-                      });
-                    }}
-                  />
-                </div>
-                <span
-                  style={{
-                    color: "red",
-                    top: "5px",
-                    fontSize: "12px",
-                  }}
-                >
-                  {productError.HSNcode || ""}
-                </span>
-              </div>
-            </div>
-
-            <div className="form-group row">
-              <label className="col-xl-3 col-lg-3 col-form-label">
-                Product Point
-              </label>
-              <div className="col-lg-9 col-xl-6">
-                <div>
-                  <input
-                    type="text"
-                    className={`form-control form-control-lg form-control-solid `}
-                    name="point"
-                    value={productValues.point || ""}
-                    onChange={(e) => {
-                      let val = e.target.value.replace(/\D/g, "");
-                      setProductValues((cv) => {
-                        return { ...cv, point: val };
-                      });
-                      setProductError((cv) => {
-                        return { ...cv, point: "" };
-                      });
-                    }}
-                  />
-                </div>
-                <span
-                  style={{
-                    color: "red",
-                    top: "5px",
-                    fontSize: "12px",
-                  }}
-                >
-                  {productError.point || ""}
-                </span>
-              </div>
-            </div>
-
-            <div className="form-group row">
-              <label className="col-xl-3 col-lg-3 col-form-label">
-                Product Stock
-              </label>
-              <div className="col-lg-9 col-xl-6">
-                <div>
-                  <input
-                    type="text"
-                    className={`form-control form-control-lg form-control-solid `}
-                    name="stock"
-                    value={productValues.stock || ""}
-                    onChange={(e) => {
-                      let val = e.target.value.replace(/\D/g, "");
-                      setProductValues((cv) => {
-                        return { ...cv, stock: val };
-                      });
-                      setProductError((cv) => {
-                        return { ...cv, stock: "" };
-                      });
-                    }}
-                  />
-                </div>
-                <span
-                  style={{
-                    color: "red",
-                    top: "5px",
-                    fontSize: "12px",
-                  }}
-                >
-                  {productError.stock || ""}
-                </span>
-              </div>
-            </div>
-
-            <div className="form-group row">
-              <label className="col-xl-3 col-lg-3 col-form-label">
-                Product Description
-              </label>
-              <div className="col-lg-9 col-xl-6">
-                <div>
-                  {/* <input
-                    type="textarea"
-                    className={`form-control form-control-lg form-control-solid `}
-                   
-                  /> */}
-                  <textarea  className={`form-control form-control-lg form-control-solid `}  name="description"
-                    value={productValues.description || ""}
-                    onChange={(e) => {
-                      setProductValues((cv) => {
-                        return { ...cv, description: e.target.value };
-                      });
-                      setProductError((cv) => {
-                        return { ...cv, description: "" };
-                      });
-                    }}
-                    required>
-                  </textarea>
-                </div>
-                <span
-                  style={{
-                    color: "red",
-                    top: "5px",
-                    fontSize: "12px",
-                  }}
-                >
-                  {productError.description || ""}
-                </span>
-              </div>
-            </div>
-
-            <div className="form-group row">
-              <label className="col-xl-3 col-lg-3 col-form-label">
-                Product Image
-              </label>
-              <div className="col-lg-9 col-xl-6">
-                <div>
-                  <input
-                    type="file"
-                    multiple
-                    className={`form-control form-control-lg form-control-solid `}
-                    name="image"
-                    // value={productValues.image || null}
-                    onChange={(e) => {
-                      getImageArrayFromUpload(e);
-                      setProductError((cv) => {
-                        return { ...cv, image: "" };
-                      });
-                    }}
-                    accept="image/*"
-                    required
-                  />
-                </div>
-                <span
-                  style={{
-                    color: "red",
-                    top: "5px",
-                    fontSize: "12px",
-                  }}
-                >
-                  {productError.image || ""}
-                </span>
-              </div>
-            </div>
+           
 
             <div className="d-flex align-items-center justify-content-center">
               <button

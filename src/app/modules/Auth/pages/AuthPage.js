@@ -41,7 +41,7 @@ export function AuthPage() {
               {/* start:: Aside content */}
               <div className="flex-column-fluid d-flex flex-column justify-content-center">
                 <h3 className="font-size-h1 mb-5 text-white">
-                  Welcome to Canna Source!
+                  Welcome to Honda!
                 </h3>
                 {/* <p className="font-weight-lighter text-white opacity-80">
                     The ultimate Bootstrap & React 16 admin theme framework for next
@@ -53,7 +53,7 @@ export function AuthPage() {
               {/* start:: Aside footer for desktop */}
               <div className="d-none flex-column-auto d-lg-flex justify-content-between mt-10">
                 <div className="opacity-70 font-weight-bold	text-white">
-                  Copyright © {" "} {today.toString()} {" "} Canna Source Ltd
+                  Copyright © {" "} {today.toString()} {" "} Honda Ltd
                 </div>
                 <div className="d-flex"></div>
               </div>

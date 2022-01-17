@@ -25,13 +25,13 @@ import "react-toastify/dist/ReactToastify.css";
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { reject } from "lodash";
-import CourseName from "./CourseName";
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const ProductData = () => {
+const CourseType = () => {
   let userInfo = getUserInfo();
   const [open, setOpen] = React.useState(false);
   const [openUpdate, setOpenUpdate] = React.useState(false);
@@ -56,23 +56,23 @@ const ProductData = () => {
 
   const [rowData, setRowData] = useState({});
   const [showStatus, setShowStatus] = useState(false);
-  const [allCourseName, setAllCourseName] = useState();
+  const [allCourseType, setAllCourseType] = useState();
 
   useEffect(() => {
     getAllCourseType();
   }, []);
 
   
-  const getAllCourseType = async () => {
-    await ApiGet("courseType/getAllCourseType")
-      .then((res) => {
-        console.log("coursetype", res.data.payload);
-        setcategory(res.data.payload);
-      })
-      .catch((err) => {
-        console.log("err", err.message);
-      });
-  };
+  // const getAllCourseType = async () => {
+  //   await ApiGet("courseType/getAllCourseType")
+  //     .then((res) => {
+  //       console.log("coursetype", res.data.payload);
+  //       setAllCourseType(res?.data?.payload?.Question);
+  //     })
+  //     .catch((err) => {
+  //       console.log("err", err.message);
+  //     });
+  // };
 
   const handleClickOpen = () => {
     setProductValues({});
@@ -102,12 +102,12 @@ const ProductData = () => {
   }, [dataChange, page, countPerPage, search]);
 
 
-  const getAllCourseName= async () => {
+  const getAllCourseType= async () => {
     setIsLoaderVisible(true);
-    await ApiGet("courseName/getAllCourseName")
+    await ApiGet("courseType/getAllCourseType")
       .then((res) => {
-        console.log("getallcoursename", res.data.payload.Question);
-        setAllCourseName(res?.data?.payload?.Question);
+        console.log("getallcoursetype", res.data.payload.Question);
+        setAllCourseType(res?.data?.payload?.Question);
         setIsLoaderVisible(false);
       })
       .catch((err) => {
@@ -119,51 +119,51 @@ const ProductData = () => {
 
 
 
-  //   const getProductData = async () => {
-//     setIsLoaderVisible(true);
+    const getProductData = async () => {
+    setIsLoaderVisible(true);
 
-//     if (!search) {
-//       await ApiGet(`product?page=${page}&limit=${countPerPage}`)
-//         .then((res) => {
-//           console.log("getbyalluser", res.data.payload);
-//           setAllProducts(res.data.payload.allProduct);
-//           setCount(res.data.payload.count);
-//           setIsLoaderVisible(false);
-//         })
-//         .catch((err) => {
-//           console.log("err", err);
-//           toast.error(err.message);
-//           setIsLoaderVisible(false);
-//         });
-//     } else {
-//       await ApiGet(
-//         `product/search=${search}?page=${page}&limit=${countPerPage}`
-//       )
-//         .then((res) => {
-//           console.log("getbyalluser", res.data.payload);
-//           setAllProducts(res.data.payload.allProduct);
-//           setCount(res.data.payload.count);
-//           setIsLoaderVisible(false);
-//         })
-//         .catch((err) => {
-//           console.log("err", err);
-//           toast.error(err.message);
-//           setIsLoaderVisible(false);
-//         });
-//     }
-//   };
+    if (!search) {
+      await ApiGet(`courseType/getAllCourseType?page=${page}&limit=${countPerPage}`)
+        .then((res) => {
+          console.log("getbyalluser", res.data.payload);
+          setAllProducts(res.data.payload);
+          setCount(res?.data?.payload);
+          setIsLoaderVisible(false);
+        })
+        .catch((err) => {
+          console.log("err", err);
+          toast.error(err.message);
+          setIsLoaderVisible(false);
+        });
+    } else {
+      await ApiGet(
+        `courseType/getAllCourseType/search=${search}?page=${page}&limit=${countPerPage}`
+      )
+        .then((res) => {
+          console.log("getbyalluser", res.data.payload);
+          setAllProducts(res.data.payload);
+          setCount(res.data.payload.count);
+          setIsLoaderVisible(false);
+        })
+        .catch((err) => {
+          console.log("err", err);
+          toast.error(err.message);
+          setIsLoaderVisible(false);
+        });
+    }
+  };
 
-  // const handleChange = (e) => {
-  //   let { name, value } = e.target;
+  const handleChange = (e) => {
+    let { name, value } = e.target;
 
-  //   setProductValues((prevState) => ({
-  //     ...prevState,
-  //     [name]: value,
-  //   }));
+    setProductValues((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
 
-  //   setProductError({ ...productError, [name]: "" });
+    setProductError({ ...productError, [name]: "" });
 
-  // };
+  };
 
 //   const handleChange = async (e) => {
 //     let { name, value } = e.target;
@@ -196,18 +196,18 @@ const ProductData = () => {
 
   const handleShow = (id) => {
     setShow(true);
-    console.log("deleteid", id);
+    console.log("deleteid", pid);
     setPid(id);
   };
 
-  const handleDeleteCourseName = async () => {
-    await ApiDelete(`courseName/deleteCourseName/id=${pid}`)
+  const handleDeleteCourseType = async () => {
+    await ApiDelete(`courseType/deleteCourseType/${pid}`)
       .then((res) => {
         handleClose();
         setPid("");
         // setDataChange([...dataChange, "genre delete"]);
-        // console.log(res.data.data);
-        getAllCourseName();
+         console.log(res.data.data);
+        getAllCourseType();
         toast.success("Product Removed Successfully");
       })
       .catch((err) => {
@@ -278,10 +278,10 @@ const ProductData = () => {
     }
     setLoading(true);
 
-    await ApiPost("courseName/addCourseName", allCourseName)
+    await ApiPost("courseType/addCourseType", CourseType)
       .then((res) => {
         setLoading(false);
-        setAllCourseName({});
+        setAllCourseType({});
         getProductData();
         handleClose1();
         setDataChange([...dataChange, "Product add"]);
@@ -293,47 +293,47 @@ const ProductData = () => {
       });
   };
 
-//   const getImageArrayFromUpload = (e) => {
-//     let files = e.target.files;
-//     let imageB64Arr = [];
+  const getImageArrayFromUpload = (e) => {
+    let files = e.target.files;
+    let imageB64Arr = [];
 
-//     console.log(files[0].type, "files");
-//     if (files[0].type.includes("image")) {
-//       for (let i in Array.from(files)) {
-//         convertBaseTo64(files.item(i))
-//           .then((file) => {
-//             imageB64Arr.push(file);
-//           })
-//           .catch((err) => {
-//             console.log("err.....", err);
-//           });
-//       }
+    console.log(files[0].type, "files");
+    if (files[0].type.includes("image")) {
+      for (let i in Array.from(files)) {
+        convertBaseTo64(files.item(i))
+          .then((file) => {
+            imageB64Arr.push(file);
+          })
+          .catch((err) => {
+            console.log("err.....", err);
+          });
+      }
 
-//       setProductValues((cv) => {
-//         return { ...cv, image: imageB64Arr };
-//       });
-//     } else {
-//       console.log("please enter image");
-//     }
-//   };
+      setProductValues((cv) => {
+        return { ...cv, image: imageB64Arr };
+      });
+    } else {
+      console.log("please enter image");
+    }
+  };
 
-//   const convertBaseTo64 = (file) => {
-//     return new Promise((resolve, object) => {
-//       const fileReader = new FileReader();
-//       fileReader.readAsDataURL(file);
-//       fileReader.onload = function () {
-//         resolve(fileReader.result);
-//       };
-//       fileReader.onerror = function (error) {
-//         reject(error);
-//       };
-//     });
-//   };
+  const convertBaseTo64 = (file) => {
+    return new Promise((resolve, object) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = function () {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = function (error) {
+        reject(error)
+      };
+    });
+  };
 
   const handleForUpdateProduct = async (data) => {
     setPid(data._id);
     setProductValues({
-      CourseName: data.productName,
+      courseType: data.productName,
     //   price: data.price,
     //   HSNcode: data.HSNcode,
     //   stock: data.stock,
@@ -351,11 +351,11 @@ const ProductData = () => {
     }
     setLoading(true);
 
-    await ApiPut(`courseName/updateCourseName/id=${pid}`, allCourseName)
+    await ApiPut(`courseType/updateCourseType/id=${pid}`, allCourseType)
       .then((res) => {
         setLoading(false);
         setOpenUpdate(false);
-        getProductData();
+        getAllCourseType();
         toast.success(" Product Updated Successfully");
       })
       .catch((err) => {
@@ -456,8 +456,8 @@ const ProductData = () => {
     //     wrap: true,
     //   },
     {
-        name: "Course Name",
-        selector: "courseName",
+        name: "Course Type",
+        selector: "courseType",
         sortable: true,
       },
 
@@ -483,7 +483,8 @@ const ProductData = () => {
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
-                  handleShow(row._id);
+                    console.log("log",pid);
+                  handleShow(row?._id);
                 }}
               >
                 <Tooltip title="Delete Product" arrow>
@@ -491,7 +492,7 @@ const ProductData = () => {
                 </Tooltip>
               </div>
 
-              {row.status == true ? (
+              {/* {row.status == true ? (
                 <div className="ml-5 cursor-pointer">
                   <button
                     className="btn btn-primary"
@@ -525,7 +526,7 @@ const ProductData = () => {
                     Deactive
                   </button>
                 </div>
-              )}
+              )} */}
             </div>
           );
         },
@@ -574,7 +575,7 @@ const ProductData = () => {
           <div className="p-2 mb-2">
             <div className="row">
               <div className="col-md-7">
-                <h3 className="pt-2 pl-2">All Product</h3>
+                <h3 className="pt-2 pl-2">All Course Type</h3>
               </div>
 
               <div className="col-md-5">
@@ -592,7 +593,7 @@ const ProductData = () => {
                       handleClickOpen();
                     }}
                   >
-                    Add New Product
+                    Add New Course Type
                   </Button>
                 </div>
               </div>
@@ -610,7 +611,7 @@ const ProductData = () => {
             </div>
             <DataTable
               columns={columns}
-              data={allProducts}
+              data={allCourseType}
               customStyles={customStyles}
               style={{
                 marginTop: "-3rem",
@@ -649,7 +650,7 @@ const ProductData = () => {
           <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="danger" onClick={() => handleDeleteProduct()}>
+          <Button variant="danger" onClick={() => handleDeleteCourseType()}>
             Delete
           </Button>
         </Modal.Footer>
@@ -691,252 +692,39 @@ const ProductData = () => {
           <form>
             <div className="form ml-30 ">
               <div className="form-group row">
-                <label className="col-xl-3 col-lg-3 col-form-label">
-                  Product Name
-                </label>
-                <div className="col-lg-9 col-xl-6">
-                  <div>
-                    <input
-                      type="text"
-                      className={`form-control form-control-lg form-control-solid `}
-                      name="productName"
-                      value={productValues.productName}
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                      required
-                    />
-                  </div>
-                  <span
-                    style={{
-                      color: "red",
-                      top: "5px",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {productError.productName || ""}
-                  </span>
-                </div>
-              </div>
-
               <div className="form-group row">
-                <label className="col-xl-3 col-lg-3 col-form-label">
-                  Price
-                </label>
-                <div className="col-lg-9 col-xl-6">
-                  <div>
-                    <input
-                      type="text"
-                      className={`form-control form-control-lg form-control-solid `}
-                      name="price"
-                      value={productValues?.price}
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                      required
-                    />
-                  </div>
-                  <span
-                    style={{
-                      color: "red",
-                      top: "5px",
-                      fontSize: "12px",
+              <label className="col-xl-3 col-lg-3 col-form-label">
+              Course Type
+              </label>
+              <div className="col-lg-9 col-xl-6">
+                <div>
+                  <input
+                    type="text"
+                    className={`form-control form-control-lg form-control-solid `}
+                    name="productName"
+                    value={productValues.productName || ""}
+                    onChange={(e) => {
+                      setProductValues((cv) => {
+                        return { ...cv, courseType: e.target.value };
+                      });
+                      setProductError((cv) => {
+                        return { ...cv, courseType: "" };
+                      });
                     }}
-                  >
-                    {productError.price || ""}
-                  </span>
+                    required
+                  />
                 </div>
+                <span
+                  style={{
+                    color: "red",
+                    top: "5px",
+                    fontSize: "12px",
+                  }}
+                >
+                  {productError.courseType || ""}
+                </span>
               </div>
-
-              <div className="form-group row">
-                <label className="col-xl-3 col-lg-3 col-form-label">
-                  HSNcode
-                </label>
-                <div className="col-lg-9 col-xl-6">
-                  <div>
-                    <input
-                      type="text"
-                      className={`form-control form-control-lg form-control-solid `}
-                      name="HSNcode"
-                      value={productValues?.HSNcode}
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                    />
-                  </div>
-                  <span
-                    style={{
-                      color: "red",
-                      top: "5px",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {productError.HSNcode || ""}
-                  </span>
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label className="col-xl-3 col-lg-3 col-form-label">
-                  Product Point
-                </label>
-                <div className="col-lg-9 col-xl-6">
-                  <div>
-                    <input
-                      type="text"
-                      className={`form-control form-control-lg form-control-solid `}
-                      name="point"
-                      value={productValues?.point}
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                    />
-                  </div>
-                  <span
-                    style={{
-                      color: "red",
-                      top: "5px",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {productError.point || ""}
-                  </span>
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label className="col-xl-3 col-lg-3 col-form-label">
-                  Product Stock
-                </label>
-                <div className="col-lg-9 col-xl-6">
-                  <div>
-                    <input
-                      type="text"
-                      className={`form-control form-control-lg form-control-solid `}
-                      name="stock"
-                      value={productValues?.stock}
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                    />
-                  </div>
-                  <span
-                    style={{
-                      color: "red",
-                      top: "5px",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {productError.stock || ""}
-                  </span>
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label className="col-xl-3 col-lg-3 col-form-label">
-                  Product Description
-                </label>
-                <div className="col-lg-9 col-xl-6">
-                  <div>
-                    <input
-                      type="textarea"
-                      className={`form-control form-control-lg form-control-solid `}
-                      name="description"
-                      value={productValues.description}
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                      required
-                    />
-                  </div>
-                  <span
-                    style={{
-                      color: "red",
-                      top: "5px",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {productError.description || ""}
-                  </span>
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label className="col-xl-3 col-lg-3 col-form-label">
-                  Product Image
-                </label>
-                <div className="col-lg-9 col-xl-6">
-                  <div>
-                    <input
-                      type="file"
-                      multiple
-                      className={`form-control form-control-lg form-control-solid `}
-                      name="image"
-                      // value={productValues.image || null}
-                      onChange={(e) => {
-                        getImageArrayFromUpload(e);
-                        setProductError((cv) => {
-                          return { ...cv, image: "" };
-                        });
-                      }}
-                      accept="image/*"
-                      required
-                    />
-                  </div>
-                  <span
-                    style={{
-                      color: "red",
-                      top: "5px",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {productError.image || ""}
-                  </span>
-                </div>
-              </div>
-
-              
-
-              <div className="form-group row">
-                <label className="col-xl-3 col-lg-3 col-form-label">
-                  Select Category
-                </label>
-                <div className="col-lg-9 col-xl-6">
-                  <div>
-                    <div className="form-group fv-plugins-icon-container">
-                      <select
-                        className={`form-control form-control-lg form-control-solid `}
-                        name="categoryId"
-                        value={productValues.categoryId}
-                        onChange={(e) => {
-                          handleChange(e);
-                        }}
-                      >
-                        <option>Select Role...</option>
-                        {category.map((record, i) => {
-                          return (
-                            <option
-                              selected={productValues.categoryId === record._id}
-                              value={record._id}
-                            >
-                              {record.categoryName}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                  </div>
-                  <span
-                    style={{
-                      color: "red",
-                      top: "5px",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {productError.categoryId || ""}
-                  </span>
-                </div>
-              </div>
+            </div>
 
               <div className="d-flex align-items-center justify-content-center">
                 {submitValue && submitValue === true ? (
@@ -965,6 +753,8 @@ const ProductData = () => {
                   </button>
                 )}
               </div>
+
+              </div>
             </div>
           </form>
         </List>
@@ -991,7 +781,7 @@ const ProductData = () => {
           <div className="form ml-30 ">
             <div className="form-group row">
               <label className="col-xl-3 col-lg-3 col-form-label">
-                Product Name
+              Course Type
               </label>
               <div className="col-lg-9 col-xl-6">
                 <div>
@@ -1002,10 +792,10 @@ const ProductData = () => {
                     value={productValues.productName || ""}
                     onChange={(e) => {
                       setProductValues((cv) => {
-                        return { ...cv, productName: e.target.value };
+                        return { ...cv, courseType: e.target.value };
                       });
                       setProductError((cv) => {
-                        return { ...cv, productName: "" };
+                        return { ...cv, courseType: "" };
                       });
                     }}
                     required
@@ -1018,214 +808,12 @@ const ProductData = () => {
                     fontSize: "12px",
                   }}
                 >
-                  {productError.productName || ""}
+                  {productError.courseType || ""}
                 </span>
               </div>
             </div>
 
-            <div className="form-group row">
-              <label className="col-xl-3 col-lg-3 col-form-label">Price</label>
-              <div className="col-lg-9 col-xl-6">
-                <div>
-                  <input
-                    type="text"
-                    className={`form-control form-control-lg form-control-solid `}
-                    name="price"
-                    value={productValues.price || ""}
-                    onChange={(e) => {
-                      let val = e.target.value.replace(/\D/g, "");
-                      setProductValues((cv) => {
-                        return { ...cv, price: val };
-                      });
-                      setProductError((cv) => {
-                        return { ...cv, price: "" };
-                      });
-                    }}
-                    required
-                  />
-                </div>
-                <span
-                  style={{
-                    color: "red",
-                    top: "5px",
-                    fontSize: "12px",
-                  }}
-                >
-                  {productError.price || ""}
-                </span>
-              </div>
-            </div>
-
-            <div className="form-group row">
-              <label className="col-xl-3 col-lg-3 col-form-label">
-                HSNcode
-              </label>
-              <div className="col-lg-9 col-xl-6">
-                <div>
-                  <input
-                    type="text"
-                    className={`form-control form-control-lg form-control-solid `}
-                    name="HSNcode"
-                    value={productValues.HSNcode || ""}
-                    onChange={(e) => {
-                      setProductValues((cv) => {
-                        return { ...cv, HSNcode: e.target.value };
-                      });
-                      setProductError((cv) => {
-                        return { ...cv, HSNcode: "" };
-                      });
-                    }}
-                  />
-                </div>
-                <span
-                  style={{
-                    color: "red",
-                    top: "5px",
-                    fontSize: "12px",
-                  }}
-                >
-                  {productError.HSNcode || ""}
-                </span>
-              </div>
-            </div>
-
-            <div className="form-group row">
-              <label className="col-xl-3 col-lg-3 col-form-label">
-                Product Point
-              </label>
-              <div className="col-lg-9 col-xl-6">
-                <div>
-                  <input
-                    type="text"
-                    className={`form-control form-control-lg form-control-solid `}
-                    name="point"
-                    value={productValues.point || ""}
-                    onChange={(e) => {
-                      let val = e.target.value.replace(/\D/g, "");
-                      setProductValues((cv) => {
-                        return { ...cv, point: val };
-                      });
-                      setProductError((cv) => {
-                        return { ...cv, point: "" };
-                      });
-                    }}
-                  />
-                </div>
-                <span
-                  style={{
-                    color: "red",
-                    top: "5px",
-                    fontSize: "12px",
-                  }}
-                >
-                  {productError.point || ""}
-                </span>
-              </div>
-            </div>
-
-            <div className="form-group row">
-              <label className="col-xl-3 col-lg-3 col-form-label">
-                Product Stock
-              </label>
-              <div className="col-lg-9 col-xl-6">
-                <div>
-                  <input
-                    type="text"
-                    className={`form-control form-control-lg form-control-solid `}
-                    name="stock"
-                    value={productValues.stock || ""}
-                    onChange={(e) => {
-                      let val = e.target.value.replace(/\D/g, "");
-                      setProductValues((cv) => {
-                        return { ...cv, stock: val };
-                      });
-                      setProductError((cv) => {
-                        return { ...cv, stock: "" };
-                      });
-                    }}
-                  />
-                </div>
-                <span
-                  style={{
-                    color: "red",
-                    top: "5px",
-                    fontSize: "12px",
-                  }}
-                >
-                  {productError.stock || ""}
-                </span>
-              </div>
-            </div>
-
-            <div className="form-group row">
-              <label className="col-xl-3 col-lg-3 col-form-label">
-                Product Description
-              </label>
-              <div className="col-lg-9 col-xl-6">
-                <div>
-                  {/* <input
-                    type="textarea"
-                    className={`form-control form-control-lg form-control-solid `}
-                   
-                  /> */}
-                  <textarea  className={`form-control form-control-lg form-control-solid `}  name="description"
-                    value={productValues.description || ""}
-                    onChange={(e) => {
-                      setProductValues((cv) => {
-                        return { ...cv, description: e.target.value };
-                      });
-                      setProductError((cv) => {
-                        return { ...cv, description: "" };
-                      });
-                    }}
-                    required>
-                  </textarea>
-                </div>
-                <span
-                  style={{
-                    color: "red",
-                    top: "5px",
-                    fontSize: "12px",
-                  }}
-                >
-                  {productError.description || ""}
-                </span>
-              </div>
-            </div>
-
-            <div className="form-group row">
-              <label className="col-xl-3 col-lg-3 col-form-label">
-                Product Image
-              </label>
-              <div className="col-lg-9 col-xl-6">
-                <div>
-                  <input
-                    type="file"
-                    multiple
-                    className={`form-control form-control-lg form-control-solid `}
-                    name="image"
-                    // value={productValues.image || null}
-                    onChange={(e) => {
-                      getImageArrayFromUpload(e);
-                      setProductError((cv) => {
-                        return { ...cv, image: "" };
-                      });
-                    }}
-                    accept="image/*"
-                    required
-                  />
-                </div>
-                <span
-                  style={{
-                    color: "red",
-                    top: "5px",
-                    fontSize: "12px",
-                  }}
-                >
-                  {productError.image || ""}
-                </span>
-              </div>
-            </div>
+           
 
             <div className="d-flex align-items-center justify-content-center">
               <button
@@ -1247,4 +835,4 @@ const ProductData = () => {
   );
 };
 
-export default ProductData;
+export default CourseType;
