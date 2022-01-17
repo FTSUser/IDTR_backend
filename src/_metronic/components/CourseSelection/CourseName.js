@@ -31,7 +31,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CourseName = () => {
+const CourseName = ({title}) => {
   let userInfo = getUserInfo();
   const [open, setOpen] = React.useState(false);
   const [openUpdate, setOpenUpdate] = React.useState(false);
@@ -61,6 +61,14 @@ const CourseName = () => {
   useEffect(() => {
     getAllCourseName();
   }, []);
+
+  
+  useEffect(() => {
+    title === "Dashboard | Honda"
+      ? (document.title = title)
+      : (document.title = "Course Name | Honda");
+  }, []);
+
 
   
   const getAllCourseType = async () => {

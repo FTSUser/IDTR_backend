@@ -58,9 +58,9 @@ const User = ({ title, getNewCount }) => {
   }, [isViewMoreInventory]);
 
   useEffect(() => {
-    title === "Dashboard | Canna Source"
+    title === "Dashboard | Honda"
       ? (document.title = title)
-      : (document.title = "User | Canna Source");
+      : (document.title = "User | Honda");
   }, []);
 
   const handleClose = () => {
@@ -182,7 +182,7 @@ const User = ({ title, getNewCount }) => {
           // setInventoryDataIdWise({});
           handleViewMoreCloseInventory();
           {
-            document.title === "Dashboard | Canna Source" && getNewCount();
+            document.title === "Dashboard | Honda" && getNewCount();
           }
         } else {
           toast.error(res?.data?.message);
@@ -563,7 +563,7 @@ const User = ({ title, getNewCount }) => {
   return (
     <>
       <div className="card p-1">
-        {document.title === "User | Canna Source" && <ToastContainer />}
+        {document.title === "User | Honda" && <ToastContainer />}
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">

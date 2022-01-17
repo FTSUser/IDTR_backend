@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
-import { ApiPostNoAuth } from "../../../../helpers/API/ApiData";
+import { ApiPost,ApiPostNoAuth } from "../../../../helpers/API/ApiData";
 import * as authUtil from "../../../../utils/auth.util";
 import * as userUtil from "../../../../utils/user.util";
 import { ToastContainer, toast } from "react-toastify";
@@ -61,8 +61,8 @@ export default function Login() {
           } else {
             console.log("datafunctions", res.data.payload.token);
             console.log("errrrrrrr")
-            // authUtil.setToken(res.data.payload.token);
-            // userUtil.setUserInfo(res.data.payload);
+            authUtil.setToken(res.data.payload.token);
+            userUtil.setUserInfo(res.data.payload);
             // window.location.reload();
             // setLoading(true);
             // setSubmitting(false);

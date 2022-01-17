@@ -30,9 +30,9 @@ export default function BasePage() {
             <ContentRoute exact path="/courseselection/vehiclecategory" component={VehicleCategory} />
 
             <ContentRoute exact path="/user" component={User} />
-            <ContentRoute exact path="/inventory" component={Inventory} />
+            {/* <ContentRoute exact path="/inventory" component={Inventory} />
             <ContentRoute exact path="/marketPlace" component={MarketPlace} />
-            <ContentRoute exact path="/order" component={Order} />
+            <ContentRoute exact path="/order" component={Order} /> */}
 
             <Redirect to="error/error-v6" />
           </Switch>

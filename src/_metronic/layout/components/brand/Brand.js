@@ -4,7 +4,7 @@ import objectPath from "object-path";
 import SVG from "react-inlinesvg";
 import { useHtmlClassService } from "../../_core/MetronicLayout";
 import { toAbsoluteUrl } from "../../../_helpers";
-import logoImg from "./side-logo.png"
+// import logoImg from "../../../../../public/media/logos/honda-logo.png";
 
 export function Brand() {
     const uiService = useHtmlClassService();
@@ -33,7 +33,7 @@ export function Brand() {
                     <img alt="logo" src={layoutProps.headerLogo} width="70%" />
                 </Link> */}
                 <Link to="/dashboard" className="brand-logo">
-                    <img alt="logo" src={logoImg} width="100%" />
+                    <img alt="logo" src={toAbsoluteUrl("/media/logos/honda-logo.png")} width="100%" />
                 </Link>
                 {/* <Link to="/dashboard" className="brand-logo">
                     <img alt="logo" src="" width="70%" />

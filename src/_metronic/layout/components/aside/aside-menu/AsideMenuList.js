@@ -133,7 +133,7 @@ export function AsideMenuList({ layoutProps }) {
               </ul>
             </div>
           </li>
-
+{/* 
         <li
           className={`menu-item ${getMenuItemActive("/inventory", false)}`}
           aria-haspopup="true"
@@ -146,9 +146,9 @@ export function AsideMenuList({ layoutProps }) {
             </span>
             <span className="menu-text">Inventory</span>
           </NavLink>
-        </li>
+        </li> */}
 
-        <li
+        {/* <li
           className={`menu-item ${getMenuItemActive("/marketPlace", false)}`}
           aria-haspopup="true"
         >
@@ -160,10 +160,10 @@ export function AsideMenuList({ layoutProps }) {
             </span>
             <span className="menu-text">Market Place</span>
           </NavLink>
-        </li>
+        </li> */}
 
 
-        <li
+        {/* <li
           className={`menu-item ${getMenuItemActive("/order", false)}`}
           aria-haspopup="true"
         >
@@ -175,7 +175,7 @@ export function AsideMenuList({ layoutProps }) {
             </span>
             <span className="menu-text">Order</span>
           </NavLink>
-        </li>
+        </li> */}
 
 
         {/* <li

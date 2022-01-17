@@ -31,7 +31,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const VehicleCategory = () => {
+const VehicleCategory = ({title}) => {
   let userInfo = getUserInfo();
   const [open, setOpen] = React.useState(false);
   const [openUpdate, setOpenUpdate] = React.useState(false);
@@ -61,6 +61,14 @@ const VehicleCategory = () => {
   useEffect(() => {
     getAllVehicleCategory();
   }, []);
+
+  
+  useEffect(() => {
+    title === "Dashboard | Honda"
+      ? (document.title = title)
+      : (document.title = "Vehicle Category | Honda");
+  }, []);
+
 
   
 //   const getAllVehicleCategory= async () => {

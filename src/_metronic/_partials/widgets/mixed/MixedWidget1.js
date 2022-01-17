@@ -19,8 +19,8 @@ export function MixedWidget1({ className }) {
   console.log("countDataAll", countDataAll);
 
   useEffect(() => {
-    document.title = "Dashboard | Canna Source";
-    setTitle("Dashboard | Canna Source");
+    document.title = "Dashboard | Honda";
+    setTitle("Dashboard | Honda");
   }, []);
 
   useEffect(() => {
