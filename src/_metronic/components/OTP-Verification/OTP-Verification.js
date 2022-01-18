@@ -88,10 +88,12 @@ const OTPVerification = () => {
     })
       .then(async (res) => {
         if (res.data.result == 0) {
-          console.log(res.data);
+          console.log("token",res.data);
            authUtil.setToken(res.data.payload.token);
             userUtil.setUserInfo(res.data.payload);
-          //  history.push("/dashboard")
+          //   console.log(res.data.payload.token);
+
+          // //  history.push("/dashboard")
           window.location.reload()
         } else {
           toast.error(res.data.message, { theme: "colored" });

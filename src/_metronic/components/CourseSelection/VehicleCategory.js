@@ -46,6 +46,12 @@ const VehicleCategory = ({ getNewCount, title }) => {
     const [count, setCount] = useState(0);
     const [countPerPage, setCountPerPage] = useState(10);
     const [search, setSearch] = useState("");
+    const [showStatus, setShowStatus] = useState(false);
+    const [idForUpdateVehicleStatus, setIdForUpdateVehicleStatus] =useState("");
+    const [statusDisplay, setStatusDisplay] = useState(false);
+    // const [isActive , setIsActive] = useState(true);
+
+
 
     const handleOnChnage = (e) => {
         const { name, value } = e.target;
@@ -75,6 +81,11 @@ const VehicleCategory = ({ getNewCount, title }) => {
         setInputValue({});
         setIsUpdateVehicleCategory(false);
     };
+
+    const handleCloseShowStatus = () => {
+        setShowStatus(false);
+      };
+    
 
     const handleAddAdminClose = () => {
         setInputValue({});
@@ -117,12 +128,38 @@ const VehicleCategory = ({ getNewCount, title }) => {
 
     };
 
+
+    const handleUpdateStatusProperty = (status) => {
+        ApiPut(`vehicleCategory/updateStatus/${idForUpdateVehicleStatus}`, {
+
+          isActive: status,
+        })
+          // ApiPut(`property/updateProperty/${idForUpdatePropertyStatus}`)
+          .then((res) => {
+            if (res?.status == 200) {
+              setShowStatus(false);
+              toast.success("Status updated Successfully");
+              getAllVehicleCategory();
+            } else {
+              toast.error(res?.data?.message);
+            }
+          })
+          .catch((err) => {
+            toast.error(err.message);
+          });
+      };    
+
     const validateFormForAddAdmin = () => {
         let formIsValid = true;
         let errorsForAdd = {};
         if (inputValueForAdd && !inputValueForAdd.VehicleCategory) {
             formIsValid = false;
-            errorsForAdd["VehicleCategory"] = "*Please Enter VehicleCategory!";
+            errorsForAdd["VehicleCategory"] = "*Please Enter Vehicle Category!";
+        }
+
+        if (inputValueForAdd && !inputValueForAdd.VehicleDescription) {
+            formIsValid = false;
+            errorsForAdd["VehicleDescription"] = "*Please Enter Vehicle Description!";
         }
         // if (inputValueForAdd && !inputValueForAdd.answer) {
         //     formIsValid = false;
@@ -138,6 +175,8 @@ const VehicleCategory = ({ getNewCount, title }) => {
         if (validateFormForAddAdmin()) {
             let Data = {
                 vehicleCategory: inputValueForAdd.VehicleCategory,
+                description: inputValueForAdd.VehicleDescription,
+                isActive: true,
                 // answer: inputValueForAdd.answer,
                 // ctid : "61dfc5645e9d45193cb1a0b6"
             }
@@ -166,7 +205,12 @@ const VehicleCategory = ({ getNewCount, title }) => {
         let errors = {};
         if (inputValue && !inputValue.VehicleCategory) {
             formIsValid = false;
-            errors["VehicleCategory"] = "*Please Enter VehicleCategory!";
+            errors["VehicleCategory"] = "*Please Enter Vehicle Category!";
+        }
+
+        if (inputValue && !inputValue.VehicleDescription) {
+            formIsValid = false;
+            errors["VehicleDescription"] = "*Please Enter Vehicle Description!";
         }
         // if (inputValue && !inputValue.answer) {
         //     formIsValid = false;
@@ -181,7 +225,7 @@ const VehicleCategory = ({ getNewCount, title }) => {
             .then((res) => {
                 if (res?.status == 200) {
                     setShow(false);
-                    toast.success("Amenintie Deleted Successfully");
+                    toast.success("Deleted Successfully");
                     getAllVehicleCategory();
                     // { document.title === "Dashboard | OUR LEISURE HOME" && getNewCount() }
                     setPage(1)
@@ -206,6 +250,8 @@ const VehicleCategory = ({ getNewCount, title }) => {
         if (validateForm()) {
           let Data = {
             vehicleCategory: inputValue.VehicleCategory,
+            description: inputValue.VehicleDescription,
+
               // answer: inputValueForAdd.answer,
               // ctid : "61dfc5645e9d45193cb1a0b6"
           }
@@ -235,15 +281,52 @@ const VehicleCategory = ({ getNewCount, title }) => {
             width: "65px",
         },
         {
-            name: "VehicleCategory",
-            selector: "vehicleType",
+            name: "Vehicle Category",
+            selector: "vehicleCategory",
             sortable: true,
         },
+        {
+            name: "Vehicle Description ",
+            selector: "description",
+            sortable: true,
+        },
+
+
         // {
         //     name: "Answer",
         //     selector: "answer",
         //     sortable: true,
         // },
+
+
+        {
+            name: "Display?",
+            cell: (row) => {
+              return (
+                <>
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => {
+                      setShowStatus(true);
+                      setIdForUpdateVehicleStatus(row?._id);
+                      setStatusDisplay(row?.isActive);
+                    }}
+                  >
+                    <Tooltip title="Status Property" arrow>
+                      <div className="cus-medium-button-style">
+                        <button  className="btn btn-success mr-2">
+                          {row?.isActive === true ? "Active" : "Deactive"}
+                        </button>
+                      </div>
+                    </Tooltip>
+                  </div>
+                </>
+              );
+            },
+            sortable: true,
+          },
+
+
         {
             name: "Actions",
             cell: (row) => {
@@ -256,8 +339,9 @@ const VehicleCategory = ({ getNewCount, title }) => {
                                     setIsUpdateVehicleCategory(true);
                                     setIdForUpdateVehicleCategoryData(row._id);
                                     setInputValue({
-                                        VehicleCategory: row?.VehicleCategory,
+                                        VehicleCategory: row?.vehicleCategory,
                                         // answer: row?.answer,
+                                        VehicleDescription: row?.description,
                                     });
                                 }}
                             >
@@ -366,11 +450,11 @@ const VehicleCategory = ({ getNewCount, title }) => {
     return (
         <>
             <div className="card p-1">
-                {document.title === "FAQs | OUR LEISURE HOME" && <ToastContainer />}
+                <ToastContainer />
                 <div className="p-2 mb-2">
                     <div className="row mb-4 pr-3">
                         <div className="col d-flex justify-content-between">
-                            <h2 className="pl-3 pt-2">Vehicle Category</h2>
+                            <h2 className="pl-3 pt-2">Vehicle Details</h2>
                         </div>
                         <div className="col">
                             <div>
@@ -378,7 +462,7 @@ const VehicleCategory = ({ getNewCount, title }) => {
                                     type="text"
                                     className={`form-control form-control-lg form-control-solid `}
                                     name="title"
-                                    placeholder="Search VehicleCategory"
+                                    placeholder="Search Vehicle Category"
                                     onChange={(e) => handleSearch(e)}
                                 />
                             </div>
@@ -388,12 +472,38 @@ const VehicleCategory = ({ getNewCount, title }) => {
                             onClick={() => {
                                 setIsAddVehicleCategory(true);
                             }}
+                            className="btn btn-success mr-2"
                         >
-                            Add VehicleCategory
+                            Add Vehicle Details
                         </button>
                         </div>
                     </div>
 
+
+
+                    <Modal show={showStatus} onHide={handleCloseShowStatus}>
+            <Modal.Header closeButton>
+              <Modal.Title className="text-danger">Alert!</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are You Sure To Want To{" "}
+              {statusDisplay === true ? "De-active" : "Active"} this vehicle 
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseShowStatus}>
+                Cancel
+              </Button>
+              <Button
+                variant="danger"
+                onClick={(e) => {
+                  handleUpdateStatusProperty(!statusDisplay);
+                }}
+              >
+                {statusDisplay === true ? "De-active" : "Active"}
+              </Button>
+            </Modal.Footer>
+          </Modal>
+          
                     {/* delete model */}
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
@@ -404,7 +514,7 @@ const VehicleCategory = ({ getNewCount, title }) => {
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
-                                cancel
+                                Cancel
                             </Button>
                             <Button
                                 variant="danger"
@@ -469,7 +579,7 @@ const VehicleCategory = ({ getNewCount, title }) => {
                                 {/* Name Amenintie */}
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Enter VehicleCategory
+                                        Enter Vehicle Category
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
@@ -496,18 +606,18 @@ const VehicleCategory = ({ getNewCount, title }) => {
                                     </div>
                                     
                                 </div>
-                                {/* <div className="form-group row">
+                                <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Enter Answer
+                                        Enter Vehicle Description
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
                                             <input
                                                 type="text"
                                                 className={`form-control form-control-lg form-control-solid `}
-                                                id="answer"
-                                                name="answer"
-                                                value={inputValueForAdd.answer}
+                                                id="VehicleDescription"
+                                                name="VehicleDescription"
+                                                value={inputValueForAdd.VehicleDescription}
                                                 onChange={(e) => {
                                                     handleOnChnageAdd(e);
                                                 }}
@@ -520,11 +630,11 @@ const VehicleCategory = ({ getNewCount, title }) => {
                                                 fontSize: "12px",
                                             }}
                                         >
-                                            {errorsForAdd["answer"]}
+                                            {errorsForAdd["VehicleDescription"]}
                                         </span>
                                     </div>
                                     
-                                </div> */}
+                                </div>
 
                                 <div className="d-flex align-items-center justify-content-center">
                                     <button
@@ -568,7 +678,7 @@ const VehicleCategory = ({ getNewCount, title }) => {
                                 {/* Ameninties Name */}
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                    Enter VehicleCategory
+                                    Enter Vehicle Category
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
@@ -594,18 +704,18 @@ const VehicleCategory = ({ getNewCount, title }) => {
                                         </span>
                                     </div>
                                 </div>
-                                {/* <div className="form-group row">
+                                <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                    Enter Answer
+                                    Vehicle Description
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
                                             <input
                                                 type="text"
                                                 className={`form-control form-control-lg form-control-solid `}
-                                                id="answer"
-                                                name="answer"
-                                                value={inputValue.answer}
+                                                id="VehicleDescription"
+                                                name="VehicleDescription"
+                                                value={inputValue.VehicleDescription}
                                                 onChange={(e) => {
                                                     handleOnChnage(e);
                                                 }}
@@ -618,10 +728,10 @@ const VehicleCategory = ({ getNewCount, title }) => {
                                                 fontSize: "12px",
                                             }}
                                         >
-                                            {errors["answer"]}
+                                            {errors["VehicleDescription"]}
                                         </span>
                                     </div>
-                                </div> */}
+                                </div>
 
 
                                 <div className="d-flex align-items-center justify-content-center">

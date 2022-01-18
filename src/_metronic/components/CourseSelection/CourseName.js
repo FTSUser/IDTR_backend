@@ -46,7 +46,9 @@ const CourseName = ({ getNewCount, title }) => {
     const [count, setCount] = useState(0);
     const [countPerPage, setCountPerPage] = useState(10);
     const [search, setSearch] = useState("");
-
+    const [showStatus, setShowStatus] = useState(false);
+    const [idForUpdateCourseStatus, setIdForUpdateCourseStatus] =useState("");
+    const [statusDisplay, setStatusDisplay] = useState(false);
     const handleOnChnage = (e) => {
         const { name, value } = e.target;
         setInputValue({ ...inputValue, [name]: value });
@@ -85,6 +87,10 @@ const CourseName = ({ getNewCount, title }) => {
         setShow(false);
     };
 
+    const handleCloseShowStatus = () => {
+        setShowStatus(false);
+      };
+
     useEffect(() => {
         getAllCourseName();
     }, [page, countPerPage]);
@@ -117,12 +123,39 @@ const CourseName = ({ getNewCount, title }) => {
 
     };
 
+
+
+    const handleUpdateStatusProperty = (status) => {
+        ApiPut(`courseName/updateStatus/${idForUpdateCourseStatus}`, {
+
+          isActive: status,
+        })
+          // ApiPut(`property/updateProperty/${idForUpdatePropertyStatus}`)
+          .then((res) => {
+            if (res?.status == 200) {
+              setShowStatus(false);
+              toast.success("Status updated Successfully");
+              getAllCourseName();
+            } else {
+              toast.error(res?.data?.message);
+            }
+          })
+          .catch((err) => {
+            toast.error(err.message);
+          });
+      };    
+
     const validateFormForAddAdmin = () => {
         let formIsValid = true;
         let errorsForAdd = {};
         if (inputValueForAdd && !inputValueForAdd.CourseName) {
             formIsValid = false;
-            errorsForAdd["CourseName"] = "*Please Enter CourseName!";
+            errorsForAdd["CourseName"] = "*Please Enter Course Name!";
+        }
+
+        if (inputValueForAdd && !inputValueForAdd.VehicleDescription) {
+            formIsValid = false;
+            errorsForAdd["VehicleDescription"] = "*Please Enter Vehicle Description!";
         }
         // if (inputValueForAdd && !inputValueForAdd.answer) {
         //     formIsValid = false;
@@ -138,6 +171,8 @@ const CourseName = ({ getNewCount, title }) => {
         if (validateFormForAddAdmin()) {
             let Data = {
               courseName: inputValueForAdd.CourseName,
+              description: inputValueForAdd.VehicleDescription,
+                isActive: true,
                 // answer: inputValueForAdd.answer,
                 // ctid : "61dfc5645e9d45193cb1a0b6"
             }
@@ -168,6 +203,11 @@ const CourseName = ({ getNewCount, title }) => {
             formIsValid = false;
             errors["CourseName"] = "*Please Enter CourseName!";
         }
+
+        if (inputValue && !inputValue.VehicleDescription) {
+            formIsValid = false;
+            errors["VehicleDescription"] = "*Please Enter Vehicle Description!";
+        }
         // if (inputValue && !inputValue.answer) {
         //     formIsValid = false;
         //     errors["answer"] = "*Please Enter Answer!";
@@ -181,7 +221,7 @@ const CourseName = ({ getNewCount, title }) => {
             .then((res) => {
                 if (res?.status == 200) {
                     setShow(false);
-                    toast.success("Amenintie Deleted Successfully");
+                    toast.success("Deleted Successfully");
                     getAllCourseName();
                     // { document.title === "Dashboard | OUR LEISURE HOME" && getNewCount() }
                     setPage(1)
@@ -206,6 +246,7 @@ const CourseName = ({ getNewCount, title }) => {
         if (validateForm()) {
           let Data = {
             courseName: inputValue.CourseName,
+            description: inputValue.VehicleDescription,
               // answer: inputValueForAdd.answer,
               // ctid : "61dfc5645e9d45193cb1a0b6"
           }
@@ -239,6 +280,42 @@ const CourseName = ({ getNewCount, title }) => {
             selector: "courseName",
             sortable: true,
         },
+
+
+
+        
+        {
+            name: "Vehicle Description ",
+            selector: "description",
+            sortable: true,
+        },
+
+        {
+            name: "Display?",
+            cell: (row) => {
+              return (
+                <>
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => {
+                      setShowStatus(true);
+                      setIdForUpdateCourseStatus(row?._id);
+                      setStatusDisplay(row?.isActive);
+                    }}
+                  >
+                    <Tooltip title="Status Property" arrow>
+                      <div className="cus-medium-button-style">
+                        <button  className="btn btn-success mr-2">
+                          {row?.isActive === true ? "Active" : "Deactive"}
+                        </button>
+                      </div>
+                    </Tooltip>
+                  </div>
+                </>
+              );
+            },
+            sortable: true,
+          },
         // {
         //     name: "Answer",
         //     selector: "answer",
@@ -256,7 +333,8 @@ const CourseName = ({ getNewCount, title }) => {
                                     setIsUpdateCourseName(true);
                                     setIdForUpdateCourseNameData(row._id);
                                     setInputValue({
-                                      CourseName: row?.CourseName,
+                                      CourseName: row?.courseName,
+                                      VehicleDescription: row?.description,
                                         // answer: row?.answer,
                                     });
                                 }}
@@ -366,7 +444,7 @@ const CourseName = ({ getNewCount, title }) => {
     return (
         <>
             <div className="card p-1">
-                {document.title === "FAQs | OUR LEISURE HOME" && <ToastContainer />}
+                 <ToastContainer />
                 <div className="p-2 mb-2">
                     <div className="row mb-4 pr-3">
                         <div className="col d-flex justify-content-between">
@@ -378,7 +456,7 @@ const CourseName = ({ getNewCount, title }) => {
                                     type="text"
                                     className={`form-control form-control-lg form-control-solid `}
                                     name="title"
-                                    placeholder="Search CourseName"
+                                    placeholder="Search Course Name"
                                     onChange={(e) => handleSearch(e)}
                                 />
                             </div>
@@ -388,11 +466,37 @@ const CourseName = ({ getNewCount, title }) => {
                             onClick={() => {
                                 setIsAddCourseName(true);
                             }}
+                            className="btn btn-success mr-2"
+
                         >
-                            Add CourseName
+                            Add Course Name
                         </button>
                         </div>
                     </div>
+
+
+                    <Modal show={showStatus} onHide={handleCloseShowStatus}>
+            <Modal.Header closeButton>
+              <Modal.Title className="text-danger">Alert!</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are You Sure To Want To{" "}
+              {statusDisplay === true ? "De-active" : "Active"} this course name
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseShowStatus}>
+                Cancel
+              </Button>
+              <Button
+                variant="danger"
+                onClick={(e) => {
+                  handleUpdateStatusProperty(!statusDisplay);
+                }}
+              >
+                {statusDisplay === true ? "De-active" : "Active"}
+              </Button>
+            </Modal.Footer>
+          </Modal>
 
                     {/* delete model */}
                     <Modal show={show} onHide={handleClose}>
@@ -400,7 +504,7 @@ const CourseName = ({ getNewCount, title }) => {
                             <Modal.Title className="text-danger">Alert!</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            Are You Sure To Want To{" "} delete this CourseName
+                            Are You Sure To Want To{" "} delete this Course Name
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
@@ -469,7 +573,7 @@ const CourseName = ({ getNewCount, title }) => {
                                 {/* Name Amenintie */}
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Enter CourseName
+                                        Enter Course Name
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
@@ -496,6 +600,37 @@ const CourseName = ({ getNewCount, title }) => {
                                     </div>
                                     
                                 </div>
+
+
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Enter Vehicle Description
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="VehicleDescription"
+                                                name="VehicleDescription"
+                                                value={inputValueForAdd.VehicleDescription}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["VehicleDescription"]}
+                                        </span>
+                                    </div>
+                                    </div>
                                 {/* <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
                                         Enter Answer
@@ -568,7 +703,7 @@ const CourseName = ({ getNewCount, title }) => {
                                 {/* Ameninties Name */}
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                    Enter CourseName
+                                    Enter Course Name
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
@@ -591,6 +726,36 @@ const CourseName = ({ getNewCount, title }) => {
                                             }}
                                         >
                                             {errors["CourseName"]}
+                                        </span>
+                                    </div>
+                                </div>
+
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                    Vehicle Description
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="VehicleDescription"
+                                                name="VehicleDescription"
+                                                value={inputValue.VehicleDescription}
+                                                onChange={(e) => {
+                                                    handleOnChnage(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errors["VehicleDescription"]}
                                         </span>
                                     </div>
                                 </div>

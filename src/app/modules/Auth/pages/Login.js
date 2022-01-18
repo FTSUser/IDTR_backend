@@ -25,7 +25,7 @@ export default function Login() {
       .min(10, "Minimum 10 symbols")
       .max(10 ,"Maximum 10 symbols")
       .matches(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/ , "Please enter valid number" )
-      .required("Pnone is Required"),
+      .required("Phone is Required"),
     // password: Yup.string()
     //   .min(3, "Minimum 3 symbols")
     //   .max(50, "Maximum 50 symbols")
@@ -52,6 +52,7 @@ export default function Login() {
       const data = {
         phone: values.phone,
         // password: values.password,
+        // role:'61aa037f803e260c3821ad0f'
       };
       console.log("DATA", data);
       await ApiPostNoAuth("admin/verify-phone", data)
@@ -63,6 +64,8 @@ export default function Login() {
             console.log("errrrrrrr")
             authUtil.setToken(res.data.payload.token);
             userUtil.setUserInfo(res.data.payload);
+            console.log("datafunctions", res.data.payload.token);
+
             // window.location.reload();
             // setLoading(true);
             // setSubmitting(false);
