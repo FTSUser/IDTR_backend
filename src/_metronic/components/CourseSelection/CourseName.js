@@ -173,6 +173,14 @@ const CourseName = ({ getNewCount, title }) => {
               courseName: inputValueForAdd.CourseName,
               description: inputValueForAdd.VehicleDescription,
                 isActive: true,
+                certificate: inputValueForAdd.Certificate,
+                documentRequired: inputValueForAdd.DocumentRequired,
+                mode: inputValueForAdd.Mode,
+                systemRequirement: inputValueForAdd.SystemRequirement,
+                timing: inputValueForAdd.Timing,
+                duration: inputValueForAdd.Duration,
+                validity: inputValueForAdd.Validity,
+            
                 // answer: inputValueForAdd.answer,
                 // ctid : "61dfc5645e9d45193cb1a0b6"
             }
@@ -602,6 +610,9 @@ const CourseName = ({ getNewCount, title }) => {
                                 </div>
 
 
+                                
+
+
 
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
@@ -631,6 +642,226 @@ const CourseName = ({ getNewCount, title }) => {
                                         </span>
                                     </div>
                                     </div>
+
+                                    <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Enter Duration 
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="Duration"
+                                                name="Duration"
+                                                value={inputValueForAdd.Duration}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["Duration"]}
+                                        </span>
+                                    </div>
+                                    </div>
+
+
+
+                                    <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Enter Timing
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="Timing"
+                                                name="Timing"
+                                                value={inputValueForAdd.Timing}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["Timing"]}
+                                        </span>
+                                    </div>
+                                    
+                                </div>
+
+
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Enter Mode
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="Mode"
+                                                name="Mode"
+                                                value={inputValueForAdd.Mode}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["Mode"]}
+                                        </span>
+                                    </div>
+                                    
+                                </div>
+
+
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Enter Document Required
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="DocumentRequired"
+                                                name="DocumentRequired"
+                                                value={inputValueForAdd.DocumentRequired}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["Document Required"]}
+                                        </span>
+                                    </div>
+                                    
+                                </div>
+
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Enter  Validity
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="Validity"
+                                                name="Validity"
+                                                value={inputValueForAdd.Validity}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["Validity"]}
+                                        </span>
+                                    </div>
+                                    
+                                </div>
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Enter System Requirement
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="SystemRequirement"
+                                                name="SystemRequirement"
+                                                value={inputValueForAdd.SystemRequirement}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["System Requirement"]}
+                                        </span>
+                                    </div>
+                                    
+                                </div>
+
+
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Enter Certificate
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="Certificate"
+                                                name="Certificate"
+                                                value={inputValueForAdd.Certificate}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["Certificate"]}
+                                        </span>
+                                    </div>
+                                    
+                                </div>
+                                    
+                               
                                 {/* <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
                                         Enter Answer
