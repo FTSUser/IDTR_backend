@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { getUserInfo } from "../../../../utils/user.util";
 import { ApiGet } from "../../../../helpers/API/ApiData";
 import User from "../../../components/User/User";
-import Inventory from "../../../components/Inventory/Inventory";
-import MarketPlace from "../../../components/MarketPlace/MarketPlace";
-import Order from "../../../components/Order/Order";
+// import Inventory from "../../../components/Inventory/Inventory";
+// import MarketPlace from "../../../components/MarketPlace/MarketPlace";
+// import Order from "../../../components/Order/Order";
 
 
 export function MixedWidget1({ className }) {
@@ -73,7 +73,7 @@ export function MixedWidget1({ className }) {
                       Total Number Of Users
                     </a>
                   </div>
-                  <div className="col bg-light-danger px-6 py-8 rounded-xl mr-5">
+                  {/* <div className="col bg-light-danger px-6 py-8 rounded-xl mr-5">
                     <span className="text-danger font-weight-bold font-size-h3 d-block my-2">
                       {countData?.allInventory}
                     </span>
@@ -84,8 +84,8 @@ export function MixedWidget1({ className }) {
                     >
                       Total Number Of Inventory
                     </a>
-                  </div>
-                  <div className="col bg-light-danger px-6 py-8 rounded-xl mr-5">
+                  </div> */}
+                  {/* <div className="col bg-light-danger px-6 py-8 rounded-xl mr-5">
                     <span className="text-danger font-weight-bold font-size-h3 d-block my-2">
                       {countData?.allMarketPlace}
                     </span>
@@ -96,8 +96,8 @@ export function MixedWidget1({ className }) {
                     >
                       Total Number Of MarketPlace
                     </a>
-                  </div>
-                  <div className="col bg-light-warning px-6 py-8 rounded-xl mr-5">
+                  </div> */}
+                  {/* <div className="col bg-light-warning px-6 py-8 rounded-xl mr-5">
                     <span className="text-warning font-weight-bold font-size-h3 d-block my-2">
                       {countData?.allOrder}
                     </span>
@@ -108,7 +108,7 @@ export function MixedWidget1({ className }) {
                     >
                       Total Number Of Order
                     </a>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               {/* <div className="card-spacer">
@@ -141,14 +141,15 @@ export function MixedWidget1({ className }) {
               </div> */}
               <div className="my-5 mx-5">
                 {selectedTable === "Users" ? (
-                  <User title={title} getNewCount={getcount} />
-                ) : selectedTable === "Inventory" ? (
-                  <Inventory title={title} getNewCount={getcount} />
-                ) : selectedTable === "Order" ? (
-                  <Order title={title} />
-                ) : selectedTable === "MarketPlace" ? (
-                  <MarketPlace title={title} />
-                ) : (
+                  <User title={title} getNewCount={getcount} />)
+                // ) : selectedTable === "Inventory" ? (
+                //   <Inventory title={title} getNewCount={getcount} />
+                // ) : selectedTable === "Order" ? (
+                //   <Order title={title} />
+                // ) : selectedTable === "MarketPlace" ? (
+                //   <MarketPlace title={title} />
+                // ) 
+                :(
                   <></>
                 )}
               </div>
