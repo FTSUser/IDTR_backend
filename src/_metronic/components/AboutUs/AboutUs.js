@@ -76,11 +76,11 @@ const AboutUs = ({ getNewCount, title }) => {
     console.log("inputValue", inputValueForAdd);
   }, [inputValueForAdd]);
 
-  useEffect(() => {
-    title === "Dashboard | OUR LEISURE HOME"
-      ? (document.title = title)
-      : (document.title = "About Us | OUR LEISURE HOME");
-  }, []);
+  // useEffect(() => {
+  //   title === "Dashboard | OUR LEISURE HOME"
+  //     ? (document.title = title)
+  //     : (document.title = "About Us | OUR LEISURE HOME");
+  // }, []);
 
   useEffect(() => {
     console.log("idForEditStatus", idForEditStatus);
@@ -109,46 +109,33 @@ const AboutUs = ({ getNewCount, title }) => {
   const getAllAboutUs = async () => {
     setIsLoaderVisible(true);
     if (!search) {
-      await ApiGet(`aboutus/getAllAboutus?page=${page}&limit=${countPerPage}`)
+      await ApiGet(`cms/getAllCMS`)
         .then((res) => {
           setIsLoaderVisible(false);
           console.log("artistreport", res);
-          setFilteredAboutUs(res?.data?.payload?.aboutus);
+          setFilteredAboutUs(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
         .catch((err) => {
           console.log(err);
         });
-    } else {
-      await ApiGet(
-        `aboutus/getAllAboutus?search=${search}&page=${page}&limit=${countPerPage}`
-      )
-        .then((res) => {
-          setIsLoaderVisible(false);
-          console.log("artistreport", res);
-          setFilteredAboutUs(res?.data?.payload?.aboutus);
-          setCount(res?.data?.payload?.count);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    } 
   };
 
   const validateFormForAddAdmin = () => {
     let formIsValid = true;
     let errorsForAdd = {};
-    if (inputValueForAdd && !inputValueForAdd.title) {
+    if (inputValueForAdd && !inputValueForAdd.titleName) {
       formIsValid = false;
-      errorsForAdd["title"] = "*Please Enter Title!";
+      errorsForAdd["titleName"] = "*Please Enter Title!";
     }
     if (!description) {
       formIsValid = false;
       errorsForAdd["description"] = "*Please Enter Description!";
     }
-    if (inputValueForAdd && !inputValueForAdd.photo) {
+    if (inputValueForAdd && !inputValueForAdd.image) {
       formIsValid = false;
-      errorsForAdd["photo"] = "*Please Upload Image!";
+      errorsForAdd["image"] = "*Please Upload Image!";
     }
 
     setErrorsForAdd(errorsForAdd);
@@ -159,11 +146,12 @@ const AboutUs = ({ getNewCount, title }) => {
     e.preventDefault();
     if (validateFormForAddAdmin()) {
       let Data = {
-        title: inputValueForAdd.title,
+        titleName: inputValueForAdd.titleName,
         description: description,
-        photo: inputValueForAdd.photo,
+        image: inputValueForAdd.image,
       };
-      ApiPost(`aboutus/addAboutus`, Data)
+      console.log("data",Data)
+      ApiPost(`cms/addCMS`,Data)
         .then((res) => {
           console.log("resresres", res);
           if (res?.status == 200) {
@@ -172,10 +160,10 @@ const AboutUs = ({ getNewCount, title }) => {
             setInputValueForAdd({});
             setDescription("");
             getAllAboutUs();
-            {
-              document.title === "Dashboard | OUR LEISURE HOME" &&
-                getNewCount();
-            }
+            // {
+            //   document.title === "Dashboard | OUR LEISURE HOME" &&
+            //     getNewCount();
+            // }
           } else {
             toast.error(res?.data?.message);
           }
@@ -204,10 +192,10 @@ const AboutUs = ({ getNewCount, title }) => {
       }
 
       setInputValueForAdd((cv) => {
-        return { ...cv, photo: imageB64Arr };
+        return { ...cv, image: imageB64Arr };
       });
     } else {
-      errorsForAdd["photo"] = "*Please Upload Image!";
+      errorsForAdd["image"] = "*Please Upload Image!";
     }
   };
 
@@ -229,10 +217,10 @@ const AboutUs = ({ getNewCount, title }) => {
       }
 
       setInputValue((cv) => {
-        return { ...cv, photo: imageB64Arr };
+        return { ...cv, image: imageB64Arr };
       });
     } else {
-      errors["photo"] = "*Please Upload Image!";
+      errors["image"] = "*Please Upload Image!";
     }
   };
 
@@ -252,32 +240,32 @@ const AboutUs = ({ getNewCount, title }) => {
   const validateForm = () => {
     let formIsValid = true;
     let errors = {};
-    if (inputValue && !inputValue.title) {
+    if (inputValue && !inputValue.titleName) {
       formIsValid = false;
-      errors["title"] = "*Please Enter Title!";
+      errors["titleName"] = "*Please Enter Title!";
     }
     if (!description) {
       formIsValid = false;
       errors["description"] = "*Please Enter Description!";
     }
-    if (inputValue && !inputValue.photo) {
+    if (inputValue && !inputValue.image) {
       formIsValid = false;
-      errors["photo"] = "*Please Upload Image!";
+      errors["image"] = "*Please Upload Image!";
     }
     setErrors(errors);
     return formIsValid;
   };
 
   const handleDeleteAboutUs = () => {
-    ApiDelete(`aboutus/deleteAboutus/${idForDeleteAboutUs}`)
+    ApiDelete(`cms/deleteCMS/${idForDeleteAboutUs}`)
       .then((res) => {
         if (res?.status == 200) {
           setShow(false);
           toast.success("Deleted Successfully");
           getAllAboutUs();
-          {
-            document.title === "Dashboard | OUR LEISURE HOME" && getNewCount();
-          }
+          // {
+          //   document.title === "Dashboard | OUR LEISURE HOME" && getNewCount();
+          // }
           setPage(1);
           setCount(0);
           setCountPerPage(countPerPage);
@@ -299,11 +287,11 @@ const AboutUs = ({ getNewCount, title }) => {
 
     if (validateForm()) {
       let Data = {
-        title: inputValue.title,
+        titleName: inputValue.titleName,
         description: description,
-        photo: inputValue.photo,
+        image: inputValue.image,
       };
-      ApiPut(`aboutus/updateAboutus/${idForUpdateAboutUsData}`, Data)
+      ApiPut(`cms/updateCMS/${idForUpdateAboutUsData}`, Data)
         .then((res) => {
           console.log("resres", res);
           if (res?.status == 200) {
@@ -331,7 +319,7 @@ const AboutUs = ({ getNewCount, title }) => {
     },
     {
       name: "Title",
-      selector: "title",
+      selector: "titleName",
       sortable: true,
     },
     {
@@ -361,7 +349,7 @@ const AboutUs = ({ getNewCount, title }) => {
               <img
                 className="max-w-50px zoom"
                 alt="img"
-                src={row?.photo != null ? row.photo[0] : ""}
+                src={row?.image != null ? row.image[0] : ""}
               />
             </div>
           </>
@@ -381,8 +369,8 @@ const AboutUs = ({ getNewCount, title }) => {
                   setIsUpdateAboutUs(true);
                   setIdForUpdateAboutUsData(row._id);
                   setInputValue({
-                    title: row?.title,
-                    photo: row?.photo,
+                    titleName: row?.titleName,
+                    image: row?.image,
                   });
 
                   setDescription(row?.description);
@@ -503,7 +491,7 @@ const AboutUs = ({ getNewCount, title }) => {
   return (
     <>
       <div className="card p-1">
-        {document.title === "About Us | OUR LEISURE HOME" && <ToastContainer />}
+        <ToastContainer />
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
@@ -525,6 +513,7 @@ const AboutUs = ({ getNewCount, title }) => {
                 onClick={() => {
                   setIsAddAboutUs(true);
                 }}
+                className="btn btn-success mr-2"
               >
                 Add About Us
               </button>
@@ -613,9 +602,9 @@ const AboutUs = ({ getNewCount, title }) => {
                       <input
                         type="text"
                         className={`form-control form-control-lg form-control-solid `}
-                        id="title"
-                        name="title"
-                        value={inputValueForAdd.title}
+                        id="titleName"
+                        name="titleName"
+                        value={inputValueForAdd.titleName}
                         onChange={(e) => {
                           handleOnChnageAdd(e);
                         }}
@@ -628,7 +617,7 @@ const AboutUs = ({ getNewCount, title }) => {
                         fontSize: "12px",
                       }}
                     >
-                      {errorsForAdd["title"]}
+                      {errorsForAdd["titleName"]}
                     </span>
                   </div>
                 </div>
@@ -686,7 +675,7 @@ const AboutUs = ({ getNewCount, title }) => {
                         fontSize: "12px",
                       }}
                     >
-                      {errorsForAdd["photo"]}
+                      {errorsForAdd["image"]}
                     </span>
                   </div>
                 </div>
@@ -740,9 +729,9 @@ const AboutUs = ({ getNewCount, title }) => {
                       <input
                         type="text"
                         className={`form-control form-control-lg form-control-solid `}
-                        id="title"
-                        name="title"
-                        value={inputValue.title}
+                        id="titleName"
+                        name="titleName"
+                        value={inputValue.titleName}
                         onChange={(e) => {
                           handleOnChnage(e);
                         }}
@@ -755,7 +744,7 @@ const AboutUs = ({ getNewCount, title }) => {
                         fontSize: "12px",
                       }}
                     >
-                      {errors["title"]}
+                      {errors["titleName"]}
                     </span>
                   </div>
                 </div>
@@ -798,8 +787,8 @@ const AboutUs = ({ getNewCount, title }) => {
                       <input
                         type="file"
                         className={`form-control form-control-lg form-control-solid `}
-                        name="photo"
-                        id="photo"
+                        name="image"
+                        id="image"
                         // value={productValues.image || null}
                         onChange={(e) => {
                           getImageArrayFromUpdateUpload(e);
@@ -815,7 +804,7 @@ const AboutUs = ({ getNewCount, title }) => {
                         fontSize: "12px",
                       }}
                     >
-                      {errors["photo"]}
+                      {errors["image"]}
                     </span>
                   </div>
                 </div>
@@ -867,7 +856,7 @@ const AboutUs = ({ getNewCount, title }) => {
                 <div className="form-group row mr-20">
                   <p
                     dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.title,
+                      __html: dataViewMore?.titleName,
                     }}
                     className=""
                   />
@@ -888,7 +877,7 @@ const AboutUs = ({ getNewCount, title }) => {
                 </div>
                 <div className="form-group row mr-20">
                   <img
-                    src={dataViewMore?.photo}
+                    src={dataViewMore?.image}
                     alt=""
                     height="256px"
                     width="256px"

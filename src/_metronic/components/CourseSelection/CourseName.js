@@ -49,6 +49,9 @@ const CourseName = ({ getNewCount, title }) => {
     const [showStatus, setShowStatus] = useState(false);
     const [idForUpdateCourseStatus, setIdForUpdateCourseStatus] =useState("");
     const [statusDisplay, setStatusDisplay] = useState(false);
+    const [getCourseType, setGetCourseType] = useState([]);
+    const [courseTypeArr, setCourseTypeArr] = useState();
+
     const handleOnChnage = (e) => {
         const { name, value } = e.target;
         setInputValue({ ...inputValue, [name]: value });
@@ -94,6 +97,47 @@ const CourseName = ({ getNewCount, title }) => {
     useEffect(() => {
         getAllCourseName();
     }, [page, countPerPage]);
+
+
+
+
+
+    
+    const getAllCourseType = async () => {
+        setIsLoaderVisible(true);
+        if (!search) {
+            await ApiGet(`courseType/getAllCourseType`)
+                .then((res) => {
+                    setIsLoaderVisible(false);
+                    console.log("artistreport", res);
+                    setGetCourseType(res?.data?.payload?.Question);
+                    // courseTypeArr.push(getCourseType.map((item)=>item.courseType))
+                    console.log("courseTypeArr",courseTypeArr)
+                    // setCount(res?.data?.payload?.count);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        } 
+        // else {
+        //     await ApiGet(`courseType/getAllCourseType?search=${search}&page=${page}&limit=${countPerPage}`)
+        //         .then((res) => {
+        //             setIsLoaderVisible(false);
+        //             console.log("artistreport", res);
+        //             setFilteredCourseType(res?.data?.payload?.Question);
+        //             setCount(res?.data?.payload?.count);
+        //         })
+        //         .catch((err) => {
+        //             console.log(err);
+        //         });
+        // }
+
+    };
+
+
+
+
+
 
     const getAllCourseName = async () => {
         setIsLoaderVisible(true);
@@ -153,9 +197,9 @@ const CourseName = ({ getNewCount, title }) => {
             errorsForAdd["CourseName"] = "*Please Enter Course Name!";
         }
 
-        if (inputValueForAdd && !inputValueForAdd.VehicleDescription) {
+        if (inputValueForAdd && !inputValueForAdd.Description) {
             formIsValid = false;
-            errorsForAdd["VehicleDescription"] = "*Please Enter Vehicle Description!";
+            errorsForAdd["Vehicle"] = "*Please Enter Description!";
         }
         // if (inputValueForAdd && !inputValueForAdd.answer) {
         //     formIsValid = false;
@@ -168,10 +212,9 @@ const CourseName = ({ getNewCount, title }) => {
 
     const handelAddCourseNameDetails = (e) => {
         e.preventDefault();
-        if (validateFormForAddAdmin()) {
             let Data = {
-              courseName: inputValueForAdd.CourseName,
-              description: inputValueForAdd.VehicleDescription,
+                courseName: inputValueForAdd.CourseName,
+                description: inputValueForAdd.Description,
                 isActive: true,
                 certificate: inputValueForAdd.Certificate,
                 documentRequired: inputValueForAdd.DocumentRequired,
@@ -180,6 +223,8 @@ const CourseName = ({ getNewCount, title }) => {
                 timing: inputValueForAdd.Timing,
                 duration: inputValueForAdd.Duration,
                 validity: inputValueForAdd.Validity,
+                _id: inputValueForAdd.CourseType,
+
             
                 // answer: inputValueForAdd.answer,
                 // ctid : "61dfc5645e9d45193cb1a0b6"
@@ -201,7 +246,7 @@ const CourseName = ({ getNewCount, title }) => {
                 .catch((err) => {
                     toast.error(err.message);
                 });
-        }
+        
     };
 
     const validateForm = () => {
@@ -212,9 +257,9 @@ const CourseName = ({ getNewCount, title }) => {
             errors["CourseName"] = "*Please Enter CourseName!";
         }
 
-        if (inputValue && !inputValue.VehicleDescription) {
+        if (inputValue && !inputValue.Description) {
             formIsValid = false;
-            errors["VehicleDescription"] = "*Please Enter Vehicle Description!";
+            errors["Description"] = "*Please Enter Description!";
         }
         // if (inputValue && !inputValue.answer) {
         //     formIsValid = false;
@@ -254,7 +299,15 @@ const CourseName = ({ getNewCount, title }) => {
         if (validateForm()) {
           let Data = {
             courseName: inputValue.CourseName,
-            description: inputValue.VehicleDescription,
+            description: inputValue.Description,
+            certificate: inputValue.Certificate,
+            documentRequired: inputValue.DocumentRequired,
+            mode: inputValue.Mode,
+            systemRequirement: inputValue.SystemRequirement,
+            timing: inputValue.Timing,
+            duration: inputValue.Duration,
+            validity: inputValue.Validity,
+           
               // answer: inputValueForAdd.answer,
               // ctid : "61dfc5645e9d45193cb1a0b6"
           }
@@ -288,13 +341,56 @@ const CourseName = ({ getNewCount, title }) => {
             selector: "courseName",
             sortable: true,
         },
-
-
-
         
         {
-            name: "Vehicle Description ",
+            name: "Course Description",
             selector: "description",
+            sortable: true,
+        },
+       
+      
+        {
+            name: "Duration",
+            selector: "duration",
+            sortable: true,
+        },
+
+
+
+
+        {
+            name: "Timing",
+            selector: "timing",
+            sortable: true,
+        },
+
+        {
+            name: "Mode",
+            selector: "mode",
+            sortable: true,
+        },
+
+        {
+            name: "Document Required",
+            selector: "documentRequired",
+            sortable: true,
+        },
+
+        {
+            name: "Validity",
+            selector: "validity",
+            sortable: true,
+        },
+
+        {
+            name: "System Requirement",
+            selector: "systemRequirement",
+            sortable: true,
+        },
+
+        {
+            name: "Certificate",
+            selector: "certificate",
             sortable: true,
         },
 
@@ -342,7 +438,16 @@ const CourseName = ({ getNewCount, title }) => {
                                     setIdForUpdateCourseNameData(row._id);
                                     setInputValue({
                                       CourseName: row?.courseName,
-                                      VehicleDescription: row?.description,
+                                      Description: row?.description,
+                                      Certificate: row?.certificate,
+                                      DocumentRequired: row?.documentRequired,
+                                      Mode: row?.mode,
+                                      SystemRequirement: row?.systemRequirement,
+                                      Timing: row?.timing,
+                                      Duration: row?.duration,
+                                      Validity: row?.validity,
+                                    
+                                     
                                         // answer: row?.answer,
                                     });
                                 }}
@@ -473,6 +578,7 @@ const CourseName = ({ getNewCount, title }) => {
                         <button
                             onClick={() => {
                                 setIsAddCourseName(true);
+                                getAllCourseType();
                             }}
                             className="btn btn-success mr-2"
 
@@ -579,6 +685,52 @@ const CourseName = ({ getNewCount, title }) => {
                         {isAddCourseName === true ? (
                             <div className="form ml-30 ">
                                 {/* Name Amenintie */}
+
+
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Select Course Type
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <select
+                                            
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="CourseType"
+                                                name="CourseType"
+                                                value={inputValueForAdd.CourseType}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            >
+                                                 <option value="" disabled selected hidden>
+                                                    Select Course Type
+                                                 </option>
+                                                {getCourseType?.length>0 && getCourseType?.map((item)=>{
+                                                    console.log("item",item._id)
+                                                      return <option key={item._id} value={item._id}> {item.courseType} </option>
+                                                })}
+                                               
+                                            </select>
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["CourseType"]}
+                                        </span>
+                                    </div>
+                                    
+                                </div>
+
+
+
+
+
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
                                         Enter Course Name
@@ -616,16 +768,16 @@ const CourseName = ({ getNewCount, title }) => {
 
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Enter Vehicle Description
+                                        Enter Course Description
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
                                             <input
                                                 type="text"
                                                 className={`form-control form-control-lg form-control-solid `}
-                                                id="VehicleDescription"
-                                                name="VehicleDescription"
-                                                value={inputValueForAdd.VehicleDescription}
+                                                id="Description"
+                                                name="Description"
+                                                value={inputValueForAdd.Description}
                                                 onChange={(e) => {
                                                     handleOnChnageAdd(e);
                                                 }}
@@ -638,7 +790,7 @@ const CourseName = ({ getNewCount, title }) => {
                                                 fontSize: "12px",
                                             }}
                                         >
-                                            {errorsForAdd["VehicleDescription"]}
+                                            {errorsForAdd["Description"]}
                                         </span>
                                     </div>
                                     </div>
@@ -762,7 +914,7 @@ const CourseName = ({ getNewCount, title }) => {
                                                 fontSize: "12px",
                                             }}
                                         >
-                                            {errorsForAdd["Document Required"]}
+                                            {errorsForAdd["Document Requirement"]}
                                         </span>
                                     </div>
                                     
@@ -971,9 +1123,9 @@ const CourseName = ({ getNewCount, title }) => {
                                             <input
                                                 type="text"
                                                 className={`form-control form-control-lg form-control-solid `}
-                                                id="VehicleDescription"
-                                                name="VehicleDescription"
-                                                value={inputValue.VehicleDescription}
+                                                id="Description"
+                                                name="Description"
+                                                value={inputValue.Description}
                                                 onChange={(e) => {
                                                     handleOnChnage(e);
                                                 }}
@@ -986,10 +1138,227 @@ const CourseName = ({ getNewCount, title }) => {
                                                 fontSize: "12px",
                                             }}
                                         >
-                                            {errors["VehicleDescription"]}
+                                            {errors["Description"]}
                                         </span>
                                     </div>
                                 </div>
+                                
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                    Duration
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="Duration"
+                                                name="Duration"
+                                                value={inputValue.Duration}
+                                                onChange={(e) => {
+                                                    handleOnChnage(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errors["Duration"]}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                    Timing
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="Timing"
+                                                name="Timing"
+                                                value={inputValue.Timing}
+                                                onChange={(e) => {
+                                                    handleOnChnage(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errors["Timing"]}
+                                        </span>
+                                    </div>
+                                </div>
+
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                    Mode
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="Mode"
+                                                name="Mode"
+                                                value={inputValue.Mode}
+                                                onChange={(e) => {
+                                                    handleOnChnage(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errors["Mode"]}
+                                        </span>
+                                    </div>
+                                </div>
+
+
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                    Document Required
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="DocumentRequired"
+                                                name="DocumentRequired"
+                                                value={inputValue.DocumentRequired}
+                                                onChange={(e) => {
+                                                    handleOnChnage(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errors["DocumentRequired"]}
+                                        </span>
+                                    </div>
+                                </div>
+
+
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                    Validity
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="Validity"
+                                                name="Validity"
+                                                value={inputValue.Validity}
+                                                onChange={(e) => {
+                                                    handleOnChnage(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errors["Validity"]}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                    System Requirement
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id=" SystemRequirement"
+                                                name=" SystemRequirement"
+                                                value={inputValue.SystemRequirement}
+                                                onChange={(e) => {
+                                                    handleOnChnage(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errors[" SystemRequirement"]}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                    Certificate
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="Certificate"
+                                                name="Certificate"
+                                                value={inputValue.Certificate}
+                                                onChange={(e) => {
+                                                    handleOnChnage(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errors["Certificate"]}
+                                        </span>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+
+                               
                                 {/* <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
                                     Enter Answer
