@@ -219,7 +219,7 @@ const CourseType = ({ getNewCount, title }) => {
               courseType: inputValueForAdd.CourseType,
               description: inputValueForAdd.VehicleDescription,
                 isActive: true,
-                _id: inputValueForAdd.VehicleCategory,
+                vcid: inputValueForAdd.VehicleCategory,
                 // answer: inputValueForAdd.answer,
                 // ctid : "61dfc5645e9d45193cb1a0b6"
             }
@@ -243,27 +243,7 @@ const CourseType = ({ getNewCount, title }) => {
         }
     };
 
-    const validateForm = () => {
-        let formIsValid = true;
-        let errors = {};
-        if (inputValue && !inputValue.CourseType) {
-            formIsValid = false;
-            errors["CourseType"] = "*Please Enter CourseType!";
-        }
-
-        if (inputValue && !inputValue.VehicleDescription) {
-            formIsValid = false;
-            errors["VehicleDescription"] = "*Please Enter Vehicle Description!";
-        }
-        
-        if (inputValue && !inputValue.VehicleCategory) {
-            formIsValid = false;
-            errors["VehicleCategory"] = "*Please Enter Vehicle Category!";
-        }
-        
-        setErrors(errors);
-        return formIsValid;
-    };
+   
 
     const handleDeleteCourseType = () => {
         ApiDelete(`courseType/deleteCourseType/${idForDeleteCourseType}`)
@@ -289,6 +269,29 @@ const CourseType = ({ getNewCount, title }) => {
         console.log("inputValue", inputValue);
     }, [inputValue])
 
+
+    const validateForm = () => {
+        let formIsValid = true;
+        let errors = {};
+        if (inputValue && !inputValue.CourseType) {
+            formIsValid = false;
+            errors["CourseType"] = "*Please Enter CourseType!";
+        }
+
+        if (inputValue && !inputValue.VehicleDescription) {
+            formIsValid = false;
+            errors["VehicleDescription"] = "*Please Enter Vehicle Description!";
+        }
+        
+        // if (inputValue && !inputValue.VehicleCategory) {
+        //     formIsValid = false;
+        //     errors["VehicleCategory"] = "*Please Enter Vehicle Category!";
+        // }
+        
+        setErrors(errors);
+        return formIsValid;
+    };
+
     const handelUpdateCourseTypeDetails = (e) => {
 
         e.preventDefault();
@@ -296,9 +299,6 @@ const CourseType = ({ getNewCount, title }) => {
           let Data = {
             courseType: inputValue.CourseType,
             description: inputValue.VehicleDescription,
-
-              // answer: inputValueForAdd.answer,
-              // ctid : "61dfc5645e9d45193cb1a0b6"
           }
             ApiPut(`courseType/updateCourseType/${idForUpdateCourseTypeData}`, Data)
                 .then((res) => {
