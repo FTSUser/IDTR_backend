@@ -293,27 +293,27 @@ const CourseType = ({ getNewCount, title }) => {
     }, [inputValue])
 
 
-    const validateForm = () => {
-        let formIsValid = true;
-        let errors = {};
-        if (inputValue && !inputValue.CourseType) {
-            formIsValid = false;
-            errors["CourseType"] = "*Please Enter CourseType!";
-        }
+    // const validateForm = () => {
+    //     let formIsValid = true;
+    //     let errors = {};
+    //     if (inputValue && !inputValue.CourseType) {
+    //         formIsValid = false;
+    //         errors["CourseType"] = "*Please Enter CourseType!";
+    //     }
 
-        if (inputValue && !inputValue.VehicleDescription) {
-            formIsValid = false;
-            errors["VehicleDescription"] = "*Please Enter Vehicle Description!";
-        }
+    //     if (inputValue && !inputValue.VehicleDescription) {
+    //         formIsValid = false;
+    //         errors["VehicleDescription"] = "*Please Enter Vehicle Description!";
+    //     }
         
         // if (inputValue && !inputValue.VehicleCategory) {
         //     formIsValid = false;
         //     errors["VehicleCategory"] = "*Please Enter Vehicle Category!";
         // }
         
-        setErrors(errors);
-        return formIsValid;
-    };
+    //     setErrors(errors);
+    //     return formIsValid;
+    // };
 
     const handelUpdateCourseTypeDetails = (e) => {
 
