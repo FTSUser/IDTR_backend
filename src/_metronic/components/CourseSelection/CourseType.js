@@ -133,7 +133,7 @@ const CourseType = ({ getNewCount, title }) => {
   const getAllVehicleCategory = async () => {
     setIsLoaderVisible(true);
     if (!search) {
-      await ApiGet(`vehicleCategory/getAllVehicleCategory`)
+      await ApiGet(`vehicleCategory/getAllVehicleCategory?page=${page}&limit=${countPerPage}`)
         .then((res) => {
           setIsLoaderVisible(false);
           console.log("artistreport", res);
@@ -144,18 +144,18 @@ const CourseType = ({ getNewCount, title }) => {
           console.log(err);
         });
     }
-    // else {
-    //     await ApiGet(`vehicleCategory/getAllVehicleCategory?search=${search}&page=${page}&limit=${countPerPage}`)
-    //         .then((res) => {
-    //             setIsLoaderVisible(false);
-    //             console.log("artistreport", res);
-    //             setFilteredVehicleCategory(res?.data?.payload?.Question);
-    //             setCount(res?.data?.payload?.count);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-    // }
+    else {
+        await ApiGet(`vehicleCategory/getAllVehicleCategory?search=${search}&page=${page}&limit=${countPerPage}`)
+            .then((res) => {
+                setIsLoaderVisible(false);
+                console.log("artistreport", res);
+                setFilteredVehicleCategory(res?.data?.payload?.Question);
+                setCount(res?.data?.payload?.count);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
   };
 
   const handleUpdateStatusProperty = (status) => {

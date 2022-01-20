@@ -78,8 +78,8 @@ const User = ({ getNewCount, title }) => {
 
   const getAllAboutUs = async () => {
     setIsLoaderVisible(true);
-    if (!search) {
-      await ApiGet(`register/getAllRegister`)
+    // if (!search) {
+      await ApiGet(`register/getAllRegister?page=${page}&limit=${countPerPage}`)
         .then((res) => {
           setIsLoaderVisible(false);
           console.log("artistreport", res);
@@ -89,7 +89,7 @@ const User = ({ getNewCount, title }) => {
         .catch((err) => {
           console.log(err);
         });
-    } 
+    // } 
   };
 
   useEffect(() => {

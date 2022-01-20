@@ -83,11 +83,13 @@ const CourseName = ({ getNewCount, title }) => {
   const handleAdminUpdateClose = () => {
     setInputValue({});
     setIsUpdateCourseName(false);
+    setErrors({})
   };
 
   const handleAddAdminClose = () => {
-    setInputValue({});
+    setInputValueForAdd({});
     setIsAddCourseName(false);
+    setErrorsForAdd({})
   };
 
   const handleClose = () => {
@@ -135,7 +137,7 @@ const CourseName = ({ getNewCount, title }) => {
   const getAllCourseName = async () => {
     setIsLoaderVisible(true);
     if (!search) {
-      await ApiGet(`courseName/getAllCourseName`)
+      await ApiGet(`courseName/getAllCourseName?page=${page}&limit=${countPerPage}`)
         .then((res) => {
           setIsLoaderVisible(false);
           console.log("artistreport", res);
@@ -190,7 +192,7 @@ const CourseName = ({ getNewCount, title }) => {
 
     if (inputValueForAdd && !inputValueForAdd.Description) {
       formIsValid = false;
-      errorsForAdd["Vehicle"] = "*Please Enter Description!";
+      errorsForAdd["Description"] = "*Please Enter Description!";
     }
 
     if (inputValueForAdd && !inputValueForAdd.CourseType) {
@@ -282,67 +284,7 @@ const CourseName = ({ getNewCount, title }) => {
     }
   };
 
-  const validateForm = () => {
-    let formIsValid = true;
-    let errors = {};
-    if (inputValue && !inputValue.CourseName) {
-      formIsValid = false;
-      errors["CourseName"] = "*Please Enter CourseName!";
-    }
-
-    if (inputValue && !inputValue.Description) {
-      formIsValid = false;
-      errors["Description"] = "*Please Enter Description!";
-    }
-
-    if (inputValue && !inputValue.CourseType) {
-      formIsValid = false;
-      errorsForAdd["CourseType"] = "*Please Enter CourseType!";
-    }
-
-    if (inputValue && !inputValue.Duration) {
-      formIsValid = false;
-      errorsForAdd["Duration"] = "*Please Enter Duration!";
-    }
-
-    if (inputValue && !inputValue.Timing) {
-      formIsValid = false;
-      errorsForAdd["Timing"] = "*Please Enter Timing!";
-    }
-
-    if (inputValue && !inputValue.Mode) {
-      formIsValid = false;
-      errorsForAdd["Mode"] = "*Please Enter Mode!";
-    }
-
-    if (inputValue && !inputValue.DocumentRequired) {
-      formIsValid = false;
-      errorsForAdd["DocumentRequired"] = "*Please Enter Document Required!";
-    }
-
-    if (inputValue && !inputValue.Validity) {
-      formIsValid = false;
-      errorsForAdd["Validity"] = "*Please Enter Validity!";
-    }
-
-    if (inputValue && !inputValue.SystemRequirement) {
-      formIsValid = false;
-      errorsForAdd["SystemRequirement"] = "*Please Enter System Requirement!";
-    }
-
-    if (inputValue && !inputValue.Certificate) {
-      formIsValid = false;
-      errorsForAdd["Certificate"] = "*Please Enter Certificate!";
-    }
-
-    if (inputValue && !inputValue.Price) {
-      formIsValid = false;
-      errorsForAdd["Price"] = "*Please Enter Price!";
-    }
-
-    setErrors(errors);
-    return formIsValid;
-  };
+  
 
   const handleDeleteCourseName = () => {
     ApiDelete(`courseName/deleteCourseName/${idForDeleteCourseName}`)
@@ -367,6 +309,68 @@ const CourseName = ({ getNewCount, title }) => {
   useEffect(() => {
     console.log("inputValue", inputValue);
   }, [inputValue]);
+
+  const validateForm = () => {
+    let formIsValid = true;
+    let errors = {};
+    if (inputValue && !inputValue.CourseName) {
+      formIsValid = false;
+      errors["CourseName"] = "*Please Enter CourseName!";
+    }
+
+    if (inputValue && !inputValue.Description) {
+      formIsValid = false;
+      errors["Description"] = "*Please Enter Description!";
+    }
+
+    if (inputValue && !inputValue.CourseType) {
+      formIsValid = false;
+      errors["CourseType"] = "*Please Enter CourseType!";
+    }
+
+    if (inputValue && !inputValue.Duration) {
+      formIsValid = false;
+      errors["Duration"] = "*Please Enter Duration!";
+    }
+
+    if (inputValue && !inputValue.Timing) {
+      formIsValid = false;
+      errors["Timing"] = "*Please Enter Timing!";
+    }
+
+    if (inputValue && !inputValue.Mode) {
+      formIsValid = false;
+      errors["Mode"] = "*Please Enter Mode!";
+    }
+
+    if (inputValue && !inputValue.DocumentRequired) {
+      formIsValid = false;
+      errors["DocumentRequired"] = "*Please Enter Document Required!";
+    }
+
+    if (inputValue && !inputValue.Validity) {
+      formIsValid = false;
+      errors["Validity"] = "*Please Enter Validity!";
+    }
+
+    if (inputValue && !inputValue.SystemRequirement) {
+      formIsValid = false;
+      errors["SystemRequirement"] = "*Please Enter System Requirement!";
+    }
+
+    if (inputValue && !inputValue.Certificate) {
+      formIsValid = false;
+      errors["Certificate"] = "*Please Enter Certificate!";
+    }
+
+    if (inputValue && !inputValue.Price) {
+      formIsValid = false;
+      errors["Price"] = "*Please Enter Price!";
+    }
+
+    setErrors(errors);
+    return formIsValid;
+  };
 
   const handelUpdateCourseNameDetails = (e) => {
     e.preventDefault();
@@ -512,6 +516,7 @@ const CourseName = ({ getNewCount, title }) => {
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
+                    console.log("typetype",row);
                   setIsUpdateCourseName(true);
                   setIdForUpdateCourseNameData(row._id);
                   getAllCourseType();
@@ -527,7 +532,6 @@ const CourseName = ({ getNewCount, title }) => {
                     Validity: row?.validity,
                     Price: row?.price,
                     CourseType: row?.ctid?._id,
-
                     // answer: row?.answer,
                   });
                 }}
@@ -973,7 +977,7 @@ const CourseName = ({ getNewCount, title }) => {
                         fontSize: "12px",
                       }}
                     >
-                      {errorsForAdd["Document Requirement"]}
+                      {errorsForAdd["DocumentRequired"]}
                     </span>
                   </div>
                 </div>
@@ -1031,7 +1035,7 @@ const CourseName = ({ getNewCount, title }) => {
                         fontSize: "12px",
                       }}
                     >
-                      {errorsForAdd["System Requirement"]}
+                      {errorsForAdd["SystemRequirement"]}
                     </span>
                   </div>
                 </div>
@@ -1392,8 +1396,8 @@ const CourseName = ({ getNewCount, title }) => {
                       <input
                         type="text"
                         className={`form-control form-control-lg form-control-solid `}
-                        id=" SystemRequirement"
-                        name=" SystemRequirement"
+                        id="SystemRequirement"
+                        name="SystemRequirement"
                         value={inputValue.SystemRequirement}
                         onChange={(e) => {
                           handleOnChnage(e);
@@ -1407,7 +1411,7 @@ const CourseName = ({ getNewCount, title }) => {
                         fontSize: "12px",
                       }}
                     >
-                      {errors[" SystemRequirement"]}
+                      {errors["SystemRequirement"]}
                     </span>
                   </div>
                 </div>
