@@ -10,13 +10,12 @@ export function AsideMenuList({ layoutProps }) {
   let userInfo = getUserInfo();
   const getMenuItemActive = (url, hasSubmenu = false) => {
     return checkIsActive(location, url)
-      ? ` ${!hasSubmenu && "menu-item-active"
-      } menu-item-open menu-item-not-hightlighted`
+      ? ` ${
+          !hasSubmenu && "menu-item-active"
+        } menu-item-open menu-item-not-hightlighted`
       : "";
   };
 
-
-  
   return (
     <>
       {/* begin::Menu Nav */}
@@ -41,7 +40,7 @@ export function AsideMenuList({ layoutProps }) {
               <span className="menu-text">Dashboard</span>
             </NavLink>
           </li>
-         <li
+          <li
             className={`menu-item ${getMenuItemActive("/user", false)}`}
             aria-haspopup="true"
           >
@@ -53,10 +52,7 @@ export function AsideMenuList({ layoutProps }) {
             </NavLink>
           </li>
 
-
-        
-
-        {/* <li
+          {/* <li
             className={`menu-item menu-item-submenu ${getMenuItemActive(
               "/",
               true
@@ -142,7 +138,10 @@ export function AsideMenuList({ layoutProps }) {
             aria-haspopup="true"
             data-menu-toggle="hover"
           >
-            <NavLink className="menu-link menu-toggle" to="/courseselection/vehiclecategory">
+            <NavLink
+              className="menu-link menu-toggle"
+              to="/courseselection/vehiclecategory"
+            >
               <span className="svg-icon menu-icon">
                 <SVG
                   src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
@@ -164,7 +163,10 @@ export function AsideMenuList({ layoutProps }) {
                   aria-haspopup="true"
                   data-menu-toggle="hover"
                 >
-                  <NavLink className="menu-link" to="/courseselection/vehiclecategory">
+                  <NavLink
+                    className="menu-link"
+                    to="/courseselection/vehiclecategory"
+                  >
                     <i className="menu-bullet menu-bullet-dot">
                       <span />
                     </i>
@@ -179,7 +181,10 @@ export function AsideMenuList({ layoutProps }) {
                   aria-haspopup="true"
                   data-menu-toggle="hover"
                 >
-                  <NavLink className="menu-link" to="/courseselection/coursetype">
+                  <NavLink
+                    className="menu-link"
+                    to="/courseselection/coursetype"
+                  >
                     <i className="menu-bullet menu-bullet-dot">
                       <span />
                     </i>
@@ -195,7 +200,10 @@ export function AsideMenuList({ layoutProps }) {
                   aria-haspopup="true"
                   data-menu-toggle="hover"
                 >
-                  <NavLink className="menu-link" to="/courseselection/coursename">
+                  <NavLink
+                    className="menu-link"
+                    to="/courseselection/coursename"
+                  >
                     <i className="menu-bullet menu-bullet-dot">
                       <span />
                     </i>
@@ -206,21 +214,20 @@ export function AsideMenuList({ layoutProps }) {
             </div>
           </li>
 
-
           <li
-          className={`menu-item ${getMenuItemActive("/cms", false)}`}
-          aria-haspopup="true"
-        >
-          <NavLink className="menu-link" to="/cms">
-            <span className="svg-icon menu-icon">
-              <SVG
-                src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
-              />
-            </span>
-            <span className="menu-text">CMS</span>
-          </NavLink>
-        </li>
-{/* 
+            className={`menu-item ${getMenuItemActive("/cms", false)}`}
+            aria-haspopup="true"
+          >
+            <NavLink className="menu-link" to="/cms">
+              <span className="svg-icon menu-icon">
+                <SVG
+                  src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
+                />
+              </span>
+              <span className="menu-text">CMS</span>
+            </NavLink>
+          </li>
+          {/* 
         <li
           className={`menu-item ${getMenuItemActive("/inventory", false)}`}
           aria-haspopup="true"
@@ -235,7 +242,7 @@ export function AsideMenuList({ layoutProps }) {
           </NavLink>
         </li> */}
 
-        {/* <li
+          {/* <li
           className={`menu-item ${getMenuItemActive("/marketPlace", false)}`}
           aria-haspopup="true"
         >
@@ -249,8 +256,7 @@ export function AsideMenuList({ layoutProps }) {
           </NavLink>
         </li> */}
 
-
-        {/* <li
+          {/* <li
           className={`menu-item ${getMenuItemActive("/order", false)}`}
           aria-haspopup="true"
         >
@@ -264,8 +270,7 @@ export function AsideMenuList({ layoutProps }) {
           </NavLink>
         </li> */}
 
-
-        {/* <li
+          {/* <li
           className={`menu-item ${getMenuItemActive("/properties", false)}`}
           aria-haspopup="true"
         >
@@ -278,8 +283,8 @@ export function AsideMenuList({ layoutProps }) {
             <span className="menu-text">Properties</span>
           </NavLink>
         </li> */}
-      </ul>
-      ) }
+        </ul>
+      )}
       {/* end::Menu Nav */}
     </>
   );

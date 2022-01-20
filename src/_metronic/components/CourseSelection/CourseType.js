@@ -69,6 +69,9 @@ const CourseType = ({ getNewCount, title }) => {
     useEffect(() => {
         console.log("inputValue", inputValueForAdd);
     }, [inputValueForAdd]);
+    useEffect(() => {
+        console.log("filteredVehicleCategory", filteredVehicleCategory);
+    }, [filteredVehicleCategory]);
 
     // useEffect(() => {
     //     title === "Dashboard | OUR LEISURE HOME" ? document.title = title : document.title = "FAQs | OUR LEISURE HOME"
@@ -288,6 +291,29 @@ const CourseType = ({ getNewCount, title }) => {
     useEffect(() => {
         console.log("inputValue", inputValue);
     }, [inputValue])
+
+
+    const validateForm = () => {
+        let formIsValid = true;
+        let errors = {};
+        if (inputValue && !inputValue.CourseType) {
+            formIsValid = false;
+            errors["CourseType"] = "*Please Enter CourseType!";
+        }
+
+        if (inputValue && !inputValue.VehicleDescription) {
+            formIsValid = false;
+            errors["VehicleDescription"] = "*Please Enter Vehicle Description!";
+        }
+        
+        // if (inputValue && !inputValue.VehicleCategory) {
+        //     formIsValid = false;
+        //     errors["VehicleCategory"] = "*Please Enter Vehicle Category!";
+        // }
+        
+        setErrors(errors);
+        return formIsValid;
+    };
 
     const handelUpdateCourseTypeDetails = (e) => {
 
@@ -645,7 +671,7 @@ const CourseType = ({ getNewCount, title }) => {
                                                  </option>
                                                 {filteredVehicleCategory?.length>0 && filteredVehicleCategory?.map((item)=>{
                                                     console.log("item",filteredVehicleCategory)
-                                                      return <option key={item._id} value={item.vcid}> {item.vehicleCategory} </option>
+                                                      return <option key={item._id} value={item?._id}> {item.vehicleCategory} </option>
                                                 })}
                                                
                                             </select>
