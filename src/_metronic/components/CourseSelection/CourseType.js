@@ -194,7 +194,7 @@ const CourseType = ({ getNewCount, title }) => {
 
         if (inputValueForAdd && !inputValueForAdd.VehicleDescription) {
             formIsValid = false;
-            errorsForAdd["VehicleDescription"] = "*Please Enter Vehicle Description!";
+            errorsForAdd["VehicleDescription"] = "*Please Enter Description!";
         }
 
 
@@ -246,7 +246,27 @@ const CourseType = ({ getNewCount, title }) => {
         }
     };
 
-   
+    const validateForm = () => {
+        let formIsValid = true;
+        let errors = {};
+        if (inputValue && !inputValue.CourseType) {
+            formIsValid = false;
+            errors["CourseType"] = "*Please Enter CourseType!";
+        }
+
+        if (inputValue && !inputValue.VehicleDescription) {
+            formIsValid = false;
+            errors["VehicleDescription"] = "*Please Enter Description!";
+        }
+        
+        if (inputValue && !inputValue.VehicleCategory) {
+            formIsValid = false;
+            errors["VehicleCategory"] = "*Please Enter Vehicle Category!";
+        }
+        
+        setErrors(errors);
+        return formIsValid;
+    };
 
     const handleDeleteCourseType = () => {
         ApiDelete(`courseType/deleteCourseType/${idForDeleteCourseType}`)
@@ -717,7 +737,7 @@ const CourseType = ({ getNewCount, title }) => {
 
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Enter Vehicle Description
+                                        Enter Description
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
@@ -896,7 +916,7 @@ const CourseType = ({ getNewCount, title }) => {
 
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                    Vehicle Description
+                                    Enter Description
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
