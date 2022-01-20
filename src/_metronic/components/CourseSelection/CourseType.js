@@ -593,7 +593,7 @@ const CourseType = ({ getNewCount, title }) => {
           </Toolbar>
           <List>
             {isAddCourseType === true ? (
-              <div className="form ml-30 ">
+              <div className="form ml-30 "> 
                 {/* Name Amenintie */}
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">

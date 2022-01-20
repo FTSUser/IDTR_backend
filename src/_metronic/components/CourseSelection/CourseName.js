@@ -53,6 +53,7 @@ const CourseName = ({ getNewCount, title }) => {
   const [statusDisplay, setStatusDisplay] = useState(false);
   const [getCourseType, setGetCourseType] = useState([]);
   const [courseTypeArr, setCourseTypeArr] = useState();
+  const [filteredVehicleCategory, setFilteredVehicleCategory] = useState({});
 
   const [dataViewMore, setDataViewMore] = useState({});
   const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
@@ -123,7 +124,7 @@ const CourseName = ({ getNewCount, title }) => {
   const getAllCourseType = async () => {
     setIsLoaderVisible(true);
     if (!search) {
-      await ApiGet(`courseType/getAllCourseType`)
+      await ApiGet(`courseType/getAllCourseType?page=${page}&limit=1000`)
         .then((res) => {
           setIsLoaderVisible(false);
           console.log("artistreport", res);
@@ -148,6 +149,22 @@ const CourseName = ({ getNewCount, title }) => {
     //             console.log(err);
     //         });
     // }
+  };
+
+
+  const getAllVehicleCategory = async () => {
+    setIsLoaderVisible(true);
+    
+      await ApiGet(`vehicleCategory/getAllVehicleCategory?page=${page}&limit=1000`)
+        .then((res) => {
+          setIsLoaderVisible(false);
+          console.log("artistreport", res);
+          setFilteredVehicleCategory(res?.data?.payload?.Question);
+          setCount(res?.data?.payload?.count);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   };
 
   const getAllCourseName = async () => {
@@ -276,6 +293,7 @@ const CourseName = ({ getNewCount, title }) => {
         validity: inputValueForAdd.Validity,
         price: inputValueForAdd.Price,
         ctid: inputValueForAdd.CourseType,
+        vcid: inputValueForAdd.VehicleCategory,
         // ctid :
 
         // answer: inputValueForAdd.answer,
@@ -670,6 +688,7 @@ const CourseName = ({ getNewCount, title }) => {
                 onClick={() => {
                   setIsAddCourseName(true);
                   getAllCourseType();
+                  getAllVehicleCategory();
                 }}
                 className="btn btn-success mr-2"
               >
@@ -774,6 +793,48 @@ const CourseName = ({ getNewCount, title }) => {
             {isAddCourseName === true ? (
               <div className="form ml-30 ">
                 {/* Name Amenintie */}
+
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Select Vehicle Category
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <div>
+                      <select
+                        className={`form-control form-control-lg form-control-solid `}
+                        id="VehicleCategory"
+                        name="VehicleCategory"
+                        value={inputValueForAdd.VehicleCategory}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
+                      >
+                        <option value="" disabled selected hidden>
+                          Select Vehicle Category
+                        </option>
+                        {filteredVehicleCategory?.length > 0 &&
+                          filteredVehicleCategory?.map((item) => {
+                            console.log("item", filteredVehicleCategory);
+                            return (
+                              <option key={item._id} value={item?._id}>
+                                {" "}
+                                {item.vehicleCategory}{" "}
+                              </option>
+                            );
+                          })}
+                      </select>
+                    </div>
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["VehicleCategory"]}
+                    </span>
+                  </div>
+                </div>
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -1149,6 +1210,55 @@ const CourseName = ({ getNewCount, title }) => {
             {isUpdateCourseName === true ? (
               <div className="form ml-30 ">
                 {/* Ameninties Name */}
+
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Select Vehicle Category
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <div>
+                      <select
+                        className={`form-control form-control-lg form-control-solid `}
+                        id="VehicleCategory"
+                        name="VehicleCategory"
+                        // value={inputValue.VehicleCategory}
+                        onChange={(e) => {
+                            handleOnChnage(e);
+                        }}
+                      >
+                        <option value="" disabled selected hidden>
+                          Select Course Type
+                        </option>
+                        {filteredVehicleCategory?.length > 0 &&
+                          filteredVehicleCategory?.map((item) => {
+                            return (
+                              <option
+                                key={item?._id}
+                                value={item?._id}
+                                selected={
+                                  inputValue?.VehicleCategory === item?._id
+                                    ? true
+                                    : false
+                                }
+                              >
+                                {" "}
+                                {item?.vehicleCategory}{" "}
+                              </option>
+                            );
+                          })}
+                      </select>
+                    </div>
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["VehicleCategory"]}
+                    </span>
+                  </div>
+                </div>
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
