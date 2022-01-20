@@ -108,7 +108,7 @@ const CourseType = ({ getNewCount, title }) => {
 
   const getAllCourseType = async () => {
     setIsLoaderVisible(true);
-      await ApiGet(`courseType/getAllCourseType`)
+      await ApiGet(`courseType/getAllCourseType?page=${page}&limit=${countPerPage}`)
         .then((res) => {
           setIsLoaderVisible(false);
           console.log("artistreport", res);
