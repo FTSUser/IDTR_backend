@@ -109,7 +109,7 @@ const Cms = ({ getNewCount, title }) => {
   const getAllAboutUs = async () => {
     setIsLoaderVisible(true);
     if (!search) {
-      await ApiGet(`cms/getAllCMS`)
+      await ApiGet(`cms/getAllCMS?page=${page}&limit=${countPerPage}`)
         .then((res) => {
           setIsLoaderVisible(false);
           console.log("artistreport", res);
@@ -119,7 +119,18 @@ const Cms = ({ getNewCount, title }) => {
         .catch((err) => {
           console.log(err);
         });
-    } 
+    } else {
+      await ApiGet(`cms/getAllCMS?search=${search}&page=${page}&limit=${countPerPage}`)
+        .then((res) => {
+          setIsLoaderVisible(false);
+          console.log("artistreport", res);
+          setFilteredAboutUs(res?.data?.payload?.Question);
+          setCount(res?.data?.payload?.count);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const validateFormForAddAdmin = () => {
@@ -347,7 +358,7 @@ const Cms = ({ getNewCount, title }) => {
           <>
             <div className="p-3">
               <img
-                className="max-w-50px zoom"
+                className="max-w-350px zoom"
                 alt="img"
                 src={row?.image != null ? row.image[0] : ""}
               />

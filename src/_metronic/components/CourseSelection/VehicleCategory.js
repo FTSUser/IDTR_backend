@@ -104,7 +104,7 @@ const VehicleCategory = ({ getNewCount, title }) => {
     const getAllVehicleCategory = async () => {
         setIsLoaderVisible(true);
         if (!search) {
-            await ApiGet(`vehicleCategory/getAllVehicleCategory`)
+            await ApiGet(`vehicleCategory/getAllVehicleCategory?page=${page}&limit=${countPerPage}`)
                 .then((res) => {
                     setIsLoaderVisible(false);
                     console.log("artistreport", res);
