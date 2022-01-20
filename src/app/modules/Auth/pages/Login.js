@@ -26,10 +26,10 @@ export default function Login() {
       .max(10 ,"Maximum 10 symbols")
       .matches(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/ , "Please enter valid number" )
       .required("Phone is Required"),
-    // password: Yup.string()
-    //   .min(3, "Minimum 3 symbols")
-    //   .max(50, "Maximum 50 symbols")
-    //   .required("Password is Required"),
+    password: Yup.string()
+      .min(3, "Minimum 3 symbols")
+      .max(50, "Maximum 50 symbols")
+      .required("Password is Required"),
   });
 
   const getInputClasses = (fieldname) => {
@@ -51,12 +51,13 @@ export default function Login() {
       setLoading(true);
       const data = {
         phone: values.phone,
-        // password: values.password,
+        password: values.password,
         // role:'61aa037f803e260c3821ad0f'
       };
       console.log("DATA", data);
-      await ApiPostNoAuth("admin/verify-phone", data)
+      await ApiPostNoAuth("admin/login", data)
         .then((res) => {
+          console.log("resres",res);
           if (res.data.result === -1) {
             toast.error(res.data.message);
           } else {
@@ -66,13 +67,15 @@ export default function Login() {
             userUtil.setUserInfo(res.data.payload);
             console.log("datafunctions", res.data.payload.token);
 
-            // window.location.reload();
-            // setLoading(true);
-            // setSubmitting(false);
-            history.push({
-                pathname:"/OTP-verification",
-                state:{phone:data?.phone}
-            })
+            window.location.reload();
+            setLoading(true);
+            setSubmitting(false);
+            
+            // history.push({
+            //     pathname:"/dashboard",
+            //     state:{phone:data?.phone},
+            //     state:{password:data?.password}
+            // })
 
           }
         })
@@ -93,7 +96,7 @@ export default function Login() {
           Login Account
         </h3>
         <p className="text-muted font-weight-bold">
-          Enter your username 
+          Enter your sername and Password
 
         </p>
       </div>
@@ -138,7 +141,7 @@ export default function Login() {
             </div>
           ) : null}
         </div>
-        {/* <div className="form-group fv-plugins-icon-container">
+        <div className="form-group fv-plugins-icon-container">
           <input
             placeholder="Password"
             type="password"
@@ -153,15 +156,15 @@ export default function Login() {
               <div className="fv-help-block">{formik.errors.password}</div>
             </div>
           ) : null}
-        </div> */}
+        </div>
         <div className="form-group d-flex flex-wrap justify-content-end align-items-center">
-          {/* <Link
+          <Link
             to="/auth/forgot-password"
             className="text-dark-50 text-hover-primary my-3 mr-2"
             id="kt_login_forgot"
           >
             forgot password?
-          </Link> */}
+          </Link>
           <button
             id="kt_login_signin_submit"
             type="submit"

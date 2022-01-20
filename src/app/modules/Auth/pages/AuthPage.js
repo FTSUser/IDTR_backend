@@ -7,7 +7,8 @@ import Login from "./Login";
 import ForgotPassword from "./ForgotPassword";
 import "../../../../_metronic/_assets/sass/pages/login/classic/login-1.scss";
 import Changepassword from "../pages/changepassowrd"
-import OTPVerification from "../../../../_metronic/components/OTP-Verification/OTP-Verification";
+import { Dashboard } from "../../../../_metronic/_partials";
+
 
 export function AuthPage() {
   const today = new Date().getFullYear();
@@ -108,9 +109,13 @@ export function AuthPage() {
                   path="/changepassword"
                   component={Changepassword}
                 />
-              <ContentRoute 
-               path="/OTP-verification" 
-               component={OTPVerification} />
+
+                <ContentRoute
+                  path="/dashboard"
+                  component={Dashboard}
+                />
+             
+              
 
                 <Redirect from="/auth" exact={true} to="/auth/login" />
                 <Redirect to="/auth/login" />

@@ -13,13 +13,13 @@ export default function BasePage() {
 
   return (
     <>
-      {userInfo?.user?.role?.roleName === "superadmin" ? (
+      {userInfo?.admin?.role?.roleName === "superadmin" ? (
         <Suspense fallback={<LayoutSplashScreen />}>
           <Switch>
             <Redirect exact from="/" to="/dashboard" />
             {/* <Redirect exact from="/auth/login" to="/dashboard" /> */}
 
-            <Redirect exact from="/OTP-verification" to="/dashboard" />
+            {/* <Redirect exact from="/login" to="/dashboard" /> */}
 
             <ContentRoute exact path="/dashboard" component={DashboardPage} />
             <ContentRoute exact path="/cms" component={Cms} />

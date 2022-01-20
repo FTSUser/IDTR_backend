@@ -20,7 +20,7 @@ export function AsideMenuList({ layoutProps }) {
   return (
     <>
       {/* begin::Menu Nav */}
-      {userInfo?.user?.role?.roleName === "superadmin" && (
+      {userInfo?.admin?.role?.roleName === "superadmin" && (
 
         <ul className={`menu-nav ${layoutProps.ulClasses}`}>
           {/*begin::1 Dashboard*/}
