@@ -21,44 +21,42 @@ export function AsideMenuList({ layoutProps }) {
     <>
       {/* begin::Menu Nav */}
       {userInfo?.user?.role?.roleName === "superadmin" && (
-        <ul className={`menu-nav ${layoutProps.ulClasses}`}>
-        {/*begin::1 Dashboard*/}
-        <li
-          className={`menu-item menu-item-submenu ${getMenuItemActive(
-            "/dashboard",
-            true
-          )}`}
-          aria-haspopup="true"
-          data-menu-toggle="hover"
-        >
-          <NavLink className="menu-link" to="/dashboard">
-            <span className="svg-icon menu-icon">
-              <SVG
-                src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
-              />
-            </span>
-            <span className="menu-text">Dashboard</span>
-          </NavLink>
-        </li>
 
-        <li
-          className={`menu-item ${getMenuItemActive("/user", false)}`}
-          aria-haspopup="true"
-        >
-          <NavLink className="menu-link" to="/user">
-            <span className="svg-icon menu-icon">
-              <SVG
-                src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
-              />
-            </span>
-            <span className="menu-text">User</span>
-          </NavLink>
-        </li>
+        <ul className={`menu-nav ${layoutProps.ulClasses}`}>
+          {/*begin::1 Dashboard*/}
+          <li
+            className={`menu-item menu-item-submenu ${getMenuItemActive(
+              "/dashboard",
+              true
+            )}`}
+            aria-haspopup="true"
+            data-menu-toggle="hover"
+          >
+            <NavLink className="menu-link" to="/dashboard">
+              <span className="svg-icon menu-icon">
+                <SVG
+                  src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
+                />
+              </span>
+              <span className="menu-text">Dashboard</span>
+            </NavLink>
+          </li>
+         <li
+            className={`menu-item ${getMenuItemActive("/user", false)}`}
+            aria-haspopup="true"
+          >
+            <NavLink className="menu-link" to="/user">
+              <span className="svg-icon menu-icon">
+                <SVG src={toAbsoluteUrl("/media/svg/icons/Home/Library.svg")} />
+              </span>
+              <span className="menu-text">User</span>
+            </NavLink>
+          </li>
 
 
         
 
-        <li
+        {/* <li
             className={`menu-item menu-item-submenu ${getMenuItemActive(
               "/",
               true
@@ -78,8 +76,6 @@ export function AsideMenuList({ layoutProps }) {
             <div className="menu-submenu ">
               <i className="menu-arrow" />
               <ul className="menu-subnav">
-                {/* Inputs */}
-                {/*begin::2 Level*/}
                 <li
                   className={`menu-item menu-item-submenu  ${getMenuItemActive(
                     "/courseselection/vehiclecategory",
@@ -127,6 +123,79 @@ export function AsideMenuList({ layoutProps }) {
                     className="menu-link"
                     to="/courseselection/coursename"
                   >
+                    <i className="menu-bullet menu-bullet-dot">
+                      <span />
+                    </i>
+                    <span className="menu-text">Course Name</span>
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
+          </li> */}
+
+          {/*end::1 Engage*/}
+          <li
+            className={`menu-item menu-item-submenu ${getMenuItemActive(
+              "/courseselection",
+              true
+            )}`}
+            aria-haspopup="true"
+            data-menu-toggle="hover"
+          >
+            <NavLink className="menu-link menu-toggle" to="/courseselection/vehiclecategory">
+              <span className="svg-icon menu-icon">
+                <SVG
+                  src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
+                />
+              </span>
+              <span className="menu-text">Course Selection</span>
+              <i className="menu-arrow" />
+            </NavLink>
+            <div className="menu-submenu ">
+              <i className="menu-arrow" />
+              <ul className="menu-subnav">
+                {/* Inputs */}
+                {/*begin::2 Level*/}
+                <li
+                  className={`menu-item menu-item-submenu  ${getMenuItemActive(
+                    "/vehiclecategory",
+                    false
+                  )}`}
+                  aria-haspopup="true"
+                  data-menu-toggle="hover"
+                >
+                  <NavLink className="menu-link" to="/courseselection/vehiclecategory">
+                    <i className="menu-bullet menu-bullet-dot">
+                      <span />
+                    </i>
+                    <span className="menu-text">Vehicle Category</span>
+                  </NavLink>
+                </li>
+                <li
+                  className={`menu-item menu-item-submenu ${getMenuItemActive(
+                    "/coursetype",
+                    false
+                  )}`}
+                  aria-haspopup="true"
+                  data-menu-toggle="hover"
+                >
+                  <NavLink className="menu-link" to="/courseselection/coursetype">
+                    <i className="menu-bullet menu-bullet-dot">
+                      <span />
+                    </i>
+                    <span className="menu-text">Course Type</span>
+                  </NavLink>
+                </li>
+
+                <li
+                  className={`menu-item menu-item-submenu ${getMenuItemActive(
+                    "/coursename",
+                    false
+                  )}`}
+                  aria-haspopup="true"
+                  data-menu-toggle="hover"
+                >
+                  <NavLink className="menu-link" to="/courseselection/coursename">
                     <i className="menu-bullet menu-bullet-dot">
                       <span />
                     </i>
