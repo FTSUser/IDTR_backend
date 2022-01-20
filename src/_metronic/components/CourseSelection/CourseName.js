@@ -201,10 +201,52 @@ const CourseName = ({ getNewCount, title }) => {
             formIsValid = false;
             errorsForAdd["Vehicle"] = "*Please Enter Description!";
         }
-        // if (inputValueForAdd && !inputValueForAdd.answer) {
-        //     formIsValid = false;
-        //     errorsForAdd["answer"] = "*Please Enter Answer!";
-        // }
+        
+
+        if (inputValueForAdd && !inputValueForAdd.CourseType) {
+            formIsValid = false;
+            errorsForAdd["CourseType"] = "*Please Enter CourseType!";
+        }
+
+        if (inputValueForAdd && !inputValueForAdd.Duration) {
+            formIsValid = false;
+            errorsForAdd["Duration"] = "*Please Enter Duration!";
+        }
+
+        if (inputValueForAdd && !inputValueForAdd.Timing) {
+            formIsValid = false;
+            errorsForAdd["Timing"] = "*Please Enter Timing!";
+        }
+
+        if (inputValueForAdd && !inputValueForAdd.Mode) {
+            formIsValid = false;
+            errorsForAdd["Mode"] = "*Please Enter Mode!";
+        }
+
+        if (inputValueForAdd && !inputValueForAdd.DocumentRequired) {
+            formIsValid = false;
+            errorsForAdd["DocumentRequired"] = "*Please Enter Document Required!";
+        }
+
+        if (inputValueForAdd && !inputValueForAdd.Validity) {
+            formIsValid = false;
+            errorsForAdd["Validity"] = "*Please Enter Validity!";
+        }
+
+        if (inputValueForAdd && !inputValueForAdd.SystemRequirement) {
+            formIsValid = false;
+            errorsForAdd["SystemRequirement"] = "*Please Enter System Requirement!";
+        }
+
+        if (inputValueForAdd && !inputValueForAdd.Certificate) {
+            formIsValid = false;
+            errorsForAdd["Certificate"] = "*Please Enter Certificate!";
+        }
+
+        if (inputValueForAdd && !inputValueForAdd.Price) {
+            formIsValid = false;
+            errorsForAdd["Price"] = "*Please Enter Price!";
+        }
 
         setErrorsForAdd(errorsForAdd);
         return formIsValid;
@@ -212,6 +254,8 @@ const CourseName = ({ getNewCount, title }) => {
 
     const handelAddCourseNameDetails = (e) => {
         e.preventDefault();
+        if (validateFormForAddAdmin()) {
+
             let Data = {
                 courseName: inputValueForAdd.CourseName,
                 description: inputValueForAdd.Description,
@@ -247,7 +291,7 @@ const CourseName = ({ getNewCount, title }) => {
                 .catch((err) => {
                     toast.error(err.message);
                 });
-        
+            }
     };
 
     const validateForm = () => {
@@ -262,10 +306,52 @@ const CourseName = ({ getNewCount, title }) => {
             formIsValid = false;
             errors["Description"] = "*Please Enter Description!";
         }
-        // if (inputValue && !inputValue.answer) {
-        //     formIsValid = false;
-        //     errors["answer"] = "*Please Enter Answer!";
-        // }
+
+        if (inputValue && !inputValue.CourseType) {
+            formIsValid = false;
+            errorsForAdd["CourseType"] = "*Please Enter CourseType!";
+        }
+
+        if (inputValue && !inputValue.Duration) {
+            formIsValid = false;
+            errorsForAdd["Duration"] = "*Please Enter Duration!";
+        }
+
+        if (inputValue && !inputValue.Timing) {
+            formIsValid = false;
+            errorsForAdd["Timing"] = "*Please Enter Timing!";
+        }
+
+        if (inputValue && !inputValue.Mode) {
+            formIsValid = false;
+            errorsForAdd["Mode"] = "*Please Enter Mode!";
+        }
+
+        if (inputValue && !inputValue.DocumentRequired) {
+            formIsValid = false;
+            errorsForAdd["DocumentRequired"] = "*Please Enter Document Required!";
+        }
+
+        if (inputValue && !inputValue.Validity) {
+            formIsValid = false;
+            errorsForAdd["Validity"] = "*Please Enter Validity!";
+        }
+
+        if (inputValue && !inputValue.SystemRequirement) {
+            formIsValid = false;
+            errorsForAdd["SystemRequirement"] = "*Please Enter System Requirement!";
+        }
+
+        if (inputValue && !inputValue.Certificate) {
+            formIsValid = false;
+            errorsForAdd["Certificate"] = "*Please Enter Certificate!";
+        }
+
+        if (inputValue && !inputValue.Price) {
+            formIsValid = false;
+            errorsForAdd["Price"] = "*Please Enter Price!";
+        }
+        
         setErrors(errors);
         return formIsValid;
     };
@@ -308,7 +394,7 @@ const CourseName = ({ getNewCount, title }) => {
             timing: inputValue.Timing,
             duration: inputValue.Duration,
             validity: inputValue.Validity,
-            price: inputValue.price,
+            price: inputValue.Price,
             _id: inputValue.CourseType,
            
               // answer: inputValueForAdd.answer,
@@ -445,6 +531,7 @@ const CourseName = ({ getNewCount, title }) => {
                                 onClick={() => {
                                     setIsUpdateCourseName(true);
                                     setIdForUpdateCourseNameData(row._id);
+                                    getAllCourseType();
                                     setInputValue({
                                       CourseName: row?.courseName,
                                       Description: row?.description,
@@ -456,7 +543,7 @@ const CourseName = ({ getNewCount, title }) => {
                                       Duration: row?.duration,
                                       Validity: row?.validity,
                                       Price: row?.price,
-                                      _id: row?.CourseType,
+                                      CourseType: row?._id,
                                     
                                      
                                         // answer: row?.answer,
@@ -1032,7 +1119,7 @@ const CourseName = ({ getNewCount, title }) => {
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
                                             <input
-                                                type="text"
+                                                type="number"
                                                 className={`form-control form-control-lg form-control-solid `}
                                                 id="Price"
                                                 name="Price"
@@ -1446,7 +1533,7 @@ const CourseName = ({ getNewCount, title }) => {
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
                                             <input
-                                                type="text"
+                                                type="number"
                                                 className={`form-control form-control-lg form-control-solid `}
                                                 id="Price"
                                                 name="Price"

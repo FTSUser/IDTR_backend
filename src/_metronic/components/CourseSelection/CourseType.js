@@ -193,6 +193,16 @@ const CourseType = ({ getNewCount, title }) => {
             formIsValid = false;
             errorsForAdd["VehicleDescription"] = "*Please Enter Vehicle Description!";
         }
+
+
+        if (inputValueForAdd && !inputValueForAdd.VehicleCategory) {
+            formIsValid = false;
+            errorsForAdd["VehicleCategory"] = "*Please Enter Vehicle Category!";
+        }
+        
+
+
+
         // if (inputValueForAdd && !inputValueForAdd.answer) {
         //     formIsValid = false;
         //     errorsForAdd["answer"] = "*Please Enter Answer!";
@@ -245,10 +255,12 @@ const CourseType = ({ getNewCount, title }) => {
             formIsValid = false;
             errors["VehicleDescription"] = "*Please Enter Vehicle Description!";
         }
-        // if (inputValue && !inputValue.answer) {
-        //     formIsValid = false;
-        //     errors["answer"] = "*Please Enter Answer!";
-        // }
+        
+        if (inputValue && !inputValue.VehicleCategory) {
+            formIsValid = false;
+            errors["VehicleCategory"] = "*Please Enter Vehicle Category!";
+        }
+        
         setErrors(errors);
         return formIsValid;
     };

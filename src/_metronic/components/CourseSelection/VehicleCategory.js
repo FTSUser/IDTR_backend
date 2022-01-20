@@ -162,6 +162,8 @@ const VehicleCategory = ({ getNewCount, title }) => {
             formIsValid = false;
             errorsForAdd["VehicleDescription"] = "*Please Enter Vehicle Description!";
         }
+
+        
         // if (inputValueForAdd && !inputValueForAdd.answer) {
         //     formIsValid = false;
         //     errorsForAdd["answer"] = "*Please Enter Answer!";
