@@ -299,6 +299,10 @@ const CourseType = ({ getNewCount, title }) => {
           let Data = {
             courseType: inputValue.CourseType,
             description: inputValue.VehicleDescription,
+            vcid: inputValue.VehicleCategory,
+
+              // answer: inputValueForAdd.answer,
+              // ctid : "61dfc5645e9d45193cb1a0b6"
           }
             ApiPut(`courseType/updateCourseType/${idForUpdateCourseTypeData}`, Data)
                 .then((res) => {
@@ -381,8 +385,9 @@ const CourseType = ({ getNewCount, title }) => {
                                     setIsUpdateCourseType(true);
                                     setIdForUpdateCourseTypeData(row._id);
                                     getAllVehicleCategory();
+                                    
                                     setInputValue({
-                                        VehicleCategory:row?.vehicleCategory,
+                                        VehicleCategory:row?._id,
                                         CourseType: row?.courseType,
                                       VehicleDescription: row?.description,
                                         // answer: row?.answer,
@@ -642,8 +647,8 @@ const CourseType = ({ getNewCount, title }) => {
                                                     Select Course Type
                                                  </option>
                                                 {filteredVehicleCategory?.length>0 && filteredVehicleCategory?.map((item)=>{
-                                                    console.log("item",item._id)
-                                                      return <option key={item._id} value={item._id}> {item.vehicleCategory} </option>
+                                                    console.log("item",filteredVehicleCategory)
+                                                      return <option key={item._id} value={item.vcid}> {item.vehicleCategory} </option>
                                                 })}
                                                
                                             </select>
