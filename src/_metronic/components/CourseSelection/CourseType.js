@@ -87,7 +87,7 @@ const CourseType = ({ getNewCount, title }) => {
     };
 
     const handleAddAdminClose = () => {
-        setInputValue({});
+        setInputValueForAdd({});
         setIsAddCourseType(false);
     };
 
@@ -388,9 +388,10 @@ const CourseType = ({ getNewCount, title }) => {
                                     setIsUpdateCourseType(true);
                                     setIdForUpdateCourseTypeData(row._id);
                                     getAllVehicleCategory();
+                                    console.log("rowcheck",row);
                                     
                                     setInputValue({
-                                        VehicleCategory:row?._id,
+                                        VehicleCategory:row?.vcid,
                                         CourseType: row?.courseType,
                                       VehicleDescription: row?.description,
                                         // answer: row?.answer,
@@ -826,7 +827,7 @@ const CourseType = ({ getNewCount, title }) => {
                                                 className={`form-control form-control-lg form-control-solid `}
                                                 id="VehicleCategory"
                                                 name="VehicleCategory"
-                                                value={inputValue.VehicleCategory}
+                                                // value={inputValue.VehicleCategory}
                                                 onChange={(e) => {
                                                     handleOnChnageAdd(e);
                                                 }}
@@ -836,7 +837,11 @@ const CourseType = ({ getNewCount, title }) => {
                                                  </option>
                                                 {filteredVehicleCategory?.length>0 && filteredVehicleCategory?.map((item)=>{
                                                     console.log("item",item._id)
-                                                      return <option key={item._id} value={item._id}> {item.vehicleCategory} </option>
+                                                      return <option key={item._id} value={item._id} selected={
+                                                        inputValue?.VehicleCategory === item._id
+                                                          ? true
+                                                          : false
+                                                      }> {item.vehicleCategory} </option>
                                                 })}
                                                
                                             </select>
