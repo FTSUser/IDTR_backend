@@ -227,6 +227,33 @@ export function AsideMenuList({ layoutProps }) {
               <span className="menu-text">CMS</span>
             </NavLink>
           </li>
+
+
+
+          <li
+            className={`menu-item ${getMenuItemActive("/feedback", false)}`}
+            aria-haspopup="true"
+          >
+            <NavLink className="menu-link" to="/feedback">
+              <span className="svg-icon menu-icon">
+                <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")} />
+              </span>
+              <span className="menu-text">FeedBack</span>
+            </NavLink>
+          </li>
+
+
+          <li
+            className={`menu-item ${getMenuItemActive("/contactus", false)}`}
+            aria-haspopup="true"
+          >
+            <NavLink className="menu-link" to="/contactus">
+              <span className="svg-icon menu-icon">
+                <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")} />
+              </span>
+              <span className="menu-text">Contact-Us</span>
+            </NavLink>
+          </li>
           {/* 
         <li
           className={`menu-item ${getMenuItemActive("/inventory", false)}`}

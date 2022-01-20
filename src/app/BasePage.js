@@ -7,9 +7,11 @@ import CourseName from '../_metronic/components/CourseSelection/CourseName'
 import CourseType from '../_metronic/components/CourseSelection/CourseType'
 import VehicleCategory from '../_metronic/components/CourseSelection/VehicleCategory'
 import Cms from '../_metronic/components/Cms/Cms'
+import ContactUs from "../_metronic/components/ContactUs/ContactUs";
+import Feedback from "../_metronic/components/Feedback/Feedback";
 import { getUserInfo } from "../../src/utils/user.util";
 export default function BasePage() {
-  let userInfo = getUserInfo();
+  let userInfo = getUserInfo()
 
   return (
     <>
@@ -29,6 +31,10 @@ export default function BasePage() {
             <ContentRoute exact path="/courseselection/vehiclecategory" component={VehicleCategory} />
 
             <ContentRoute exact path="/user" component={User} />
+            <ContentRoute exact path="/feedback" component={Feedback} />
+
+            <ContentRoute exact path="/contactus" component={ContactUs} />
+
           
             <Redirect to="error/error-v6" />
           </Switch>
