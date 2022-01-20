@@ -223,6 +223,7 @@ const CourseName = ({ getNewCount, title }) => {
                 timing: inputValueForAdd.Timing,
                 duration: inputValueForAdd.Duration,
                 validity: inputValueForAdd.Validity,
+                price: inputValueForAdd.Price,
                 _id: inputValueForAdd.CourseType,
 
             
@@ -307,6 +308,8 @@ const CourseName = ({ getNewCount, title }) => {
             timing: inputValue.Timing,
             duration: inputValue.Duration,
             validity: inputValue.Validity,
+            price: inputValue.price,
+            _id: inputValue.CourseType,
            
               // answer: inputValueForAdd.answer,
               // ctid : "61dfc5645e9d45193cb1a0b6"
@@ -395,6 +398,12 @@ const CourseName = ({ getNewCount, title }) => {
         },
 
         {
+            name: "Price",
+            selector: "price",
+            sortable: true,
+        },
+
+        {
             name: "Display?",
             cell: (row) => {
               return (
@@ -446,6 +455,8 @@ const CourseName = ({ getNewCount, title }) => {
                                       Timing: row?.timing,
                                       Duration: row?.duration,
                                       Validity: row?.validity,
+                                      Price: row?.price,
+                                      _id: row?.CourseType,
                                     
                                      
                                         // answer: row?.answer,
@@ -1012,6 +1023,37 @@ const CourseName = ({ getNewCount, title }) => {
                                     </div>
                                     
                                 </div>
+
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Enter Price
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="Price"
+                                                name="Price"
+                                                value={inputValueForAdd.Price}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["Price"]}
+                                        </span>
+                                    </div>
+                                    
+                                </div>
                                     
                                
                                 {/* <div className="form-group row">
@@ -1084,6 +1126,52 @@ const CourseName = ({ getNewCount, title }) => {
                         {isUpdateCourseName === true ? (
                             <div className="form ml-30 ">
                                 {/* Ameninties Name */}
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Select Course Type
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <select
+                                            
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="CourseType"
+                                                name="CourseType"
+                                                value={inputValue.CourseType}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            >
+                                                 <option value="" disabled selected hidden>
+                                                    Select Course Type
+                                                 </option>
+                                                {getCourseType?.length>0 && getCourseType?.map((item)=>{
+                                                    console.log("item",item._id)
+                                                      return <option key={item._id} value={item._id}> {item.courseType} </option>
+                                                })}
+                                               
+                                            </select>
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["CourseType"]}
+                                        </span>
+                                    </div>
+                                    
+                                </div>
+
+
+
+
+
+
+
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
                                     Enter Course Name
@@ -1347,6 +1435,35 @@ const CourseName = ({ getNewCount, title }) => {
                                             }}
                                         >
                                             {errors["Certificate"]}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                    Price
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="Price"
+                                                name="Price"
+                                                value={inputValue.Price}
+                                                onChange={(e) => {
+                                                    handleOnChnage(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errors["Price"]}
                                         </span>
                                     </div>
                                 </div>

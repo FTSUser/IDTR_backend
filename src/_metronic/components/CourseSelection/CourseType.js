@@ -49,6 +49,10 @@ const CourseType = ({ getNewCount, title }) => {
     const [showStatus, setShowStatus] = useState(false);
     const [idForUpdateCourseStatus, setIdForUpdateCourseStatus] =useState("");
     const [statusDisplay, setStatusDisplay] = useState(false);
+    // const [getVehicleCategory, setGetVehicleCategory] = useState([]);
+    const [filteredVehicleCategory, setFilteredVehicleCategory] = useState({});
+
+
 
     const handleOnChnage = (e) => {
         const { name, value } = e.target;
@@ -124,6 +128,37 @@ const CourseType = ({ getNewCount, title }) => {
 
     };
 
+
+    
+    const getAllVehicleCategory = async () => {
+        setIsLoaderVisible(true);
+        if (!search) {
+            await ApiGet(`vehicleCategory/getAllVehicleCategory`)
+                .then((res) => {
+                    setIsLoaderVisible(false);
+                    console.log("artistreport", res);
+                    setFilteredVehicleCategory(res?.data?.payload?.Question);
+                    setCount(res?.data?.payload?.count);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        } 
+        // else {
+        //     await ApiGet(`vehicleCategory/getAllVehicleCategory?search=${search}&page=${page}&limit=${countPerPage}`)
+        //         .then((res) => {
+        //             setIsLoaderVisible(false);
+        //             console.log("artistreport", res);
+        //             setFilteredVehicleCategory(res?.data?.payload?.Question);
+        //             setCount(res?.data?.payload?.count);
+        //         })
+        //         .catch((err) => {
+        //             console.log(err);
+        //         });
+        // }
+
+    };
+
     const handleUpdateStatusProperty = (status) => {
         ApiPut(`courseType/updateStatus/${idForUpdateCourseStatus}`, {
 
@@ -174,6 +209,7 @@ const CourseType = ({ getNewCount, title }) => {
               courseType: inputValueForAdd.CourseType,
               description: inputValueForAdd.VehicleDescription,
                 isActive: true,
+                _id: inputValueForAdd.VehicleCategory,
                 // answer: inputValueForAdd.answer,
                 // ctid : "61dfc5645e9d45193cb1a0b6"
             }
@@ -332,8 +368,10 @@ const CourseType = ({ getNewCount, title }) => {
                                 onClick={() => {
                                     setIsUpdateCourseType(true);
                                     setIdForUpdateCourseTypeData(row._id);
+                                    getAllVehicleCategory();
                                     setInputValue({
-                                      CourseType: row?.courseType,
+                                        VehicleCategory:row?.vehicleCategory,
+                                        CourseType: row?.courseType,
                                       VehicleDescription: row?.description,
                                         // answer: row?.answer,
                                     });
@@ -466,6 +504,7 @@ const CourseType = ({ getNewCount, title }) => {
                         <button
                             onClick={() => {
                                 setIsAddCourseType(true);
+                                getAllVehicleCategory();
                             }}
                             className="btn btn-success mr-2"
 
@@ -573,6 +612,56 @@ const CourseType = ({ getNewCount, title }) => {
                                 {/* Name Amenintie */}
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Select Vehicle Category
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <select
+                                            
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="VehicleCategory"
+                                                name="VehicleCategory"
+                                                value={inputValueForAdd.VehicleCategory}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            >
+                                                 <option value="" disabled selected hidden>
+                                                    Select Course Type
+                                                 </option>
+                                                {filteredVehicleCategory?.length>0 && filteredVehicleCategory?.map((item)=>{
+                                                    console.log("item",item._id)
+                                                      return <option key={item._id} value={item._id}> {item.vehicleCategory} </option>
+                                                })}
+                                               
+                                            </select>
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["VehicleCategory"]}
+                                        </span>
+                                    </div>
+                                    
+                                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
                                         Enter Course Type
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
@@ -600,6 +689,9 @@ const CourseType = ({ getNewCount, title }) => {
                                     </div>
                                     
                                 </div>
+
+
+
 
 
                                 <div className="form-group row">
@@ -701,6 +793,53 @@ const CourseType = ({ getNewCount, title }) => {
                         {isUpdateCourseType === true ? (
                             <div className="form ml-30 ">
                                 {/* Ameninties Name */}
+
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Select Vehicle Category
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <select
+                                            
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="VehicleCategory"
+                                                name="VehicleCategory"
+                                                value={inputValue.VehicleCategory}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            >
+                                                 <option value="" disabled selected hidden>
+                                                    Select Course Type
+                                                 </option>
+                                                {filteredVehicleCategory?.length>0 && filteredVehicleCategory?.map((item)=>{
+                                                    console.log("item",item._id)
+                                                      return <option key={item._id} value={item._id}> {item.vehicleCategory} </option>
+                                                })}
+                                               
+                                            </select>
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["VehicleCategory"]}
+                                        </span>
+                                    </div>
+                                    
+                                </div>
+
+
+
+
+
+
+
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
                                     Enter Course Type

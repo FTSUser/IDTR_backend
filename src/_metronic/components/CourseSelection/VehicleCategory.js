@@ -49,6 +49,7 @@ const VehicleCategory = ({ getNewCount, title }) => {
     const [showStatus, setShowStatus] = useState(false);
     const [idForUpdateVehicleStatus, setIdForUpdateVehicleStatus] =useState("");
     const [statusDisplay, setStatusDisplay] = useState(false);
+
     // const [isActive , setIsActive] = useState(true);
 
 
