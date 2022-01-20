@@ -347,7 +347,7 @@ const Cms = ({ getNewCount, title }) => {
           <>
             <div className="p-3">
               <img
-                className="max-w-50px zoom"
+                className="max-w-350px zoom"
                 alt="img"
                 src={row?.image != null ? row.image[0] : ""}
               />
