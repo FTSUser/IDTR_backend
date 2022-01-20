@@ -55,7 +55,6 @@ const User = ({ getNewCount, title }) => {
   const [countPerPage, setCountPerPage] = useState(10);
   const [search, setSearch] = useState("");
 
- 
   const handleViewMoreClose = () => {
     setIsViewMoreAboutus(false);
     setDataViewMore({});
@@ -65,12 +64,9 @@ const User = ({ getNewCount, title }) => {
     console.log("inputValue", inputValueForAdd);
   }, [inputValueForAdd]);
 
-
   useEffect(() => {
     console.log("idForEditStatus", idForEditStatus);
   }, [idForEditStatus]);
-
-  
 
   useEffect(() => {
     getAllAboutUs();
@@ -79,17 +75,17 @@ const User = ({ getNewCount, title }) => {
   const getAllAboutUs = async () => {
     setIsLoaderVisible(true);
     // if (!search) {
-      await ApiGet(`register/getAllRegister?page=${page}&limit=${countPerPage}`)
-        .then((res) => {
-          setIsLoaderVisible(false);
-          console.log("artistreport", res);
-          setFilteredAboutUs(res?.data?.payload?.Question);
-          setCount(res?.data?.payload?.count);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    // } 
+    await ApiGet(`register/getAllRegister?page=${page}&limit=${countPerPage}`)
+      .then((res) => {
+        setIsLoaderVisible(false);
+        console.log("artistreport", res);
+        setFilteredAboutUs(res?.data?.payload?.Question);
+        setCount(res?.data?.payload?.count);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // }
   };
 
   useEffect(() => {
@@ -104,29 +100,32 @@ const User = ({ getNewCount, title }) => {
       width: "65px",
     },
     {
+      name: "Email",
+      selector: "email",
+      sortable: true,
+    },
+    {
       name: "First Name",
       selector: "fname",
       sortable: true,
     },
 
-
     {
-        name: "Last Name",
-        selector: "lname",
-        sortable: true,
-      },
-
-
-
-    
-
+      name: "Last Name",
+      selector: "lname",
+      sortable: true,
+    },
+    {
+      name: "Gender",
+      selector: "gender",
+      sortable: true,
+    },
 
     {
       name: "Actions",
       cell: (row) => {
         return (
           <>
-           
             <div
               className="cursor-pointer pl-2"
               onClick={() => {
@@ -178,14 +177,11 @@ const User = ({ getNewCount, title }) => {
     },
   };
 
-  
-
   return (
     <>
       <div className="card p-1">
         <ToastContainer />
         <div className="p-2 mb-2">
-         
           <DataTable
             columns={columns}
             data={filteredAboutUs}
@@ -257,7 +253,7 @@ const User = ({ getNewCount, title }) => {
                     className=""
                   />
                 </div>
-                <div className="form-group row mb-0">
+                {/* <div className="form-group row mb-0">
                   <p>Image:</p>
                 </div>
                 <div className="form-group row mr-20">
@@ -267,7 +263,7 @@ const User = ({ getNewCount, title }) => {
                     height="256px"
                     width="256px"
                   />
-                </div>
+                </div> */}
               </div>
             ) : null}
           </List>

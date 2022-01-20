@@ -65,8 +65,13 @@ const CourseType = ({ getNewCount, title }) => {
   };
 
   useEffect(() => {
+    console.log("inputValueForAdd", inputValueForAdd);
+  }, [inputValueForAdd]);
+
+  useEffect(() => {
     console.log("inputValue", inputValue);
   }, [inputValue]);
+
   useEffect(() => {
     console.log("filteredVehicleCategory", filteredVehicleCategory);
   }, [filteredVehicleCategory]);
@@ -103,7 +108,6 @@ const CourseType = ({ getNewCount, title }) => {
 
   const getAllCourseType = async () => {
     setIsLoaderVisible(true);
-    if (!search) {
       await ApiGet(`courseType/getAllCourseType`)
         .then((res) => {
           setIsLoaderVisible(false);
@@ -113,27 +117,13 @@ const CourseType = ({ getNewCount, title }) => {
         })
         .catch((err) => {
           console.log(err);
-        });
-    } else {
-      await ApiGet(
-        `courseType/getAllCourseType?search=${search}&page=${page}&limit=${countPerPage}`
-      )
-        .then((res) => {
-          setIsLoaderVisible(false);
-          console.log("artistreport", res);
-          setFilteredCourseType(res?.data?.payload?.Question);
-          setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
   };
 
   const getAllVehicleCategory = async () => {
     setIsLoaderVisible(true);
-    if (!search) {
-      await ApiGet(`vehicleCategory/getAllVehicleCategory?page=${page}&limit=${countPerPage}`)
+    
+      await ApiGet(`vehicleCategory/getAllVehicleCategory?page=${page}&limit=1000`)
         .then((res) => {
           setIsLoaderVisible(false);
           console.log("artistreport", res);
@@ -143,19 +133,6 @@ const CourseType = ({ getNewCount, title }) => {
         .catch((err) => {
           console.log(err);
         });
-    }
-    else {
-        await ApiGet(`vehicleCategory/getAllVehicleCategory?search=${search}&page=${page}&limit=${countPerPage}`)
-            .then((res) => {
-                setIsLoaderVisible(false);
-                console.log("artistreport", res);
-                setFilteredVehicleCategory(res?.data?.payload?.Question);
-                setCount(res?.data?.payload?.count);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }
   };
 
   const handleUpdateStatusProperty = (status) => {
@@ -321,9 +298,15 @@ const CourseType = ({ getNewCount, title }) => {
       selector: "courseType",
       sortable: true,
     },
+    {
+      name: "Vehicle Category",
+      selector: "vehicleCategory",
+      selector: row => row?.vcid?.vehicleCategory,
+      sortable: true,
+    },
 
     {
-      name: "Vehicle Description ",
+      name: "Vehicle Description",
       selector: "description",
       sortable: true,
     },
@@ -372,10 +355,10 @@ const CourseType = ({ getNewCount, title }) => {
                   setIsUpdateCourseType(true);
                   setIdForUpdateCourseTypeData(row._id);
                   getAllVehicleCategory();
-                  console.log("rowcheck", row);
+                  console.log("rowcheck", row?.vcid?._id);
 
                   setInputValue({
-                    VehicleCategory: row?.vcid,
+                    VehicleCategory: row?.vcid?._id,
                     CourseType: row?.courseType,
                     VehicleDescription: row?.description,
                     // answer: row?.answer,
@@ -804,16 +787,16 @@ const CourseType = ({ getNewCount, title }) => {
                           filteredVehicleCategory?.map((item) => {
                             return (
                               <option
-                                key={item._id}
-                                value={item._id}
+                                key={item?._id}
+                                value={item?._id}
                                 selected={
-                                  inputValue?.VehicleCategory === item._id
+                                  inputValue?.VehicleCategory === item?._id
                                     ? true
                                     : false
                                 }
                               >
                                 {" "}
-                                {item.vehicleCategory}{" "}
+                                {item?.vehicleCategory}{" "}
                               </option>
                             );
                           })}
