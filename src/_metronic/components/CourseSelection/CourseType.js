@@ -628,7 +628,7 @@ const CourseType = ({ getNewCount, title }) => {
                         }}
                       >
                         <option value="" disabled selected hidden>
-                          Select Course Type
+                          Select Vehicle Category
                         </option>
                         {filteredVehicleCategory?.length > 0 &&
                           filteredVehicleCategory?.map((item) => {

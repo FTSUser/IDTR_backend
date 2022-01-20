@@ -9,6 +9,8 @@ import {
 import { Tooltip } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import List from "@material-ui/core/List";
+import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
+
 import Toolbar from "@material-ui/core/Toolbar";
 import CreateIcon from "@material-ui/icons/Create";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -51,6 +53,20 @@ const CourseName = ({ getNewCount, title }) => {
   const [statusDisplay, setStatusDisplay] = useState(false);
   const [getCourseType, setGetCourseType] = useState([]);
   const [courseTypeArr, setCourseTypeArr] = useState();
+
+  const [dataViewMore, setDataViewMore] = useState({});
+  const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
+
+
+
+
+
+
+
+  const handleViewMoreClose = () => {
+    setIsViewMoreAboutus(false);
+    setDataViewMore({});
+  };
 
   const handleOnChnage = (e) => {
     const { name, value } = e.target;
@@ -434,39 +450,10 @@ const CourseName = ({ getNewCount, title }) => {
       sortable: true,
     },
 
-    {
-      name: "Timing",
-      selector: "timing",
-      sortable: true,
-    },
 
     {
       name: "Mode",
       selector: "mode",
-      sortable: true,
-    },
-
-    {
-      name: "Document Required",
-      selector: "documentRequired",
-      sortable: true,
-    },
-
-    {
-      name: "Validity",
-      selector: "validity",
-      sortable: true,
-    },
-
-    {
-      name: "System Requirement",
-      selector: "systemRequirement",
-      sortable: true,
-    },
-
-    {
-      name: "Certificate",
-      selector: "certificate",
       sortable: true,
     },
 
@@ -541,6 +528,7 @@ const CourseName = ({ getNewCount, title }) => {
                 </Tooltip>
               </div>
             </div>
+
             <div
               className="cursor-pointer"
               onClick={() => {
@@ -552,6 +540,27 @@ const CourseName = ({ getNewCount, title }) => {
                 <DeleteIcon />
               </Tooltip>
             </div>
+
+
+            
+     
+          <>
+           
+            <div
+              className="cursor-pointer pl-2"
+              onClick={() => {
+                setIsViewMoreAboutus(true);
+                setDataViewMore(row);
+                console.log("rowShow", row);
+                console.log("isViewMoreAboutus", isViewMoreAboutus);
+              }}
+            >
+              <Tooltip title="Show More" arrow>
+                <InfoOutlinedIcon />
+              </Tooltip>
+            </div>
+          </>
+        
           </>
         );
       },
@@ -1474,34 +1483,7 @@ const CourseName = ({ getNewCount, title }) => {
                   </div>
                 </div>
 
-                {/* <div className="form-group row">
-                                    <label className="col-xl-3 col-lg-3 col-form-label">
-                                    Enter Answer
-                                    </label>
-                                    <div className="col-lg-9 col-xl-6">
-                                        <div>
-                                            <input
-                                                type="text"
-                                                className={`form-control form-control-lg form-control-solid `}
-                                                id="answer"
-                                                name="answer"
-                                                value={inputValue.answer}
-                                                onChange={(e) => {
-                                                    handleOnChnage(e);
-                                                }}
-                                            />
-                                        </div>
-                                        <span
-                                            style={{
-                                                color: "red",
-                                                top: "5px",
-                                                fontSize: "12px",
-                                            }}
-                                        >
-                                            {errors["answer"]}
-                                        </span>
-                                    </div>
-                                </div> */}
+              
 
                 <div className="d-flex align-items-center justify-content-center">
                   <button
@@ -1515,6 +1497,136 @@ const CourseName = ({ getNewCount, title }) => {
                       <span className="mx-3 spinner spinner-white"></span>
                     )}
                   </button>
+                </div>
+              </div>
+            ) : null}
+
+          </List>
+        </Dialog>
+      ) : null}
+
+
+
+
+{isViewMoreAboutus ? (
+        <Dialog
+          fullScreen
+          open={isViewMoreAboutus}
+          onClose={handleViewMoreClose}
+          TransitionComponent={Transition}
+        >
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleViewMoreClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </Toolbar>
+          <List>
+            {isViewMoreAboutus === true ? (
+              <div className="form ml-30 ">
+                <div className="form-group row mb-0">
+                  <p>Title:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.courseName,
+                    }}
+                    className=""
+                  />
+                </div>
+                <div className="form-group row mb-0">
+                  <p>Description:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.description,
+                    }}
+                    className=""
+                  />
+                </div>
+
+                <div className="form-group row mb-0">
+                  <p>Duration:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.duration,
+                    }}
+                    className=""
+                  />
+                </div>
+                <div className="form-group row mb-0">
+                  <p>Timing:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.timing,
+                    }}
+                    className=""
+                  />
+                </div>
+                <div className="form-group row mb-0">
+                  <p>Mode:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.mode,
+                    }}
+                    className=""
+                  />
+                </div>
+                <div className="form-group row mb-0">
+                  <p>Document Required:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.documentRequired,
+                    }}
+                    className=""
+                  />
+                </div>
+                <div className="form-group row mb-0">
+                  <p>Validity:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.validity,
+                    }}
+                    className=""
+                  />
+                </div>
+                <div className="form-group row mb-0">
+                  <p>System Requirement:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.systemRequirement,
+                    }}
+                    className=""
+                  />
+                </div>
+                <div className="form-group row mb-0">
+                  <p>Price:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.price,
+                    }}
+                    className=""
+                  />
                 </div>
               </div>
             ) : null}
