@@ -28,7 +28,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AboutUs = ({ getNewCount, title }) => {
+const Cms = ({ getNewCount, title }) => {
   const [filteredAboutUs, setFilteredAboutUs] = useState({});
   const [isLoaderVisible, setIsLoaderVisible] = useState(false);
   const [show, setShow] = useState(false);
@@ -892,4 +892,4 @@ const AboutUs = ({ getNewCount, title }) => {
   );
 };
 
-export default AboutUs;
+export default Cms;
