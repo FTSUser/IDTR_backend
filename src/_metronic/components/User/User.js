@@ -232,7 +232,7 @@ const User = ({ getNewCount, title }) => {
             {isViewMoreAboutus === true ? (
               <div className="form ml-30 ">
                 <div className="form-group row mb-0">
-                  <p>Title:</p>
+                  <p>First Name:</p>
                 </div>
                 <div className="form-group row mr-20">
                   <p
@@ -243,12 +243,219 @@ const User = ({ getNewCount, title }) => {
                   />
                 </div>
                 <div className="form-group row mb-0">
-                  <p>Description:</p>
+                  <p>Middle Name:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.mname,
+                    }}
+                    className=""
+                  />
+                </div>
+
+
+                <div className="form-group row mb-0">
+                  <p>Last Name:</p>
                 </div>
                 <div className="form-group row mr-20">
                   <p
                     dangerouslySetInnerHTML={{
                       __html: dataViewMore?.lname,
+                    }}
+                    className=""
+                  />
+                </div>
+
+                <div className="form-group row mb-0">
+                  <p>Date of Birth:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.DoB,
+                    }}
+                    className=""
+                  />
+                </div>
+
+
+                <div className="form-group row mb-0">
+                  <p>Qualification:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.qualification,
+                    }}
+                    className=""
+                  />
+                </div>
+
+
+                <div className="form-group row mb-0">
+                  <p>Gender:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.gender,
+                    }}
+                    className=""
+                  />
+                </div>
+
+
+                <div className="form-group row mb-0">
+                  <p>Address:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.address,
+                    }}
+                    className=""
+                  />
+                </div>
+
+
+                <div className="form-group row mb-0">
+                  <p>State:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.state,
+                    }}
+                    className=""
+                  />
+                </div>
+
+                
+                <div className="form-group row mb-0">
+                  <p>City:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.city,
+                    }}
+                    className=""
+                  />
+                </div>
+
+                
+                <div className="form-group row mb-0">
+                  <p>District:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.district,
+                    }}
+                    className=""
+                  />
+                </div>
+
+                
+                <div className="form-group row mb-0">
+                  <p>Email:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.email,
+                    }}
+                    className=""
+                  />
+                </div>
+
+                
+                <div className="form-group row mb-0">
+                  <p>Phone:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.phone,
+                    }}
+                    className=""
+                  />
+                </div>
+
+                
+                <div className="form-group row mb-0">
+                  <p>Pincode:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.pincode,
+                    }}
+                    className=""
+                  />
+                </div>
+
+                
+                <div className="form-group row mb-0">
+                  <p>Permanent DLnumber:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.permanentDLnumber,
+                    }}
+                    className=""
+                  />
+                </div>
+
+                
+                <div className="form-group row mb-0">
+                  <p>Issue Date:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.issueDate,
+                    }}
+                    className=""
+                  />
+                </div>
+
+                
+                <div className="form-group row mb-0">
+                  <p>Valid Till:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.validTill,
+                    }}
+                    className=""
+                  />
+                </div>
+
+                
+                <div className="form-group row mb-0">
+                  <p>Authority:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.Authority,
+                    }}
+                    className=""
+                  />
+                </div>
+
+                
+                <div className="form-group row mb-0">
+                  <p>Blood Group:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.bloodGroup,
                     }}
                     className=""
                   />
