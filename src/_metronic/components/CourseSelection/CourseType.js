@@ -69,6 +69,9 @@ const CourseType = ({ getNewCount, title }) => {
     useEffect(() => {
         console.log("inputValue", inputValueForAdd);
     }, [inputValueForAdd]);
+    useEffect(() => {
+        console.log("filteredVehicleCategory", filteredVehicleCategory);
+    }, [filteredVehicleCategory]);
 
     // useEffect(() => {
     //     title === "Dashboard | OUR LEISURE HOME" ? document.title = title : document.title = "FAQs | OUR LEISURE HOME"
@@ -648,7 +651,7 @@ const CourseType = ({ getNewCount, title }) => {
                                                  </option>
                                                 {filteredVehicleCategory?.length>0 && filteredVehicleCategory?.map((item)=>{
                                                     console.log("item",filteredVehicleCategory)
-                                                      return <option key={item._id} value={item.vcid}> {item.vehicleCategory} </option>
+                                                      return <option key={item._id} value={item?._id}> {item.vehicleCategory} </option>
                                                 })}
                                                
                                             </select>
