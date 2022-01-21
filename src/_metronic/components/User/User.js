@@ -52,22 +52,24 @@ const User = ({ getNewCount, title }) => {
 
  
   const [tableFilterData, setTableFilterData] = useState({});
+  const [setEndValue,endValue] = useState("")
+  const [setStartValue,startValue] = useState("")
 
   const handleViewMoreClose = () => {
     setIsViewMoreUser(false);
     setDataViewMore({});
   };
 
-  const startValue = new Date(
-    new Date().getFullYear(),
-    new Date().getMonth(),
-    14
-  );
-  const endValue = new Date(
-    new Date().getFullYear(),
-    new Date().getMonth() + 1,
-    15
-  );
+  // const startValue = new Date(
+  //   new Date().getFullYear(),
+  //   new Date().getMonth(),
+  //   14
+  // );
+  // const endValue = new Date(
+  //   new Date().getFullYear(),
+  //   new Date().getMonth() + 1,
+  //   15
+  // );
 
   useEffect(() =>{
     console.log("tableFilterData",tableFilterData);
@@ -77,23 +79,26 @@ const User = ({ getNewCount, title }) => {
   const handleSetDateData = (date) => {
     // console.log("1--", date);
     // console.log("--", tableData);
-    setTableFilterData({});
+    setTableFilterData([]);
     if (!date) {
       setTableFilterData(filteredUser);
     } else {
-      tableFilterData.filter((data) => {
+      let newData = filteredUser.filter((data) => {
         if (
           moment(data.createdAt).unix() > moment(date[0]).unix() &&
           moment(data.createdAt).unix() < moment(date[1]).unix()
         ) {
-          //   console.log("in if");
-          setTableFilterData((prevState) => {
-            return {...prevState, data};
-          });
+            console.log("inifffffff---",data);
+            return data;
         }
+        // setTableFilterData((prevState) => {
+        //   return {...prevState, data};
+        // });
       });
+      console.log("newData",newData);
+      setTableFilterData(newData)
     }
-    console.log("filteredUser", tableFilterData);
+    console.log("filteredUser", filteredUser);
   };
 
 
@@ -117,6 +122,7 @@ const User = ({ getNewCount, title }) => {
         setIsLoaderVisible(false);
         console.log("artistreport", res);
         setFilteredUser(res?.data?.payload?.Question);
+        setTableFilterData(res?.data?.payload?.Question);
         setCount(res?.data?.payload?.count);
       })
       .catch((err) => {
@@ -240,13 +246,14 @@ const User = ({ getNewCount, title }) => {
               start="Year"
               depth="Year"
               onChange={(e) => {
+                console.log("e.target.value",e.target.value);
                 handleSetDateData(e.target.value);
               }}
             ></DateRangePickerComponent>
         <div className="p-2 mb-2">
           <DataTable
             columns={columns}
-            data={tableFilterData?.length ===0 ? filteredUser: tableFilterData}
+            data={tableFilterData}
             customStyles={customStyles}
             style={{
               marginTop: "-3rem",
