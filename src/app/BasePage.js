@@ -8,6 +8,8 @@ import CourseType from '../_metronic/components/CourseSelection/CourseType'
 import VehicleCategory from '../_metronic/components/CourseSelection/VehicleCategory'
 import Cms from '../_metronic/components/Cms/Cms'
 import ContactUs from "../_metronic/components/ContactUs/ContactUs";
+import Payment from "../_metronic/components/Payment/Payment";
+import Announcement from "../_metronic/components/Announcement/Announcement";
 import Feedback from "../_metronic/components/Feedback/Feedback";
 import { getUserInfo } from "../../src/utils/user.util";
 export default function BasePage() {
@@ -31,7 +33,12 @@ export default function BasePage() {
             <ContentRoute exact path="/courseselection/vehiclecategory" component={VehicleCategory} />
 
             <ContentRoute exact path="/user" component={User} />
+            <ContentRoute exact path="/payment" component={Payment} />
+            <ContentRoute exact path="/announcement" component={Announcement} />
+
+
             <ContentRoute exact path="/feedback" component={Feedback} />
+
 
             <ContentRoute exact path="/contactus" component={ContactUs} />
 

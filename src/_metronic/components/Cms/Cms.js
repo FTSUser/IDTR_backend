@@ -29,26 +29,26 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const Cms = ({ getNewCount, title }) => {
-  const [filteredAboutUs, setFilteredAboutUs] = useState({});
+  const [filteredCms, setFilteredCms] = useState({});
   const [isLoaderVisible, setIsLoaderVisible] = useState(false);
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [dataViewMore, setDataViewMore] = useState({});
-  const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
+  const [isViewMoreCms, setIsViewMoreCms] = useState(false);
 
   const [description, setDescription] = useState("");
 
   //new data
-  const [isUpdateAboutUs, setIsUpdateAboutUs] = useState(false);
-  const [isAddAboutUs, setIsAddAboutUs] = useState(false);
-  const [idForUpdateAboutUsData, setIdForUpdateAboutUsData] = useState("");
+  const [isUpdateCms, setIsUpdateCms] = useState(false);
+  const [isAddCms, setIsAddCms] = useState(false);
+  const [idForUpdateCmsData, setIdForUpdateCmsData] = useState("");
   const [inputValue, setInputValue] = useState({});
   const [inputValueForAdd, setInputValueForAdd] = useState({});
   const [errors, setErrors] = useState({});
   const [errorsForAdd, setErrorsForAdd] = useState({});
   const [idForEditStatus, setIdForEditStatus] = useState("");
-  const [idForDeleteAboutUs, setIdForDeleteAboutUs] = useState("");
+  const [idForDeleteCms, setIdForDeleteCms] = useState("");
   const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
@@ -68,7 +68,7 @@ const Cms = ({ getNewCount, title }) => {
   };
 
   const handleViewMoreClose = () => {
-    setIsViewMoreAboutus(false);
+    setIsViewMoreCms(false);
     setDataViewMore({});
   };
 
@@ -76,11 +76,7 @@ const Cms = ({ getNewCount, title }) => {
     console.log("inputValue", inputValueForAdd);
   }, [inputValueForAdd]);
 
-  // useEffect(() => {
-  //   title === "Dashboard | OUR LEISURE HOME"
-  //     ? (document.title = title)
-  //     : (document.title = "About Us | OUR LEISURE HOME");
-  // }, []);
+
 
   useEffect(() => {
     console.log("idForEditStatus", idForEditStatus);
@@ -89,13 +85,13 @@ const Cms = ({ getNewCount, title }) => {
   const handleAdminUpdateClose = () => {
     setInputValue({});
     setDescription("");
-    setIsUpdateAboutUs(false);
+    setIsUpdateCms(false);
   };
 
   const handleAddAdminClose = () => {
     setInputValue({});
     setDescription([]);
-    setIsAddAboutUs(false);
+    setIsAddCms(false);
   };
 
   const handleClose = () => {
@@ -103,17 +99,17 @@ const Cms = ({ getNewCount, title }) => {
   };
 
   useEffect(() => {
-    getAllAboutUs();
+    getAllCms();
   }, [page, countPerPage]);
 
-  const getAllAboutUs = async () => {
+  const getAllCms = async () => {
     setIsLoaderVisible(true);
     if (!search) {
       await ApiGet(`cms/getAllCMS?page=${page}&limit=${countPerPage}`)
         .then((res) => {
           setIsLoaderVisible(false);
           console.log("artistreport", res);
-          setFilteredAboutUs(res?.data?.payload?.Question);
+          setFilteredCms(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
         .catch((err) => {
@@ -124,7 +120,7 @@ const Cms = ({ getNewCount, title }) => {
         .then((res) => {
           setIsLoaderVisible(false);
           console.log("artistreport", res);
-          setFilteredAboutUs(res?.data?.payload?.Question);
+          setFilteredCms(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
         .catch((err) => {
@@ -153,7 +149,7 @@ const Cms = ({ getNewCount, title }) => {
     return formIsValid;
   };
 
-  const handleAddAboutUsDetails = (e) => {
+  const handleAddCmsDetails = (e) => {
     e.preventDefault();
     if (validateFormForAddAdmin()) {
       let Data = {
@@ -166,11 +162,11 @@ const Cms = ({ getNewCount, title }) => {
         .then((res) => {
           console.log("resresres", res);
           if (res?.status == 200) {
-            setIsAddAboutUs(false);
+            setIsAddCms(false);
             toast.success(res?.data?.message);
             setInputValueForAdd({});
             setDescription("");
-            getAllAboutUs();
+            getAllCms();
             // {
             //   document.title === "Dashboard | OUR LEISURE HOME" &&
             //     getNewCount();
@@ -267,13 +263,13 @@ const Cms = ({ getNewCount, title }) => {
     return formIsValid;
   };
 
-  const handleDeleteAboutUs = () => {
-    ApiDelete(`cms/deleteCMS/${idForDeleteAboutUs}`)
+  const handleDeleteCms = () => {
+    ApiDelete(`cms/deleteCMS/${idForDeleteCms}`)
       .then((res) => {
         if (res?.status == 200) {
           setShow(false);
           toast.success("Deleted Successfully");
-          getAllAboutUs();
+          getAllCms();
           // {
           //   document.title === "Dashboard | OUR LEISURE HOME" && getNewCount();
           // }
@@ -293,7 +289,7 @@ const Cms = ({ getNewCount, title }) => {
     console.log("inputValue", inputValue);
   }, [inputValue]);
 
-  const handleUpdateAboutUsDetails = (e) => {
+  const handleUpdateCmsDetails = (e) => {
     e.preventDefault();
 
     if (validateForm()) {
@@ -302,15 +298,15 @@ const Cms = ({ getNewCount, title }) => {
         description: description,
         image: inputValue.image,
       };
-      ApiPut(`cms/updateCMS/${idForUpdateAboutUsData}`, Data)
+      ApiPut(`cms/updateCMS/${idForUpdateCmsData}`, Data)
         .then((res) => {
           console.log("resres", res);
           if (res?.status == 200) {
-            setIsUpdateAboutUs(false);
+            setIsUpdateCms(false);
             toast.success(res?.data?.message);
             setInputValue({});
             setDescription("");
-            getAllAboutUs();
+            getAllCms();
           } else {
             toast.error(res?.data?.message);
           }
@@ -358,7 +354,7 @@ const Cms = ({ getNewCount, title }) => {
           <>
             <div className="p-3">
               <img
-                className="max-w-350px zoom"
+                className="max-w-250px zoom"
                 alt="img"
                 src={row?.image != null ? row.image[0] : ""}
               />
@@ -377,8 +373,8 @@ const Cms = ({ getNewCount, title }) => {
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
-                  setIsUpdateAboutUs(true);
-                  setIdForUpdateAboutUsData(row._id);
+                  setIsUpdateCms(true);
+                  setIdForUpdateCmsData(row._id);
                   setInputValue({
                     titleName: row?.titleName,
                     image: row?.image,
@@ -387,7 +383,7 @@ const Cms = ({ getNewCount, title }) => {
                   setDescription(row?.description);
                 }}
               >
-                <Tooltip title="Edit AboutUs" arrow>
+                <Tooltip title="Edit Cms" arrow>
                   <CreateIcon />
                 </Tooltip>
               </div>
@@ -396,17 +392,17 @@ const Cms = ({ getNewCount, title }) => {
               className="cursor-pointer"
               onClick={() => {
                 setShow(true);
-                setIdForDeleteAboutUs(row?._id);
+                setIdForDeleteCms(row?._id);
               }}
             >
-              <Tooltip title="Delete About Us" arrow>
+              <Tooltip title="Delete CMS" arrow>
                 <DeleteIcon />
               </Tooltip>
             </div>
             <div
               className="cursor-pointer pl-2"
               onClick={() => {
-                setIsViewMoreAboutus(true);
+                setIsViewMoreCms(true);
                 setDataViewMore(row);
                 console.log("rowShow", row);
               }}
@@ -490,12 +486,12 @@ const Cms = ({ getNewCount, title }) => {
       setPage(1);
       setCount(0);
       setCountPerPage(countPerPage);
-      getAllAboutUs();
+      getAllCms();
     } else {
       setPage(1);
       setCount(0);
       setCountPerPage(countPerPage);
-      getAllAboutUs();
+      getAllCms();
     }
   }, [debouncedSearchTerm]);
 
@@ -506,7 +502,7 @@ const Cms = ({ getNewCount, title }) => {
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2">About Us</h2>
+              <h2 className="pl-3 pt-2"> CMS</h2>
             </div>
             <div className="col">
               <div>
@@ -514,7 +510,7 @@ const Cms = ({ getNewCount, title }) => {
                   type="text"
                   className={`form-control form-control-lg form-control-solid `}
                   name="title"
-                  placeholder="Search About Us"
+                  placeholder="Search CMS"
                   onChange={(e) => handleSearch(e)}
                 />
               </div>
@@ -522,11 +518,11 @@ const Cms = ({ getNewCount, title }) => {
             <div className="cus-medium-button-style button-height">
               <button
                 onClick={() => {
-                  setIsAddAboutUs(true);
+                  setIsAddCms(true);
                 }}
                 className="btn btn-success mr-2"
               >
-                Add About Us
+                Add CMS
               </button>
             </div>
           </div>
@@ -537,7 +533,7 @@ const Cms = ({ getNewCount, title }) => {
               <Modal.Title className="text-danger">Alert!</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              Are You Sure To Want To delete this About Us
+              Are You Sure To Want To delete this CMS
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
@@ -546,7 +542,7 @@ const Cms = ({ getNewCount, title }) => {
               <Button
                 variant="danger"
                 onClick={() => {
-                  handleDeleteAboutUs();
+                  handleDeleteCms();
                 }}
               >
                 Delete
@@ -557,7 +553,7 @@ const Cms = ({ getNewCount, title }) => {
 
           <DataTable
             columns={columns}
-            data={filteredAboutUs}
+            data={filteredCms}
             customStyles={customStyles}
             style={{
               marginTop: "-3rem",
@@ -583,10 +579,10 @@ const Cms = ({ getNewCount, title }) => {
         </div>
       </div>
 
-      {isAddAboutUs ? (
+      {isAddCms ? (
         <Dialog
           fullScreen
-          open={isAddAboutUs}
+          open={isAddCms}
           onClose={handleAddAdminClose}
           TransitionComponent={Transition}
         >
@@ -601,7 +597,7 @@ const Cms = ({ getNewCount, title }) => {
             </IconButton>
           </Toolbar>
           <List>
-            {isAddAboutUs === true ? (
+            {isAddCms === true ? (
               <div className="form ml-30 ">
                 {/* Name Amenintie */}
                 <div className="form-group row">
@@ -694,7 +690,7 @@ const Cms = ({ getNewCount, title }) => {
                 <div className="d-flex align-items-center justify-content-center">
                   <button
                     onClick={(e) => {
-                      handleAddAboutUsDetails(e);
+                      handleAddCmsDetails(e);
                     }}
                     className="btn btn-success mr-2"
                   >
@@ -710,10 +706,10 @@ const Cms = ({ getNewCount, title }) => {
         </Dialog>
       ) : null}
 
-      {isUpdateAboutUs ? (
+      {isUpdateCms ? (
         <Dialog
           fullScreen
-          open={isUpdateAboutUs}
+          open={isUpdateCms}
           onClose={handleAdminUpdateClose}
           TransitionComponent={Transition}
         >
@@ -728,7 +724,7 @@ const Cms = ({ getNewCount, title }) => {
             </IconButton>
           </Toolbar>
           <List>
-            {isUpdateAboutUs === true ? (
+            {isUpdateCms === true ? (
               <div className="form ml-30 ">
                 {/* Ameninties Name */}
                 <div className="form-group row">
@@ -823,7 +819,7 @@ const Cms = ({ getNewCount, title }) => {
                 <div className="d-flex align-items-center justify-content-center">
                   <button
                     onClick={(e) => {
-                      handleUpdateAboutUsDetails(e);
+                      handleUpdateCmsDetails(e);
                     }}
                     className="btn btn-success mr-2"
                   >
@@ -841,10 +837,10 @@ const Cms = ({ getNewCount, title }) => {
 
       {/* view more */}
 
-      {isViewMoreAboutus ? (
+      {isViewMoreCms ? (
         <Dialog
           fullScreen
-          open={isViewMoreAboutus}
+          open={isViewMoreCms}
           onClose={handleViewMoreClose}
           TransitionComponent={Transition}
         >
@@ -859,7 +855,7 @@ const Cms = ({ getNewCount, title }) => {
             </IconButton>
           </Toolbar>
           <List>
-            {isViewMoreAboutus === true ? (
+            {isViewMoreCms === true ? (
               <div className="form ml-30 ">
                 <div className="form-group row mb-0">
                   <p>Title:</p>
@@ -891,7 +887,7 @@ const Cms = ({ getNewCount, title }) => {
                     src={dataViewMore?.image}
                     alt=""
                     height="256px"
-                    width="256px"
+                    width="512px"
                   />
                 </div>
               </div>

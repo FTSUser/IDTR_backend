@@ -2,27 +2,14 @@ import React, { useEffect, useState } from "react";
 import DataTable, { defaultThemes } from "react-data-table-component";
 import {
   ApiGet,
-  ApiDelete,
-  ApiPut,
-  ApiPost,
+  
 } from "../../../helpers/API/ApiData";
-import { Tooltip } from "@material-ui/core";
-import Dialog from "@material-ui/core/Dialog";
-import List from "@material-ui/core/List";
-import Toolbar from "@material-ui/core/Toolbar";
-import CreateIcon from "@material-ui/icons/Create";
-import DeleteIcon from "@material-ui/icons/Delete";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
+
 import Slide from "@material-ui/core/Slide";
-import { Button } from "react-bootstrap";
-import { Modal } from "react-bootstrap";
+
 import Loader from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
-import { reject } from "lodash";
-import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -37,19 +24,12 @@ const ContactUs = ({ getNewCount, title }) => {
   const [dataViewMore, setDataViewMore] = useState({});
   const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
 
-  const [description, setDescription] = useState("");
 
-  //new data
-  const [isUpdateAboutUs, setIsUpdateAboutUs] = useState(false);
-  const [isAddAboutUs, setIsAddAboutUs] = useState(false);
-  const [idForUpdateAboutUsData, setIdForUpdateAboutUsData] = useState("");
+
   const [inputValue, setInputValue] = useState({});
   const [inputValueForAdd, setInputValueForAdd] = useState({});
   const [errors, setErrors] = useState({});
-  const [errorsForAdd, setErrorsForAdd] = useState({});
   const [idForEditStatus, setIdForEditStatus] = useState("");
-  const [idForDeleteAboutUs, setIdForDeleteAboutUs] = useState("");
-  const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [countPerPage, setCountPerPage] = useState(10);
@@ -124,18 +104,30 @@ const ContactUs = ({ getNewCount, title }) => {
 
       {
         name: "Subject",
-        selector: "subject",
+        cell: (row) => {
+            return(
+                <span>
+                    {row?.subject}
+                </span>
+            )
+        },
         sortable: true,
+      
       },
-
 
 
       {
         name: "Description",
-        selector: "description",
+        cell: (row) => {
+            return(
+                <span>
+                    {row?.description}
+                </span>
+            )
+        },
         sortable: true,
+      
       },
-
      
 
 
