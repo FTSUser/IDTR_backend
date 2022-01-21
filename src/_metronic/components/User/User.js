@@ -24,42 +24,78 @@ import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import moment from "moment";
+import { DateRangePickerComponent } from "@syncfusion/ej2-react-calendars";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const User = ({ getNewCount, title }) => {
-  const [filteredAboutUs, setFilteredAboutUs] = useState({});
+  const [filteredUser, setFilteredUser] = useState({});
   const [isLoaderVisible, setIsLoaderVisible] = useState(false);
-  const [show, setShow] = useState(false);
-  const [loading, setLoading] = useState(false);
-
+ 
   const [dataViewMore, setDataViewMore] = useState({});
-  const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
+  const [isViewMoreUser, setIsViewMoreUser] = useState(false);
 
-  const [description, setDescription] = useState("");
+
 
   //new data
-  const [isUpdateAboutUs, setIsUpdateAboutUs] = useState(false);
-  const [isAddAboutUs, setIsAddAboutUs] = useState(false);
-  const [idForUpdateAboutUsData, setIdForUpdateAboutUsData] = useState("");
+ 
   const [inputValue, setInputValue] = useState({});
   const [inputValueForAdd, setInputValueForAdd] = useState({});
-  const [errors, setErrors] = useState({});
-  const [errorsForAdd, setErrorsForAdd] = useState({});
+
   const [idForEditStatus, setIdForEditStatus] = useState("");
-  const [idForDeleteAboutUs, setIdForDeleteAboutUs] = useState("");
-  const [status, setStatus] = useState("");
+
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [countPerPage, setCountPerPage] = useState(10);
-  const [search, setSearch] = useState("");
+
+ 
+  const [tableFilterData, setTableFilterData] = useState({});
 
   const handleViewMoreClose = () => {
-    setIsViewMoreAboutus(false);
+    setIsViewMoreUser(false);
     setDataViewMore({});
   };
+
+  const startValue = new Date(
+    new Date().getFullYear(),
+    new Date().getMonth(),
+    14
+  );
+  const endValue = new Date(
+    new Date().getFullYear(),
+    new Date().getMonth() + 1,
+    15
+  );
+
+  useEffect(() =>{
+    console.log("tableFilterData",tableFilterData);
+  },[tableFilterData])
+
+
+  const handleSetDateData = (date) => {
+    // console.log("1--", date);
+    // console.log("--", tableData);
+    setTableFilterData({});
+    if (!date) {
+      setTableFilterData(filteredUser);
+    } else {
+      tableFilterData.filter((data) => {
+        if (
+          moment(data.createdAt).unix() > moment(date[0]).unix() &&
+          moment(data.createdAt).unix() < moment(date[1]).unix()
+        ) {
+          //   console.log("in if");
+          setTableFilterData((prevState) => {
+            return {...prevState, data};
+          });
+        }
+      });
+    }
+    console.log("filteredUser", tableFilterData);
+  };
+
 
   useEffect(() => {
     console.log("inputValue", inputValueForAdd);
@@ -70,17 +106,17 @@ const User = ({ getNewCount, title }) => {
   }, [idForEditStatus]);
 
   useEffect(() => {
-    getAllAboutUs();
+    getAllUser();
   }, [page, countPerPage]);
 
-  const getAllAboutUs = async () => {
+  const getAllUser = async () => {
     setIsLoaderVisible(true);
     // if (!search) {
     await ApiGet(`register/getAllRegister?page=${page}&limit=${countPerPage}`)
       .then((res) => {
         setIsLoaderVisible(false);
         console.log("artistreport", res);
-        setFilteredAboutUs(res?.data?.payload?.Question);
+        setFilteredUser(res?.data?.payload?.Question);
         setCount(res?.data?.payload?.count);
       })
       .catch((err) => {
@@ -144,7 +180,7 @@ const User = ({ getNewCount, title }) => {
             <div
               className="cursor-pointer pl-2"
               onClick={() => {
-                setIsViewMoreAboutus(true);
+                setIsViewMoreUser(true);
                 setDataViewMore(row);
                 console.log("rowShow", row);
               }}
@@ -196,10 +232,21 @@ const User = ({ getNewCount, title }) => {
     <>
       <div className="card p-1">
         <ToastContainer />
+        <DateRangePickerComponent
+              placeholder="Enter Date Range"
+              startDate={startValue}
+              endDate={endValue}
+              format="dd-MMM-yy"
+              start="Year"
+              depth="Year"
+              onChange={(e) => {
+                handleSetDateData(e.target.value);
+              }}
+            ></DateRangePickerComponent>
         <div className="p-2 mb-2">
           <DataTable
             columns={columns}
-            data={filteredAboutUs}
+            data={tableFilterData?.length ===0 ? filteredUser: tableFilterData}
             customStyles={customStyles}
             style={{
               marginTop: "-3rem",
@@ -226,10 +273,10 @@ const User = ({ getNewCount, title }) => {
       </div>
       {/* view more */}
 
-      {isViewMoreAboutus ? (
+      {isViewMoreUser ? (
         <Dialog
           fullScreen
-          open={isViewMoreAboutus}
+          open={isViewMoreUser}
           onClose={handleViewMoreClose}
           TransitionComponent={Transition}
         >
@@ -244,7 +291,7 @@ const User = ({ getNewCount, title }) => {
             </IconButton>
           </Toolbar>
           <List>
-            {isViewMoreAboutus === true ? (
+            {isViewMoreUser === true ? (
               <div className="form ml-30 ">
                 <div className="form-group row mb-0">
                   <p>First Name:</p>

@@ -18,14 +18,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const ContactUs = ({ getNewCount, title }) => {
   const [filteredContactUs, setFilteredContactUs] = useState({});
   const [isLoaderVisible, setIsLoaderVisible] = useState(false);
-  const [show, setShow] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const [dataViewMore, setDataViewMore] = useState({});
-  const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
-
-
-
   const [inputValue, setInputValue] = useState({});
   const [inputValueForAdd, setInputValueForAdd] = useState({});
   const [errors, setErrors] = useState({});
@@ -36,11 +28,7 @@ const ContactUs = ({ getNewCount, title }) => {
   const [search, setSearch] = useState("");
 
  
-  const handleViewMoreClose = () => {
-    setIsViewMoreAboutus(false);
-    setDataViewMore({});
-  };
-
+  
   useEffect(() => {
     console.log("inputValue", inputValueForAdd);
   }, [inputValueForAdd]);
