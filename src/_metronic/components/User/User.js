@@ -23,6 +23,7 @@ import { reject } from "lodash";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import moment from "moment";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -98,6 +99,18 @@ const User = ({ getNewCount, title }) => {
       name: "SNo",
       cell: (row, index) => (page - 1) * countPerPage + (index + 1),
       width: "65px",
+    },
+    {
+      name: "Date",
+      cell: (row) => {
+        return (
+          <span>
+            {moment(row?.createdAt).format('ll')}
+          </span>
+        );
+      },
+
+      // width: "65px",
     },
     {
       name: "Email",
@@ -254,7 +267,6 @@ const User = ({ getNewCount, title }) => {
                   />
                 </div>
 
-
                 <div className="form-group row mb-0">
                   <p>Last Name:</p>
                 </div>
@@ -279,7 +291,6 @@ const User = ({ getNewCount, title }) => {
                   />
                 </div>
 
-
                 <div className="form-group row mb-0">
                   <p>Qualification:</p>
                 </div>
@@ -291,7 +302,6 @@ const User = ({ getNewCount, title }) => {
                     className=""
                   />
                 </div>
-
 
                 <div className="form-group row mb-0">
                   <p>Gender:</p>
@@ -305,7 +315,6 @@ const User = ({ getNewCount, title }) => {
                   />
                 </div>
 
-
                 <div className="form-group row mb-0">
                   <p>Address:</p>
                 </div>
@@ -317,7 +326,6 @@ const User = ({ getNewCount, title }) => {
                     className=""
                   />
                 </div>
-
 
                 <div className="form-group row mb-0">
                   <p>State:</p>
@@ -331,7 +339,6 @@ const User = ({ getNewCount, title }) => {
                   />
                 </div>
 
-                
                 <div className="form-group row mb-0">
                   <p>City:</p>
                 </div>
@@ -344,7 +351,6 @@ const User = ({ getNewCount, title }) => {
                   />
                 </div>
 
-                
                 <div className="form-group row mb-0">
                   <p>District:</p>
                 </div>
@@ -357,7 +363,6 @@ const User = ({ getNewCount, title }) => {
                   />
                 </div>
 
-                
                 <div className="form-group row mb-0">
                   <p>Email:</p>
                 </div>
@@ -370,7 +375,6 @@ const User = ({ getNewCount, title }) => {
                   />
                 </div>
 
-                
                 <div className="form-group row mb-0">
                   <p>Phone:</p>
                 </div>
@@ -383,7 +387,6 @@ const User = ({ getNewCount, title }) => {
                   />
                 </div>
 
-                
                 <div className="form-group row mb-0">
                   <p>Pincode:</p>
                 </div>
@@ -396,7 +399,6 @@ const User = ({ getNewCount, title }) => {
                   />
                 </div>
 
-                
                 <div className="form-group row mb-0">
                   <p>Permanent DLnumber:</p>
                 </div>
@@ -409,7 +411,6 @@ const User = ({ getNewCount, title }) => {
                   />
                 </div>
 
-                
                 <div className="form-group row mb-0">
                   <p>Issue Date:</p>
                 </div>
@@ -422,7 +423,6 @@ const User = ({ getNewCount, title }) => {
                   />
                 </div>
 
-                
                 <div className="form-group row mb-0">
                   <p>Valid Till:</p>
                 </div>
@@ -435,7 +435,6 @@ const User = ({ getNewCount, title }) => {
                   />
                 </div>
 
-                
                 <div className="form-group row mb-0">
                   <p>Authority:</p>
                 </div>
@@ -448,7 +447,6 @@ const User = ({ getNewCount, title }) => {
                   />
                 </div>
 
-                
                 <div className="form-group row mb-0">
                   <p>Blood Group:</p>
                 </div>
