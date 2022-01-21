@@ -405,6 +405,10 @@ const CourseName = ({ getNewCount, title }) => {
       formIsValid = false;
       errors["Price"] = "*Please Enter Price!";
     }
+    if (inputValue && !inputValue.VehicleCategory) {
+      formIsValid = false;
+      errors["VehicleCategory"] = "*Please Enter Price!";
+    }
 
     setErrors(errors);
     return formIsValid;
@@ -470,6 +474,11 @@ const CourseName = ({ getNewCount, title }) => {
     {
       name: "Duration",
       selector: "duration",
+      sortable: true,
+    },
+    {
+      name: "CourseType",
+      selector: row => row?.ctid?.courseType,
       sortable: true,
     },
 
@@ -1261,7 +1270,7 @@ const CourseName = ({ getNewCount, title }) => {
                         fontSize: "12px",
                       }}
                     >
-                      {errorsForAdd["VehicleCategory"]}
+                      {errors["VehicleCategory"]}
                     </span>
                   </div>
                 </div>
@@ -1303,7 +1312,7 @@ const CourseName = ({ getNewCount, title }) => {
                         fontSize: "12px",
                       }}
                     >
-                      {errorsForAdd["CourseType"]}
+                      {errors["CourseType"]}
                     </span>
                   </div>
                 </div>
