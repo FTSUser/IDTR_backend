@@ -481,6 +481,11 @@ const CourseName = ({ getNewCount, title }) => {
       selector: row => row?.ctid?.courseType,
       sortable: true,
     },
+    {
+      name: "VehicleCategory",
+      selector: row => row?.vcid?.vehicleCategory,
+      sortable: true,
+    },
 
 
     {

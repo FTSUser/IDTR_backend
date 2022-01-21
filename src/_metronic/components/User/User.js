@@ -109,6 +109,8 @@ const User = ({ getNewCount, title }) => {
           </span>
         );
       },
+      sortable: true,
+      selector: row => row?.createdAt, 
 
       // width: "65px",
     },
