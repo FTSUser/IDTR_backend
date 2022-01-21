@@ -557,7 +557,7 @@ const CourseName = ({ getNewCount, title }) => {
                     Validity: row?.validity,
                     Price: row?.price,
                     CourseType: row?.ctid?._id,
-                    VehicleCategory: row?.vcid
+                    VehicleCategory: row?.vcid?._id
                     // answer: row?.answer,
                   });
                 }}
