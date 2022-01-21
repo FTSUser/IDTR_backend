@@ -53,7 +53,7 @@ const CourseName = ({ getNewCount, title }) => {
   const [statusDisplay, setStatusDisplay] = useState(false);
   const [getCourseType, setGetCourseType] = useState([]);
   const [courseTypeArr, setCourseTypeArr] = useState();
-  const [filteredVehicleCategory, setFilteredVehicleCategory] = useState({});
+  const [filteredVehicleCategory, setFilteredVehicleCategory] = useState([]);
 
   const [dataViewMore, setDataViewMore] = useState({});
   const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
@@ -88,6 +88,10 @@ const CourseName = ({ getNewCount, title }) => {
   useEffect(() => {
     console.log("inputValueeeee", inputValue);
   }, [inputValue]);
+
+  useEffect(() => {
+    console.log("filteredVehicleCategory", filteredVehicleCategory);
+  }, [filteredVehicleCategory]);
 
   // useEffect(() => {
   //     title === "Dashboard | OUR LEISURE HOME" ? document.title = title : document.title = "FAQs | OUR LEISURE HOME"
@@ -421,6 +425,7 @@ const CourseName = ({ getNewCount, title }) => {
         validity: inputValue.Validity,
         price: inputValue.Price,
         ctid: inputValue.CourseType,
+        vcid: inputValue?.VehicleCategory
 
         // answer: inputValueForAdd.answer,
         // ctid : "61dfc5645e9d45193cb1a0b6"
@@ -525,6 +530,7 @@ const CourseName = ({ getNewCount, title }) => {
                   setIsUpdateCourseName(true);
                   setIdForUpdateCourseNameData(row._id);
                   getAllCourseType();
+                  getAllVehicleCategory();
                   setInputValue({
                     CourseName: row?.courseName,
                     Description: row?.description,
@@ -537,6 +543,7 @@ const CourseName = ({ getNewCount, title }) => {
                     Validity: row?.validity,
                     Price: row?.price,
                     CourseType: row?.ctid?._id,
+                    VehicleCategory: row?.vcid
                     // answer: row?.answer,
                   });
                 }}
@@ -856,7 +863,6 @@ const CourseName = ({ getNewCount, title }) => {
                         </option>
                         {getCourseType?.length > 0 &&
                           getCourseType?.map((item) => {
-                            console.log("item", item._id);
                             return (
                               <option key={item._id} value={item._id}>
                                 {" "}
@@ -1277,7 +1283,6 @@ const CourseName = ({ getNewCount, title }) => {
                       >
                         {getCourseType?.length > 0 &&
                           getCourseType?.map((item) => {
-                            console.log("item", item._id);
                             return (
                               <option key={item._id} value={item._id} selected={
                                 inputValue?.CourseType === item._id
