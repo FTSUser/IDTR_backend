@@ -174,12 +174,12 @@ export default function Login() {
             <span>Sign In</span>
           </button>
         </div>
-
+{/* 
         <div className="d-flex justify-content-center">
           <span className="font-weight-bold text-dark-50">
             Read our <Link>Onboarding Policy</Link> here.
           </span>
-        </div>
+        </div> */}
       </form>
 
       {/*end::Form*/}

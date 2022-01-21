@@ -110,10 +110,6 @@ export function AuthPage() {
                   component={Changepassword}
                 />
 
-                <ContentRoute
-                  path="/dashboard"
-                  component={Dashboard}
-                />
              
               
 
