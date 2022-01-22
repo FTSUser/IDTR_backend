@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { getUserInfo } from "../../../../utils/user.util";
 import { ApiGet } from "../../../../helpers/API/ApiData";
 import User from "../../../components/User/User";
+import { toAbsoluteUrl } from "../../../../_metronic/_helpers";
+
 // import Inventory from "../../../components/Inventory/Inventory";
 // import MarketPlace from "../../../components/MarketPlace/MarketPlace";
 // import Order from "../../../components/Order/Order";
@@ -23,39 +25,38 @@ export function MixedWidget1({ className }) {
     setTitle("Dashboard | Honda");
   }, []);
 
-  useEffect(() => {
-    getcount();
-  }, []);
+  // useEffect(() => {
+  //   getcount();
+  // }, []);
 
-  const getcount = async () => {
-    // if (userInfo?.admin?.role === "superadmin") {
-    await ApiGet(`user/count`)
-      .then((res) => {
-        console.log("getcountAdmin", res);
-        setCountData(res?.data?.payload);
-        // setMonthData(res?.data?.payload?.countProperty);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    // }
-  };
+  // const getcount = async () => {
+  //   // if (userInfo?.admin?.role === "superadmin") {
+  //   await ApiGet(`user/count`)
+  //     .then((res) => {
+  //       console.log("getcountAdmin", res);
+  //       setCountData(res?.data?.payload);
+  //       // setMonthData(res?.data?.payload?.countProperty);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  //   // }
+  // };
 
 
 
   return (
-    <div className={`card card-custom bg-gray-100 ${className}`}>
+    <div >
       {/* Header */}
-      <div className="card-header border-0 bg-danger py-1 px-1">
-        <div className="card-body p-0 position-relative overflow-hidden">
+      <div >
+        <div >
+        <img src={toAbsoluteUrl("/media/logos/honda-logo.png")}/>
           {/* Stat */}
           <div
-            className="card-rounded-bottom bg-danger"
-            style={{ height: "30px" }}
+            
           >
-            <h2 className="card-title font-weight-bolder text-white pt-2 pl-6">
-              Overall Recoard
-            </h2>
+            
+            
           </div>
           {userInfo?.role === "admin" && (
             <>
@@ -139,7 +140,7 @@ export function MixedWidget1({ className }) {
                   </div>
                 </div>
               </div> */}
-              <div className="my-5 mx-5">
+              {/* <div className="my-5 mx-5">
                 {selectedTable === "Users" ? (
                   <User title={title} getNewCount={getcount} />)
                 // ) : selectedTable === "Inventory" ? (
@@ -152,7 +153,7 @@ export function MixedWidget1({ className }) {
                 :(
                   <></>
                 )}
-              </div>
+              </div> */}
             </>
           )}
         </div>
