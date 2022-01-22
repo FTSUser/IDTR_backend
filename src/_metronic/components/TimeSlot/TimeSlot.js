@@ -27,8 +27,6 @@ import DateFnsUtils from "@date-io/date-fns"; // choose your lib
 import moment from "moment";
 import "rc-time-picker/assets/index.css";
 import TimePicker from "rc-time-picker";
-import TimeSelect from "./TimeSelect";
-import EndTime from "./EndTime";
 import DatePicker from "react-datepicker";
 // import TimePicker from '@mui/lab/TimePicker';
 
@@ -72,7 +70,7 @@ const TimeSlot = ({ getNewCount, title }) => {
   const [selectedCourseName, setSelectedCourseName] = useState([]);
   const [date, setDate] = useState(new Date());
   const [endDate, setEndDate] = useState("");
-  const [startDate, setStartDate] = useState("");
+  // const [startDate, setStartDate] = useState("");
 
   const handleViewMoreClose = () => {
     setIsViewMoreAboutus(false);
@@ -88,12 +86,16 @@ const TimeSlot = ({ getNewCount, title }) => {
   }, [selectedCourseName]);
 
   useEffect(() => {
-    console.log("startDateeee", startDate);
-  }, [startDate]);
+    console.log("selectedCourseName", selectedCourseName);
+  }, [selectedCourseName]);
 
-  useEffect(() => {
-    console.log("endDateeee", endDate);
-  }, [endDate]);
+  // useEffect(() => {
+  //   console.log("startDateeee", startDate);
+  // }, [startDate]);
+
+  // useEffect(() => {
+  //   console.log("endDateeee", endDate);
+  // }, [endDate]);
 
   const handleOnChnage = (e) => {
     const { name, value } = e.target;
@@ -111,11 +113,9 @@ const TimeSlot = ({ getNewCount, title }) => {
     console.log("inputValueForAdd", inputValueForAdd);
   }, [inputValueForAdd]);
 
-
   useEffect(() => {
     console.log("date", date);
   }, [date]);
-
 
   useEffect(() => {
     console.log("inputValueeeee", inputValue);
@@ -150,22 +150,31 @@ const TimeSlot = ({ getNewCount, title }) => {
   };
 
   //for start time selector
+  // const [startDate, setStartDate] = useState(value.format(new Date()));
+  const [startTime,setStartTime] = useState("");
+  useEffect(() =>{
+    console.log("startTime",startTime);
+  },[startTime])
   const format = "h:mm a";
 
   const now = moment().hour(0).minute(0);
 
   function onChange(value) {
-    console.log(value && value.format(format));
+    console.log("TESTTEST", value?.toDate());
+    setStartTime(value?.toDate())
+    // setStartDate(value.format(format))
   }
 
   //for end time selector
-  // const format2 = "h:mm a";
+  const [endTime,setEndTime] = useState("");
+  const format1 = 'h:mm a';
 
-  // const now2 = moment().hour(0).minute(0);
-
-  // function onChange2(value) {
-  //   console.log("testtest",value && value.format(format2));
-  // }
+  const now1 = moment().hour(0).minute(0);
+  
+    function onChange1(value) {
+      console.log("TESTTEST22",value?.toDate());
+      setEndTime(value?.toDate());
+    }
 
   //time end
 
@@ -304,11 +313,33 @@ const TimeSlot = ({ getNewCount, title }) => {
 
   const handelAddCourseNameDetails = (e) => {
     e.preventDefault();
-    if (validateFormForAddAdmin()) {
+    // if (validateFormForAddAdmin()) {
+      const newCourseName = [];
+      {
+        selectedCourseName.map((sub, i) => {
+          newCourseName.push(sub._id);
+        });
+      }
+      const newCourseType = [];
+      {
+        selectedCourseType.map((sub, i) => {
+          newCourseType.push(sub._id);
+        });
+      }
+      const newVehicleCategory = [];
+      {
+        selectedVehicleCategory.map((sub, i) => {
+          newVehicleCategory.push(sub._id);
+        });
+      }
       let Data = {
         date: date,
         seat: inputValueForAdd?.seat,
-        endTime: endDate?.Moment?._d
+        endTime: endTime,
+        startTime:startTime,
+        cnid: newCourseName,
+        ctid: newCourseType,
+        vcid:newVehicleCategory,
 
       };
       ApiPost(`trainingDate/addDate`, Data)
@@ -326,7 +357,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         .catch((err) => {
           toast.error(err.message);
         });
-    }
+    // }
   };
 
   const handleDeleteCourseName = () => {
@@ -660,7 +691,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                 />
               </div>
             </div>
-            
+
             <div className="cus-medium-button-style button-height">
               <button
                 onClick={() => {
@@ -902,14 +933,15 @@ const TimeSlot = ({ getNewCount, title }) => {
                     Select Date
                   </label>
                   <div className="col-lg-9 col-xl-6">
-                  <DatePicker
-                        id="date"
-                        format="DD/MM/YYYY"
-                        selected={new Date(date)}
-                        onChange={(date) => {setDate(date);
-                          setErrorsForAdd({ ...errorsForAdd, date: "" });}
-                      }
-                      />
+                    <DatePicker
+                      id="date"
+                      format="DD/MM/YYYY"
+                      selected={new Date(date)}
+                      onChange={(date) => {
+                        setDate(date);
+                        setErrorsForAdd({ ...errorsForAdd, date: "" });
+                      }}
+                    />
                     <span
                       style={{
                         color: "red",
@@ -927,7 +959,15 @@ const TimeSlot = ({ getNewCount, title }) => {
                     Enter Start Time
                   </label>
                   <div className="col-lg-9 col-xl-6">
-                    <TimeSelect setStartDate={setStartDate} />
+                    {/* <TimeSelect setStartDate={setStartDate} /> */}
+                    <TimePicker
+                      showSecond={false}
+                      defaultValue={now}
+                      onChange={onChange}
+                      format={format}
+                      use12Hours
+                      inputReadOnly
+                    />
                     <span
                       style={{
                         color: "red",
@@ -939,14 +979,21 @@ const TimeSlot = ({ getNewCount, title }) => {
                     </span>
                   </div>
                 </div>
-
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter End Time
                   </label>
                   <div className="col-lg-9 col-xl-6">
-                    <EndTime setEndDate={setEndDate} />
+                    {/* <EndTime setEndDate={setEndDate} /> */}
+                    <TimePicker
+                      showSecond={false}
+                      defaultValue={now1}
+                      onChange={onChange1}
+                      format={format1}
+                      use12Hours
+                      inputReadOnly
+                    />
                     <span
                       style={{
                         color: "red",
@@ -958,8 +1005,6 @@ const TimeSlot = ({ getNewCount, title }) => {
                     </span>
                   </div>
                 </div>
-
-                
 
                 <div className="d-flex align-items-center justify-content-center">
                   <button
