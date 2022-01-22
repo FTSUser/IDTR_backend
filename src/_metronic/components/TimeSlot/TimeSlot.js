@@ -70,6 +70,10 @@ const TimeSlot = ({ getNewCount, title }) => {
   const [selectedCourseName, setSelectedCourseName] = useState([]);
   const [date, setDate] = useState(new Date());
   const [allTimeSlot, setAllTimeSlot] = useState([]);
+  const [allVehicleCategoryForUpdate, setAllVehicleCategoryForUpdate] =
+    useState([]);
+  const [allCourseTypeForUpdate, setAllCourseTypeForUpdate] = useState([]);
+  const [allCourseNameForUpdate, setAllCourseNameForUpdate] = useState([]);
 
   // const [startDate, setStartDate] = useState("");
 
@@ -79,8 +83,8 @@ const TimeSlot = ({ getNewCount, title }) => {
   };
 
   useEffect(() => {
-    console.log("selectedVehicleCategory", selectedVehicleCategory);
-  }, [selectedVehicleCategory]);
+    console.log("errorsForAdd", errorsForAdd);
+  }, [errorsForAdd]);
 
   useEffect(() => {
     console.log("selectedCourseName", selectedCourseName);
@@ -109,10 +113,10 @@ const TimeSlot = ({ getNewCount, title }) => {
     if (e.target.name === "seat") {
       let val = e.target.value.replace(/\D/g, "");
       setInputValueForAdd({ ...inputValueForAdd, [name]: val });
-      setErrors({ ...errorsForAdd, [name]: "" });}
+      setErrors({ ...errorsForAdd, [name]: "" });
+    }
     setInputValueForAdd({ ...inputValueForAdd, [name]: value });
     setErrorsForAdd({ ...errorsForAdd, [name]: "" });
-    
   };
 
   useEffect(() => {
@@ -143,14 +147,11 @@ const TimeSlot = ({ getNewCount, title }) => {
 
   const handleAddAdminClose = () => {
     setInputValueForAdd({});
-    setDate("");
-    setEndTime("");
-    setStartTime("");
+    setIsAddCourseName(false);
+    setErrorsForAdd({});
     setSelectedCourseName([]);
     setSelectedCourseType([]);
     setSelectedVehicleCategory([]);
-    setIsAddCourseName(false);
-    setErrorsForAdd({});
   };
 
   const handleClose = () => {
@@ -174,6 +175,11 @@ const TimeSlot = ({ getNewCount, title }) => {
   function onChange(value) {
     console.log("TESTTEST", value?.toDate());
     setStartTime(value?.toDate());
+    setErrorsForAdd({
+      ...errorsForAdd,
+      startTime: "",
+    });
+
     // setStartDate(value.format(format))
   }
 
@@ -186,10 +192,13 @@ const TimeSlot = ({ getNewCount, title }) => {
   function onChange1(value) {
     console.log("TESTTEST22", value?.toDate());
     setEndTime(value?.toDate());
+    setErrorsForAdd({
+      ...errorsForAdd,
+      endTime: "",
+    });
   }
 
   //time end
-
 
   const getAllCourseType = async () => {
     setIsLoaderVisible(true);
@@ -282,18 +291,17 @@ const TimeSlot = ({ getNewCount, title }) => {
   const validateFormForAddAdmin = () => {
     let formIsValid = true;
     let errorsForAdd = {};
-    if (inputValueForAdd && !inputValueForAdd.VehicleCategory) {
+    if (selectedVehicleCategory?.length <= 0) {
       formIsValid = false;
       errorsForAdd["VehicleCategory"] = "*Please Enter Vehicle Category!";
     }
 
-    
-    if (inputValueForAdd && !inputValueForAdd.CourseType) {
+    if (selectedCourseType?.length <= 0) {
       formIsValid = false;
       errorsForAdd["CourseType"] = "*Please Enter CourseType!";
     }
 
-    if (inputValueForAdd && !inputValueForAdd.CourseName) {
+    if (selectedCourseName?.length <= 0) {
       formIsValid = false;
       errorsForAdd["CourseName"] = "*Please Enter CourseName!";
     }
@@ -301,13 +309,11 @@ const TimeSlot = ({ getNewCount, title }) => {
     if (inputValueForAdd && !inputValueForAdd.seat) {
       formIsValid = false;
       errorsForAdd["seat"] = "*Please Enter seat Number!";
-    } else if (inputValueForAdd.seat<0) {
+    } else if (inputValueForAdd.seat < 0) {
       formIsValid = false;
       errorsForAdd["seat"] = "*Please Enter vaild seat number!";
     }
 
-   
-    
     if (!date) {
       formIsValid = false;
       errorsForAdd["date"] = "*Please Enter date!";
@@ -327,8 +333,8 @@ const TimeSlot = ({ getNewCount, title }) => {
 
   const handelAddCourseNameDetails = (e) => {
     e.preventDefault();
-    
-     if (validateFormForAddAdmin()) {
+
+    if (validateFormForAddAdmin()) {
       const newCourseName = [];
       {
         selectedCourseName.map((sub, i) => {
@@ -351,11 +357,10 @@ const TimeSlot = ({ getNewCount, title }) => {
         date: date,
         seat: inputValueForAdd?.seat,
         endTime: endTime,
-        startTime:startTime,
+        startTime: startTime,
         cnid: newCourseName,
         ctid: newCourseType,
-        vcid:newVehicleCategory,
-
+        vcid: newVehicleCategory,
       };
       ApiPost(`trainingDate/addDate`, Data)
         .then((res) => {
@@ -364,6 +369,12 @@ const TimeSlot = ({ getNewCount, title }) => {
             setIsAddCourseName(false);
             toast.success(res?.data?.message);
             setInputValueForAdd({});
+
+            setIsAddCourseName(false);
+            setErrorsForAdd({});
+            setSelectedCourseName([]);
+            setSelectedCourseType([]);
+            setSelectedVehicleCategory([]);
             getAllCourseName();
           } else {
             toast.error(res?.data?.message);
@@ -401,13 +412,12 @@ const TimeSlot = ({ getNewCount, title }) => {
   const validateForm = () => {
     let formIsValid = true;
     let errors = {};
-   
+
     if (inputValue && !inputValue.VehicleCategory) {
       formIsValid = false;
       errors["VehicleCategory"] = "*Please Enter Vehicle Category!";
     }
 
-    
     if (inputValue && !inputValue.CourseType) {
       formIsValid = false;
       errors["CourseType"] = "*Please Enter CourseType!";
@@ -421,13 +431,11 @@ const TimeSlot = ({ getNewCount, title }) => {
     if (inputValue && !inputValue.seat) {
       formIsValid = false;
       errors["seat"] = "*Please Enter seat Number!";
-    } else if (inputValue.seat<0) {
+    } else if (inputValue.seat < 0) {
       formIsValid = false;
       errors["seat"] = "*Please Enter vaild seat number!";
     }
 
-   
-    
     if (!date) {
       formIsValid = false;
       errors["date"] = "*Please Enter date!";
@@ -440,7 +448,6 @@ const TimeSlot = ({ getNewCount, title }) => {
       formIsValid = false;
       errors["endTime"] = "*Please Enter endTime!";
     }
-
 
     setErrors(errors);
     return formIsValid;
@@ -494,7 +501,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         return <span>{moment(row?.createdAt).format("ll")}</span>;
       },
       sortable: true,
-      selector: row => row?.createdAt,
+      selector: (row) => row?.createdAt,
     },
     {
       name: "Start Time",
@@ -502,7 +509,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         return <span>{moment(row?.startTime).format("LT")}</span>;
       },
       sortable: true,
-      selector: row => row?.startTime,
+      selector: (row) => row?.startTime,
     },
     {
       name: "End Time",
@@ -510,7 +517,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         return <span>{moment(row?.endTime).format("LT")}</span>;
       },
       sortable: true,
-      selector: row => row?.endTime,
+      selector: (row) => row?.endTime,
     },
 
     {
@@ -524,7 +531,7 @@ const TimeSlot = ({ getNewCount, title }) => {
       cell: (row) => {
         return (
           <>
-            <div className="d-flex justify-content-between">
+            {/* <div className="d-flex justify-content-between">
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
@@ -547,13 +554,16 @@ const TimeSlot = ({ getNewCount, title }) => {
                     CourseType: row?.ctid?._id,
                     VehicleCategory: row?.vcid?._id,
                   });
+                  setAllVehicleCategoryForUpdate(row?.vcid)
+                  setAllCourseNameForUpdate(row?.cnid)
+                  setAllCourseTypeForUpdate(row?.ctid)
                 }}
               >
                 <Tooltip title="Edit CourseName" arrow>
                   <CreateIcon />
                 </Tooltip>
               </div>
-            </div>
+            </div> */}
 
             <div
               className="cursor-pointer"
@@ -567,7 +577,7 @@ const TimeSlot = ({ getNewCount, title }) => {
               </Tooltip>
             </div>
 
-            <>
+            {/* <>
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
@@ -581,7 +591,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                   <InfoOutlinedIcon />
                 </Tooltip>
               </div>
-            </>
+            </> */}
           </>
         );
       },
@@ -811,7 +821,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                           setSelectedVehicleCategory(selectedList);
                           setErrorsForAdd({
                             ...errorsForAdd,
-                            selectedTopSubjects: "",
+                            VehicleCategory: "",
                           });
                         }}
                         onRemove={(selectedList, removedItem) => {
@@ -843,7 +853,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                         setSelectedCourseType(selectedList);
                         setErrorsForAdd({
                           ...errorsForAdd,
-                          selectedTopSubjects: "",
+                          CourseType: "",
                         });
                       }}
                       onRemove={(selectedList, removedItem) => {
@@ -874,7 +884,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                         setSelectedCourseName(selectedList);
                         setErrorsForAdd({
                           ...errorsForAdd,
-                          selectedCourseName: "",
+                          CourseName: "",
                         });
                       }}
                       onRemove={(selectedList, removedItem) => {
@@ -1048,36 +1058,21 @@ const TimeSlot = ({ getNewCount, title }) => {
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
-                      <select
-                        className={`form-control form-control-lg form-control-solid `}
-                        id="VehicleCategory"
-                        name="VehicleCategory"
-                        // value={inputValue.VehicleCategory}
-                        onChange={(e) => {
-                          handleOnChnage(e);
+                      <Multiselect
+                        options={filteredVehicleCategory}
+                        onSelect={(selectedList, selectedItem) => {
+                          setSelectedVehicleCategory(selectedList);
+                          setErrorsForAdd({
+                            ...errorsForAdd,
+                            selectedTopSubjects: "",
+                          });
                         }}
-                      >
-                        <option value="" disabled selected hidden>
-                          Select Vehicle Category
-                        </option>
-                        {filteredVehicleCategory?.length > 0 &&
-                          filteredVehicleCategory?.map((item) => {
-                            return (
-                              <option
-                                key={item?._id}
-                                value={item?._id}
-                                selected={
-                                  inputValue?.VehicleCategory === item?._id
-                                    ? true
-                                    : false
-                                }
-                              >
-                                {" "}
-                                {item?.vehicleCategory}{" "}
-                              </option>
-                            );
-                          })}
-                      </select>
+                        onRemove={(selectedList, removedItem) => {
+                          setSelectedVehicleCategory(selectedList);
+                        }}
+                        displayValue="vehicleCategory"
+                        selectedValues={allVehicleCategoryForUpdate}
+                      />
                     </div>
                     <span
                       style={{
@@ -1086,7 +1081,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                         fontSize: "12px",
                       }}
                     >
-                      {errors["VehicleCategory"]}
+                      {errorsForAdd["VehicleCategory"]}
                     </span>
                   </div>
                 </div>
@@ -1096,35 +1091,21 @@ const TimeSlot = ({ getNewCount, title }) => {
                     Select Course Type
                   </label>
                   <div className="col-lg-9 col-xl-6">
-                    <div>
-                      <select
-                        className={`form-control form-control-lg form-control-solid `}
-                        id="CourseType"
-                        name="CourseType"
-                        // value={inputValue.CourseType}
-                        onChange={(e) => {
-                          handleOnChnage(e);
-                        }}
-                      >
-                        {getCourseType?.length > 0 &&
-                          getCourseType?.map((item) => {
-                            return (
-                              <option
-                                key={item._id}
-                                value={item._id}
-                                selected={
-                                  inputValue?.CourseType === item._id
-                                    ? true
-                                    : false
-                                }
-                              >
-                                {" "}
-                                {item.courseType}{" "}
-                              </option>
-                            );
-                          })}
-                      </select>
-                    </div>
+                    <Multiselect
+                      options={getCourseType}
+                      onSelect={(selectedList, selectedItem) => {
+                        setSelectedCourseType(selectedList);
+                        setErrorsForAdd({
+                          ...errorsForAdd,
+                          selectedTopSubjects: "",
+                        });
+                      }}
+                      onRemove={(selectedList, removedItem) => {
+                        setSelectedCourseType(selectedList);
+                      }}
+                      displayValue="courseType"
+                      selectedValues={allCourseTypeForUpdate}
+                    />
                     <span
                       style={{
                         color: "red",
@@ -1132,7 +1113,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                         fontSize: "12px",
                       }}
                     >
-                      {errors["CourseType"]}
+                      {errorsForAdd["CourseType"]}
                     </span>
                   </div>
                 </div>
@@ -1142,35 +1123,21 @@ const TimeSlot = ({ getNewCount, title }) => {
                     Select Course Name
                   </label>
                   <div className="col-lg-9 col-xl-6">
-                    <div>
-                      <select
-                        className={`form-control form-control-lg form-control-solid `}
-                        id="CourseName"
-                        name="CourseName"
-                        // value={inputValue.CourseType}
-                        onChange={(e) => {
-                          handleOnChnage(e);
-                        }}
-                      >
-                        {getCourseType?.length > 0 &&
-                          getCourseType?.map((item) => {
-                            return (
-                              <option
-                                key={item._id}
-                                value={item._id}
-                                selected={
-                                  inputValue?.CourseType === item._id
-                                    ? true
-                                    : false
-                                }
-                              >
-                                {" "}
-                                {item.courseName}{" "}
-                              </option>
-                            );
-                          })}
-                      </select>
-                    </div>
+                    <Multiselect
+                      options={filteredCourseName}
+                      onSelect={(selectedList, selectedItem) => {
+                        setSelectedCourseName(selectedList);
+                        setErrorsForAdd({
+                          ...errorsForAdd,
+                          selectedCourseName: "",
+                        });
+                      }}
+                      onRemove={(selectedList, removedItem) => {
+                        setSelectedCourseName(selectedList);
+                      }}
+                      displayValue="courseName"
+                      selectedValues={allCourseNameForUpdate}
+                    />
                     <span
                       style={{
                         color: "red",
@@ -1178,7 +1145,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                         fontSize: "12px",
                       }}
                     >
-                      {errors["CourseName"]}
+                      {errorsForAdd["CourseName"]}
                     </span>
                   </div>
                 </div>
