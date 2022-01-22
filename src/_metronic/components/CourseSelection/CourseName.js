@@ -93,9 +93,6 @@ const CourseName = ({ getNewCount, title }) => {
     console.log("filteredVehicleCategory", filteredVehicleCategory);
   }, [filteredVehicleCategory]);
 
-  // useEffect(() => {
-  //     title === "Dashboard | OUR LEISURE HOME" ? document.title = title : document.title = "FAQs | OUR LEISURE HOME"
-  // }, [])
 
   useEffect(() => {
     console.log("idForEditStatus", idForEditStatus);
@@ -298,10 +295,7 @@ const CourseName = ({ getNewCount, title }) => {
         price: inputValueForAdd.Price,
         ctid: inputValueForAdd.CourseType,
         vcid: inputValueForAdd.VehicleCategory,
-        // ctid :
-
-        // answer: inputValueForAdd.answer,
-        // ctid : "61dfc5645e9d45193cb1a0b6"
+       
       };
       ApiPost(`courseName/addCourseName`, Data)
         .then((res) => {
@@ -311,7 +305,6 @@ const CourseName = ({ getNewCount, title }) => {
             toast.success(res?.data?.message);
             setInputValueForAdd({});
             getAllCourseName();
-            // { document.title === "Dashboard | OUR LEISURE HOME" && getNewCount() }
           } else {
             toast.error(res?.data?.message);
           }
@@ -331,7 +324,6 @@ const CourseName = ({ getNewCount, title }) => {
           setShow(false);
           toast.success("Deleted Successfully");
           getAllCourseName();
-          // { document.title === "Dashboard | OUR LEISURE HOME" && getNewCount() }
           setPage(1);
           setCount(0);
           setCountPerPage(countPerPage);
@@ -431,8 +423,7 @@ const CourseName = ({ getNewCount, title }) => {
         ctid: inputValue.CourseType,
         vcid: inputValue?.VehicleCategory
 
-        // answer: inputValueForAdd.answer,
-        // ctid : "61dfc5645e9d45193cb1a0b6"
+       
       };
       ApiPut(`courseName/updateCourseName/${idForUpdateCourseNameData}`, Data)
         .then((res) => {
@@ -526,11 +517,7 @@ const CourseName = ({ getNewCount, title }) => {
       },
       sortable: true,
     },
-    // {
-    //     name: "Answer",
-    //     selector: "answer",
-    //     sortable: true,
-    // },
+    
     {
       name: "Actions",
       cell: (row) => {
@@ -558,7 +545,6 @@ const CourseName = ({ getNewCount, title }) => {
                     Price: row?.price,
                     CourseType: row?.ctid?._id,
                     VehicleCategory: row?.vcid?._id
-                    // answer: row?.answer,
                   });
                 }}
               >

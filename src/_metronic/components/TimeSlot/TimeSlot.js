@@ -9,6 +9,8 @@ import {
 import { Tooltip } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import List from "@material-ui/core/List";
+import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
+
 import Toolbar from "@material-ui/core/Toolbar";
 import CreateIcon from "@material-ui/icons/Create";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -24,23 +26,23 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CourseType = ({ getNewCount, title }) => {
-  const [filteredCourseType, setFilteredCourseType] = useState({});
+const TimeSlot = ({ getNewCount, title }) => {
+  const [filteredCourseName, setFilteredCourseName] = useState({});
   const [isLoaderVisible, setIsLoaderVisible] = useState(false);
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
 
   //new data
-  const [isUpdateCourseType, setIsUpdateCourseType] = useState(false);
-  const [isAddCourseType, setIsAddCourseType] = useState(false);
-  const [idForUpdateCourseTypeData, setIdForUpdateCourseTypeData] =
+  const [isUpdateCourseName, setIsUpdateCourseName] = useState(false);
+  const [isAddCourseName, setIsAddCourseName] = useState(false);
+  const [idForUpdateCourseNameData, setIdForUpdateCourseNameData] =
     useState("");
   const [inputValue, setInputValue] = useState({});
   const [inputValueForAdd, setInputValueForAdd] = useState({});
   const [errors, setErrors] = useState({});
   const [errorsForAdd, setErrorsForAdd] = useState({});
   const [idForEditStatus, setIdForEditStatus] = useState("");
-  const [idForDeleteCourseType, setIdForDeleteCourseType] = useState("");
+  const [idForDeleteCourseName, setIdForDeleteCourseName] = useState("");
   const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
@@ -49,8 +51,23 @@ const CourseType = ({ getNewCount, title }) => {
   const [showStatus, setShowStatus] = useState(false);
   const [idForUpdateCourseStatus, setIdForUpdateCourseStatus] = useState("");
   const [statusDisplay, setStatusDisplay] = useState(false);
-  // const [getVehicleCategory, setGetVehicleCategory] = useState([]);
-  const [filteredVehicleCategory, setFilteredVehicleCategory] = useState({});
+  const [getCourseType, setGetCourseType] = useState([]);
+  const [courseTypeArr, setCourseTypeArr] = useState();
+  const [filteredVehicleCategory, setFilteredVehicleCategory] = useState([]);
+
+  const [dataViewMore, setDataViewMore] = useState({});
+  const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
+
+
+
+
+
+
+
+  const handleViewMoreClose = () => {
+    setIsViewMoreAboutus(false);
+    setDataViewMore({});
+  };
 
   const handleOnChnage = (e) => {
     const { name, value } = e.target;
@@ -65,17 +82,16 @@ const CourseType = ({ getNewCount, title }) => {
   };
 
   useEffect(() => {
-    console.log("inputValueForAdd", inputValueForAdd);
+    console.log("inputValue", inputValueForAdd);
   }, [inputValueForAdd]);
-
+  
   useEffect(() => {
-    console.log("inputValue", inputValue);
+    console.log("inputValueeeee", inputValue);
   }, [inputValue]);
 
   useEffect(() => {
     console.log("filteredVehicleCategory", filteredVehicleCategory);
   }, [filteredVehicleCategory]);
-
 
   useEffect(() => {
     console.log("idForEditStatus", idForEditStatus);
@@ -83,39 +99,58 @@ const CourseType = ({ getNewCount, title }) => {
 
   const handleAdminUpdateClose = () => {
     setInputValue({});
-    setIsUpdateCourseType(false);
+    setIsUpdateCourseName(false);
+    setErrors({})
   };
 
   const handleAddAdminClose = () => {
     setInputValueForAdd({});
-    setIsAddCourseType(false);
-  };
-
-  const handleCloseShowStatus = () => {
-    setShowStatus(false);
+    setIsAddCourseName(false);
+    setErrorsForAdd({})
   };
 
   const handleClose = () => {
     setShow(false);
   };
 
+  const handleCloseShowStatus = () => {
+    setShowStatus(false);
+  };
+
   useEffect(() => {
-    getAllCourseType();
+    getAllCourseName();
   }, [page, countPerPage]);
 
   const getAllCourseType = async () => {
     setIsLoaderVisible(true);
-      await ApiGet(`courseType/getAllCourseType?page=${page}&limit=${countPerPage}`)
+    if (!search) {
+      await ApiGet(`courseType/getAllCourseType?page=${page}&limit=1000`)
         .then((res) => {
           setIsLoaderVisible(false);
           console.log("artistreport", res);
-          setFilteredCourseType(res?.data?.payload?.Question);
-          setCount(res?.data?.payload?.count);
+          setGetCourseType(res?.data?.payload?.Question);
+          // courseTypeArr.push(getCourseType.map((item)=>item.courseType))
+          console.log("courseTypeArr", courseTypeArr);
+          // setCount(res?.data?.payload?.count);
         })
         .catch((err) => {
           console.log(err);
-        })
+        });
+    }
+    // else {
+    //     await ApiGet(`courseType/getAllCourseType?search=${search}&page=${page}&limit=${countPerPage}`)
+    //         .then((res) => {
+    //             setIsLoaderVisible(false);
+    //             console.log("artistreport", res);
+    //             setFilteredCourseType(res?.data?.payload?.Question);
+    //             setCount(res?.data?.payload?.count);
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         });
+    // }
   };
+
 
   const getAllVehicleCategory = async () => {
     setIsLoaderVisible(true);
@@ -132,8 +167,37 @@ const CourseType = ({ getNewCount, title }) => {
         });
   };
 
+  const getAllCourseName = async () => {
+    setIsLoaderVisible(true);
+    if (!search) {
+      await ApiGet(`courseName/getAllCourseName?page=${page}&limit=${countPerPage}`)
+        .then((res) => {
+          setIsLoaderVisible(false);
+          console.log("artistreport", res);
+          setFilteredCourseName(res?.data?.payload?.Question);
+          setCount(res?.data?.payload?.count);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      await ApiGet(
+        `courseName/getAllCourseName?search=${search}&page=${page}&limit=${countPerPage}`
+      )
+        .then((res) => {
+          setIsLoaderVisible(false);
+          console.log("artistreport", res);
+          setFilteredCourseName(res?.data?.payload?.Question);
+          setCount(res?.data?.payload?.count);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   const handleUpdateStatusProperty = (status) => {
-    ApiPut(`courseType/updateStatus/${idForUpdateCourseStatus}`, {
+    ApiPut(`courseName/updateStatus/${idForUpdateCourseStatus}`, {
       isActive: status,
     })
       // ApiPut(`property/updateProperty/${idForUpdatePropertyStatus}`)
@@ -141,7 +205,7 @@ const CourseType = ({ getNewCount, title }) => {
         if (res?.status == 200) {
           setShowStatus(false);
           toast.success("Status updated Successfully");
-          getAllCourseType();
+          getAllCourseName();
         } else {
           toast.error(res?.data?.message);
         }
@@ -154,45 +218,92 @@ const CourseType = ({ getNewCount, title }) => {
   const validateFormForAddAdmin = () => {
     let formIsValid = true;
     let errorsForAdd = {};
+    if (inputValueForAdd && !inputValueForAdd.CourseName) {
+      formIsValid = false;
+      errorsForAdd["CourseName"] = "*Please Enter Course Name!";
+    }
+
+    if (inputValueForAdd && !inputValueForAdd.Description) {
+      formIsValid = false;
+      errorsForAdd["Description"] = "*Please Enter Description!";
+    }
+
     if (inputValueForAdd && !inputValueForAdd.CourseType) {
       formIsValid = false;
-      errorsForAdd["CourseType"] = "*Please Enter Course Type!";
+      errorsForAdd["CourseType"] = "*Please Enter CourseType!";
     }
 
-    if (inputValueForAdd && !inputValueForAdd.VehicleDescription) {
+    if (inputValueForAdd && !inputValueForAdd.Duration) {
       formIsValid = false;
-      errorsForAdd["VehicleDescription"] = "*Please Enter Description!";
+      errorsForAdd["Duration"] = "*Please Enter Duration!";
     }
 
-    if (inputValueForAdd && !inputValueForAdd.VehicleCategory) {
+    if (inputValueForAdd && !inputValueForAdd.Timing) {
       formIsValid = false;
-      errorsForAdd["VehicleCategory"] = "*Please Enter Vehicle Category!";
+      errorsForAdd["Timing"] = "*Please Enter Timing!";
     }
 
-    
+    if (inputValueForAdd && !inputValueForAdd.Mode) {
+      formIsValid = false;
+      errorsForAdd["Mode"] = "*Please Enter Mode!";
+    }
+
+    if (inputValueForAdd && !inputValueForAdd.DocumentRequired) {
+      formIsValid = false;
+      errorsForAdd["DocumentRequired"] = "*Please Enter Document Required!";
+    }
+
+    if (inputValueForAdd && !inputValueForAdd.Validity) {
+      formIsValid = false;
+      errorsForAdd["Validity"] = "*Please Enter Validity!";
+    }
+
+    if (inputValueForAdd && !inputValueForAdd.SystemRequirement) {
+      formIsValid = false;
+      errorsForAdd["SystemRequirement"] = "*Please Enter System Requirement!";
+    }
+
+    if (inputValueForAdd && !inputValueForAdd.Certificate) {
+      formIsValid = false;
+      errorsForAdd["Certificate"] = "*Please Enter Certificate!";
+    }
+
+    if (inputValueForAdd && !inputValueForAdd.Price) {
+      formIsValid = false;
+      errorsForAdd["Price"] = "*Please Enter Price!";
+    }
 
     setErrorsForAdd(errorsForAdd);
     return formIsValid;
   };
 
-  const handelAddCourseTypeDetails = (e) => {
+  const handelAddCourseNameDetails = (e) => {
     e.preventDefault();
     if (validateFormForAddAdmin()) {
       let Data = {
-        courseType: inputValueForAdd.CourseType,
-        description: inputValueForAdd.VehicleDescription,
+        courseName: inputValueForAdd.CourseName,
+        description: inputValueForAdd.Description,
         isActive: true,
+        certificate: inputValueForAdd.Certificate,
+        documentRequired: inputValueForAdd.DocumentRequired,
+        mode: inputValueForAdd.Mode,
+        systemRequirement: inputValueForAdd.SystemRequirement,
+        timing: inputValueForAdd.Timing,
+        duration: inputValueForAdd.Duration,
+        validity: inputValueForAdd.Validity,
+        price: inputValueForAdd.Price,
+        ctid: inputValueForAdd.CourseType,
         vcid: inputValueForAdd.VehicleCategory,
-        
+       
       };
-      ApiPost(`courseType/addCourseType`, Data)
+      ApiPost(`courseName/addCourseName`, Data)
         .then((res) => {
           console.log("resresres", res);
           if (res?.status == 200) {
-            setIsAddCourseType(false);
+            setIsAddCourseName(false);
             toast.success(res?.data?.message);
             setInputValueForAdd({});
-            getAllCourseType();
+            getAllCourseName();
           } else {
             toast.error(res?.data?.message);
           }
@@ -203,13 +314,15 @@ const CourseType = ({ getNewCount, title }) => {
     }
   };
 
-  const handleDeleteCourseType = () => {
-    ApiDelete(`courseType/deleteCourseType/${idForDeleteCourseType}`)
+  
+
+  const handleDeleteCourseName = () => {
+    ApiDelete(`courseName/deleteCourseName/${idForDeleteCourseName}`)
       .then((res) => {
         if (res?.status == 200) {
           setShow(false);
           toast.success("Deleted Successfully");
-          getAllCourseType();
+          getAllCourseName();
           setPage(1);
           setCount(0);
           setCountPerPage(countPerPage);
@@ -229,43 +342,95 @@ const CourseType = ({ getNewCount, title }) => {
   const validateForm = () => {
     let formIsValid = true;
     let errors = {};
+    if (inputValue && !inputValue.CourseName) {
+      formIsValid = false;
+      errors["CourseName"] = "*Please Enter CourseName!";
+    }
+
+    if (inputValue && !inputValue.Description) {
+      formIsValid = false;
+      errors["Description"] = "*Please Enter Description!";
+    }
+
     if (inputValue && !inputValue.CourseType) {
       formIsValid = false;
       errors["CourseType"] = "*Please Enter CourseType!";
     }
 
-    if (inputValue && !inputValue.VehicleDescription) {
+    if (inputValue && !inputValue.Duration) {
       formIsValid = false;
-      errors["VehicleDescription"] = "*Please Enter Vehicle Description!";
+      errors["Duration"] = "*Please Enter Duration!";
     }
 
-    // if (inputValue && !inputValue.VehicleCategory) {
-    //     formIsValid = false;
-    //     errors["VehicleCategory"] = "*Please Enter Vehicle Category!";
-    // }
+    if (inputValue && !inputValue.Timing) {
+      formIsValid = false;
+      errors["Timing"] = "*Please Enter Timing!";
+    }
+
+    if (inputValue && !inputValue.Mode) {
+      formIsValid = false;
+      errors["Mode"] = "*Please Enter Mode!";
+    }
+
+    if (inputValue && !inputValue.DocumentRequired) {
+      formIsValid = false;
+      errors["DocumentRequired"] = "*Please Enter Document Required!";
+    }
+
+    if (inputValue && !inputValue.Validity) {
+      formIsValid = false;
+      errors["Validity"] = "*Please Enter Validity!";
+    }
+
+    if (inputValue && !inputValue.SystemRequirement) {
+      formIsValid = false;
+      errors["SystemRequirement"] = "*Please Enter System Requirement!";
+    }
+
+    if (inputValue && !inputValue.Certificate) {
+      formIsValid = false;
+      errors["Certificate"] = "*Please Enter Certificate!";
+    }
+
+    if (inputValue && !inputValue.Price) {
+      formIsValid = false;
+      errors["Price"] = "*Please Enter Price!";
+    }
+    if (inputValue && !inputValue.VehicleCategory) {
+      formIsValid = false;
+      errors["VehicleCategory"] = "*Please Enter Price!";
+    }
 
     setErrors(errors);
     return formIsValid;
   };
 
-  const handelUpdateCourseTypeDetails = (e) => {
+  const handelUpdateCourseNameDetails = (e) => {
     e.preventDefault();
     if (validateForm()) {
       let Data = {
-        courseType: inputValue.CourseType,
-        description: inputValue.VehicleDescription,
-        vcid: inputValue.VehicleCategory,
+        courseName: inputValue.CourseName,
+        description: inputValue.Description,
+        certificate: inputValue.Certificate,
+        documentRequired: inputValue.DocumentRequired,
+        mode: inputValue.Mode,
+        systemRequirement: inputValue.SystemRequirement,
+        timing: inputValue.Timing,
+        duration: inputValue.Duration,
+        validity: inputValue.Validity,
+        price: inputValue.Price,
+        ctid: inputValue.CourseType,
+        vcid: inputValue?.VehicleCategory
 
-     
       };
-      ApiPut(`courseType/updateCourseType/${idForUpdateCourseTypeData}`, Data)
+      ApiPut(`courseName/updateCourseName/${idForUpdateCourseNameData}`, Data)
         .then((res) => {
           console.log("resres", res);
           if (res?.status == 200) {
-            setIsUpdateCourseType(false);
+            setIsUpdateCourseName(false);
             toast.success(res?.data?.message);
             setInputValue({});
-            getAllCourseType();
+            getAllCourseName();
           } else {
             toast.error(res?.data?.message);
           }
@@ -284,22 +449,12 @@ const CourseType = ({ getNewCount, title }) => {
       width: "65px",
     },
     {
-      name: "Course Type",
-      selector: "courseType",
-      sortable: true,
-    },
-    {
-      name: "Vehicle Category",
-      selector: "vehicleCategory",
-      selector: row => row?.vcid?.vehicleCategory,
+      name: "Course Name",
+      selector: "courseName",
       sortable: true,
     },
 
-    {
-      name: "Vehicle Description",
-      selector: "description",
-      sortable: true,
-    },
+  
 
     {
       name: "Display?",
@@ -327,7 +482,6 @@ const CourseType = ({ getNewCount, title }) => {
       },
       sortable: true,
     },
-
     
     {
       name: "Actions",
@@ -338,35 +492,65 @@ const CourseType = ({ getNewCount, title }) => {
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
-                  setIsUpdateCourseType(true);
-                  setIdForUpdateCourseTypeData(row._id);
+                    console.log("typetype",row);
+                  setIsUpdateCourseName(true);
+                  setIdForUpdateCourseNameData(row._id);
+                  getAllCourseType();
                   getAllVehicleCategory();
-                  console.log("rowcheck", row?.vcid?._id);
-
                   setInputValue({
-                    VehicleCategory: row?.vcid?._id,
-                    CourseType: row?.courseType,
-                    VehicleDescription: row?.description,
+                    CourseName: row?.courseName,
+                    Description: row?.description,
+                    Certificate: row?.certificate,
+                    DocumentRequired: row?.documentRequired,
+                    Mode: row?.mode,
+                    SystemRequirement: row?.systemRequirement,
+                    Timing: row?.timing,
+                    Duration: row?.duration,
+                    Validity: row?.validity,
+                    Price: row?.price,
+                    CourseType: row?.ctid?._id,
+                    VehicleCategory: row?.vcid?._id
                   });
-                  console.log("a", inputValue);
                 }}
               >
-                <Tooltip title="Edit CourseType" arrow>
+                <Tooltip title="Edit CourseName" arrow>
                   <CreateIcon />
                 </Tooltip>
               </div>
             </div>
+
             <div
               className="cursor-pointer"
               onClick={() => {
                 setShow(true);
-                setIdForDeleteCourseType(row?._id);
+                setIdForDeleteCourseName(row?._id);
               }}
             >
-              <Tooltip title="Delete Course Type" arrow>
+              <Tooltip title="Delete Course Name" arrow>
                 <DeleteIcon />
               </Tooltip>
             </div>
+
+
+            
+     
+          <>
+           
+            <div
+              className="cursor-pointer pl-2"
+              onClick={() => {
+                setIsViewMoreAboutus(true);
+                setDataViewMore(row);
+                console.log("rowShow", row);
+                console.log("isViewMoreAboutus", isViewMoreAboutus);
+              }}
+            >
+              <Tooltip title="Show More" arrow>
+                <InfoOutlinedIcon />
+              </Tooltip>
+            </div>
+          </>
+        
           </>
         );
       },
@@ -442,12 +626,12 @@ const CourseType = ({ getNewCount, title }) => {
       setPage(1);
       setCount(0);
       setCountPerPage(countPerPage);
-      getAllCourseType();
+      getAllCourseName();
     } else {
       setPage(1);
       setCount(0);
       setCountPerPage(countPerPage);
-      getAllCourseType();
+      getAllCourseName();
     }
   }, [debouncedSearchTerm]);
 
@@ -458,7 +642,7 @@ const CourseType = ({ getNewCount, title }) => {
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2">Course Type</h2>
+              <h2 className="pl-3 pt-2">Time Slot</h2>
             </div>
             <div className="col">
               <div>
@@ -466,7 +650,7 @@ const CourseType = ({ getNewCount, title }) => {
                   type="text"
                   className={`form-control form-control-lg form-control-solid `}
                   name="title"
-                  placeholder="Search Course Type"
+                  placeholder="Search Course Name"
                   onChange={(e) => handleSearch(e)}
                 />
               </div>
@@ -474,12 +658,13 @@ const CourseType = ({ getNewCount, title }) => {
             <div className="cus-medium-button-style button-height">
               <button
                 onClick={() => {
-                  setIsAddCourseType(true);
+                  setIsAddCourseName(true);
+                  getAllCourseType();
                   getAllVehicleCategory();
                 }}
                 className="btn btn-success mr-2"
               >
-                Add Course Type
+                Add Time Slot
               </button>
             </div>
           </div>
@@ -490,7 +675,7 @@ const CourseType = ({ getNewCount, title }) => {
             </Modal.Header>
             <Modal.Body>
               Are You Sure To Want To{" "}
-              {statusDisplay === true ? "De-active" : "Active"} this course type
+              {statusDisplay === true ? "De-active" : "Active"} this course name
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleCloseShowStatus}>
@@ -513,7 +698,7 @@ const CourseType = ({ getNewCount, title }) => {
               <Modal.Title className="text-danger">Alert!</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              Are You Sure To Want To delete this CourseType
+              Are You Sure To Want To delete this Course Name
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
@@ -522,7 +707,7 @@ const CourseType = ({ getNewCount, title }) => {
               <Button
                 variant="danger"
                 onClick={() => {
-                  handleDeleteCourseType();
+                  handleDeleteCourseName();
                 }}
               >
                 Delete
@@ -533,7 +718,7 @@ const CourseType = ({ getNewCount, title }) => {
 
           <DataTable
             columns={columns}
-            data={filteredCourseType}
+            data={filteredCourseName}
             customStyles={customStyles}
             style={{
               marginTop: "-3rem",
@@ -559,10 +744,10 @@ const CourseType = ({ getNewCount, title }) => {
         </div>
       </div>
 
-      {isAddCourseType ? (
+      {isAddCourseName ? (
         <Dialog
           fullScreen
-          open={isAddCourseType}
+          open={isAddCourseName}
           onClose={handleAddAdminClose}
           TransitionComponent={Transition}
         >
@@ -577,9 +762,10 @@ const CourseType = ({ getNewCount, title }) => {
             </IconButton>
           </Toolbar>
           <List>
-            {isAddCourseType === true ? (
-              <div className="form ml-30 "> 
+            {isAddCourseName === true ? (
+              <div className="form ml-30 ">
                 {/* Name Amenintie */}
+
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Select Vehicle Category
@@ -624,20 +810,32 @@ const CourseType = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Course Type
+                    Select Course Type
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
-                      <input
-                        type="text"
+                      <select
                         className={`form-control form-control-lg form-control-solid `}
                         id="CourseType"
                         name="CourseType"
-                        value={inputValueForAdd.CourseType}
+                        // value={inputValueForAdd.CourseType}
                         onChange={(e) => {
                           handleOnChnageAdd(e);
                         }}
-                      />
+                      >
+                        <option value="" disabled selected hidden>
+                          Select Course Type
+                        </option>
+                        {getCourseType?.length > 0 &&
+                          getCourseType?.map((item) => {
+                            return (
+                              <option key={item._id} value={item._id}>
+                                {" "}
+                                {item.courseType}{" "}
+                              </option>
+                            );
+                          })}
+                      </select>
                     </div>
                     <span
                       style={{
@@ -651,22 +849,36 @@ const CourseType = ({ getNewCount, title }) => {
                   </div>
                 </div>
 
+
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Description
+                    Select Course Name
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
-                      <input
-                        type="text"
+                      <select
                         className={`form-control form-control-lg form-control-solid `}
-                        id="VehicleDescription"
-                        name="VehicleDescription"
-                        value={inputValueForAdd.VehicleDescription}
+                        id="CourseName"
+                        name="CourseName"
+                        // value={inputValue.CourseType}
                         onChange={(e) => {
-                          handleOnChnageAdd(e);
+                            handleOnChnage(e);
                         }}
-                      />
+                      >
+                        {getCourseType?.length > 0 &&
+                          getCourseType?.map((item) => {
+                            return (
+                              <option key={item._id} value={item._id} selected={
+                                inputValue?.CourseType === item._id
+                                  ? true
+                                  : false
+                              }>
+                                {" "}
+                                {item.courseName}{" "}
+                              </option>
+                            );
+                          })}
+                      </select>
                     </div>
                     <span
                       style={{
@@ -675,44 +887,15 @@ const CourseType = ({ getNewCount, title }) => {
                         fontSize: "12px",
                       }}
                     >
-                      {errorsForAdd["VehicleDescription"]}
+                      {errors["CourseName"]}
                     </span>
                   </div>
                 </div>
-                {/* <div className="form-group row">
-                                    <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Enter Answer
-                                    </label>
-                                    <div className="col-lg-9 col-xl-6">
-                                        <div>
-                                            <input
-                                                type="text"
-                                                className={`form-control form-control-lg form-control-solid `}
-                                                id="answer"
-                                                name="answer"
-                                                value={inputValueForAdd.answer}
-                                                onChange={(e) => {
-                                                    handleOnChnageAdd(e);
-                                                }}
-                                            />
-                                        </div>
-                                        <span
-                                            style={{
-                                                color: "red",
-                                                top: "5px",
-                                                fontSize: "12px",
-                                            }}
-                                        >
-                                            {errorsForAdd["answer"]}
-                                        </span>
-                                    </div>
-                                    
-                                </div> */}
 
                 <div className="d-flex align-items-center justify-content-center">
                   <button
                     onClick={(e) => {
-                      handelAddCourseTypeDetails(e);
+                      handelAddCourseNameDetails(e);
                     }}
                     className="btn btn-success mr-2"
                   >
@@ -722,16 +905,18 @@ const CourseType = ({ getNewCount, title }) => {
                     )}
                   </button>
                 </div>
+
+                
               </div>
             ) : null}
           </List>
         </Dialog>
       ) : null}
 
-      {isUpdateCourseType ? (
+      {isUpdateCourseName ? (
         <Dialog
           fullScreen
-          open={isUpdateCourseType}
+          open={isUpdateCourseName}
           onClose={handleAdminUpdateClose}
           TransitionComponent={Transition}
         >
@@ -746,7 +931,7 @@ const CourseType = ({ getNewCount, title }) => {
             </IconButton>
           </Toolbar>
           <List>
-            {isUpdateCourseType === true ? (
+            {isUpdateCourseName === true ? (
               <div className="form ml-30 ">
                 {/* Ameninties Name */}
 
@@ -794,27 +979,40 @@ const CourseType = ({ getNewCount, title }) => {
                         fontSize: "12px",
                       }}
                     >
-                      {errorsForAdd["VehicleCategory"]}
+                      {errors["VehicleCategory"]}
                     </span>
                   </div>
                 </div>
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Course Type
+                    Select Course Type
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
-                      <input
-                        type="text"
+                      <select
                         className={`form-control form-control-lg form-control-solid `}
                         id="CourseType"
                         name="CourseType"
-                        value={inputValue.CourseType}
+                        // value={inputValue.CourseType}
                         onChange={(e) => {
-                          handleOnChnage(e);
+                            handleOnChnage(e);
                         }}
-                      />
+                      >
+                        {getCourseType?.length > 0 &&
+                          getCourseType?.map((item) => {
+                            return (
+                              <option key={item._id} value={item._id} selected={
+                                inputValue?.CourseType === item._id
+                                  ? true
+                                  : false
+                              }>
+                                {" "}
+                                {item.courseType}{" "}
+                              </option>
+                            );
+                          })}
+                      </select>
                     </div>
                     <span
                       style={{
@@ -828,22 +1026,36 @@ const CourseType = ({ getNewCount, title }) => {
                   </div>
                 </div>
 
+
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Description
+                    Select Course Name
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
-                      <input
-                        type="text"
+                      <select
                         className={`form-control form-control-lg form-control-solid `}
-                        id="VehicleDescription"
-                        name="VehicleDescription"
-                        value={inputValue.VehicleDescription}
+                        id="CourseName"
+                        name="CourseName"
+                        // value={inputValue.CourseType}
                         onChange={(e) => {
-                          handleOnChnage(e);
+                            handleOnChnage(e);
                         }}
-                      />
+                      >
+                        {getCourseType?.length > 0 &&
+                          getCourseType?.map((item) => {
+                            return (
+                              <option key={item._id} value={item._id} selected={
+                                inputValue?.CourseType === item._id
+                                  ? true
+                                  : false
+                              }>
+                                {" "}
+                                {item.courseName}{" "}
+                              </option>
+                            );
+                          })}
+                      </select>
                     </div>
                     <span
                       style={{
@@ -852,43 +1064,19 @@ const CourseType = ({ getNewCount, title }) => {
                         fontSize: "12px",
                       }}
                     >
-                      {errors["VehicleDescription"]}
+                      {errors["CourseName"]}
                     </span>
                   </div>
                 </div>
-                {/* <div className="form-group row">
-                                    <label className="col-xl-3 col-lg-3 col-form-label">
-                                    Enter Answer
-                                    </label>
-                                    <div className="col-lg-9 col-xl-6">
-                                        <div>
-                                            <input
-                                                type="text"
-                                                className={`form-control form-control-lg form-control-solid `}
-                                                id="answer"
-                                                name="answer"
-                                                value={inputValue.answer}
-                                                onChange={(e) => {
-                                                    handleOnChnage(e);
-                                                }}
-                                            />
-                                        </div>
-                                        <span
-                                            style={{
-                                                color: "red",
-                                                top: "5px",
-                                                fontSize: "12px",
-                                            }}
-                                        >
-                                            {errors["answer"]}
-                                        </span>
-                                    </div>
-                                </div> */}
+
+                  
+
+              
 
                 <div className="d-flex align-items-center justify-content-center">
                   <button
                     onClick={(e) => {
-                      handelUpdateCourseTypeDetails(e);
+                      handelUpdateCourseNameDetails(e);
                     }}
                     className="btn btn-success mr-2"
                   >
@@ -900,6 +1088,136 @@ const CourseType = ({ getNewCount, title }) => {
                 </div>
               </div>
             ) : null}
+
+          </List>
+        </Dialog>
+      ) : null}
+
+
+
+
+{isViewMoreAboutus ? (
+        <Dialog
+          fullScreen
+          open={isViewMoreAboutus}
+          onClose={handleViewMoreClose}
+          TransitionComponent={Transition}
+        >
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleViewMoreClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </Toolbar>
+          <List>
+            {isViewMoreAboutus === true ? (
+              <div className="form ml-30 ">
+                <div className="form-group row mb-0">
+                  <p>Title:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.courseName,
+                    }}
+                    className=""
+                  />
+                </div>
+                <div className="form-group row mb-0">
+                  <p>Description:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.description,
+                    }}
+                    className=""
+                  />
+                </div>
+
+                <div className="form-group row mb-0">
+                  <p>Duration:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.duration,
+                    }}
+                    className=""
+                  />
+                </div>
+                <div className="form-group row mb-0">
+                  <p>Timing:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.timing,
+                    }}
+                    className=""
+                  />
+                </div>
+                <div className="form-group row mb-0">
+                  <p>Mode:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.mode,
+                    }}
+                    className=""
+                  />
+                </div>
+                <div className="form-group row mb-0">
+                  <p>Document Required:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.documentRequired,
+                    }}
+                    className=""
+                  />
+                </div>
+                <div className="form-group row mb-0">
+                  <p>Validity:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.validity,
+                    }}
+                    className=""
+                  />
+                </div>
+                <div className="form-group row mb-0">
+                  <p>System Requirement:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.systemRequirement,
+                    }}
+                    className=""
+                  />
+                </div>
+                <div className="form-group row mb-0">
+                  <p>Price:</p>
+                </div>
+                <div className="form-group row mr-20">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: dataViewMore?.price,
+                    }}
+                    className=""
+                  />
+                </div>
+              </div>
+            ) : null}
           </List>
         </Dialog>
       ) : null}
@@ -907,4 +1225,4 @@ const CourseType = ({ getNewCount, title }) => {
   );
 };
 
-export default CourseType;
+export default TimeSlot;

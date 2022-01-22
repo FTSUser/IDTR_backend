@@ -167,10 +167,7 @@ const Cms = ({ getNewCount, title }) => {
             setInputValueForAdd({});
             setDescription("");
             getAllCms();
-            // {
-            //   document.title === "Dashboard | OUR LEISURE HOME" &&
-            //     getNewCount();
-            // }
+            
           } else {
             toast.error(res?.data?.message);
           }

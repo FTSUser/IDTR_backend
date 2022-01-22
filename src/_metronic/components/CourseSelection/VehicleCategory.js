@@ -70,10 +70,7 @@ const VehicleCategory = ({ getNewCount, title }) => {
         console.log("inputValue", inputValueForAdd);
     }, [inputValueForAdd]);
 
-    // useEffect(() => {
-    //     title === "Dashboard | OUR LEISURE HOME" ? document.title = title : document.title = "FAQs | OUR LEISURE HOME"
-    // }, [])
-
+    
     useEffect(() => {
         console.log("idForEditStatus", idForEditStatus);
     }, [idForEditStatus]);
@@ -163,12 +160,7 @@ const VehicleCategory = ({ getNewCount, title }) => {
             errorsForAdd["VehicleDescription"] = "*Please Enter Vehicle Description!";
         }
 
-        
-        // if (inputValueForAdd && !inputValueForAdd.answer) {
-        //     formIsValid = false;
-        //     errorsForAdd["answer"] = "*Please Enter Answer!";
-        // }
-
+      
         setErrorsForAdd(errorsForAdd);
         return formIsValid;
     };
@@ -180,8 +172,7 @@ const VehicleCategory = ({ getNewCount, title }) => {
                 vehicleCategory: inputValueForAdd.VehicleCategory,
                 description: inputValueForAdd.VehicleDescription,
                 isActive: true,
-                // answer: inputValueForAdd.answer,
-                // ctid : "61dfc5645e9d45193cb1a0b6"
+                
             }
             ApiPost(`vehicleCategory/addVehicleCategory`, Data)
                 .then((res) => {
@@ -191,7 +182,6 @@ const VehicleCategory = ({ getNewCount, title }) => {
                         toast.success(res?.data?.message);
                         setInputValueForAdd({});
                         getAllVehicleCategory();
-                        // { document.title === "Dashboard | OUR LEISURE HOME" && getNewCount() }
 
                     } else {
                         toast.error(res?.data?.message);
@@ -215,9 +205,7 @@ const VehicleCategory = ({ getNewCount, title }) => {
             formIsValid = false;
             errors["VehicleDescription"] = "*Please Enter Vehicle Description!";
         }
-        // if (inputValue && !inputValue.answer) {
-        //     formIsValid = false;
-        //     errors["answer"] = "*Please Enter Answer!";
+      
         // }
         setErrors(errors);
         return formIsValid;
@@ -230,7 +218,6 @@ const VehicleCategory = ({ getNewCount, title }) => {
                     setShow(false);
                     toast.success("Deleted Successfully");
                     getAllVehicleCategory();
-                    // { document.title === "Dashboard | OUR LEISURE HOME" && getNewCount() }
                     setPage(1)
                     setCount(0)
                     setCountPerPage(countPerPage)
@@ -255,8 +242,6 @@ const VehicleCategory = ({ getNewCount, title }) => {
             vehicleCategory: inputValue.VehicleCategory,
             description: inputValue.VehicleDescription,
 
-              // answer: inputValueForAdd.answer,
-              // ctid : "61dfc5645e9d45193cb1a0b6"
           }
             ApiPut(`vehicleCategory/updateVehicleCategory/${idForUpdateVehicleCategoryData}`, Data)
                 .then((res) => {
@@ -295,13 +280,7 @@ const VehicleCategory = ({ getNewCount, title }) => {
         },
 
 
-        // {
-        //     name: "Answer",
-        //     selector: "answer",
-        //     sortable: true,
-        // },
-
-
+        
         {
             name: "Display?",
             cell: (row) => {
@@ -343,7 +322,6 @@ const VehicleCategory = ({ getNewCount, title }) => {
                                     setIdForUpdateVehicleCategoryData(row._id);
                                     setInputValue({
                                         VehicleCategory: row?.vehicleCategory,
-                                        // answer: row?.answer,
                                         VehicleDescription: row?.description,
                                     });
                                 }}

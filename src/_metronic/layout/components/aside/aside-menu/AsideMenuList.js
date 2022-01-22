@@ -228,6 +228,19 @@ export function AsideMenuList({ layoutProps }) {
             </NavLink>
           </li>
 
+
+          <li
+            className={`menu-item ${getMenuItemActive("/timeslot", false)}`}
+            aria-haspopup="true"
+          >
+            <NavLink className="menu-link" to="/timeslot">
+              <span className="svg-icon menu-icon">
+                <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")} />
+              </span>
+              <span className="menu-text">TimeSlot</span>
+            </NavLink>
+          </li>
+
           <li
             className={`menu-item ${getMenuItemActive("/payment", false)}`}
             aria-haspopup="true"
