@@ -951,7 +951,6 @@ const Announcement = ({ getNewCount, title }) => {
                     <div>
                       <DatePicker
                         id="date"
-                        format="DD/MM/YYYY"
                         selected={new Date(date)}
                         onChange={(date) => {setDate(date);
                           setErrors({ ...errors, date: "" });}

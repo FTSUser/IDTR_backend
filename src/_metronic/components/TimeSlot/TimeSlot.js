@@ -105,8 +105,13 @@ const TimeSlot = ({ getNewCount, title }) => {
 
   const handleOnChnageAdd = (e) => {
     const { name, value } = e.target;
+    if (e.target.name === "seat") {
+      let val = e.target.value.replace(/\D/g, "");
+      setInputValueForAdd({ ...inputValueForAdd, [name]: val });
+      setErrors({ ...errorsForAdd, [name]: "" });}
     setInputValueForAdd({ ...inputValueForAdd, [name]: value });
     setErrorsForAdd({ ...errorsForAdd, [name]: "" });
+    
   };
 
   useEffect(() => {
@@ -252,59 +257,43 @@ const TimeSlot = ({ getNewCount, title }) => {
   const validateFormForAddAdmin = () => {
     let formIsValid = true;
     let errorsForAdd = {};
-    if (inputValueForAdd && !inputValueForAdd.CourseName) {
+    if (inputValueForAdd && !inputValueForAdd.VehicleCategory) {
       formIsValid = false;
-      errorsForAdd["CourseName"] = "*Please Enter Course Name!";
+      errorsForAdd["VehicleCategory"] = "*Please Enter Vehicle Category!";
     }
 
-    if (inputValueForAdd && !inputValueForAdd.Description) {
-      formIsValid = false;
-      errorsForAdd["Description"] = "*Please Enter Description!";
-    }
-
+    
     if (inputValueForAdd && !inputValueForAdd.CourseType) {
       formIsValid = false;
       errorsForAdd["CourseType"] = "*Please Enter CourseType!";
     }
 
-    if (inputValueForAdd && !inputValueForAdd.Duration) {
+    if (inputValueForAdd && !inputValueForAdd.CourseName) {
       formIsValid = false;
-      errorsForAdd["Duration"] = "*Please Enter Duration!";
+      errorsForAdd["CourseName"] = "*Please Enter CourseName!";
     }
 
-    if (inputValueForAdd && !inputValueForAdd.Timing) {
+    if (inputValueForAdd && !inputValueForAdd.seat) {
       formIsValid = false;
-      errorsForAdd["Timing"] = "*Please Enter Timing!";
+      errorsForAdd["seat"] = "*Please Enter seat Number!";
+    } else if (inputValueForAdd.seat<0) {
+      formIsValid = false;
+      errorsForAdd["seat"] = "*Please Enter vaild seat number!";
     }
 
-    if (inputValueForAdd && !inputValueForAdd.Mode) {
+   
+    
+    if (!date) {
       formIsValid = false;
-      errorsForAdd["Mode"] = "*Please Enter Mode!";
+      errorsForAdd["date"] = "*Please Enter date!";
     }
-
-    if (inputValueForAdd && !inputValueForAdd.DocumentRequired) {
+    if (!startTime) {
       formIsValid = false;
-      errorsForAdd["DocumentRequired"] = "*Please Enter Document Required!";
+      errorsForAdd["startTime"] = "*Please Enter startTime!";
     }
-
-    if (inputValueForAdd && !inputValueForAdd.Validity) {
+    if (!endTime) {
       formIsValid = false;
-      errorsForAdd["Validity"] = "*Please Enter Validity!";
-    }
-
-    if (inputValueForAdd && !inputValueForAdd.SystemRequirement) {
-      formIsValid = false;
-      errorsForAdd["SystemRequirement"] = "*Please Enter System Requirement!";
-    }
-
-    if (inputValueForAdd && !inputValueForAdd.Certificate) {
-      formIsValid = false;
-      errorsForAdd["Certificate"] = "*Please Enter Certificate!";
-    }
-
-    if (inputValueForAdd && !inputValueForAdd.Price) {
-      formIsValid = false;
-      errorsForAdd["Price"] = "*Please Enter Price!";
+      errorsForAdd["endTime"] = "*Please Enter endTime!";
     }
 
     setErrorsForAdd(errorsForAdd);
@@ -313,7 +302,8 @@ const TimeSlot = ({ getNewCount, title }) => {
 
   const handelAddCourseNameDetails = (e) => {
     e.preventDefault();
-    // if (validateFormForAddAdmin()) {
+    
+     if (validateFormForAddAdmin()) {
       const newCourseName = [];
       {
         selectedCourseName.map((sub, i) => {
@@ -357,7 +347,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         .catch((err) => {
           toast.error(err.message);
         });
-    // }
+    }
   };
 
   const handleDeleteCourseName = () => {
@@ -386,64 +376,46 @@ const TimeSlot = ({ getNewCount, title }) => {
   const validateForm = () => {
     let formIsValid = true;
     let errors = {};
-    if (inputValue && !inputValue.CourseName) {
+   
+    if (inputValue && !inputValue.VehicleCategory) {
       formIsValid = false;
-      errors["CourseName"] = "*Please Enter CourseName!";
+      errors["VehicleCategory"] = "*Please Enter Vehicle Category!";
     }
 
-    if (inputValue && !inputValue.Description) {
-      formIsValid = false;
-      errors["Description"] = "*Please Enter Description!";
-    }
-
+    
     if (inputValue && !inputValue.CourseType) {
       formIsValid = false;
       errors["CourseType"] = "*Please Enter CourseType!";
     }
 
-    if (inputValue && !inputValue.Duration) {
+    if (inputValue && !inputValue.CourseName) {
       formIsValid = false;
-      errors["Duration"] = "*Please Enter Duration!";
+      errors["CourseName"] = "*Please Enter CourseName!";
     }
 
-    if (inputValue && !inputValue.Timing) {
+    if (inputValue && !inputValue.seat) {
       formIsValid = false;
-      errors["Timing"] = "*Please Enter Timing!";
+      errors["seat"] = "*Please Enter seat Number!";
+    } else if (inputValue.seat<0) {
+      formIsValid = false;
+      errors["seat"] = "*Please Enter vaild seat number!";
     }
 
-    if (inputValue && !inputValue.Mode) {
+   
+    
+    if (!date) {
       formIsValid = false;
-      errors["Mode"] = "*Please Enter Mode!";
+      errors["date"] = "*Please Enter date!";
+    }
+    if (!startTime) {
+      formIsValid = false;
+      errors["startTime"] = "*Please Enter startTime!";
+    }
+    if (!endTime) {
+      formIsValid = false;
+      errors["endTime"] = "*Please Enter endTime!";
     }
 
-    if (inputValue && !inputValue.DocumentRequired) {
-      formIsValid = false;
-      errors["DocumentRequired"] = "*Please Enter Document Required!";
-    }
-
-    if (inputValue && !inputValue.Validity) {
-      formIsValid = false;
-      errors["Validity"] = "*Please Enter Validity!";
-    }
-
-    if (inputValue && !inputValue.SystemRequirement) {
-      formIsValid = false;
-      errors["SystemRequirement"] = "*Please Enter System Requirement!";
-    }
-
-    if (inputValue && !inputValue.Certificate) {
-      formIsValid = false;
-      errors["Certificate"] = "*Please Enter Certificate!";
-    }
-
-    if (inputValue && !inputValue.Price) {
-      formIsValid = false;
-      errors["Price"] = "*Please Enter Price!";
-    }
-    if (inputValue && !inputValue.VehicleCategory) {
-      formIsValid = false;
-      errors["VehicleCategory"] = "*Please Enter Price!";
-    }
 
     setErrors(errors);
     return formIsValid;
@@ -879,7 +851,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                         setSelectedCourseName(selectedList);
                         setErrorsForAdd({
                           ...errorsForAdd,
-                          selectedTopSubjects: "",
+                          selectedCourseName: "",
                         });
                       }}
                       onRemove={(selectedList, removedItem) => {
@@ -894,7 +866,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                         fontSize: "12px",
                       }}
                     >
-                      {errors["CourseName"]}
+                      {errorsForAdd["CourseName"]}
                     </span>
                   </div>
                 </div>
@@ -910,7 +882,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                         className={`form-control form-control-lg form-control-solid `}
                         id="seat"
                         name="seat"
-                        value={inputValue?.seat}
+                        value={inputValueForAdd?.seat}
                         onChange={(e) => {
                           handleOnChnageAdd(e);
                         }}
@@ -949,7 +921,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                         fontSize: "12px",
                       }}
                     >
-                      {errorsForAdd["seat"]}
+                      {errorsForAdd["date"]}
                     </span>
                   </div>
                 </div>
@@ -975,7 +947,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                         fontSize: "12px",
                       }}
                     >
-                      {errorsForAdd["seat"]}
+                      {errorsForAdd["startTime"]}
                     </span>
                   </div>
                 </div>
@@ -1001,7 +973,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                         fontSize: "12px",
                       }}
                     >
-                      {errorsForAdd["seat"]}
+                      {errorsForAdd["endTime"]}
                     </span>
                   </div>
                 </div>
