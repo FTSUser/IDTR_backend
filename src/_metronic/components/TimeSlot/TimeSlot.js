@@ -69,7 +69,8 @@ const TimeSlot = ({ getNewCount, title }) => {
   const [selectedCourseType, setSelectedCourseType] = useState([]);
   const [selectedCourseName, setSelectedCourseName] = useState([]);
   const [date, setDate] = useState(new Date());
-  const [endDate, setEndDate] = useState("");
+  const [allTimeSlot, setAllTimeSlot] = useState([]);
+
   // const [startDate, setStartDate] = useState("");
 
   const handleViewMoreClose = () => {
@@ -137,6 +138,12 @@ const TimeSlot = ({ getNewCount, title }) => {
 
   const handleAddAdminClose = () => {
     setInputValueForAdd({});
+    setDate("");
+    setEndTime("");
+    setStartTime("");
+    setSelectedCourseName([]);
+    setSelectedCourseType([]);
+    setSelectedVehicleCategory([]);
     setIsAddCourseName(false);
     setErrorsForAdd({});
   };
@@ -151,36 +158,33 @@ const TimeSlot = ({ getNewCount, title }) => {
 
   //for start time selector
   // const [startDate, setStartDate] = useState(value.format(new Date()));
-  const [startTime,setStartTime] = useState("");
-  useEffect(() =>{
-    console.log("startTime",startTime);
-  },[startTime])
+  const [startTime, setStartTime] = useState("");
+  useEffect(() => {
+    console.log("startTime", startTime);
+  }, [startTime]);
   const format = "h:mm a";
 
   const now = moment().hour(0).minute(0);
 
   function onChange(value) {
     console.log("TESTTEST", value?.toDate());
-    setStartTime(value?.toDate())
+    setStartTime(value?.toDate());
     // setStartDate(value.format(format))
   }
 
   //for end time selector
-  const [endTime,setEndTime] = useState("");
-  const format1 = 'h:mm a';
+  const [endTime, setEndTime] = useState("");
+  const format1 = "h:mm a";
 
   const now1 = moment().hour(0).minute(0);
-  
-    function onChange1(value) {
-      console.log("TESTTEST22",value?.toDate());
-      setEndTime(value?.toDate());
-    }
+
+  function onChange1(value) {
+    console.log("TESTTEST22", value?.toDate());
+    setEndTime(value?.toDate());
+  }
 
   //time end
 
-  useEffect(() => {
-    getAllCourseName();
-  }, [page, countPerPage]);
 
   const getAllCourseType = async () => {
     setIsLoaderVisible(true);
@@ -208,10 +212,32 @@ const TimeSlot = ({ getNewCount, title }) => {
         setIsLoaderVisible(false);
         console.log("artistreport", res);
         setFilteredVehicleCategory(res?.data?.payload?.Question);
-        setCount(res?.data?.payload?.count);
       })
       .catch((err) => {
         console.log(err);
+        setIsLoaderVisible(false);
+      });
+  };
+
+  useEffect(() => {
+    getAllTimeSlot();
+  }, [page, countPerPage]);
+
+  const getAllTimeSlot = async () => {
+    setIsLoaderVisible(true);
+    await ApiGet(`trainingDate/getAllDate?page=${page}&limit=${countPerPage}`)
+      // ApiPut(`property/updateProperty/${idForUpdatePropertyStatus}`)
+      .then((res) => {
+        if (res?.status == 200) {
+          console.log("timetest", res?.data?.payload?.Question);
+          setIsLoaderVisible(false);
+          setAllTimeSlot(res?.data?.payload?.Question);
+        } else {
+          toast.error(res?.data?.message);
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message);
       });
   };
 
@@ -223,7 +249,6 @@ const TimeSlot = ({ getNewCount, title }) => {
         setIsLoaderVisible(false);
         console.log("courseName", res);
         setFilteredCourseName(res?.data?.payload?.Question);
-        setCount(res?.data?.payload?.count);
       })
       .catch((err) => {
         console.log(err);
@@ -314,59 +339,64 @@ const TimeSlot = ({ getNewCount, title }) => {
   const handelAddCourseNameDetails = (e) => {
     e.preventDefault();
     // if (validateFormForAddAdmin()) {
-      const newCourseName = [];
-      {
-        selectedCourseName.map((sub, i) => {
-          newCourseName.push(sub._id);
-        });
-      }
-      const newCourseType = [];
-      {
-        selectedCourseType.map((sub, i) => {
-          newCourseType.push(sub._id);
-        });
-      }
-      const newVehicleCategory = [];
-      {
-        selectedVehicleCategory.map((sub, i) => {
-          newVehicleCategory.push(sub._id);
-        });
-      }
-      let Data = {
-        date: date,
-        seat: inputValueForAdd?.seat,
-        endTime: endTime,
-        startTime:startTime,
-        cnid: newCourseName,
-        ctid: newCourseType,
-        vcid:newVehicleCategory,
-
-      };
-      ApiPost(`trainingDate/addDate`, Data)
-        .then((res) => {
-          console.log("resresres", res);
-          if (res?.status == 200) {
-            setIsAddCourseName(false);
-            toast.success(res?.data?.message);
-            setInputValueForAdd({});
-            getAllCourseName();
-          } else {
-            toast.error(res?.data?.message);
-          }
-        })
-        .catch((err) => {
-          toast.error(err.message);
-        });
+    const newCourseName = [];
+    {
+      selectedCourseName.map((sub, i) => {
+        newCourseName.push(sub._id);
+      });
+    }
+    const newCourseType = [];
+    {
+      selectedCourseType.map((sub, i) => {
+        newCourseType.push(sub._id);
+      });
+    }
+    const newVehicleCategory = [];
+    {
+      selectedVehicleCategory.map((sub, i) => {
+        newVehicleCategory.push(sub._id);
+      });
+    }
+    let Data = {
+      date: date,
+      seat: inputValueForAdd?.seat,
+      endTime: endTime,
+      startTime: startTime,
+      cnid: newCourseName,
+      ctid: newCourseType,
+      vcid: newVehicleCategory,
+    };
+    ApiPost(`trainingDate/addDate`, Data)
+      .then((res) => {
+        console.log("resresres", res);
+        if (res?.status == 200) {
+          setIsAddCourseName(false);
+          toast.success(res?.data?.message);
+          setInputValueForAdd({});
+          setDate("");
+          setEndTime("");
+          setStartTime("");
+          setSelectedCourseName([]);
+          setSelectedCourseType([]);
+          setSelectedVehicleCategory([]);
+          getAllTimeSlot();
+        } else {
+          toast.error(res?.data?.message);
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
     // }
   };
 
   const handleDeleteCourseName = () => {
-    ApiDelete(`courseName/deleteCourseName/${idForDeleteCourseName}`)
+    ApiDelete(`trainingDate/deleteDate/${idForDeleteCourseName}`)
       .then((res) => {
         if (res?.status == 200) {
           setShow(false);
           toast.success("Deleted Successfully");
-          getAllCourseName();
+          getAllTimeSlot();
           setPage(1);
           setCount(0);
           setCountPerPage(countPerPage);
@@ -492,35 +522,33 @@ const TimeSlot = ({ getNewCount, title }) => {
       width: "65px",
     },
     {
-      name: "Course Name",
-      selector: "courseName",
+      name: "Date",
+      cell: (row) => {
+        return <span>{moment(row?.createdAt).format("ll")}</span>;
+      },
       sortable: true,
+      selector: row => row?.createdAt,
+    },
+    {
+      name: "Start Time",
+      cell: (row) => {
+        return <span>{moment(row?.startTime).format("LT")}</span>;
+      },
+      sortable: true,
+      selector: row => row?.startTime,
+    },
+    {
+      name: "End Time",
+      cell: (row) => {
+        return <span>{moment(row?.endTime).format("LT")}</span>;
+      },
+      sortable: true,
+      selector: row => row?.endTime,
     },
 
     {
-      name: "Display?",
-      cell: (row) => {
-        return (
-          <>
-            <div
-              className="cursor-pointer"
-              onClick={() => {
-                setShowStatus(true);
-                setIdForUpdateCourseStatus(row?._id);
-                setStatusDisplay(row?.isActive);
-              }}
-            >
-              <Tooltip title="Status Property" arrow>
-                <div className="cus-medium-button-style">
-                  <button className="btn btn-success mr-2">
-                    {row?.isActive === true ? "Active" : "Deactive"}
-                  </button>
-                </div>
-              </Tooltip>
-            </div>
-          </>
-        );
-      },
+      name: "Total Seat",
+      selector: "seat",
       sortable: true,
     },
 
@@ -756,7 +784,7 @@ const TimeSlot = ({ getNewCount, title }) => {
 
           <DataTable
             columns={columns}
-            data={filteredCourseName}
+            data={allTimeSlot}
             customStyles={customStyles}
             style={{
               marginTop: "-3rem",
@@ -1063,7 +1091,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                         }}
                       >
                         <option value="" disabled selected hidden>
-                          Select Course Type
+                          Select Vehicle Category
                         </option>
                         {filteredVehicleCategory?.length > 0 &&
                           filteredVehicleCategory?.map((item) => {
