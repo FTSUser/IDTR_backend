@@ -20,7 +20,6 @@ export function AsideMenuList({ layoutProps }) {
     <>
       {/* begin::Menu Nav */}
       {userInfo?.admin?.role?.roleName === "superadmin" && (
-
         <ul className={`menu-nav ${layoutProps.ulClasses}`}>
           {/*begin::1 Dashboard*/}
           <li
@@ -46,90 +45,13 @@ export function AsideMenuList({ layoutProps }) {
           >
             <NavLink className="menu-link" to="/user">
               <span className="svg-icon menu-icon">
-                <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")} />
-              </span>
-              <span className="menu-text">User</span>
-            </NavLink>
-          </li>
-
-          {/* <li
-            className={`menu-item menu-item-submenu ${getMenuItemActive(
-              "/",
-              true
-            )}`}
-            aria-haspopup="true"
-            data-menu-toggle="hover"
-          >
-            <NavLink className="menu-link menu-toggle" to="/">
-              <span className="svg-icon menu-icon">
                 <SVG
                   src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
                 />
               </span>
-              <span className="menu-text">Course Selection</span>
-              <i className="menu-arrow" />
+              <span className="menu-text">User</span>
             </NavLink>
-            <div className="menu-submenu ">
-              <i className="menu-arrow" />
-              <ul className="menu-subnav">
-                <li
-                  className={`menu-item menu-item-submenu  ${getMenuItemActive(
-                    "/courseselection/vehiclecategory",
-                    false
-                  )}`}
-                  aria-haspopup="true"
-                  data-menu-toggle="hover"
-                >
-                  <NavLink className="menu-link" to="/courseselection/vehiclecategory">
-                    <i className="menu-bullet menu-bullet-dot">
-                      <span />
-                    </i>
-                    <span className="menu-text">Vehicle Category</span>
-                  </NavLink>
-                </li>
-
-                <li
-                  className={`menu-item menu-item-submenu  ${getMenuItemActive(
-                    "/courseselection/coursetype",
-                    false
-                  )}`}
-                  aria-haspopup="true"
-                  data-menu-toggle="hover"
-                >
-                  <NavLink
-                    className="menu-link"
-                    to="/courseselection/coursetype"
-                  >
-                    <i className="menu-bullet menu-bullet-dot">
-                      <span />
-                    </i>
-                    <span className="menu-text">Course Type</span>
-                  </NavLink>
-                </li>
-
-                <li
-                  className={`menu-item menu-item-submenu  ${getMenuItemActive(
-                    "/courseselection/coursename",
-                    false
-                  )}`}
-                  aria-haspopup="true"
-                  data-menu-toggle="hover"
-                >
-                  <NavLink
-                    className="menu-link"
-                    to="/courseselection/coursename"
-                  >
-                    <i className="menu-bullet menu-bullet-dot">
-                      <span />
-                    </i>
-                    <span className="menu-text">Course Name</span>
-                  </NavLink>
-                </li>
-              </ul>
-            </div>
-          </li> */}
-
-          {/*end::1 Engage*/}
+          </li>
           <li
             className={`menu-item menu-item-submenu ${getMenuItemActive(
               "/courseselection",
@@ -213,7 +135,6 @@ export function AsideMenuList({ layoutProps }) {
               </ul>
             </div>
           </li>
-
           <li
             className={`menu-item ${getMenuItemActive("/cms", false)}`}
             aria-haspopup="true"
@@ -227,130 +148,84 @@ export function AsideMenuList({ layoutProps }) {
               <span className="menu-text">CMS</span>
             </NavLink>
           </li>
-
-
           <li
             className={`menu-item ${getMenuItemActive("/timeslot", false)}`}
             aria-haspopup="true"
           >
             <NavLink className="menu-link" to="/timeslot">
               <span className="svg-icon menu-icon">
-                <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")} />
+                <SVG
+                  src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
+                />
               </span>
               <span className="menu-text">TimeSlot</span>
             </NavLink>
           </li>
-
           <li
             className={`menu-item ${getMenuItemActive("/payment", false)}`}
             aria-haspopup="true"
           >
             <NavLink className="menu-link" to="/payment">
               <span className="svg-icon menu-icon">
-                <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")} />
+                <SVG
+                  src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
+                />
               </span>
               <span className="menu-text">Payment</span>
             </NavLink>
           </li>
-
           <li
             className={`menu-item ${getMenuItemActive("/announcement", false)}`}
             aria-haspopup="true"
           >
             <NavLink className="menu-link" to="/announcement">
               <span className="svg-icon menu-icon">
-                <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")} />
+                <SVG
+                  src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
+                />
               </span>
               <span className="menu-text">Announcement</span>
             </NavLink>
           </li>
-
-
-
-
-
-
-
           <li
             className={`menu-item ${getMenuItemActive("/feedback", false)}`}
             aria-haspopup="true"
           >
             <NavLink className="menu-link" to="/feedback">
               <span className="svg-icon menu-icon">
-                <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")} />
+                <SVG
+                  src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
+                />
               </span>
               <span className="menu-text">FeedBack</span>
             </NavLink>
           </li>
-
-
           <li
             className={`menu-item ${getMenuItemActive("/contactus", false)}`}
             aria-haspopup="true"
           >
             <NavLink className="menu-link" to="/contactus">
               <span className="svg-icon menu-icon">
-                <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")} />
+                <SVG
+                  src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
+                />
               </span>
               <span className="menu-text">Contact-Us</span>
             </NavLink>
           </li>
-          {/* 
-        <li
-          className={`menu-item ${getMenuItemActive("/inventory", false)}`}
-          aria-haspopup="true"
-        >
-          <NavLink className="menu-link" to="/inventory">
-            <span className="svg-icon menu-icon">
-              <SVG
-                src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
-              />
-            </span>
-            <span className="menu-text">Inventory</span>
-          </NavLink>
-        </li> */}
-
-          {/* <li
-          className={`menu-item ${getMenuItemActive("/marketPlace", false)}`}
-          aria-haspopup="true"
-        >
-          <NavLink className="menu-link" to="/marketPlace">
-            <span className="svg-icon menu-icon">
-              <SVG
-                src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
-              />
-            </span>
-            <span className="menu-text">Market Place</span>
-          </NavLink>
-        </li> */}
-
-          {/* <li
-          className={`menu-item ${getMenuItemActive("/order", false)}`}
-          aria-haspopup="true"
-        >
-          <NavLink className="menu-link" to="/order">
-            <span className="svg-icon menu-icon">
-              <SVG
-                src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
-              />
-            </span>
-            <span className="menu-text">Order</span>
-          </NavLink>
-        </li> */}
-
-          {/* <li
-          className={`menu-item ${getMenuItemActive("/properties", false)}`}
-          aria-haspopup="true"
-        >
-          <NavLink className="menu-link" to="/properties">
-            <span className="svg-icon menu-icon">
-              <SVG
-                src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
-              />
-            </span>
-            <span className="menu-text">Properties</span>
-          </NavLink>
-        </li> */}
+          <li
+            className={`menu-item ${getMenuItemActive("/faq", false)}`}
+            aria-haspopup="true"
+          >
+            <NavLink className="menu-link" to="/faq">
+              <span className="svg-icon menu-icon">
+                <SVG
+                  src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
+                />
+              </span>
+              <span className="menu-text">FAQ</span>
+            </NavLink>
+          </li>
         </ul>
       )}
       {/* end::Menu Nav */}
