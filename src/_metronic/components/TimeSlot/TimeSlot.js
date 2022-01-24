@@ -9,8 +9,6 @@ import {
 import { Tooltip } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import List from "@material-ui/core/List";
-import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
-
 import Toolbar from "@material-ui/core/Toolbar";
 import CreateIcon from "@material-ui/icons/Create";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -22,20 +20,17 @@ import { Modal } from "react-bootstrap";
 import Loader from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import Multiselect from "multiselect-react-dropdown";
-import DateFnsUtils from "@date-io/date-fns"; // choose your lib
-
 import moment from "moment";
 import "rc-time-picker/assets/index.css";
 import TimePicker from "rc-time-picker";
 import DatePicker from "react-datepicker";
-// import TimePicker from '@mui/lab/TimePicker';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const TimeSlot = ({ getNewCount, title }) => {
-  const [filteredCourseName, setFilteredCourseName] = useState({});
+  const [filteredCourseName, setFilteredCourseName] = useState([]);
   const [isLoaderVisible, setIsLoaderVisible] = useState(false);
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -45,26 +40,15 @@ const TimeSlot = ({ getNewCount, title }) => {
   const [isAddCourseName, setIsAddCourseName] = useState(false);
   const [idForUpdateCourseNameData, setIdForUpdateCourseNameData] =
     useState("");
-  const [inputValue, setInputValue] = useState({});
   const [inputValueForAdd, setInputValueForAdd] = useState({});
-  const [errors, setErrors] = useState({});
   const [errorsForAdd, setErrorsForAdd] = useState({});
-  const [idForEditStatus, setIdForEditStatus] = useState("");
   const [idForDeleteCourseName, setIdForDeleteCourseName] = useState("");
-  const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [countPerPage, setCountPerPage] = useState(10);
   const [search, setSearch] = useState("");
-  const [showStatus, setShowStatus] = useState(false);
-  const [idForUpdateCourseStatus, setIdForUpdateCourseStatus] = useState("");
-  const [statusDisplay, setStatusDisplay] = useState(false);
   const [getCourseType, setGetCourseType] = useState([]);
-  const [courseTypeArr, setCourseTypeArr] = useState();
   const [filteredVehicleCategory, setFilteredVehicleCategory] = useState([]);
-
-  const [dataViewMore, setDataViewMore] = useState({});
-  const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
   const [selectedVehicleCategory, setSelectedVehicleCategory] = useState([]);
   const [selectedCourseType, setSelectedCourseType] = useState([]);
   const [selectedCourseName, setSelectedCourseName] = useState([]);
@@ -75,74 +59,25 @@ const TimeSlot = ({ getNewCount, title }) => {
   const [allCourseTypeForUpdate, setAllCourseTypeForUpdate] = useState([]);
   const [allCourseNameForUpdate, setAllCourseNameForUpdate] = useState([]);
 
-  // const [startDate, setStartDate] = useState("");
 
-  const handleViewMoreClose = () => {
-    setIsViewMoreAboutus(false);
-    setDataViewMore({});
-  };
-
-  useEffect(() => {
-    console.log("errorsForAdd", errorsForAdd);
-  }, [errorsForAdd]);
-
-  useEffect(() => {
-    console.log("selectedCourseName", selectedCourseName);
-  }, [selectedCourseName]);
-
-  useEffect(() => {
-    console.log("selectedCourseName", selectedCourseName);
-  }, [selectedCourseName]);
-
-  // useEffect(() => {
-  //   console.log("startDateeee", startDate);
-  // }, [startDate]);
-
-  // useEffect(() => {
-  //   console.log("endDateeee", endDate);
-  // }, [endDate]);
-
-  const handleOnChnage = (e) => {
-    const { name, value } = e.target;
-    setInputValue({ ...inputValue, [name]: value });
-    setErrors({ ...errors, [name]: "" });
-  };
 
   const handleOnChnageAdd = (e) => {
     const { name, value } = e.target;
     if (e.target.name === "seat") {
       let val = e.target.value.replace(/\D/g, "");
       setInputValueForAdd({ ...inputValueForAdd, [name]: val });
-      setErrors({ ...errorsForAdd, [name]: "" });
-    }
-    setInputValueForAdd({ ...inputValueForAdd, [name]: value });
+      setErrorsForAdd({ ...errorsForAdd, [name]: "" });
+    } else {
+      const { name, value } = e.target;
+      setInputValueForAdd({ ...inputValueForAdd, [name]: value });
     setErrorsForAdd({ ...errorsForAdd, [name]: "" });
+    }
+    
   };
-
-  useEffect(() => {
-    console.log("inputValueForAdd", inputValueForAdd);
-  }, [inputValueForAdd]);
-
-  useEffect(() => {
-    console.log("date", date);
-  }, [date]);
-
-  useEffect(() => {
-    console.log("inputValueeeee", inputValue);
-  }, [inputValue]);
-
-  useEffect(() => {
-    console.log("filteredVehicleCategory", filteredVehicleCategory);
-  }, [filteredVehicleCategory]);
-
-  useEffect(() => {
-    console.log("idForEditStatus", idForEditStatus);
-  }, [idForEditStatus]);
 
   const handleAdminUpdateClose = () => {
     setIsUpdateCourseName(false);
     setInputValueForAdd({});
-    setErrors({});
     setErrorsForAdd({});
     setSelectedCourseName([]);
     setSelectedCourseType([]);
@@ -162,39 +97,23 @@ const TimeSlot = ({ getNewCount, title }) => {
     setShow(false);
   };
 
-  const handleCloseShowStatus = () => {
-    setShowStatus(false);
-  };
-
   //for start time selector
-  // const [startDate, setStartDate] = useState(value.format(new Date()));
   const [startTime, setStartTime] = useState("");
-  useEffect(() => {
-    console.log("startTime", startTime);
-  }, [startTime]);
+  const [now,setNow] = useState(moment().hour(0).minute(0));
   const format = "h:mm a";
-
-  const now = moment().hour(0).minute(0);
-
   function onChange(value) {
-    console.log("TESTTEST", value?.toDate());
     setStartTime(value?.toDate());
     setErrorsForAdd({
       ...errorsForAdd,
       startTime: "",
     });
-
-    // setStartDate(value.format(format))
   }
 
   //for end time selector
   const [endTime, setEndTime] = useState("");
+  const [now1,setNow1] = useState(moment().hour(0).minute(0))
   const format1 = "h:mm a";
-
-  const now1 = moment().hour(0).minute(0);
-
   function onChange1(value) {
-    console.log("TESTTEST22", value?.toDate());
     setEndTime(value?.toDate());
     setErrorsForAdd({
       ...errorsForAdd,
@@ -209,11 +128,7 @@ const TimeSlot = ({ getNewCount, title }) => {
     await ApiGet(`courseType/getAllCourseType?page=${page}&limit=1000`)
       .then((res) => {
         setIsLoaderVisible(false);
-        console.log("artistreport", res);
         setGetCourseType(res?.data?.payload?.Question);
-        // courseTypeArr.push(getCourseType.map((item)=>item.courseType))
-        // console.log("courseTypeArr", courseTypeArr);
-        // setCount(res?.data?.payload?.count);
       })
       .catch((err) => {
         console.log(err);
@@ -228,7 +143,6 @@ const TimeSlot = ({ getNewCount, title }) => {
     )
       .then((res) => {
         setIsLoaderVisible(false);
-        console.log("artistreport", res);
         setFilteredVehicleCategory(res?.data?.payload?.Question);
       })
       .catch((err) => {
@@ -243,13 +157,13 @@ const TimeSlot = ({ getNewCount, title }) => {
 
   const getAllTimeSlot = async () => {
     setIsLoaderVisible(true);
-    await ApiGet(`trainingDate/getAllDate?page=${page}&limit=${countPerPage}`)
-      // ApiPut(`property/updateProperty/${idForUpdatePropertyStatus}`)
+    if(!search) {
+      await ApiGet(`trainingDate/getAllDate?page=${page}&limit=${countPerPage}`)
       .then((res) => {
         if (res?.status == 200) {
-          console.log("timetest", res?.data?.payload?.Question);
           setIsLoaderVisible(false);
           setAllTimeSlot(res?.data?.payload?.Question);
+          setCount(res?.data?.payload?.count)
         } else {
           toast.error(res?.data?.message);
         }
@@ -257,15 +171,30 @@ const TimeSlot = ({ getNewCount, title }) => {
       .catch((err) => {
         toast.error(err.message);
       });
+    } else {
+      await ApiGet(`trainingDate/getAllDate?search=${search}&page=${page}&limit=${countPerPage}`)
+      .then((res) => {
+        if (res?.status == 200) {
+          setIsLoaderVisible(false);
+          setAllTimeSlot(res?.data?.payload?.Question);
+          setCount(res?.data?.payload?.count)
+        } else {
+          toast.error(res?.data?.message);
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+    }
+    
   };
 
   const getAllCourseName = async () => {
     setIsLoaderVisible(true);
 
-    await ApiGet(`courseName/getAllCourseName?page=${page}&&limit=1000`)
+    await ApiGet(`courseName/getAllCourseName?page=${page}&limit=1000`)
       .then((res) => {
         setIsLoaderVisible(false);
-        console.log("courseName", res);
         setFilteredCourseName(res?.data?.payload?.Question);
       })
       .catch((err) => {
@@ -273,24 +202,7 @@ const TimeSlot = ({ getNewCount, title }) => {
       });
   };
 
-  const handleUpdateStatusProperty = (status) => {
-    ApiPut(`courseName/updateStatus/${idForUpdateCourseStatus}`, {
-      isActive: status,
-    })
-      // ApiPut(`property/updateProperty/${idForUpdatePropertyStatus}`)
-      .then((res) => {
-        if (res?.status == 200) {
-          setShowStatus(false);
-          toast.success("Status updated Successfully");
-          getAllCourseName();
-        } else {
-          toast.error(res?.data?.message);
-        }
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      });
-  };
+  
 
   const validateFormForAddAdmin = () => {
     let formIsValid = true;
@@ -368,7 +280,6 @@ const TimeSlot = ({ getNewCount, title }) => {
       };
       ApiPost(`trainingDate/addDate`, Data)
         .then((res) => {
-          console.log("resresres", res);
           if (res?.status == 200) {
             setIsAddCourseName(false);
             toast.success(res?.data?.message);
@@ -379,7 +290,6 @@ const TimeSlot = ({ getNewCount, title }) => {
             setSelectedCourseName([]);
             setSelectedCourseType([]);
             setSelectedVehicleCategory([]);
-            getAllCourseName();
           } else {
             toast.error(res?.data?.message);
           }
@@ -409,85 +319,95 @@ const TimeSlot = ({ getNewCount, title }) => {
       });
   };
 
-  useEffect(() => {
-    console.log("inputValue", inputValue);
-  }, [inputValue]);
+  
 
   const validateForm = () => {
     let formIsValid = true;
-    let errors = {};
-
-    if (inputValue && !inputValue.VehicleCategory) {
+    let errorsForAdd = {};
+    if (selectedVehicleCategory?.length <= 0) {
       formIsValid = false;
-      errors["VehicleCategory"] = "*Please Enter Vehicle Category!";
+      errorsForAdd["VehicleCategory"] = "*Please Enter Vehicle Category!";
     }
 
-    if (inputValue && !inputValue.CourseType) {
+    if (selectedCourseType?.length <= 0) {
       formIsValid = false;
-      errors["CourseType"] = "*Please Enter CourseType!";
+      errorsForAdd["CourseType"] = "*Please Enter CourseType!";
     }
 
-    if (inputValue && !inputValue.CourseName) {
+    if (selectedCourseName?.length <= 0) {
       formIsValid = false;
-      errors["CourseName"] = "*Please Enter CourseName!";
+      errorsForAdd["CourseName"] = "*Please Enter CourseName!";
     }
 
-    if (inputValue && !inputValue.seat) {
+    if (inputValueForAdd && !inputValueForAdd.seat) {
       formIsValid = false;
-      errors["seat"] = "*Please Enter seat Number!";
-    } else if (inputValue.seat < 0) {
+      errorsForAdd["seat"] = "*Please Enter seat Number!";
+    } else if (inputValueForAdd.seat < 0) {
       formIsValid = false;
-      errors["seat"] = "*Please Enter vaild seat number!";
+      errorsForAdd["seat"] = "*Please Enter vaild seat number!";
     }
 
     if (!date) {
       formIsValid = false;
-      errors["date"] = "*Please Enter date!";
+      errorsForAdd["date"] = "*Please Enter date!";
     }
     if (!startTime) {
       formIsValid = false;
-      errors["startTime"] = "*Please Enter startTime!";
+      errorsForAdd["startTime"] = "*Please Enter startTime!";
     }
     if (!endTime) {
       formIsValid = false;
-      errors["endTime"] = "*Please Enter endTime!";
+      errorsForAdd["endTime"] = "*Please Enter endTime!";
     }
 
-    setErrors(errors);
+    setErrorsForAdd(errorsForAdd);
     return formIsValid;
   };
 
-  const handelUpdateCourseNameDetails = (e) => {
+  const handelUpdateTimeSlotDetails = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      let Data = {
-        courseName: inputValue.CourseName,
-        description: inputValue.Description,
-        certificate: inputValue.Certificate,
-        documentRequired: inputValue.DocumentRequired,
-        mode: inputValue.Mode,
-        systemRequirement: inputValue.SystemRequirement,
-        timing: inputValue.Timing,
-        duration: inputValue.Duration,
-        validity: inputValue.Validity,
-        price: inputValue.Price,
-        ctid: inputValue.CourseType,
-        vcid: inputValue?.VehicleCategory,
-      };
-      ApiPut(`courseName/updateCourseName/${idForUpdateCourseNameData}`, Data)
+        const newCourseName = [];
+        {
+          selectedCourseName.map((sub, i) => {
+            newCourseName.push(sub._id);
+          });
+        }
+        const newCourseType = [];
+        {
+          selectedCourseType.map((sub, i) => {
+            newCourseType.push(sub._id);
+          });
+        }
+        const newVehicleCategory = [];
+        {
+          selectedVehicleCategory.map((sub, i) => {
+            newVehicleCategory.push(sub._id);
+          });
+        }
+        let Data = {
+          date: date,
+          seat: inputValueForAdd?.seat,
+          endTime: endTime,
+          startTime: startTime,
+          cnid: newCourseName,
+          ctid: newCourseType,
+          vcid: newVehicleCategory,
+        };
+      ApiPut(`trainingDate/updateDate/${idForUpdateCourseNameData}`, Data)
         .then((res) => {
-          console.log("resres", res);
           if (res?.status == 200) {
             setIsUpdateCourseName(false);
             toast.success(res?.data?.message);
-            setInputValue({});
-            getAllCourseName();
+            getAllTimeSlot()
           } else {
+            console.log("res007",res);
             toast.error(res?.data?.message);
           }
         })
         .catch((err) => {
-          toast.error(err.message);
+          console.log("errerrerr",err?.message);
+          toast.error(err?.message);
         });
     }
   };
@@ -500,12 +420,20 @@ const TimeSlot = ({ getNewCount, title }) => {
       width: "65px",
     },
     {
-      name: "Date",
+      name: "CreatedAt",
       cell: (row) => {
         return <span>{moment(row?.createdAt).format("ll")}</span>;
       },
       sortable: true,
       selector: (row) => row?.createdAt,
+    },
+    {
+      name: "Date",
+      cell: (row) => {
+        return <span>{moment(row?.date).format("ll")}</span>;
+      },
+      sortable: true,
+      selector: (row) => row?.date,
     },
     {
       name: "Start Time",
@@ -539,7 +467,6 @@ const TimeSlot = ({ getNewCount, title }) => {
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
-                  console.log("typetype", row);
                   setIsUpdateCourseName(true);
                   setIdForUpdateCourseNameData(row._id);
                   getAllCourseType();
@@ -551,9 +478,16 @@ const TimeSlot = ({ getNewCount, title }) => {
                   setStartTime(row?.startTime)
                   setEndTime(row?.endTime)
                   setDate(row?.date)
+                  setSelectedCourseName(row?.cnid)
+                  setSelectedCourseType(row?.ctid)
+                  setSelectedVehicleCategory(row?.vcid)
                   setAllVehicleCategoryForUpdate(row?.vcid)
                   setAllCourseNameForUpdate(row?.cnid)
                   setAllCourseTypeForUpdate(row?.ctid)
+                  // setNow(row?.startTime)
+                  setNow(moment(row?.startTime))
+                  // setNow1(row?.endTime)
+                  setNow1(moment(row?.endTime))
                 }}
               >
                 <Tooltip title="Edit CourseName" arrow>
@@ -664,12 +598,14 @@ const TimeSlot = ({ getNewCount, title }) => {
       setPage(1);
       setCount(0);
       setCountPerPage(countPerPage);
-      getAllCourseName();
+      // getAllCourseName();
+      getAllTimeSlot()
     } else {
       setPage(1);
       setCount(0);
       setCountPerPage(countPerPage);
-      getAllCourseName();
+      // getAllCourseName();
+      getAllTimeSlot()
     }
   }, [debouncedSearchTerm]);
 
@@ -709,28 +645,7 @@ const TimeSlot = ({ getNewCount, title }) => {
             </div>
           </div>
 
-          <Modal show={showStatus} onHide={handleCloseShowStatus}>
-            <Modal.Header closeButton>
-              <Modal.Title className="text-danger">Alert!</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              Are You Sure To Want To{" "}
-              {statusDisplay === true ? "De-active" : "Active"} this course name
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleCloseShowStatus}>
-                Cancel
-              </Button>
-              <Button
-                variant="danger"
-                onClick={(e) => {
-                  handleUpdateStatusProperty(!statusDisplay);
-                }}
-              >
-                {statusDisplay === true ? "De-active" : "Active"}
-              </Button>
-            </Modal.Footer>
-          </Modal>
+         
 
           {/* delete model */}
           <Modal show={show} onHide={handleClose}>
@@ -738,7 +653,7 @@ const TimeSlot = ({ getNewCount, title }) => {
               <Modal.Title className="text-danger">Alert!</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              Are You Sure To Want To delete this Course Name
+              Are You Sure To Want To delete this time slot?
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
@@ -804,8 +719,6 @@ const TimeSlot = ({ getNewCount, title }) => {
           <List>
             {isAddCourseName === true ? (
               <div className="form ml-30 ">
-                {/* Name Amenintie */}
-
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Select Vehicle Category
@@ -961,7 +874,6 @@ const TimeSlot = ({ getNewCount, title }) => {
                     Enter Start Time
                   </label>
                   <div className="col-lg-9 col-xl-6">
-                    {/* <TimeSelect setStartDate={setStartDate} /> */}
                     <TimePicker
                       showSecond={false}
                       defaultValue={now}
@@ -987,7 +899,6 @@ const TimeSlot = ({ getNewCount, title }) => {
                     Enter End Time
                   </label>
                   <div className="col-lg-9 col-xl-6">
-                    {/* <EndTime setEndDate={setEndDate} /> */}
                     <TimePicker
                       showSecond={false}
                       defaultValue={now1}
@@ -1047,8 +958,6 @@ const TimeSlot = ({ getNewCount, title }) => {
           <List>
             {isUpdateCourseName === true ? (
               <div className="form ml-30 ">
-                {/* Ameninties Name */}
-
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Select Vehicle Category
@@ -1207,7 +1116,6 @@ const TimeSlot = ({ getNewCount, title }) => {
                     Enter Start Time
                   </label>
                   <div className="col-lg-9 col-xl-6">
-                    {/* <TimeSelect setStartDate={setStartDate} /> */}
                     <TimePicker
                       showSecond={false}
                       defaultValue={now}
@@ -1233,7 +1141,6 @@ const TimeSlot = ({ getNewCount, title }) => {
                     Enter End Time
                   </label>
                   <div className="col-lg-9 col-xl-6">
-                    {/* <EndTime setEndDate={setEndDate} /> */}
                     <TimePicker
                       showSecond={false}
                       defaultValue={now1}
@@ -1257,7 +1164,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                 <div className="d-flex align-items-center justify-content-center">
                   <button
                     onClick={(e) => {
-                      handelUpdateCourseNameDetails(e);
+                      handelUpdateTimeSlotDetails(e);
                     }}
                     className="btn btn-success mr-2"
                   >
@@ -1266,132 +1173,6 @@ const TimeSlot = ({ getNewCount, title }) => {
                       <span className="mx-3 spinner spinner-white"></span>
                     )}
                   </button>
-                </div>
-              </div>
-            ) : null}
-          </List>
-        </Dialog>
-      ) : null}
-
-      {isViewMoreAboutus ? (
-        <Dialog
-          fullScreen
-          open={isViewMoreAboutus}
-          onClose={handleViewMoreClose}
-          TransitionComponent={Transition}
-        >
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleViewMoreClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-          </Toolbar>
-          <List>
-            {isViewMoreAboutus === true ? (
-              <div className="form ml-30 ">
-                <div className="form-group row mb-0">
-                  <p>Title:</p>
-                </div>
-                <div className="form-group row mr-20">
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.courseName,
-                    }}
-                    className=""
-                  />
-                </div>
-                <div className="form-group row mb-0">
-                  <p>Description:</p>
-                </div>
-                <div className="form-group row mr-20">
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.description,
-                    }}
-                    className=""
-                  />
-                </div>
-
-                <div className="form-group row mb-0">
-                  <p>Duration:</p>
-                </div>
-                <div className="form-group row mr-20">
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.duration,
-                    }}
-                    className=""
-                  />
-                </div>
-                <div className="form-group row mb-0">
-                  <p>Timing:</p>
-                </div>
-                <div className="form-group row mr-20">
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.timing,
-                    }}
-                    className=""
-                  />
-                </div>
-                <div className="form-group row mb-0">
-                  <p>Mode:</p>
-                </div>
-                <div className="form-group row mr-20">
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.mode,
-                    }}
-                    className=""
-                  />
-                </div>
-                <div className="form-group row mb-0">
-                  <p>Document Required:</p>
-                </div>
-                <div className="form-group row mr-20">
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.documentRequired,
-                    }}
-                    className=""
-                  />
-                </div>
-                <div className="form-group row mb-0">
-                  <p>Validity:</p>
-                </div>
-                <div className="form-group row mr-20">
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.validity,
-                    }}
-                    className=""
-                  />
-                </div>
-                <div className="form-group row mb-0">
-                  <p>System Requirement:</p>
-                </div>
-                <div className="form-group row mr-20">
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.systemRequirement,
-                    }}
-                    className=""
-                  />
-                </div>
-                <div className="form-group row mb-0">
-                  <p>Price:</p>
-                </div>
-                <div className="form-group row mr-20">
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.price,
-                    }}
-                    className=""
-                  />
                 </div>
               </div>
             ) : null}
