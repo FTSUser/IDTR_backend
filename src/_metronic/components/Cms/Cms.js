@@ -244,10 +244,10 @@ const Cms = ({ getNewCount, title }) => {
   const validateForm = () => {
     let formIsValid = true;
     let errors = {};
-    if (inputValue && !inputValue.titleName) {
-      formIsValid = false;
-      errors["titleName"] = "*Please Enter Title!";
-    }
+    // if (inputValue && !inputValue.titleName) {
+    //   formIsValid = false;
+    //   errors["titleName"] = "*Please Enter Title!";
+    // }
     if (!description) {
       formIsValid = false;
       errors["description"] = "*Please Enter Description!";
@@ -291,7 +291,7 @@ const Cms = ({ getNewCount, title }) => {
 
     if (validateForm()) {
       let Data = {
-        titleName: inputValue.titleName,
+        // titleName: inputValue.titleName,
         description: description,
         image: inputValue.image,
       };
@@ -385,7 +385,7 @@ const Cms = ({ getNewCount, title }) => {
                 </Tooltip>
               </div>
             </div>
-            <div
+            {/* <div
               className="cursor-pointer"
               onClick={() => {
                 setShow(true);
@@ -395,7 +395,7 @@ const Cms = ({ getNewCount, title }) => {
               <Tooltip title="Delete CMS" arrow>
                 <DeleteIcon />
               </Tooltip>
-            </div>
+            </div> */}
             <div
               className="cursor-pointer pl-2"
               onClick={() => {
@@ -501,7 +501,7 @@ const Cms = ({ getNewCount, title }) => {
             <div className="col d-flex justify-content-between">
               <h2 className="pl-3 pt-2"> CMS</h2>
             </div>
-            <div className="col">
+            {/* <div className="col">
               <div>
                 <input
                   type="text"
@@ -511,8 +511,8 @@ const Cms = ({ getNewCount, title }) => {
                   onChange={(e) => handleSearch(e)}
                 />
               </div>
-            </div>
-            <div className="cus-medium-button-style button-height">
+            </div> */}
+            {/* <div className="cus-medium-button-style button-height">
               <button
                 onClick={() => {
                   setIsAddCms(true);
@@ -521,7 +521,7 @@ const Cms = ({ getNewCount, title }) => {
               >
                 Add CMS
               </button>
-            </div>
+            </div> */}
           </div>
 
           {/* delete model */}
@@ -724,7 +724,7 @@ const Cms = ({ getNewCount, title }) => {
             {isUpdateCms === true ? (
               <div className="form ml-30 ">
                 {/* Ameninties Name */}
-                <div className="form-group row">
+                {/* <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter Title
                   </label>
@@ -751,7 +751,7 @@ const Cms = ({ getNewCount, title }) => {
                       {errors["titleName"]}
                     </span>
                   </div>
-                </div>
+                </div> */}
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter Description

@@ -140,9 +140,13 @@ const TimeSlot = ({ getNewCount, title }) => {
   }, [idForEditStatus]);
 
   const handleAdminUpdateClose = () => {
-    setInputValue({});
     setIsUpdateCourseName(false);
+    setInputValueForAdd({});
     setErrors({});
+    setErrorsForAdd({});
+    setSelectedCourseName([]);
+    setSelectedCourseType([]);
+    setSelectedVehicleCategory([]);
   };
 
   const handleAddAdminClose = () => {
@@ -531,7 +535,7 @@ const TimeSlot = ({ getNewCount, title }) => {
       cell: (row) => {
         return (
           <>
-            {/* <div className="d-flex justify-content-between">
+            <div className="d-flex justify-content-between">
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
@@ -540,20 +544,13 @@ const TimeSlot = ({ getNewCount, title }) => {
                   setIdForUpdateCourseNameData(row._id);
                   getAllCourseType();
                   getAllVehicleCategory();
-                  setInputValue({
-                    CourseName: row?.courseName,
-                    Description: row?.description,
-                    Certificate: row?.certificate,
-                    DocumentRequired: row?.documentRequired,
-                    Mode: row?.mode,
-                    SystemRequirement: row?.systemRequirement,
-                    Timing: row?.timing,
-                    Duration: row?.duration,
-                    Validity: row?.validity,
-                    Price: row?.price,
-                    CourseType: row?.ctid?._id,
-                    VehicleCategory: row?.vcid?._id,
-                  });
+                  getAllCourseName();
+                  setInputValueForAdd({
+                    seat:row?.seat
+                  })
+                  setStartTime(row?.startTime)
+                  setEndTime(row?.endTime)
+                  setDate(row?.date)
                   setAllVehicleCategoryForUpdate(row?.vcid)
                   setAllCourseNameForUpdate(row?.cnid)
                   setAllCourseTypeForUpdate(row?.ctid)
@@ -563,7 +560,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                   <CreateIcon />
                 </Tooltip>
               </div>
-            </div> */}
+            </div>
 
             <div
               className="cursor-pointer"
@@ -1146,6 +1143,113 @@ const TimeSlot = ({ getNewCount, title }) => {
                       }}
                     >
                       {errorsForAdd["CourseName"]}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Enter Total Seat
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <div>
+                      <input
+                        type="number"
+                        className={`form-control form-control-lg form-control-solid `}
+                        id="seat"
+                        name="seat"
+                        value={inputValueForAdd?.seat}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
+                      />
+                    </div>
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["seat"]}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Select Date
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <DatePicker
+                      id="date"
+                      format="DD/MM/YYYY"
+                      selected={new Date(date)}
+                      onChange={(date) => {
+                        setDate(date);
+                        setErrorsForAdd({ ...errorsForAdd, date: "" });
+                      }}
+                    />
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["date"]}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Enter Start Time
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    {/* <TimeSelect setStartDate={setStartDate} /> */}
+                    <TimePicker
+                      showSecond={false}
+                      defaultValue={now}
+                      onChange={onChange}
+                      format={format}
+                      use12Hours
+                      inputReadOnly
+                    />
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["startTime"]}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Enter End Time
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    {/* <EndTime setEndDate={setEndDate} /> */}
+                    <TimePicker
+                      showSecond={false}
+                      defaultValue={now1}
+                      onChange={onChange1}
+                      format={format1}
+                      use12Hours
+                      inputReadOnly
+                    />
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["endTime"]}
                     </span>
                   </div>
                 </div>
