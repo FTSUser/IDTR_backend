@@ -86,7 +86,7 @@ const CourseName = ({ getNewCount, title }) => {
     let Data = {
       vehicleCategory: inputValueForAdd?.VehicleCategory
     }
-      await ApiPost(`courseType/getCoursetypeByVehiclecategory?page=${page}&limit=1000`,Data)
+      await ApiPost(`courseType/getCoursetypeByVehiclecategory?limit=1000`,Data)
         .then((res) => {
           setIsLoaderVisible(false);
           console.log("artistreport", res);
@@ -108,7 +108,7 @@ const CourseName = ({ getNewCount, title }) => {
   const getAllVehicleCategory = async () => {
     setIsLoaderVisible(true);
     
-      await ApiGet(`vehicleCategory/getAllVehicleCategory?page=${page}&limit=1000`)
+      await ApiGet(`vehicleCategory/getAllVehicleCategory?limit=1000`)
         .then((res) => {
           setIsLoaderVisible(false);
           console.log("artistreport", res);

@@ -121,7 +121,7 @@ const Payment = ({ getNewCount, title }) => {
         cell: (row) => {
             return(
                 <span>
-                    {row?.cnid?.courseName}
+                    {row?.cnid === null ? "-" : row?.cnid?.courseName}
                 </span>
             )
         },

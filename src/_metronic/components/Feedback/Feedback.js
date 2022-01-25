@@ -76,6 +76,13 @@ const Feedback = ({ getNewCount, title }) => {
         name: "Email",
         selector: "email",
         sortable: true,
+        cell: (row) => {
+          return(
+              <span>
+                  {row?.email === "" ? "-" : row?.email}
+              </span>
+          )
+      },
       },
 
       {
@@ -96,6 +103,13 @@ const Feedback = ({ getNewCount, title }) => {
         name: "Rating",
         selector: "rating",
         sortable: true,
+        cell: (row) => {
+          return(
+              <span>
+                  {!row?.rating ? "-" : row?.rating}
+              </span>
+          )
+      },
       },
 
       
@@ -104,10 +118,11 @@ const Feedback = ({ getNewCount, title }) => {
         cell: (row) => {
             return(
                 <span>
-                    {row?.description}
+                    {row?.description === "" ? "-" : row?.description}
                 </span>
             )
         },
+        
         sortable: true,
       
       },

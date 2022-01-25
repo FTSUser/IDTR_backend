@@ -160,17 +160,38 @@ const User = ({ getNewCount, title }) => {
       name: "Email",
       selector: "email",
       sortable: true,
+      cell: (row) => {
+        return(
+            <span>
+                {row?.email === "" ? "-" : row?.email}
+            </span>
+        )
+    },
     },
     {
       name: "First Name",
       selector: "fname",
       sortable: true,
+      cell: (row) => {
+        return(
+            <span>
+                {row?.fname === "" ? "-" : row?.fname}
+            </span>
+        )
+    },
     },
 
     {
       name: "Last Name",
       selector: "lname",
       sortable: true,
+      cell: (row) => {
+        return(
+            <span>
+                {row?.lname === "" ? "-" : row?.lname}
+            </span>
+        )
+    },
     },
     {
       name: "Gender",

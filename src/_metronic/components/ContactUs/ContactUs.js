@@ -109,7 +109,7 @@ const ContactUs = ({ getNewCount, title }) => {
         cell: (row) => {
             return(
                 <span>
-                    {row?.description}
+                    {row?.description === "" ? "-" : row?.description}
                 </span>
             )
         },

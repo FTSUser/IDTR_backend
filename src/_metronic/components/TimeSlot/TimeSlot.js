@@ -124,7 +124,7 @@ const TimeSlot = ({ getNewCount, title }) => {
       vehicleCategory: inputValueForAdd?.VehicleCategory,
     };
     await ApiPost(
-      `courseType/getCoursetypeByVehiclecategory?page=${page}&limit=1000`,
+      `courseType/getCoursetypeByVehiclecategory?limit=1000`,
       Data
     )
       .then((res) => {
@@ -147,7 +147,7 @@ const TimeSlot = ({ getNewCount, title }) => {
     setIsLoaderVisible(true);
 
     await ApiGet(
-      `vehicleCategory/getAllVehicleCategory?page=${page}&limit=1000`
+      `vehicleCategory/getAllVehicleCategory?limit=1000`
     )
       .then((res) => {
         setIsLoaderVisible(false);
@@ -177,7 +177,7 @@ const TimeSlot = ({ getNewCount, title }) => {
     };
 
     await ApiPost(
-      `courseName/getCoursenameByCoursetype?page=${page}&limit=1000`,
+      `courseName/getCoursenameByCoursetype?limit=1000`,
       Data
     )
       .then((res) => {
