@@ -403,20 +403,22 @@ const TimeSlot = ({ getNewCount, title }) => {
       width: "65px",
     },
     {
-      name: "CreatedAt",
-      cell: (row) => {
-        return <span>{moment(row?.createdAt).format("ll")}</span>;
-      },
-      sortable: true,
-      selector: (row) => row?.createdAt,
-    },
-    {
       name: "Date",
       cell: (row) => {
         return <span>{moment(row?.date).format("ll")}</span>;
       },
       sortable: true,
       selector: (row) => row?.date,
+    },
+    {
+      name: "Vehicle Category",
+      selector: (row) => row?.vcid?.vehicleCategory,
+      sortable: true,
+    },
+    {
+      name: "Course Type",
+      selector: (row) => row?.ctid?.courseType,
+      sortable: true,
     },
     {
       name: "Course Name",
