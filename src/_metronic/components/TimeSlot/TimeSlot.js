@@ -34,9 +34,6 @@ const TimeSlot = ({ getNewCount, title }) => {
   const [isLoaderVisible, setIsLoaderVisible] = useState(false);
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  //new data
-  const [isUpdateCourseName, setIsUpdateCourseName] = useState(false);
   const [isAddCourseName, setIsAddCourseName] = useState(false);
   const [idForUpdateCourseNameData, setIdForUpdateCourseNameData] =
     useState("");
@@ -58,8 +55,7 @@ const TimeSlot = ({ getNewCount, title }) => {
     useState([]);
   const [allCourseTypeForUpdate, setAllCourseTypeForUpdate] = useState([]);
   const [allCourseNameForUpdate, setAllCourseNameForUpdate] = useState([]);
-
-
+  const [isEditPopUp, setIsEditPopUp] = useState(false);
 
   const handleOnChnageAdd = (e) => {
     const { name, value } = e.target;
@@ -70,18 +66,8 @@ const TimeSlot = ({ getNewCount, title }) => {
     } else {
       const { name, value } = e.target;
       setInputValueForAdd({ ...inputValueForAdd, [name]: value });
-    setErrorsForAdd({ ...errorsForAdd, [name]: "" });
+      setErrorsForAdd({ ...errorsForAdd, [name]: "" });
     }
-    
-  };
-
-  const handleAdminUpdateClose = () => {
-    setIsUpdateCourseName(false);
-    setInputValueForAdd({});
-    setErrorsForAdd({});
-    setSelectedCourseName([]);
-    setSelectedCourseType([]);
-    setSelectedVehicleCategory([]);
   };
 
   const handleAddAdminClose = () => {
@@ -91,6 +77,17 @@ const TimeSlot = ({ getNewCount, title }) => {
     setSelectedCourseName([]);
     setSelectedCourseType([]);
     setSelectedVehicleCategory([]);
+    setIsEditPopUp(false);
+    setIdForUpdateCourseNameData("");
+    setStartTime("");
+    setEndTime("");
+    setDate(new Date());
+    setAllVehicleCategoryForUpdate([]);
+    setAllCourseNameForUpdate([]);
+    setAllCourseTypeForUpdate([]);
+    setNow(moment().hour(0).minute(0));
+    setNow1(moment().hour(0).minute(0));
+    setIsEditPopUp(false);
   };
 
   const handleClose = () => {
@@ -99,7 +96,7 @@ const TimeSlot = ({ getNewCount, title }) => {
 
   //for start time selector
   const [startTime, setStartTime] = useState("");
-  const [now,setNow] = useState(moment().hour(0).minute(0));
+  const [now, setNow] = useState(moment().hour(0).minute(0));
   const format = "h:mm a";
   function onChange(value) {
     setStartTime(value?.toDate());
@@ -111,7 +108,7 @@ const TimeSlot = ({ getNewCount, title }) => {
 
   //for end time selector
   const [endTime, setEndTime] = useState("");
-  const [now1,setNow1] = useState(moment().hour(0).minute(0))
+  const [now1, setNow1] = useState(moment().hour(0).minute(0));
   const format1 = "h:mm a";
   function onChange1(value) {
     setEndTime(value?.toDate());
@@ -120,8 +117,6 @@ const TimeSlot = ({ getNewCount, title }) => {
       endTime: "",
     });
   }
-
-  //time end
 
   const getAllCourseType = async () => {
     setIsLoaderVisible(true);
@@ -157,36 +152,37 @@ const TimeSlot = ({ getNewCount, title }) => {
 
   const getAllTimeSlot = async () => {
     setIsLoaderVisible(true);
-    if(!search) {
+    if (!search) {
       await ApiGet(`trainingDate/getAllDate?page=${page}&limit=${countPerPage}`)
-      .then((res) => {
-        if (res?.status == 200) {
-          setIsLoaderVisible(false);
-          setAllTimeSlot(res?.data?.payload?.Question);
-          setCount(res?.data?.payload?.count)
-        } else {
-          toast.error(res?.data?.message);
-        }
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      });
+        .then((res) => {
+          if (res?.status == 200) {
+            setIsLoaderVisible(false);
+            setAllTimeSlot(res?.data?.payload?.Question);
+            setCount(res?.data?.payload?.count);
+          } else {
+            toast.error(res?.data?.message);
+          }
+        })
+        .catch((err) => {
+          toast.error(err.message);
+        });
     } else {
-      await ApiGet(`trainingDate/getAllDate?search=${search}&page=${page}&limit=${countPerPage}`)
-      .then((res) => {
-        if (res?.status == 200) {
-          setIsLoaderVisible(false);
-          setAllTimeSlot(res?.data?.payload?.Question);
-          setCount(res?.data?.payload?.count)
-        } else {
-          toast.error(res?.data?.message);
-        }
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      });
+      await ApiGet(
+        `trainingDate/getAllDate?search=${search}&page=${page}&limit=${countPerPage}`
+      )
+        .then((res) => {
+          if (res?.status == 200) {
+            setIsLoaderVisible(false);
+            setAllTimeSlot(res?.data?.payload?.Question);
+            setCount(res?.data?.payload?.count);
+          } else {
+            toast.error(res?.data?.message);
+          }
+        })
+        .catch((err) => {
+          toast.error(err.message);
+        });
     }
-    
   };
 
   const getAllCourseName = async () => {
@@ -202,55 +198,10 @@ const TimeSlot = ({ getNewCount, title }) => {
       });
   };
 
-  
-
-  const validateFormForAddAdmin = () => {
-    let formIsValid = true;
-    let errorsForAdd = {};
-    if (selectedVehicleCategory?.length <= 0) {
-      formIsValid = false;
-      errorsForAdd["VehicleCategory"] = "*Please Enter Vehicle Category!";
-    }
-
-    if (selectedCourseType?.length <= 0) {
-      formIsValid = false;
-      errorsForAdd["CourseType"] = "*Please Enter CourseType!";
-    }
-
-    if (selectedCourseName?.length <= 0) {
-      formIsValid = false;
-      errorsForAdd["CourseName"] = "*Please Enter CourseName!";
-    }
-
-    if (inputValueForAdd && !inputValueForAdd.seat) {
-      formIsValid = false;
-      errorsForAdd["seat"] = "*Please Enter seat Number!";
-    } else if (inputValueForAdd.seat < 0) {
-      formIsValid = false;
-      errorsForAdd["seat"] = "*Please Enter vaild seat number!";
-    }
-
-    if (!date) {
-      formIsValid = false;
-      errorsForAdd["date"] = "*Please Enter date!";
-    }
-    if (!startTime) {
-      formIsValid = false;
-      errorsForAdd["startTime"] = "*Please Enter startTime!";
-    }
-    if (!endTime) {
-      formIsValid = false;
-      errorsForAdd["endTime"] = "*Please Enter endTime!";
-    }
-
-    setErrorsForAdd(errorsForAdd);
-    return formIsValid;
-  };
-
   const handelAddCourseNameDetails = (e) => {
     e.preventDefault();
 
-    if (validateFormForAddAdmin()) {
+    if (validateForm()) {
       const newCourseName = [];
       {
         selectedCourseName.map((sub, i) => {
@@ -284,12 +235,13 @@ const TimeSlot = ({ getNewCount, title }) => {
             setIsAddCourseName(false);
             toast.success(res?.data?.message);
             setInputValueForAdd({});
-
+            getAllTimeSlot();
             setIsAddCourseName(false);
             setErrorsForAdd({});
             setSelectedCourseName([]);
             setSelectedCourseType([]);
             setSelectedVehicleCategory([]);
+            setIsEditPopUp(false);
           } else {
             toast.error(res?.data?.message);
           }
@@ -318,8 +270,6 @@ const TimeSlot = ({ getNewCount, title }) => {
         toast.error(err.message);
       });
   };
-
-  
 
   const validateForm = () => {
     let formIsValid = true;
@@ -367,46 +317,53 @@ const TimeSlot = ({ getNewCount, title }) => {
   const handelUpdateTimeSlotDetails = (e) => {
     e.preventDefault();
     if (validateForm()) {
-        const newCourseName = [];
-        {
-          selectedCourseName.map((sub, i) => {
-            newCourseName.push(sub._id);
-          });
-        }
-        const newCourseType = [];
-        {
-          selectedCourseType.map((sub, i) => {
-            newCourseType.push(sub._id);
-          });
-        }
-        const newVehicleCategory = [];
-        {
-          selectedVehicleCategory.map((sub, i) => {
-            newVehicleCategory.push(sub._id);
-          });
-        }
-        let Data = {
-          date: date,
-          seat: inputValueForAdd?.seat,
-          endTime: endTime,
-          startTime: startTime,
-          cnid: newCourseName,
-          ctid: newCourseType,
-          vcid: newVehicleCategory,
-        };
+      const newCourseName = [];
+      {
+        selectedCourseName.map((sub, i) => {
+          newCourseName.push(sub._id);
+        });
+      }
+      const newCourseType = [];
+      {
+        selectedCourseType.map((sub, i) => {
+          newCourseType.push(sub._id);
+        });
+      }
+      const newVehicleCategory = [];
+      {
+        selectedVehicleCategory.map((sub, i) => {
+          newVehicleCategory.push(sub._id);
+        });
+      }
+      let Data = {
+        date: date,
+        seat: inputValueForAdd?.seat,
+        endTime: endTime,
+        startTime: startTime,
+        cnid: newCourseName,
+        ctid: newCourseType,
+        vcid: newVehicleCategory,
+      };
       ApiPut(`trainingDate/updateDate/${idForUpdateCourseNameData}`, Data)
         .then((res) => {
           if (res?.status == 200) {
-            setIsUpdateCourseName(false);
+            setIsAddCourseName(false);
             toast.success(res?.data?.message);
-            getAllTimeSlot()
+            setInputValueForAdd({});
+            getAllTimeSlot();
+            setIsAddCourseName(false);
+            setErrorsForAdd({});
+            setSelectedCourseName([]);
+            setSelectedCourseType([]);
+            setSelectedVehicleCategory([]);
+            setIsEditPopUp(false);
           } else {
-            console.log("res007",res);
+            console.log("res007", res);
             toast.error(res?.data?.message);
           }
         })
         .catch((err) => {
-          console.log("errerrerr",err?.message);
+          console.log("errerrerr", err?.message);
           toast.error(err?.message);
         });
     }
@@ -467,27 +424,26 @@ const TimeSlot = ({ getNewCount, title }) => {
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
-                  setIsUpdateCourseName(true);
+                  setIsAddCourseName(true);
                   setIdForUpdateCourseNameData(row._id);
                   getAllCourseType();
                   getAllVehicleCategory();
                   getAllCourseName();
                   setInputValueForAdd({
-                    seat:row?.seat
-                  })
-                  setStartTime(row?.startTime)
-                  setEndTime(row?.endTime)
-                  setDate(row?.date)
-                  setSelectedCourseName(row?.cnid)
-                  setSelectedCourseType(row?.ctid)
-                  setSelectedVehicleCategory(row?.vcid)
-                  setAllVehicleCategoryForUpdate(row?.vcid)
-                  setAllCourseNameForUpdate(row?.cnid)
-                  setAllCourseTypeForUpdate(row?.ctid)
-                  // setNow(row?.startTime)
-                  setNow(moment(row?.startTime))
-                  // setNow1(row?.endTime)
-                  setNow1(moment(row?.endTime))
+                    seat: row?.seat,
+                  });
+                  setStartTime(row?.startTime);
+                  setEndTime(row?.endTime);
+                  setDate(row?.date);
+                  setSelectedCourseName(row?.cnid);
+                  setSelectedCourseType(row?.ctid);
+                  setSelectedVehicleCategory(row?.vcid);
+                  setAllVehicleCategoryForUpdate(row?.vcid);
+                  setAllCourseNameForUpdate(row?.cnid);
+                  setAllCourseTypeForUpdate(row?.ctid);
+                  setNow(moment(row?.startTime));
+                  setNow1(moment(row?.endTime));
+                  setIsEditPopUp(true);
                 }}
               >
                 <Tooltip title="Edit CourseName" arrow>
@@ -507,22 +463,6 @@ const TimeSlot = ({ getNewCount, title }) => {
                 <DeleteIcon />
               </Tooltip>
             </div>
-
-            {/* <>
-              <div
-                className="cursor-pointer pl-2"
-                onClick={() => {
-                  setIsViewMoreAboutus(true);
-                  setDataViewMore(row);
-                  console.log("rowShow", row);
-                  console.log("isViewMoreAboutus", isViewMoreAboutus);
-                }}
-              >
-                <Tooltip title="Show More" arrow>
-                  <InfoOutlinedIcon />
-                </Tooltip>
-              </div>
-            </> */}
           </>
         );
       },
@@ -572,22 +512,17 @@ const TimeSlot = ({ getNewCount, title }) => {
 
   // Hook
   function useDebounce(value, delay) {
-    // State and setters for debounced value
     const [debouncedValue, setDebouncedValue] = useState(value);
     useEffect(
       () => {
-        // Update debounced value after delay
         const handler = setTimeout(() => {
           setDebouncedValue(value);
         }, delay);
-        // Cancel the timeout if value changes (also on delay change or unmount)
-        // This is how we prevent debounced value from updating if value is changed ...
-        // .. within the delay period. Timeout gets cleared and restarted.
         return () => {
           clearTimeout(handler);
         };
       },
-      [value, delay] // Only re-call effect if value or delay changes
+      [value, delay]
     );
     return debouncedValue;
   }
@@ -598,14 +533,12 @@ const TimeSlot = ({ getNewCount, title }) => {
       setPage(1);
       setCount(0);
       setCountPerPage(countPerPage);
-      // getAllCourseName();
-      getAllTimeSlot()
+      getAllTimeSlot();
     } else {
       setPage(1);
       setCount(0);
       setCountPerPage(countPerPage);
-      // getAllCourseName();
-      getAllTimeSlot()
+      getAllTimeSlot();
     }
   }, [debouncedSearchTerm]);
 
@@ -644,8 +577,6 @@ const TimeSlot = ({ getNewCount, title }) => {
               </button>
             </div>
           </div>
-
-         
 
           {/* delete model */}
           <Modal show={show} onHide={handleClose}>
@@ -718,245 +649,6 @@ const TimeSlot = ({ getNewCount, title }) => {
           </Toolbar>
           <List>
             {isAddCourseName === true ? (
-              <div className="form ml-30 ">
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Select Vehicle Category
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <div>
-                      <Multiselect
-                        options={filteredVehicleCategory}
-                        onSelect={(selectedList, selectedItem) => {
-                          setSelectedVehicleCategory(selectedList);
-                          setErrorsForAdd({
-                            ...errorsForAdd,
-                            VehicleCategory: "",
-                          });
-                        }}
-                        onRemove={(selectedList, removedItem) => {
-                          setSelectedVehicleCategory(selectedList);
-                        }}
-                        displayValue="vehicleCategory"
-                      />
-                    </div>
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errorsForAdd["VehicleCategory"]}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Select Course Type
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <Multiselect
-                      options={getCourseType}
-                      onSelect={(selectedList, selectedItem) => {
-                        setSelectedCourseType(selectedList);
-                        setErrorsForAdd({
-                          ...errorsForAdd,
-                          CourseType: "",
-                        });
-                      }}
-                      onRemove={(selectedList, removedItem) => {
-                        setSelectedCourseType(selectedList);
-                      }}
-                      displayValue="courseType"
-                    />
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errorsForAdd["CourseType"]}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Select Course Name
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <Multiselect
-                      options={filteredCourseName}
-                      onSelect={(selectedList, selectedItem) => {
-                        setSelectedCourseName(selectedList);
-                        setErrorsForAdd({
-                          ...errorsForAdd,
-                          CourseName: "",
-                        });
-                      }}
-                      onRemove={(selectedList, removedItem) => {
-                        setSelectedCourseName(selectedList);
-                      }}
-                      displayValue="courseName"
-                    />
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errorsForAdd["CourseName"]}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Total Seat
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <div>
-                      <input
-                        type="number"
-                        className={`form-control form-control-lg form-control-solid `}
-                        id="seat"
-                        name="seat"
-                        value={inputValueForAdd?.seat}
-                        onChange={(e) => {
-                          handleOnChnageAdd(e);
-                        }}
-                      />
-                    </div>
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errorsForAdd["seat"]}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Select Date
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <DatePicker
-                      id="date"
-                      format="DD/MM/YYYY"
-                      selected={new Date(date)}
-                      onChange={(date) => {
-                        setDate(date);
-                        setErrorsForAdd({ ...errorsForAdd, date: "" });
-                      }}
-                    />
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errorsForAdd["date"]}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Start Time
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <TimePicker
-                      showSecond={false}
-                      defaultValue={now}
-                      onChange={onChange}
-                      format={format}
-                      use12Hours
-                      inputReadOnly
-                    />
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errorsForAdd["startTime"]}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter End Time
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <TimePicker
-                      showSecond={false}
-                      defaultValue={now1}
-                      onChange={onChange1}
-                      format={format1}
-                      use12Hours
-                      inputReadOnly
-                    />
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errorsForAdd["endTime"]}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="d-flex align-items-center justify-content-center">
-                  <button
-                    onClick={(e) => {
-                      handelAddCourseNameDetails(e);
-                    }}
-                    className="btn btn-success mr-2"
-                  >
-                    <span>Add Details</span>
-                    {loading && (
-                      <span className="mx-3 spinner spinner-white"></span>
-                    )}
-                  </button>
-                </div>
-              </div>
-            ) : null}
-          </List>
-        </Dialog>
-      ) : null}
-
-      {isUpdateCourseName ? (
-        <Dialog
-          fullScreen
-          open={isUpdateCourseName}
-          onClose={handleAdminUpdateClose}
-          TransitionComponent={Transition}
-        >
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleAdminUpdateClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-          </Toolbar>
-          <List>
-            {isUpdateCourseName === true ? (
               <div className="form ml-30 ">
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -1164,7 +856,9 @@ const TimeSlot = ({ getNewCount, title }) => {
                 <div className="d-flex align-items-center justify-content-center">
                   <button
                     onClick={(e) => {
-                      handelUpdateTimeSlotDetails(e);
+                      isEditPopUp === false
+                        ? handelAddCourseNameDetails(e)
+                        : handelUpdateTimeSlotDetails(e);
                     }}
                     className="btn btn-success mr-2"
                   >
