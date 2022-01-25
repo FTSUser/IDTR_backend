@@ -31,19 +31,11 @@ const CourseName = ({ getNewCount, title }) => {
   const [isLoaderVisible, setIsLoaderVisible] = useState(false);
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  //new data
-  const [isUpdateCourseName, setIsUpdateCourseName] = useState(false);
   const [isAddCourseName, setIsAddCourseName] = useState(false);
-  const [idForUpdateCourseNameData, setIdForUpdateCourseNameData] =
-    useState("");
-  const [inputValue, setInputValue] = useState({});
+  const [idForUpdateCourseNameData, setIdForUpdateCourseNameData] = useState("");
   const [inputValueForAdd, setInputValueForAdd] = useState({});
-  const [errors, setErrors] = useState({});
   const [errorsForAdd, setErrorsForAdd] = useState({});
-  const [idForEditStatus, setIdForEditStatus] = useState("");
   const [idForDeleteCourseName, setIdForDeleteCourseName] = useState("");
-  const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [countPerPage, setCountPerPage] = useState(10);
@@ -52,27 +44,15 @@ const CourseName = ({ getNewCount, title }) => {
   const [idForUpdateCourseStatus, setIdForUpdateCourseStatus] = useState("");
   const [statusDisplay, setStatusDisplay] = useState(false);
   const [getCourseType, setGetCourseType] = useState([]);
-  const [courseTypeArr, setCourseTypeArr] = useState();
   const [filteredVehicleCategory, setFilteredVehicleCategory] = useState([]);
 
   const [dataViewMore, setDataViewMore] = useState({});
   const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
-
-
-
-
-
-
+  const [isEditPopUp,setIsEditPopUp] = useState(false);
 
   const handleViewMoreClose = () => {
     setIsViewMoreAboutus(false);
     setDataViewMore({});
-  };
-
-  const handleOnChnage = (e) => {
-    const { name, value } = e.target;
-    setInputValue({ ...inputValue, [name]: value });
-    setErrors({ ...errors, [name]: "" });
   };
 
   const handleOnChnageAdd = (e) => {
@@ -81,33 +61,11 @@ const CourseName = ({ getNewCount, title }) => {
     setErrorsForAdd({ ...errorsForAdd, [name]: "" });
   };
 
-  useEffect(() => {
-    console.log("inputValue", inputValueForAdd);
-  }, [inputValueForAdd]);
-  
-  useEffect(() => {
-    console.log("inputValueeeee", inputValue);
-  }, [inputValue]);
-
-  useEffect(() => {
-    console.log("filteredVehicleCategory", filteredVehicleCategory);
-  }, [filteredVehicleCategory]);
-
-
-  useEffect(() => {
-    console.log("idForEditStatus", idForEditStatus);
-  }, [idForEditStatus]);
-
-  const handleAdminUpdateClose = () => {
-    setInputValue({});
-    setIsUpdateCourseName(false);
-    setErrors({})
-  };
-
   const handleAddAdminClose = () => {
     setInputValueForAdd({});
     setIsAddCourseName(false);
     setErrorsForAdd({})
+    setIsEditPopUp(false)
   };
 
   const handleClose = () => {
@@ -124,33 +82,26 @@ const CourseName = ({ getNewCount, title }) => {
 
   const getAllCourseType = async () => {
     setIsLoaderVisible(true);
-    if (!search) {
-      await ApiGet(`courseType/getAllCourseType?page=${page}&limit=1000`)
+    let Data = {
+      vehicleCategory: inputValueForAdd?.VehicleCategory
+    }
+      await ApiPost(`courseType/getCoursetypeByVehiclecategory?page=${page}&limit=1000`,Data)
         .then((res) => {
           setIsLoaderVisible(false);
           console.log("artistreport", res);
-          setGetCourseType(res?.data?.payload?.Question);
-          // courseTypeArr.push(getCourseType.map((item)=>item.courseType))
-          console.log("courseTypeArr", courseTypeArr);
-          // setCount(res?.data?.payload?.count);
+          setGetCourseType(res?.data?.payload?.courseType);
         })
         .catch((err) => {
           console.log(err);
         });
-    }
-    // else {
-    //     await ApiGet(`courseType/getAllCourseType?search=${search}&page=${page}&limit=${countPerPage}`)
-    //         .then((res) => {
-    //             setIsLoaderVisible(false);
-    //             console.log("artistreport", res);
-    //             setFilteredCourseType(res?.data?.payload?.Question);
-    //             setCount(res?.data?.payload?.count);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-    // }
   };
+
+  useEffect(() =>{
+    if(inputValueForAdd?.VehicleCategory?.length > 0){
+      getAllCourseType()
+    }
+  },[inputValueForAdd?.VehicleCategory])
+
 
 
   const getAllVehicleCategory = async () => {
@@ -197,11 +148,10 @@ const CourseName = ({ getNewCount, title }) => {
     }
   };
 
-  const handleUpdateStatusProperty = (status) => {
+  const handleUpdateStatusCourseName = (status) => {
     ApiPut(`courseName/updateStatus/${idForUpdateCourseStatus}`, {
       isActive: status,
     })
-      // ApiPut(`property/updateProperty/${idForUpdatePropertyStatus}`)
       .then((res) => {
         if (res?.status == 200) {
           setShowStatus(false);
@@ -336,92 +286,26 @@ const CourseName = ({ getNewCount, title }) => {
       });
   };
 
-  useEffect(() => {
-    console.log("inputValue", inputValue);
-  }, [inputValue]);
 
-  const validateForm = () => {
-    let formIsValid = true;
-    let errors = {};
-    if (inputValue && !inputValue.CourseName) {
-      formIsValid = false;
-      errors["CourseName"] = "*Please Enter CourseName!";
-    }
 
-    if (inputValue && !inputValue.Description) {
-      formIsValid = false;
-      errors["Description"] = "*Please Enter Description!";
-    }
-
-    if (inputValue && !inputValue.CourseType) {
-      formIsValid = false;
-      errors["CourseType"] = "*Please Enter CourseType!";
-    }
-
-    if (inputValue && !inputValue.Duration) {
-      formIsValid = false;
-      errors["Duration"] = "*Please Enter Duration!";
-    }
-
-    if (inputValue && !inputValue.Timing) {
-      formIsValid = false;
-      errors["Timing"] = "*Please Enter Timing!";
-    }
-
-    if (inputValue && !inputValue.Mode) {
-      formIsValid = false;
-      errors["Mode"] = "*Please Enter Mode!";
-    }
-
-    if (inputValue && !inputValue.DocumentRequired) {
-      formIsValid = false;
-      errors["DocumentRequired"] = "*Please Enter Document Required!";
-    }
-
-    if (inputValue && !inputValue.Validity) {
-      formIsValid = false;
-      errors["Validity"] = "*Please Enter Validity!";
-    }
-
-    if (inputValue && !inputValue.SystemRequirement) {
-      formIsValid = false;
-      errors["SystemRequirement"] = "*Please Enter System Requirement!";
-    }
-
-    if (inputValue && !inputValue.Certificate) {
-      formIsValid = false;
-      errors["Certificate"] = "*Please Enter Certificate!";
-    }
-
-    if (inputValue && !inputValue.Price) {
-      formIsValid = false;
-      errors["Price"] = "*Please Enter Price!";
-    }
-    if (inputValue && !inputValue.VehicleCategory) {
-      formIsValid = false;
-      errors["VehicleCategory"] = "*Please Enter Price!";
-    }
-
-    setErrors(errors);
-    return formIsValid;
-  };
+ 
 
   const handelUpdateCourseNameDetails = (e) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (validateFormForAddAdmin()) {
       let Data = {
-        courseName: inputValue.CourseName,
-        description: inputValue.Description,
-        certificate: inputValue.Certificate,
-        documentRequired: inputValue.DocumentRequired,
-        mode: inputValue.Mode,
-        systemRequirement: inputValue.SystemRequirement,
-        timing: inputValue.Timing,
-        duration: inputValue.Duration,
-        validity: inputValue.Validity,
-        price: inputValue.Price,
-        ctid: inputValue.CourseType,
-        vcid: inputValue?.VehicleCategory
+        courseName: inputValueForAdd?.CourseName,
+        description: inputValueForAdd?.Description,
+        certificate: inputValueForAdd?.Certificate,
+        documentRequired: inputValueForAdd?.DocumentRequired,
+        mode: inputValueForAdd?.Mode,
+        systemRequirement: inputValueForAdd?.SystemRequirement,
+        timing: inputValueForAdd?.Timing,
+        duration: inputValueForAdd?.Duration,
+        validity: inputValueForAdd?.Validity,
+        price: inputValueForAdd?.Price,
+        ctid: inputValueForAdd?.CourseType,
+        vcid: inputValueForAdd?.VehicleCategory
 
        
       };
@@ -429,10 +313,11 @@ const CourseName = ({ getNewCount, title }) => {
         .then((res) => {
           console.log("resres", res);
           if (res?.status == 200) {
-            setIsUpdateCourseName(false);
+            setIsAddCourseName(false);
             toast.success(res?.data?.message);
-            setInputValue({});
+            setInputValueForAdd({});
             getAllCourseName();
+            setIsEditPopUp(false)
           } else {
             toast.error(res?.data?.message);
           }
@@ -528,11 +413,11 @@ const CourseName = ({ getNewCount, title }) => {
                 className="cursor-pointer pl-2"
                 onClick={() => {
                     console.log("typetype",row);
-                  setIsUpdateCourseName(true);
+                    setIsAddCourseName(true);
                   setIdForUpdateCourseNameData(row._id);
-                  getAllCourseType();
+                  // getAllCourseType();
                   getAllVehicleCategory();
-                  setInputValue({
+                  setInputValueForAdd({
                     CourseName: row?.courseName,
                     Description: row?.description,
                     Certificate: row?.certificate,
@@ -546,6 +431,7 @@ const CourseName = ({ getNewCount, title }) => {
                     CourseType: row?.ctid?._id,
                     VehicleCategory: row?.vcid?._id
                   });
+                  setIsEditPopUp(true)
                 }}
               >
                 <Tooltip title="Edit CourseName" arrow>
@@ -565,12 +451,7 @@ const CourseName = ({ getNewCount, title }) => {
                 <DeleteIcon />
               </Tooltip>
             </div>
-
-
-            
-     
           <>
-           
             <div
               className="cursor-pointer pl-2"
               onClick={() => {
@@ -694,7 +575,7 @@ const CourseName = ({ getNewCount, title }) => {
               <button
                 onClick={() => {
                   setIsAddCourseName(true);
-                  getAllCourseType();
+                  // getAllCourseType();
                   getAllVehicleCategory();
                 }}
                 className="btn btn-success mr-2"
@@ -719,7 +600,7 @@ const CourseName = ({ getNewCount, title }) => {
               <Button
                 variant="danger"
                 onClick={(e) => {
-                  handleUpdateStatusProperty(!statusDisplay);
+                  handleUpdateStatusCourseName(!statusDisplay);
                 }}
               >
                 {statusDisplay === true ? "De-active" : "Active"}
@@ -823,7 +704,11 @@ const CourseName = ({ getNewCount, title }) => {
                           filteredVehicleCategory?.map((item) => {
                             console.log("item", filteredVehicleCategory);
                             return (
-                              <option key={item._id} value={item?._id}>
+                              <option key={item._id} value={item?._id} selected={
+                                inputValueForAdd?.VehicleCategory === item?._id
+                                  ? true
+                                  : false
+                              }>
                                 {" "}
                                 {item.vehicleCategory}{" "}
                               </option>
@@ -864,7 +749,11 @@ const CourseName = ({ getNewCount, title }) => {
                         {getCourseType?.length > 0 &&
                           getCourseType?.map((item) => {
                             return (
-                              <option key={item._id} value={item._id}>
+                              <option key={item._id} value={item._id} selected={
+                                inputValueForAdd?.CourseType === item._id
+                                  ? true
+                                  : false
+                              }>
                                 {" "}
                                 {item.courseType}{" "}
                               </option>
@@ -1179,7 +1068,8 @@ const CourseName = ({ getNewCount, title }) => {
                 <div className="d-flex align-items-center justify-content-center">
                   <button
                     onClick={(e) => {
-                      handelAddCourseNameDetails(e);
+                      isEditPopUp === false ? 
+                      handelAddCourseNameDetails(e): handelUpdateCourseNameDetails(e)
                     }}
                     className="btn btn-success mr-2"
                   >
@@ -1194,434 +1084,6 @@ const CourseName = ({ getNewCount, title }) => {
           </List>
         </Dialog>
       ) : null}
-
-      {isUpdateCourseName ? (
-        <Dialog
-          fullScreen
-          open={isUpdateCourseName}
-          onClose={handleAdminUpdateClose}
-          TransitionComponent={Transition}
-        >
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleAdminUpdateClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-          </Toolbar>
-          <List>
-            {isUpdateCourseName === true ? (
-              <div className="form ml-30 ">
-                {/* Ameninties Name */}
-
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Select Vehicle Category
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <div>
-                      <select
-                        className={`form-control form-control-lg form-control-solid `}
-                        id="VehicleCategory"
-                        name="VehicleCategory"
-                        // value={inputValue.VehicleCategory}
-                        onChange={(e) => {
-                            handleOnChnage(e);
-                        }}
-                      >
-                        <option value="" disabled selected hidden>
-                          Select Course Type
-                        </option>
-                        {filteredVehicleCategory?.length > 0 &&
-                          filteredVehicleCategory?.map((item) => {
-                            return (
-                              <option
-                                key={item?._id}
-                                value={item?._id}
-                                selected={
-                                  inputValue?.VehicleCategory === item?._id
-                                    ? true
-                                    : false
-                                }
-                              >
-                                {" "}
-                                {item?.vehicleCategory}{" "}
-                              </option>
-                            );
-                          })}
-                      </select>
-                    </div>
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errors["VehicleCategory"]}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Select Course Type
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <div>
-                      <select
-                        className={`form-control form-control-lg form-control-solid `}
-                        id="CourseType"
-                        name="CourseType"
-                        // value={inputValue.CourseType}
-                        onChange={(e) => {
-                            handleOnChnage(e);
-                        }}
-                      >
-                        {getCourseType?.length > 0 &&
-                          getCourseType?.map((item) => {
-                            return (
-                              <option key={item._id} value={item._id} selected={
-                                inputValue?.CourseType === item._id
-                                  ? true
-                                  : false
-                              }>
-                                {" "}
-                                {item.courseType}{" "}
-                              </option>
-                            );
-                          })}
-                      </select>
-                    </div>
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errors["CourseType"]}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Course Name
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <div>
-                      <input
-                        type="text"
-                        className={`form-control form-control-lg form-control-solid `}
-                        id="CourseName"
-                        name="CourseName"
-                        value={inputValue.CourseName}
-                        onChange={(e) => {
-                          handleOnChnage(e);
-                        }}
-                      />
-                    </div>
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errors["CourseName"]}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Vehicle Description
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <div>
-                      <input
-                        type="text"
-                        className={`form-control form-control-lg form-control-solid `}
-                        id="Description"
-                        name="Description"
-                        value={inputValue.Description}
-                        onChange={(e) => {
-                          handleOnChnage(e);
-                        }}
-                      />
-                    </div>
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errors["Description"]}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Duration
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <div>
-                      <input
-                        type="text"
-                        className={`form-control form-control-lg form-control-solid `}
-                        id="Duration"
-                        name="Duration"
-                        value={inputValue.Duration}
-                        onChange={(e) => {
-                          handleOnChnage(e);
-                        }}
-                      />
-                    </div>
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errors["Duration"]}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Timing
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <div>
-                      <input
-                        type="text"
-                        className={`form-control form-control-lg form-control-solid `}
-                        id="Timing"
-                        name="Timing"
-                        value={inputValue.Timing}
-                        onChange={(e) => {
-                          handleOnChnage(e);
-                        }}
-                      />
-                    </div>
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errors["Timing"]}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Mode
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <div>
-                      <input
-                        type="text"
-                        className={`form-control form-control-lg form-control-solid `}
-                        id="Mode"
-                        name="Mode"
-                        value={inputValue.Mode}
-                        onChange={(e) => {
-                          handleOnChnage(e);
-                        }}
-                      />
-                    </div>
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errors["Mode"]}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Document Required
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <div>
-                      <input
-                        type="text"
-                        className={`form-control form-control-lg form-control-solid `}
-                        id="DocumentRequired"
-                        name="DocumentRequired"
-                        value={inputValue.DocumentRequired}
-                        onChange={(e) => {
-                          handleOnChnage(e);
-                        }}
-                      />
-                    </div>
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errors["DocumentRequired"]}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Validity
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <div>
-                      <input
-                        type="text"
-                        className={`form-control form-control-lg form-control-solid `}
-                        id="Validity"
-                        name="Validity"
-                        value={inputValue.Validity}
-                        onChange={(e) => {
-                          handleOnChnage(e);
-                        }}
-                      />
-                    </div>
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errors["Validity"]}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    System Requirement
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <div>
-                      <input
-                        type="text"
-                        className={`form-control form-control-lg form-control-solid `}
-                        id="SystemRequirement"
-                        name="SystemRequirement"
-                        value={inputValue.SystemRequirement}
-                        onChange={(e) => {
-                          handleOnChnage(e);
-                        }}
-                      />
-                    </div>
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errors["SystemRequirement"]}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Certificate
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <div>
-                      <input
-                        type="text"
-                        className={`form-control form-control-lg form-control-solid `}
-                        id="Certificate"
-                        name="Certificate"
-                        value={inputValue.Certificate}
-                        onChange={(e) => {
-                          handleOnChnage(e);
-                        }}
-                      />
-                    </div>
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errors["Certificate"]}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Price
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <div>
-                      <input
-                        type="number"
-                        className={`form-control form-control-lg form-control-solid `}
-                        id="Price"
-                        name="Price"
-                        value={inputValue.Price}
-                        onChange={(e) => {
-                          handleOnChnage(e);
-                        }}
-                      />
-                    </div>
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errors["Price"]}
-                    </span>
-                  </div>
-                </div>
-
-              
-
-                <div className="d-flex align-items-center justify-content-center">
-                  <button
-                    onClick={(e) => {
-                      handelUpdateCourseNameDetails(e);
-                    }}
-                    className="btn btn-success mr-2"
-                  >
-                    <span>Update Details</span>
-                    {loading && (
-                      <span className="mx-3 spinner spinner-white"></span>
-                    )}
-                  </button>
-                </div>
-              </div>
-            ) : null}
-
-          </List>
-        </Dialog>
-      ) : null}
-
-
-
 
 {isViewMoreAboutus ? (
         <Dialog
