@@ -25,8 +25,8 @@ import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import moment from "moment";
-
-
+import S3 from "react-aws-s3";
+import { AwsConfig } from "../../../config/S3Backet/app.config";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -41,13 +41,13 @@ const Announcement = ({ getNewCount, title }) => {
   const [isViewMoreAnnouncement, setIsViewMoreAnnouncement] = useState(false);
   const [date, setDate] = useState(new Date());
 
-
   const [description, setDescription] = useState("");
-
+  console.log("dataViewMore", dataViewMore);
   //new data
   const [isUpdateAnnouncement, setIsUpdateAnnouncement] = useState(false);
   const [isAddAnnouncement, setIsAddAnnouncement] = useState(false);
-  const [idForUpdateAnnouncementData, setIdForUpdateAnnouncementData] = useState("");
+  const [idForUpdateAnnouncementData, setIdForUpdateAnnouncementData] =
+    useState("");
   const [inputValue, setInputValue] = useState({});
   const [inputValueForAdd, setInputValueForAdd] = useState({});
   const [errors, setErrors] = useState({});
@@ -60,6 +60,9 @@ const Announcement = ({ getNewCount, title }) => {
   const [countPerPage, setCountPerPage] = useState(10);
   const [search, setSearch] = useState("");
 
+  // S3 link for image start
+
+  // S3 link for image End
   const handleOnChnage = (e) => {
     const { name, value } = e.target;
     setInputValue({ ...inputValue, [name]: value });
@@ -77,20 +80,14 @@ const Announcement = ({ getNewCount, title }) => {
     setDataViewMore({});
   };
 
-  useEffect(() => {
-    console.log("inputValue", inputValueForAdd);
-  }, [inputValueForAdd]);
+  useEffect(() => {}, [inputValueForAdd]);
 
-
-
-  useEffect(() => {
-    console.log("idForEditStatus", idForEditStatus);
-  }, [idForEditStatus]);
+  useEffect(() => {}, [idForEditStatus]);
 
   const handleAdminUpdateClose = () => {
     setInputValue({});
     setDescription("");
-    setDate(new Date())
+    setDate(new Date());
 
     setIsUpdateAnnouncement(false);
   };
@@ -98,7 +95,7 @@ const Announcement = ({ getNewCount, title }) => {
   const handleAddAdminClose = () => {
     setInputValue({});
     setDescription([]);
-    setDate(new Date())
+    setDate(new Date());
 
     setIsAddAnnouncement(false);
   };
@@ -114,27 +111,25 @@ const Announcement = ({ getNewCount, title }) => {
   const getAllAnnouncement = async () => {
     setIsLoaderVisible(true);
     if (!search) {
-      await ApiGet(`Announcement/getAllAnnouncement?page=${page}&limit=${countPerPage}`)
+      await ApiGet(
+        `Announcement/getAllAnnouncement?page=${page}&limit=${countPerPage}`
+      )
         .then((res) => {
           setIsLoaderVisible(false);
-          console.log("artistreport", res);
           setFilteredAnnouncement(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => {});
     } else {
-      await ApiGet(`Announcement/getAllAnnouncement?search=${search}&page=${page}&limit=${countPerPage}`)
+      await ApiGet(
+        `Announcement/getAllAnnouncement?search=${search}&page=${page}&limit=${countPerPage}`
+      )
         .then((res) => {
           setIsLoaderVisible(false);
-          console.log("artistreport", res);
           setFilteredAnnouncement(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => {});
     }
   };
 
@@ -154,7 +149,6 @@ const Announcement = ({ getNewCount, title }) => {
       formIsValid = false;
       errorsForAdd["type"] = "*Please Enter Type!";
     }
-
 
     if (!description) {
       formIsValid = false;
@@ -180,18 +174,15 @@ const Announcement = ({ getNewCount, title }) => {
         description: description,
         image: inputValueForAdd.image,
       };
-      console.log("data",Data)
-      ApiPost(`Announcement/addAnnouncement`,Data)
+      ApiPost(`Announcement/addAnnouncement`, Data)
         .then((res) => {
-          console.log("resresres", res);
           if (res?.status == 200) {
             setIsAddAnnouncement(false);
             toast.success(res?.data?.message);
             setInputValueForAdd({});
             setDescription("");
-            setDate(new Date())
+            setDate(new Date());
             getAllAnnouncement();
-            
           } else {
             toast.error(res?.data?.message);
           }
@@ -203,50 +194,80 @@ const Announcement = ({ getNewCount, title }) => {
   };
 
   const getImageArrayFromUpload = (e) => {
-    let files = e.target.files;
-    let imageB64Arr = [];
+    // let files = e.target.files;
+    // let imageB64Arr = [];
 
-    console.log(files[0].type, "files");
-    if (files[0].type.includes("image")) {
-      for (let i in Array.from(files)) {
-        convertBaseTo64(files.item(i))
-          .then((file) => {
-            imageB64Arr.push(file);
-            console.log(imageB64Arr);
-          })
-          .catch((err) => {
-            console.log("err.....", err);
-          });
+    uploadS3bucket(e.target.files[0]);
+
+    // if (files[0].type.includes("image")) {
+    //   for (let i in Array.from(files)) {
+    //     convertBaseTo64(files.item(i))
+    //       .then((file) => {
+    //         imageB64Arr.push(file);
+    //       })
+    //       .catch((err) => {
+    //       });
+    //   }
+
+    //   setInputValueForAdd((cv) => {
+    //     return { ...cv, image: imageB64Arr };
+    //   });
+    // } else {
+    //   errorsForAdd["image"] = "*Please Upload Image!";
+    // }
+  };
+
+  const uploadS3bucket = async (file) => {
+    if (file.type.includes("image")) {
+      let config = AwsConfig;
+      config = {
+        ...config,
+        dirName: "Cerificate",
+        ACL: "public-read",
+      };
+      const Reacts3Client = new S3(config);
+      let urls;
+      let f = file;
+      let filename = "AboutImage(" + new Date().getTime() + ")";
+      let data = await Reacts3Client.uploadFile(f, filename);
+      // try {
+      // if (data.status === 204) {
+      urls = data.location;
+      if (urls) {
+        setInputValueForAdd((cv) => {
+          return { ...cv, image: urls };
+        });
+        console.log("urls====>", urls);
       }
-
-      setInputValueForAdd((cv) => {
-        return { ...cv, image: imageB64Arr };
-      });
+      return urls;
     } else {
       errorsForAdd["image"] = "*Please Upload Image!";
     }
   };
 
-  const getImageArrayFromUpdateUpload = (e) => {
-    let files = e.target.files;
-    let imageB64Arr = [];
+  const getImageArrayFromUpdateUpload = async (e) => {
+    let files = e.target.files[0];
 
-    console.log(files[0].type, "files");
-    if (files[0].type.includes("image")) {
-      for (let i in Array.from(files)) {
-        convertBaseTo64(files.item(i))
-          .then((file) => {
-            imageB64Arr.push(file);
-            console.log(imageB64Arr);
-          })
-          .catch((err) => {
-            console.log("err.....", err);
-          });
+    if (files.type.includes("image")) {
+      let config = AwsConfig;
+      config = {
+        ...config,
+        dirName: "Cerificate",
+        ACL: "public-read",
+      };
+      const Reacts3Client = new S3(config);
+      let urls;
+      let f = files;
+      let filename = "AboutImage(" + new Date().getTime() + ")";
+      let data = await Reacts3Client.uploadFile(f, filename);
+      // try {
+      // if (data.status === 204) {
+      urls = data.location;
+      if (urls) {
+        setInputValue((cv) => {
+          return { ...cv, image: urls };
+        });
       }
-
-      setInputValue((cv) => {
-        return { ...cv, image: imageB64Arr };
-      });
     } else {
       errors["image"] = "*Please Upload Image!";
     }
@@ -283,7 +304,6 @@ const Announcement = ({ getNewCount, title }) => {
       errors["type"] = "*Please Enter Type!";
     }
 
-
     if (!description) {
       formIsValid = false;
       errors["description"] = "*Please Enter Description!";
@@ -318,9 +338,7 @@ const Announcement = ({ getNewCount, title }) => {
       });
   };
 
-  useEffect(() => {
-    console.log("inputValue", inputValue);
-  }, [inputValue]);
+  useEffect(() => {}, [inputValue]);
 
   const handleUpdateAnnouncementDetails = (e) => {
     e.preventDefault();
@@ -330,21 +348,21 @@ const Announcement = ({ getNewCount, title }) => {
         date: date,
         name: inputValue.name,
 
-
-        
         type: inputValue.type,
         description: description,
         image: inputValue.image,
       };
-      ApiPut(`Announcement/updateAnnouncement/${idForUpdateAnnouncementData}`, Data)
+      ApiPut(
+        `Announcement/updateAnnouncement/${idForUpdateAnnouncementData}`,
+        Data
+      )
         .then((res) => {
-          console.log("resres", res);
           if (res?.status == 200) {
             setIsUpdateAnnouncement(false);
             toast.success(res?.data?.message);
             setInputValue({});
             setDescription("");
-            setDate(new Date())
+            setDate(new Date());
             getAllAnnouncement();
           } else {
             toast.error(res?.data?.message);
@@ -363,24 +381,17 @@ const Announcement = ({ getNewCount, title }) => {
       cell: (row, index) => (page - 1) * countPerPage + (index + 1),
       width: "65px",
     },
-      
 
-    
     {
       name: "Date",
       cell: (row) => {
-        return (
-          <span>
-            {moment(row?.date).format('ll')}
-          </span>
-        );
+        return <span>{moment(row?.date).format("ll")}</span>;
       },
       sortable: true,
-      selector: row => row?.date, 
+      selector: (row) => row?.date,
 
       // width: "65px",
     },
-
 
     {
       name: "Name",
@@ -418,8 +429,6 @@ const Announcement = ({ getNewCount, title }) => {
       sortable: true,
     },
 
-
-
     {
       name: "Description",
       selector: "description",
@@ -444,11 +453,7 @@ const Announcement = ({ getNewCount, title }) => {
         return (
           <>
             <div className="p-3">
-              <img
-                className="max-w-50px zoom"
-                alt="img"
-                src={row?.image != null ? row.image[0] : ""}
-              />
+              <img className="max-w-50px zoom" alt="img" src={row?.image} />
             </div>
           </>
         );
@@ -469,12 +474,11 @@ const Announcement = ({ getNewCount, title }) => {
 
                   setDate(row?.date);
                   setDescription(row?.description);
-                  setInputValue({ 
-                     name: row?.name,
-                     type: row?.type,
-                     image: row?.image,
+                  setInputValue({
+                    name: row?.name,
+                    type: row?.type,
+                    image: row?.image,
                   });
-                  
                 }}
               >
                 <Tooltip title="Edit Announcement" arrow>
@@ -498,7 +502,6 @@ const Announcement = ({ getNewCount, title }) => {
               onClick={() => {
                 setIsViewMoreAnnouncement(true);
                 setDataViewMore(row);
-                console.log("rowShow", row);
               }}
             >
               <Tooltip title="Show More" arrow>
@@ -723,8 +726,7 @@ const Announcement = ({ getNewCount, title }) => {
                   </div>
                 </div> */}
 
-
-                 <div className="form-group row">
+                <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter Date
                   </label>
@@ -733,10 +735,10 @@ const Announcement = ({ getNewCount, title }) => {
                       <DatePicker
                         id="date"
                         selected={date}
-                        onChange={(date) => {setDate(date);
-                          setErrorsForAdd({ ...errorsForAdd, date: "" });}
-                        
-                      } 
+                        onChange={(date) => {
+                          setDate(date);
+                          setErrorsForAdd({ ...errorsForAdd, date: "" });
+                        }}
                       />
                     </div>
                     <span
@@ -750,8 +752,6 @@ const Announcement = ({ getNewCount, title }) => {
                     </span>
                   </div>
                 </div>
-
-
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -782,8 +782,6 @@ const Announcement = ({ getNewCount, title }) => {
                   </div>
                 </div>
 
-
-
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter Type
@@ -812,7 +810,6 @@ const Announcement = ({ getNewCount, title }) => {
                     </span>
                   </div>
                 </div>
-
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -942,8 +939,7 @@ const Announcement = ({ getNewCount, title }) => {
                   </div>
                 </div> */}
 
-                
-                  <div className="form-group row">
+                <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter Date
                   </label>
@@ -952,10 +948,10 @@ const Announcement = ({ getNewCount, title }) => {
                       <DatePicker
                         id="date"
                         selected={new Date(date)}
-                        onChange={(date) => {setDate(date);
-                          setErrors({ ...errors, date: "" });}
-                        
-                      } 
+                        onChange={(date) => {
+                          setDate(date);
+                          setErrors({ ...errors, date: "" });
+                        }}
                       />
                     </div>
                     <span
@@ -1028,7 +1024,6 @@ const Announcement = ({ getNewCount, title }) => {
                   </div>
                 </div>
 
-               
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter Description
@@ -1135,47 +1130,47 @@ const Announcement = ({ getNewCount, title }) => {
                   <div className="honda-text-grid-items">
                     <span>Date:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.date,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.date,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Name:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.name,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.name,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Type:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.type,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.type,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <p>Description:</p>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.description,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.description,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Image:</span>
                     <img
-                    src={dataViewMore?.image}
-                    alt=""
-                    height="90px"
-                    width="170px"
-                  />
+                      src={dataViewMore?.image}
+                      alt=""
+                      height="90px"
+                      width="170px"
+                    />
                   </div>
                 </div>
               </div>

@@ -23,7 +23,8 @@ import { reject } from "lodash";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-
+import { AwsConfig } from "../../../config/S3Backet/app.config";
+import S3 from "react-aws-s3";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -76,8 +77,6 @@ const Cms = ({ getNewCount, title }) => {
     console.log("inputValue", inputValueForAdd);
   }, [inputValueForAdd]);
 
-
-
   useEffect(() => {
     console.log("idForEditStatus", idForEditStatus);
   }, [idForEditStatus]);
@@ -116,7 +115,9 @@ const Cms = ({ getNewCount, title }) => {
           console.log(err);
         });
     } else {
-      await ApiGet(`cms/getAllCMS?search=${search}&page=${page}&limit=${countPerPage}`)
+      await ApiGet(
+        `cms/getAllCMS?search=${search}&page=${page}&limit=${countPerPage}`
+      )
         .then((res) => {
           setIsLoaderVisible(false);
           console.log("artistreport", res);
@@ -157,8 +158,8 @@ const Cms = ({ getNewCount, title }) => {
         description: description,
         image: inputValueForAdd.image,
       };
-      console.log("data",Data)
-      ApiPost(`cms/addCMS`,Data)
+      console.log("data", Data);
+      ApiPost(`cms/addCMS`, Data)
         .then((res) => {
           console.log("resresres", res);
           if (res?.status == 200) {
@@ -167,7 +168,6 @@ const Cms = ({ getNewCount, title }) => {
             setInputValueForAdd({});
             setDescription("");
             getAllCms();
-            
           } else {
             toast.error(res?.data?.message);
           }
@@ -178,68 +178,84 @@ const Cms = ({ getNewCount, title }) => {
     }
   };
 
-  const getImageArrayFromUpload = (e) => {
-    let files = e.target.files;
-    let imageB64Arr = [];
-
-    console.log(files[0].type, "files");
-    if (files[0].type.includes("image")) {
-      for (let i in Array.from(files)) {
-        convertBaseTo64(files.item(i))
-          .then((file) => {
-            imageB64Arr.push(file);
-            console.log(imageB64Arr);
-          })
-          .catch((err) => {
-            console.log("err.....", err);
-          });
+  const uploadS3bucket = async (file) => {
+    if (file.type.includes("image")) {
+      let config = AwsConfig;
+      config = {
+        ...config,
+        dirName: "Cerificate",
+        ACL: "public-read",
+      };
+      const Reacts3Client = new S3(config);
+      let urls;
+      let f = file;
+      let filename = "AboutImage(" + new Date().getTime() + ")";
+      let data = await Reacts3Client.uploadFile(f, filename);
+      // try {
+      // if (data.status === 204) {
+      urls = data.location;
+      if (urls) {
+        setInputValue((cv) => {
+          return { ...cv, image: urls };
+        });
+        console.log("urls------------1", urls);
       }
-
-      setInputValueForAdd((cv) => {
-        return { ...cv, image: imageB64Arr };
-      });
-    } else {
-      errorsForAdd["image"] = "*Please Upload Image!";
-    }
-  };
-
-  const getImageArrayFromUpdateUpload = (e) => {
-    let files = e.target.files;
-    let imageB64Arr = [];
-
-    console.log(files[0].type, "files");
-    if (files[0].type.includes("image")) {
-      for (let i in Array.from(files)) {
-        convertBaseTo64(files.item(i))
-          .then((file) => {
-            imageB64Arr.push(file);
-            console.log(imageB64Arr);
-          })
-          .catch((err) => {
-            console.log("err.....", err);
-          });
-      }
-
-      setInputValue((cv) => {
-        return { ...cv, image: imageB64Arr };
-      });
+      return urls;
     } else {
       errors["image"] = "*Please Upload Image!";
     }
   };
 
-  const convertBaseTo64 = (file) => {
-    return new Promise((resolve, object) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = function () {
-        resolve(fileReader.result);
+  const uploadS3bucketForUpdate = async (file) => {
+    if (file.type.includes("image")) {
+      let config = AwsConfig;
+      config = {
+        ...config,
+        dirName: "Cerificate",
+        ACL: "public-read",
       };
-      fileReader.onerror = function (error) {
-        reject(error);
-      };
-    });
+      const Reacts3Client = new S3(config);
+      let urls;
+      let f = file;
+      let filename = "AboutImage(" + new Date().getTime() + ")";
+      let data = await Reacts3Client.uploadFile(f, filename);
+      // try {
+      // if (data.status === 204) {
+      urls = data.location;
+      if (urls) {
+        setInputValueForAdd((cv) => {
+          return { ...cv, image: urls };
+        });
+        console.log("urls------------2", urls);
+      }
+      return urls;
+    } else {
+      errorsForAdd["image"] = "*Please Upload Image!";
+    }
   };
+
+  const getImageArrayFromUpload = async (e) => {
+    uploadS3bucketForUpdate(e.target.files[0]);
+  };
+
+  const getImageArrayFromUpdateUpload = async (e) => {
+    let files = e.target.files[0];
+
+    uploadS3bucket(files);
+  };
+
+  // const convertBaseTo64 = (file) => {
+  //   return new Promise((resolve, object) => {
+  //     const fileReader = new FileReader();
+  //     fileReader.readAsDataURL(file);
+  //     fileReader.onload = function () {
+  //       resolve(fileReader.result);
+  //     };
+  //     fileReader.onerror = function (error) {
+  //       reject(error);
+  //     };
+  //   });
+  // };
 
   const validateForm = () => {
     let formIsValid = true;
@@ -353,7 +369,7 @@ const Cms = ({ getNewCount, title }) => {
               <img
                 className="max-w-250px zoom"
                 alt="img"
-                src={row?.image != null ? row.image[0] : ""}
+                src={row?.image && row?.image}
               />
             </div>
           </>
@@ -529,9 +545,7 @@ const Cms = ({ getNewCount, title }) => {
             <Modal.Header closeButton>
               <Modal.Title className="text-danger">Alert!</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-              Are You Sure To Want To delete this CMS
-            </Modal.Body>
+            <Modal.Body>Are You Sure To Want To delete this CMS</Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
                 cancel
