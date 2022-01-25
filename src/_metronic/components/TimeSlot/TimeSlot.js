@@ -74,17 +74,17 @@ const TimeSlot = ({ getNewCount, title }) => {
     setInputValueForAdd({});
     setIsAddCourseName(false);
     setErrorsForAdd({});
-    setSelectedCourseName([]);
-    setSelectedCourseType([]);
-    setSelectedVehicleCategory([]);
+    // setSelectedCourseName([]);
+    // setSelectedCourseType([]);
+    // setSelectedVehicleCategory([]);
     setIsEditPopUp(false);
     setIdForUpdateCourseNameData("");
     setStartTime("");
     setEndTime("");
     setDate(new Date());
-    setAllVehicleCategoryForUpdate([]);
-    setAllCourseNameForUpdate([]);
-    setAllCourseTypeForUpdate([]);
+    // setAllVehicleCategoryForUpdate([]);
+    // setAllCourseNameForUpdate([]);
+    // setAllCourseTypeForUpdate([]);
     setNow(moment().hour(0).minute(0));
     setNow1(moment().hour(0).minute(0));
     setIsEditPopUp(false);
@@ -120,22 +120,16 @@ const TimeSlot = ({ getNewCount, title }) => {
 
   const getAllCourseType = async () => {
     setIsLoaderVisible(true);
-    
-      const newVehicleCategory = [];
-      {
-        selectedVehicleCategory.map((sub, i) => {
-          newVehicleCategory.push(sub._id);
-        });
-      }
-
-      let Data = {
-        vehicleCategory: newVehicleCategory
-      }
-
-      console.log("newVehicleCategory",newVehicleCategory);
-    await ApiPost(`courseType/getCoursetypeByVehiclecategory?page=${page}&limit=1000`,Data)
+    let Data = {
+      vehicleCategory: inputValueForAdd?.VehicleCategory,
+    };
+    await ApiPost(
+      `courseType/getCoursetypeByVehiclecategory?page=${page}&limit=1000`,
+      Data
+    )
       .then((res) => {
         setIsLoaderVisible(false);
+        console.log("artistreport", res);
         setGetCourseType(res?.data?.payload?.courseType);
       })
       .catch((err) => {
@@ -143,11 +137,11 @@ const TimeSlot = ({ getNewCount, title }) => {
       });
   };
 
-  useEffect(() =>{
-    if(selectedVehicleCategory?.length > 0){
+  useEffect(() => {
+    if (inputValueForAdd?.VehicleCategory?.length > 0) {
       getAllCourseType();
     }
-  },[selectedVehicleCategory?.length])
+  }, [inputValueForAdd?.VehicleCategory]);
 
   const getAllVehicleCategory = async () => {
     setIsLoaderVisible(true);
@@ -158,6 +152,37 @@ const TimeSlot = ({ getNewCount, title }) => {
       .then((res) => {
         setIsLoaderVisible(false);
         setFilteredVehicleCategory(res?.data?.payload?.Question);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoaderVisible(false);
+      });
+  };
+
+  useEffect(() => {
+    console.log("inputValueForAdd", inputValueForAdd);
+  }, [inputValueForAdd]);
+
+  useEffect(() => {
+    if (inputValueForAdd?.CourseType?.length > 0) {
+      getAllCourseName();
+    }
+  }, [inputValueForAdd?.CourseType]);
+
+  const getAllCourseName = async () => {
+    setIsLoaderVisible(true);
+    let Data = {
+      courseType: inputValueForAdd?.CourseType,
+      vehicleCategory: inputValueForAdd?.VehicleCategory,
+    };
+
+    await ApiPost(
+      `courseName/getCoursenameByCoursetype?page=${page}&limit=1000`,
+      Data
+    )
+      .then((res) => {
+        setIsLoaderVisible(false);
+        setSelectedCourseName(res?.data?.payload?.courseName);
       })
       .catch((err) => {
         console.log(err);
@@ -204,49 +229,31 @@ const TimeSlot = ({ getNewCount, title }) => {
     }
   };
 
-  const getAllCourseName = async () => {
-    setIsLoaderVisible(true);
+  // const getAllCourseName = async () => {
+  //   setIsLoaderVisible(true);
 
-    await ApiGet(`courseName/getAllCourseName?page=${page}&limit=1000`)
-      .then((res) => {
-        setIsLoaderVisible(false);
-        setFilteredCourseName(res?.data?.payload?.Question);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  //   await ApiGet(`courseName/getAllCourseName?page=${page}&limit=1000`)
+  //     .then((res) => {
+  //       setIsLoaderVisible(false);
+  //       setFilteredCourseName(res?.data?.payload?.Question);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   const handelAddCourseNameDetails = (e) => {
     e.preventDefault();
 
     if (validateForm()) {
-      const newCourseName = [];
-      {
-        selectedCourseName.map((sub, i) => {
-          newCourseName.push(sub._id);
-        });
-      }
-      const newCourseType = [];
-      {
-        selectedCourseType.map((sub, i) => {
-          newCourseType.push(sub._id);
-        });
-      }
-      const newVehicleCategory = [];
-      {
-        selectedVehicleCategory.map((sub, i) => {
-          newVehicleCategory.push(sub._id);
-        });
-      }
       let Data = {
         date: date,
         seat: inputValueForAdd?.seat,
         endTime: endTime,
         startTime: startTime,
-        cnid: newCourseName,
-        ctid: newCourseType,
-        vcid: newVehicleCategory,
+        cnid: inputValueForAdd?.CourseName,
+        ctid: inputValueForAdd?.CourseType,
+        vcid: inputValueForAdd?.VehicleCategory,
       };
       ApiPost(`trainingDate/addDate`, Data)
         .then((res) => {
@@ -257,9 +264,9 @@ const TimeSlot = ({ getNewCount, title }) => {
             getAllTimeSlot();
             setIsAddCourseName(false);
             setErrorsForAdd({});
-            setSelectedCourseName([]);
-            setSelectedCourseType([]);
-            setSelectedVehicleCategory([]);
+            // setSelectedCourseName([]);
+            // setSelectedCourseType([]);
+            // setSelectedVehicleCategory([]);
             setIsEditPopUp(false);
           } else {
             toast.error(res?.data?.message);
@@ -293,17 +300,17 @@ const TimeSlot = ({ getNewCount, title }) => {
   const validateForm = () => {
     let formIsValid = true;
     let errorsForAdd = {};
-    if (selectedVehicleCategory?.length <= 0) {
+    if (inputValueForAdd && !inputValueForAdd.VehicleCategory) {
       formIsValid = false;
       errorsForAdd["VehicleCategory"] = "*Please Enter Vehicle Category!";
     }
 
-    if (selectedCourseType?.length <= 0) {
+    if (inputValueForAdd && !inputValueForAdd.CourseType) {
       formIsValid = false;
       errorsForAdd["CourseType"] = "*Please Enter CourseType!";
     }
 
-    if (selectedCourseName?.length <= 0) {
+    if (inputValueForAdd && !inputValueForAdd.CourseName) {
       formIsValid = false;
       errorsForAdd["CourseName"] = "*Please Enter CourseName!";
     }
@@ -336,32 +343,32 @@ const TimeSlot = ({ getNewCount, title }) => {
   const handelUpdateTimeSlotDetails = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      const newCourseName = [];
-      {
-        selectedCourseName.map((sub, i) => {
-          newCourseName.push(sub._id);
-        });
-      }
-      const newCourseType = [];
-      {
-        selectedCourseType.map((sub, i) => {
-          newCourseType.push(sub._id);
-        });
-      }
-      const newVehicleCategory = [];
-      {
-        selectedVehicleCategory.map((sub, i) => {
-          newVehicleCategory.push(sub._id);
-        });
-      }
+      // const newCourseName = [];
+      // {
+      //   selectedCourseName.map((sub, i) => {
+      //     newCourseName.push(sub._id);
+      //   });
+      // }
+      // const newCourseType = [];
+      // {
+      //   selectedCourseType.map((sub, i) => {
+      //     newCourseType.push(sub._id);
+      //   });
+      // }
+      // const newVehicleCategory = [];
+      // {
+      //   selectedVehicleCategory.map((sub, i) => {
+      //     newVehicleCategory.push(sub._id);
+      //   });
+      // }
       let Data = {
         date: date,
         seat: inputValueForAdd?.seat,
         endTime: endTime,
         startTime: startTime,
-        cnid: newCourseName,
-        ctid: newCourseType,
-        vcid: newVehicleCategory,
+        cnid: inputValueForAdd?.CourseName,
+        ctid: inputValueForAdd?.CourseType,
+        vcid: inputValueForAdd?.VehicleCategory,
       };
       ApiPut(`trainingDate/updateDate/${idForUpdateCourseNameData}`, Data)
         .then((res) => {
@@ -372,9 +379,9 @@ const TimeSlot = ({ getNewCount, title }) => {
             getAllTimeSlot();
             setIsAddCourseName(false);
             setErrorsForAdd({});
-            setSelectedCourseName([]);
-            setSelectedCourseType([]);
-            setSelectedVehicleCategory([]);
+            // setSelectedCourseName([]);
+            // setSelectedCourseType([]);
+            // setSelectedVehicleCategory([]);
             setIsEditPopUp(false);
           } else {
             console.log("res007", res);
@@ -443,22 +450,25 @@ const TimeSlot = ({ getNewCount, title }) => {
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
+                  console.log("rowrow",row);
                   setIsAddCourseName(true);
                   setIdForUpdateCourseNameData(row._id);
                   getAllVehicleCategory();
-                  getAllCourseName();
                   setInputValueForAdd({
                     seat: row?.seat,
+                    CourseName: row?.cnid?._id,
+                    CourseType: row?.ctid?._id,
+                    VehicleCategory: row?.vcid?._id,
                   });
                   setStartTime(row?.startTime);
                   setEndTime(row?.endTime);
                   setDate(row?.date);
-                  setSelectedCourseName(row?.cnid);
-                  setSelectedCourseType(row?.ctid);
-                  setSelectedVehicleCategory(row?.vcid);
-                  setAllVehicleCategoryForUpdate(row?.vcid);
-                  setAllCourseNameForUpdate(row?.cnid);
-                  setAllCourseTypeForUpdate(row?.ctid);
+                  // setSelectedCourseName(row?.cnid);
+                  // setSelectedCourseType(row?.ctid);
+                  // setSelectedVehicleCategory(row?.vcid);
+                  // setAllVehicleCategoryForUpdate(row?.vcid);
+                  // setAllCourseNameForUpdate(row?.cnid);
+                  // setAllCourseTypeForUpdate(row?.ctid);
                   setNow(moment(row?.startTime));
                   setNow1(moment(row?.endTime));
                   setIsEditPopUp(true);
@@ -531,17 +541,14 @@ const TimeSlot = ({ getNewCount, title }) => {
   // Hook
   function useDebounce(value, delay) {
     const [debouncedValue, setDebouncedValue] = useState(value);
-    useEffect(
-      () => {
-        const handler = setTimeout(() => {
-          setDebouncedValue(value);
-        }, delay);
-        return () => {
-          clearTimeout(handler);
-        };
-      },
-      [value, delay]
-    );
+    useEffect(() => {
+      const handler = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+      return () => {
+        clearTimeout(handler);
+      };
+    }, [value, delay]);
     return debouncedValue;
   }
 
@@ -586,7 +593,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                 onClick={() => {
                   setIsAddCourseName(true);
                   getAllVehicleCategory();
-                  getAllCourseName();
+                  // getAllCourseName();
                 }}
                 className="btn btn-success mr-2"
               >
@@ -667,7 +674,7 @@ const TimeSlot = ({ getNewCount, title }) => {
           <List>
             {isAddCourseName === true ? (
               <div className="form ml-30 ">
-                <div className="form-group row">
+                {/* <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Select Vehicle Category
                   </label>
@@ -753,6 +760,155 @@ const TimeSlot = ({ getNewCount, title }) => {
                       displayValue="courseName"
                       selectedValues={allCourseNameForUpdate}
                     />
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["CourseName"]}
+                    </span>
+                  </div>
+                </div> */}
+
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Select Vehicle Category
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <div>
+                      <select
+                        className={`form-control form-control-lg form-control-solid `}
+                        id="VehicleCategory"
+                        name="VehicleCategory"
+                        value={inputValueForAdd?.VehicleCategory}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
+                      >
+                        <option value="" disabled selected hidden>
+                          Select Vehicle Category
+                        </option>
+                        {filteredVehicleCategory?.length > 0 &&
+                          filteredVehicleCategory?.map((item) => {
+                            // console.log("item", filteredVehicleCategory);
+                            return (
+                              <option
+                                key={item._id}
+                                value={item?._id}
+                                selected={
+                                  inputValueForAdd?.VehicleCategory ===
+                                  item?._id
+                                    ? true
+                                    : false
+                                }
+                              >
+                                {" "}
+                                {item.vehicleCategory}{" "}
+                              </option>
+                            );
+                          })}
+                      </select>
+                    </div>
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["VehicleCategory"]}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Select Course Type
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <div>
+                      <select
+                        className={`form-control form-control-lg form-control-solid `}
+                        id="CourseType"
+                        name="CourseType"
+                        // value={inputValueForAdd.CourseType}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
+                      >
+                        <option value="" disabled selected hidden>
+                          Select Course Type
+                        </option>
+                        {getCourseType?.length > 0 &&
+                          getCourseType?.map((item) => {
+                            return (
+                              <option
+                                key={item._id}
+                                value={item._id}
+                                selected={
+                                  inputValueForAdd?.CourseType === item._id
+                                    ? true
+                                    : false
+                                }
+                              >
+                                {" "}
+                                {item.courseType}{" "}
+                              </option>
+                            );
+                          })}
+                      </select>
+                    </div>
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["CourseType"]}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Select Course Name
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <div>
+                      <select
+                        className={`form-control form-control-lg form-control-solid `}
+                        id="CourseName"
+                        name="CourseName"
+                        // value={inputValueForAdd.CourseName}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
+                      >
+                        <option value="" disabled selected hidden>
+                          Select Course Type
+                        </option>
+                        {selectedCourseName?.length > 0 &&
+                          selectedCourseName?.map((item) => {
+                            return (
+                              <option
+                                key={item._id}
+                                value={item._id}
+                                selected={
+                                  inputValueForAdd?.CourseName === item._id
+                                    ? true
+                                    : false
+                                }
+                              >
+                                {" "}
+                                {item.courseName}{" "}
+                              </option>
+                            );
+                          })}
+                      </select>
+                    </div>
                     <span
                       style={{
                         color: "red",
