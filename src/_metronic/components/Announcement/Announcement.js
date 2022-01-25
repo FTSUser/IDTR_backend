@@ -193,11 +193,43 @@ const Announcement = ({ getNewCount, title }) => {
     }
   };
 
-  const getImageArrayFromUpload = (e) => {
+  const getImageArrayFromUpload = async (e) => {
     // let files = e.target.files;
     // let imageB64Arr = [];
 
-    uploadS3bucket(e.target.files[0]);
+    const file = e?.target?.files[0]
+console.log(file, "fileData")
+
+    if(file){
+      if (file.type.includes("image")) {
+        let config = AwsConfig;
+        config = {
+          ...config,
+          dirName: "Cerificate",
+          ACL: "public-read",
+        };
+        const Reacts3Client = new S3(config);
+        let urls;
+        
+        let filename = "AboutImage(" + new Date().getTime() + ")";
+        let data = await Reacts3Client.uploadFile(file, filename);
+        // try {
+        // if (data.status === 204) {
+        urls = data.location;
+        if (urls) {
+          setInputValueForAdd((cv) => {
+            return { ...cv, image: urls };
+          });
+          console.log("urls====>", urls);
+        }
+        return urls;
+      } else {
+        errorsForAdd["image"] = "*Please Upload Image!";
+      }
+
+    }
+
+
 
     // if (files[0].type.includes("image")) {
     //   for (let i in Array.from(files)) {
@@ -218,31 +250,36 @@ const Announcement = ({ getNewCount, title }) => {
   };
 
   const uploadS3bucket = async (file) => {
-    if (file.type.includes("image")) {
-      let config = AwsConfig;
-      config = {
-        ...config,
-        dirName: "Cerificate",
-        ACL: "public-read",
-      };
-      const Reacts3Client = new S3(config);
-      let urls;
-      let f = file;
-      let filename = "AboutImage(" + new Date().getTime() + ")";
-      let data = await Reacts3Client.uploadFile(f, filename);
-      // try {
-      // if (data.status === 204) {
-      urls = data.location;
-      if (urls) {
-        setInputValueForAdd((cv) => {
-          return { ...cv, image: urls };
-        });
-        console.log("urls====>", urls);
+    debugger
+    console.log("filesData", file)
+    if(file){
+        if (file.type.includes("image")) {
+          let config = AwsConfig;
+          config = {
+            ...config,
+            dirName: "Cerificate",
+            ACL: "public-read",
+          };
+          const Reacts3Client = new S3(config);
+          let urls;
+          let f = file;
+          let filename = "AboutImage(" + new Date().getTime() + ")";
+          let data = await Reacts3Client.uploadFile(f, filename);
+          // try {
+          // if (data.status === 204) {
+          urls = data.location;
+          if (urls) {
+            setInputValueForAdd((cv) => {
+              return { ...cv, image: urls };
+            });
+            console.log("urls====>", urls);
+          }
+          return urls;
+        } else {
+          errorsForAdd["image"] = "*Please Upload Image!";
+        }
+
       }
-      return urls;
-    } else {
-      errorsForAdd["image"] = "*Please Upload Image!";
-    }
   };
 
   const getImageArrayFromUpdateUpload = async (e) => {

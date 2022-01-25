@@ -307,7 +307,7 @@ const Cms = ({ getNewCount, title }) => {
 
     if (validateForm()) {
       let Data = {
-        // titleName: inputValue.titleName,
+        titleName: inputValue.titleName,
         description: description,
         image: inputValue.image,
       };
@@ -391,6 +391,7 @@ const Cms = ({ getNewCount, title }) => {
                   setInputValue({
                     titleName: row?.titleName,
                     image: row?.image,
+                    titleName:row?.titleName
                   });
 
                   setDescription(row?.description);
