@@ -49,14 +49,12 @@ export function MixedWidget1({ className }) {
     <div >
       {/* Header */}
       <div >
-        <div >
+        <div className="honda-logo-center-alignment-page">
         <img src={toAbsoluteUrl("/media/logos/honda-logo.png")}/>
           {/* Stat */}
           <div
             
-          >
-            
-            
+          >  
           </div>
           {userInfo?.role === "admin" && (
             <>

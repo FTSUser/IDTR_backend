@@ -1130,65 +1130,53 @@ const Announcement = ({ getNewCount, title }) => {
           </Toolbar>
           <List>
             {isViewMoreAnnouncement === true ? (
-              <div className="form ml-30 ">
-                <div className="form-group row mb-0">
-                  <p>Date:</p>
-                </div>
-                <div className="form-group row mr-20">
-                  <p
+              <div className="honda-container">
+                <div className="honda-text-grid">
+                  <div className="honda-text-grid-items">
+                    <span>Date:</span>
+                    <p
                     dangerouslySetInnerHTML={{
                       __html: dataViewMore?.date,
                     }}
                     className=""
                   />
-                </div>
-                <div className="form-group row mb-0">
-                  <p>Name:</p>
-                </div>
-                <div className="form-group row mr-20">
-                  <p
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Name:</span>
+                    <p
                     dangerouslySetInnerHTML={{
                       __html: dataViewMore?.name,
                     }}
                     className=""
                   />
-                </div>
-
-                <div className="form-group row mb-0">
-                  <p>Type:</p>
-                </div>
-                <div className="form-group row mr-20">
-                  <p
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Type:</span>
+                    <p
                     dangerouslySetInnerHTML={{
                       __html: dataViewMore?.type,
                     }}
                     className=""
                   />
-                </div>
-
-                <div className="form-group row mb-0">
-                  <p>Description:</p>
-                </div>
-                <div className="form-group row mr-20">
-                  <p
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <p>Description:</p>
+                    <p
                     dangerouslySetInnerHTML={{
                       __html: dataViewMore?.description,
                     }}
                     className=""
                   />
-                </div>
-
-                
-                <div className="form-group row mb-0">
-                  <p>Image:</p>
-                </div>
-                <div className="form-group row mr-20">
-                  <img
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Image:</span>
+                    <img
                     src={dataViewMore?.image}
                     alt=""
-                    height="256px"
-                    width="512px"
+                    height="90px"
+                    width="170px"
                   />
+                  </div>
                 </div>
               </div>
             ) : null}
