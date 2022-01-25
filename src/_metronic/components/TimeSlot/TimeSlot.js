@@ -419,6 +419,11 @@ const TimeSlot = ({ getNewCount, title }) => {
       selector: (row) => row?.date,
     },
     {
+      name: "Course Name",
+      selector: (row) => row?.cnid?.courseName,
+      sortable: true,
+    },
+    {
       name: "Start Time",
       cell: (row) => {
         return <span>{moment(row?.startTime).format("LT")}</span>;

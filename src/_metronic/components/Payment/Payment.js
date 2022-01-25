@@ -110,6 +110,7 @@ const Payment = ({ getNewCount, title }) => {
         );
 
       },
+      selector: (row) => row?.createdAt,
       sortable: true,
 
       // width: "65px",
@@ -124,6 +125,7 @@ const Payment = ({ getNewCount, title }) => {
                 </span>
             )
         },
+        selector: (row) => row?.cnid?.courseName,
         sortable: true,
       
       },
