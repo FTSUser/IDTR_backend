@@ -120,15 +120,34 @@ const TimeSlot = ({ getNewCount, title }) => {
 
   const getAllCourseType = async () => {
     setIsLoaderVisible(true);
-    await ApiGet(`courseType/getAllCourseType?page=${page}&limit=1000`)
+    
+      const newVehicleCategory = [];
+      {
+        selectedVehicleCategory.map((sub, i) => {
+          newVehicleCategory.push(sub._id);
+        });
+      }
+
+      let Data = {
+        vehicleCategory: newVehicleCategory
+      }
+
+      console.log("newVehicleCategory",newVehicleCategory);
+    await ApiPost(`courseType/getCoursetypeByVehiclecategory?page=${page}&limit=1000`,Data)
       .then((res) => {
         setIsLoaderVisible(false);
-        setGetCourseType(res?.data?.payload?.Question);
+        setGetCourseType(res?.data?.payload?.courseType);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  useEffect(() =>{
+    if(selectedVehicleCategory?.length > 0){
+      getAllCourseType();
+    }
+  },[selectedVehicleCategory?.length])
 
   const getAllVehicleCategory = async () => {
     setIsLoaderVisible(true);
@@ -426,7 +445,6 @@ const TimeSlot = ({ getNewCount, title }) => {
                 onClick={() => {
                   setIsAddCourseName(true);
                   setIdForUpdateCourseNameData(row._id);
-                  getAllCourseType();
                   getAllVehicleCategory();
                   getAllCourseName();
                   setInputValueForAdd({
@@ -567,7 +585,6 @@ const TimeSlot = ({ getNewCount, title }) => {
               <button
                 onClick={() => {
                   setIsAddCourseName(true);
-                  getAllCourseType();
                   getAllVehicleCategory();
                   getAllCourseName();
                 }}

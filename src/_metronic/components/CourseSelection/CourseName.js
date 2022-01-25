@@ -66,6 +66,7 @@ const CourseName = ({ getNewCount, title }) => {
     setIsAddCourseName(false);
     setErrorsForAdd({})
     setIsEditPopUp(false)
+    setGetCourseType([])
   };
 
   const handleClose = () => {
@@ -128,6 +129,7 @@ const CourseName = ({ getNewCount, title }) => {
           console.log("artistreport", res);
           setFilteredCourseName(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
+          setGetCourseType([])
         })
         .catch((err) => {
           console.log(err);
@@ -318,6 +320,7 @@ const CourseName = ({ getNewCount, title }) => {
             setInputValueForAdd({});
             getAllCourseName();
             setIsEditPopUp(false)
+            setGetCourseType([])
           } else {
             toast.error(res?.data?.message);
           }
