@@ -156,10 +156,10 @@ const Announcement = ({ getNewCount, title }) => {
       formIsValid = false;
       errorsForAdd["description"] = "*Please Enter Description!";
     }
-    if (inputValueForAdd && !inputValueForAdd.image) {
-      formIsValid = false;
-      errorsForAdd["image"] = "*Please Upload Image!";
-    }
+    // if (inputValueForAdd && !inputValueForAdd.image) {
+    //   formIsValid = false;
+    //   errorsForAdd["image"] = "*Please Upload Image!";
+    // }
 
     setErrorsForAdd(errorsForAdd);
     return formIsValid;
@@ -347,10 +347,10 @@ const Announcement = ({ getNewCount, title }) => {
       formIsValid = false;
       errors["description"] = "*Please Enter Description!";
     }
-    if (inputValue && !inputValue.image) {
-      formIsValid = false;
-      errors["image"] = "*Please Upload Image!";
-    }
+    // if (inputValue && !inputValue.image) {
+    //   formIsValid = false;
+    //   errors["image"] = "*Please Upload Image!";
+    // }
     setErrors(errors);
     return formIsValid;
   };
@@ -894,10 +894,10 @@ const Announcement = ({ getNewCount, title }) => {
                           getImageArrayFromUpload(e);
                         }}
                         accept="image/*"
-                        required
+
                       />
                     </div>
-                    <span
+                    {/* <span
                       style={{
                         color: "red",
                         top: "5px",
@@ -905,7 +905,7 @@ const Announcement = ({ getNewCount, title }) => {
                       }}
                     >
                       {errorsForAdd["image"]}
-                    </span>
+                    </span> */}
                   </div>
                 </div>
 
@@ -1109,10 +1109,10 @@ const Announcement = ({ getNewCount, title }) => {
                           getImageArrayFromUpdateUpload(e);
                         }}
                         accept="image/*"
-                        required
+
                       />
                     </div>
-                    <span
+                    {/* <span
                       style={{
                         color: "red",
                         top: "5px",
@@ -1120,7 +1120,7 @@ const Announcement = ({ getNewCount, title }) => {
                       }}
                     >
                       {errors["image"]}
-                    </span>
+                    </span> */}
                   </div>
                 </div>
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
-import { ApiPost,ApiPostNoAuth } from "../../../../helpers/API/ApiData";
+import { ApiPost, ApiPostNoAuth } from "../../../../helpers/API/ApiData";
 import * as authUtil from "../../../../utils/auth.util";
 import * as userUtil from "../../../../utils/user.util";
 import { ToastContainer, toast } from "react-toastify";
@@ -23,8 +23,8 @@ export default function Login() {
     phone: Yup.string()
       // .phone("Wrong phone format")
       .min(10, "Minimum 10 symbols")
-      .max(10 ,"Maximum 10 symbols")
-      .matches(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/ , "Please enter valid number" )
+      .max(10, "Maximum 10 symbols")
+      .matches(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/, "Please enter valid number")
       .required("Phone is Required"),
     password: Yup.string()
       .min(3, "Minimum 3 symbols")
@@ -57,7 +57,7 @@ export default function Login() {
       console.log("DATA", data);
       await ApiPostNoAuth("admin/login", data)
         .then((res) => {
-          console.log("resres",res);
+          console.log("resres", res);
           if (res.data.result === -1) {
             toast.error(res.data.message);
           } else {
@@ -70,7 +70,7 @@ export default function Login() {
             window.location.reload();
             setLoading(true);
             setSubmitting(false);
-            
+
             // history.push({
             //     pathname:"/dashboard",
             //     state:{phone:data?.phone},
@@ -158,13 +158,13 @@ export default function Login() {
           ) : null}
         </div>
         <div className="form-group d-flex flex-wrap justify-content-end align-items-center">
-          <Link
+          {/* <Link
             to="/auth/forgot-password"
             className="text-dark-50 text-hover-primary my-3 mr-2"
             id="kt_login_forgot"
           >
             forgot password?
-          </Link>
+          </Link> */}
           <button
             id="kt_login_signin_submit"
             type="submit"
