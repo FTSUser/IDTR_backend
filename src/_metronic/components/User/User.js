@@ -259,6 +259,37 @@ const User = ({ getNewCount, title }) => {
     <>
       <div className="card p-1">
         <ToastContainer />
+        <div className="p-2 mb-2">
+          <div className="row mb-4 pr-3">
+            <div className="col d-flex justify-content-between">
+              <h2 className="pl-3 pt-2">Time Slot</h2>
+            </div>
+            <div className="col">
+              <div>
+                <input
+                  type="text"
+                  className={`form-control form-control-lg form-control-solid `}
+                  name="title"
+                  placeholder="Search Course Name"
+                  // onChange={(e) => handleSearch(e)}
+                />
+              </div>
+            </div>
+
+            <div className="cus-medium-button-style button-height">
+              <button
+                onClick={() => {
+                  // setIsAddCourseName(true);
+                  // getAllVehicleCategory();
+                  // getAllCourseName();
+                }}
+                className="btn btn-success mr-2"
+              >
+                Add Time Slot
+              </button>
+            </div>
+          </div>
+        </div>
         <DateRangePickerComponent
               placeholder="Enter Date Range"
               startDate={startValue}
