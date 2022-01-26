@@ -10,21 +10,15 @@ import { Tooltip } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import List from "@material-ui/core/List";
 import Toolbar from "@material-ui/core/Toolbar";
-import CreateIcon from "@material-ui/icons/Create";
-import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
-import { Button } from "react-bootstrap";
-import { Modal } from "react-bootstrap";
 import Loader from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
-import { reject } from "lodash";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import moment from "moment";
 import { DateRangePickerComponent } from "@syncfusion/ej2-react-calendars";
+import CsvDownload from "react-json-to-csv";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -33,52 +27,24 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const User = ({ getNewCount, title }) => {
   const [filteredUser, setFilteredUser] = useState({});
   const [isLoaderVisible, setIsLoaderVisible] = useState(false);
- 
   const [dataViewMore, setDataViewMore] = useState({});
   const [isViewMoreUser, setIsViewMoreUser] = useState(false);
-
-
-
-  //new data
- 
   const [inputValue, setInputValue] = useState({});
-  const [inputValueForAdd, setInputValueForAdd] = useState({});
-
-  const [idForEditStatus, setIdForEditStatus] = useState("");
-
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [countPerPage, setCountPerPage] = useState(10);
-
- 
   const [tableFilterData, setTableFilterData] = useState({});
-  const [setEndValue,endValue] = useState("")
-  const [setStartValue,startValue] = useState("")
+  const [setEndValue, endValue] = useState("");
+  const [setStartValue, startValue] = useState("");
+  const [allRegisterUserExcel, setAllRegisterUserExcel] = useState([]);
+  const [dataCSV, setDataCSV] = useState([]);
 
   const handleViewMoreClose = () => {
     setIsViewMoreUser(false);
     setDataViewMore({});
   };
 
-  // const startValue = new Date(
-  //   new Date().getFullYear(),
-  //   new Date().getMonth(),
-  //   14
-  // );
-  // const endValue = new Date(
-  //   new Date().getFullYear(),
-  //   new Date().getMonth() + 1,
-  //   15
-  // );
-
-  useEffect(() =>{
-    console.log("tableFilterData",tableFilterData);
-  },[tableFilterData])
-
-
   const handleSetDateData = (date) => {
-    // console.log("1--", date);
-    // console.log("--", tableData);
     setTableFilterData([]);
     if (!date) {
       setTableFilterData(filteredUser);
@@ -88,30 +54,16 @@ const User = ({ getNewCount, title }) => {
           moment(data.createdAt).unix() > moment(date[0]).unix() &&
           moment(data.createdAt).unix() < moment(date[1]).unix()
         ) {
-            console.log("inifffffff---",data);
-            return data;
+          return data;
         }
-        // setTableFilterData((prevState) => {
-        //   return {...prevState, data};
-        // });
       });
-      console.log("newData",newData);
-      setTableFilterData(newData)
+      setTableFilterData(newData);
     }
-    console.log("filteredUser", filteredUser);
   };
-
-
-  useEffect(() => {
-    console.log("inputValue", inputValueForAdd);
-  }, [inputValueForAdd]);
-
-  useEffect(() => {
-    console.log("idForEditStatus", idForEditStatus);
-  }, [idForEditStatus]);
 
   useEffect(() => {
     getAllUser();
+    console.log("countPerPage",countPerPage,page);
   }, [page, countPerPage]);
 
   const getAllUser = async () => {
@@ -145,14 +97,10 @@ const User = ({ getNewCount, title }) => {
     {
       name: "Date",
       cell: (row) => {
-        return (
-          <span>
-            {moment(row?.createdAt).format('ll')}
-          </span>
-        );
+        return <span>{moment(row?.createdAt).format("ll")}</span>;
       },
       sortable: true,
-      selector: row => row?.createdAt, 
+      // selector: (row) => row?.createdAt,
 
       // width: "65px",
     },
@@ -161,24 +109,16 @@ const User = ({ getNewCount, title }) => {
       selector: "email",
       sortable: true,
       cell: (row) => {
-        return(
-            <span>
-                {row?.email === "" ? "-" : row?.email}
-            </span>
-        )
-    },
+        return <span>{row?.email === "" ? "-" : row?.email}</span>;
+      },
     },
     {
       name: "First Name",
       selector: "fname",
       sortable: true,
       cell: (row) => {
-        return(
-            <span>
-                {row?.fname === "" ? "-" : row?.fname}
-            </span>
-        )
-    },
+        return <span>{row?.fname === "" ? "-" : row?.fname}</span>;
+      },
     },
 
     {
@@ -186,12 +126,8 @@ const User = ({ getNewCount, title }) => {
       selector: "lname",
       sortable: true,
       cell: (row) => {
-        return(
-            <span>
-                {row?.lname === "" ? "-" : row?.lname}
-            </span>
-        )
-    },
+        return <span>{row?.lname === "" ? "-" : row?.lname}</span>;
+      },
     },
     {
       name: "Gender",
@@ -255,6 +191,68 @@ const User = ({ getNewCount, title }) => {
     },
   };
 
+  //For Excel Download
+
+  useEffect(() => {
+    getAllUserForExcel();
+  }, []);
+
+  const getAllUserForExcel = async () => {
+    // if (!search) {
+    await ApiGet(`register/getAll`)
+      .then((res) => {
+        console.log("regist", res?.data?.payload?.Question);
+        setAllRegisterUserExcel(res?.data?.payload?.Question);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // }
+  };
+  useEffect(() => {
+    if (allRegisterUserExcel) {
+      allRegisterUserExcel.map((registerUser) => {
+        let data = {
+          CreatedAt: registerUser?.createdAt,
+          CreatedBy: registerUser?.createdBy,
+          Authority:registerUser?.Authority,
+          FirstName: registerUser?.fname,
+          MiddleName: registerUser?.mname,
+          LastName: registerUser?.lname,
+          Gender: registerUser?.gender,
+          BloodGroup: registerUser?.bloodGroup,
+          ValidTill: moment(registerUser?.validTill).format("ll"),
+          Email: registerUser?.email,
+          Phone: registerUser?.phone,
+          Qualification: registerUser?.qualification,
+          DrivingLicenseNumber: registerUser?.drivingLicenseNumber,
+          DoB: moment(registerUser?.DoB).format("ll"),
+          Address : registerUser?.address,
+          City:registerUser?.city,
+          District:registerUser?.district,
+          State:registerUser?.state,
+          Pincode:registerUser?.pincode,
+          Authoritycity:registerUser?.authoritycity,
+          Authoritydistrict:registerUser?.authoritydistrict,
+          PaymentType:registerUser?.type,
+          dateofMakePayment: registerUser?.dateofMakePayment === null ? "Payment Panding" : registerUser?.dateofMakePayment,
+          IsPaymentDone: registerUser?.isPaymentDone === null ? "Payment Panding" : registerUser?.isPaymentDone,
+          paymentId:registerUser?.paymentId === null ? "Payment Panding" : registerUser?.paymentId,
+          lcid: registerUser?.lcid,
+          IssueDate: moment(registerUser?.issueDate).format("ll"),
+
+
+
+          //new test
+          // tdid: "61dfe45964926806043a1ea5",
+          // uid: "61e53e6c8edfdb46301d51a4",
+        };
+        setDataCSV((currVal) => [...currVal, data]);
+      });
+    }
+    console.log("UsertCsvReport", allRegisterUserExcel);
+  }, [allRegisterUserExcel]);
+
   return (
     <>
       <div className="card p-1">
@@ -288,20 +286,42 @@ const User = ({ getNewCount, title }) => {
                 Add Time Slot
               </button>
             </div>
+            <div className="cus-medium-button-style button-height">
+              <CsvDownload
+                className={``}
+                data={dataCSV}
+                filename="Donations.csv"
+                style={{
+                  //pass other props, like styles
+                  backgroundColor: "#F64E60",
+                  borderRadius: "6px",
+                  border: "1px solid #fff",
+                  display: "inline-block",
+                  cursor: "pointer",
+                  color: "#FFFFFF",
+                  fontSize: "12px",
+                  padding: "10px 18px",
+                  textDecoration: "none",
+                  position: "right",
+                }}
+              >
+                Export to Excel
+              </CsvDownload>
+            </div>
           </div>
         </div>
         <DateRangePickerComponent
-              placeholder="Enter Date Range"
-              startDate={startValue}
-              endDate={endValue}
-              format="dd-MMM-yy"
-              start="Year"
-              depth="Year"
-              onChange={(e) => {
-                console.log("e.target.value",e.target.value);
-                handleSetDateData(e.target.value);
-              }}
-            ></DateRangePickerComponent>
+          placeholder="Enter Date Range"
+          startDate={startValue}
+          endDate={endValue}
+          format="dd-MMM-yy"
+          start="Year"
+          depth="Year"
+          onChange={(e) => {
+            console.log("e.target.value", e.target.value);
+            handleSetDateData(e.target.value);
+          }}
+        ></DateRangePickerComponent>
         <div className="p-2 mb-2">
           <DataTable
             columns={columns}
@@ -356,164 +376,164 @@ const User = ({ getNewCount, title }) => {
                   <div className="honda-text-grid-items">
                     <span>First Name:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.fname,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.fname,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Middle Name:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.mname,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.mname,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Last Name:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.lname,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.lname,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Date of Birth:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.DoB,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.DoB,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Qualification:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.qualification,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.qualification,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Gender:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.gender,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.gender,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Address:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.address,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.address,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>State:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.state,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.state,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>City:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.city,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.city,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>District:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.district,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.district,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Email:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.email,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.email,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Phone:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.phone,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.phone,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Pincode:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.pincode,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.pincode,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Permanent DLnumber:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.permanentDLnumber,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.permanentDLnumber,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Issue Date:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.issueDate,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.issueDate,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Valid Till:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.validTill,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.validTill,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Authority:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.Authority,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.Authority,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Blood Group:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.bloodGroup,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.bloodGroup,
+                      }}
+                      className=""
+                    />
                   </div>
                 </div>
               </div>

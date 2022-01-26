@@ -21,6 +21,8 @@ import { Button } from "react-bootstrap";
 import { Modal } from "react-bootstrap";
 import Loader from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
+import moment from "moment";
+import CsvDownload from "react-json-to-csv";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -32,7 +34,8 @@ const CourseName = ({ getNewCount, title }) => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isAddCourseName, setIsAddCourseName] = useState(false);
-  const [idForUpdateCourseNameData, setIdForUpdateCourseNameData] = useState("");
+  const [idForUpdateCourseNameData, setIdForUpdateCourseNameData] =
+    useState("");
   const [inputValueForAdd, setInputValueForAdd] = useState({});
   const [errorsForAdd, setErrorsForAdd] = useState({});
   const [idForDeleteCourseName, setIdForDeleteCourseName] = useState("");
@@ -48,7 +51,7 @@ const CourseName = ({ getNewCount, title }) => {
 
   const [dataViewMore, setDataViewMore] = useState({});
   const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
-  const [isEditPopUp,setIsEditPopUp] = useState(false);
+  const [isEditPopUp, setIsEditPopUp] = useState(false);
 
   const handleViewMoreClose = () => {
     setIsViewMoreAboutus(false);
@@ -64,9 +67,9 @@ const CourseName = ({ getNewCount, title }) => {
   const handleAddAdminClose = () => {
     setInputValueForAdd({});
     setIsAddCourseName(false);
-    setErrorsForAdd({})
-    setIsEditPopUp(false)
-    setGetCourseType([])
+    setErrorsForAdd({});
+    setIsEditPopUp(false);
+    setGetCourseType([]);
   };
 
   const handleClose = () => {
@@ -84,52 +87,52 @@ const CourseName = ({ getNewCount, title }) => {
   const getAllCourseType = async () => {
     setIsLoaderVisible(true);
     let Data = {
-      vehicleCategory: inputValueForAdd?.VehicleCategory
-    }
-      await ApiPost(`courseType/getCoursetypeByVehiclecategory?limit=1000`,Data)
-        .then((res) => {
-          setIsLoaderVisible(false);
-          console.log("artistreport", res);
-          setGetCourseType(res?.data?.payload?.courseType);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      vehicleCategory: inputValueForAdd?.VehicleCategory,
+    };
+    await ApiPost(`courseType/getCoursetypeByVehiclecategory?limit=1000`, Data)
+      .then((res) => {
+        setIsLoaderVisible(false);
+        console.log("artistreport", res);
+        setGetCourseType(res?.data?.payload?.courseType);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  useEffect(() =>{
-    if(inputValueForAdd?.VehicleCategory?.length > 0){
-      getAllCourseType()
+  useEffect(() => {
+    if (inputValueForAdd?.VehicleCategory?.length > 0) {
+      getAllCourseType();
     }
-  },[inputValueForAdd?.VehicleCategory])
-
-
+  }, [inputValueForAdd?.VehicleCategory]);
 
   const getAllVehicleCategory = async () => {
     setIsLoaderVisible(true);
-    
-      await ApiGet(`vehicleCategory/getAllVehicleCategory?limit=1000`)
-        .then((res) => {
-          setIsLoaderVisible(false);
-          console.log("artistreport", res);
-          setFilteredVehicleCategory(res?.data?.payload?.Question);
-          setCount(res?.data?.payload?.count);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+
+    await ApiGet(`vehicleCategory/getAllVehicleCategory?limit=1000`)
+      .then((res) => {
+        setIsLoaderVisible(false);
+        console.log("artistreport", res);
+        setFilteredVehicleCategory(res?.data?.payload?.Question);
+        setCount(res?.data?.payload?.count);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const getAllCourseName = async () => {
     setIsLoaderVisible(true);
     if (!search) {
-      await ApiGet(`courseName/getAllCourseName?page=${page}&limit=${countPerPage}`)
+      await ApiGet(
+        `courseName/getAllCourseName?page=${page}&limit=${countPerPage}`
+      )
         .then((res) => {
           setIsLoaderVisible(false);
           console.log("artistreport", res);
           setFilteredCourseName(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
-          setGetCourseType([])
+          setGetCourseType([]);
         })
         .catch((err) => {
           console.log(err);
@@ -247,7 +250,6 @@ const CourseName = ({ getNewCount, title }) => {
         price: inputValueForAdd.Price,
         ctid: inputValueForAdd.CourseType,
         vcid: inputValueForAdd.VehicleCategory,
-       
       };
       ApiPost(`courseName/addCourseName`, Data)
         .then((res) => {
@@ -266,8 +268,6 @@ const CourseName = ({ getNewCount, title }) => {
         });
     }
   };
-
-  
 
   const handleDeleteCourseName = () => {
     ApiDelete(`courseName/deleteCourseName/${idForDeleteCourseName}`)
@@ -288,10 +288,6 @@ const CourseName = ({ getNewCount, title }) => {
       });
   };
 
-
-
- 
-
   const handelUpdateCourseNameDetails = (e) => {
     e.preventDefault();
     if (validateFormForAddAdmin()) {
@@ -307,9 +303,7 @@ const CourseName = ({ getNewCount, title }) => {
         validity: inputValueForAdd?.Validity,
         price: inputValueForAdd?.Price,
         ctid: inputValueForAdd?.CourseType,
-        vcid: inputValueForAdd?.VehicleCategory
-
-       
+        vcid: inputValueForAdd?.VehicleCategory,
       };
       ApiPut(`courseName/updateCourseName/${idForUpdateCourseNameData}`, Data)
         .then((res) => {
@@ -319,8 +313,8 @@ const CourseName = ({ getNewCount, title }) => {
             toast.success(res?.data?.message);
             setInputValueForAdd({});
             getAllCourseName();
-            setIsEditPopUp(false)
-            setGetCourseType([])
+            setIsEditPopUp(false);
+            setGetCourseType([]);
           } else {
             toast.error(res?.data?.message);
           }
@@ -357,15 +351,14 @@ const CourseName = ({ getNewCount, title }) => {
     },
     {
       name: "CourseType",
-      selector: row => row?.ctid?.courseType,
+      selector: (row) => row?.ctid?.courseType,
       sortable: true,
     },
     {
       name: "VehicleCategory",
-      selector: row => row?.vcid?.vehicleCategory,
+      selector: (row) => row?.vcid?.vehicleCategory,
       sortable: true,
     },
-
 
     {
       name: "Mode",
@@ -405,7 +398,7 @@ const CourseName = ({ getNewCount, title }) => {
       },
       sortable: true,
     },
-    
+
     {
       name: "Actions",
       cell: (row) => {
@@ -415,8 +408,8 @@ const CourseName = ({ getNewCount, title }) => {
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
-                    console.log("typetype",row);
-                    setIsAddCourseName(true);
+                  console.log("typetype", row);
+                  setIsAddCourseName(true);
                   setIdForUpdateCourseNameData(row._id);
                   // getAllCourseType();
                   getAllVehicleCategory();
@@ -432,9 +425,9 @@ const CourseName = ({ getNewCount, title }) => {
                     Validity: row?.validity,
                     Price: row?.price,
                     CourseType: row?.ctid?._id,
-                    VehicleCategory: row?.vcid?._id
+                    VehicleCategory: row?.vcid?._id,
                   });
-                  setIsEditPopUp(true)
+                  setIsEditPopUp(true);
                 }}
               >
                 <Tooltip title="Edit CourseName" arrow>
@@ -454,22 +447,21 @@ const CourseName = ({ getNewCount, title }) => {
                 <DeleteIcon />
               </Tooltip>
             </div>
-          <>
-            <div
-              className="cursor-pointer pl-2"
-              onClick={() => {
-                setIsViewMoreAboutus(true);
-                setDataViewMore(row);
-                console.log("rowShow", row);
-                console.log("isViewMoreAboutus", isViewMoreAboutus);
-              }}
-            >
-              <Tooltip title="Show More" arrow>
-                <InfoOutlinedIcon />
-              </Tooltip>
-            </div>
-          </>
-        
+            <>
+              <div
+                className="cursor-pointer pl-2"
+                onClick={() => {
+                  setIsViewMoreAboutus(true);
+                  setDataViewMore(row);
+                  console.log("rowShow", row);
+                  console.log("isViewMoreAboutus", isViewMoreAboutus);
+                }}
+              >
+                <Tooltip title="Show More" arrow>
+                  <InfoOutlinedIcon />
+                </Tooltip>
+              </div>
+            </>
           </>
         );
       },
@@ -554,6 +546,65 @@ const CourseName = ({ getNewCount, title }) => {
     }
   }, [debouncedSearchTerm]);
 
+  //for excel file
+  const [allCourseNameExcel, setAllCourseNameExcel] = useState([]);
+  const [dataCSV, setDataCSV] = useState([]);
+  useEffect(() => {
+    getAllCourseNameForExcel();
+  }, []);
+
+  const getAllCourseNameForExcel = async () => {
+    // if (!search) {
+    await ApiGet(`courseName/getAll`)
+      .then((res) => {
+        console.log("regist", res?.data?.payload?.Question);
+        setAllCourseNameExcel(res?.data?.payload?.Question);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // }
+  };
+  useEffect(() => {
+    if (allCourseNameExcel) {
+      allCourseNameExcel.map((registerUser) => {
+        let data = {
+          CreatedAt: moment(registerUser?.createdAt).format("ll"),
+          CreatedBy: registerUser?.createdBy,
+          SystemRequirement: registerUser?.systemRequirement,
+          Price: registerUser?.price,
+          Mode: registerUser?.mode,
+          Duration: registerUser?.duration,
+          Timing: registerUser?.timing,
+          Certificate: registerUser?.certificate,
+          Validity: registerUser?.validity,
+          DocumentRequired: registerUser?.documentRequired,
+          CourseName:registerUser?.courseName,
+          Description: registerUser?.description,
+          IsActive:registerUser?.isActive,
+          UpdatedAt:moment(registerUser?.updatedAt).format("ll"),
+          UpdatedBy: registerUser?.updatedBy,
+          CreatedAtVC: moment(registerUser?.vcid?.createdAt).format("ll"),
+          CreatedByVC: registerUser?.vcid?.createdBy,
+          VehicleCategory: registerUser?.vcid?.vehicleCategory,
+          DescriptionVC: registerUser?.vcid?.description,
+          IsActiveVC:registerUser?.vcid?.isActive,
+          UpdatedAtVC:moment(registerUser?.vcid?.updatedAt).format("ll"),
+          UpdatedByVC: registerUser?.vcid?.updatedBy,
+          CreatedAtCT: moment(registerUser?.ctid?.createdAt).format("ll"),
+          CreatedByCT: registerUser?.ctid?.createdBy,
+          CourseType: registerUser?.ctid?.courseType,
+          DescriptionCT: registerUser?.ctid?.description,
+          IsActiveCT:registerUser?.ctid?.isActive,
+          UpdatedAtCT:moment(registerUser?.ctid?.updatedAt).format("ll"),
+          UpdatedByCT: registerUser?.ctid?.updatedBy,
+        };
+        setDataCSV((currVal) => [...currVal, data]);
+      });
+    }
+    console.log("UsertCsvReport", allCourseNameExcel);
+  }, [allCourseNameExcel]);
+
   return (
     <>
       <div className="card p-1">
@@ -585,6 +636,28 @@ const CourseName = ({ getNewCount, title }) => {
               >
                 Add Course Name
               </button>
+            </div>
+            <div className="cus-medium-button-style button-height">
+              <CsvDownload
+                className={``}
+                data={dataCSV}
+                filename="Donations.csv"
+                style={{
+                  //pass other props, like styles
+                  backgroundColor: "#F64E60",
+                  borderRadius: "6px",
+                  border: "1px solid #fff",
+                  display: "inline-block",
+                  cursor: "pointer",
+                  color: "#FFFFFF",
+                  fontSize: "12px",
+                  padding: "10px 18px",
+                  textDecoration: "none",
+                  position: "right",
+                }}
+              >
+                Export to Excel
+              </CsvDownload>
             </div>
           </div>
 
@@ -707,11 +780,16 @@ const CourseName = ({ getNewCount, title }) => {
                           filteredVehicleCategory?.map((item) => {
                             console.log("item", filteredVehicleCategory);
                             return (
-                              <option key={item._id} value={item?._id} selected={
-                                inputValueForAdd?.VehicleCategory === item?._id
-                                  ? true
-                                  : false
-                              }>
+                              <option
+                                key={item._id}
+                                value={item?._id}
+                                selected={
+                                  inputValueForAdd?.VehicleCategory ===
+                                  item?._id
+                                    ? true
+                                    : false
+                                }
+                              >
                                 {" "}
                                 {item.vehicleCategory}{" "}
                               </option>
@@ -752,11 +830,15 @@ const CourseName = ({ getNewCount, title }) => {
                         {getCourseType?.length > 0 &&
                           getCourseType?.map((item) => {
                             return (
-                              <option key={item._id} value={item._id} selected={
-                                inputValueForAdd?.CourseType === item._id
-                                  ? true
-                                  : false
-                              }>
+                              <option
+                                key={item._id}
+                                value={item._id}
+                                selected={
+                                  inputValueForAdd?.CourseType === item._id
+                                    ? true
+                                    : false
+                                }
+                              >
                                 {" "}
                                 {item.courseType}{" "}
                               </option>
@@ -1066,13 +1148,12 @@ const CourseName = ({ getNewCount, title }) => {
                   </div>
                 </div>
 
-                
-
                 <div className="d-flex align-items-center justify-content-center">
                   <button
                     onClick={(e) => {
-                      isEditPopUp === false ? 
-                      handelAddCourseNameDetails(e): handelUpdateCourseNameDetails(e)
+                      isEditPopUp === false
+                        ? handelAddCourseNameDetails(e)
+                        : handelUpdateCourseNameDetails(e);
                     }}
                     className="btn btn-success mr-2"
                   >
@@ -1088,7 +1169,7 @@ const CourseName = ({ getNewCount, title }) => {
         </Dialog>
       ) : null}
 
-{isViewMoreAboutus ? (
+      {isViewMoreAboutus ? (
         <Dialog
           fullScreen
           open={isViewMoreAboutus}
@@ -1112,83 +1193,83 @@ const CourseName = ({ getNewCount, title }) => {
                   <div className="honda-text-grid-items">
                     <span>Title:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.courseName,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.courseName,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Description:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.description,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.description,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Duration:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.duration,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.duration,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Timing:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.timing,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.timing,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Mode:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.mode,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.mode,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Document Required:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.documentRequired,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.documentRequired,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Validity:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.validity,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.validity,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>System Requirement:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.systemRequirement,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.systemRequirement,
+                      }}
+                      className=""
+                    />
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Price:</span>
                     <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.price,
-                    }}
-                    className=""
-                  />
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.price,
+                      }}
+                      className=""
+                    />
                   </div>
                 </div>
               </div>
