@@ -19,24 +19,20 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 import List from "@material-ui/core/List";
 import Toolbar from "@material-ui/core/Toolbar";
-import CreateIcon from "@material-ui/icons/Create";
-import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
-import { Button } from "react-bootstrap";
-import { Modal } from "react-bootstrap";
 import Loader from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
-import { reject } from "lodash";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import moment from "moment";
 import { DateRangePickerComponent } from "@syncfusion/ej2-react-calendars";
+import CsvDownload from "react-json-to-csv";
 import { AwsConfig } from "../../../config/S3Backet/app.config";
 import PaymentForm from "../PaymentForm/payment";
 import PaymentData from "../PaymentForm/payment";
+import CreateIcon from "@material-ui/icons/Create";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -54,19 +50,17 @@ const User = ({ getNewCount, title }) => {
   //new data
 
   const [inputValue, setInputValue] = useState({});
-  const [inputValueForAdd, setInputValueForAdd] = useState({});
-
-  const [idForEditStatus, setIdForEditStatus] = useState("");
-
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [countPerPage, setCountPerPage] = useState(10);
+  const [setEndValue, endValue] = useState("");
+  const [setStartValue, startValue] = useState("");
+  const [allRegisterUserExcel, setAllRegisterUserExcel] = useState([]);
+  const [dataCSV, setDataCSV] = useState([]);
   const [modalOpen, setModalOpen] = useState(false)
 
 
   const [tableFilterData, setTableFilterData] = useState({});
-  const [setEndValue, endValue] = useState("")
-  const [setStartValue, startValue] = useState("")
   const [isAddAnnouncement, setIsAddAnnouncement] = useState(false);
   const [isUpdateAnnouncement, setIsUpdateAnnouncement] = useState(false);
   const [show, setShow] = useState(false);
@@ -186,8 +180,6 @@ const User = ({ getNewCount, title }) => {
 
   }
   const handleSetDateData = (date) => {
-    // console.log("1--", date);
-    // console.log("--", tableData);
     setTableFilterData([]);
     if (!date) {
       setTableFilterData(filteredUser);
@@ -200,27 +192,15 @@ const User = ({ getNewCount, title }) => {
           console.log("inifffffff---", data);
           return data;
         }
-        // setTableFilterData((prevState) => {
-        //   return {...prevState, data};
-        // });
       });
       console.log("newData", newData);
       setTableFilterData(newData)
     }
-    console.log("filteredUser", filteredUser);
   };
-
-
-  useEffect(() => {
-    console.log("inputValue", inputValueForAdd);
-  }, [inputValueForAdd]);
-
-  useEffect(() => {
-    console.log("idForEditStatus", idForEditStatus);
-  }, [idForEditStatus]);
 
   useEffect(() => {
     getAllUser();
+    console.log("countPerPage",countPerPage,page);
   }, [page, countPerPage]);
 
   const getAllUser = async () => {
@@ -254,14 +234,10 @@ const User = ({ getNewCount, title }) => {
     {
       name: "Date",
       cell: (row) => {
-        return (
-          <span>
-            {moment(row?.createdAt).format('ll')}
-          </span>
-        );
+        return <span>{moment(row?.createdAt).format("ll")}</span>;
       },
       sortable: true,
-      selector: row => row?.createdAt,
+      // selector: (row) => row?.createdAt,
 
       // width: "65px",
     },
@@ -270,11 +246,7 @@ const User = ({ getNewCount, title }) => {
       selector: "email",
       sortable: true,
       cell: (row) => {
-        return (
-          <span>
-            {row?.email === "" ? "-" : row?.email}
-          </span>
-        )
+        return <span>{row?.email === "" ? "-" : row?.email}</span>;
       },
     },
     {
@@ -282,11 +254,7 @@ const User = ({ getNewCount, title }) => {
       selector: "fname",
       sortable: true,
       cell: (row) => {
-        return (
-          <span>
-            {row?.fname === "" ? "-" : row?.fname}
-          </span>
-        )
+        return <span>{row?.fname === "" ? "-" : row?.fname}</span>;
       },
     },
 
@@ -295,11 +263,7 @@ const User = ({ getNewCount, title }) => {
       selector: "lname",
       sortable: true,
       cell: (row) => {
-        return (
-          <span>
-            {row?.lname === "" ? "-" : row?.lname}
-          </span>
-        )
+        return <span>{row?.lname === "" ? "-" : row?.lname}</span>;
       },
     },
     {
@@ -433,6 +397,68 @@ const User = ({ getNewCount, title }) => {
       },
     },
   };
+
+  //For Excel Download
+
+  useEffect(() => {
+    getAllUserForExcel();
+  }, []);
+
+  const getAllUserForExcel = async () => {
+    // if (!search) {
+    await ApiGet(`register/getAll`)
+      .then((res) => {
+        console.log("regist", res?.data?.payload?.Question);
+        setAllRegisterUserExcel(res?.data?.payload?.Question);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // }
+  };
+  useEffect(() => {
+    if (allRegisterUserExcel) {
+      allRegisterUserExcel.map((registerUser) => {
+        let data = {
+          CreatedAt: registerUser?.createdAt,
+          CreatedBy: registerUser?.createdBy,
+          Authority:registerUser?.Authority,
+          FirstName: registerUser?.fname,
+          MiddleName: registerUser?.mname,
+          LastName: registerUser?.lname,
+          Gender: registerUser?.gender,
+          BloodGroup: registerUser?.bloodGroup,
+          ValidTill: moment(registerUser?.validTill).format("ll"),
+          Email: registerUser?.email,
+          Phone: registerUser?.phone,
+          Qualification: registerUser?.qualification,
+          DrivingLicenseNumber: registerUser?.drivingLicenseNumber,
+          DoB: moment(registerUser?.DoB).format("ll"),
+          Address : registerUser?.address,
+          City:registerUser?.city,
+          District:registerUser?.district,
+          State:registerUser?.state,
+          Pincode:registerUser?.pincode,
+          Authoritycity:registerUser?.authoritycity,
+          Authoritydistrict:registerUser?.authoritydistrict,
+          PaymentType:registerUser?.type,
+          dateofMakePayment: registerUser?.dateofMakePayment === null ? "Payment Panding" : registerUser?.dateofMakePayment,
+          IsPaymentDone: registerUser?.isPaymentDone === null ? "Payment Panding" : registerUser?.isPaymentDone,
+          paymentId:registerUser?.paymentId === null ? "Payment Panding" : registerUser?.paymentId,
+          lcid: registerUser?.lcid,
+          IssueDate: moment(registerUser?.issueDate).format("ll"),
+
+
+
+          //new test
+          // tdid: "61dfe45964926806043a1ea5",
+          // uid: "61e53e6c8edfdb46301d51a4",
+        };
+        setDataCSV((currVal) => [...currVal, data]);
+      });
+    }
+    console.log("UsertCsvReport", allRegisterUserExcel);
+  }, [allRegisterUserExcel]);
 
 
 
@@ -1049,6 +1075,28 @@ const User = ({ getNewCount, title }) => {
               >
                 Add
               </button>
+            </div>
+            <div className="cus-medium-button-style button-height">
+              <CsvDownload
+                className={``}
+                data={dataCSV}
+                filename="Donations.csv"
+                style={{
+                  //pass other props, like styles
+                  backgroundColor: "#F64E60",
+                  borderRadius: "6px",
+                  border: "1px solid #fff",
+                  display: "inline-block",
+                  cursor: "pointer",
+                  color: "#FFFFFF",
+                  fontSize: "12px",
+                  padding: "10px 18px",
+                  textDecoration: "none",
+                  position: "right",
+                }}
+              >
+                Export to Excel
+              </CsvDownload>
             </div>
           </div>
         </div>

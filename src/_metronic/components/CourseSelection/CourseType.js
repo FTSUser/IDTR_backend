@@ -19,6 +19,8 @@ import { Button } from "react-bootstrap";
 import { Modal } from "react-bootstrap";
 import Loader from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
+import moment from "moment";
+import CsvDownload from "react-json-to-csv";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -451,6 +453,52 @@ const CourseType = ({ getNewCount, title }) => {
     }
   }, [debouncedSearchTerm]);
 
+  //Download csv data
+  //for excel file
+  const [allCourseTypeExcel, setAllCourseTypeExcel] = useState([]);
+  const [dataCSV, setDataCSV] = useState([]);
+  useEffect(() => {
+    getAllCourseTypeForExcel();
+  }, []);
+
+  const getAllCourseTypeForExcel = async () => {
+    // if (!search) {
+    await ApiGet(`courseType/getAll`)
+      .then((res) => {
+        console.log("regist", res?.data?.payload?.Question);
+        setAllCourseTypeExcel(res?.data?.payload?.Question);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // }
+  };
+  useEffect(() => {
+    if (allCourseTypeExcel) {
+      allCourseTypeExcel.map((registerUser) => {
+        let data = {
+          CreatedAt: moment(registerUser?.createdAt).format("ll"),
+          CreatedBy: registerUser?.createdBy,
+          CourseType:registerUser?.courseType,
+          Description: registerUser?.description,
+          IsActive:registerUser?.isActive,
+          UpdatedAt:moment(registerUser?.updatedAt).format("ll"),
+          UpdatedBy: registerUser?.updatedBy,
+          CreatedAtVC: moment(registerUser?.vcid?.createdAt).format("ll"),
+          CreatedByVC: registerUser?.vcid?.createdBy,
+          VehicleCategory: registerUser?.vcid?.vehicleCategory,
+          DescriptionVC: registerUser?.vcid?.description,
+          IsActiveVC:registerUser?.vcid?.isActive,
+          UpdatedAtVC:moment(registerUser?.vcid?.updatedAt).format("ll"),
+          UpdatedByVC: registerUser?.vcid?.updatedBy,
+        };
+        setDataCSV((currVal) => [...currVal, data]);
+      });
+    }
+    console.log("UsertCsvReport", allCourseTypeExcel);
+  }, [allCourseTypeExcel]);
+
+
   return (
     <>
       <div className="card p-1">
@@ -482,6 +530,28 @@ const CourseType = ({ getNewCount, title }) => {
                 Add Course Type
               </button>
             </div>
+            <div className="cus-medium-button-style button-height">
+            <CsvDownload
+              className={``}
+              data={dataCSV}
+              filename="Donations.csv"
+              style={{
+                //pass other props, like styles
+                backgroundColor: "#F64E60",
+                borderRadius: "6px",
+                border: "1px solid #fff",
+                display: "inline-block",
+                cursor: "pointer",
+                color: "#FFFFFF",
+                fontSize: "12px",
+                padding: "10px 18px",
+                textDecoration: "none",
+                position: "right",
+              }}
+            >
+              Export to Excel
+            </CsvDownload>
+          </div>
           </div>
 
           <Modal show={showStatus} onHide={handleCloseShowStatus}>

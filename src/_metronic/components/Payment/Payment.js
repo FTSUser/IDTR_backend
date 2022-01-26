@@ -24,6 +24,7 @@ import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import moment from "moment";
+import CsvDownload from "react-json-to-csv";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -101,14 +102,39 @@ const Payment = ({ getNewCount, title }) => {
       width: "65px",
     },
     {
-      name: "Date",
+      name: "User Email",
       cell: (row) => {
         return (
-          <span>
-            {moment(row?.createdAt).format('ll')}
-          </span>
+          <span>{row?.uid === null || !row?.uid ? "-" : row?.uid?.email}</span>
         );
+      },
+      selector: (row) => row?.uid?.email,
+      sortable: true,
+    },
+    {
+      name: "User Phone",
+      cell: (row) => {
+        return (
+          <span>{row?.uid === null || !row?.uid ? "-" : row?.uid?.phone}</span>
+        );
+      },
+      selector: (row) => row?.uid?.phone,
+      sortable: true,
+    },
+    {
+      name: "Date",
+      cell: (row) => {
+        return <span>{moment(row?.created).format("ll")}</span>;
+      },
+      selector: (row) => row?.created,
+      sortable: true,
 
+      // width: "65px",
+    },
+    {
+      name: "Payment",
+      cell: (row) => {
+        return <span>{row?.cnid === null ? "-" : row?.cnid?.price}</span>;
       },
       selector: (row) => row?.createdAt,
       sortable: true,
@@ -117,23 +143,40 @@ const Payment = ({ getNewCount, title }) => {
     },
 
     {
-        name: "Course Name",
-        cell: (row) => {
-            return(
-                <span>
-                    {row?.cnid === null ? "-" : row?.cnid?.courseName}
-                </span>
-            )
-        },
-        selector: (row) => row?.cnid?.courseName,
-        sortable: true,
-      
+      name: "Course Name",
+      cell: (row) => {
+        return <span>{row?.cnid === null ? "-" : row?.cnid?.courseName}</span>;
       },
+      selector: (row) => row?.cnid?.courseName,
+      sortable: true,
+    },
+    {
+      name: "Course Type",
+      cell: (row) => {
+        return (
+          <span>
+            {row?.ctid === null || !row?.ctid ? "-" : row?.ctid?.courseType}
+          </span>
+        );
+      },
+      selector: (row) => row?.ctid?.courseType,
+      sortable: true,
+    },
+    {
+      name: "Vehical Category",
+      cell: (row) => {
+        return (
+          <span>
+            {row?.vcid === null || !row?.vcid
+              ? "-"
+              : row?.vcid?.vehicleCategory}
+          </span>
+        );
+      },
+      selector: (row) => row?.vcid?.vehicleCategory,
+      sortable: true,
+    },
 
-
-    
-   
-   
     // {
     //   name: "Gender",
     //   selector: "gender",
@@ -195,12 +238,118 @@ const Payment = ({ getNewCount, title }) => {
       },
     },
   };
+  //for excel file
+  const [allPaymentDetailsExcel, setAllPaymentDetailsExcel] = useState([]);
+  const [dataCSV, setDataCSV] = useState([]);
+  useEffect(() => {
+    getAllPaymentDetailsForExcel();
+  }, []);
+
+  const getAllPaymentDetailsForExcel = async () => {
+    // if (!search) {
+    await ApiGet(`payment/getAll`)
+      .then((res) => {
+        console.log("regist", res?.data?.payload?.Question);
+        setAllPaymentDetailsExcel(res?.data?.payload?.Question);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // }
+  };
+  useEffect(() => {
+    if (allPaymentDetailsExcel) {
+      allPaymentDetailsExcel.map((registerUser) => {
+        let data = {
+          certificate: registerUser?.cnid?.certificate,
+          courseName: registerUser?.cnid?.courseName,
+          createdAt: moment(registerUser?.cnid?.createdAt).format("ll"),
+          createdBy: registerUser?.cnid?.createdBy,
+          description: registerUser?.cnid?.description,
+          documentRequired: registerUser?.cnid?.documentRequired,
+          duration: registerUser?.cnid?.duration,
+          isActive: registerUser?.cnid?.isActive,
+          mode: registerUser?.cnid?.mode,
+          price: registerUser?.cnid?.price,
+          systemRequirement: registerUser?.cnid?.systemRequirement,
+          timing: registerUser?.cnid?.timing,
+          updatedBy: registerUser?.cnid?.updatedBy,
+          validity: registerUser?.cnid?.validity,
+          created: moment(registerUser?.cnid?.created).format("ll"),
+          courseType: registerUser?.ctid?.courseType,
+          createdAtCT: moment(registerUser?.ctid?.createdAtCT).format("ll"),
+          createdByCT: registerUser?.ctid?.createdBy,
+          descriptionCT: registerUser?.ctid?.description,
+          isActiveCT: registerUser?.ctid?.isActive,
+          updatedAtCT: moment(registerUser?.ctid?.updatedAt).format("ll"),
+          updatedByCT: registerUser?.ctid?.updatedBy,
+          priceCT: registerUser?.ctid?.price,
+          createdAtTD: moment(registerUser?.tdid?.createdAt).format("ll"),
+          createdByTD: registerUser?.tdid?.createdBy,
+          dateTD: registerUser?.tdid?.date,
+          endTimeTD: moment(registerUser?.tdid?.endTime).format("LT"),
+          seat: registerUser?.tdid?.seat,
+          startTimeTD: moment(registerUser?.tdid?.startTime).format("LT"),
+          updatedAtTD: moment(registerUser?.tdid?.updatedAt).format("ll"),
+          updatedByTD: registerUser?.tdid?.updatedBy,
+          IDTRcenter: registerUser?.uid?.IDTRcenter,
+          email: registerUser?.uid?.email,
+          modificationData: moment(registerUser?.uid?.modificationData).format(
+            "ll"
+          ),
+          phone: registerUser?.uid?.phone,
+          registrationDate: moment(registerUser?.tdid?.registrationDate).format(
+            "ll"
+          ),
+          state: registerUser?.uid?.state,
+          modificationDate: moment(
+            registerUser?.tdid?.status?.modificationDate
+          ).format("ll"),
+          name: registerUser?.tdid?.status?.name,
+          createdAtVC: moment(registerUser?.vcid?.createdAt).format("ll"),
+          createdByVC: registerUser?.vcid?.createdBy,
+          descriptionVC: registerUser?.vcid?.description,
+          isActiveVC: registerUser?.vcid?.isActive,
+          vehicleCategory: registerUser?.vcid?.vehicleCategory,
+        };
+        setDataCSV((currVal) => [...currVal, data]);
+      });
+    }
+    console.log("UsertCsvReport", allPaymentDetailsExcel);
+  }, [allPaymentDetailsExcel]);
 
   return (
     <>
       <div className="card p-1">
         <ToastContainer />
         <div className="p-2 mb-2">
+          <div className="row mb-4 pr-3">
+            <div className="col d-flex justify-content-between">
+              <h2 className="pl-3 pt-2">Payment Details</h2>
+            </div>
+            <div className="cus-medium-button-style button-height">
+              <CsvDownload
+                className={``}
+                data={dataCSV}
+                filename="Donations.csv"
+                style={{
+                  //pass other props, like styles
+                  backgroundColor: "#F64E60",
+                  borderRadius: "6px",
+                  border: "1px solid #fff",
+                  display: "inline-block",
+                  cursor: "pointer",
+                  color: "#FFFFFF",
+                  fontSize: "12px",
+                  padding: "10px 18px",
+                  textDecoration: "none",
+                  position: "right",
+                }}
+              >
+                Export to Excel
+              </CsvDownload>
+            </div>
+          </div>
           <DataTable
             columns={columns}
             data={filteredPayment}
