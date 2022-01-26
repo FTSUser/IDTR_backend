@@ -12,6 +12,8 @@ import List from "@material-ui/core/List";
 import Toolbar from "@material-ui/core/Toolbar";
 import CreateIcon from "@material-ui/icons/Create";
 import DeleteIcon from "@material-ui/icons/Delete";
+
+
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
@@ -80,9 +82,9 @@ const Announcement = ({ getNewCount, title }) => {
     setDataViewMore({});
   };
 
-  useEffect(() => {}, [inputValueForAdd]);
+  useEffect(() => { }, [inputValueForAdd]);
 
-  useEffect(() => {}, [idForEditStatus]);
+  useEffect(() => { }, [idForEditStatus]);
 
   const handleAdminUpdateClose = () => {
     setInputValue({});
@@ -119,7 +121,7 @@ const Announcement = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     } else {
       await ApiGet(
         `Announcement/getAllAnnouncement?search=${search}&page=${page}&limit=${countPerPage}`
@@ -129,7 +131,7 @@ const Announcement = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
@@ -198,9 +200,9 @@ const Announcement = ({ getNewCount, title }) => {
     // let imageB64Arr = [];
 
     const file = e?.target?.files[0]
-console.log(file, "fileData")
+    console.log(file, "fileData")
 
-    if(file){
+    if (file) {
       if (file.type.includes("image")) {
         let config = AwsConfig;
         config = {
@@ -210,7 +212,7 @@ console.log(file, "fileData")
         };
         const Reacts3Client = new S3(config);
         let urls;
-        
+
         let filename = "AboutImage(" + new Date().getTime() + ")";
         let data = await Reacts3Client.uploadFile(file, filename);
         // try {
@@ -252,34 +254,34 @@ console.log(file, "fileData")
   const uploadS3bucket = async (file) => {
     debugger
     console.log("filesData", file)
-    if(file){
-        if (file.type.includes("image")) {
-          let config = AwsConfig;
-          config = {
-            ...config,
-            dirName: "Cerificate",
-            ACL: "public-read",
-          };
-          const Reacts3Client = new S3(config);
-          let urls;
-          let f = file;
-          let filename = "AboutImage(" + new Date().getTime() + ")";
-          let data = await Reacts3Client.uploadFile(f, filename);
-          // try {
-          // if (data.status === 204) {
-          urls = data.location;
-          if (urls) {
-            setInputValueForAdd((cv) => {
-              return { ...cv, image: urls };
-            });
-            console.log("urls====>", urls);
-          }
-          return urls;
-        } else {
-          errorsForAdd["image"] = "*Please Upload Image!";
+    if (file) {
+      if (file.type.includes("image")) {
+        let config = AwsConfig;
+        config = {
+          ...config,
+          dirName: "Cerificate",
+          ACL: "public-read",
+        };
+        const Reacts3Client = new S3(config);
+        let urls;
+        let f = file;
+        let filename = "AboutImage(" + new Date().getTime() + ")";
+        let data = await Reacts3Client.uploadFile(f, filename);
+        // try {
+        // if (data.status === 204) {
+        urls = data.location;
+        if (urls) {
+          setInputValueForAdd((cv) => {
+            return { ...cv, image: urls };
+          });
+          console.log("urls====>", urls);
         }
-
+        return urls;
+      } else {
+        errorsForAdd["image"] = "*Please Upload Image!";
       }
+
+    }
   };
 
   const getImageArrayFromUpdateUpload = async (e) => {
@@ -375,7 +377,7 @@ console.log(file, "fileData")
       });
   };
 
-  useEffect(() => {}, [inputValue]);
+  useEffect(() => { }, [inputValue]);
 
   const handleUpdateAnnouncementDetails = (e) => {
     e.preventDefault();

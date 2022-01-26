@@ -15,6 +15,7 @@ import TimeSlot from "../_metronic/components/TimeSlot/TimeSlot";
 import FAQ from "../_metronic/components/FAQ/FAQ";
 
 import { getUserInfo } from "../../src/utils/user.util";
+import PaymentData from "../_metronic/components/PaymentForm/payment";
 export default function BasePage() {
   let userInfo = getUserInfo()
 
@@ -30,7 +31,9 @@ export default function BasePage() {
             <ContentRoute exact path="/courseselection/coursetype" component={CourseType} />
             <ContentRoute exact path="/courseselection/vehiclecategory" component={VehicleCategory} />
             <ContentRoute exact path="/user" component={User} />
-            <ContentRoute exact path="/payment" component={Payment} />
+            {/* <ContentRoute exact path="/payment" component={Payment} /> */}
+            <ContentRoute exact path="/payment" component={PaymentData} />
+
             <ContentRoute exact path="/announcement" component={Announcement} />
             <ContentRoute exact path="/timeslot" component={TimeSlot} />
             <ContentRoute exact path="/feedback" component={Feedback} />
