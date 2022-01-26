@@ -89,7 +89,76 @@ const User = ({ getNewCount, title }) => {
   //   new Date().getMonth() + 1,
   //   15
   // );
+  const [getAllVehicalData, setgetAllVehicalData] = useState({});
+  const [getAllCourceType, setgetAllCourceType] = useState({});
+  const [getAllCourceName, setgetAllCourceName] = useState({});
+  const [getCourseNameByID, setgetNameByID] = useState();
+  const [getSeat, setSeat] = useState([]);
 
+
+
+  const userInfo = JSON.parse(localStorage.getItem("userData"));
+  const [VehicalCategoryData, setVehicalCategoryData] = useState("");
+  const [TrainningDate, setTrainningDate] = useState("");
+  const [CourceTypeData, setCourceTypeData] = useState("");
+  const [price, setPrice] = useState("");
+  const [cnid, setCNID] = useState("");
+  const [alertForSlot, setAlertForSlot] = useState();
+
+
+
+  const [submitpayment, setSubmitPayment] = useState(false);
+  const [paymentId, setPaymentId] = useState();
+
+
+
+
+  const [CourceType, setCourceType] = useState("");
+  const [updateCall, setUpdateCall] = useState(false);
+
+
+
+  const [typeTrueFalseform, settypeTrueFalseform] = useState(false);
+  const [errorShow, seterrorShow] = useState('');
+
+  const [tab, setTab] = useState("course");
+
+  const [formdata, setFormData] = useState({
+
+    vehicleCategory: '',
+    courseType: '',
+    courseName: '',
+    firstname: '',
+    middlename: '',
+    lastname: '',
+    dateofCourse: '',
+    DateofBirth: '',
+    qualification: '',
+    gender: '',
+    address: '',
+    state: '',
+    driverlicense: '',
+    district: '',
+    city: '',
+    email: '',
+    phone: '',
+    pin: '',
+    license: '',
+    issueDate: '',
+    validDate: '',
+    authority: '',
+    passport: null,
+    driviniglicencephoto: null,
+    idProof: null,
+    mediacalCertificate: null,
+    bloodgroup: '',
+    preferdate: '',
+    trainddateid: '',
+    sloatId: '',
+    authoritycity: '',
+    authoritydistrict: '',
+    type: ''
+  })
   useEffect(() => {
     console.log("tableFilterData", tableFilterData);
   }, [tableFilterData])
@@ -276,12 +345,18 @@ const User = ({ getNewCount, title }) => {
                 <>
                   <Tooltip title="Edit" arrow>
                     <CreateIcon onClick={() => {
-                      console.log("row", row);
+                      console.log("row=======>", VehicalCategoryData);
                       setIsAddAnnouncement(true);
+                      let index = getAllVehicalData?.Question?.findIndex((e) => e._id === row?.vcid)
+                      let vehical;
+                      if (index !== -1) {
+                        vehical = { label: getAllVehicalData?.Question[index].vehicleCategory, value: getAllVehicalData?.Question[index]._id }
+                        setVehicalCategoryData(vehical)
+                      }
                       setFormData({
                         driverlicense: row?.drivingLicenseNumber,
                         firstname: row?.fname,
-                        vehicleCategory: row?.vcid,
+                        vehicleCategory: vehical ? vehical : row?.vcid,
                         courseType: row?.ctid,
                         courseName: row?.cnid,
                         license: row?.lcid,
@@ -297,7 +372,8 @@ const User = ({ getNewCount, title }) => {
                         city: row?.city,
                         district: row?.district,
 
-
+                        authoritycity: row?.authoritycity,
+                        authoritydistrict: row?.authoritydistrict,
                         pin: row?.pincode,
                         email: row?.email,
                         phone: row?.phone,
@@ -357,76 +433,7 @@ const User = ({ getNewCount, title }) => {
       },
     },
   };
-  const [getAllVehicalData, setgetAllVehicalData] = useState({});
-  const [getAllCourceType, setgetAllCourceType] = useState({});
-  const [getAllCourceName, setgetAllCourceName] = useState({});
-  const [getCourseNameByID, setgetNameByID] = useState();
-  const [getSeat, setSeat] = useState([]);
 
-
-
-  const userInfo = JSON.parse(localStorage.getItem("userData"));
-  const [VehicalCategoryData, setVehicalCategoryData] = useState("");
-  const [TrainningDate, setTrainningDate] = useState("");
-  const [CourceTypeData, setCourceTypeData] = useState("");
-  const [price, setPrice] = useState("");
-  const [cnid, setCNID] = useState("");
-  const [alertForSlot, setAlertForSlot] = useState();
-
-
-
-  const [submitpayment, setSubmitPayment] = useState(false);
-  const [paymentId, setPaymentId] = useState();
-
-
-
-
-  const [CourceType, setCourceType] = useState("");
-  const [updateCall, setUpdateCall] = useState(false);
-
-
-
-  const [typeTrueFalseform, settypeTrueFalseform] = useState(false);
-  const [errorShow, seterrorShow] = useState('');
-
-  const [tab, setTab] = useState("course");
-
-  const [formdata, setFormData] = useState({
-
-    vehicleCategory: '',
-    courseType: '',
-    courseName: '',
-    firstname: '',
-    middlename: '',
-    lastname: '',
-    dateofCourse: '',
-    DateofBirth: '',
-    qualification: '',
-    gender: '',
-    address: '',
-    state: '',
-    driverlicense: '',
-    district: '',
-    city: '',
-    email: '',
-    phone: '',
-    pin: '',
-    license: '',
-    issueDate: '',
-    validDate: '',
-    authority: '',
-    passport: null,
-    driviniglicencephoto: null,
-    idProof: null,
-    mediacalCertificate: null,
-    bloodgroup: '',
-    preferdate: '',
-    trainddateid: '',
-    sloatId: '',
-    authoritycity: '',
-    authoritydistrict: '',
-    type: ''
-  })
 
 
 
