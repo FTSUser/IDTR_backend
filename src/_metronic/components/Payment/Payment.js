@@ -132,6 +132,16 @@ const Payment = ({ getNewCount, title }) => {
       // width: "65px",
     },
     {
+      name: "Time",
+      cell: (row) => {
+        return <span>{moment(row?.created).format("LT")}</span>;
+      },
+      selector: (row) => row?.created,
+      sortable: true,
+
+      // width: "65px",
+    },
+    {
       name: "Payment",
       cell: (row) => {
         return <span>{row?.cnid === null ? "-" : row?.cnid?.price}</span>;

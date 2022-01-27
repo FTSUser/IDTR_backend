@@ -65,6 +65,9 @@ const User = ({ getNewCount, title }) => {
   const [isUpdateAnnouncement, setIsUpdateAnnouncement] = useState(false);
   const [show, setShow] = useState(false);
   const [dicloser, setdicloser] = useState(false);
+  const [isPaymentPopUp, setIsPaymentPopUp] = useState(false);
+  const [dataForPayment, setDataForPayment] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const [idForUpdateAnnouncementData, setIdForUpdateAnnouncementData] =
     useState("");
@@ -157,22 +160,16 @@ const User = ({ getNewCount, title }) => {
     console.log("tableFilterData", tableFilterData);
   }, [tableFilterData])
 
-  const handleAdminUpdateClose = () => {
-    setInputValue({});
-
-
-    setIsUpdateAnnouncement(false);
-  };
+  const handlePaymentClose = () =>{
+    setIsPaymentPopUp(false)
+    setDataForPayment([])
+  }
 
   const handleAddAdminClose = () => {
     setInputValue({});
 
 
     setIsAddAnnouncement(false);
-  };
-
-  const handleClose = () => {
-    setShow(false);
   };
   const onChangeDiscloser = (e) => {
     console.log("eee", e);
@@ -291,9 +288,13 @@ const User = ({ getNewCount, title }) => {
             </div>
             <div
               className="cursor-pointer pl-2"
-
+              onClick={() => {
+                setIsPaymentPopUp(true);
+                setDataForPayment(row);
+                console.log("rowShow111Pay", row);
+              }}
             >
-              {row?.type === "offline" ?
+              {row?.isPaymentDone === false  ?
                 <Tooltip title="Payment" arrow>
                   <InfoOutlinedIcon />
                 </Tooltip> :
@@ -652,6 +653,28 @@ const User = ({ getNewCount, title }) => {
           setIsAddAnnouncement(false);
           toast.success(res?.data?.message);
           // setInputValueForAdd({});
+          getAllUser();
+        } else {
+          toast.error(res?.data?.message);
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  }
+
+  const handleOfflinePayment = () => {
+    const data = {
+      receiptDate:new Date(),
+      receiptNumber:dataForPayment?._id,
+      isPaymentDone: true
+    }
+    ApiPut("register/offlinePayment", data)
+      .then((res) => {
+        if (res?.status == 200) {
+          setIsPaymentPopUp(false)
+          toast.success(res?.data?.message);
+          setDataForPayment([])
           getAllUser();
         } else {
           toast.error(res?.data?.message);
@@ -1774,10 +1797,14 @@ const User = ({ getNewCount, title }) => {
               <div className="honda-container">
                 <div className="honda-text-grid">
                   <div className="honda-text-grid-items">
+                    <span>Photo:</span>
+                    {dataViewMore?.passportPhoto === null || dataViewMore?.passportPhoto === "" || !dataViewMore?.passportPhoto ? "No Data" : <img src={dataViewMore?.passportPhoto} alt="No Image" />}
+                  </div>
+                  <div className="honda-text-grid-items">
                     <span>First Name:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.fname,
+                        __html: dataViewMore?.fname === null || dataViewMore?.fname === "" || !dataViewMore?.fname ? "No data" : dataViewMore?.fname,
                       }}
                       className=""
                     />
@@ -1786,7 +1813,7 @@ const User = ({ getNewCount, title }) => {
                     <span>Middle Name:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.mname,
+                        __html: dataViewMore?.mname === null || dataViewMore?.mname === "" || !dataViewMore?.mname ? "No data" : dataViewMore?.mname,
                       }}
                       className=""
                     />
@@ -1795,7 +1822,7 @@ const User = ({ getNewCount, title }) => {
                     <span>Last Name:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.lname,
+                        __html: dataViewMore?.lname === null || dataViewMore?.lname === "" || !dataViewMore?.lname ? "No data" : dataViewMore?.lname,
                       }}
                       className=""
                     />
@@ -1804,7 +1831,7 @@ const User = ({ getNewCount, title }) => {
                     <span>Date of Birth:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.DoB,
+                        __html: dataViewMore?.DoB === null || dataViewMore?.DoB === "" || !dataViewMore?.DoB ? "No data" : moment(dataViewMore?.DoB).format("ll"),
                       }}
                       className=""
                     />
@@ -1813,7 +1840,7 @@ const User = ({ getNewCount, title }) => {
                     <span>Qualification:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.qualification,
+                        __html: dataViewMore?.qualification === null || dataViewMore?.qualification === "" || !dataViewMore?.qualification ? "No data" : dataViewMore?.qualification,
                       }}
                       className=""
                     />
@@ -1822,7 +1849,7 @@ const User = ({ getNewCount, title }) => {
                     <span>Gender:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.gender,
+                        __html: dataViewMore?.gender === null || dataViewMore?.gender === "" || !dataViewMore?.gender ? "No data" : dataViewMore?.gender,
                       }}
                       className=""
                     />
@@ -1831,7 +1858,7 @@ const User = ({ getNewCount, title }) => {
                     <span>Address:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.address,
+                        __html: dataViewMore?.address === null || dataViewMore?.address === "" || !dataViewMore?.address ? "No data" : dataViewMore?.address,
                       }}
                       className=""
                     />
@@ -1840,7 +1867,7 @@ const User = ({ getNewCount, title }) => {
                     <span>State:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.state,
+                        __html: dataViewMore?.state === null || dataViewMore?.state === "" || !dataViewMore?.state ? "No data" : dataViewMore?.state,
                       }}
                       className=""
                     />
@@ -1849,7 +1876,7 @@ const User = ({ getNewCount, title }) => {
                     <span>City:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.city,
+                        __html: dataViewMore?.city === null || dataViewMore?.city === "" || !dataViewMore?.city ? "No data" : dataViewMore?.city,
                       }}
                       className=""
                     />
@@ -1858,7 +1885,7 @@ const User = ({ getNewCount, title }) => {
                     <span>District:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.district,
+                        __html: dataViewMore?.district === null || dataViewMore?.district === "" || !dataViewMore?.district ? "No data" : dataViewMore?.district,
                       }}
                       className=""
                     />
@@ -1867,7 +1894,7 @@ const User = ({ getNewCount, title }) => {
                     <span>Email:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.email,
+                        __html: dataViewMore?.email === null || dataViewMore?.email === "" || !dataViewMore?.email ? "No data" : dataViewMore?.email,
                       }}
                       className=""
                     />
@@ -1876,7 +1903,7 @@ const User = ({ getNewCount, title }) => {
                     <span>Phone:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.phone,
+                        __html: dataViewMore?.phone === null || dataViewMore?.phone === "" || !dataViewMore?.phone ? "No data" : dataViewMore?.phone,
                       }}
                       className=""
                     />
@@ -1885,7 +1912,7 @@ const User = ({ getNewCount, title }) => {
                     <span>Pincode:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.pincode,
+                        __html: dataViewMore?.pincode === null || dataViewMore?.pincode === "" || !dataViewMore?.pincode ? "No data" : dataViewMore?.pincode,
                       }}
                       className=""
                     />
@@ -1894,7 +1921,7 @@ const User = ({ getNewCount, title }) => {
                     <span>Permanent DLnumber:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.permanentDLnumber,
+                        __html: dataViewMore?.permanentDLnumber === null || dataViewMore?.permanentDLnumber === "" || !dataViewMore?.permanentDLnumber ? "No data" : dataViewMore?.permanentDLnumber,
                       }}
                       className=""
                     />
@@ -1903,7 +1930,7 @@ const User = ({ getNewCount, title }) => {
                     <span>Issue Date:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.issueDate,
+                        __html: dataViewMore?.issueDate === null || dataViewMore?.issueDate === "" || !dataViewMore?.issueDate ? "No data" : dataViewMore?.issueDate,
                       }}
                       className=""
                     />
@@ -1912,7 +1939,7 @@ const User = ({ getNewCount, title }) => {
                     <span>Valid Till:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.validTill,
+                        __html: dataViewMore?.validTill === null || dataViewMore?.validTill === "" || !dataViewMore?.validTill ? "No data" : dataViewMore?.validTill,
                       }}
                       className=""
                     />
@@ -1921,7 +1948,7 @@ const User = ({ getNewCount, title }) => {
                     <span>Authority:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.Authority,
+                        __html: dataViewMore?.Authority === null || dataViewMore?.Authority === "" || !dataViewMore?.Authority ? "No data" : dataViewMore?.Authority,
                       }}
                       className=""
                     />
@@ -1930,11 +1957,105 @@ const User = ({ getNewCount, title }) => {
                     <span>Blood Group:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.bloodGroup,
+                        __html: dataViewMore?.bloodGroup === null || dataViewMore?.bloodGroup === "" || !dataViewMore?.bloodGroup ? "No data" : dataViewMore?.bloodGroup,
                       }}
                       className=""
                     />
                   </div>
+                  <div className="honda-text-grid-items">
+                    <span>Other Information:</span>
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Driving License Image:</span>
+                    {dataViewMore?.drivingLicense === null || dataViewMore?.drivingLicense === "" || !dataViewMore?.drivingLicense ? "No Data" : <img src={dataViewMore?.drivingLicense} alt="No Image" />}
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>ID Proof:</span>
+                    {dataViewMore?.IDproof === null || dataViewMore?.IDproof === "" || !dataViewMore?.IDproof ? "No Data" : <img src={dataViewMore?.IDproof} alt="No Image" />}
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Authority City:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.authoritycity === null || dataViewMore?.authoritycity === "" || !dataViewMore?.authoritycity ? "No data" : dataViewMore?.authoritycity,
+                      }}
+                      className=""
+                    />
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Authority District:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html: dataViewMore?.authoritydistrict === null || dataViewMore?.authoritydistrict === "" || !dataViewMore?.authoritydistrict ? "No data" : dataViewMore?.authoritydistrict,
+                      }}
+                      className=""
+                    />
+                  </div>
+                  
+                </div>
+              </div>
+            ) : null}
+          </List>
+        </Dialog>
+      ) : null}
+
+      {isPaymentPopUp ? (
+        <Dialog
+          fullScreen
+          open={isPaymentPopUp}
+          onClose={handlePaymentClose}
+          TransitionComponent={Transition}
+        >
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handlePaymentClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </Toolbar>
+          <List>
+            {isPaymentPopUp === true ? (
+              <div className="honda-container">
+                <div className="honda-text-grid">
+                <div className="honda-text-grid-items">
+                    <span>Payment Amount:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html: dataForPayment?.cnid?.price === null || dataForPayment?.cnid?.price === "" || !dataForPayment?.cnid?.price ? "No data" : dataForPayment?.cnid?.price,
+                      }}
+                      className=""
+                    />
+                  </div>
+                <div className="honda-text-grid-items">
+                    <span>Payment Id:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html: dataForPayment?._id === null || dataForPayment?._id === "" || !dataForPayment?._id ? "No data" : dataForPayment?._id,
+                      }}
+                      className=""
+                    />
+                  </div>
+                <div className="honda-text-grid-items">
+                    <span>User Name:</span>
+                    <p>{dataForPayment?.fname}{" "}{dataForPayment?.mname}{" "}{dataForPayment?.lname}</p>
+                  </div>
+                  
+                </div>
+                <div className="d-flex align-items-center justify-content-center">
+                  <button
+                    onClick={(e) => {
+                      handleOfflinePayment(e);
+                    }}
+                    className="btn btn-success mr-2"
+                  >
+                    <span>Make A Payment</span>
+                    {loading && (
+                      <span className="mx-3 spinner spinner-white"></span>
+                    )}
+                  </button>
                 </div>
               </div>
             ) : null}

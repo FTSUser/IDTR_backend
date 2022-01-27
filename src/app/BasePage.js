@@ -7,6 +7,7 @@ import CourseName from '../_metronic/components/CourseSelection/CourseName'
 import CourseType from '../_metronic/components/CourseSelection/CourseType'
 import VehicleCategory from '../_metronic/components/CourseSelection/VehicleCategory'
 import Cms from '../_metronic/components/Cms/Cms'
+import Information from '../_metronic/components/Information/Information'
 import ContactUs from "../_metronic/components/ContactUs/ContactUs";
 import Payment from "../_metronic/components/Payment/Payment";
 import Announcement from "../_metronic/components/Announcement/Announcement";
@@ -31,6 +32,7 @@ export default function BasePage() {
             <Redirect exact from="/" to="/dashboard" />
             <ContentRoute exact path="/dashboard" component={DashboardPage} />
             <ContentRoute exact path="/cms" component={Cms} />
+            <ContentRoute exact path="/information" component={Information} />
             <ContentRoute exact path="/courseselection/coursename" component={CourseName} />
             <ContentRoute exact path="/courseselection/coursetype" component={CourseType} />
             <ContentRoute exact path="/courseselection/vehiclecategory" component={VehicleCategory} />
