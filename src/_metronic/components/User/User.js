@@ -110,12 +110,12 @@ const User = ({ getNewCount, title }) => {
   const [price, setPrice] = useState("");
   const [cnid, setCNID] = useState("");
   const [alertForSlot, setAlertForSlot] = useState();
- const [editMode,setEditMode]=useState(false);
-const [defaultValue ,setdefaultValue]=useState({
-  vehicleCategory:null,
-  courseType:null,
-  courseCategory:null
-})
+  const [editMode, setEditMode] = useState(false);
+  const [defaultValue, setdefaultValue] = useState({
+    vehicleCategory: null,
+    courseType: null,
+    courseCategory: null
+  })
 
 
   const [submitpayment, setSubmitPayment] = useState(false);
@@ -176,19 +176,59 @@ const [defaultValue ,setdefaultValue]=useState({
     console.log("tableFilterData", tableFilterData);
   }, [tableFilterData])
 
-  const handlePaymentClose = () =>{
+  const handlePaymentClose = () => {
     setIsPaymentPopUp(false)
     setDataForPayment([])
   }
 
   const handleAddAdminClose = () => {
+    setSeat([])
+    setFormData(
+      {
+        vehicleCategory: '',
+        courseType: '',
+        courseName: '',
+        firstname: '',
+        middlename: '',
+        lastname: '',
+        dateofCourse: '',
+        DateofBirth: '',
+        qualification: '',
+        gender: '',
+        address: '',
+        state: '',
+        driverlicense: '',
+        district: '',
+        city: '',
+        email: '',
+        phone: '',
+        pin: '',
+        license: '',
+        issueDate: '',
+        validDate: '',
+        authority: '',
+        passport: null,
+        driviniglicencephoto: null,
+        idProof: null,
+        mediacalCertificate: null,
+        bloodgroup: '',
+        preferdate: '',
+        trainddateid: '',
+        sloatId: '',
+        authoritycity: '',
+        authoritydistrict: '',
+        type: ''
+      }
+    )
     setEditMode(false)
     setInputValue({});
     setCourceTypeData('')
     setTab("course")
-setdefaultValue({ vehicleCategory:null,
-  courseType:null,
-  courseCategory:null})
+    setdefaultValue({
+      vehicleCategory: null,
+      courseType: null,
+      courseCategory: null
+    })
     setIsAddAnnouncement(false);
   };
   const onChangeDiscloser = (e) => {
@@ -217,7 +257,7 @@ setdefaultValue({ vehicleCategory:null,
 
   useEffect(() => {
     getAllUser();
-    console.log("countPerPage",countPerPage,page);
+    console.log("countPerPage", countPerPage, page);
   }, [page, countPerPage]);
 
 
@@ -309,19 +349,19 @@ setdefaultValue({ vehicleCategory:null,
               </Tooltip>
             </div>
             <Tooltip title="Make a Payment" arrow>
-            <div
-              className="cursor-pointer pl-2"
-              onClick={() => {
-                setIsPaymentPopUp(true);
-                setDataForPayment(row);
-                console.log("rowShow111Pay", row);
-              }}
-            >
-              {row?.isPaymentDone === false  ?
-             
-              <img src="media/allIconsForTable/rs.png" /> : "" }
-              
-            </div>
+              <div
+                className="cursor-pointer pl-2"
+                onClick={() => {
+                  setIsPaymentPopUp(true);
+                  setDataForPayment(row);
+                  console.log("rowShow111Pay", row);
+                }}
+              >
+                {row?.isPaymentDone === false ?
+
+                  <img src="media/allIconsForTable/rs.png" /> : ""}
+
+              </div>
             </Tooltip>
             <div
               className="cursor-pointer pl-2"
@@ -330,22 +370,22 @@ setdefaultValue({ vehicleCategory:null,
                 <>
                   <Tooltip title="Edit" arrow>
                     <CreateIcon onClick={() => {
-                      
+
                       setIsAddAnnouncement(true);
                       setEditMode(true)
                       let index = getAllVehicalData?.Question?.findIndex((e) => e._id === row?.vcid)
                       let vehical;
-                      console.log("row=======>",  row?.dateofCourse);
+                      console.log("row=======>", row?.dateofCourse);
                       if (index !== -1) {
                         vehical = { label: getAllVehicalData?.Question[index].vehicleCategory, value: getAllVehicalData?.Question[index]._id }
-                        setdefaultValue(data=>({...data ,vehicleCategory:vehical}))
+                        setdefaultValue(data => ({ ...data, vehicleCategory: vehical }))
                       }
                       setVehicalCategoryData(row?.vcid)
                       getAllCourseTypeDataEdit(row?.vcid, row?.ctid)
-                      getAllCourseNameEdit(row?.ctid, row?.vcid,row?.cnid)
+                      getAllCourseNameEdit(row?.ctid, row?.vcid, row?.cnid)
                       setCNID(row?.cnid)
                       setFormData({
-                        _id:row?._id,
+                        _id: row?._id,
                         vehicleCategory: row?.vcid,
                         courseType: row?.ctid,
                         courseName: row?.cnid,
@@ -380,15 +420,15 @@ setdefaultValue({ vehicleCategory:null,
                         authoritydistrict: row?.authoritydistrict,
                         type: row?.type
                       })
-                      getTrainignDateEditData(row?.dateofCourse,row?.cnid)
+                      getTrainignDateEditData(row?.dateofCourse, row?.cnid)
 
                     }} />
                   </Tooltip>
                   <Tooltip title="Delete" arrow>
                     <DeleteIcon onClick={() => {
-                setShow(true);
-                setIdForDeleteAnnouncement(row?._id);
-              }} />
+                      setShow(true);
+                      setIdForDeleteAnnouncement(row?._id);
+                    }} />
                   </Tooltip>
                 </>
                 :
@@ -459,7 +499,7 @@ setdefaultValue({ vehicleCategory:null,
         let data = {
           CreatedAt: registerUser?.createdAt,
           CreatedBy: registerUser?.createdBy,
-          Authority:registerUser?.Authority,
+          Authority: registerUser?.Authority,
           FirstName: registerUser?.fname,
           MiddleName: registerUser?.mname,
           LastName: registerUser?.lname,
@@ -471,17 +511,17 @@ setdefaultValue({ vehicleCategory:null,
           Qualification: registerUser?.qualification,
           DrivingLicenseNumber: registerUser?.drivingLicenseNumber,
           DoB: moment(registerUser?.DoB).format("ll"),
-          Address : registerUser?.address,
-          City:registerUser?.city,
-          District:registerUser?.district,
-          State:registerUser?.state,
-          Pincode:registerUser?.pincode,
-          Authoritycity:registerUser?.authoritycity,
-          Authoritydistrict:registerUser?.authoritydistrict,
-          PaymentType:registerUser?.type,
+          Address: registerUser?.address,
+          City: registerUser?.city,
+          District: registerUser?.district,
+          State: registerUser?.state,
+          Pincode: registerUser?.pincode,
+          Authoritycity: registerUser?.authoritycity,
+          Authoritydistrict: registerUser?.authoritydistrict,
+          PaymentType: registerUser?.type,
           dateofMakePayment: registerUser?.dateofMakePayment === null ? "Payment Panding" : registerUser?.dateofMakePayment,
           IsPaymentDone: registerUser?.isPaymentDone === null ? "Payment Panding" : registerUser?.isPaymentDone,
-          paymentId:registerUser?.paymentId === null ? "Payment Panding" : registerUser?.paymentId,
+          paymentId: registerUser?.paymentId === null ? "Payment Panding" : registerUser?.paymentId,
           lcid: registerUser?.lcid,
           IssueDate: moment(registerUser?.issueDate).format("ll"),
 
@@ -701,8 +741,8 @@ setdefaultValue({ vehicleCategory:null,
 
   const handleOfflinePayment = () => {
     const data = {
-      receiptDate:new Date(),
-      receiptNumber:dataForPayment?._id,
+      receiptDate: new Date(),
+      receiptNumber: dataForPayment?._id,
       isPaymentDone: true
     }
     ApiPut("register/offlinePayment", data)
@@ -721,7 +761,7 @@ setdefaultValue({ vehicleCategory:null,
       });
   }
 
-  
+
   const updateData = () => {
     const data = {
       "vcid": formdata.vehicleCategory,
@@ -1023,7 +1063,7 @@ setdefaultValue({ vehicleCategory:null,
     })
   }
   const getAllCourseType = () => {
-   
+
     setgetAllCourceName()
     setgetAllCourceType()
     const data = {
@@ -1044,18 +1084,19 @@ setdefaultValue({ vehicleCategory:null,
 
 
   const getAllCourseTypeDataEdit = async (dataID, cidmain) => {
-    
+
     setgetAllCourceName()
     setgetAllCourceType()
     const data = {
       vehicleCategory: dataID
     }
-    ApiPost('courseType/getCoursetypeByVehiclecategory?page=${page}&limit=1000', data).then(async(res) => {
+    ApiPost('courseType/getCoursetypeByVehiclecategory?page=${page}&limit=1000', data).then(async (res) => {
       setgetAllCourceType(res.data.payload);
       const dataselect = res?.data?.payload?.courseType?.filter((data) => data._id === cidmain)
-      if(dataselect.length>=0){
-      setdefaultValue((valueDefult)=>( { ...valueDefult ,courseType:{label: dataselect[0]?.description, value: dataselect[0]?._id }}))
-    }})
+      if (dataselect.length >= 0) {
+        setdefaultValue((valueDefult) => ({ ...valueDefult, courseType: { label: dataselect[0]?.description, value: dataselect[0]?._id } }))
+      }
+    })
   }
 
 
@@ -1081,15 +1122,16 @@ setdefaultValue({ vehicleCategory:null,
     setUpdateCall(false)
   }
 
-  const getAllCourseNameEdit = async (CourceTypeDataedit, VehicalCategoryDataedit,cId) => {
+  const getAllCourseNameEdit = async (CourceTypeDataedit, VehicalCategoryDataedit, cId) => {
     const data = {
       courseType: CourceTypeDataedit,
       vehicleCategory: VehicalCategoryDataedit
     }
     ApiPost('courseName/getCoursenameByCoursetype?page=${page}&limit=1000', data).then((res) => {
       setgetAllCourceName(res.data.payload);
-      const setDataMAin= res?.data?.payload?.courseName?.filter((dataMain)=>dataMain._id===cId)
-      setdefaultValue(dataasd=>({ ...dataasd,courseCategory:{label:setDataMAin[0].courseName,value:setDataMAin[0]._id}}))}
+      const setDataMAin = res?.data?.payload?.courseName?.filter((dataMain) => dataMain._id === cId)
+      setdefaultValue(dataasd => ({ ...dataasd, courseCategory: { label: setDataMAin[0].courseName, value: setDataMAin[0]._id } }))
+    }
     )
     setUpdateCall(false)
   }
@@ -1127,7 +1169,7 @@ setdefaultValue({ vehicleCategory:null,
     setShow(false);
   };
 
-  
+
   const handleDeleteAnnouncement = () => {
     ApiDelete(`register/deleteRegister/${idForDeleteAnnouncement}`)
       .then((res) => {
@@ -1151,7 +1193,7 @@ setdefaultValue({ vehicleCategory:null,
   };
 
 
-  const getTrainignDateEditData = (preferdate,courseName) => {
+  const getTrainignDateEditData = (preferdate, courseName) => {
     const data = {
       date: preferdate,
       coursenameid: courseName
@@ -1181,19 +1223,20 @@ setdefaultValue({ vehicleCategory:null,
   const uploadCertificate = async () => {
     let urls = {};
     if (formdata.passport && formdata.driviniglicencephoto) {
-      if (formdata.passport) {
+      if (formdata.passport && typeof formdata.passport !== 'string') {
         let passport1 = await uploadS3bucket(formdata.passport);
         urls = { passport: passport1, ...urls }
       }
-      if (formdata.driviniglicencephoto) {
+      if (formdata.driviniglicencephoto && typeof formdata.driviniglicencephoto !== 'string') {
         let driviniglicencephoto = await uploadS3bucket(formdata.driviniglicencephoto);
         urls = { driviniglicencephoto: driviniglicencephoto, ...urls }
       }
-      if (formdata.mediacalCertificate) {
+      if (formdata.mediacalCertificate && typeof formdata.mediacalCertificate !== 'string') {
         let mediacalCertificate = await uploadS3bucket(formdata.mediacalCertificate);
         urls = { mediacalCertificate: mediacalCertificate, ...urls }
       }
-      if (formdata.idProof) {
+      if (formdata.idProof && typeof formdata.idProof !== 'string') {
+        console.log("for,data idproof", formdata.idProof);
         let idProof = await uploadS3bucket(formdata.idProof);
         urls = { idProof: idProof, ...urls }
       }
@@ -1217,17 +1260,18 @@ setdefaultValue({ vehicleCategory:null,
 
     let filename = "AboutImage(" + new Date().getTime() + ")";
     let data = await Reacts3Client.uploadFile(f, filename);
-    // try {
-    // if (data.status === 204) {
-    urls = data.location;
-    return urls
-    //   } else {
-    //     toast.error("Failed to upload image:", f.name);
+    try {
+      if (data.status === 204) {
+        toast.success("Document Upload ")
+        urls = data.location;
+        return urls
+      } else {
+        toast.error("Failed to upload image:", f.name);
 
-    //   }
-    // } catch (err) {
+      }
+    } catch (err) {
 
-    // }
+    }
   }
   return (
     <>
@@ -1261,28 +1305,28 @@ setdefaultValue({ vehicleCategory:null,
               </button>
             </div>
             {/* delete model */}
-          <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title className="text-danger">Alert!</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              Are You Sure To Want To delete this User
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                cancel
-              </Button>
-              <Button
-                variant="danger"
-                onClick={() => {
-                  handleDeleteAnnouncement();
-                }}
-              >
-                Delete
-              </Button>
-            </Modal.Footer>
-          </Modal>
-          {/* end delete model */}
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title className="text-danger">Alert!</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                Are You Sure To Want To delete this User
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  cancel
+                </Button>
+                <Button
+                  variant="danger"
+                  onClick={() => {
+                    handleDeleteAnnouncement();
+                  }}
+                >
+                  Delete
+                </Button>
+              </Modal.Footer>
+            </Modal>
+            {/* end delete model */}
 
             <div className="cus-medium-button-style button-height">
               <CsvDownload
@@ -1432,46 +1476,46 @@ setdefaultValue({ vehicleCategory:null,
 
                         <div className="register-grid-items12">
                           <label>Course Type<span>*</span></label>
-                         { (editMode?defaultValue.courseType:true) &&(
-                           <Select
-                           options={getAllCourceType?.courseType?.map(e => ({ label: e.courseType, value: e._id }))}
-                           name='courseType'
-                           onChange={(e) => {
-                             setCourceType('')
-                             onChnagSelectField(e, 'courseType')
-                             setCourceTypeData(e.value);
-                             setUpdateCall(true)
-                           }}
-                           defaultValue={defaultValue.courseType!==null && defaultValue.courseType}
-                         />
-                         ) }
-                                     
-                        
+                          {(editMode ? defaultValue.courseType : true) && (
+                            <Select
+                              options={getAllCourceType?.courseType?.map(e => ({ label: e.courseType, value: e._id }))}
+                              name='courseType'
+                              onChange={(e) => {
+                                setCourceType('')
+                                onChnagSelectField(e, 'courseType')
+                                setCourceTypeData(e.value);
+                                setUpdateCall(true)
+                              }}
+                              defaultValue={defaultValue.courseType !== null && defaultValue.courseType}
+                            />
+                          )}
+
+
 
                         </div>
 
                         <div className="register-grid-items12 ">
                           <label>Course Category<span>*</span></label>
-                          { (editMode?defaultValue.courseCategory:true) &&(
-                         
-                          <Select
-                            // isClearable
-                            options={getAllCourceName?.courseName?.map(e => ({ label: e.courseName, value: e._id }))}
-                            name='courseName'
-                            onChange={(e) => {
-                              setCourceType(e.value)
-                              if (e?.value) {
-                                let index = getAllCourceName?.courseName?.findIndex(o => o?._id === e?.value);
-                                if (index !== -1) {
-                                  setPrice(getAllCourceName?.courseName[index].price)
-                                  setCNID(getAllCourceName?.courseName[index]._id)
+                          {(editMode ? defaultValue.courseCategory : true) && (
+
+                            <Select
+                              // isClearable
+                              options={getAllCourceName?.courseName?.map(e => ({ label: e.courseName, value: e._id }))}
+                              name='courseName'
+                              onChange={(e) => {
+                                setCourceType(e.value)
+                                if (e?.value) {
+                                  let index = getAllCourceName?.courseName?.findIndex(o => o?._id === e?.value);
+                                  if (index !== -1) {
+                                    setPrice(getAllCourceName?.courseName[index].price)
+                                    setCNID(getAllCourceName?.courseName[index]._id)
+                                  }
                                 }
-                              }
-                              onChnagSelectField(e, 'courseName')
-                            }}
-                            defaultValue={defaultValue.courseCategory && defaultValue.courseCategory}
-                          />
-                         ) }
+                                onChnagSelectField(e, 'courseName')
+                              }}
+                              defaultValue={defaultValue.courseCategory && defaultValue.courseCategory}
+                            />
+                          )}
 
                         </div>
                         {/* <div className="register-grid-items">
@@ -1484,7 +1528,7 @@ setdefaultValue({ vehicleCategory:null,
                             options={licenseCategoryData.map(e => ({ label: e.name, value: e.name }))}
                             name='license'
                             onChange={e => onChnagSelectField(e, 'license')}
-                            defaultValue={{label:formdata.license,value:formdata.license}}
+                            defaultValue={{ label: formdata.license, value: formdata.license }}
                           />
 
                         </div>
@@ -1525,7 +1569,7 @@ setdefaultValue({ vehicleCategory:null,
                             options={districts.map(e => ({ label: e.name, value: e.name }))}
                             name='authoritydistrict'
                             onChange={e => onChnagSelectField(e, 'authoritydistrict')}
-                            defaultValue={{ label: formdata.authoritydistrict, value: formdata.authoritydistrict}}
+                            defaultValue={{ label: formdata.authoritydistrict, value: formdata.authoritydistrict }}
 
                           />
                         </div>
@@ -1536,9 +1580,9 @@ setdefaultValue({ vehicleCategory:null,
                             options={city.map(e => ({ label: e.name, value: e.name }))}
                             name='authoritycity'
                             onChange={e => onChnagSelectField(e, 'authoritycity')}
-                            defaultValue={{ label: formdata.authoritycity, value: formdata.authoritycity}}
-                    
-                    />
+                            defaultValue={{ label: formdata.authoritycity, value: formdata.authoritycity }}
+
+                          />
                         </div>
 
                       </div>
@@ -1593,7 +1637,7 @@ setdefaultValue({ vehicleCategory:null,
                         <div className="register-grid-items">
                           <label>Preferred Training Date<span>*</span></label>
                           <input type="date" placeholder="Vehicle Category" onChange={e => onChnageForm(e)}
-                            name='preferdate' value={(formdata.preferdate.slice(0,10))}
+                            name='preferdate' value={(formdata.preferdate.slice(0, 10))}
                           />
                         </div>
                         <div className="register-grid-items">
@@ -1721,8 +1765,8 @@ setdefaultValue({ vehicleCategory:null,
                           <div className="register-grid-items">
                             <label>Date of Birth<span>*</span></label>
                             {/* <input type="date" name='DateofBirth' value={formdata.DateofBirth} onChange={e => onChnageForm(e)} /> */}
-                          
-                            <input type="date" name='DateofBirth' value={ `${new Date(formdata.DateofBirth).getFullYear()}${new Date(formdata.DateofBirth).getMonth()<9?'-0':'-'}${new Date(formdata.DateofBirth).getMonth()+1}-${new Date(formdata.DateofBirth).getDate()}`} onChange={e => onChnageForm(e)} />
+
+                            <input type="date" name='DateofBirth' value={`${new Date(formdata.DateofBirth).getFullYear()}${new Date(formdata.DateofBirth).getMonth() < 9 ? '-0' : '-'}${new Date(formdata.DateofBirth).getMonth() + 1}-${new Date(formdata.DateofBirth).getDate()}`} onChange={e => onChnageForm(e)} />
                           </div>
 
                         </div>
@@ -1850,8 +1894,8 @@ setdefaultValue({ vehicleCategory:null,
                       </div>
                       <div className="photo-upload-from">
                         <p> 1. Passport Photo<span className="star-color">*</span>:  less than 1 mb.(jpg, jpeg, PNG)/ Rest all documents less than 5 mb (jpg, jpeg, PNG, pdf)</p>
-                        <input type="file" name='passport' onChange={e => onChangImage(e.target.files[0],"passport")}  />
-                      </div> 
+                        <input type="file" name='passport' onChange={e => onChangImage(e.target.files[0], "passport")} />
+                      </div>
                       <div className="photo-upload-from">
                         <p>2. Driving License<span className="star-color">*</span> (Not valid incase of NA)</p>
                         <input type="file" name='driviniglicencephoto' onChange={e => onChangImage(e.target.files[0], "driviniglicencephoto")} />
@@ -1907,28 +1951,29 @@ setdefaultValue({ vehicleCategory:null,
                   )}
                   {tab === "payment" && (
                     <div className="tab-details-alignment">
-                      <div className="d-flex">
-                        {/* <div className="d-flex py-2">
+                      <div className="payment-title">Payment Type</div>
+                      <div className="d-flex ">
+                        {/* <div className="d-flex aligncenetr">
                           <input type="radio"
 
                             placeholder="online" name='type' value="online" onChange={e => onChnageForm(e)} />
                           <label htmlFor="online">online</label>
 
                         </div> */}
-                        <div className="d-flex py-2">
+                        <div className="d-flex aligncenetr">
                           <input type="radio"
 
                             placeholder="offline" name='type' value="offline" onChange={e => onChnageForm(e)} />
-                          <label htmlFor="offline">offline</label>
+                          <label className="s" htmlFor="offline">offline</label>
 
                         </div>
                       </div>
                       {
                         formdata?.type === 'online' ?
-                          <div>
-                            <div className="d-flex">
+                          <div className="mt-3">
+                            <div className="d-flex aligncenetr">
                               <input type="checkbox" onChange={e => onChangeDiscloser(e.target.checked)} checked={dicloser} />
-                              <div onClick={() => setModalOpen(!modalOpen)}>Disclooser</div>
+                              <div className="s" onClick={() => setModalOpen(!modalOpen)}>Disclooser</div>
                             </div>
                             {dicloser && (
                               <PaymentData price={price} cnid={cnid} vcid={formdata.vehicleCategory} ctid={formdata.courseType} tdid={formdata.sloatId} hhhhh={(data) => {
@@ -1942,9 +1987,9 @@ setdefaultValue({ vehicleCategory:null,
                             }
                           </div>
                           : <div>
-                            <div className="d-flex">
+                            <div className="d-flex aligncenetr">
                               <input type="checkbox" onChange={e => onChangeDiscloser(e.target.checked)} checked={dicloser} />
-                              <div onClick={() => setModalOpen(!modalOpen)}>Disclooser</div></div>
+                              <div className="s" onClick={() => setModalOpen(!modalOpen)}>Disclooser</div></div>
                           </div>
                       }
                       <div
@@ -1952,10 +1997,10 @@ setdefaultValue({ vehicleCategory:null,
                       >
                         <button className="out-line-button" onClick={(e) => handleOnClick(e, "document")}>Previous</button>
 
-                        {!editMode?(
+                        {!editMode ? (
                           dicloser && (formdata.type === "online" ? submitpayment : true) && <button className="fill-button" onClick={() => register()}>Submit</button>
-                        ):(dicloser && (formdata.type === "online" ? submitpayment : true) && <button className="fill-button" onClick={() => updateData()}>Update</button>)}
-                        
+                        ) : (dicloser && (formdata.type === "online" ? submitpayment : true) && <button className="fill-button" onClick={() => updateData()}>Update</button>)}
+
                       </div>
                     </div>
                   )}
@@ -1968,7 +2013,167 @@ setdefaultValue({ vehicleCategory:null,
                             <i onClick={() => setModalOpen(false)} class="fas fa-times"></i>
                           </div>
                           <div className='modal-body'>
-                            Hello
+                            <p>
+                              <b>
+                                Cautionary statement regarding forward-looking information
+                              </b>
+                            </p>
+                            <p>
+
+                              This Site contains statements that constitute forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995. In addition, in the future we, and others on our behalf, may make statements that constitute forward-looking statements. Such forward-looking statements may include, without limitation, statements relating to the following:
+
+                            </p>
+                            <ul>
+                              <li><p> our plans, objectives or goals;</p></li>
+                              <li><p> our future economic performance or prospects;</p></li>
+                              <li><p> the potential effect on our future performance of certain contingencies; and</p></li>
+                              <li><p>assumptions underlying any such statements.</p></li>
+                            </ul>
+                            <p>
+                              Words such as “believes,” “anticipates,” “expects,” “intends” and “plans” and similar expressions are intended to identify forward-looking statements but are not the exclusive means of identifying such statements. We do not intend to update these forward-looking statements except as may be required by applicable securities laws. By their very nature, forward-looking statements involve inherent risks and uncertainties, both general and specific, and risks exist that predictions, forecasts, projections and other outcomes described or implied in forward-looking statements will not be achieved. We caution you that a number of important factors could cause results to differ materially from the plans, objectives, expectations, estimates and intentions expressed in such forward-looking statements. These factors include:
+
+                            </p>
+                            <ul>
+                              <li><p> the ability to maintain sufficient liquidity and access capital markets;</p></li>
+                              <li><p> market and interest rate fluctuations and interest rate levels;</p></li>
+                              <li><p> the strength of the global economy in general and the strength of the economies of the countries in which we conduct our operations, in particular the risk of continued slow economic recovery or downturn in the US or other developed countries in the future;
+                              </p></li>
+                              <li><p>  the direct and indirect impacts of deterioration or slow recovery in residential and commercial real estate markets;</p></li>
+                              <li>
+                                <p>
+                                  adverse rating actions by credit rating agencies in respect of sovereign issuers, structured credit products or other credit-related exposures;
+
+                                </p>
+                              </li>
+                              <li>
+                                <p>
+                                  the ability to achieve our strategic objectives, including improved performance, reduced risks, lower costs and more efficient use of capital;
+
+                                </p>
+                              </li>
+
+                              <li>
+                                <p>
+                                  the ability of counterparties to meet their obligations to us;
+                                </p>
+                              </li>
+                              <li>
+                                <p>
+                                  the effects of, and changes in, fiscal, monetary, trade and tax policies, and currency fluctuations;
+
+                                </p>
+                              </li>
+
+                              <li>
+                                <p>
+                                  political and social developments, including war, civil unrest or terrorist activity;
+                                </p>
+                              </li>
+                              <li>
+                                <p>
+                                  the possibility of foreign exchange controls, expropriation, nationalization or confiscation of assets in countries in which we conduct our operations;
+                                </p>
+                              </li>
+
+                              <li>
+                                <p>
+                                  operational factors such as systems failure, human error, or the failure to implement procedures properly;
+                                </p>
+                              </li>
+                              <li>
+                                <p>
+                                  actions taken by regulators with respect to our business and practices in one or more of the countries in which we conduct our operations;
+                                </p>
+                              </li>
+                              <li>
+                                <p>
+                                  the effects of changes in laws, regulations or accounting policies or practices;
+                                </p>
+                              </li>
+                              <li>
+                                <p>
+                                  competition in geographic and business areas in which we conduct our operations;
+                                </p>
+                              </li>
+
+                              <li>
+                                <p>
+                                  the ability to retain and recruit qualified personnel;
+                                </p>
+                              </li>
+                              <li>
+                                <p>
+                                  the ability to maintain our reputation and promote our brand;
+                                </p>
+                              </li>
+                              <li>
+                                <p>
+                                  the ability to increase market share and control expenses;
+                                </p>
+                              </li>
+                              <li>
+                                <p>
+                                  technological changes;
+                                </p>
+                              </li>
+                              <li>
+                                <p>
+                                  the timely development and acceptance of our new products and services and the perceived overall value of these products and services by users;
+                                </p>
+                              </li>
+                              <li>
+                                <p>
+                                  acquisitions, including the ability to integrate acquired businesses successfully, and divestitures, including the ability to sell non-core assets;
+                                </p>
+                              </li>
+                              <li>
+                                <p>
+                                  the adverse resolution of litigation and other contingencies;
+                                </p>
+                              </li>
+                              <li>
+                                <p>
+                                  the ability to achieve our cost efficiency goals and cost targets; and
+                                </p>
+                              </li>
+                              <li>
+                                <p>
+                                  our success at managing the risks involved in the foregoing.
+                                </p>
+                              </li>
+                            </ul>
+                            <p>
+                              We caution you that the foregoing list of important factors is not exclusive. When evaluating forward-looking statements, you should carefully consider the foregoing factors and other uncertainties and events, including the information set forth in our most recent Annual Report under “Risk Factors” and in our other public filings
+                            </p>
+
+                            <p>
+                              <b> Cautionary Statement Regarding Non-GAAP Financial Information</b>
+                            </p>
+                            <p>
+                              This Site may contain non-GAAP financial information. If such non-GAAP financial information is disclosed, the most directly comparable measures under generally accepted accounting principles is provided in our most recent periodic report or in our other public filings.
+
+                            </p>
+                            <p><b> Other information about disclosure on this site</b></p>
+                            <p>
+                              On this Site, adjusted cost run-rate results are measured against our annualized 6M11 expense run rate measured at constant foreign exchange rates and adjusted to exclude business realignment and other significant non-operating expenses and variable compensation expenses.
+
+                            </p>
+
+                            <p>
+                              As of January 1, 2013, Basel III was implemented in Switzerland along with the “Too Big to Fail” legislation and regulations thereunder. Our related disclosures are in accordance with our current interpretation of such requirements, including relevant assumptions. Changes in the interpretation of these requirements in Switzerland or in any of our assumptions or estimates could result in different numbers from those shown herein. Capital and ratio numbers for periods prior to 2013 herein are based on estimates, which are calculated as if the Basel III framework had been in place in Switzerland during such periods.
+
+                            </p>
+                            <p>
+                              Unless otherwise noted, leverage ratio, leverage exposure and total capital amounts included herein are based on the current FINMA framework. The Swiss Total Capital leverage ratio is calculated as Swiss Total Capital, divided by a three-month average leverage exposure, which consists of balance sheet assets, off-balance sheet exposures, which consist of guarantees and commitments, and regulatory adjustments, which include cash collateral netting reversals and derivative add-ons.
+
+                            </p>
+                            <p>
+                              For further information on Core results, refer to “Results overview” in II – Operating and financial review – Core Results in our most recent Annual Report.
+
+                            </p>
+                            <p>
+                              All opinions and estimates expressed in this Site constitute our judgment as of publication and do not constitute general or specific investment legal, tax or accounting advice of any kind
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -2197,7 +2402,7 @@ setdefaultValue({ vehicleCategory:null,
                       className=""
                     />
                   </div>
-                  
+
                 </div>
               </div>
             ) : null}
@@ -2227,7 +2432,7 @@ setdefaultValue({ vehicleCategory:null,
               <div className="honda-container">
                 <div className="honda-container-height">
                   <div className="honda-text-grid">
-                  <div className="honda-text-grid-items">
+                    <div className="honda-text-grid-items">
                       <span>Receipt Amount:</span>
                       <p
                         dangerouslySetInnerHTML={{
@@ -2236,7 +2441,7 @@ setdefaultValue({ vehicleCategory:null,
                         className=""
                       />
                     </div>
-                  <div className="honda-text-grid-items">
+                    <div className="honda-text-grid-items">
                       <span>Receipt Id:</span>
                       <p
                         dangerouslySetInnerHTML={{
@@ -2245,11 +2450,11 @@ setdefaultValue({ vehicleCategory:null,
                         className=""
                       />
                     </div>
-                  <div className="honda-text-grid-items">
+                    <div className="honda-text-grid-items">
                       <span>User Name:</span>
                       <p>{dataForPayment?.fname}{" "}{dataForPayment?.mname}{" "}{dataForPayment?.lname}</p>
                     </div>
-                    
+
                   </div>
                 </div>
                 <div className="d-flex align-items-center justify-content-center">
@@ -2259,7 +2464,7 @@ setdefaultValue({ vehicleCategory:null,
                     }}
                     className="btn btn-succes mr-2"
                   >
-                    
+
                     Make A Payment
                   </button>
                 </div>

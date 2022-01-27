@@ -800,3 +800,44 @@ $icon-background: rgba(204, 0, 1, 0.18);
 .honda-container-height {
     height: calc(100vh - 190px);
 }
+.modal-body {
+    p {
+        font-size: 16px;
+    }
+    p {
+        b {
+            font-size: 18px;
+        }
+    }
+    ul {
+        li {
+            p {
+                font-size: 14px;
+            }
+        }
+    }
+}
+.mt-3 {
+    margin-top: 10px;
+}
+.aligncenetr {
+    align-items: baseline;
+}
+.s {
+    font-size: 16px !important;
+    line-height: 21px !important;
+    font-family: "Helvetica";
+    font-weight: 400 !important;
+    color: #555555 !important;
+    display: block;
+    padding: 0 10px !important;
+}
+.payment-title {
+    font-size: 20px;
+    line-height: 25px;
+    font-family: "Helvetica";
+    font-weight: 400;
+    font-weight: bold;
+    color: #000000;
+    margin: 0 0 1rem 0;
+}
