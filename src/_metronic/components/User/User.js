@@ -33,6 +33,8 @@ import PaymentForm from "../PaymentForm/payment";
 import PaymentData from "../PaymentForm/payment";
 import CreateIcon from "@material-ui/icons/Create";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { Modal } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -69,6 +71,7 @@ const User = ({ getNewCount, title }) => {
   const [isPaymentPopUp, setIsPaymentPopUp] = useState(false);
   const [dataForPayment, setDataForPayment] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [idForDeleteAnnouncement, setIdForDeleteAnnouncement] = useState("");
 
   const [idForUpdateAnnouncementData, setIdForUpdateAnnouncementData] =
     useState("");
@@ -317,7 +320,6 @@ setdefaultValue({ vehicleCategory:null,
             </Tooltip>
             <div
               className="cursor-pointer pl-2"
-
             >
               {!row?.uid ?
                 <>
@@ -378,7 +380,10 @@ setdefaultValue({ vehicleCategory:null,
                     }} />
                   </Tooltip>
                   <Tooltip title="Delete" arrow>
-                    <DeleteIcon />
+                    <DeleteIcon onClick={() => {
+                setShow(true);
+                setIdForDeleteAnnouncement(row?._id);
+              }} />
                   </Tooltip>
                 </>
                 :
@@ -1113,6 +1118,33 @@ setdefaultValue({ vehicleCategory:null,
     })
   }
 
+  const handleClose = () => {
+    setShow(false);
+  };
+
+  
+  const handleDeleteAnnouncement = () => {
+    ApiDelete(`register/deleteRegister/${idForDeleteAnnouncement}`)
+      .then((res) => {
+        if (res?.status == 200) {
+          setShow(false);
+          toast.success("Deleted Successfully");
+          getAllUser();
+          // {
+          //   document.title === "Dashboard | OUR LEISURE HOME" && getNewCount();
+          // }
+          setPage(1);
+          setCount(0);
+          setCountPerPage(countPerPage);
+        } else {
+          toast.error(res?.data?.message);
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
+
 
   const getTrainignDateEditData = (preferdate,courseName) => {
     const data = {
@@ -1199,7 +1231,7 @@ setdefaultValue({ vehicleCategory:null,
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2">Add</h2>
+              <h2 className="pl-3 pt-2">User</h2>
             </div>
             <div className="col">
               <div>
@@ -1223,6 +1255,30 @@ setdefaultValue({ vehicleCategory:null,
                 Add
               </button>
             </div>
+            {/* delete model */}
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title className="text-danger">Alert!</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are You Sure To Want To delete this User
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                cancel
+              </Button>
+              <Button
+                variant="danger"
+                onClick={() => {
+                  handleDeleteAnnouncement();
+                }}
+              >
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
+          {/* end delete model */}
+
             <div className="cus-medium-button-style button-height">
               <CsvDownload
                 className={``}
