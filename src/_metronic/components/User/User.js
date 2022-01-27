@@ -97,11 +97,16 @@ const User = ({ getNewCount, title }) => {
   const userInfo = JSON.parse(localStorage.getItem("userData"));
   const [VehicalCategoryData, setVehicalCategoryData] = useState("");
   const [TrainningDate, setTrainningDate] = useState("");
-  const [CourceTypeData, setCourceTypeData] = useState("");
+  const [CourceTypeData, setCourceTypeData] = useState('');
   const [price, setPrice] = useState("");
   const [cnid, setCNID] = useState("");
   const [alertForSlot, setAlertForSlot] = useState();
-
+ const [editMode,setEditMode]=useState(false);
+const [defaultValue ,setdefaultValue]=useState({
+  vehicleCategory:null,
+  courseType:null,
+  courseCategory:null
+})
 
 
   const [submitpayment, setSubmitPayment] = useState(false);
@@ -156,6 +161,8 @@ const User = ({ getNewCount, title }) => {
     authoritydistrict: '',
     type: ''
   })
+
+
   useEffect(() => {
     console.log("tableFilterData", tableFilterData);
   }, [tableFilterData])
@@ -166,9 +173,13 @@ const User = ({ getNewCount, title }) => {
   }
 
   const handleAddAdminClose = () => {
+    setEditMode(false)
     setInputValue({});
-
-
+    setCourceTypeData('')
+    setTab("course")
+setdefaultValue({ vehicleCategory:null,
+  courseType:null,
+  courseCategory:null})
     setIsAddAnnouncement(false);
   };
   const onChangeDiscloser = (e) => {
@@ -199,6 +210,8 @@ const User = ({ getNewCount, title }) => {
     getAllUser();
     console.log("countPerPage",countPerPage,page);
   }, [page, countPerPage]);
+
+
 
   const getAllUser = async () => {
     setIsLoaderVisible(true);
@@ -310,45 +323,58 @@ const User = ({ getNewCount, title }) => {
                 <>
                   <Tooltip title="Edit" arrow>
                     <CreateIcon onClick={() => {
-                      console.log("row=======>", VehicalCategoryData);
+                      
                       setIsAddAnnouncement(true);
+                      setEditMode(true)
                       let index = getAllVehicalData?.Question?.findIndex((e) => e._id === row?.vcid)
                       let vehical;
+                      console.log("row=======>",  row?.dateofCourse);
                       if (index !== -1) {
                         vehical = { label: getAllVehicalData?.Question[index].vehicleCategory, value: getAllVehicalData?.Question[index]._id }
-                        setVehicalCategoryData(vehical)
+                        setdefaultValue(data=>({...data ,vehicleCategory:vehical}))
                       }
+                      setVehicalCategoryData(row?.vcid)
+                      getAllCourseTypeDataEdit(row?.vcid, row?.ctid)
+                      getAllCourseNameEdit(row?.ctid, row?.vcid,row?.cnid)
+                      setCNID(row?.cnid)
                       setFormData({
-                        driverlicense: row?.drivingLicenseNumber,
-                        firstname: row?.fname,
-                        vehicleCategory: vehical ? vehical : row?.vcid,
+                        _id:row?._id,
+                        vehicleCategory: row?.vcid,
                         courseType: row?.ctid,
                         courseName: row?.cnid,
-                        license: row?.lcid,
-                        dateofCourse: row?.dateofCourse,
+                        firstname: row?.fname,
                         middlename: row?.mname,
-                        lastname: row?.lcid,
-                        license: row?.lname,
+                        lastname: row?.lname,
+                        dateofCourse: row?.dateofCourse,
                         DateofBirth: row?.DoB,
                         qualification: row?.qualification,
                         gender: row?.gender,
                         address: row?.address,
                         state: row?.state,
-                        city: row?.city,
+                        driverlicense: row?.drivingLicenseNumber,
                         district: row?.district,
-
-                        authoritycity: row?.authoritycity,
-                        authoritydistrict: row?.authoritydistrict,
-                        pin: row?.pincode,
+                        city: row?.city,
                         email: row?.email,
                         phone: row?.phone,
-
-
-
-
-
-
+                        pin: row?.pincode,
+                        license: row?.lcid,
+                        issueDate: row?.issueDate,
+                        validDate: row?.validTill,
+                        authority: row?.Authority,
+                        passport: row?.passportPhoto,
+                        driviniglicencephoto: row?.drivingLicense,
+                        idProof: row?.IDproof,
+                        mediacalCertificate: row?.medicalCertificate,
+                        bloodgroup: row?.bloodGroup,
+                        preferdate: row?.dateofCourse,
+                        trainddateid: row?.trainddateid,
+                        sloatId: row?.tdid,
+                        authoritycity: row?.authoritycity,
+                        authoritydistrict: row?.authoritydistrict,
+                        type: row?.type
                       })
+                      getTrainignDateEditData(row?.dateofCourse,row?.cnid)
+
                     }} />
                   </Tooltip>
                   <Tooltip title="Delete" arrow>
@@ -614,7 +640,7 @@ const User = ({ getNewCount, title }) => {
       "ctid": formdata.courseType,
       "cnid": formdata.courseName,
       "lcid": formdata.license,
-      "dateofCourse": formdata.dateofCourse,
+      "dateofCourse": formdata.preferdate,
       "drivingLicenseNumber": formdata.driverlicense,
       "fname": formdata.firstname,
       "mname": formdata.middlename,
@@ -675,6 +701,64 @@ const User = ({ getNewCount, title }) => {
           setIsPaymentPopUp(false)
           toast.success(res?.data?.message);
           setDataForPayment([])
+          getAllUser();
+        } else {
+          toast.error(res?.data?.message);
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  }
+
+  
+  const updateData = () => {
+    const data = {
+      "vcid": formdata.vehicleCategory,
+      "ctid": formdata.courseType,
+      "cnid": formdata.courseName,
+      "lcid": formdata.license,
+      "dateofCourse": formdata.preferdate,
+      "drivingLicenseNumber": formdata.driverlicense,
+      "fname": formdata.firstname,
+      "mname": formdata.middlename,
+      "lname": formdata.lastname,
+      "DoB": formdata.DateofBirth,
+      "qualification": formdata.qualification,
+      "gender": formdata.gender,
+      "address": formdata.address,
+      "state": "Haryana",
+      "city": formdata.city,
+      "district": formdata.district,
+      "pincode": formdata.pin,
+      "email": formdata.email,
+      "phone": formdata.phone,
+      "permanentDLnumber": formdata.driverlicense,
+      "issueDate": formdata.issueDate,
+      "validTill": formdata.validDate,
+      "Authority": "Haryana",
+      "passportPhoto": formdata.passport,
+      "drivingLicense": formdata.driviniglicencephoto,
+      "IDproof": formdata.idProof,
+      "medicalCertificate": formdata.mediacalCertificate,
+      "bloodGroup": formdata.bloodgroup,
+      "paymentId": paymentId,
+      "uid": userInfo?.payload?.user?._id,
+      "tdid": formdata.sloatId,
+      "authoritycity": formdata.authoritycity,
+      "authoritydistrict": formdata.authoritydistrict,
+      "type": formdata.type
+
+
+    }
+    ApiPut(`register/updateRegister/${formdata._id}`, data)
+      .then((res) => {
+        if (res?.status == 200) {
+          setIsAddAnnouncement(false);
+          toast.success(res?.data?.message);
+          setTab("course")
+
+          // setInputValueForAdd({});
           getAllUser();
         } else {
           toast.error(res?.data?.message);
@@ -928,13 +1012,8 @@ const User = ({ getNewCount, title }) => {
       setgetAllVehicalData(res.data.payload);
     })
   }
-
   const getAllCourseType = () => {
-
-    setFormData({
-      ...formdata, courseType: '',
-      courseName: '',
-    })
+   
     setgetAllCourceName()
     setgetAllCourceType()
     const data = {
@@ -944,6 +1023,7 @@ const User = ({ getNewCount, title }) => {
       setgetAllCourceType(res.data.payload);
     })
   }
+
   const getCourseNames = () => {
     ApiGet(`courseName/getCourseNameById/${cnid}`,).then((res) => {
 
@@ -951,6 +1031,25 @@ const User = ({ getNewCount, title }) => {
 
     })
   }
+
+
+  const getAllCourseTypeDataEdit = async (dataID, cidmain) => {
+    
+    setgetAllCourceName()
+    setgetAllCourceType()
+    const data = {
+      vehicleCategory: dataID
+    }
+    ApiPost('courseType/getCoursetypeByVehiclecategory?page=${page}&limit=1000', data).then(async(res) => {
+      setgetAllCourceType(res.data.payload);
+      const dataselect = res?.data?.payload?.courseType?.filter((data) => data._id === cidmain)
+      if(dataselect.length>=0){
+      setdefaultValue((valueDefult)=>( { ...valueDefult ,courseType:{label: dataselect[0]?.description, value: dataselect[0]?._id }}))
+    }})
+  }
+
+
+
 
   useEffect(() => {
     if (cnid) {
@@ -966,11 +1065,22 @@ const User = ({ getNewCount, title }) => {
 
     }
     ApiPost('courseName/getCoursenameByCoursetype?page=${page}&limit=1000', data).then((res) => {
-
-
       setgetAllCourceName(res.data.payload);
 
     })
+    setUpdateCall(false)
+  }
+
+  const getAllCourseNameEdit = async (CourceTypeDataedit, VehicalCategoryDataedit,cId) => {
+    const data = {
+      courseType: CourceTypeDataedit,
+      vehicleCategory: VehicalCategoryDataedit
+    }
+    ApiPost('courseName/getCoursenameByCoursetype?page=${page}&limit=1000', data).then((res) => {
+      setgetAllCourceName(res.data.payload);
+      const setDataMAin= res?.data?.payload?.courseName?.filter((dataMain)=>dataMain._id===cId)
+      setdefaultValue(dataasd=>({ ...dataasd,courseCategory:{label:setDataMAin[0].courseName,value:setDataMAin[0]._id}}))}
+    )
     setUpdateCall(false)
   }
 
@@ -980,7 +1090,6 @@ const User = ({ getNewCount, title }) => {
     }
   }, [updateCall])
   useEffect(() => {
-
     if (formdata.vehicleCategory) {
       getAllCourseType()
     }
@@ -1001,9 +1110,24 @@ const User = ({ getNewCount, title }) => {
         setSeat(res.data.payload?.subMenu)
         // }, 1000);
       }
-
     })
   }
+
+
+  const getTrainignDateEditData = (preferdate,courseName) => {
+    const data = {
+      date: preferdate,
+      coursenameid: courseName
+    }
+    ApiGet(`trainingDate/getDate?date=${data.date}&cnid=${data.coursenameid}`,).then((res) => {
+      if (res.data.payload) {
+        // setTimeout(() => {
+        setSeat(res.data.payload?.subMenu)
+        // }, 1000);
+      }
+    })
+  }
+
   const checkTrainnigDate = () => {
     if (formdata.preferdate && formdata.courseName) {
       getTrainignDate()
@@ -1241,30 +1365,34 @@ const User = ({ getNewCount, title }) => {
                               onChnagSelectField(e, 'vehicleCategory')
                               setVehicalCategoryData(e.value)
                             }}
-                            defaultValue={VehicalCategoryData}
+                            defaultValue={defaultValue.vehicleCategory}
                           />
                         </div>
 
                         <div className="register-grid-items12">
                           <label>Course Type<span>*</span></label>
-                          <Select
-                            // isClearable
-                            options={getAllCourceType?.courseType?.map(e => ({ label: e.courseType, value: e._id }))}
-                            name='courseType'
-                            onChange={(e) => {
-                              setCourceType('')
-                              onChnagSelectField(e, 'courseType')
-                              setCourceTypeData(e.value);
-                              setUpdateCall(true)
-                            }}
-                            defaultValue={CourceTypeData}
-
-                          />
+                         { (editMode?defaultValue.courseType:true) &&(
+                           <Select
+                           options={getAllCourceType?.courseType?.map(e => ({ label: e.courseType, value: e._id }))}
+                           name='courseType'
+                           onChange={(e) => {
+                             setCourceType('')
+                             onChnagSelectField(e, 'courseType')
+                             setCourceTypeData(e.value);
+                             setUpdateCall(true)
+                           }}
+                           defaultValue={defaultValue.courseType!==null && defaultValue.courseType}
+                         />
+                         ) }
+                                     
+                        
 
                         </div>
 
                         <div className="register-grid-items12 ">
                           <label>Course Category<span>*</span></label>
+                          { (editMode?defaultValue.courseCategory:true) &&(
+                         
                           <Select
                             // isClearable
                             options={getAllCourceName?.courseName?.map(e => ({ label: e.courseName, value: e._id }))}
@@ -1276,14 +1404,14 @@ const User = ({ getNewCount, title }) => {
                                 if (index !== -1) {
                                   setPrice(getAllCourceName?.courseName[index].price)
                                   setCNID(getAllCourceName?.courseName[index]._id)
-
-
                                 }
                               }
                               onChnagSelectField(e, 'courseName')
                             }}
-                            defaultValue={CourceType}
+                            defaultValue={defaultValue.courseCategory && defaultValue.courseCategory}
                           />
+                         ) }
+
                         </div>
                         {/* <div className="register-grid-items">
                   <label>Date of Course<span>*</span></label>
@@ -1295,6 +1423,7 @@ const User = ({ getNewCount, title }) => {
                             options={licenseCategoryData.map(e => ({ label: e.name, value: e.name }))}
                             name='license'
                             onChange={e => onChnagSelectField(e, 'license')}
+                            defaultValue={{label:formdata.license,value:formdata.license}}
                           />
 
                         </div>
@@ -1304,11 +1433,11 @@ const User = ({ getNewCount, title }) => {
                         </div>
                         <div className="register-grid-items">
                           <label>Issue Date<span>*</span></label>
-                          <input type="date" placeholder="" name='issueDate' value={formdata.issueDate} onChange={e => onChnageForm(e)} />
+                          <input type="date" placeholder="" name='issueDate' value={(formdata.issueDate).slice(0, 10)} onChange={e => onChnageForm(e)} />
                         </div>
                         <div className="register-grid-items">
                           <label>Valid Till<span>*</span></label>
-                          <input type="date" placeholder="" name='validDate' value={formdata.validDate} onChange={e => onChnageForm(e)} />
+                          <input type="date" placeholder="" name='validDate' value={(formdata.validDate).slice(0, 10)} onChange={e => onChnageForm(e)} />
                         </div>
                         <div className="register-grid-items">
 
@@ -1335,6 +1464,8 @@ const User = ({ getNewCount, title }) => {
                             options={districts.map(e => ({ label: e.name, value: e.name }))}
                             name='authoritydistrict'
                             onChange={e => onChnagSelectField(e, 'authoritydistrict')}
+                            defaultValue={{ label: formdata.authoritydistrict, value: formdata.authoritydistrict}}
+
                           />
                         </div>
                         <div className="register-grid-items12">
@@ -1344,7 +1475,9 @@ const User = ({ getNewCount, title }) => {
                             options={city.map(e => ({ label: e.name, value: e.name }))}
                             name='authoritycity'
                             onChange={e => onChnagSelectField(e, 'authoritycity')}
-                          />
+                            defaultValue={{ label: formdata.authoritycity, value: formdata.authoritycity}}
+                    
+                    />
                         </div>
 
                       </div>
@@ -1399,7 +1532,7 @@ const User = ({ getNewCount, title }) => {
                         <div className="register-grid-items">
                           <label>Preferred Training Date<span>*</span></label>
                           <input type="date" placeholder="Vehicle Category" onChange={e => onChnageForm(e)}
-                            name='preferdate' value={formdata.preferdate}
+                            name='preferdate' value={(formdata.preferdate.slice(0,10))}
                           />
                         </div>
                         <div className="register-grid-items">
@@ -1526,7 +1659,9 @@ const User = ({ getNewCount, title }) => {
                           </div>
                           <div className="register-grid-items">
                             <label>Date of Birth<span>*</span></label>
-                            <input type="date" name='DateofBirth' value={formdata.DateofBirth} onChange={e => onChnageForm(e)} />
+                            {/* <input type="date" name='DateofBirth' value={formdata.DateofBirth} onChange={e => onChnageForm(e)} /> */}
+                          
+                            <input type="date" name='DateofBirth' value={ `${new Date(formdata.DateofBirth).getFullYear()}${new Date(formdata.DateofBirth).getMonth()<9?'-0':'-'}${new Date(formdata.DateofBirth).getMonth()+1}-${new Date(formdata.DateofBirth).getDate()}`} onChange={e => onChnageForm(e)} />
                           </div>
 
                         </div>
@@ -1538,6 +1673,7 @@ const User = ({ getNewCount, title }) => {
                               options={qualification.map(e => ({ label: e.name, value: e.name }))}
                               name='qualification'
                               onChange={e => onChnagSelectField(e, 'qualification')}
+                              defaultValue={{ label: formdata.qualification, value: formdata.qualification }}
                             />
                           </div>
                           <div className="register-grid-items12">
@@ -1547,6 +1683,8 @@ const User = ({ getNewCount, title }) => {
                               options={gender.map(e => ({ label: e.name, value: e.name }))}
                               name='gender'
                               onChange={e => onChnagSelectField(e, 'gender')}
+                              defaultValue={{ label: formdata.gender, value: formdata.gender }}
+
                             />
                           </div>
                         </div>
@@ -1574,6 +1712,8 @@ const User = ({ getNewCount, title }) => {
                               options={districts.map(e => ({ label: e.name, value: e.name }))}
                               name='district'
                               onChange={e => onChnagSelectField(e, 'district')}
+                              defaultValue={{ label: formdata.district, value: formdata.district }}
+
                             />
                           </div>
                           <div className="register-grid-items12">
@@ -1583,6 +1723,8 @@ const User = ({ getNewCount, title }) => {
                               options={city.map(e => ({ label: e.name, value: e.name }))}
                               name='city'
                               onChange={e => onChnagSelectField(e, 'city')}
+                              defaultValue={{ label: formdata.city, value: formdata.city }}
+
                             />
                           </div>
                           <div className="register-grid-items">
@@ -1647,8 +1789,8 @@ const User = ({ getNewCount, title }) => {
                       </div>
                       <div className="photo-upload-from">
                         <p> 1. Passport Photo<span className="star-color">*</span>:  less than 1 mb.(jpg, jpeg, PNG)/ Rest all documents less than 5 mb (jpg, jpeg, PNG, pdf)</p>
-                        <input type="file" name='passport' onChange={e => onChangImage(e.target.files[0], "passport")} />
-                      </div>
+                        <input type="file" name='passport' onChange={e => onChangImage(e.target.files[0],"passport")}  />
+                      </div> 
                       <div className="photo-upload-from">
                         <p>2. Driving License<span className="star-color">*</span> (Not valid incase of NA)</p>
                         <input type="file" name='driviniglicencephoto' onChange={e => onChangImage(e.target.files[0], "driviniglicencephoto")} />
@@ -1672,6 +1814,8 @@ const User = ({ getNewCount, title }) => {
                             options={bloodgroupData.map(e => ({ label: e.name, value: e.name }))}
                             name='bloodgroup'
                             onChange={e => onChnagSelectField(e, 'bloodgroup')}
+                            defaultValue={{ label: formdata.bloodgroup, value: formdata.bloodgroup }}
+
                           />
                         </div>
                       </div>
@@ -1747,9 +1891,10 @@ const User = ({ getNewCount, title }) => {
                       >
                         <button className="out-line-button" onClick={(e) => handleOnClick(e, "document")}>Previous</button>
 
-                        {
+                        {!editMode?(
                           dicloser && (formdata.type === "online" ? submitpayment : true) && <button className="fill-button" onClick={() => register()}>Submit</button>
-                        }
+                        ):(dicloser && (formdata.type === "online" ? submitpayment : true) && <button className="fill-button" onClick={() => updateData()}>Update</button>)}
+                        
                       </div>
                     </div>
                   )}
