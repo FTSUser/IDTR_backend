@@ -27,6 +27,10 @@ const ContactUs = ({ getNewCount, title }) => {
   const [countPerPage, setCountPerPage] = useState(10);
   const [search, setSearch] = useState("");
 
+  useEffect(() => {
+    document.title = "Honda | ContactUs";
+  }, []);
+
  
   
   useEffect(() => {

@@ -55,6 +55,10 @@ const VehicleCategory = ({ getNewCount, title }) => {
 
   // const [isActive , setIsActive] = useState(true);
 
+  useEffect(() => {
+    document.title = "Honda | VehicleCategory";
+  }, []);
+
   const handleOnChnage = (e) => {
     const { name, value } = e.target;
     setInputValue({ ...inputValue, [name]: value });

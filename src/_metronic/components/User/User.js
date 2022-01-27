@@ -80,6 +80,11 @@ const User = ({ getNewCount, title }) => {
     setDataViewMore({});
   };
 
+  useEffect(() => {
+    document.title = "Honda | User";
+  }, []);
+
+
   // const startValue = new Date(
   //   new Date().getFullYear(),
   //   new Date().getMonth(),

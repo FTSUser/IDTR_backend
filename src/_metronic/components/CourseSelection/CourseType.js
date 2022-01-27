@@ -54,6 +54,10 @@ const CourseType = ({ getNewCount, title }) => {
   // const [getVehicleCategory, setGetVehicleCategory] = useState([]);
   const [filteredVehicleCategory, setFilteredVehicleCategory] = useState({});
 
+  useEffect(() => {
+    document.title = "Honda | CourseType";
+  }, []);
+
   const handleOnChnage = (e) => {
     const { name, value } = e.target;
     setInputValue({ ...inputValue, [name]: value });

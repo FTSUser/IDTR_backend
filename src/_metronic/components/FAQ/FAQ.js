@@ -49,6 +49,10 @@ const FAQ = ({ getNewCount, title }) => {
   const [search, setSearch] = useState("");
   const [isEdit, setIsEdit] = useState(false);
 
+  useEffect(() => {
+    document.title = "Honda | FAQ";
+  }, []);
+
   const handleOnChnageAdd = (e) => {
     const { name, value } = e.target;
     setInputValueForAdd({ ...inputValueForAdd, [name]: value });

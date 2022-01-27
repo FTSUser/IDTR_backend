@@ -56,6 +56,10 @@ const Cms = ({ getNewCount, title }) => {
   const [countPerPage, setCountPerPage] = useState(10);
   const [search, setSearch] = useState("");
 
+  useEffect(() => {
+    document.title = "Honda | CMS";
+  }, []);
+
   const handleOnChnage = (e) => {
     const { name, value } = e.target;
     setInputValue({ ...inputValue, [name]: value });

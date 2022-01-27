@@ -53,6 +53,10 @@ const CourseName = ({ getNewCount, title }) => {
   const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
   const [isEditPopUp, setIsEditPopUp] = useState(false);
 
+  useEffect(() => {
+    document.title = "Honda | CourseName";
+  }, []);
+
   const handleViewMoreClose = () => {
     setIsViewMoreAboutus(false);
     setDataViewMore({});

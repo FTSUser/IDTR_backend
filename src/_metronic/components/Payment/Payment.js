@@ -57,6 +57,10 @@ const Payment = ({ getNewCount, title }) => {
   const [countPerPage, setCountPerPage] = useState(10);
   const [search, setSearch] = useState("");
 
+  useEffect(() => {
+    document.title = "Honda | Payment";
+  }, []);
+
   const handleViewMoreClose = () => {
     setIsViewMorePayment(false);
     setDataViewMore({});

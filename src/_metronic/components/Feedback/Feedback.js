@@ -27,6 +27,10 @@ const Feedback = ({ getNewCount, title }) => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
+    document.title = "Honda | Feedback";
+  }, []);
+
+  useEffect(() => {
     getAllFeedback();
   }, [page, countPerPage]);
 

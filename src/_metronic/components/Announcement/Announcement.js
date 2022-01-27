@@ -62,6 +62,10 @@ const Announcement = ({ getNewCount, title }) => {
   const [countPerPage, setCountPerPage] = useState(10);
   const [search, setSearch] = useState("");
 
+  useEffect(() => {
+    document.title = "Honda | Announcement";
+  }, []);
+
   // S3 link for image start
 
   // S3 link for image End

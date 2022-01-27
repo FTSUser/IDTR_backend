@@ -57,6 +57,10 @@ const TimeSlot = ({ getNewCount, title }) => {
   const [allCourseNameForUpdate, setAllCourseNameForUpdate] = useState([]);
   const [isEditPopUp, setIsEditPopUp] = useState(false);
 
+  useEffect(() => {
+    document.title = "Honda | TimeSlot";
+  }, []);
+
   const handleOnChnageAdd = (e) => {
     const { name, value } = e.target;
     if (e.target.name === "seat") {
