@@ -34,6 +34,7 @@ import PaymentData from "../PaymentForm/payment";
 import CreateIcon from "@material-ui/icons/Create";
 import DeleteIcon from "@material-ui/icons/Delete";
 
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -286,6 +287,7 @@ const User = ({ getNewCount, title }) => {
                 <InfoOutlinedIcon />
               </Tooltip>
             </div>
+            <Tooltip title="Make a Payment" arrow>
             <div
               className="cursor-pointer pl-2"
               onClick={() => {
@@ -295,13 +297,11 @@ const User = ({ getNewCount, title }) => {
               }}
             >
               {row?.isPaymentDone === false  ?
-                <Tooltip title="Payment" arrow>
-                  <InfoOutlinedIcon />
-                </Tooltip> :
-                ""
-              }
-
+             
+              <img src="media/allIconsForTable/rs.png" /> : "" }
+              
             </div>
+            </Tooltip>
             <div
               className="cursor-pointer pl-2"
 
@@ -336,18 +336,11 @@ const User = ({ getNewCount, title }) => {
                         state: row?.state,
                         city: row?.city,
                         district: row?.district,
-
                         authoritycity: row?.authoritycity,
                         authoritydistrict: row?.authoritydistrict,
                         pin: row?.pincode,
                         email: row?.email,
                         phone: row?.phone,
-
-
-
-
-
-
                       })
                     }} />
                   </Tooltip>
