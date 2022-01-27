@@ -2164,42 +2164,42 @@ setdefaultValue({ vehicleCategory:null,
           <List>
             {isPaymentPopUp === true ? (
               <div className="honda-container">
-                <div className="honda-text-grid">
-                <div className="honda-text-grid-items">
-                    <span>Payment Amount:</span>
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html: dataForPayment?.cnid?.price === null || dataForPayment?.cnid?.price === "" || !dataForPayment?.cnid?.price ? "No data" : dataForPayment?.cnid?.price,
-                      }}
-                      className=""
-                    />
+                <div className="honda-container-height">
+                  <div className="honda-text-grid">
+                  <div className="honda-text-grid-items">
+                      <span>Receipt Amount:</span>
+                      <p
+                        dangerouslySetInnerHTML={{
+                          __html: dataForPayment?.courseName[0]?.price === null || dataForPayment?.courseName[0]?.price === "" || !dataForPayment?.courseName[0]?.price ? "No data" : dataForPayment?.courseName[0]?.price,
+                        }}
+                        className=""
+                      />
+                    </div>
+                  <div className="honda-text-grid-items">
+                      <span>Receipt Id:</span>
+                      <p
+                        dangerouslySetInnerHTML={{
+                          __html: dataForPayment?._id === null || dataForPayment?._id === "" || !dataForPayment?._id ? "No data" : dataForPayment?._id,
+                        }}
+                        className=""
+                      />
+                    </div>
+                  <div className="honda-text-grid-items">
+                      <span>User Name:</span>
+                      <p>{dataForPayment?.fname}{" "}{dataForPayment?.mname}{" "}{dataForPayment?.lname}</p>
+                    </div>
+                    
                   </div>
-                <div className="honda-text-grid-items">
-                    <span>Payment Id:</span>
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html: dataForPayment?._id === null || dataForPayment?._id === "" || !dataForPayment?._id ? "No data" : dataForPayment?._id,
-                      }}
-                      className=""
-                    />
-                  </div>
-                <div className="honda-text-grid-items">
-                    <span>User Name:</span>
-                    <p>{dataForPayment?.fname}{" "}{dataForPayment?.mname}{" "}{dataForPayment?.lname}</p>
-                  </div>
-                  
                 </div>
                 <div className="d-flex align-items-center justify-content-center">
                   <button
                     onClick={(e) => {
                       handleOfflinePayment(e);
                     }}
-                    className="btn btn-success mr-2"
+                    className="btn btn-succes mr-2"
                   >
-                    <span>Make A Payment</span>
-                    {loading && (
-                      <span className="mx-3 spinner spinner-white"></span>
-                    )}
+                    
+                    Make A Payment
                   </button>
                 </div>
               </div>
