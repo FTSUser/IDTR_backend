@@ -1008,6 +1008,11 @@ const User = ({ getNewCount, title }) => {
         seterrorShow('Phone')
         settypeTrueFalseform(true)
       }
+      else if (formdata.phone.length < 10) {
+        toast.error(`Sorry! Phone Number Not Valid must be specified`)
+        seterrorShow('Phone Number Not Valid')
+        settypeTrueFalseform(true)
+      }
       else {
         seterrorShow('')
         settypeTrueFalseform(false)
