@@ -416,17 +416,17 @@ const TimeSlot = ({ getNewCount, title }) => {
     },
     {
       name: "Vehicle Category",
-      selector: (row) => row?.vcid?.vehicleCategory,
+      selector: (row) => row?.vehicleCategory[0]?.vehicleCategory,
       sortable: true,
     },
     {
       name: "Course Type",
-      selector: (row) => row?.ctid?.courseType,
+      selector: (row) => row?.courseType[0]?.courseType,
       sortable: true,
     },
     {
       name: "Course Name",
-      selector: (row) => row?.cnid?.courseName,
+      selector: (row) => row?.courseName[0]?.courseName,
       sortable: true,
     },
     {
@@ -461,7 +461,7 @@ const TimeSlot = ({ getNewCount, title }) => {
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
-                  console.log("rowrow",row);
+                  console.log("rowrow", row);
                   setIsAddCourseName(true);
                   setIdForUpdateCourseNameData(row._id);
                   getAllVehicleCategory();
@@ -543,7 +543,7 @@ const TimeSlot = ({ getNewCount, title }) => {
 
   //for search data
 
-  
+
   const handleSearch = (e) => {
     let val = e.target.value.replace(/[^\w\s]/gi, "");
     setSearch(val);
@@ -813,7 +813,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                                 value={item?._id}
                                 selected={
                                   inputValueForAdd?.VehicleCategory ===
-                                  item?._id
+                                    item?._id
                                     ? true
                                     : false
                                 }
