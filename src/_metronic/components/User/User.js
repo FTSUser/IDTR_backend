@@ -371,7 +371,7 @@ const User = ({ getNewCount, title }) => {
                 <>
                   <Tooltip title="Edit" arrow>
                     <CreateIcon onClick={() => {
-                      setTab('payment')
+                      setTab('course')
                       setIsAddAnnouncement(true);
                       setEditMode(true)
                       let index = getAllVehicalData?.Question?.findIndex((e) => e._id === row?.vcid)
