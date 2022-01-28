@@ -1213,13 +1213,13 @@ const User = ({ getNewCount, title }) => {
       getTrainignDate()
     }
   }
-  const disablePastDate = () => {
-    const today = new Date();
-    const dd = String(today.getDate() + 1).padStart(2, "0");
-    const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    const yyyy = today.getFullYear();
-    return yyyy + "-" + mm + "-" + dd;
-  };
+  // const disablePastDate = () => {
+  //   const today = new Date();
+  //   const dd = String(today.getDate() + 1).padStart(2, "0");
+  //   const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+  //   const yyyy = today.getFullYear();
+  //   return yyyy + "-" + mm + "-" + dd;
+  // };
 
   const uploadCertificate = async () => {
     let urls = {};
@@ -1329,7 +1329,7 @@ const User = ({ getNewCount, title }) => {
                   name="search"
                   value={search}
                   placeholder="Search User"
-                onChange={(e) => handleSearch(e)}
+                  onChange={(e) => handleSearch(e)}
                 />
               </div>
             </div>
@@ -1676,7 +1676,12 @@ const User = ({ getNewCount, title }) => {
                       <div className="register-grid search-button-alignment">
                         <div className="register-grid-items">
                           <label>Preferred Training Date<span>*</span></label>
-                          <input type="date" placeholder="Vehicle Category" onChange={e => onChnageForm(e)}
+                          <input type="date" placeholder="Vehicle Category" min={moment(new Date).format("YYYY-MM-DD")} onChange={(e) => {
+                            onChnageForm(e)
+                            // disablePastDate()
+                          }
+
+                          }
                             name='preferdate' value={(formdata.preferdate.slice(0, 10))}
                           />
                         </div>
