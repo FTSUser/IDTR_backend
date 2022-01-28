@@ -50,8 +50,7 @@ const ContactUs = ({ getNewCount, title }) => {
 
   const getAllContactUs = async () => {
     setIsLoaderVisible(true);
-    if (!search) {
-      await ApiGet(`contactus/getContactus`)
+      await ApiGet(`contactus/getContactus?page=${page}&limit=${countPerPage}`)
         .then((res) => {
           setIsLoaderVisible(false);
           console.log("artistreport", res);
@@ -61,7 +60,6 @@ const ContactUs = ({ getNewCount, title }) => {
         .catch((err) => {
           console.log(err);
         });
-    } 
   };
 
   useEffect(() => {
@@ -106,8 +104,6 @@ const ContactUs = ({ getNewCount, title }) => {
         sortable: true,
       
       },
-
-
       {
         name: "Description",
         cell: (row) => {
@@ -120,36 +116,6 @@ const ContactUs = ({ getNewCount, title }) => {
         sortable: true,
       
       },
-     
-
-
-
-
-    
-
-
-    // {
-    //   name: "Actions",
-    //   cell: (row) => {
-    //     return (
-    //       <>
-           
-    //         <div
-    //           className="cursor-pointer pl-2"
-    //           onClick={() => {
-    //             setIsViewMoreAboutus(true);
-    //             setDataViewMore(row);
-    //             console.log("rowShow", row);
-    //           }}
-    //         >
-    //           <Tooltip title="Show More" arrow>
-    //             <InfoOutlinedIcon />
-    //           </Tooltip>
-    //         </div>
-    //       </>
-    //     );
-    //   },
-    // },
   ];
   // * Table Style
   const customStyles = {

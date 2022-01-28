@@ -54,7 +54,7 @@ const CourseName = ({ getNewCount, title }) => {
   const [isEditPopUp, setIsEditPopUp] = useState(false);
 
   useEffect(() => {
-    document.title = "Honda | CourseName";
+    document.title = "Honda | CourseCategory";
   }, []);
 
   const handleViewMoreClose = () => {
@@ -434,7 +434,7 @@ const CourseName = ({ getNewCount, title }) => {
                   setIsEditPopUp(true);
                 }}
               >
-                <Tooltip title="Edit CourseName" arrow>
+                <Tooltip title="Edit CourseCategory" arrow>
                   <CreateIcon />
                 </Tooltip>
               </div>
@@ -447,7 +447,7 @@ const CourseName = ({ getNewCount, title }) => {
                 setIdForDeleteCourseName(row?._id);
               }}
             >
-              <Tooltip title="Delete Course Name" arrow>
+              <Tooltip title="Delete CourseCategory" arrow>
                 <DeleteIcon />
               </Tooltip>
             </div>
@@ -507,8 +507,10 @@ const CourseName = ({ getNewCount, title }) => {
 
   //for search data
 
+  
   const handleSearch = (e) => {
-    setSearch(e.target.value);
+    let val = e.target.value.replace(/[^\w\s]/gi, "");
+    setSearch(val);
   };
 
   const debouncedSearchTerm = useDebounce(search, 500);
@@ -616,15 +618,16 @@ const CourseName = ({ getNewCount, title }) => {
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2">Course Name</h2>
+              <h2 className="pl-3 pt-2">Course Category</h2>
             </div>
             <div className="col">
               <div>
                 <input
                   type="text"
                   className={`form-control form-control-lg form-control-solid `}
-                  name="title"
-                  placeholder="Search Course Name"
+                  name="search"
+                  value={search}
+                  placeholder="Search Course Category"
                   onChange={(e) => handleSearch(e)}
                 />
               </div>
@@ -638,7 +641,7 @@ const CourseName = ({ getNewCount, title }) => {
                 }}
                 className="btn btn-success mr-2"
               >
-                Add Course Name
+                Add Course Category
               </button>
             </div>
             <div className="cus-medium-button-style button-height">
@@ -671,7 +674,7 @@ const CourseName = ({ getNewCount, title }) => {
             </Modal.Header>
             <Modal.Body>
               Are You Sure To Want To{" "}
-              {statusDisplay === true ? "De-active" : "Active"} this course name
+              {statusDisplay === true ? "De-active" : "Active"} this Course Category
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleCloseShowStatus}>
@@ -694,7 +697,7 @@ const CourseName = ({ getNewCount, title }) => {
               <Modal.Title className="text-danger">Alert!</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              Are You Sure To Want To delete this Course Name
+              Are You Sure To Want To delete this Course Category
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
