@@ -157,7 +157,7 @@ export default function Login() {
             </div>
           ) : null}
         </div>
-        <div className="form-group d-flex flex-wrap justify-content-end align-items-center">
+        <div className="form-group d-flex flex-wrap justify-content-center align-items-center">
           {/* <Link
             to="/auth/forgot-password"
             className="text-dark-50 text-hover-primary my-3 mr-2"
@@ -169,7 +169,7 @@ export default function Login() {
             id="kt_login_signin_submit"
             type="submit"
             disabled={formik.isSubmitting}
-            className={`btn btn-primary font-weight-bold px-9 py-4 my-3`}
+            className={`btn btn-primary btn-login font-weight-bold px-9 py-4 my-3`}
           >
             <span>Sign In</span>
           </button>
