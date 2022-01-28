@@ -1046,7 +1046,25 @@ const User = ({ getNewCount, title }) => {
   };
   const previousClick = (e, key) => {
     if (key === "course") {
-      setTab(key)
+      let index = getAllVehicalData?.Question?.findIndex((e) => e._id === formdata?.vehicleCategory);
+      let vehaicalId = formdata.vehicleCategory;
+      let courseTypeId = formdata.courseType;
+      let courseNameId = formdata.courseName;
+
+
+      let vehical;
+      console.log("row=======>", formdata?.vehicleCategory);
+      if (index !== -1) {
+        vehical = { label: getAllVehicalData?.Question[index].vehicleCategory, value: getAllVehicalData?.Question[index]._id }
+        setdefaultValue(data => ({ ...data, vehicleCategory: vehical }))
+      }
+      setVehicalCategoryData(formdata?.vehicleCategory)
+      getAllCourseTypeDataEdit(vehaicalId, courseTypeId)
+      getAllCourseNameEdit(courseTypeId, vehaicalId, courseNameId)
+      setTimeout(() => {
+        setTab(key)
+      }, 1000);
+
 
     } else if (key === "personal") {
       setTab(key)
