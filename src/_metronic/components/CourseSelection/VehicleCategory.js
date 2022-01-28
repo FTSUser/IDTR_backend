@@ -297,7 +297,7 @@ const VehicleCategory = ({ getNewCount, title }) => {
               }}
             >
               <Tooltip title="Status Property" arrow>
-                <div className="cus-medium-button-style">
+                <div className="cus-medium-button-style widthfixed">
                   <button className="btn btn-success mr-2">
                     {row?.isActive === true ? "Active" : "Deactive"}
                   </button>

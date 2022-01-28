@@ -817,6 +817,13 @@ $icon-background: rgba(204, 0, 1, 0.18);
         }
     }
 }
+input[type="date"]::-webkit-datetime-edit-text,
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field {
+    // color: red;
+    color: $gray;
+}
 .mt-3 {
     margin-top: 10px;
 }
@@ -840,4 +847,9 @@ $icon-background: rgba(204, 0, 1, 0.18);
     font-weight: bold;
     color: #000000;
     margin: 0 0 1rem 0;
+}
+img.view {
+    height: 300px !important;
+    width: 300px !important;
+    object-fit: contain !important;
 }

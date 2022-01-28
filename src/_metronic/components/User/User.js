@@ -370,7 +370,7 @@ const User = ({ getNewCount, title }) => {
                 <>
                   <Tooltip title="Edit" arrow>
                     <CreateIcon onClick={() => {
-
+                      setTab('payment')
                       setIsAddAnnouncement(true);
                       setEditMode(true)
                       let index = getAllVehicalData?.Question?.findIndex((e) => e._id === row?.vcid)
@@ -894,8 +894,8 @@ const User = ({ getNewCount, title }) => {
         settypeTrueFalseform(true)
       }
       else if (formdata.courseName == '') {
-        toast.error(`Sorry! Course Name must be specified`)
-        seterrorShow('Course Name')
+        toast.error(`Sorry! Course Category must be specified`)
+        seterrorShow('Course Category')
         settypeTrueFalseform(true)
       }
 
@@ -1262,7 +1262,7 @@ const User = ({ getNewCount, title }) => {
     let data = await Reacts3Client.uploadFile(f, filename);
     try {
       if (data.status === 204) {
-        toast.success("Document Upload ")
+        toast.success("Document uploaded successfully ")
         urls = data.location;
         return urls
       } else {
@@ -2209,7 +2209,7 @@ const User = ({ getNewCount, title }) => {
                 <div className="honda-text-grid">
                   <div className="honda-text-grid-items">
                     <span>Photo:</span>
-                    {dataViewMore?.passportPhoto === null || dataViewMore?.passportPhoto === "" || !dataViewMore?.passportPhoto ? "No Data" : <img src={dataViewMore?.passportPhoto} alt="No Image" />}
+                    {dataViewMore?.passportPhoto === null || dataViewMore?.passportPhoto === "" || !dataViewMore?.passportPhoto ? "No Data" : <img className="view" src={dataViewMore?.passportPhoto} alt="No Image" />}
                   </div>
                   <div className="honda-text-grid-items">
                     <span>First Name:</span>
@@ -2378,11 +2378,11 @@ const User = ({ getNewCount, title }) => {
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Driving License Image:</span>
-                    {dataViewMore?.drivingLicense === null || dataViewMore?.drivingLicense === "" || !dataViewMore?.drivingLicense ? "No Data" : <img src={dataViewMore?.drivingLicense} alt="No Image" />}
+                    {dataViewMore?.drivingLicense === null || dataViewMore?.drivingLicense === "" || !dataViewMore?.drivingLicense ? "No Data" : <img className="view" src={dataViewMore?.drivingLicense} alt="No Image" />}
                   </div>
                   <div className="honda-text-grid-items">
                     <span>ID Proof:</span>
-                    {dataViewMore?.IDproof === null || dataViewMore?.IDproof === "" || !dataViewMore?.IDproof ? "No Data" : <img src={dataViewMore?.IDproof} alt="No Image" />}
+                    {dataViewMore?.IDproof === null || dataViewMore?.IDproof === "" || !dataViewMore?.IDproof ? "No Data" : <img className="view" src={dataViewMore?.IDproof} alt="No Image" />}
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Authority City:</span>

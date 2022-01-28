@@ -111,31 +111,31 @@ const CourseType = ({ getNewCount, title }) => {
 
   const getAllCourseType = async () => {
     setIsLoaderVisible(true);
-      await ApiGet(`courseType/getAllCourseType?page=${page}&limit=${countPerPage}`)
-        .then((res) => {
-          setIsLoaderVisible(false);
-          console.log("artistreport", res);
-          setFilteredCourseType(res?.data?.payload?.Question);
-          setCount(res?.data?.payload?.count);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
+    await ApiGet(`courseType/getAllCourseType?page=${page}&limit=${countPerPage}`)
+      .then((res) => {
+        setIsLoaderVisible(false);
+        console.log("artistreport", res);
+        setFilteredCourseType(res?.data?.payload?.Question);
+        setCount(res?.data?.payload?.count);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   };
 
   const getAllVehicleCategory = async () => {
     setIsLoaderVisible(true);
-    
-      await ApiGet(`vehicleCategory/getAllVehicleCategory?limit=1000`)
-        .then((res) => {
-          setIsLoaderVisible(false);
-          console.log("artistreport", res);
-          setFilteredVehicleCategory(res?.data?.payload?.Question);
-          setCount(res?.data?.payload?.count);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+
+    await ApiGet(`vehicleCategory/getAllVehicleCategory?limit=1000`)
+      .then((res) => {
+        setIsLoaderVisible(false);
+        console.log("artistreport", res);
+        setFilteredVehicleCategory(res?.data?.payload?.Question);
+        setCount(res?.data?.payload?.count);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleUpdateStatusProperty = (status) => {
@@ -175,7 +175,7 @@ const CourseType = ({ getNewCount, title }) => {
       errorsForAdd["VehicleCategory"] = "*Please Enter Vehicle Category!";
     }
 
-    
+
 
     setErrorsForAdd(errorsForAdd);
     return formIsValid;
@@ -189,7 +189,7 @@ const CourseType = ({ getNewCount, title }) => {
         description: inputValueForAdd.VehicleDescription,
         isActive: true,
         vcid: inputValueForAdd.VehicleCategory,
-        
+
       };
       ApiPost(`courseType/addCourseType`, Data)
         .then((res) => {
@@ -262,7 +262,7 @@ const CourseType = ({ getNewCount, title }) => {
         description: inputValue.VehicleDescription,
         vcid: inputValue.VehicleCategory,
 
-     
+
       };
       ApiPut(`courseType/updateCourseType/${idForUpdateCourseTypeData}`, Data)
         .then((res) => {
@@ -321,7 +321,7 @@ const CourseType = ({ getNewCount, title }) => {
               }}
             >
               <Tooltip title="Status Property" arrow>
-                <div className="cus-medium-button-style">
+                <div className="cus-medium-button-style widthfixed">
                   <button className="btn btn-success mr-2">
                     {row?.isActive === true ? "Active" : "Deactive"}
                   </button>
@@ -334,7 +334,7 @@ const CourseType = ({ getNewCount, title }) => {
       sortable: true,
     },
 
-    
+
     {
       name: "Actions",
       cell: (row) => {
@@ -483,17 +483,17 @@ const CourseType = ({ getNewCount, title }) => {
         let data = {
           CreatedAt: moment(registerUser?.createdAt).format("ll"),
           CreatedBy: registerUser?.createdBy,
-          CourseType:registerUser?.courseType,
+          CourseType: registerUser?.courseType,
           Description: registerUser?.description,
-          IsActive:registerUser?.isActive,
-          UpdatedAt:moment(registerUser?.updatedAt).format("ll"),
+          IsActive: registerUser?.isActive,
+          UpdatedAt: moment(registerUser?.updatedAt).format("ll"),
           UpdatedBy: registerUser?.updatedBy,
           CreatedAtVC: moment(registerUser?.vcid?.createdAt).format("ll"),
           CreatedByVC: registerUser?.vcid?.createdBy,
           VehicleCategory: registerUser?.vcid?.vehicleCategory,
           DescriptionVC: registerUser?.vcid?.description,
-          IsActiveVC:registerUser?.vcid?.isActive,
-          UpdatedAtVC:moment(registerUser?.vcid?.updatedAt).format("ll"),
+          IsActiveVC: registerUser?.vcid?.isActive,
+          UpdatedAtVC: moment(registerUser?.vcid?.updatedAt).format("ll"),
           UpdatedByVC: registerUser?.vcid?.updatedBy,
         };
         setDataCSV((currVal) => [...currVal, data]);
@@ -535,27 +535,27 @@ const CourseType = ({ getNewCount, title }) => {
               </button>
             </div>
             <div className="cus-medium-button-style button-height">
-            <CsvDownload
-              className={``}
-              data={dataCSV}
-              filename="Donations.csv"
-              style={{
-                //pass other props, like styles
-                backgroundColor: "#CC0001",
-                borderRadius: "6px",
-                border: "1px solid #fff",
-                display: "inline-block",
-                cursor: "pointer",
-                color: "#FFFFFF",
-                fontSize: "12px",
-                padding: "10px 18px",
-                textDecoration: "none",
-                position: "right",
-              }}
-            >
-              Export to Excel
-            </CsvDownload>
-          </div>
+              <CsvDownload
+                className={``}
+                data={dataCSV}
+                filename="Donations.csv"
+                style={{
+                  //pass other props, like styles
+                  backgroundColor: "#CC0001",
+                  borderRadius: "6px",
+                  border: "1px solid #fff",
+                  display: "inline-block",
+                  cursor: "pointer",
+                  color: "#FFFFFF",
+                  fontSize: "12px",
+                  padding: "10px 18px",
+                  textDecoration: "none",
+                  position: "right",
+                }}
+              >
+                Export to Excel
+              </CsvDownload>
+            </div>
           </div>
 
           <Modal show={showStatus} onHide={handleCloseShowStatus}>
@@ -652,7 +652,7 @@ const CourseType = ({ getNewCount, title }) => {
           </Toolbar>
           <List>
             {isAddCourseType === true ? (
-              <div className="form ml-30 "> 
+              <div className="form ml-30 ">
                 {/* Name Amenintie */}
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -836,7 +836,7 @@ const CourseType = ({ getNewCount, title }) => {
                         name="VehicleCategory"
                         // value={inputValue.VehicleCategory}
                         onChange={(e) => {
-                            handleOnChnage(e);
+                          handleOnChnage(e);
                         }}
                       >
                         <option value="" disabled selected hidden>
