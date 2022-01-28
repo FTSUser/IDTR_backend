@@ -1603,7 +1603,7 @@ const User = ({ getNewCount, title }) => {
                           />
                         </div>
                         <div className="register-grid-items12">
-                          <label>License Authority District<span>*</span></label>
+                          <label>License Authority (District)<span>*</span></label>
 
                           <Select
                             options={districts.map(e => ({ label: e.name, value: e.name }))}
@@ -1614,7 +1614,7 @@ const User = ({ getNewCount, title }) => {
                           />
                         </div>
                         <div className="register-grid-items12">
-                          <label>License Authority Town / city<span>*</span></label>
+                          <label>License Authority (Town / city)<span>*</span></label>
 
                           <Select
                             options={city.map(e => ({ label: e.name, value: e.name }))}

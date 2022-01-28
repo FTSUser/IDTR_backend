@@ -35,7 +35,7 @@ export function AsideMenuList({ layoutProps }) {
                 {/* <SVG
                   src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
                 /> */}
-                <img src="media/allIconsForTable/dashboard.png" /> 
+                <img src="media/allIconsForTable/dashboard.svg" /> 
               </span>
               <span className="menu-text">Dashboard</span>
             </NavLink>
@@ -49,7 +49,7 @@ export function AsideMenuList({ layoutProps }) {
                 {/* <SVG
                   src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
                 /> */}
-                <img src="media/allIconsForTable/user.png" /> 
+                <img src="media/allIconsForTable/user.svg" /> 
               </span>
               <span className="menu-text">User</span>
             </NavLink>
@@ -70,7 +70,7 @@ export function AsideMenuList({ layoutProps }) {
                 {/* <SVG
                   src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
                 /> */}
-                <img src="media/allIconsForTable/course.png" /> 
+                <img src="media/allIconsForTable/course.svg" /> 
               </span>
               <span className="menu-text">Course Selection</span>
               <i className="menu-arrow" />
@@ -147,7 +147,7 @@ export function AsideMenuList({ layoutProps }) {
                 {/* <SVG
                   src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
                 /> */}
-                <img src="media/allIconsForTable/CMs.png" /> 
+                <img src="media/allIconsForTable/CMs.svg" /> 
               </span>
               <span className="menu-text">CMS</span>
             </NavLink>
@@ -161,7 +161,7 @@ export function AsideMenuList({ layoutProps }) {
                 {/* <SVG
                   src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
                 /> */}
-                <img src="media/allIconsForTable/info.png" /> 
+                <img src="media/allIconsForTable/info.svg" /> 
               </span>
               <span className="menu-text">Information</span>
             </NavLink>
@@ -175,7 +175,7 @@ export function AsideMenuList({ layoutProps }) {
                 {/* <SVG
                   src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
                 /> */}
-                <img src="media/allIconsForTable/time.png" /> 
+                <img src="media/allIconsForTable/time.svg" /> 
               </span>
               <span className="menu-text">TimeSlot</span>
             </NavLink>
@@ -189,7 +189,7 @@ export function AsideMenuList({ layoutProps }) {
                 {/* <SVG
                   src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
                 /> */}
-                <img src="media/allIconsForTable/makemoney.png" /> 
+                <img src="media/allIconsForTable/payment.svg" /> 
               </span>
               <span className="menu-text">Payment</span>
             </NavLink>
@@ -203,7 +203,7 @@ export function AsideMenuList({ layoutProps }) {
                 {/* <SVG
                   src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
                 /> */}
-                <img src="media/allIconsForTable/annoncment.png" /> 
+                <img src="media/allIconsForTable/annoncment.svg" /> 
               </span>
               <span className="menu-text">Announcement</span>
             </NavLink>
@@ -220,7 +220,7 @@ export function AsideMenuList({ layoutProps }) {
                 {/* <SVG
                   src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
                 /> */}
-                <img src="media/allIconsForTable/banner.png" /> 
+                <img src="media/allIconsForTable/banner.svg" /> 
               </span>
               <span className="menu-text">Banner</span>
             </NavLink>
@@ -234,7 +234,7 @@ export function AsideMenuList({ layoutProps }) {
                 {/* <SVG
                   src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
                 /> */}
-                <img src="media/allIconsForTable/description.png" /> 
+                <img src="media/allIconsForTable/description.svg" /> 
               </span>
               <span className="menu-text">Banner Description</span>
             </NavLink>
@@ -248,7 +248,7 @@ export function AsideMenuList({ layoutProps }) {
                 {/* <SVG
                   src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
                 /> */}
-                <img src="media/allIconsForTable/client.png" /> 
+                <img src="media/allIconsForTable/client.svg" /> 
               </span>
               <span className="menu-text">Clients</span>
             </NavLink>
@@ -264,7 +264,7 @@ export function AsideMenuList({ layoutProps }) {
                 {/* <SVG
                   src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
                 /> */}
-                <img src="media/allIconsForTable/feedback.png" /> 
+                <img src="media/allIconsForTable/feedback.svg" /> 
               </span>
               <span className="menu-text">FeedBack</span>
             </NavLink>
@@ -278,7 +278,7 @@ export function AsideMenuList({ layoutProps }) {
                 {/* <SVG
                   src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
                 /> */}
-                <img src="media/allIconsForTable/contactus.png" /> 
+                <img src="media/allIconsForTable/contactus.svg" /> 
               </span>
               <span className="menu-text">Contact-Us</span>
             </NavLink>
@@ -292,7 +292,7 @@ export function AsideMenuList({ layoutProps }) {
                 {/* <SVG
                   src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
                 /> */}
-                <img src="media/allIconsForTable/FAQ.png" /> 
+                <img src="media/allIconsForTable/FAQ.svg" /> 
               </span>
               <span className="menu-text">FAQ</span>
             </NavLink>
