@@ -395,7 +395,7 @@ const Cms = ({ getNewCount, title }) => {
                   setInputValue({
                     titleName: row?.titleName,
                     image: row?.image,
-                    titleName:row?.titleName
+                    titleName: row?.titleName
                   });
 
                   setDescription(row?.description);
@@ -874,36 +874,35 @@ const Cms = ({ getNewCount, title }) => {
             {isViewMoreCms === true ? (
               <div className="form ml-30 ">
                 <div className="form-group row mb-0">
-                  <p>Title:</p>
+                  <p className="titles">Title:</p>
                 </div>
                 <div className="form-group row mr-20">
                   <p
                     dangerouslySetInnerHTML={{
                       __html: dataViewMore?.titleName,
                     }}
-                    className=""
+                    className="cms-des"
                   />
                 </div>
                 <div className="form-group row mb-0">
-                  <p>Description:</p>
+                  <p className="titles">Description:</p>
                 </div>
                 <div className="form-group row mr-20">
                   <p
                     dangerouslySetInnerHTML={{
                       __html: dataViewMore?.description,
                     }}
-                    className=""
+                    className="cms-des"
                   />
                 </div>
                 <div className="form-group row mb-0">
-                  <p>Image:</p>
+                  <p className="titles">Image:</p>
                 </div>
                 <div className="form-group row mr-20">
                   <img
                     src={dataViewMore?.image}
                     alt=""
-                    height="256px"
-                    width="512px"
+                    className="cmsImage"
                   />
                 </div>
               </div>

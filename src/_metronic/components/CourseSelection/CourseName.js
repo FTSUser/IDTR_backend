@@ -390,7 +390,7 @@ const CourseName = ({ getNewCount, title }) => {
               }}
             >
               <Tooltip title="Status Property" arrow>
-                <div className="cus-medium-button-style">
+                <div className="cus-medium-button-style widthfixed">
                   <button className="btn btn-success mr-2">
                     {row?.isActive === true ? "Active" : "Deactive"}
                   </button>
@@ -585,24 +585,24 @@ const CourseName = ({ getNewCount, title }) => {
           Certificate: registerUser?.certificate,
           Validity: registerUser?.validity,
           DocumentRequired: registerUser?.documentRequired,
-          CourseName:registerUser?.courseName,
+          CourseName: registerUser?.courseName,
           Description: registerUser?.description,
-          IsActive:registerUser?.isActive,
-          UpdatedAt:moment(registerUser?.updatedAt).format("ll"),
+          IsActive: registerUser?.isActive,
+          UpdatedAt: moment(registerUser?.updatedAt).format("ll"),
           UpdatedBy: registerUser?.updatedBy,
           CreatedAtVC: moment(registerUser?.vcid?.createdAt).format("ll"),
           CreatedByVC: registerUser?.vcid?.createdBy,
           VehicleCategory: registerUser?.vcid?.vehicleCategory,
           DescriptionVC: registerUser?.vcid?.description,
-          IsActiveVC:registerUser?.vcid?.isActive,
-          UpdatedAtVC:moment(registerUser?.vcid?.updatedAt).format("ll"),
+          IsActiveVC: registerUser?.vcid?.isActive,
+          UpdatedAtVC: moment(registerUser?.vcid?.updatedAt).format("ll"),
           UpdatedByVC: registerUser?.vcid?.updatedBy,
           CreatedAtCT: moment(registerUser?.ctid?.createdAt).format("ll"),
           CreatedByCT: registerUser?.ctid?.createdBy,
           CourseType: registerUser?.ctid?.courseType,
           DescriptionCT: registerUser?.ctid?.description,
-          IsActiveCT:registerUser?.ctid?.isActive,
-          UpdatedAtCT:moment(registerUser?.ctid?.updatedAt).format("ll"),
+          IsActiveCT: registerUser?.ctid?.isActive,
+          UpdatedAtCT: moment(registerUser?.ctid?.updatedAt).format("ll"),
           UpdatedByCT: registerUser?.ctid?.updatedBy,
         };
         setDataCSV((currVal) => [...currVal, data]);
@@ -792,7 +792,7 @@ const CourseName = ({ getNewCount, title }) => {
                                 value={item?._id}
                                 selected={
                                   inputValueForAdd?.VehicleCategory ===
-                                  item?._id
+                                    item?._id
                                     ? true
                                     : false
                                 }

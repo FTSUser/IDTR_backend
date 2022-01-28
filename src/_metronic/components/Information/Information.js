@@ -84,9 +84,9 @@ const Information = ({ getNewCount, title }) => {
     setDataViewMore({});
   };
 
-  useEffect(() => {}, [inputValueForAdd]);
+  useEffect(() => { }, [inputValueForAdd]);
 
-  useEffect(() => {}, [idForEditStatus]);
+  useEffect(() => { }, [idForEditStatus]);
 
   const handleAdminUpdateClose = () => {
     setInputValue({});
@@ -123,7 +123,7 @@ const Information = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.Information);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     } else {
       await ApiGet(
         `information/getAllInformation?search=${search}&page=${page}&limit=${countPerPage}`
@@ -133,14 +133,14 @@ const Information = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.Information);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
   const validateFormForAddAdmin = () => {
     let formIsValid = true;
     let errorsForAdd = {};
-    
+
     if (inputValueForAdd && !inputValueForAdd.titleName) {
       formIsValid = false;
       errorsForAdd["name"] = "*Please Enter Name!";
@@ -181,9 +181,9 @@ const Information = ({ getNewCount, title }) => {
     }
   };
 
-  
 
-  
+
+
 
 
   const validateForm = () => {
@@ -195,12 +195,12 @@ const Information = ({ getNewCount, title }) => {
       errors["name"] = "*Please Enter Name!";
     }
 
-   
+
     if (!description) {
       formIsValid = false;
       errors["description"] = "*Please Enter Description!";
     }
-   
+
     setErrors(errors);
     return formIsValid;
   };
@@ -227,7 +227,7 @@ const Information = ({ getNewCount, title }) => {
       });
   };
 
-  useEffect(() => {}, [inputValue]);
+  useEffect(() => { }, [inputValue]);
 
   const handleUpdateAnnouncementDetails = (e) => {
     e.preventDefault();
@@ -267,7 +267,7 @@ const Information = ({ getNewCount, title }) => {
       width: "65px",
     },
 
-   
+
 
     {
       name: "Title",
@@ -287,7 +287,7 @@ const Information = ({ getNewCount, title }) => {
       sortable: true,
     },
 
-  
+
     {
       name: "Description",
       selector: "description",
@@ -305,7 +305,7 @@ const Information = ({ getNewCount, title }) => {
       },
       sortable: true,
     },
-   
+
     {
       name: "Actions",
       cell: (row) => {
@@ -482,7 +482,7 @@ const Information = ({ getNewCount, title }) => {
           <List>
             {isAddAnnouncement === true ? (
               <div className="form ml-30 ">
-               <div className="form-group row">
+                <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter Name
                   </label>
@@ -511,7 +511,7 @@ const Information = ({ getNewCount, title }) => {
                   </div>
                 </div>
 
-           
+
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -542,7 +542,7 @@ const Information = ({ getNewCount, title }) => {
                   </div>
                 </div>
 
-                
+
                 <div className="d-flex align-items-center justify-content-center">
                   <button
                     onClick={(e) => {
@@ -612,7 +612,7 @@ const Information = ({ getNewCount, title }) => {
                   </div>
                 </div> */}
 
-               
+
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -643,7 +643,7 @@ const Information = ({ getNewCount, title }) => {
                   </div>
                 </div>
 
-               
+
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -675,7 +675,7 @@ const Information = ({ getNewCount, title }) => {
                 </div>
                 {/* update image */}
 
-                
+
 
                 <div className="d-flex align-items-center justify-content-center">
                   <button
@@ -719,27 +719,27 @@ const Information = ({ getNewCount, title }) => {
             {isViewMoreAnnouncement === true ? (
               <div className="honda-container">
                 <div className="honda-text-grid">
-                 
+
                   <div className="honda-text-grid-items">
-                    <span>Title:</span>
+                    <span className="titles">Title:</span>
                     <p
                       dangerouslySetInnerHTML={{
                         __html: dataViewMore?.titleName,
                       }}
-                      className=""
+                      className="cms-des"
                     />
                   </div>
-                  
+
                   <div className="honda-text-grid-items">
                     <p>Description:</p>
                     <p
                       dangerouslySetInnerHTML={{
                         __html: dataViewMore?.description,
                       }}
-                      className=""
+                      className="cms-des"
                     />
                   </div>
-                  
+
                 </div>
               </div>
             ) : null}
