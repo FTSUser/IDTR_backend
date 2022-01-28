@@ -510,8 +510,10 @@ console.log(file, "fileData")
 
   //for search data
 
+  
   const handleSearch = (e) => {
-    setSearch(e.target.value);
+    let val = e.target.value.replace(/[^\w\s]/gi, "");
+    setSearch(val);
   };
 
   const debouncedSearchTerm = useDebounce(search, 500);
@@ -567,7 +569,8 @@ console.log('filteredAnnouncement',filteredAnnouncement);
                 <input
                   type="text"
                   className={`form-control form-control-lg form-control-solid `}
-                  name="title"
+                  name="search"
+                  value={search}
                   placeholder="Search Banner"
                   onChange={(e) => handleSearch(e)}
                 />

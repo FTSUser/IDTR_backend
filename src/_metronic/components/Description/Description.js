@@ -18,15 +18,10 @@ import Slide from "@material-ui/core/Slide";
 import { Button } from "react-bootstrap";
 import { Modal } from "react-bootstrap";
 import Loader from "react-loader-spinner";
-import DatePicker from "react-datepicker";
 import { ToastContainer, toast } from "react-toastify";
-import { reject } from "lodash";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import moment from "moment";
-import S3 from "react-aws-s3";
-import { AwsConfig } from "../../../config/S3Backet/app.config";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -54,7 +49,6 @@ const Description = ({ getNewCount, title }) => {
   const [errorsForAdd, setErrorsForAdd] = useState({});
   const [idForEditStatus, setIdForEditStatus] = useState("");
   const [idForDeleteAnnouncement, setIdForDeleteAnnouncement] = useState("");
-  const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [countPerPage, setCountPerPage] = useState(10);
@@ -180,137 +174,6 @@ const Description = ({ getNewCount, title }) => {
         });
     }
   };
-
-  const getImageArrayFromUpload = async (e) => {
-    // let files = e.target.files;
-    // let imageB64Arr = [];
-
-    const file = e?.target?.files[0]
-console.log(file, "fileData")
-
-    if(file){
-      if (file.type.includes("image")) {
-        let config = AwsConfig;
-        config = {
-          ...config,
-          dirName: "Cerificate",
-          ACL: "public-read",
-        };
-        const Reacts3Client = new S3(config);
-        let urls;
-        
-        let filename = "AboutImage(" + new Date().getTime() + ")";
-        let data = await Reacts3Client.uploadFile(file, filename);
-        // try {
-        // if (data.status === 204) {
-        urls = data.location;
-        if (urls) {
-          setInputValueForAdd((cv) => {
-            return { ...cv, image: urls };
-          });
-          console.log("urls====>", urls);
-        }
-        return urls;
-      } else {
-        errorsForAdd["image"] = "*Please Upload Image!";
-      }
-
-    }
-
-
-
-    // if (files[0].type.includes("image")) {
-    //   for (let i in Array.from(files)) {
-    //     convertBaseTo64(files.item(i))
-    //       .then((file) => {
-    //         imageB64Arr.push(file);
-    //       })
-    //       .catch((err) => {
-    //       });
-    //   }
-
-    //   setInputValueForAdd((cv) => {
-    //     return { ...cv, image: imageB64Arr };
-    //   });
-    // } else {
-    //   errorsForAdd["image"] = "*Please Upload Image!";
-    // }
-  };
-
-  const uploadS3bucket = async (file) => {
-    debugger
-    console.log("filesData", file)
-    if(file){
-        if (file.type.includes("image")) {
-          let config = AwsConfig;
-          config = {
-            ...config,
-            dirName: "Cerificate",
-            ACL: "public-read",
-          };
-          const Reacts3Client = new S3(config);
-          let urls;
-          let f = file;
-          let filename = "AboutImage(" + new Date().getTime() + ")";
-          let data = await Reacts3Client.uploadFile(f, filename);
-          // try {
-          // if (data.status === 204) {
-          urls = data.location;
-          if (urls) {
-            setInputValueForAdd((cv) => {
-              return { ...cv, image: urls };
-            });
-            console.log("urls====>", urls);
-          }
-          return urls;
-        } else {
-          errorsForAdd["image"] = "*Please Upload Image!";
-        }
-
-      }
-  };
-
-  const getImageArrayFromUpdateUpload = async (e) => {
-    let files = e.target.files[0];
-
-    if (files.type.includes("image")) {
-      let config = AwsConfig;
-      config = {
-        ...config,
-        dirName: "Cerificate",
-        ACL: "public-read",
-      };
-      const Reacts3Client = new S3(config);
-      let urls;
-      let f = files;
-      let filename = "AboutImage(" + new Date().getTime() + ")";
-      let data = await Reacts3Client.uploadFile(f, filename);
-      // try {
-      // if (data.status === 204) {
-      urls = data.location;
-      if (urls) {
-        setInputValue((cv) => {
-          return { ...cv, image: urls };
-        });
-      }
-    } else {
-      errors["image"] = "*Please Upload Image!";
-    }
-  };
-
-  const convertBaseTo64 = (file) => {
-    return new Promise((resolve, object) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = function () {
-        resolve(fileReader.result);
-      };
-      fileReader.onerror = function (error) {
-        reject(error);
-      };
-    });
-  };
-
   const validateForm = () => {
     let formIsValid = true;
     let errors = {};
@@ -516,8 +379,10 @@ console.log(file, "fileData")
 
   //for search data
 
+  
   const handleSearch = (e) => {
-    setSearch(e.target.value);
+    let val = e.target.value.replace(/[^\w\s]/gi, "");
+    setSearch(val);
   };
 
   const debouncedSearchTerm = useDebounce(search, 500);
@@ -566,15 +431,16 @@ console.log(file, "fileData")
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2"> Description</h2>
+              <h2 className="pl-3 pt-2">Banner Description</h2>
             </div>
             <div className="col">
               <div>
                 <input
                   type="text"
                   className={`form-control form-control-lg form-control-solid `}
-                  name="title"
-                  placeholder="Search Description"
+                  name="search"
+                  value={search}
+                  placeholder="Search Banner Description"
                   onChange={(e) => handleSearch(e)}
                 />
               </div>
@@ -586,7 +452,7 @@ console.log(file, "fileData")
                 }}
                 className="btn btn-success mr-2"
               >
-                Add Description
+                Add Banner Description
               </button>
             </div>
           </div>

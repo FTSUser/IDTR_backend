@@ -384,8 +384,10 @@ const VehicleCategory = ({ getNewCount, title }) => {
 
   //for search data
 
+  
   const handleSearch = (e) => {
-    setSearch(e.target.value);
+    let val = e.target.value.replace(/[^\w\s]/gi, "");
+    setSearch(val);
   };
 
   const debouncedSearchTerm = useDebounce(search, 500);
@@ -471,14 +473,15 @@ const VehicleCategory = ({ getNewCount, title }) => {
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2">Vehicle Details</h2>
+              <h2 className="pl-3 pt-2">vehicle category</h2>
             </div>
             <div className="col">
               <div>
                 <input
                   type="text"
                   className={`form-control form-control-lg form-control-solid `}
-                  name="title"
+                  name="search"
+                  value={search}
                   placeholder="Search Vehicle Category"
                   onChange={(e) => handleSearch(e)}
                 />
@@ -491,7 +494,7 @@ const VehicleCategory = ({ getNewCount, title }) => {
                 }}
                 className="btn btn-success mr-2"
               >
-                Add Vehicle Details
+                Add Vehicle Category
               </button>
             </div>
             <div className="cus-medium-button-style button-height">

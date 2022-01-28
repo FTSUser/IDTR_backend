@@ -72,6 +72,7 @@ const User = ({ getNewCount, title }) => {
   const [dataForPayment, setDataForPayment] = useState([]);
   const [loading, setLoading] = useState(false);
   const [idForDeleteAnnouncement, setIdForDeleteAnnouncement] = useState("");
+  const [search, setSearch] = useState("");
 
   const [idForUpdateAnnouncementData, setIdForUpdateAnnouncementData] =
     useState("");
@@ -264,8 +265,8 @@ const User = ({ getNewCount, title }) => {
 
   const getAllUser = async () => {
     setIsLoaderVisible(true);
-    // if (!search) {
-    await ApiGet(`register/getAllRegister?page=${page}&limit=${countPerPage}`)
+    // if (!search) { 
+    await ApiGet(`register/getAllRegister?search=${search}&page=${page}&limit=${countPerPage}`)
       .then((res) => {
         setIsLoaderVisible(false);
         console.log("artistreport", res);
@@ -1273,6 +1274,44 @@ const User = ({ getNewCount, title }) => {
 
     }
   }
+
+
+  const handleSearch = (e) => {
+    let val = e.target.value.replace(/[^\w\s]/gi, "");
+    setSearch(val);
+  };
+
+  const debouncedSearchTerm = useDebounce(search, 500);
+  function useDebounce(value, delay) {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+    useEffect(
+      () => {
+        const handler = setTimeout(() => {
+          setDebouncedValue(value);
+        }, delay);
+        return () => {
+          clearTimeout(handler);
+        };
+      },
+      [value, delay]
+    );
+    return debouncedValue;
+  }
+
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      setIsLoaderVisible(true);
+      setPage(1);
+      setCount(0);
+      setCountPerPage(countPerPage);
+      getAllUser();
+    } else {
+      setPage(1);
+      setCount(0);
+      setCountPerPage(countPerPage);
+      getAllUser();
+    }
+  }, [debouncedSearchTerm]);
   return (
     <>
       <div className="card p-1">
@@ -1287,9 +1326,10 @@ const User = ({ getNewCount, title }) => {
                 <input
                   type="text"
                   className={`form-control form-control-lg form-control-solid `}
-                  name="title"
-                  placeholder="Search Course Name"
-                // onChange={(e) => handleSearch(e)}
+                  name="search"
+                  value={search}
+                  placeholder="Search User"
+                onChange={(e) => handleSearch(e)}
                 />
               </div>
             </div>

@@ -96,7 +96,7 @@ export default function Login() {
           Login Account
         </h3>
         <p className="text-muted font-weight-bold">
-          Enter your sername and Password
+          Enter your Phone Number and Password
 
         </p>
       </div>

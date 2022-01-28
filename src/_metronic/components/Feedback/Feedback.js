@@ -36,8 +36,7 @@ const Feedback = ({ getNewCount, title }) => {
 
   const getAllFeedback = async () => {
     setIsLoaderVisible(true);
-    if (!search) {
-      await ApiGet(`feedback/getAllFeedback`)
+      await ApiGet(`feedback/getAllFeedback?page=${page}&limit=${countPerPage}`)
         .then((res) => {
           setIsLoaderVisible(false);
           console.log("artistreport", res);
@@ -47,7 +46,6 @@ const Feedback = ({ getNewCount, title }) => {
         .catch((err) => {
           console.log(err);
         });
-    }
   };
 
   useEffect(() => {

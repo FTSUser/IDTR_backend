@@ -330,8 +330,10 @@ const FAQ = ({ getNewCount, title }) => {
 
   //for search data
 
+  
   const handleSearch = (e) => {
-    setSearch(e.target.value);
+    let val = e.target.value.replace(/[^\w\s]/gi, "");
+    setSearch(val);
   };
 
   const debouncedSearchTerm = useDebounce(search, 500);
@@ -380,8 +382,9 @@ const FAQ = ({ getNewCount, title }) => {
                 <input
                   type="text"
                   className={`form-control form-control-lg form-control-solid `}
-                  name="title"
-                  placeholder="Search Announcement"
+                  name="search"
+                  value={search}
+                  placeholder="Search FAQs"
                   onChange={(e) => handleSearch(e)}
                 />
               </div>
