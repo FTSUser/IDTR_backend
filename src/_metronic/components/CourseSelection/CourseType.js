@@ -111,6 +111,7 @@ const CourseType = ({ getNewCount, title }) => {
 
   const getAllCourseType = async () => {
     setIsLoaderVisible(true);
+    if (!search) {
     await ApiGet(`courseType/getAllCourseType?page=${page}&limit=${countPerPage}`)
       .then((res) => {
         setIsLoaderVisible(false);
@@ -121,6 +122,18 @@ const CourseType = ({ getNewCount, title }) => {
       .catch((err) => {
         console.log(err);
       })
+    } else {
+      await ApiGet(`courseType/getAllCourseType?search=${search}&page=${page}&limit=${countPerPage}`)
+      .then((res) => {
+        setIsLoaderVisible(false);
+        console.log("artistreport", res);
+        setFilteredCourseType(res?.data?.payload?.Question);
+        setCount(res?.data?.payload?.count);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
   };
 
   const getAllVehicleCategory = async () => {
