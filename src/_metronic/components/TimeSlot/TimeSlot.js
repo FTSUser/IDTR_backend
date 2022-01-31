@@ -467,9 +467,9 @@ const TimeSlot = ({ getNewCount, title }) => {
                   getAllVehicleCategory();
                   setInputValueForAdd({
                     seat: row?.seat,
-                    CourseName: row?.cnid?._id,
-                    CourseType: row?.ctid?._id,
-                    VehicleCategory: row?.vcid?._id,
+                    CourseName: row?.cnid,
+                    CourseType: row?.ctid,
+                    VehicleCategory: row?.vcid,
                   });
                   setStartTime(row?.startTime);
                   setEndTime(row?.endTime);
@@ -862,13 +862,13 @@ const TimeSlot = ({ getNewCount, title }) => {
                                 key={item._id}
                                 value={item._id}
                                 selected={
-                                  inputValueForAdd?.CourseType === item._id
+                                  inputValueForAdd?.CourseType === item?._id
                                     ? true
                                     : false
                                 }
                               >
                                 {" "}
-                                {item.courseType}{" "}
+                                {item?.courseType}{" "}
                               </option>
                             );
                           })}
