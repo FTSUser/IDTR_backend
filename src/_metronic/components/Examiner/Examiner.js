@@ -290,7 +290,7 @@ const Examiner = ({ getNewCount, title }) => {
                                         name: row?.name,
                                         email: row?.email,
                                         phone: row?.phone,
-                                        password:row?.password
+                                        password: row?.password
                                     });
                                     setIsEditPopUp(true);
                                 }}
@@ -673,7 +673,7 @@ const Examiner = ({ getNewCount, title }) => {
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
                                             <input
-                                                type="password"
+                                                type="text"
                                                 className={`form-control form-control-lg form-control-solid `}
                                                 id="password"
                                                 name="password"

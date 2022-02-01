@@ -134,10 +134,7 @@ const Question = (props) => {
             errorsForAdd["name"] = "*Please Enter Name!";
         }
 
-        if (inputValueForAdd && !inputValueForAdd.description) {
-            formIsValid = false;
-            errorsForAdd["description"] = "*Please Enter description!";
-        }
+
         if (inputValueForAdd && !inputValueForAdd.language) {
             formIsValid = false;
             errorsForAdd["language"] = "*Please Enter language!";
@@ -151,10 +148,12 @@ const Question = (props) => {
         e.preventDefault();
         if (validateFormForAddAdmin()) {
             let Data = {
-                name: inputValueForAdd.name,
-                description: inputValueForAdd.description,
-                language: inputValueForAdd.language,
 
+                Qsetid: props?.location?.state?.question?._id,
+                Qname: inputValueForAdd.name,
+                type: inputValueForAdd.type,
+                Option: option,
+                language: inputValueForAdd.language
 
             };
             ApiPost(`question/addQuestion`, Data)
@@ -709,7 +708,49 @@ const Question = (props) => {
                                         </span>
                                     </div>
                                 </div>
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Select Language
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <select
+                                                className={`form-control form-control-lg form-control-solid`}
+                                                name="language"
+                                                value={inputValueForAdd.language}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
 
+                                            >
+                                                <option>Select Languagae...</option>
+                                                <option value="english" selected={
+                                                    inputValueForAdd?.language ===
+                                                        "english"
+                                                        ? true
+                                                        : false
+                                                }>English </option>
+                                                <option value="hindi" selected={
+                                                    inputValueForAdd?.language ===
+                                                        "hindi"
+                                                        ? true
+                                                        : false
+                                                }>Hindi</option>
+
+                                            </select>
+
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["language"]}
+                                        </span>
+                                    </div>
+                                </div>
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
                                         Selaect Type
@@ -719,8 +760,12 @@ const Question = (props) => {
                                             name="type"
                                             type="text"
 
+                                            value={inputValueForAdd.type}
 
-                                            onChange={(e) => typeChanges(e)}
+                                            onChange={(e) => {
+                                                handleOnChnageAdd(e);
+                                                typeChanges(e)
+                                            }}
                                         >
                                             <option selected disabled value="">
                                                 Type
@@ -855,7 +900,7 @@ const Question = (props) => {
                                         className="btn btn-success mr-2"
                                     >
 
-                                        <span> {isEditPopUp === false ? 'Add' : 'Edit'}  Question Set</span>
+                                        <span> {isEditPopUp === false ? 'Add' : 'Edit'}  Question </span>
                                         {loading && (
                                             <span className="mx-3 spinner spinner-white"></span>
                                         )}
