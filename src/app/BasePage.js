@@ -22,6 +22,8 @@ import FAQ from "../_metronic/components/FAQ/FAQ";
 import { getUserInfo } from "../../src/utils/user.util";
 import PaymentData from "../_metronic/components/PaymentForm/payment";
 import Examiner from "../_metronic/components/Examiner/Examiner";
+import QuestionSet from "../_metronic/components/QuestionSet/QuestionSet";
+import Question from "../_metronic/components/Question/Question";
 export default function BasePage() {
   let userInfo = getUserInfo()
 
@@ -56,6 +58,11 @@ export default function BasePage() {
             <ContentRoute exact path="/contactus" component={ContactUs} />
             <ContentRoute exact path="/faq" component={FAQ} />
             <ContentRoute exact path="/examiner" component={Examiner} />
+            <ContentRoute exact path="/questionSet" component={QuestionSet} />
+            <ContentRoute exact path="/question" component={Question} />
+
+
+
 
             <Redirect to="error/error-v6" />
           </Switch>

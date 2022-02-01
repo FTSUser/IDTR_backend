@@ -310,6 +310,20 @@ export function AsideMenuList({ layoutProps }) {
               <span className="menu-text">Examiner </span>
             </NavLink>
           </li>
+          <li
+            className={`menu-item ${getMenuItemActive("/questionSet", false)}`}
+            aria-haspopup="true"
+          >
+            <NavLink className="menu-link" to="/questionSet">
+              <span className="svg-icon menu-icon">
+                {/* <SVG
+                  src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
+                /> */}
+                <img src="media/allIconsForTable/FAQ.svg" />
+              </span>
+              <span className="menu-text">Question Set </span>
+            </NavLink>
+          </li>
         </ul>
       )}
       {/* end::Menu Nav */}

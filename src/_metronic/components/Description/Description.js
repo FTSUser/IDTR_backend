@@ -78,9 +78,9 @@ const Description = ({ getNewCount, title }) => {
     setDataViewMore({});
   };
 
-  useEffect(() => {}, [inputValueForAdd]);
+  useEffect(() => { }, [inputValueForAdd]);
 
-  useEffect(() => {}, [idForEditStatus]);
+  useEffect(() => { }, [idForEditStatus]);
 
   const handleAdminUpdateClose = () => {
     setInputValue({});
@@ -117,7 +117,7 @@ const Description = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     } else {
       await ApiGet(
         `content/getAllContent?search=${search}&page=${page}&limit=${countPerPage}`
@@ -127,14 +127,14 @@ const Description = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
   const validateFormForAddAdmin = () => {
     let formIsValid = true;
     let errorsForAdd = {};
-    
+
     if (inputValueForAdd && !inputValueForAdd.titleName) {
       formIsValid = false;
       errorsForAdd["name"] = "*Please Enter Name!";
@@ -183,12 +183,12 @@ const Description = ({ getNewCount, title }) => {
       errors["name"] = "*Please Enter Name!";
     }
 
-   
+
     if (!description) {
       formIsValid = false;
       errors["description"] = "*Please Enter Description!";
     }
-   
+
     setErrors(errors);
     return formIsValid;
   };
@@ -215,7 +215,7 @@ const Description = ({ getNewCount, title }) => {
       });
   };
 
-  useEffect(() => {}, [inputValue]);
+  useEffect(() => { }, [inputValue]);
 
   const handleUpdateAnnouncementDetails = (e) => {
     e.preventDefault();
@@ -255,7 +255,7 @@ const Description = ({ getNewCount, title }) => {
       width: "65px",
     },
 
-   
+
 
     {
       name: "Title",
@@ -275,7 +275,7 @@ const Description = ({ getNewCount, title }) => {
       sortable: true,
     },
 
-  
+
     {
       name: "Description",
       selector: "description",
@@ -293,7 +293,7 @@ const Description = ({ getNewCount, title }) => {
       },
       sortable: true,
     },
-   
+
     {
       name: "Actions",
       cell: (row) => {
@@ -316,7 +316,7 @@ const Description = ({ getNewCount, title }) => {
                 </Tooltip>
               </div>
             </div>
-            <div
+            {/* <div
               className="cursor-pointer"
               onClick={() => {
                 setShow(true);
@@ -326,7 +326,7 @@ const Description = ({ getNewCount, title }) => {
               <Tooltip title="Delete Announcement" arrow>
                 <DeleteIcon />
               </Tooltip>
-            </div>
+            </div> */}
             <div
               className="cursor-pointer pl-2"
               onClick={() => {
@@ -379,7 +379,7 @@ const Description = ({ getNewCount, title }) => {
 
   //for search data
 
-  
+
   const handleSearch = (e) => {
     let val = e.target.value.replace(/[^\w\s]/gi, "");
     setSearch(val);
@@ -445,7 +445,7 @@ const Description = ({ getNewCount, title }) => {
                 />
               </div>
             </div>
-            <div className="cus-medium-button-style button-height">
+            {/* <div className="cus-medium-button-style button-height">
               <button
                 onClick={() => {
                   setIsAddAnnouncement(true);
@@ -454,7 +454,7 @@ const Description = ({ getNewCount, title }) => {
               >
                 Add Banner Description
               </button>
-            </div>
+            </div> */}
           </div>
 
           {/* delete model */}
@@ -559,7 +559,7 @@ const Description = ({ getNewCount, title }) => {
                   </div>
                 </div> */}
 
-          
+
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -590,7 +590,7 @@ const Description = ({ getNewCount, title }) => {
                   </div>
                 </div>
 
-           
+
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -621,7 +621,7 @@ const Description = ({ getNewCount, title }) => {
                   </div>
                 </div>
 
-                
+
                 <div className="d-flex align-items-center justify-content-center">
                   <button
                     onClick={(e) => {
@@ -691,7 +691,7 @@ const Description = ({ getNewCount, title }) => {
                   </div>
                 </div> */}
 
-               
+
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -722,7 +722,7 @@ const Description = ({ getNewCount, title }) => {
                   </div>
                 </div>
 
-               
+
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -754,7 +754,7 @@ const Description = ({ getNewCount, title }) => {
                 </div>
                 {/* update image */}
 
-                
+
 
                 <div className="d-flex align-items-center justify-content-center">
                   <button
@@ -798,7 +798,7 @@ const Description = ({ getNewCount, title }) => {
             {isViewMoreAnnouncement === true ? (
               <div className="honda-container">
                 <div className="honda-text-grid">
-                 
+
                   <div className="honda-text-grid-items">
                     <span>Title:</span>
                     <p
@@ -808,7 +808,7 @@ const Description = ({ getNewCount, title }) => {
                       className=""
                     />
                   </div>
-                  
+
                   <div className="honda-text-grid-items">
                     <p>Description:</p>
                     <p
@@ -818,7 +818,7 @@ const Description = ({ getNewCount, title }) => {
                       className=""
                     />
                   </div>
-                  
+
                 </div>
               </div>
             ) : null}
