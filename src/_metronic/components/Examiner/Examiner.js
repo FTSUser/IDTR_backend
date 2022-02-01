@@ -290,6 +290,7 @@ const Examiner = ({ getNewCount, title }) => {
                                         name: row?.name,
                                         email: row?.email,
                                         phone: row?.phone,
+                                        password:row?.password
                                     });
                                     setIsEditPopUp(true);
                                 }}
