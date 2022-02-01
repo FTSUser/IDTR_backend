@@ -316,7 +316,7 @@ const Description = ({ getNewCount, title }) => {
                 </Tooltip>
               </div>
             </div>
-            {/* <div
+            <div
               className="cursor-pointer"
               onClick={() => {
                 setShow(true);
@@ -326,7 +326,7 @@ const Description = ({ getNewCount, title }) => {
               <Tooltip title="Delete Announcement" arrow>
                 <DeleteIcon />
               </Tooltip>
-            </div> */}
+            </div>
             <div
               className="cursor-pointer pl-2"
               onClick={() => {
@@ -445,7 +445,7 @@ const Description = ({ getNewCount, title }) => {
                 />
               </div>
             </div>
-            {/* <div className="cus-medium-button-style button-height">
+            <div className="cus-medium-button-style button-height">
               <button
                 onClick={() => {
                   setIsAddAnnouncement(true);
@@ -454,7 +454,7 @@ const Description = ({ getNewCount, title }) => {
               >
                 Add Banner Description
               </button>
-            </div> */}
+            </div>
           </div>
 
           {/* delete model */}
