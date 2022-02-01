@@ -9,6 +9,8 @@ import {
 import { Tooltip } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import List from "@material-ui/core/List";
+import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
+
 import Toolbar from "@material-ui/core/Toolbar";
 import CreateIcon from "@material-ui/icons/Create";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -18,61 +20,47 @@ import Slide from "@material-ui/core/Slide";
 import { Button } from "react-bootstrap";
 import { Modal } from "react-bootstrap";
 import Loader from "react-loader-spinner";
-import DatePicker from "react-datepicker";
 import { ToastContainer, toast } from "react-toastify";
-import { reject } from "lodash";
-import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import moment from "moment";
-import S3 from "react-aws-s3";
-import { AwsConfig } from "../../../config/S3Backet/app.config";
-import { number } from "yup";
+import CsvDownload from "react-json-to-csv";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const Examiner = ({ getNewCount, title }) => {
-    const [filteredAnnouncement, setFilteredAnnouncement] = useState({});
+    const [filteredCourseName, setFilteredCourseName] = useState({});
     const [isLoaderVisible, setIsLoaderVisible] = useState(false);
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false);
-
-    const [dataViewMore, setDataViewMore] = useState({});
-    const [isViewMoreAnnouncement, setIsViewMoreAnnouncement] = useState(false);
-    const [date, setDate] = useState(new Date());
-
-    const [description, setDescription] = useState("");
-    console.log("dataViewMore", dataViewMore);
-    //new data
-    const [isUpdateAnnouncement, setIsUpdateAnnouncement] = useState(false);
-    const [isAddAnnouncement, setIsAddAnnouncement] = useState(false);
-    const [idForUpdateAnnouncementData, setIdForUpdateAnnouncementData] =
+    const [isAddCourseName, setIsAddCourseName] = useState(false);
+    const [idForUpdateCourseNameData, setIdForUpdateCourseNameData] =
         useState("");
-    const [inputValue, setInputValue] = useState({});
     const [inputValueForAdd, setInputValueForAdd] = useState({});
-    const [errors, setErrors] = useState({});
     const [errorsForAdd, setErrorsForAdd] = useState({});
-    const [idForEditStatus, setIdForEditStatus] = useState("");
-    const [idForDeleteAnnouncement, setIdForDeleteAnnouncement] = useState("");
-    const [status, setStatus] = useState("");
+    const [idForDeleteCourseName, setIdForDeleteCourseName] = useState("");
     const [page, setPage] = useState(1);
     const [count, setCount] = useState(0);
     const [countPerPage, setCountPerPage] = useState(10);
     const [search, setSearch] = useState("");
-    const [isPopupForEdit, setIsPopupForEdit] = useState(false);
+    const [showStatus, setShowStatus] = useState(false);
+    const [idForUpdateCourseStatus, setIdForUpdateCourseStatus] = useState("");
+    const [statusDisplay, setStatusDisplay] = useState(false);
+    const [getCourseType, setGetCourseType] = useState([]);
+    const [filteredVehicleCategory, setFilteredVehicleCategory] = useState([]);
+
+    const [dataViewMore, setDataViewMore] = useState({});
+    const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
+    const [isEditPopUp, setIsEditPopUp] = useState(false);
 
     useEffect(() => {
         document.title = "Honda | Examiner";
     }, []);
 
-    useEffect(() => {
-        console.log("isPopupForEdit", isPopupForEdit);
-    }, [isPopupForEdit]);
-
-    useEffect(() => {
-        console.log("inputValueForAdd", inputValueForAdd);
-    }, [inputValueForAdd]);
+    const handleViewMoreClose = () => {
+        setIsViewMoreAboutus(false);
+        setDataViewMore({});
+    };
 
     const handleOnChnageAdd = (e) => {
         const { name, value } = e.target;
@@ -80,68 +68,85 @@ const Examiner = ({ getNewCount, title }) => {
         setErrorsForAdd({ ...errorsForAdd, [name]: "" });
     };
 
-    const handleViewMoreClose = () => {
-        setIsViewMoreAnnouncement(false);
-        setDataViewMore({});
-    };
-
     const handleAddAdminClose = () => {
-        setInputValue({});
-        setDescription([]);
-        setDate(new Date());
-
-        setIsAddAnnouncement(false);
-        setIsPopupForEdit(false);
+        setInputValueForAdd({});
+        setIsAddCourseName(false);
+        setErrorsForAdd({});
+        setIsEditPopUp(false);
+        setGetCourseType([]);
     };
 
     const handleClose = () => {
         setShow(false);
     };
 
+    const handleCloseShowStatus = () => {
+        setShowStatus(false);
+    };
+
     useEffect(() => {
-        getAllAnnouncement();
+        getAllCourseName();
     }, [page, countPerPage]);
 
-    const getAllAnnouncement = async () => {
+
+
+
+    const getAllCourseName = async () => {
         setIsLoaderVisible(true);
         if (!search) {
-            await ApiGet(`examiner/getAllExaminer?page=${page}&limit=${countPerPage}`)
+            await ApiGet(
+                `examiner/getAllExaminer?page=${page}&limit=${countPerPage}`
+            )
                 .then((res) => {
                     setIsLoaderVisible(false);
-                    setFilteredAnnouncement(res?.data?.payload?.Examiner);
+                    console.log("artistreport", res);
+                    setFilteredCourseName(res?.data?.payload?.Examiner);
                     setCount(res?.data?.payload?.count);
+                    setGetCourseType([]);
                 })
-                .catch((err) => { });
+                .catch((err) => {
+                    console.log(err);
+                });
         } else {
             await ApiGet(
                 `examiner/getAllExaminer?search=${search}&page=${page}&limit=${countPerPage}`
             )
                 .then((res) => {
                     setIsLoaderVisible(false);
-                    setFilteredAnnouncement(res?.data?.payload?.Examiner);
+                    console.log("artistreport", res);
+                    setFilteredCourseName(res?.data?.payload?.Examiner);
                     setCount(res?.data?.payload?.count);
                 })
-                .catch((err) => { });
+                .catch((err) => {
+                    console.log(err);
+                });
         }
+    };
+
+    const handleUpdateStatusCourseName = (status) => {
+        ApiPut(`courseName/updateStatus/${idForUpdateCourseStatus}`, {
+            isActive: status,
+        })
+            .then((res) => {
+                if (res?.status == 200) {
+                    setShowStatus(false);
+                    toast.success("Status updated Successfully");
+                    getAllCourseName();
+                } else {
+                    toast.error(res?.data?.message);
+                }
+            })
+            .catch((err) => {
+                toast.error(err.message);
+            });
     };
 
     const validateFormForAddAdmin = () => {
         let formIsValid = true;
         let errorsForAdd = {};
-
         if (inputValueForAdd && !inputValueForAdd.name) {
             formIsValid = false;
             errorsForAdd["name"] = "*Please Enter Name!";
-        }
-        if (inputValueForAdd && !inputValueForAdd?.phone) {
-            formIsValid = false;
-            errorsForAdd["phone"] = "*Please Enter Phone Number!";
-        } else if (
-            inputValueForAdd?.phone &&
-            !inputValueForAdd?.phone.match(/^\d{10}$/)
-        ) {
-            formIsValid = false;
-            errorsForAdd["phone"] = "*Please Enter vaild phone number!";
         }
         if (inputValueForAdd && !inputValueForAdd.email) {
             formIsValid = false;
@@ -155,28 +160,32 @@ const Examiner = ({ getNewCount, title }) => {
             formIsValid = false;
             errorsForAdd["email"] = "*Please Enter vaild Email!";
         }
+        if (inputValueForAdd && !inputValueForAdd.phone) {
+            formIsValid = false;
+            errorsForAdd["phone"] = "*Please Enter Phone!";
+        }
+
 
         setErrorsForAdd(errorsForAdd);
         return formIsValid;
     };
 
-    const handleAddAnnouncementDetails = (e) => {
+    const handelAddCourseNameDetails = (e) => {
         e.preventDefault();
         if (validateFormForAddAdmin()) {
             let Data = {
-                name: inputValueForAdd?.name,
-                email: inputValueForAdd?.email,
-                phone: Number(inputValueForAdd?.phone),
+                name: inputValueForAdd.name,
+                phone: inputValueForAdd.phone,
+                email: inputValueForAdd.email
             };
             ApiPost(`examiner/addExaminer`, Data)
                 .then((res) => {
+                    console.log("resresres", res);
                     if (res?.status == 200) {
-                        setIsAddAnnouncement(false);
+                        setIsAddCourseName(false);
                         toast.success(res?.data?.message);
                         setInputValueForAdd({});
-                        setDescription("");
-                        setDate(new Date());
-                        getAllAnnouncement();
+                        getAllCourseName();
                     } else {
                         toast.error(res?.data?.message);
                     }
@@ -187,16 +196,13 @@ const Examiner = ({ getNewCount, title }) => {
         }
     };
 
-    const handleDeleteAnnouncement = () => {
-        ApiDelete(`examiner/deleteExaminer/${idForDeleteAnnouncement}`)
+    const handleDeleteCourseName = () => {
+        ApiDelete(`examiner/deleteExaminer/${idForDeleteCourseName}`)
             .then((res) => {
                 if (res?.status == 200) {
                     setShow(false);
                     toast.success("Deleted Successfully");
-                    getAllAnnouncement();
-                    // {
-                    //   document.title === "Dashboard | OUR LEISURE HOME" && getNewCount();
-                    // }
+                    getAllCourseName();
                     setPage(1);
                     setCount(0);
                     setCountPerPage(countPerPage);
@@ -209,27 +215,24 @@ const Examiner = ({ getNewCount, title }) => {
             });
     };
 
-    useEffect(() => { }, [inputValue]);
-
-    const handleUpdateAnnouncementDetails = (e) => {
+    const handelUpdateCourseNameDetails = (e) => {
         e.preventDefault();
-
         if (validateFormForAddAdmin()) {
             let Data = {
                 name: inputValueForAdd?.name,
                 email: inputValueForAdd?.email,
                 phone: inputValueForAdd?.phone,
-                // password: inputValueForAdd.password
             };
-            ApiPut(`examiner/updateExaminer/${idForUpdateAnnouncementData}`, Data)
+            ApiPut(`examiner/updateExaminer/${idForUpdateCourseNameData}`, Data)
                 .then((res) => {
+                    console.log("resres", res);
                     if (res?.status == 200) {
-                        setIsAddAnnouncement(false);
+                        setIsAddCourseName(false);
                         toast.success(res?.data?.message);
                         setInputValueForAdd({});
-                        setDescription("");
-                        setDate(new Date());
-                        getAllAnnouncement();
+                        getAllCourseName();
+                        setIsEditPopUp(false);
+                        setGetCourseType([]);
                     } else {
                         toast.error(res?.data?.message);
                     }
@@ -247,59 +250,24 @@ const Examiner = ({ getNewCount, title }) => {
             cell: (row, index) => (page - 1) * countPerPage + (index + 1),
             width: "65px",
         },
+        {
+            name: "Email",
+            selector: "email",
+            sortable: true,
+        },
 
         {
             name: "Name",
-            selector: "Name",
-            cell: (row) => {
-                return (
-                    <>
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: row?.name,
-                            }}
-                            className=""
-                        />
-                    </>
-                );
-            },
+            selector: "name",
             sortable: true,
         },
 
         {
-            name: "Email",
-            selector: "Email",
-            cell: (row) => {
-                return (
-                    <>
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: row?.email,
-                            }}
-                            className=""
-                        />
-                    </>
-                );
-            },
-            sortable: true,
-        },
-        {
             name: "Phone",
-            selector: "Phone",
-            cell: (row) => {
-                return (
-                    <>
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: row?.phone,
-                            }}
-                            className=""
-                        />
-                    </>
-                );
-            },
+            selector: "phone",
             sortable: true,
         },
+
         {
             name: "Actions",
             cell: (row) => {
@@ -309,44 +277,49 @@ const Examiner = ({ getNewCount, title }) => {
                             <div
                                 className="cursor-pointer pl-2"
                                 onClick={() => {
-                                    setIsAddAnnouncement(true);
-                                    setIdForUpdateAnnouncementData(row._id);
-                                    console.log("logrow", row);
+                                    console.log("typetype", row);
+                                    setIsAddCourseName(true);
+                                    setIdForUpdateCourseNameData(row._id);
                                     setInputValueForAdd({
                                         name: row?.name,
                                         email: row?.email,
                                         phone: row?.phone,
                                     });
-                                    setIsPopupForEdit(true);
+                                    setIsEditPopUp(true);
                                 }}
                             >
-                                <Tooltip title="Edit Announcement" arrow>
+                                <Tooltip title="Edit Examiner" arrow>
                                     <CreateIcon />
                                 </Tooltip>
                             </div>
                         </div>
+
                         <div
                             className="cursor-pointer"
                             onClick={() => {
                                 setShow(true);
-                                setIdForDeleteAnnouncement(row?._id);
+                                setIdForDeleteCourseName(row?._id);
                             }}
                         >
-                            <Tooltip title="Delete Announcement" arrow>
+                            <Tooltip title="Delete Examiner" arrow>
                                 <DeleteIcon />
                             </Tooltip>
                         </div>
-                        <div
-                            className="cursor-pointer pl-2"
-                            onClick={() => {
-                                setIsViewMoreAnnouncement(true);
-                                setDataViewMore(row);
-                            }}
-                        >
-                            <Tooltip title="Show More" arrow>
-                                <InfoOutlinedIcon />
-                            </Tooltip>
-                        </div>
+                        <>
+                            <div
+                                className="cursor-pointer pl-2"
+                                onClick={() => {
+                                    setIsViewMoreAboutus(true);
+                                    setDataViewMore(row);
+                                    console.log("rowShow", row);
+                                    console.log("isViewMoreAboutus", isViewMoreAboutus);
+                                }}
+                            >
+                                <Tooltip title="Show More" arrow>
+                                    <InfoOutlinedIcon />
+                                </Tooltip>
+                            </div>
+                        </>
                     </>
                 );
             },
@@ -388,6 +361,7 @@ const Examiner = ({ getNewCount, title }) => {
 
     //for search data
 
+
     const handleSearch = (e) => {
         let val = e.target.value.replace(/[^\w\s]/gi, "");
         setSearch(val);
@@ -423,15 +397,49 @@ const Examiner = ({ getNewCount, title }) => {
             setPage(1);
             setCount(0);
             setCountPerPage(countPerPage);
-            getAllAnnouncement();
+            getAllCourseName();
         } else {
             setPage(1);
             setCount(0);
             setCountPerPage(countPerPage);
-            getAllAnnouncement();
+            getAllCourseName();
         }
     }, [debouncedSearchTerm]);
-    console.log("filteredAnnouncement", filteredAnnouncement);
+
+    //for excel file
+    const [allCourseNameExcel, setAllCourseNameExcel] = useState([]);
+    const [dataCSV, setDataCSV] = useState([]);
+    useEffect(() => {
+        getAllCourseNameForExcel();
+    }, []);
+
+    const getAllCourseNameForExcel = async () => {
+        // if (!search) {
+        await ApiGet(`examiner/getAll`)
+            .then((res) => {
+                console.log("regist", res?.data?.payload?.Examiner);
+                setAllCourseNameExcel(res?.data?.payload?.Examiner);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        // }
+    };
+    useEffect(() => {
+        if (allCourseNameExcel) {
+            allCourseNameExcel.map((registerUser) => {
+                let data = {
+                    CreatedAt: moment(registerUser?.createdAt).format("ll"),
+                    ExaminerName: registerUser?.name,
+                    ExaminerEmail: registerUser?.email,
+                    ExaminerPhone: registerUser?.phone,
+                };
+                setDataCSV((currVal) => [...currVal, data]);
+            });
+        }
+        console.log("UsertCsvReport", allCourseNameExcel);
+    }, [allCourseNameExcel]);
+
     return (
         <>
             <div className="card p-1">
@@ -439,7 +447,7 @@ const Examiner = ({ getNewCount, title }) => {
                 <div className="p-2 mb-2">
                     <div className="row mb-4 pr-3">
                         <div className="col d-flex justify-content-between">
-                            <h2 className="pl-3 pt-2"> Examiner</h2>
+                            <h2 className="pl-3 pt-2">Examiner</h2>
                         </div>
                         <div className="col">
                             <div>
@@ -456,12 +464,34 @@ const Examiner = ({ getNewCount, title }) => {
                         <div className="cus-medium-button-style button-height">
                             <button
                                 onClick={() => {
-                                    setIsAddAnnouncement(true);
+                                    setIsAddCourseName(true);
                                 }}
                                 className="btn btn-success mr-2"
                             >
                                 Add Examiner
                             </button>
+                        </div>
+                        <div className="cus-medium-button-style button-height">
+                            <CsvDownload
+                                className={``}
+                                data={dataCSV}
+                                filename="Donations.csv"
+                                style={{
+                                    //pass other props, like styles
+                                    backgroundColor: "#CC0001",
+                                    borderRadius: "6px",
+                                    border: "1px solid #fff",
+                                    display: "inline-block",
+                                    cursor: "pointer",
+                                    color: "#FFFFFF",
+                                    fontSize: "12px",
+                                    padding: "10px 18px",
+                                    textDecoration: "none",
+                                    position: "right",
+                                }}
+                            >
+                                Export to Excel
+                            </CsvDownload>
                         </div>
                     </div>
 
@@ -480,7 +510,7 @@ const Examiner = ({ getNewCount, title }) => {
                             <Button
                                 variant="danger"
                                 onClick={() => {
-                                    handleDeleteAnnouncement();
+                                    handleDeleteCourseName();
                                 }}
                             >
                                 Delete
@@ -491,7 +521,7 @@ const Examiner = ({ getNewCount, title }) => {
 
                     <DataTable
                         columns={columns}
-                        data={filteredAnnouncement}
+                        data={filteredCourseName}
                         customStyles={customStyles}
                         style={{
                             marginTop: "-3rem",
@@ -517,10 +547,10 @@ const Examiner = ({ getNewCount, title }) => {
                 </div>
             </div>
 
-            {isAddAnnouncement ? (
+            {isAddCourseName ? (
                 <Dialog
                     fullScreen
-                    open={isAddAnnouncement}
+                    open={isAddCourseName}
                     onClose={handleAddAdminClose}
                     TransitionComponent={Transition}
                 >
@@ -535,8 +565,9 @@ const Examiner = ({ getNewCount, title }) => {
                         </IconButton>
                     </Toolbar>
                     <List>
-                        {isAddAnnouncement === true ? (
+                        {isAddCourseName === true ? (
                             <div className="form ml-30 ">
+                                {/* Name Amenintie */}
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
                                         Enter Name
@@ -593,7 +624,6 @@ const Examiner = ({ getNewCount, title }) => {
                                         </span>
                                     </div>
                                 </div>
-
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
                                         Enter Phone
@@ -601,10 +631,17 @@ const Examiner = ({ getNewCount, title }) => {
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
                                             <input
-                                                type="number"
+                                                type="text"
                                                 className={`form-control form-control-lg form-control-solid `}
                                                 id="phone"
                                                 name="phone"
+                                                minLength={10}
+                                                maxLength={10}
+                                                onKeyPress={(event) => {
+                                                    if (!/[0-9]/.test(event.key)) {
+                                                        event.preventDefault();
+                                                    }
+                                                }}
                                                 value={inputValueForAdd.phone}
                                                 onChange={(e) => {
                                                     handleOnChnageAdd(e);
@@ -622,33 +659,51 @@ const Examiner = ({ getNewCount, title }) => {
                                         </span>
                                     </div>
                                 </div>
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Enter Password
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="password"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="password"
+                                                name="password"
+
+                                                value={inputValueForAdd.password}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["password"]}
+                                        </span>
+                                    </div>
+                                </div>
 
                                 <div className="d-flex align-items-center justify-content-center">
-                                    {isPopupForEdit ? (
-                                        <button
-                                            onClick={(e) => {
-                                                handleUpdateAnnouncementDetails(e);
-                                            }}
-                                            className="btn btn-success mr-2"
-                                        >
-                                            <span>Update Details</span>
-                                            {loading && (
-                                                <span className="mx-3 spinner spinner-white"></span>
-                                            )}
-                                        </button>
-                                    ) : (
-                                        <button
-                                            onClick={(e) => {
-                                                handleAddAnnouncementDetails(e);
-                                            }}
-                                            className="btn btn-success mr-2"
-                                        >
-                                            <span>Add Details</span>
-                                            {loading && (
-                                                <span className="mx-3 spinner spinner-white"></span>
-                                            )}
-                                        </button>
-                                    )}
+                                    <button
+                                        onClick={(e) => {
+                                            isEditPopUp === false
+                                                ? handelAddCourseNameDetails(e)
+                                                : handelUpdateCourseNameDetails(e);
+                                        }}
+                                        className="btn btn-success mr-2"
+                                    >
+
+                                        <span> {isEditPopUp === false ? 'Add' : 'Edit'}  Examiner</span>
+                                        {loading && (
+                                            <span className="mx-3 spinner spinner-white"></span>
+                                        )}
+                                    </button>
                                 </div>
                             </div>
                         ) : null}
@@ -656,12 +711,10 @@ const Examiner = ({ getNewCount, title }) => {
                 </Dialog>
             ) : null}
 
-            {/* view more */}
-
-            {isViewMoreAnnouncement ? (
+            {isViewMoreAboutus ? (
                 <Dialog
                     fullScreen
-                    open={isViewMoreAnnouncement}
+                    open={isViewMoreAboutus}
                     onClose={handleViewMoreClose}
                     TransitionComponent={Transition}
                 >
@@ -676,26 +729,34 @@ const Examiner = ({ getNewCount, title }) => {
                         </IconButton>
                     </Toolbar>
                     <List>
-                        {isViewMoreAnnouncement === true ? (
+                        {isViewMoreAboutus === true ? (
                             <div className="honda-container">
                                 <div className="honda-text-grid">
                                     <div className="honda-text-grid-items">
-                                        <span>Title:</span>
+                                        <span>Name:</span>
                                         <p
                                             dangerouslySetInnerHTML={{
-                                                __html: dataViewMore?.title,
+                                                __html: dataViewMore?.name,
                                             }}
                                             className=""
                                         />
                                     </div>
-
                                     <div className="honda-text-grid-items">
-                                        <span>Image:</span>
-                                        <img
-                                            src={dataViewMore?.image}
-                                            alt=""
-                                            height="90px"
-                                            width="170px"
+                                        <span>Email:</span>
+                                        <p
+                                            dangerouslySetInnerHTML={{
+                                                __html: dataViewMore?.email,
+                                            }}
+                                            className=""
+                                        />
+                                    </div>
+                                    <div className="honda-text-grid-items">
+                                        <span>Phone:</span>
+                                        <p
+                                            dangerouslySetInnerHTML={{
+                                                __html: dataViewMore?.phone,
+                                            }}
+                                            className=""
                                         />
                                     </div>
                                 </div>
