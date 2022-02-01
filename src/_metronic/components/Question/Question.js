@@ -420,6 +420,139 @@ const Question = (props) => {
         console.log("UsertCsvReport", allCourseNameExcel);
     }, [allCourseNameExcel]);
 
+    const [mcqCheck, setMcqCheck] = useState(false);
+    const [checkBoxCheck, setCheckBoxCheck] = useState(false);
+    function typeChanges(e) {
+        if (e.target.value == "mcq") {
+            setMcqCheck(true);
+            setCheckBoxCheck(false);
+        } else {
+            setCheckBoxCheck(true);
+            setMcqCheck(false);
+        }
+    }
+    const [option, setOption] = useState([
+        {
+            no: "1",
+            name: "",
+            istrue: false,
+        },
+        {
+            no: "2",
+            name: "",
+            istrue: false,
+        },
+        {
+            no: "3",
+            name: "",
+            istrue: false,
+        },
+        {
+            no: "4",
+            name: "",
+            istrue: false,
+        },
+    ]);
+    const handleQuestion = (data, index) => {
+        let list = [...option];
+        let i = index;
+        let type = data.target.type;
+        let value;
+        if (type === "radio") {
+            value = data.target.value === "on" ? true : false;
+        } else {
+            value = data.target.value;
+        }
+        if (i === 0) {
+            if (type === "radio") {
+                list[i].istrue = value;
+                list.map((item, index) => {
+                    if (index !== i) {
+                        list[index].istrue = !value;
+                    }
+                });
+            } else if (type === "text") {
+                list[index].name = value;
+            }
+        } else if (i === 1) {
+            if (type === "radio") {
+                list[i].istrue = value;
+                list.map((item, index) => {
+                    if (index !== i) {
+                        list[index].istrue = !value;
+                    }
+                });
+            } else if (type === "text") {
+                list[i].name = value;
+            }
+        } else if (i === 2) {
+            if (type === "radio") {
+                list[i].istrue = value;
+                list.map((item, index) => {
+                    if (index !== i) {
+                        list[index].istrue = !value;
+                    }
+                });
+            } else if (type === "text") {
+                list[i].name = value;
+            }
+        } else if (i === 3) {
+            if (type === "radio") {
+                list[i].istrue = value;
+                list.map((item, index) => {
+                    if (index !== i) {
+                        list[index].istrue = !value;
+                    }
+                });
+            } else if (type === "text") {
+                list[i].name = value;
+            }
+        } else {
+            setOption(option);
+        }
+        setOption(list);
+    };
+    const handleQuestionCheckBox = (data, index) => {
+        let list = [...option];
+        let i = index + 1;
+        let type = data.target.type;
+
+        let value;
+        if (type === "checkbox") {
+            value = data.target.value === "on" ? true : false;
+        } else {
+            value = data.target.value;
+        }
+
+        if (i === 1) {
+            if (type === "checkbox") {
+                list[i - 1].istrue = !list[i - 1].istrue;
+            } else if (type === "text") {
+                list[i - 1].name = value;
+            }
+        } else if (i === 2) {
+            if (type === "checkbox") {
+                list[i - 1].istrue = !list[i - 1].istrue;
+            } else if (type === "text") {
+                list[i - 1].name = value;
+            }
+        } else if (i === 3) {
+            if (type === "checkbox") {
+                list[i - 1].istrue = !list[i - 1].istrue;
+            } else if (type === "text") {
+                list[i - 1].name = value;
+            }
+        } else if (i === 4) {
+            if (type === "checkbox") {
+                list[i - 1].istrue = !list[i - 1].istrue;
+            } else if (type === "text") {
+                list[i - 1].name = value;
+            }
+        } else {
+            setOption(option);
+        }
+        setOption(list);
+    };
     return (
         <>
             <div className="card p-1">
@@ -579,75 +712,135 @@ const Question = (props) => {
 
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Enter Description
+                                        Selaect Type
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
-                                        <div>
-                                            <input
-                                                type="text"
-                                                className={`form-control form-control-lg form-control-solid `}
-                                                id="description"
-                                                name="description"
-                                                value={inputValueForAdd.description}
-                                                onChange={(e) => {
-                                                    handleOnChnageAdd(e);
-                                                }}
-                                            />
-                                        </div>
-                                        <span
-                                            style={{
-                                                color: "red",
-                                                top: "5px",
-                                                fontSize: "12px",
-                                            }}
+                                        <select
+                                            name="type"
+                                            type="text"
+
+
+                                            onChange={(e) => typeChanges(e)}
                                         >
-                                            {errorsForAdd["description"]}
-                                        </span>
+                                            <option selected disabled value="">
+                                                Type
+                                            </option>
+                                            <option value="mcq">MCQ</option>
+                                            <option value="checkbox">Check Box</option>
+                                        </select>
                                     </div>
                                 </div>
 
-                                <div className="form-group row">
-                                    <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Select Language
-                                    </label>
-                                    <div className="col-lg-9 col-xl-6">
-                                        <div>
-                                            <select
-                                                className={`form-control form-control-lg form-control-solid`}
-                                                name="language"
-                                                value={inputValueForAdd.language}
-                                                onChange={(e) => {
-                                                    handleOnChnageAdd(e);
-                                                }}
+                                <div>
+                                    {mcqCheck && (
+                                        <>
+                                            {isAddCourseName
+                                                ? option.map((data, index) => {
+                                                    return (
+                                                        <div
+                                                            className="form-group d-flex align-items-center"
+                                                            key={index}
+                                                        >
+                                                            <input
 
-                                            >
-                                                <option>Select Languagae...</option>
-                                                <option value="english" selected={
-                                                    inputValueForAdd?.language ===
-                                                        "english"
-                                                        ? true
-                                                        : false
-                                                }>English </option>
-                                                <option value="hindi" selected={
-                                                    inputValueForAdd?.language ===
-                                                        "hindi"
-                                                        ? true
-                                                        : false
-                                                }>Hindi</option>
+                                                                type="radio"
+                                                                name="radio"
+                                                                id="radio"
+                                                                defaultChecked={data.istrue}
+                                                                onChange={(e) => handleQuestion(e, index)}
+                                                            />
+                                                            <input
+                                                                className="form-control"
+                                                                type="text"
+                                                                value={data.name}
+                                                                onChange={(e) => handleQuestion(e, index)}
+                                                                required
+                                                            />
+                                                        </div>
+                                                    );
+                                                })
+                                                : [0, 1, 2, 3].map((data, index) => {
+                                                    return (
+                                                        <div
+                                                            className="form-group d-flex align-items-center"
+                                                            key={index}
+                                                        >
+                                                            <input
+                                                                className="mr-3"
+                                                                type="radio"
+                                                                name="radio"
+                                                                id="radio"
+                                                                checked={data.istrue}
+                                                                // defaultChecked={data.istrue}
+                                                                onChange={(e) => handleQuestion(e, index)}
+                                                            />
+                                                            <input
+                                                                className="form-control"
+                                                                type="text"
+                                                                onChange={(e) => handleQuestion(e, index)}
+                                                                required
+                                                            />
+                                                        </div>
+                                                    );
+                                                })}
+                                        </>
+                                    )}
 
-                                            </select>
-
-                                        </div>
-                                        <span
-                                            style={{
-                                                color: "red",
-                                                top: "5px",
-                                                fontSize: "12px",
-                                            }}
-                                        >
-                                            {errorsForAdd["language"]}
-                                        </span>
-                                    </div>
+                                    {checkBoxCheck && (
+                                        <>
+                                            {isAddCourseName
+                                                ? option.map((data, index) => {
+                                                    return (
+                                                        <div
+                                                            className="form-group d-flex align-items-center"
+                                                            key={index}
+                                                        >
+                                                            <input
+                                                                className="mr-3 "
+                                                                type="checkbox"
+                                                                defaultChecked={data.istrue}
+                                                                onChange={(e) =>
+                                                                    handleQuestionCheckBox(e, index)
+                                                                }
+                                                            />
+                                                            <input
+                                                                className="form-control"
+                                                                type="text"
+                                                                value={data.name}
+                                                                onChange={(e) =>
+                                                                    handleQuestionCheckBox(e, index)
+                                                                }
+                                                                required
+                                                            />
+                                                        </div>
+                                                    );
+                                                })
+                                                : [0, 1, 2, 3].map((data, index) => {
+                                                    return (
+                                                        <div
+                                                            className="form-group d-flex align-items-center"
+                                                            key={index}
+                                                        >
+                                                            <input
+                                                                className="mr-3"
+                                                                type="checkbox"
+                                                                onChange={(e) =>
+                                                                    handleQuestionCheckBox(e, index)
+                                                                }
+                                                            />
+                                                            <input
+                                                                className="form-control"
+                                                                type="text"
+                                                                onChange={(e) =>
+                                                                    handleQuestionCheckBox(e, index)
+                                                                }
+                                                                required
+                                                            />
+                                                        </div>
+                                                    );
+                                                })}
+                                        </>
+                                    )}
                                 </div>
 
 
