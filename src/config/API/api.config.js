@@ -9,5 +9,5 @@ export const API =
   hostname === "localhost" && isLocalApi
     ? API_PROD
     : hostname === "localhost"
-    ? API_DEV
-    : API_PROD;
+      ? API_DEV
+      : API_PROD;

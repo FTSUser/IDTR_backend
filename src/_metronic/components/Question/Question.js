@@ -75,6 +75,10 @@ const Question = (props) => {
         setErrorsForAdd({});
         setIsEditPopUp(false);
         setGetCourseType([]);
+        setOption([])
+        setMcqCheck(false)
+        setCheckBoxCheck(false)
+
     };
 
     const handleClose = () => {
@@ -139,6 +143,10 @@ const Question = (props) => {
             formIsValid = false;
             errorsForAdd["language"] = "*Please Enter language!";
         }
+        if (inputValueForAdd && !inputValueForAdd.type) {
+            formIsValid = false;
+            errorsForAdd["type"] = "*Please Enter type!";
+        }
 
         setErrorsForAdd(errorsForAdd);
         return formIsValid;
@@ -148,29 +156,35 @@ const Question = (props) => {
         e.preventDefault();
         if (validateFormForAddAdmin()) {
             let Data = {
-
                 Qsetid: props?.location?.state?.question?._id,
                 Qname: inputValueForAdd.name,
                 type: inputValueForAdd.type,
                 Option: option,
                 language: inputValueForAdd.language
-
             };
-            ApiPost(`question/addQuestion`, Data)
-                .then((res) => {
-                    console.log("resresres", res);
-                    if (res?.status == 200) {
-                        setIsAddCourseName(false);
-                        toast.success(res?.data?.message);
-                        setInputValueForAdd({});
-                        getAllQuestionSet();
-                    } else {
-                        toast.error(res?.data?.message);
-                    }
-                })
-                .catch((err) => {
-                    toast.error(err.message);
-                });
+            let filter = option.filter((e) => e.istrue === true);
+            if (filter.length) {
+                ApiPost(`question/addQuestion`, Data)
+                    .then((res) => {
+                        console.log("resresres", res);
+                        if (res?.status == 200) {
+                            setIsAddCourseName(false);
+                            toast.success(res?.data?.message);
+                            setInputValueForAdd({});
+                            getAllQuestionSet();
+                        } else {
+                            toast.error(res?.data?.message);
+                        }
+                    })
+                    .catch((err) => {
+                        toast.error(err.message);
+                    });
+            } else {
+                toast.error(`Please select any one ${Data.type}`);
+            }
+
+
+
         }
     };
 
@@ -197,27 +211,34 @@ const Question = (props) => {
         e.preventDefault();
         if (validateFormForAddAdmin()) {
             let Data = {
-                name: inputValueForAdd.name,
-                description: inputValueForAdd.description,
+                Qname: inputValueForAdd.name,
+                Qsetid: props?.location?.state?.question?._id,
+                type: inputValueForAdd.type,
                 language: inputValueForAdd.language,
+                Option: option,
             };
-            ApiPut(`question/updateQuestion/${idForUpdateCourseNameData}`, Data)
-                .then((res) => {
-                    console.log("resres", res);
-                    if (res?.status == 200) {
-                        setIsAddCourseName(false);
-                        toast.success(res?.data?.message);
-                        setInputValueForAdd({});
-                        getAllQuestionSet();
-                        setIsEditPopUp(false);
-                        setGetCourseType([]);
-                    } else {
-                        toast.error(res?.data?.message);
-                    }
-                })
-                .catch((err) => {
-                    toast.error(err.message);
-                });
+            let filter = option.filter((e) => e.istrue === true);
+            if (filter.length) {
+                ApiPut(`question/updateQuestion/${idForUpdateCourseNameData}`, Data)
+                    .then((res) => {
+                        console.log("resres", res);
+                        if (res?.status == 200) {
+                            setIsAddCourseName(false);
+                            toast.success(res?.data?.message);
+                            setInputValueForAdd({});
+                            getAllQuestionSet();
+                            setIsEditPopUp(false);
+                            setGetCourseType([]);
+                        } else {
+                            toast.error(res?.data?.message);
+                        }
+                    })
+                    .catch((err) => {
+                        toast.error(err.message);
+                    });
+            } else {
+                toast.error(`Please select any one ${Data.type}`);
+            }
         }
     };
 
@@ -257,11 +278,22 @@ const Question = (props) => {
                                 onClick={() => {
                                     console.log("typetype", row);
                                     setIsAddCourseName(true);
+                                    if (row) {
+                                        if (row.type === "mcq") {
+                                            setMcqCheck(true);
+                                        } else if (row.type == "checkbox") {
+                                            setCheckBoxCheck(true);
+                                        }
+                                        setOption(row.Option);
+                                    }
+
+
                                     setIdForUpdateCourseNameData(row._id);
                                     setInputValueForAdd({
-                                        name: row?.name,
-                                        description: row?.description,
+                                        name: row?.Qname,
                                         language: row?.language,
+                                        type: row?.type
+
                                     });
                                     setIsEditPopUp(true);
                                 }}
@@ -422,7 +454,7 @@ const Question = (props) => {
     const [mcqCheck, setMcqCheck] = useState(false);
     const [checkBoxCheck, setCheckBoxCheck] = useState(false);
     function typeChanges(e) {
-        if (e.target.value == "mcq") {
+        if (e.target.value === "mcq") {
             setMcqCheck(true);
             setCheckBoxCheck(false);
         } else {
@@ -577,6 +609,30 @@ const Question = (props) => {
                             <button
                                 onClick={() => {
                                     setIsAddCourseName(true);
+                                    setOption(
+                                        [
+                                            {
+                                                no: "1",
+                                                name: "",
+                                                istrue: false,
+                                            },
+                                            {
+                                                no: "2",
+                                                name: "",
+                                                istrue: false,
+                                            },
+                                            {
+                                                no: "3",
+                                                name: "",
+                                                istrue: false,
+                                            },
+                                            {
+                                                no: "4",
+                                                name: "",
+                                                istrue: false,
+                                            },
+                                        ]
+                                    )
                                 }}
                                 className="btn btn-success mr-2"
                             >
@@ -722,6 +778,7 @@ const Question = (props) => {
                                                     handleOnChnageAdd(e);
                                                 }}
 
+
                                             >
                                                 <option>Select Languagae...</option>
                                                 <option value="english" selected={
@@ -753,28 +810,41 @@ const Question = (props) => {
                                 </div>
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Selaect Type
+                                        Select Type
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
-                                        <select
-                                            name="type"
-                                            type="text"
+                                        <div>
+                                            <select
+                                                name="type"
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid`}
+                                                value={inputValueForAdd.type}
 
-                                            value={inputValueForAdd.type}
-
-                                            onChange={(e) => {
-                                                handleOnChnageAdd(e);
-                                                typeChanges(e)
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                    typeChanges(e)
+                                                }}
+                                            >
+                                                <option selected disabled value="">
+                                                    Type
+                                                </option>
+                                                <option value="mcq" >MCQ</option>
+                                                <option value="checkbox" >Check Box</option>
+                                            </select>
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
                                             }}
                                         >
-                                            <option selected disabled value="">
-                                                Type
-                                            </option>
-                                            <option value="mcq">MCQ</option>
-                                            <option value="checkbox">Check Box</option>
-                                        </select>
+                                            {errorsForAdd["type"]}
+                                        </span>
                                     </div>
+
                                 </div>
+
 
                                 <div>
                                     {mcqCheck && (
@@ -782,49 +852,53 @@ const Question = (props) => {
                                             {isAddCourseName
                                                 ? option.map((data, index) => {
                                                     return (
-                                                        <div
-                                                            className="form-group d-flex align-items-center"
-                                                            key={index}
-                                                        >
-                                                            <input
-
-                                                                type="radio"
-                                                                name="radio"
-                                                                id="radio"
-                                                                defaultChecked={data.istrue}
-                                                                onChange={(e) => handleQuestion(e, index)}
-                                                            />
-                                                            <input
-                                                                className="form-control"
-                                                                type="text"
-                                                                value={data.name}
-                                                                onChange={(e) => handleQuestion(e, index)}
-                                                                required
-                                                            />
+                                                        <div className="col-lg-9 col-xl-6">
+                                                            <div
+                                                                className="form-group d-flex align-items-center"
+                                                                key={index}
+                                                            >
+                                                                <input
+                                                                    className="mr-3"
+                                                                    type="radio"
+                                                                    name="radio"
+                                                                    id="radio"
+                                                                    defaultChecked={data.istrue}
+                                                                    onChange={(e) => handleQuestion(e, index)}
+                                                                />
+                                                                <input
+                                                                    className="form-control"
+                                                                    type="text"
+                                                                    value={data.name}
+                                                                    onChange={(e) => handleQuestion(e, index)}
+                                                                    required
+                                                                />
+                                                            </div>
                                                         </div>
                                                     );
                                                 })
                                                 : [0, 1, 2, 3].map((data, index) => {
                                                     return (
-                                                        <div
-                                                            className="form-group d-flex align-items-center"
-                                                            key={index}
-                                                        >
-                                                            <input
-                                                                className="mr-3"
-                                                                type="radio"
-                                                                name="radio"
-                                                                id="radio"
-                                                                checked={data.istrue}
-                                                                // defaultChecked={data.istrue}
-                                                                onChange={(e) => handleQuestion(e, index)}
-                                                            />
-                                                            <input
-                                                                className="form-control"
-                                                                type="text"
-                                                                onChange={(e) => handleQuestion(e, index)}
-                                                                required
-                                                            />
+                                                        <div className="col-lg-9 col-xl-6">
+                                                            <div
+                                                                className="form-group d-flex align-items-center"
+                                                                key={index}
+                                                            >
+                                                                <input
+                                                                    className="mr-3"
+                                                                    type="radio"
+                                                                    name="radio"
+                                                                    id="radio"
+                                                                    checked={data.istrue}
+                                                                    // defaultChecked={data.istrue}
+                                                                    onChange={(e) => handleQuestion(e, index)}
+                                                                />
+                                                                <input
+                                                                    className={`form-control form-control-lg form-control-solid`}
+                                                                    type="text"
+                                                                    onChange={(e) => handleQuestion(e, index)}
+                                                                    required
+                                                                />
+                                                            </div>
                                                         </div>
                                                     );
                                                 })}
@@ -836,51 +910,55 @@ const Question = (props) => {
                                             {isAddCourseName
                                                 ? option.map((data, index) => {
                                                     return (
-                                                        <div
-                                                            className="form-group d-flex align-items-center"
-                                                            key={index}
-                                                        >
-                                                            <input
-                                                                className="mr-3 "
-                                                                type="checkbox"
-                                                                defaultChecked={data.istrue}
-                                                                onChange={(e) =>
-                                                                    handleQuestionCheckBox(e, index)
-                                                                }
-                                                            />
-                                                            <input
-                                                                className="form-control"
-                                                                type="text"
-                                                                value={data.name}
-                                                                onChange={(e) =>
-                                                                    handleQuestionCheckBox(e, index)
-                                                                }
-                                                                required
-                                                            />
+                                                        <div className="col-lg-9 col-xl-6">
+                                                            <div
+                                                                className="form-group d-flex align-items-center"
+                                                                key={index}
+                                                            >
+                                                                <input
+                                                                    className="mr-3"
+                                                                    type="checkbox"
+                                                                    defaultChecked={data.istrue}
+                                                                    onChange={(e) =>
+                                                                        handleQuestionCheckBox(e, index)
+                                                                    }
+                                                                />
+                                                                <input
+                                                                    className={`form-control form-control-lg form-control-solid`}
+                                                                    type="text"
+                                                                    value={data.name}
+                                                                    onChange={(e) =>
+                                                                        handleQuestionCheckBox(e, index)
+                                                                    }
+                                                                    required
+                                                                />
+                                                            </div>
                                                         </div>
                                                     );
                                                 })
                                                 : [0, 1, 2, 3].map((data, index) => {
                                                     return (
-                                                        <div
-                                                            className="form-group d-flex align-items-center"
-                                                            key={index}
-                                                        >
-                                                            <input
-                                                                className="mr-3"
-                                                                type="checkbox"
-                                                                onChange={(e) =>
-                                                                    handleQuestionCheckBox(e, index)
-                                                                }
-                                                            />
-                                                            <input
-                                                                className="form-control"
-                                                                type="text"
-                                                                onChange={(e) =>
-                                                                    handleQuestionCheckBox(e, index)
-                                                                }
-                                                                required
-                                                            />
+                                                        <div className="col-lg-9 col-xl-6">
+                                                            <div
+                                                                className="form-group d-flex align-items-center"
+                                                                key={index}
+                                                            >
+                                                                <input
+                                                                    className="mr-3"
+                                                                    type="checkbox"
+                                                                    onChange={(e) =>
+                                                                        handleQuestionCheckBox(e, index)
+                                                                    }
+                                                                />
+                                                                <input
+                                                                    className={`form-control form-control-lg form-control-solid`}
+                                                                    type="text"
+                                                                    onChange={(e) =>
+                                                                        handleQuestionCheckBox(e, index)
+                                                                    }
+                                                                    required
+                                                                />
+                                                            </div>
                                                         </div>
                                                     );
                                                 })}
@@ -937,16 +1015,7 @@ const Question = (props) => {
                                         <span>Name:</span>
                                         <p
                                             dangerouslySetInnerHTML={{
-                                                __html: dataViewMore?.name,
-                                            }}
-                                            className=""
-                                        />
-                                    </div>
-                                    <div className="honda-text-grid-items">
-                                        <span>Description:</span>
-                                        <p
-                                            dangerouslySetInnerHTML={{
-                                                __html: dataViewMore?.description,
+                                                __html: dataViewMore?.Qname,
                                             }}
                                             className=""
                                         />
@@ -959,6 +1028,28 @@ const Question = (props) => {
                                             }}
                                             className=""
                                         />
+                                    </div>
+                                    <div className="honda-text-grid-items">
+                                        <span>Type:</span>
+                                        <p
+                                            dangerouslySetInnerHTML={{
+                                                __html: dataViewMore?.type,
+                                            }}
+                                            className=""
+                                        />
+                                    </div>
+                                    <div className="honda-text-grid-items">
+                                        <span>Option:</span>
+                                        {
+                                            dataViewMore?.Option.map((data, key) => {
+                                                return (
+                                                    <div className="d-flex">
+                                                        <div className="mr-3"> {data?.no}</div>
+                                                        <div>{data?.name}</div>
+                                                    </div>
+                                                )
+                                            })
+                                        }
                                     </div>
                                 </div>
                             </div>
