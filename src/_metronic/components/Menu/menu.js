@@ -139,10 +139,10 @@ const Menu = ({ getNewCount, title }) => {
             formIsValid = false;
             errorsForAdd["name"] = "*Please Enter Name!";
         }
-        if (selectedCourseType?.length === 0) {
-            formIsValid = false;
-            errorsForAdd["role"] = "*Please Enter role!";
-        }
+        // if (selectedCourseType?.length === 0) {
+        //     formIsValid = false;
+        //     errorsForAdd["role"] = "*Please Enter role!";
+        // }
 
 
 
@@ -157,7 +157,7 @@ const Menu = ({ getNewCount, title }) => {
             selectedCourseType.map(o => data.push(o._id))
             let Data = {
                 name: inputValueForAdd.name,
-                assignTo: data
+                // assignTo: data
 
             };
             console.log("data", Data);
@@ -206,7 +206,7 @@ const Menu = ({ getNewCount, title }) => {
             selectedCourseType.map(o => data.push(o._id))
             let Data = {
                 name: inputValueForAdd?.name,
-                assignTo: data
+                // assignTo: data
             };
             ApiPut(`menu/updateMenu/${idForUpdateCourseNameData}`, Data)
                 .then((res) => {
@@ -242,26 +242,26 @@ const Menu = ({ getNewCount, title }) => {
             sortable: true,
         },
 
-        {
-            name: "Assign To",
-            cell: (row) => {
-                return (
-                    <>
-                        {
-                            row?.assignTo?.map((data, key) => {
-                                return (
-                                    <>
-                                        <div >
-                                            <div >{data?.roleName},</div>
-                                        </div>
-                                    </>
-                                )
-                            }
-                            )}
-                    </>
-                );
-            },
-        },
+        // {
+        //     name: "Assign To",
+        //     cell: (row) => {
+        //         return (
+        //             <>
+        //                 {
+        //                     row?.assignTo?.map((data, key) => {
+        //                         return (
+        //                             <>
+        //                                 <div >
+        //                                     <div >{data?.roleName},</div>
+        //                                 </div>
+        //                             </>
+        //                         )
+        //                     }
+        //                     )}
+        //             </>
+        //         );
+        //     },
+        // },
 
 
 
@@ -277,8 +277,8 @@ const Menu = ({ getNewCount, title }) => {
                                     console.log("typetype", row);
                                     setIsAddCourseName(true);
                                     setIdForUpdateCourseNameData(row._id);
-                                    setSelectedCourseType(row?.assignTo);
-                                    setAllCourseTypeForUpdate(row?.assignTo);
+                                    // setSelectedCourseType(row?.assignTo);
+                                    // setAllCourseTypeForUpdate(row?.assignTo);
 
 
                                     setInputValueForAdd({
@@ -596,7 +596,7 @@ const Menu = ({ getNewCount, title }) => {
                                         </span>
                                     </div>
                                 </div>
-                                <div className="form-group row">
+                                {/* <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
                                         Assign To
                                     </label>
@@ -636,7 +636,7 @@ const Menu = ({ getNewCount, title }) => {
                                         </div>
 
                                     </div>
-                                </div>
+                                </div> */}
 
 
                                 <div className="d-flex align-items-center justify-content-center">
@@ -691,7 +691,7 @@ const Menu = ({ getNewCount, title }) => {
                                             className=""
                                         />
                                     </div>
-                                    <div className="honda-text-grid-items">
+                                    {/* <div className="honda-text-grid-items">
                                         <span>Assign To:</span>
                                         {
                                             dataViewMore?.assignTo?.map((data, key) => {
@@ -700,7 +700,7 @@ const Menu = ({ getNewCount, title }) => {
                                                 )
                                             })
                                         }
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         ) : null}

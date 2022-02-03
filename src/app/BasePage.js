@@ -25,52 +25,55 @@ import Examiner from "../_metronic/components/Examiner/Examiner";
 import QuestionSet from "../_metronic/components/QuestionSet/QuestionSet";
 import Question from "../_metronic/components/Question/Question";
 import Menu from "../_metronic/components/Menu/menu";
+import Assign from "../_metronic/components/Assign/Assign";
 export default function BasePage() {
   let userInfo = getUserInfo()
 
   return (
     <>
-      {userInfo?.admin?.role?.roleName === "superadmin" ? (
-        <Suspense fallback={<LayoutSplashScreen />}>
-          <Switch>
-            <Redirect exact from="/" to="/dashboard" />
-            <ContentRoute exact path="/dashboard" component={DashboardPage} />
-            <ContentRoute exact path="/menu" component={Menu} />
 
-            <ContentRoute exact path="/cms" component={Cms} />
-            <ContentRoute exact path="/information" component={Information} />
-            <ContentRoute exact path="/courseselection/coursename" component={CourseName} />
-            <ContentRoute exact path="/courseselection/coursetype" component={CourseType} />
-            <ContentRoute exact path="/courseselection/vehiclecategory" component={VehicleCategory} />
-            <ContentRoute exact path="/user" component={User} />
-            <ContentRoute exact path="/payment" component={Payment} />
-            {/* <ContentRoute exact path="/payment" component={PaymentData} /> */}
-
-            <ContentRoute exact path="/announcement" component={Announcement} />
-            {/* /////////////////////////////////////////////////////////////////////////*/}
-            <ContentRoute exact path="/banner" component={Banner} />
-            <ContentRoute exact path="/description" component={Description} />
-            <ContentRoute exact path="/clients" component={Clients} />
+      <Suspense fallback={<LayoutSplashScreen />}>
+        <Switch>
+          <Redirect exact from="/" to="/dashboard" />
+          <ContentRoute exact path="/dashboard" component={DashboardPage} />
+          <ContentRoute exact path="/menu" component={Menu} />
+          <ContentRoute exact path="/assign" component={Assign} />
 
 
+          <ContentRoute exact path="/cms" component={Cms} />
+          <ContentRoute exact path="/information" component={Information} />
+          <ContentRoute exact path="/courseselection/coursename" component={CourseName} />
+          <ContentRoute exact path="/courseselection/coursetype" component={CourseType} />
+          <ContentRoute exact path="/courseselection/vehiclecategory" component={VehicleCategory} />
+          <ContentRoute exact path="/user" component={User} />
+          <ContentRoute exact path="/payment" component={Payment} />
+          {/* <ContentRoute exact path="/payment" component={PaymentData} /> */}
 
-            {/* /////////////////////////////////////////////////////////////////////////*/}
-
-            <ContentRoute exact path="/timeslot" component={TimeSlot} />
-            <ContentRoute exact path="/feedback" component={Feedback} />
-            <ContentRoute exact path="/contactus" component={ContactUs} />
-            <ContentRoute exact path="/faq" component={FAQ} />
-            <ContentRoute exact path="/examiner" component={Examiner} />
-            <ContentRoute exact path="/questionSet" component={QuestionSet} />
-            <ContentRoute exact path="/question" component={Question} />
+          <ContentRoute exact path="/announcement" component={Announcement} />
+          {/* /////////////////////////////////////////////////////////////////////////*/}
+          <ContentRoute exact path="/banner" component={Banner} />
+          <ContentRoute exact path="/Banner Description" component={Description} />
+          <ContentRoute exact path="/clients" component={Clients} />
 
 
 
+          {/* /////////////////////////////////////////////////////////////////////////*/}
 
-            <Redirect to="error/error-v6" />
-          </Switch>
-        </Suspense>
-      ) : null}
+          <ContentRoute exact path="/timeslot" component={TimeSlot} />
+          <ContentRoute exact path="/feedback" component={Feedback} />
+          <ContentRoute exact path="/Contact-Us" component={ContactUs} />
+          <ContentRoute exact path="/faq" component={FAQ} />
+          <ContentRoute exact path="/examiner" component={Examiner} />
+          <ContentRoute exact path="/questionSet" component={QuestionSet} />
+          <ContentRoute exact path="/question" component={Question} />
+
+
+
+
+          <Redirect to="error/error-v6" />
+        </Switch>
+      </Suspense>
+
     </>
   );
 }
