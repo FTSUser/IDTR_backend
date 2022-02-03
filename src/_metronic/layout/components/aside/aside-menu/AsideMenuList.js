@@ -40,7 +40,21 @@ export function AsideMenuList({ layoutProps }) {
             </NavLink>
           </li>
           <li
-            className={`menu-item ${getMenuItemActive("/user", false)}`}
+            className={`menu-item ${getMenuItemActive("/menu", false)}`}
+            aria-haspopup="true"
+          >
+            <NavLink className="menu-link" to="/menu">
+              <span className="svg-icon menu-icon">
+                {/* <SVG
+                  src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
+                /> */}
+                <img src="media/allIconsForTable/user.svg" />
+              </span>
+              <span className="menu-text">Menu</span>
+            </NavLink>
+          </li>
+          <li
+            className={`menu-item ${getMenuItemActive("/menu", false)}`}
             aria-haspopup="true"
           >
             <NavLink className="menu-link" to="/user">
@@ -307,7 +321,7 @@ export function AsideMenuList({ layoutProps }) {
                 /> */}
                 <img src="media/allIconsForTable/FAQ.svg" />
               </span>
-              <span className="menu-text">Examiner </span>
+              <span className="menu-text">User Creation </span>
             </NavLink>
           </li>
           <li

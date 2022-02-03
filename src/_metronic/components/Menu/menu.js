@@ -6,11 +6,11 @@ import {
     ApiPut,
     ApiPost,
 } from "../../../helpers/API/ApiData";
+import Select from 'react-select';
 import { Tooltip } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import List from "@material-ui/core/List";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
-import Select from 'react-select';
 
 import Toolbar from "@material-ui/core/Toolbar";
 import CreateIcon from "@material-ui/icons/Create";
@@ -24,12 +24,13 @@ import Loader from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import moment from "moment";
 import CsvDownload from "react-json-to-csv";
+import Multiselect from "multiselect-react-dropdown";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const Examiner = ({ getNewCount, title }) => {
+const Menu = ({ getNewCount, title }) => {
     const [filteredCourseName, setFilteredCourseName] = useState({});
     const [isLoaderVisible, setIsLoaderVisible] = useState(false);
     const [show, setShow] = useState(false);
@@ -44,18 +45,14 @@ const Examiner = ({ getNewCount, title }) => {
     const [count, setCount] = useState(0);
     const [countPerPage, setCountPerPage] = useState(10);
     const [search, setSearch] = useState("");
-    const [showStatus, setShowStatus] = useState(false);
-    const [idForUpdateCourseStatus, setIdForUpdateCourseStatus] = useState("");
-    const [statusDisplay, setStatusDisplay] = useState(false);
-    const [getCourseType, setGetCourseType] = useState([]);
-    const [filteredVehicleCategory, setFilteredVehicleCategory] = useState([]);
-
     const [dataViewMore, setDataViewMore] = useState({});
     const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
     const [isEditPopUp, setIsEditPopUp] = useState(false);
+    const [selectedCourseType, setSelectedCourseType] = useState([]);
+    const [allCourseTypeForUpdate, setAllCourseTypeForUpdate] = useState([]);
 
     useEffect(() => {
-        document.title = "Honda | Examiner";
+        document.title = "Honda | Menu";
     }, []);
 
     const handleViewMoreClose = () => {
@@ -68,21 +65,10 @@ const Examiner = ({ getNewCount, title }) => {
         setInputValueForAdd({ ...inputValueForAdd, [name]: value });
         setErrorsForAdd({ ...errorsForAdd, [name]: "" });
     };
-
-    const handleAddAdminClose = () => {
-        setInputValueForAdd({});
-        setIsAddCourseName(false);
-        setErrorsForAdd({});
-        setIsEditPopUp(false);
-        setGetCourseType([]);
-    };
-
-    const handleClose = () => {
-        setShow(false);
-    };
-
-    const handleCloseShowStatus = () => {
-        setShowStatus(false);
+    const handleOnChnageSelectAdd = (e) => {
+        const { label, value } = e.target;
+        setInputValueForAdd({ ...inputValueForAdd, [label]: value });
+        setErrorsForAdd({ ...errorsForAdd, [label]: "" });
     };
     const [getAllRole, setgetAllRole] = useState({});
     const getAllRoleData = () => {
@@ -90,6 +76,23 @@ const Examiner = ({ getNewCount, title }) => {
             setgetAllRole(res.data.payload.allRole);
         })
     }
+    const handleAddAdminClose = () => {
+        setInputValueForAdd({});
+        setIsAddCourseName(false);
+        setErrorsForAdd({});
+        setSelectedCourseType([]);
+        setIsEditPopUp(false);
+        setAllCourseTypeForUpdate([]);
+
+
+    };
+
+    const handleClose = () => {
+        setShow(false);
+    };
+
+
+
     useEffect(() => {
         getAllCourseName();
         getAllRoleData()
@@ -102,26 +105,26 @@ const Examiner = ({ getNewCount, title }) => {
         setIsLoaderVisible(true);
         if (!search) {
             await ApiGet(
-                `examiner/getAllExaminer?page=${page}&limit=${countPerPage}`
+                `menu/getAllMenu?page=${page}&limit=${countPerPage}`
             )
                 .then((res) => {
                     setIsLoaderVisible(false);
                     console.log("artistreport", res);
-                    setFilteredCourseName(res?.data?.payload?.Examiner);
+                    setFilteredCourseName(res?.data?.payload?.Menu);
                     setCount(res?.data?.payload?.count);
-                    setGetCourseType([]);
+
                 })
                 .catch((err) => {
                     console.log(err);
                 });
         } else {
             await ApiGet(
-                `examiner/getAllExaminer?search=${search}&page=${page}&limit=${countPerPage}`
+                `menu/getAllMenu?search=${search}&page=${page}&limit=${countPerPage}`
             )
                 .then((res) => {
                     setIsLoaderVisible(false);
                     console.log("artistreport", res);
-                    setFilteredCourseName(res?.data?.payload?.Examiner);
+                    setFilteredCourseName(res?.data?.payload?.Menu);
                     setCount(res?.data?.payload?.count);
                 })
                 .catch((err) => {
@@ -130,23 +133,7 @@ const Examiner = ({ getNewCount, title }) => {
         }
     };
 
-    const handleUpdateStatusCourseName = (status) => {
-        ApiPut(`courseName/updateStatus/${idForUpdateCourseStatus}`, {
-            isActive: status,
-        })
-            .then((res) => {
-                if (res?.status == 200) {
-                    setShowStatus(false);
-                    toast.success("Status updated Successfully");
-                    getAllCourseName();
-                } else {
-                    toast.error(res?.data?.message);
-                }
-            })
-            .catch((err) => {
-                toast.error(err.message);
-            });
-    };
+
 
     const validateFormForAddAdmin = () => {
         let formIsValid = true;
@@ -155,30 +142,8 @@ const Examiner = ({ getNewCount, title }) => {
             formIsValid = false;
             errorsForAdd["name"] = "*Please Enter Name!";
         }
-        if (inputValueForAdd && !inputValueForAdd.email) {
-            formIsValid = false;
-            errorsForAdd["email"] = "*Please Enter Email!";
-        } else if (
-            inputValueForAdd.email &&
-            !inputValueForAdd.email.match(
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            )
-        ) {
-            formIsValid = false;
-            errorsForAdd["email"] = "*Please Enter vaild Email!";
-        }
-        if (inputValueForAdd && !inputValueForAdd.phone) {
-            formIsValid = false;
-            errorsForAdd["phone"] = "*Please Enter Phone!";
-        }
-        if (inputValueForAdd && !inputValueForAdd.password) {
-            formIsValid = false;
-            errorsForAdd["password"] = "*Please Enter password!";
-        }
-        if (inputValueForAdd && !inputValueForAdd.role) {
-            formIsValid = false;
-            errorsForAdd["role"] = "*Please Enter role!";
-        }
+
+
 
         setErrorsForAdd(errorsForAdd);
         return formIsValid;
@@ -187,19 +152,20 @@ const Examiner = ({ getNewCount, title }) => {
     const handelAddCourseNameDetails = (e) => {
         e.preventDefault();
         if (validateFormForAddAdmin()) {
+            let data = []
+            selectedCourseType.map(o => data.push(o._id))
             let Data = {
                 name: inputValueForAdd.name,
-                phone: inputValueForAdd.phone,
-                email: inputValueForAdd.email,
-                password: inputValueForAdd?.password,
-                role: inputValueForAdd?.role
+                assignTo: data
+
             };
-            console.log("Dayta", Data);
-            ApiPost(`examiner/addExaminer`, Data)
+            console.log("data", Data);
+            ApiPost(`menu/addMenu`, Data)
                 .then((res) => {
                     console.log("resresres", res);
                     if (res?.status == 200) {
                         setIsAddCourseName(false);
+                        setSelectedCourseType([]);
                         toast.success(res?.data?.message);
                         setInputValueForAdd({});
                         getAllCourseName();
@@ -214,7 +180,7 @@ const Examiner = ({ getNewCount, title }) => {
     };
 
     const handleDeleteCourseName = () => {
-        ApiDelete(`examiner/deleteExaminer/${idForDeleteCourseName}`)
+        ApiDelete(`menu/deleteMenu/${idForDeleteCourseName}`)
             .then((res) => {
                 if (res?.status == 200) {
                     setShow(false);
@@ -235,14 +201,13 @@ const Examiner = ({ getNewCount, title }) => {
     const handelUpdateCourseNameDetails = (e) => {
         e.preventDefault();
         if (validateFormForAddAdmin()) {
+            let data = []
+            selectedCourseType.map(o => data.push(o._id))
             let Data = {
                 name: inputValueForAdd?.name,
-                email: inputValueForAdd?.email,
-                phone: inputValueForAdd?.phone,
-                password: inputValueForAdd?.password,
-                role: inputValueForAdd?.role
+                assignTo: data
             };
-            ApiPut(`examiner/updateExaminer/${idForUpdateCourseNameData}`, Data)
+            ApiPut(`menu/updateMenu/${idForUpdateCourseNameData}`, Data)
                 .then((res) => {
                     console.log("resres", res);
                     if (res?.status == 200) {
@@ -250,8 +215,9 @@ const Examiner = ({ getNewCount, title }) => {
                         toast.success(res?.data?.message);
                         setInputValueForAdd({});
                         getAllCourseName();
+                        setSelectedCourseType([]);
                         setIsEditPopUp(false);
-                        setGetCourseType([]);
+
                     } else {
                         toast.error(res?.data?.message);
                     }
@@ -276,16 +242,27 @@ const Examiner = ({ getNewCount, title }) => {
         },
 
         {
-            name: "Email",
-            selector: "email",
-            sortable: true,
+            name: "Assign To",
+            cell: (row) => {
+                return (
+                    <>
+                        {
+                            row?.assignTo?.map((data, key) => {
+                                return (
+                                    <>
+                                        <div >
+                                            <div >{data?.roleName},</div>
+                                        </div>
+                                    </>
+                                )
+                            }
+                            )}
+                    </>
+                );
+            },
         },
 
-        {
-            name: "Phone",
-            selector: "phone",
-            sortable: true,
-        },
+
 
         {
             name: "Actions",
@@ -299,12 +276,13 @@ const Examiner = ({ getNewCount, title }) => {
                                     console.log("typetype", row);
                                     setIsAddCourseName(true);
                                     setIdForUpdateCourseNameData(row._id);
+                                    setSelectedCourseType(row?.assignTo);
+                                    setAllCourseTypeForUpdate(row?.assignTo);
+
+
                                     setInputValueForAdd({
                                         name: row?.name,
-                                        email: row?.email,
-                                        phone: row?.phone,
-                                        password: row?.password,
-                                        role: row?.role
+
                                     });
                                     setIsEditPopUp(true);
                                 }}
@@ -451,9 +429,8 @@ const Examiner = ({ getNewCount, title }) => {
             allCourseNameExcel.map((registerUser) => {
                 let data = {
                     CreatedAt: moment(registerUser?.createdAt).format("ll"),
-                    ExaminerName: registerUser?.name,
-                    ExaminerEmail: registerUser?.email,
-                    ExaminerPhone: registerUser?.phone,
+                    MenuName: registerUser?.name,
+
                 };
                 setDataCSV((currVal) => [...currVal, data]);
             });
@@ -468,7 +445,7 @@ const Examiner = ({ getNewCount, title }) => {
                 <div className="p-2 mb-2">
                     <div className="row mb-4 pr-3">
                         <div className="col d-flex justify-content-between">
-                            <h2 className="pl-3 pt-2">Examiner</h2>
+                            <h2 className="pl-3 pt-2">Menu</h2>
                         </div>
                         <div className="col">
                             <div>
@@ -477,7 +454,7 @@ const Examiner = ({ getNewCount, title }) => {
                                     className={`form-control form-control-lg form-control-solid `}
                                     name="search"
                                     value={search}
-                                    placeholder="Search Examiner"
+                                    placeholder="Search Menu"
                                     onChange={(e) => handleSearch(e)}
                                 />
                             </div>
@@ -489,7 +466,7 @@ const Examiner = ({ getNewCount, title }) => {
                                 }}
                                 className="btn btn-success mr-2"
                             >
-                                Add Examiner
+                                Add Menu
                             </button>
                         </div>
                         <div className="cus-medium-button-style button-height">
@@ -522,7 +499,7 @@ const Examiner = ({ getNewCount, title }) => {
                             <Modal.Title className="text-danger">Alert!</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            Are You Sure To Want To delete this Examiner
+                            Are You Sure To Want To delete this Menu
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
@@ -619,139 +596,38 @@ const Examiner = ({ getNewCount, title }) => {
                                 </div>
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Enter Email
+                                        Assign To
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
-                                            <input
-                                                type="text"
-                                                className={`form-control form-control-lg form-control-solid `}
-                                                id="email"
-                                                name="email"
-                                                value={inputValueForAdd.email}
-                                                onChange={(e) => {
-                                                    handleOnChnageAdd(e);
-                                                }}
-                                            />
-                                        </div>
-                                        <span
-                                            style={{
-                                                color: "red",
-                                                top: "5px",
-                                                fontSize: "12px",
-                                            }}
-                                        >
-                                            {errorsForAdd["email"]}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="form-group row">
-                                    <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Enter Phone
-                                    </label>
-                                    <div className="col-lg-9 col-xl-6">
-                                        <div>
-                                            <input
-                                                type="text"
-                                                className={`form-control form-control-lg form-control-solid `}
-                                                id="phone"
-                                                name="phone"
-                                                minLength={10}
-                                                maxLength={10}
-                                                onKeyPress={(event) => {
-                                                    if (!/[0-9]/.test(event.key)) {
-                                                        event.preventDefault();
-                                                    }
-                                                }}
-                                                value={inputValueForAdd.phone}
-                                                onChange={(e) => {
-                                                    handleOnChnageAdd(e);
-                                                }}
-                                            />
-                                        </div>
-                                        <span
-                                            style={{
-                                                color: "red",
-                                                top: "5px",
-                                                fontSize: "12px",
-                                            }}
-                                        >
-                                            {errorsForAdd["phone"]}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="form-group  row">
-                                    <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Select Role
-                                    </label>
-                                    <div className="col-lg-9 col-xl-6">
-                                        {/* <Select
-                                            options={getAllRole?.allRole?.map(e => ({ label: e.roleName, value: e._id }))}
-                                            value={inputValueForAdd.role}
-                                            onChange={(e) => {
-                                                handleOnChnageAdd(e);
-                                            }}
-                                        /> */}
-                                        <select
-                                            className={`form-control form-control-lg form-control-solid `}
-                                            id="role"
-                                            name="role"
-                                            value={inputValueForAdd.role}
-                                            onChange={(e) => {
-                                                handleOnChnageAdd(e);
-                                            }}
-                                        >
-                                            <option value="" disabled selected hidden>
-                                                Select Role
-                                            </option>
-                                            {getAllRole?.length > 0 &&
-                                                getAllRole?.map((item) => {
-                                                    console.log("item", getAllRole);
-                                                    return (
-                                                        <option
-                                                            key={item._id}
-                                                            value={item?._id}
-                                                            selected={
-                                                                inputValueForAdd?.role ===
-                                                                    item?._id
-                                                                    ? true
-                                                                    : false
-                                                            }
-                                                        >
-                                                            {" "}
-                                                            {item.roleName}{" "}
-                                                        </option>
-                                                    );
-                                                })}
-                                        </select>
-                                        <span
-                                            style={{
-                                                color: "red",
-                                                top: "5px",
-                                                fontSize: "12px",
-                                            }}
-                                        >
-                                            {errorsForAdd["role"]}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="form-group row">
-                                    <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Enter Password
-                                    </label>
-                                    <div className="col-lg-9 col-xl-6">
-                                        <div>
-                                            <input
-                                                type="text"
-                                                className={`form-control form-control-lg form-control-solid `}
-                                                id="password"
-                                                name="password"
+                                            <div className="form-group row">
 
-                                                value={inputValueForAdd.password}
-                                                onChange={(e) => {
-                                                    handleOnChnageAdd(e);
-                                                }}
-                                            />
+                                                <Multiselect
+                                                    options={getAllRole}
+                                                    onSelect={(selectedList, selectedItem) => {
+                                                        setSelectedCourseType(selectedList);
+                                                        setErrorsForAdd({
+                                                            ...errorsForAdd,
+                                                            selectedTopSubjects: "",
+                                                        });
+                                                    }}
+                                                    onRemove={(selectedList, removedItem) => {
+                                                        setSelectedCourseType(selectedList);
+                                                    }}
+                                                    displayValue="roleName"
+                                                    selectedValues={allCourseTypeForUpdate}
+                                                />
+                                                {/* <span
+                                                    style={{
+                                                        color: "red",
+                                                        top: "5px",
+                                                        fontSize: "12px",
+                                                    }}
+                                                >
+                                                    {errorsForAdd["roleName"]}
+                                                </span> */}
+
+                                            </div>
                                         </div>
                                         <span
                                             style={{
@@ -760,10 +636,11 @@ const Examiner = ({ getNewCount, title }) => {
                                                 fontSize: "12px",
                                             }}
                                         >
-                                            {errorsForAdd["password"]}
+                                            {errorsForAdd["name"]}
                                         </span>
                                     </div>
                                 </div>
+
 
                                 <div className="d-flex align-items-center justify-content-center">
                                     <button
@@ -775,7 +652,7 @@ const Examiner = ({ getNewCount, title }) => {
                                         className="btn btn-success mr-2"
                                     >
 
-                                        <span> {isEditPopUp === false ? 'Add' : 'Edit'}  Examiner</span>
+                                        <span> {isEditPopUp === false ? 'Add' : 'Edit'}  Menu</span>
                                         {loading && (
                                             <span className="mx-3 spinner spinner-white"></span>
                                         )}
@@ -818,7 +695,7 @@ const Examiner = ({ getNewCount, title }) => {
                                         />
                                     </div>
                                     <div className="honda-text-grid-items">
-                                        <span>Email:</span>
+                                        <span>Assign To:</span>
                                         <p
                                             dangerouslySetInnerHTML={{
                                                 __html: dataViewMore?.email,
@@ -826,15 +703,7 @@ const Examiner = ({ getNewCount, title }) => {
                                             className=""
                                         />
                                     </div>
-                                    <div className="honda-text-grid-items">
-                                        <span>Phone:</span>
-                                        <p
-                                            dangerouslySetInnerHTML={{
-                                                __html: dataViewMore?.phone,
-                                            }}
-                                            className=""
-                                        />
-                                    </div>
+
                                 </div>
                             </div>
                         ) : null}
@@ -845,4 +714,4 @@ const Examiner = ({ getNewCount, title }) => {
     );
 };
 
-export default Examiner;
+export default Menu;

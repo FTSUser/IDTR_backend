@@ -24,6 +24,7 @@ import PaymentData from "../_metronic/components/PaymentForm/payment";
 import Examiner from "../_metronic/components/Examiner/Examiner";
 import QuestionSet from "../_metronic/components/QuestionSet/QuestionSet";
 import Question from "../_metronic/components/Question/Question";
+import Menu from "../_metronic/components/Menu/menu";
 export default function BasePage() {
   let userInfo = getUserInfo()
 
@@ -34,6 +35,8 @@ export default function BasePage() {
           <Switch>
             <Redirect exact from="/" to="/dashboard" />
             <ContentRoute exact path="/dashboard" component={DashboardPage} />
+            <ContentRoute exact path="/menu" component={Menu} />
+
             <ContentRoute exact path="/cms" component={Cms} />
             <ContentRoute exact path="/information" component={Information} />
             <ContentRoute exact path="/courseselection/coursename" component={CourseName} />
