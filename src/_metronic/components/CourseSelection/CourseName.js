@@ -507,7 +507,7 @@ const CourseName = ({ getNewCount, title }) => {
 
   //for search data
 
-  
+
   const handleSearch = (e) => {
     let val = e.target.value.replace(/[^\w\s]/gi, "");
     setSearch(val);
@@ -573,8 +573,9 @@ const CourseName = ({ getNewCount, title }) => {
   };
   useEffect(() => {
     if (allCourseNameExcel) {
-      allCourseNameExcel.map((registerUser) => {
+      allCourseNameExcel.map((registerUser, key) => {
         let data = {
+          Number: key + 1,
           CreatedAt: moment(registerUser?.createdAt).format("ll"),
           CreatedBy: registerUser?.createdBy,
           SystemRequirement: registerUser?.systemRequirement,

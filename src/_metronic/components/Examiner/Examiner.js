@@ -448,8 +448,9 @@ const Examiner = ({ getNewCount, title }) => {
     };
     useEffect(() => {
         if (allCourseNameExcel) {
-            allCourseNameExcel.map((registerUser) => {
+            allCourseNameExcel.map((registerUser, key) => {
                 let data = {
+                    Number: key + 1,
                     CreatedAt: moment(registerUser?.createdAt).format("ll"),
                     ExaminerName: registerUser?.name,
                     ExaminerEmail: registerUser?.email,

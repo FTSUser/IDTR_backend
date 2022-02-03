@@ -438,8 +438,9 @@ const Question = (props) => {
     };
     useEffect(() => {
         if (allCourseNameExcel) {
-            allCourseNameExcel.map((registerUser) => {
+            allCourseNameExcel.map((registerUser, key) => {
                 let data = {
+                    Number: key + 1,
                     CreatedAt: moment(registerUser?.createdAt).format("ll"),
                     QuestionSetName: registerUser?.name,
                     QuestionSetDescription: registerUser?.description,

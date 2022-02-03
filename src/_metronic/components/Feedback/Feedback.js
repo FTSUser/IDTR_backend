@@ -36,16 +36,16 @@ const Feedback = ({ getNewCount, title }) => {
 
   const getAllFeedback = async () => {
     setIsLoaderVisible(true);
-      await ApiGet(`feedback/getAllFeedback?page=${page}&limit=${countPerPage}`)
-        .then((res) => {
-          setIsLoaderVisible(false);
-          console.log("artistreport", res);
-          setFilteredFeedback(res?.data?.payload?.Question);
-          setCount(res?.data?.payload?.count);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    await ApiGet(`feedback/getAllFeedback?page=${page}&limit=${countPerPage}`)
+      .then((res) => {
+        setIsLoaderVisible(false);
+        console.log("artistreport", res);
+        setFilteredFeedback(res?.data?.payload?.Question);
+        setCount(res?.data?.payload?.count);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -159,8 +159,9 @@ const Feedback = ({ getNewCount, title }) => {
   };
   useEffect(() => {
     if (allFeedbackExcel) {
-      allFeedbackExcel.map((registerUser) => {
+      allFeedbackExcel.map((registerUser, key) => {
         let data = {
+          Number: key + 1,
           createdAt: moment(registerUser?.createdAt).format("ll"),
           createdBy: registerUser?.createdBy,
           description:
@@ -186,32 +187,32 @@ const Feedback = ({ getNewCount, title }) => {
       <div className="card p-1">
         <ToastContainer />
         <div className="p-2 mb-2">
-        <div className="row mb-4 pr-3">
-          <div className="col d-flex justify-content-between">
-            <h2 className="pl-3 pt-2">Feedback</h2>
-          </div>
-          <div className="cus-medium-button-style button-height">
-            <CsvDownload
-              className={``}
-              data={dataCSV}
-              filename="Donations.csv"
-              style={{
-                //pass other props, like styles
-                backgroundColor: "#CC0001",
-                borderRadius: "6px",
-                border: "1px solid #fff",
-                display: "inline-block",
-                cursor: "pointer",
-                color: "#FFFFFF",
-                fontSize: "12px",
-                padding: "10px 18px",
-                textDecoration: "none",
-                position: "right",
-              }}
-            >
-              Export to Excel
-            </CsvDownload>
-          </div>
+          <div className="row mb-4 pr-3">
+            <div className="col d-flex justify-content-between">
+              <h2 className="pl-3 pt-2">Feedback</h2>
+            </div>
+            <div className="cus-medium-button-style button-height">
+              <CsvDownload
+                className={``}
+                data={dataCSV}
+                filename="Donations.csv"
+                style={{
+                  //pass other props, like styles
+                  backgroundColor: "#CC0001",
+                  borderRadius: "6px",
+                  border: "1px solid #fff",
+                  display: "inline-block",
+                  cursor: "pointer",
+                  color: "#FFFFFF",
+                  fontSize: "12px",
+                  padding: "10px 18px",
+                  textDecoration: "none",
+                  position: "right",
+                }}
+              >
+                Export to Excel
+              </CsvDownload>
+            </div>
           </div>
 
           <DataTable

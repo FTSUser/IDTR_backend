@@ -61,15 +61,12 @@ const Menu = ({ getNewCount, title }) => {
     };
 
     const handleOnChnageAdd = (e) => {
+        console.log("Eeeee", e);
         const { name, value } = e.target;
         setInputValueForAdd({ ...inputValueForAdd, [name]: value });
         setErrorsForAdd({ ...errorsForAdd, [name]: "" });
     };
-    const handleOnChnageSelectAdd = (e) => {
-        const { label, value } = e.target;
-        setInputValueForAdd({ ...inputValueForAdd, [label]: value });
-        setErrorsForAdd({ ...errorsForAdd, [label]: "" });
-    };
+
     const [getAllRole, setgetAllRole] = useState({});
     const getAllRoleData = () => {
         ApiGet('role').then((res) => {
@@ -141,6 +138,10 @@ const Menu = ({ getNewCount, title }) => {
         if (inputValueForAdd && !inputValueForAdd.name) {
             formIsValid = false;
             errorsForAdd["name"] = "*Please Enter Name!";
+        }
+        if (selectedCourseType?.length === 0) {
+            formIsValid = false;
+            errorsForAdd["role"] = "*Please Enter role!";
         }
 
 
@@ -426,8 +427,9 @@ const Menu = ({ getNewCount, title }) => {
     };
     useEffect(() => {
         if (allCourseNameExcel) {
-            allCourseNameExcel.map((registerUser) => {
+            allCourseNameExcel.map((registerUser, key) => {
                 let data = {
+                    Number: key + 1,
                     CreatedAt: moment(registerUser?.createdAt).format("ll"),
                     MenuName: registerUser?.name,
 
@@ -600,44 +602,39 @@ const Menu = ({ getNewCount, title }) => {
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
-                                            <div className="form-group row">
 
-                                                <Multiselect
-                                                    options={getAllRole}
-                                                    onSelect={(selectedList, selectedItem) => {
-                                                        setSelectedCourseType(selectedList);
-                                                        setErrorsForAdd({
-                                                            ...errorsForAdd,
-                                                            selectedTopSubjects: "",
-                                                        });
-                                                    }}
-                                                    onRemove={(selectedList, removedItem) => {
-                                                        setSelectedCourseType(selectedList);
-                                                    }}
-                                                    displayValue="roleName"
-                                                    selectedValues={allCourseTypeForUpdate}
-                                                />
-                                                {/* <span
-                                                    style={{
-                                                        color: "red",
-                                                        top: "5px",
-                                                        fontSize: "12px",
-                                                    }}
-                                                >
-                                                    {errorsForAdd["roleName"]}
-                                                </span> */}
 
-                                            </div>
+                                            <Multiselect
+
+                                                options={getAllRole}
+                                                onSelect={(selectedList, selectedItem) => {
+                                                    setSelectedCourseType(selectedList);
+                                                    setErrorsForAdd({
+                                                        ...errorsForAdd,
+                                                        role: "",
+                                                    });
+                                                }}
+
+                                                onRemove={(selectedList, removedItem) => {
+                                                    setSelectedCourseType(selectedList);
+                                                }}
+                                                displayValue="roleName"
+                                                selectedValues={allCourseTypeForUpdate}
+
+                                            />
+                                            <span
+                                                style={{
+                                                    color: "red",
+                                                    top: "5px",
+                                                    fontSize: "12px",
+                                                }}
+                                            >
+                                                {errorsForAdd["role"]}
+                                            </span>
+
+
                                         </div>
-                                        <span
-                                            style={{
-                                                color: "red",
-                                                top: "5px",
-                                                fontSize: "12px",
-                                            }}
-                                        >
-                                            {errorsForAdd["name"]}
-                                        </span>
+
                                     </div>
                                 </div>
 
@@ -686,7 +683,7 @@ const Menu = ({ getNewCount, title }) => {
                             <div className="honda-container">
                                 <div className="honda-text-grid">
                                     <div className="honda-text-grid-items">
-                                        <span>Name:</span>
+                                        <span>Menu Name:</span>
                                         <p
                                             dangerouslySetInnerHTML={{
                                                 __html: dataViewMore?.name,
@@ -696,14 +693,14 @@ const Menu = ({ getNewCount, title }) => {
                                     </div>
                                     <div className="honda-text-grid-items">
                                         <span>Assign To:</span>
-                                        <p
-                                            dangerouslySetInnerHTML={{
-                                                __html: dataViewMore?.email,
-                                            }}
-                                            className=""
-                                        />
+                                        {
+                                            dataViewMore?.assignTo?.map((data, key) => {
+                                                return (
+                                                    <div>{data?.roleName}</div>
+                                                )
+                                            })
+                                        }
                                     </div>
-
                                 </div>
                             </div>
                         ) : null}

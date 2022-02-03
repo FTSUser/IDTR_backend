@@ -273,8 +273,9 @@ const Payment = ({ getNewCount, title }) => {
   };
   useEffect(() => {
     if (allPaymentDetailsExcel) {
-      allPaymentDetailsExcel.map((registerUser) => {
+      allPaymentDetailsExcel.map((registerUser, key) => {
         let data = {
+          Number: key + 1,
           certificate: registerUser?.cnid?.certificate,
           courseName: registerUser?.cnid?.courseName,
           createdAt: moment(registerUser?.cnid?.createdAt).format("ll"),

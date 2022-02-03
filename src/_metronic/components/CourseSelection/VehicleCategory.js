@@ -384,7 +384,7 @@ const VehicleCategory = ({ getNewCount, title }) => {
 
   //for search data
 
-  
+
   const handleSearch = (e) => {
     let val = e.target.value.replace(/[^\w\s]/gi, "");
     setSearch(val);
@@ -450,8 +450,9 @@ const VehicleCategory = ({ getNewCount, title }) => {
   };
   useEffect(() => {
     if (allVehicleCategoryExcel) {
-      allVehicleCategoryExcel.map((registerUser) => {
+      allVehicleCategoryExcel.map((registerUser, key) => {
         let data = {
+          Number: key + 1,
           CreatedAt: moment(registerUser?.createdAt).format("ll"),
           CreatedBy: registerUser?.createdBy,
           VehicleCategory: registerUser?.vehicleCategory,
