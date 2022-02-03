@@ -19,7 +19,7 @@ export function AsideMenuList({ layoutProps }) {
     <>
 
 
-      <ul className={`menu-nav ${layoutProps.ulClasses}`}>
+      {/* <ul className={`menu-nav ${layoutProps.ulClasses}`}>
         <li
           className={`menu-item menu-item-submenu ${getMenuItemActive(
             "/dashboard",
@@ -144,7 +144,7 @@ export function AsideMenuList({ layoutProps }) {
             )
           })
         }
-      </ul>
+      </ul> */}
 
 
 
