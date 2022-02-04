@@ -76,7 +76,7 @@ const Assign = ({ getNewCount, title }) => {
     }
     const [getAllMenu, setgetAllMenu] = useState({});
     const getAllMenuData = () => {
-        ApiGet('menu/getAllMenu').then((res) => {
+        ApiGet('menu/getAll').then((res) => {
             setgetAllMenu(res.data.payload.Menu);
         })
     }
@@ -259,19 +259,19 @@ const Assign = ({ getNewCount, title }) => {
             name: "Menu",
             cell: (row) => {
                 return (
-                    <>
+                    <div>
                         {
                             row?.menu?.map((data, key) => {
                                 return (
                                     <>
-                                        <div >
-                                            <div >{data?.name},</div>
-                                        </div>
+
+                                        <div >{data?.name}</div>
+
                                     </>
                                 )
                             }
                             )}
-                    </>
+                    </div>
                 );
             },
         },

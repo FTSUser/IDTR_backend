@@ -270,7 +270,7 @@ const Menu = ({ getNewCount, title }) => {
             cell: (row) => {
                 return (
                     <>
-                        <div className="d-flex justify-content-between">
+                        {/* <div className="d-flex justify-content-between">
                             <div
                                 className="cursor-pointer pl-2"
                                 onClick={() => {
@@ -292,9 +292,9 @@ const Menu = ({ getNewCount, title }) => {
                                     <CreateIcon />
                                 </Tooltip>
                             </div>
-                        </div>
+                        </div> */}
 
-                        <div
+                        {/* <div
                             className="cursor-pointer"
                             onClick={() => {
                                 setShow(true);
@@ -304,7 +304,7 @@ const Menu = ({ getNewCount, title }) => {
                             <Tooltip title="Delete Examiner" arrow>
                                 <DeleteIcon />
                             </Tooltip>
-                        </div>
+                        </div> */}
                         <>
                             <div
                                 className="cursor-pointer pl-2"
@@ -461,7 +461,7 @@ const Menu = ({ getNewCount, title }) => {
                                 />
                             </div>
                         </div>
-                        <div className="cus-medium-button-style button-height">
+                        {/* <div className="cus-medium-button-style button-height">
                             <button
                                 onClick={() => {
                                     setIsAddCourseName(true);
@@ -470,7 +470,7 @@ const Menu = ({ getNewCount, title }) => {
                             >
                                 Add Menu
                             </button>
-                        </div>
+                        </div> */}
                         <div className="cus-medium-button-style button-height">
                             <CsvDownload
                                 className={``}

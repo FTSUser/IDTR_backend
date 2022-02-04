@@ -52,7 +52,7 @@ export default function BasePage() {
           <ContentRoute exact path="/announcement" component={Announcement} />
           {/* /////////////////////////////////////////////////////////////////////////*/}
           <ContentRoute exact path="/banner" component={Banner} />
-          <ContentRoute exact path="/Banner Description" component={Description} />
+          <ContentRoute exact path="/banner-description" component={Description} />
           <ContentRoute exact path="/clients" component={Clients} />
 
 
@@ -61,10 +61,10 @@ export default function BasePage() {
 
           <ContentRoute exact path="/timeslot" component={TimeSlot} />
           <ContentRoute exact path="/feedback" component={Feedback} />
-          <ContentRoute exact path="/Contact-Us" component={ContactUs} />
+          <ContentRoute exact path="/contact-us" component={ContactUs} />
           <ContentRoute exact path="/faq" component={FAQ} />
-          <ContentRoute exact path="/examiner" component={Examiner} />
-          <ContentRoute exact path="/questionSet" component={QuestionSet} />
+          <ContentRoute exact path="/role" component={Examiner} />
+          <ContentRoute exact path="/question-set" component={QuestionSet} />
           <ContentRoute exact path="/question" component={Question} />
 
 

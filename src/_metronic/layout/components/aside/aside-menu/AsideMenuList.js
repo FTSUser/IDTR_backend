@@ -19,7 +19,7 @@ export function AsideMenuList({ layoutProps }) {
     <>
 
 
-      {/* <ul className={`menu-nav ${layoutProps.ulClasses}`}>
+      <ul className={`menu-nav ${layoutProps.ulClasses}`}>
         <li
           className={`menu-item menu-item-submenu ${getMenuItemActive(
             "/dashboard",
@@ -132,10 +132,10 @@ export function AsideMenuList({ layoutProps }) {
                 aria-haspopup="true"
                 data-menu-toggle="hover"
               >
-                <NavLink className="menu-link" to={`/${data?.name}`}>
+                <NavLink className="menu-link" to={`/${data?.name.trim().toLowerCase().replace(' ', '-')}`}>
                   <span className="svg-icon menu-icon">
 
-                    <img src="media/allIconsForTable/dashboard.svg" />
+                    <img src={`media/allIconsForTable/${data?.name.trim().toLowerCase().replace(' ', '-')}.svg`} />
                   </span>
                   <span className="menu-text">{data?.name}</span>
                 </NavLink>
@@ -144,12 +144,12 @@ export function AsideMenuList({ layoutProps }) {
             )
           })
         }
-      </ul> */}
+      </ul>
 
 
 
 
-      {userInfo?.admin?.role?.roleName === "superadmin" && (
+      {/* {userInfo?.admin?.role?.roleName === "superadmin" && (
         <ul className={`menu-nav ${layoutProps.ulClasses}`}>
 
           <li
@@ -429,7 +429,7 @@ export function AsideMenuList({ layoutProps }) {
             </NavLink>
           </li>
         </ul>
-      )}
+      )} */}
 
     </>
   );
