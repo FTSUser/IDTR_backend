@@ -270,6 +270,34 @@ const Question = (props) => {
         }
     };
 
+    const handleUpdateStatusProperty = (status) => {
+        ApiPut(`question/updateQuestion/${idForUpdateCourseStatus}`, {
+                Qname: inputValueForAdd.name,
+                type: inputValueForAdd.type,
+                Option: option,
+                language: inputValueForAdd.language,
+                weight:inputValueForAdd.weight,
+                Category:inputValueForAdd.Category,
+                image:inputValueForAdd.image,
+                isActive: status
+
+        })
+          // ApiPut(`property/updateProperty/${idForUpdatePropertyStatus}`)
+          .then((res) => {
+            if (res?.status == 200) {
+              setShowStatus(false);
+              getAllQuestionSet();
+              toast.success("Status updated Successfully");
+            } else {
+              toast.error(res?.data?.message);
+            }
+          })
+          .catch((err) => {
+            toast.error(err.message);
+          });
+      };
+
+
     let i = 0;
     const columns = [
         {
@@ -384,6 +412,7 @@ const Question = (props) => {
                                 className="cursor-pointer pl-2"
                                 onClick={() => {
                                     setIsViewMoreAboutus(true);
+                                    
                                     setDataViewMore(row);
                                     console.log("rowShow", row);
                                     console.log("isViewMoreAboutus", isViewMoreAboutus);
@@ -399,6 +428,44 @@ const Question = (props) => {
                 );
             },
         },
+
+        {
+            name: "Display?",
+            cell: (row) => {
+              return (
+                <>
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => {
+                      setShowStatus(true);
+                      setIdForUpdateCourseStatus(row?._id);
+                      setStatusDisplay(row?.isActive);
+                      setInputValueForAdd({
+                                        name: row?.Qname,
+                                        description: row?.description,
+                                        weight:row?.weight,
+                                        language: row?.language,
+                                        type:row?.type,
+                                        image:row?.image,
+                                        Category:row?.Category,
+                                    });
+                    }}
+                  >
+                    <Tooltip title="Status Property" arrow>
+                      <div className="cus-medium-button-style widthfixed">
+                        <button className="btn btn-success mr-2">
+                          {row?.isActive === true ? "Active" : "Deactive"}
+                        </button>
+                      </div>
+                    </Tooltip>
+                  </div>
+                </>
+              );
+            },
+            sortable: true,
+          },
+
+        
     ];
     // * Table Style
     const customStyles = {
@@ -1252,6 +1319,32 @@ const Question = (props) => {
                     </List>
                 </Dialog>
             ) : null}
+
+
+
+
+            <Modal show={showStatus} onHide={handleCloseShowStatus}>
+            <Modal.Header closeButton>
+              <Modal.Title className="text-danger">Alert!</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are You Sure To Want To{" "}
+              {statusDisplay === true ? "De-active" : "Active"} this course type
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseShowStatus}>
+                Cancel
+              </Button>
+              <Button
+                variant="danger"
+                onClick={(e) => {
+                  handleUpdateStatusProperty(!statusDisplay);
+                }}
+              >
+                {statusDisplay === true ? "De-active" : "Active"}
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </>
     );
 };
