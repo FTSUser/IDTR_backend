@@ -54,7 +54,7 @@ const Question = (props) => {
     const [isEditPopUp, setIsEditPopUp] = useState(false);
 
     useEffect(() => {
-        document.title = "Honda | Examiner";
+        document.title = "Honda | Question";
         console.log("propspropsprops", props?.location?.state?.question?._id);
     }, []);
 
@@ -65,6 +65,10 @@ const Question = (props) => {
 
     const handleOnChnageAdd = (e) => {
         const { name, value } = e.target;
+        if(name==='weight'){
+        setErrorsForAdd({ ...errorsForAdd, [name]: "" });
+        return  setInputValueForAdd({ ...inputValueForAdd, [name]:parseInt(value)});
+        }
         setInputValueForAdd({ ...inputValueForAdd, [name]: value });
         setErrorsForAdd({ ...errorsForAdd, [name]: "" });
     };
@@ -99,8 +103,8 @@ const Question = (props) => {
     const getAllQuestionSet = async () => {
         setIsLoaderVisible(true);
         if (!search) {
-            await ApiPost(
-                `question/getQuestionByQuestionSet?page=${page}&limit=${countPerPage}`, { questionset: props?.location?.state?.question?._id }
+            await ApiGet(
+                `question/getAllQuestion`,
             )
                 .then((res) => {
                     setIsLoaderVisible(false);
@@ -113,8 +117,8 @@ const Question = (props) => {
                     console.log(err);
                 });
         } else {
-            await ApiPost(
-                `question/getQuestionByQuestionSet?search=${search}&page=${page}&limit=${countPerPage}`, { questionset: props?.location?.state?.question?._id }
+            await ApiGet(
+                `question/getAllQuestion`, 
             )
                 .then((res) => {
                     setIsLoaderVisible(false);
@@ -148,6 +152,11 @@ const Question = (props) => {
             errorsForAdd["type"] = "*Please Enter type!";
         }
 
+        if (inputValueForAdd && !inputValueForAdd.weight) {
+            formIsValid = false;
+            errorsForAdd["weight"] = "*Please Enter weight!";
+        }
+
         setErrorsForAdd(errorsForAdd);
         return formIsValid;
     };
@@ -156,11 +165,12 @@ const Question = (props) => {
         e.preventDefault();
         if (validateFormForAddAdmin()) {
             let Data = {
-                Qsetid: props?.location?.state?.question?._id,
                 Qname: inputValueForAdd.name,
                 type: inputValueForAdd.type,
                 Option: option,
-                language: inputValueForAdd.language
+                language: inputValueForAdd.language,
+                weight:inputValueForAdd.weight
+
             };
             let filter = option.filter((e) => e.istrue === true);
             if (filter.length) {
@@ -212,10 +222,10 @@ const Question = (props) => {
         if (validateFormForAddAdmin()) {
             let Data = {
                 Qname: inputValueForAdd.name,
-                Qsetid: props?.location?.state?.question?._id,
                 type: inputValueForAdd.type,
-                language: inputValueForAdd.language,
                 Option: option,
+                language: inputValueForAdd.language,
+                weight:inputValueForAdd.weight
             };
             let filter = option.filter((e) => e.istrue === true);
             if (filter.length) {
@@ -266,6 +276,11 @@ const Question = (props) => {
             selector: "language",
             sortable: true,
         },
+        {
+            name: "Weight",
+            selector: "weight",
+            sortable: true,
+        },
 
         {
             name: "Actions",
@@ -289,13 +304,23 @@ const Question = (props) => {
 
 
                                     setIdForUpdateCourseNameData(row._id);
+                                    setOption(row?.Option)
                                     setInputValueForAdd({
                                         name: row?.Qname,
+                                        description: row?.description,
+                                        weight:row?.weight,
                                         language: row?.language,
-                                        type: row?.type
-
+                                        type:row?.type
                                     });
-                                    setIsEditPopUp(true);
+                                    if (row?.type === "mcq") {
+                                            setMcqCheck(true);
+                                            setCheckBoxCheck(false);
+
+                                        } else {
+                                            setMcqCheck(false);
+                                            setCheckBoxCheck(true);
+                                        }
+                                     setIsEditPopUp(true);
                                 }}
                             >
                                 <Tooltip title="Edit Examiner" arrow>
@@ -809,6 +834,36 @@ const Question = (props) => {
                                         </span>
                                     </div>
                                 </div>
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                    Weight
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="number"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="weight"
+                                                name="weight"
+                                                value={inputValueForAdd.weight}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["weight"]}
+                                        </span>
+                                    </div>
+                                </div>
+
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
                                         Select Type
@@ -879,27 +934,26 @@ const Question = (props) => {
                                                 })
                                                 : [0, 1, 2, 3].map((data, index) => {
                                                     return (
-                                                        <div className="col-lg-9 col-xl-6">
-                                                            <div
-                                                                className="form-group d-flex align-items-center"
-                                                                key={index}
-                                                            >
-                                                                <input
-                                                                    className="mr-3"
-                                                                    type="radio"
-                                                                    name="radio"
-                                                                    id="radio"
-                                                                    checked={data.istrue}
-                                                                    // defaultChecked={data.istrue}
-                                                                    onChange={(e) => handleQuestion(e, index)}
-                                                                />
-                                                                <input
-                                                                    className={`form-control form-control-lg form-control-solid`}
-                                                                    type="text"
-                                                                    onChange={(e) => handleQuestion(e, index)}
-                                                                    required
-                                                                />
-                                                            </div>
+                                                        <div
+                                                            className="form-group d-flex align-items-center"
+                                                            key={index}
+                                                        >
+                                                            <input
+                                                                className="mr-3"
+                                                                type="radio"
+                                                                name="radio"
+                                                                id="radio"
+                                                                checked={data.istrue}
+                                                                // defaultChecked={data.istrue}
+                                                                onChange={(e) => handleQuestion(e, index)}
+                                                            />
+                                                            <input
+                                                                className="form-control"
+                                                                type="text"
+                                                                onChange={(e) => handleQuestion(e, index)}
+                                                                value={data.name}
+                                                                required
+                                                            />
                                                         </div>
                                                     );
                                                 })}
@@ -939,27 +993,28 @@ const Question = (props) => {
                                                 })
                                                 : [0, 1, 2, 3].map((data, index) => {
                                                     return (
-                                                        <div className="col-lg-9 col-xl-6">
-                                                            <div
-                                                                className="form-group d-flex align-items-center"
-                                                                key={index}
-                                                            >
-                                                                <input
-                                                                    className="mr-3"
-                                                                    type="checkbox"
-                                                                    onChange={(e) =>
-                                                                        handleQuestionCheckBox(e, index)
-                                                                    }
-                                                                />
-                                                                <input
-                                                                    className={`form-control form-control-lg form-control-solid`}
-                                                                    type="text"
-                                                                    onChange={(e) =>
-                                                                        handleQuestionCheckBox(e, index)
-                                                                    }
-                                                                    required
-                                                                />
-                                                            </div>
+                                                        <div
+                                                            className="form-group d-flex align-items-center"
+                                                            key={index}
+                                                        >
+                                                            <input
+                                                                className="mr-3"
+                                                                type="checkbox"
+                                                                defaultChecked={data.istrue}
+                                                                onChange={(e) =>
+                                                                    handleQuestionCheckBox(e, index)
+                                                                }
+                                                            />
+                                                            <input
+                                                                className="form-control"
+                                                                type="text"
+                                                                value={data.name}
+
+                                                                onChange={(e) =>
+                                                                    handleQuestionCheckBox(e, index)
+                                                                }
+                                                                required
+                                                            />
                                                         </div>
                                                     );
                                                 })}

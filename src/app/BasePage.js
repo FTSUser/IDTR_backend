@@ -18,11 +18,11 @@ import Clients from "../_metronic/components/Clients/Clients";
 import Feedback from "../_metronic/components/Feedback/Feedback";
 import TimeSlot from "../_metronic/components/TimeSlot/TimeSlot";
 import FAQ from "../_metronic/components/FAQ/FAQ";
-
+import Batch from "../_metronic/components/Batch/Batch";
 import { getUserInfo } from "../../src/utils/user.util";
 import PaymentData from "../_metronic/components/PaymentForm/payment";
 import Examiner from "../_metronic/components/Examiner/Examiner";
-import QuestionSet from "../_metronic/components/QuestionSet/QuestionSet";
+// import QuestionSet from "../_metronic/components/QuestionSet/QuestionSet";
 import Question from "../_metronic/components/Question/Question";
 import Menu from "../_metronic/components/Menu/menu";
 import Assign from "../_metronic/components/Assign/Assign";
@@ -55,17 +55,18 @@ export default function BasePage() {
           <ContentRoute exact path="/banner-description" component={Description} />
           <ContentRoute exact path="/clients" component={Clients} />
 
+            <ContentRoute exact path="/timeslot" component={TimeSlot} />
+            <ContentRoute exact path="/feedback" component={Feedback} />
+            <ContentRoute exact path="/faq" component={FAQ} />
+            <ContentRoute exact path="/batch" component={Batch} />
+            <ContentRoute exact path="/examiner" component={Examiner} />
+            <ContentRoute exact path="/question" component={Question} />
 
 
           {/* /////////////////////////////////////////////////////////////////////////*/}
 
-          <ContentRoute exact path="/timeslot" component={TimeSlot} />
-          <ContentRoute exact path="/feedback" component={Feedback} />
           <ContentRoute exact path="/contact-us" component={ContactUs} />
-          <ContentRoute exact path="/faq" component={FAQ} />
           <ContentRoute exact path="/role" component={Examiner} />
-          <ContentRoute exact path="/question-set" component={QuestionSet} />
-          <ContentRoute exact path="/question" component={Question} />
 
 
 
