@@ -2059,7 +2059,7 @@ const User = ({ getNewCount, title }) => {
                             <div className="d-flex aligncenetr">
                               <input type="checkbox" onChange={e => onChangeDiscloser(e.target.checked)} checked={dicloser} />
                               <div className="s" onClick={() => setModalOpen(!modalOpen)}>Disclooser</div></div>
-                          </div>
+                            </div>
                       }
                       <div
                         className="next-step-alignment"
