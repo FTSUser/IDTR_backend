@@ -23,6 +23,10 @@ import Loader from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import moment from "moment";
 import CsvDownload from "react-json-to-csv";
+import S3 from "react-aws-s3";
+import { AwsConfig } from "../../../config/S3Backet/app.config";
+
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -157,6 +161,16 @@ const Question = (props) => {
             errorsForAdd["weight"] = "*Please Enter weight!";
         }
 
+        if (inputValueForAdd && !inputValueForAdd.Category) {
+            formIsValid = false;
+            errorsForAdd["Category"] = "*Please Enter Category!";
+        }
+        option.map((data)=>{
+            if(data.name===''){
+                return toast.error('Enter Question')
+            }
+        })
+
         setErrorsForAdd(errorsForAdd);
         return formIsValid;
     };
@@ -169,7 +183,9 @@ const Question = (props) => {
                 type: inputValueForAdd.type,
                 Option: option,
                 language: inputValueForAdd.language,
-                weight:inputValueForAdd.weight
+                weight:inputValueForAdd.weight,
+                Category:inputValueForAdd.Category,
+                image:inputValueForAdd.image
 
             };
             let filter = option.filter((e) => e.istrue === true);
@@ -225,7 +241,9 @@ const Question = (props) => {
                 type: inputValueForAdd.type,
                 Option: option,
                 language: inputValueForAdd.language,
-                weight:inputValueForAdd.weight
+                weight:inputValueForAdd.weight,
+                Category:inputValueForAdd.Category,
+                image:inputValueForAdd.image
             };
             let filter = option.filter((e) => e.istrue === true);
             if (filter.length) {
@@ -277,6 +295,25 @@ const Question = (props) => {
             sortable: true,
         },
         {
+            name: "Image",
+            //   selector: "photo",
+            cell: (row) => {
+              return (
+                <>
+                  <div className="p-3">
+                    <img className="max-w-50px zoom" alt="img" src={row?.image} />
+                  </div>
+                </>
+              );
+            },
+            wrap: true,
+          },
+          {
+            name: "Category",
+            selector: "Category",
+            sortable: true,
+        },
+        {
             name: "Weight",
             selector: "weight",
             sortable: true,
@@ -310,7 +347,9 @@ const Question = (props) => {
                                         description: row?.description,
                                         weight:row?.weight,
                                         language: row?.language,
-                                        type:row?.type
+                                        type:row?.type,
+                                        image:row?.image,
+                                        Category:row?.Category,
                                     });
                                     if (row?.type === "mcq") {
                                             setMcqCheck(true);
@@ -610,6 +649,43 @@ const Question = (props) => {
         }
         setOption(list);
     };
+
+
+
+    const getImageArrayFromUpload = async (e) => {
+        // let files = e.target.files;
+        // let imageB64Arr = [];
+        const file = e?.target?.files[0]
+        if(file){
+          if (file.type.includes("image")) {
+            let config = AwsConfig;
+            config = {
+              ...config,
+              dirName: "Cerificate",
+              ACL: "public-read",
+            };
+            const Reacts3Client = new S3(config);
+            let urls;
+            
+            let filename = "AboutImage(" + new Date().getTime() + ")";
+            let data = await Reacts3Client.uploadFile(file, filename);
+            // try {
+            // if (data.status === 204) {
+            urls = data.location;
+            if (urls) {
+              setInputValueForAdd((cv) => {
+                return { ...cv, image: urls };
+              });
+              console.log("urls====>", urls);
+            }
+            return urls;
+          } else {
+            errorsForAdd["image"] = "*Please Upload Image!";
+          }
+        }
+      };
+
+
     return (
         <>
             <div className="card p-1">
@@ -834,6 +910,69 @@ const Question = (props) => {
                                         </span>
                                     </div>
                                 </div>
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Image
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                        <input
+                                            type="file"
+                                            className={`form-control form-control-lg form-control-solid `}
+                                            name="image"
+                                            // value={productValues.image || null}
+                                            onChange={(e) => {
+                                            getImageArrayFromUpload(e);
+                                            }}
+                                            accept="image/*"
+                                            required
+                                        />
+                                        </div>
+                                        <span
+                                        style={{
+                                            color: "red",
+                                            top: "5px",
+                                            fontSize: "12px",
+                                        }}
+                                        >
+                                        {errorsForAdd["image"]}
+                                        </span>
+                                    </div>
+                                    </div>
+
+
+                            <div className="form-group row">
+                                <label className="col-xl-3 col-lg-3 col-form-label">
+                                    Category
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="Category"
+                                                name="Category"
+                                                value={inputValueForAdd.Category}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["Category"]}
+                                        </span>
+                                    </div>
+                                </div>
+
+
+
 
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
