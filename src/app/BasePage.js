@@ -26,6 +26,7 @@ import QuestionSet from "../_metronic/components/QuestionSet/QuestionSet";
 import Question from "../_metronic/components/Question/Question";
 import Menu from "../_metronic/components/Menu/menu";
 import Assign from "../_metronic/components/Assign/Assign";
+import TakeTest from "../_metronic/components/TakeTest/TakeTest";
 export default function BasePage() {
   let userInfo = getUserInfo()
 
@@ -47,7 +48,7 @@ export default function BasePage() {
           <ContentRoute exact path="/courseselection/vehiclecategory" component={VehicleCategory} />
           <ContentRoute exact path="/user" component={User} />
           <ContentRoute exact path="/payment" component={Payment} />
-          {/* <ContentRoute exact path="/payment" component={PaymentData} /> */}
+          <ContentRoute exact path="/take-test" component={TakeTest} />
 
           <ContentRoute exact path="/announcement" component={Announcement} />
           {/* /////////////////////////////////////////////////////////////////////////*/}

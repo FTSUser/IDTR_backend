@@ -461,7 +461,7 @@ const Menu = ({ getNewCount, title }) => {
                                 />
                             </div>
                         </div>
-                        {/* <div className="cus-medium-button-style button-height">
+                        <div className="cus-medium-button-style button-height">
                             <button
                                 onClick={() => {
                                     setIsAddCourseName(true);
@@ -470,7 +470,7 @@ const Menu = ({ getNewCount, title }) => {
                             >
                                 Add Menu
                             </button>
-                        </div> */}
+                        </div>
                         <div className="cus-medium-button-style button-height">
                             <CsvDownload
                                 className={``}
