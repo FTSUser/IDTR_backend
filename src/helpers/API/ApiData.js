@@ -223,7 +223,7 @@ export const ApiPost = (type, userData, AdditionalHeader) => {
                 resolve(responseJson);
             })
             .catch((error) => {
-                console.log("error", error);
+                console.log("error1121561", error);
 
                 if (
                     error &&

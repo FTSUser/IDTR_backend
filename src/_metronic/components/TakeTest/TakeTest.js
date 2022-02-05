@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React, { useEffect, useState } from "react";
 import DataTable, { defaultThemes } from "react-data-table-component";
 import {
@@ -38,7 +39,10 @@ const TakeTest = ({ getNewCount, title }) => {
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false);
     const [isAddCourseName, setIsAddCourseName] = useState(false);
+    const [userByAttendece, setUserByAttendece] = useState([]);
+
     const [isAddAttedence, setIsAddAttedence] = useState(false);
+    const [isAddQuestion, setIsAddQuestion] = useState(false);
 
     const [inputValueForAdd, setInputValueForAdd] = useState({});
     const [errorsForAdd, setErrorsForAdd] = useState({});
@@ -48,6 +52,18 @@ const TakeTest = ({ getNewCount, title }) => {
     const [search, setSearch] = useState("");
     const [dataViewMore, setDataViewMore] = useState({});
     const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
+    const [selectedTopSubjects, setSelectedTopSubjects] = useState([]);
+    const [questionData, setQuestionData] = useState([]);
+    const [attendenceId, setAttendenceId] = useState('');
+    const [batchId, setBatchId] = useState('');
+    const [tdId, setTdId] = useState([]);
+
+
+    useEffect(() => {
+        console.log("attendenceId", attendenceId);
+    }, [attendenceId])
+
+
     const [questionKEY, setQuestionKEY] = useState(0);
     let userInfo = getUserInfo();
     useEffect(() => {
@@ -57,13 +73,6 @@ const TakeTest = ({ getNewCount, title }) => {
     const handleViewMoreClose = () => {
         setIsViewMoreAboutus(false);
         setDataViewMore({});
-    };
-
-    const handleOnChnageAdd = (e) => {
-        console.log("Eeeee", e);
-        const { name, value } = e.target;
-        setInputValueForAdd({ ...inputValueForAdd, [name]: value });
-        setErrorsForAdd({ ...errorsForAdd, [name]: "" });
     };
 
     const [getAllRole, setgetAllRole] = useState({});
@@ -79,13 +88,16 @@ const TakeTest = ({ getNewCount, title }) => {
     };
 
     const handleAddAttedenc = () => {
-
         setIsAddAttedence(false);
+        getAllCourseName();
+        setSelectedTopSubjects([])
 
     };
 
-    const handleClose = () => {
-        setShow(false);
+    const handelCloseQuestion = () => {
+        setIsAddQuestion(false)
+
+
     };
 
 
@@ -93,7 +105,38 @@ const TakeTest = ({ getNewCount, title }) => {
     useEffect(() => {
         getAllCourseName();
         getAllRoleData()
+
     }, [page, countPerPage]);
+
+    const getAllUserIdWise = async (id) => {
+        await ApiGet(
+            `register/getRegisterByBatch/${id}`
+        )
+            .then((res) => {
+                console.log("res", res);
+                setUserByAttendece(res?.data?.payload?.users)
+                setAttendenceId(id)
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.error(err)
+            });
+    }
+
+    const viewPeperSet = async (id) => {
+        await ApiGet(
+            `batch/getExamsetByBatch/${id}`
+        )
+            .then((res) => {
+                console.log("res", res);
+                setQuestionData(res?.data?.payload?.Examset)
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.error(err)
+            });
+    }
+
 
 
 
@@ -105,14 +148,14 @@ const TakeTest = ({ getNewCount, title }) => {
                 Examiner: userInfo?.admin?._id
             }
             console.log("userInfo?._id", userInfo?.admin?._id);
-            await ApiPost(
-                `test/getTestByExaminer?page=${page}&limit=${countPerPage}`, data
+            await ApiGet(
+                `batch/getBatchByExaminer/${data?.Examiner}?page=${page}&limit=${countPerPage}`,
             )
                 .then((res) => {
                     console.log("res", res);
                     setIsLoaderVisible(false);
                     console.log("artistreport", res);
-                    setFilteredCourseName(res?.data?.payload?.Question);
+                    setFilteredCourseName(res?.data?.payload?.Batch);
                     setCount(res?.data?.payload?.count);
 
                 })
@@ -120,13 +163,16 @@ const TakeTest = ({ getNewCount, title }) => {
                     console.log(err);
                 });
         } else {
-            await ApiPost(
-                `test/getTestByExaminer?search=${search}&page=${page}&limit=${countPerPage}`
+            const data = {
+                Examiner: userInfo?.admin?._id
+            }
+            await ApiGet(
+                `batch/getBatchByExaminer/${data?.Examiner}?page=${page}&limit=${countPerPage}&search=${search}`,
             )
                 .then((res) => {
                     setIsLoaderVisible(false);
                     console.log("artistreport", res);
-                    setFilteredCourseName(res?.data?.payload?.Question);
+                    setFilteredCourseName(res?.data?.payload?.Batch);
                     setCount(res?.data?.payload?.count);
                 })
                 .catch((err) => {
@@ -145,24 +191,15 @@ const TakeTest = ({ getNewCount, title }) => {
         },
         {
             name: "Name",
-            selector: row => row?.batch?.name,
+            selector: row => row?.name,
             sortable: true,
         },
 
         {
             name: "Seat",
-            selector: row => row?.batch?.total,
+            selector: row => row?.total,
             sortable: true,
         },
-        {
-            name: "No Of Question",
-            selector: row => row?.question?.length,
-            sortable: true,
-        },
-
-
-
-
 
         {
             name: "Actions",
@@ -174,25 +211,41 @@ const TakeTest = ({ getNewCount, title }) => {
                                 className="cursor-pointer pl-2"
                                 onClick={() => {
                                     setIsAddCourseName(true);
-                                    setDataViewMore(row);
+                                    setBatchId(row?._id)
+                                    setTdId(row?.tdid)
+                                    // setDataViewMore(row);
                                 }}
                             >
                                 <button className="btn btn-success">Start Test</button>
 
                             </div>
                         </div>
-                        <div className="d-flex justify-content-between">
-                            <div
-                                className="cursor-pointer pl-2"
-                                onClick={() => {
-                                    setIsAddAttedence(true);
+                        {
+                            row?.isExamGenerate ? <div>
+                                <div className="btn btn-success mr-3" onClick={() => {
+                                    setIsAddQuestion(true)
+                                    viewPeperSet(row?._id)
+                                }
+                                }>
+                                    View Peper Set
+                                </div></div> : ''
 
-                                }}
-                            >
-                                <button className="btn btn-success">Attendance</button>
+                        }
+                        {
+                            row?.isAttendanceTake ? '' : <div className="d-flex justify-content-between">
+                                <div
+                                    className="cursor-pointer pl-2"
+                                    onClick={() => {
+                                        setIsAddAttedence(true);
+                                        getAllUserIdWise(row?._id)
+                                    }}
+                                >
+                                    <button className="btn btn-success">Attendance</button>
 
+                                </div>
                             </div>
-                        </div>
+                        }
+
 
 
                         <>
@@ -317,6 +370,25 @@ const TakeTest = ({ getNewCount, title }) => {
             });
         // }
     };
+
+    const addUserAttedence = async () => {
+        const data = {
+            uids: selectedTopSubjects,
+            batch: attendenceId
+        }
+        await ApiPut(`test/attendence`, data)
+            .then((res) => {
+                console.log("attdence", res?.data?.payload);
+                setSelectedTopSubjects([])
+                setIsAddAttedence(false)
+                // setAllCourseNameExcel(res?.data?.payload?.Examiner);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
+
     useEffect(() => {
         if (allCourseNameExcel) {
             allCourseNameExcel.map((registerUser, key) => {
@@ -331,6 +403,95 @@ const TakeTest = ({ getNewCount, title }) => {
         }
         console.log("UsertCsvReport", allCourseNameExcel);
     }, [allCourseNameExcel]);
+
+
+
+
+    const handleSubjectSelect = (data, id, e) => {
+        console.log("eeeee", e?.target?.name);
+        if (e?.target?.name === "selectall") {
+            let newArr = [];
+            if (selectedTopSubjects.length === data.length) {
+                setSelectedTopSubjects([])
+            } else {
+                console.log("in else")
+
+                let newArr = [];
+                data && data?.map((res, key) => {
+                    return (newArr.push(res?._id))
+                })
+                setSelectedTopSubjects(newArr)
+            }
+
+        } else {
+
+            if (selectedTopSubjects?.find((ss) => ss === data?._id)) {
+                setSelectedTopSubjects((curVal) =>
+                    curVal.filter((cv) => cv !== data?._id)
+                );
+            } else {
+                setSelectedTopSubjects((curVal) => [...curVal, data?._id]);
+            }
+        }
+    };
+
+
+    const handleOnChnageAdd = (e) => {
+        const { name, value } = e.target;
+        setInputValueForAdd({ ...inputValueForAdd, [name]: value });
+        setErrorsForAdd({ ...errorsForAdd, [name]: "" });
+    };
+    useEffect(() => {
+        console.log("inputValueForAdd", inputValueForAdd);
+    }, [inputValueForAdd])
+
+
+    const validateFormForAddAdmin = () => {
+        let formIsValid = true;
+        let errorsForAdd = {};
+
+
+        if (inputValueForAdd && !inputValueForAdd.type) {
+            formIsValid = false;
+            errorsForAdd["type"] = "*Please Enter type!";
+        }
+        if (inputValueForAdd && !inputValueForAdd.no) {
+            formIsValid = false;
+            errorsForAdd["no"] = "*Please Enter no!";
+        }
+
+
+
+        setErrorsForAdd(errorsForAdd);
+        return formIsValid;
+    };
+    const generatePeperSet = async () => {
+        if (validateFormForAddAdmin()) {
+            const data = {
+                tdid: tdId,
+                batch: batchId,
+                no: inputValueForAdd.no,
+                type: inputValueForAdd.type
+            }
+            await ApiPost(`question/getgenerateQuestion`, data)
+                .then((res) => {
+                    if (res?.status == 200) {
+                        console.log("attdence", res?.data?.payload);
+                        setSelectedTopSubjects([])
+                        setIsAddAttedence(false)
+                    } else {
+
+                        toast.error(res?.message);
+
+                    }
+
+                })
+                .catch((err) => {
+
+                    toast.error(err?.message)
+                });
+        }
+    }
 
     return (
         <>
@@ -439,17 +600,115 @@ const TakeTest = ({ getNewCount, title }) => {
                             <div>
                                 <div className="container">
                                     <h2>
-                                        {
-                                            dataViewMore?.batch?.name
-                                        }
+                                        Hello
                                     </h2>
+                                    <div className="form-group">
+                                        <select
+                                            className={`form-control form-control-lg form-control-solid`}
+                                            name="type"
+                                            value={inputValueForAdd.type}
+                                            onChange={(e) => {
+                                                handleOnChnageAdd(e);
+                                            }}
+                                        >
+                                            <option>Select Languagae...</option>
+                                            <option value="english" selected={
+                                                inputValueForAdd?.type ===
+                                                    "english"
+                                                    ? true
+                                                    : false
+                                            }>English </option>
+                                            <option value="hindi" selected={
+                                                inputValueForAdd?.type ===
+                                                    "hindi"
+                                                    ? true
+                                                    : false
+                                            }>Hindi</option>
+
+                                        </select>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["type"]}
+                                        </span>
+                                    </div>
+                                    <div className="form-group">
+                                        <select
+                                            className={`form-control form-control-lg form-control-solid`}
+                                            name="no"
+                                            value={inputValueForAdd.no}
+                                            onChange={(e) => {
+                                                handleOnChnageAdd(e);
+                                            }}
+                                        >
+                                            <option>Select Number Of Question...</option>
+                                            <option value="20" selected={
+                                                inputValueForAdd?.no ===
+                                                    "20"
+                                                    ? true
+                                                    : false
+                                            }>20 </option>
+                                            <option value="40" selected={
+                                                inputValueForAdd?.no ===
+                                                    "40"
+                                                    ? true
+                                                    : false
+                                            }>40</option>
+
+                                        </select>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["no"]}
+                                        </span>
+                                    </div>
+
+                                    <div>
+                                        <div className="btn btn-success" onClick={() => generatePeperSet()}>Generate Question </div>
+                                    </div>
 
 
 
-                                    <div className="d-flex">
+                                </div>
+                            </div>
+                        ) : null}
+                    </List>
+                </Dialog>
+            ) : null}
+            {isAddQuestion ? (
+                <Dialog
+                    fullScreen
+                    open={isAddQuestion}
+                    onClose={handelCloseQuestion}
+                    TransitionComponent={Transition}
+                >
+                    <Toolbar>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            onClick={handelCloseQuestion}
+                            aria-label="close"
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                    </Toolbar>
+                    <List>
+                        {isAddQuestion === true ? (
+                            <div>
+                                <div className="container">
+                                    <h2>Hello</h2>
+                                    {/* <div className="d-flex">
                                         <h4 className="mr-3">Question  {questionKEY + 1}</h4>
 
-                                        <h4>{dataViewMore?.question[questionKEY]?.Qname}</h4>
+                                        <h4>{questionData?.question[questionKEY]?.Qname}</h4>
 
                                     </div>
                                     <div>
@@ -482,14 +741,15 @@ const TakeTest = ({ getNewCount, title }) => {
                                             </> : ""
                                         }
 
-                                    </div>
+                                    </div> */}
+
+
                                 </div>
                             </div>
                         ) : null}
                     </List>
                 </Dialog>
             ) : null}
-
             {isAddAttedence ? (
                 <Dialog
                     fullScreen
@@ -512,31 +772,60 @@ const TakeTest = ({ getNewCount, title }) => {
                             <div>
                                 <div className="container">
                                     <div className="">
+
                                         <div className="d-flex">
                                             <div className="mr-3">
-                                                <input type="checkbox" />
+                                                <input type="checkbox"
+                                                    name="selectall"
+
+                                                    onChange={(e) => handleSubjectSelect(userByAttendece, "id", e)}
+                                                    checked={
+                                                        selectedTopSubjects?.length === userByAttendece.length
+                                                            ? true
+                                                            : false
+                                                    }
+                                                />
                                             </div>
                                             <div>
                                                 <div>Select All</div>
                                             </div>
                                         </div>
-                                        <div className="d-flex ">
-                                            <div className="mr-3">
-                                                <input type="checkbox" />
-                                            </div>
-                                            <div className="">
-                                                <div>Abc@gmail.com</div>
-                                            </div>
-                                        </div>
-                                        <div className="d-flex ">
-                                            <div className="mr-3">
-                                                <input type="checkbox" />
-                                            </div>
-                                            <div className="">
-                                                <div>Abc@gmail.com</div>
-                                            </div>
-                                        </div>
+
+                                        {
+                                            userByAttendece?.length > 0 && userByAttendece?.map((data, key) => {
+                                                return (
+                                                    <>
+
+                                                        <div className="d-flex " key={key}>
+                                                            <div className="mr-3">
+                                                                <input type="checkbox"
+                                                                    checked={
+                                                                        selectedTopSubjects?.find((ss) => ss === data?._id)
+                                                                            ? true
+                                                                            : false
+                                                                    }
+                                                                    // onChange={(e) => addAttendence(e)} />
+                                                                    onChange={() => handleSubjectSelect(data, data?._id, "e")}
+                                                                />
+                                                            </div>
+                                                            <div className="">
+                                                                <div>{data?.email} {' '} {data?.fname} {' '} {data?.phone}</div>
+                                                            </div>
+                                                        </div>
+                                                    </>
+                                                )
+                                            })
+                                        }
+
+
                                     </div>
+
+                                    {selectedTopSubjects?.length > 0 &&
+                                        <div className="">
+                                            <div className="btn btn-success"
+                                                onClick={() => addUserAttedence()}>Add Attedence</div>
+                                        </div>}
+
                                 </div>
                             </div>
                         ) : null}
