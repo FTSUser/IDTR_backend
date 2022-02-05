@@ -38,6 +38,8 @@ const TakeTest = ({ getNewCount, title }) => {
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false);
     const [isAddCourseName, setIsAddCourseName] = useState(false);
+    const [isAddAttedence, setIsAddAttedence] = useState(false);
+
     const [inputValueForAdd, setInputValueForAdd] = useState({});
     const [errorsForAdd, setErrorsForAdd] = useState({});
     const [page, setPage] = useState(1);
@@ -74,8 +76,11 @@ const TakeTest = ({ getNewCount, title }) => {
         setInputValueForAdd({});
         setIsAddCourseName(false);
         setErrorsForAdd({});
+    };
 
+    const handleAddAttedenc = () => {
 
+        setIsAddAttedence(false);
 
     };
 
@@ -173,6 +178,18 @@ const TakeTest = ({ getNewCount, title }) => {
                                 }}
                             >
                                 <button className="btn btn-success">Start Test</button>
+
+                            </div>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <div
+                                className="cursor-pointer pl-2"
+                                onClick={() => {
+                                    setIsAddAttedence(true);
+
+                                }}
+                            >
+                                <button className="btn btn-success">Attendance</button>
 
                             </div>
                         </div>
@@ -465,6 +482,60 @@ const TakeTest = ({ getNewCount, title }) => {
                                             </> : ""
                                         }
 
+                                    </div>
+                                </div>
+                            </div>
+                        ) : null}
+                    </List>
+                </Dialog>
+            ) : null}
+
+            {isAddAttedence ? (
+                <Dialog
+                    fullScreen
+                    open={isAddAttedence}
+                    onClose={handleAddAttedenc}
+                    TransitionComponent={Transition}
+                >
+                    <Toolbar>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            onClick={handleAddAttedenc}
+                            aria-label="close"
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                    </Toolbar>
+                    <List>
+                        {isAddAttedence === true ? (
+                            <div>
+                                <div className="container">
+                                    <div className="">
+                                        <div className="d-flex">
+                                            <div className="mr-3">
+                                                <input type="checkbox" />
+                                            </div>
+                                            <div>
+                                                <div>Select All</div>
+                                            </div>
+                                        </div>
+                                        <div className="d-flex ">
+                                            <div className="mr-3">
+                                                <input type="checkbox" />
+                                            </div>
+                                            <div className="">
+                                                <div>Abc@gmail.com</div>
+                                            </div>
+                                        </div>
+                                        <div className="d-flex ">
+                                            <div className="mr-3">
+                                                <input type="checkbox" />
+                                            </div>
+                                            <div className="">
+                                                <div>Abc@gmail.com</div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
