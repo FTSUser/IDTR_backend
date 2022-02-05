@@ -459,7 +459,11 @@ const TakeTest = ({ getNewCount, title }) => {
                                         {questionKEY === dataViewMore?.question?.length - 1 ? "" :
                                             <button className="btn btn-success" onClick={() => { setQuestionKEY(questionKEY + 1) }}>Next</button>
                                         }
-
+                                        {
+                                            questionKEY === dataViewMore?.question?.length - 1 ? <>
+                                                <div className="success">Success</div>
+                                            </> : ""
+                                        }
 
                                     </div>
                                 </div>

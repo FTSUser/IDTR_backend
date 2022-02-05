@@ -27,6 +27,7 @@ import Question from "../_metronic/components/Question/Question";
 import Menu from "../_metronic/components/Menu/menu";
 import Assign from "../_metronic/components/Assign/Assign";
 import TakeTest from "../_metronic/components/TakeTest/TakeTest";
+import CheckQuestion from "../_metronic/components/CheckQuestion/CheckQuestion";
 export default function BasePage() {
   let userInfo = getUserInfo()
 
@@ -49,6 +50,8 @@ export default function BasePage() {
           <ContentRoute exact path="/user" component={User} />
           <ContentRoute exact path="/payment" component={Payment} />
           <ContentRoute exact path="/take-test" component={TakeTest} />
+          <ContentRoute exact path="/check-question" component={CheckQuestion} />
+
 
           <ContentRoute exact path="/announcement" component={Announcement} />
           {/* /////////////////////////////////////////////////////////////////////////*/}
@@ -56,12 +59,12 @@ export default function BasePage() {
           <ContentRoute exact path="/banner-description" component={Description} />
           <ContentRoute exact path="/clients" component={Clients} />
 
-            <ContentRoute exact path="/timeslot" component={TimeSlot} />
-            <ContentRoute exact path="/feedback" component={Feedback} />
-            <ContentRoute exact path="/faq" component={FAQ} />
-            <ContentRoute exact path="/batch" component={Batch} />
-            <ContentRoute exact path="/examiner" component={Examiner} />
-            <ContentRoute exact path="/question" component={Question} />
+          <ContentRoute exact path="/timeslot" component={TimeSlot} />
+          <ContentRoute exact path="/feedback" component={Feedback} />
+          <ContentRoute exact path="/faq" component={FAQ} />
+          <ContentRoute exact path="/batch" component={Batch} />
+          <ContentRoute exact path="/examiner" component={Examiner} />
+          <ContentRoute exact path="/question" component={Question} />
 
 
           {/* /////////////////////////////////////////////////////////////////////////*/}
