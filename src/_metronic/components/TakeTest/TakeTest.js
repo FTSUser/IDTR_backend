@@ -54,7 +54,7 @@ const TakeTest = ({ getNewCount, title }) => {
   const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
   const [selectedTopSubjects, setSelectedTopSubjects] = useState([]);
   const [questionData, setQuestionData] = useState([]);
-  const [successBatchId, setSuucessBatchId] = useState('');
+  const [successBatchId, setSuucessBatchId] = useState("");
 
   const [attendenceId, setAttendenceId] = useState("");
   const [batchId, setBatchId] = useState("");
@@ -121,7 +121,7 @@ const TakeTest = ({ getNewCount, title }) => {
       .then((res) => {
         console.log("res", res);
         setQuestionData(res?.data?.payload?.Examset?.questionsList);
-        setSuucessBatchId(res?.data?.payload?.Examset?.batchId)
+        setSuucessBatchId(res?.data?.payload?.Examset?.batchId);
       })
       .catch((err) => {
         console.log(err);
@@ -372,6 +372,7 @@ const TakeTest = ({ getNewCount, title }) => {
         setSelectedTopSubjects([]);
         setIsAddAttedence(false);
         getAllCourseName();
+
         // setAllCourseNameExcel(res?.data?.payload?.Examiner);
       })
       .catch((err) => {
@@ -459,6 +460,10 @@ const TakeTest = ({ getNewCount, title }) => {
             console.log("attdence", res?.data?.payload);
             setSelectedTopSubjects([]);
             setIsAddAttedence(false);
+            setInputValueForAdd({});
+            setIsAddCourseName(false);
+            setErrorsForAdd({});
+            getAllCourseName();
           } else {
             toast.error(res?.message);
           }
@@ -469,14 +474,12 @@ const TakeTest = ({ getNewCount, title }) => {
     }
   };
 
-
   const CompleteBatchById = async () => {
     console.log("BatchId", successBatchId);
-    await ApiPut(`batch/CompleteBatchById/${successBatchId}`,)
+    await ApiPut(`batch/CompleteBatchById/${successBatchId}`)
       .then((res) => {
         if (res?.status == 200) {
-
-          toast.success(res?.data?.message)
+          toast.success(res?.data?.message);
         } else {
           toast.error(res?.message);
         }
@@ -484,8 +487,7 @@ const TakeTest = ({ getNewCount, title }) => {
       .catch((err) => {
         toast.error(err?.response?.data?.message);
       });
-  }
-
+  };
 
   return (
     <>
@@ -746,7 +748,12 @@ const TakeTest = ({ getNewCount, title }) => {
                     )}
                     {questionKEY === questionData?.length - 1 ? (
                       <>
-                        <div className="success btn btn-success" onClick={() => CompleteBatchById()}>Success</div>
+                        <div
+                          className="success btn btn-success"
+                          onClick={() => CompleteBatchById()}
+                        >
+                          Success
+                        </div>
                       </>
                     ) : (
                       ""
@@ -790,7 +797,7 @@ const TakeTest = ({ getNewCount, title }) => {
                           }
                           checked={
                             selectedTopSubjects?.length ===
-                              userByAttendece.length
+                            userByAttendece.length
                               ? true
                               : false
                           }
@@ -874,7 +881,11 @@ const TakeTest = ({ getNewCount, title }) => {
                   <div className="honda-text-grid-items">
                     <div className="honda-text-grid-items">
                       <span>CreatedAt:</span>
-                      {<div>{moment(dataViewMore?.createdAt).format("ll")}</div>}
+                      {
+                        <div>
+                          {moment(dataViewMore?.createdAt).format("ll")}
+                        </div>
+                      }
                     </div>
                     <span>Batch Name:</span>
                     <p
