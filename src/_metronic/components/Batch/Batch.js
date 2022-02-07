@@ -36,14 +36,13 @@ const Batch = ({ getNewCount, title }) => {
   const [isLoaderVisible, setIsLoaderVisible] = useState(false);
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [dateTimezon ,setdateTimezon]=useState([]);
+  const [dateTimezon, setdateTimezon] = useState([]);
 
   const [dataViewMore, setDataViewMore] = useState({});
   const [isViewMoreAnnouncement, setIsViewMoreAnnouncement] = useState(false);
   const [date, setDate] = useState(new Date());
 
   const [description, setDescription] = useState("");
-  console.log("dataViewMore", dataViewMore);
   //new data
   const [isUpdateAnnouncement, setIsUpdateAnnouncement] = useState(false);
   const [isAddAnnouncement, setIsAddAnnouncement] = useState(false);
@@ -89,9 +88,9 @@ const Batch = ({ getNewCount, title }) => {
     setDataViewMore({});
   };
 
-  useEffect(() => {}, [inputValueForAdd]);
+  useEffect(() => { }, [inputValueForAdd]);
 
-  useEffect(() => {}, [idForEditStatus]);
+  useEffect(() => { }, [idForEditStatus]);
 
   const handleAdminUpdateClose = () => {
     setInputValue({});
@@ -148,60 +147,60 @@ const Batch = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.batch);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     } else {
       await ApiGet(
         `batch/getAllBatch?search=${search}&page=${page}&limit=${countPerPage}`
       )
         .then((res) => {
           setIsLoaderVisible(false);
-          setFilteredAnnouncement(res?.data?.payload?.batch );
+          setFilteredAnnouncement(res?.data?.payload?.batch);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
 
-  const getDateAndApi= async (selectdate)=>{
-    selectdate= new Date(selectdate)
+  const getDateAndApi = async (selectdate) => {
+    selectdate = new Date(selectdate)
     setIsLoaderVisible(true);
-      await ApiGet(
-        `trainingDate/getData?date=${selectdate.getFullYear()+"-"+(selectdate.getMonth()<9?("0"+(selectdate.getMonth()+1)):(selectdate.getMonth()+1))+'-'+(selectdate.getDate()<9?("0"+(selectdate.getDate())):(selectdate.getDate()))}`
-      )
-        .then((res) => {
-            setdateTimezon((res?.data?.payload?.subMenu)?(res?.data?.payload?.subMenu):[])
-        })
-        .catch((err) => {
-            setdateTimezon([])
-        });
+    await ApiGet(
+      `trainingDate/getData?date=${selectdate.getFullYear() + "-" + (selectdate.getMonth() < 9 ? ("0" + (selectdate.getMonth() + 1)) : (selectdate.getMonth() + 1)) + '-' + (selectdate.getDate() < 9 ? ("0" + (selectdate.getDate())) : (selectdate.getDate()))}`
+    )
+      .then((res) => {
+        setdateTimezon((res?.data?.payload?.subMenu) ? (res?.data?.payload?.subMenu) : [])
+      })
+      .catch((err) => {
+        setdateTimezon([])
+      });
   }
 
 
 
-  const getExaminerAndApi= async ()=>{
+  const getExaminerAndApi = async () => {
     setIsLoaderVisible(true);
-      await ApiGet(
-        `admin/get-examiners`
-      )
-        .then((res) => {
-            setgetExaminer((res?.data?.payload?.Examiner)?(res?.data?.payload?.Examiner):[])
-        })
-        .catch((err) => {
-            setgetExaminer([])
-        });
+    await ApiGet(
+      `admin/get-examiners`
+    )
+      .then((res) => {
+        setgetExaminer((res?.data?.payload?.Examiner) ? (res?.data?.payload?.Examiner) : [])
+      })
+      .catch((err) => {
+        setgetExaminer([])
+      });
   }
-  const getDataenterAndApi= async ()=>{
+  const getDataenterAndApi = async () => {
     setIsLoaderVisible(true);
-      await ApiGet(
-        `admin/get-dataentry`
-      )
-        .then((res) => {
-            setgetDataenter((res?.data?.payload?.DataEntry)?(res?.data?.payload?.DataEntry):[])
-        })
-        .catch((err) => {
-            setgetDataenter([])
-        });
+    await ApiGet(
+      `admin/get-dataentry`
+    )
+      .then((res) => {
+        setgetDataenter((res?.data?.payload?.DataEntry) ? (res?.data?.payload?.DataEntry) : [])
+      })
+      .catch((err) => {
+        setgetDataenter([])
+      });
   }
 
   useEffect(() => {
@@ -211,13 +210,13 @@ const Batch = ({ getNewCount, title }) => {
 
 
 
-  
+
 
 
   const validateFormForAddAdmin = () => {
     let formIsValid = true;
     let errorsForAdd = {};
-   
+
     if (inputValueForAdd && !inputValueForAdd.name) {
       formIsValid = false;
       errorsForAdd["name"] = "*Please Enter Name!";
@@ -229,85 +228,84 @@ const Batch = ({ getNewCount, title }) => {
     }
 
     if (inputValueForAdd && !inputValueForAdd.DataEntry) {
-        formIsValid = false;
-        errorsForAdd["DataEntry"] = "*Please Upload DataEntry!";
-      }
+      formIsValid = false;
+      errorsForAdd["DataEntry"] = "*Please Upload DataEntry!";
+    }
 
-      if (inputValueForAdd && !inputValueForAdd.Examiner) {
-        formIsValid = false;
-        errorsForAdd["Examiner"] = "*Please Upload Examiner!";
-      }
+    if (inputValueForAdd && !inputValueForAdd.Examiner) {
+      formIsValid = false;
+      errorsForAdd["Examiner"] = "*Please Upload Examiner!";
+    }
 
     setErrorsForAdd(errorsForAdd);
     return formIsValid;
   };
 
 
-  
+
   const handleAddAnnouncementDetails = (e) => {
-      e.preventDefault();
-      if (validateFormForAddAdmin()) {
-          let Data = {
-              name: inputValueForAdd.name,
+    e.preventDefault();
+    if (validateFormForAddAdmin()) {
+      let Data = {
+        name: inputValueForAdd.name,
         date: date,
-        tdid:batchInfo,
-        Examiner:inputValueForAdd.Examiner,
-        DataEntry:inputValueForAdd.DataEntry
-        
+        tdid: batchInfo,
+        Examiner: inputValueForAdd.Examiner,
+        DataEntry: inputValueForAdd.DataEntry
+
       };
       ApiPost(`batch/addBatch`, Data)
-      .then((res) => {
+        .then((res) => {
           if (res?.status == 200) {
-              setIsAddAnnouncement(false);
-              toast.success(res?.data?.message);
-              setInputValueForAdd({});
-              setDescription("");
+            setIsAddAnnouncement(false);
+            toast.success(res?.data?.message);
+            setInputValueForAdd({});
+            setDescription("");
             setDate(new Date());
             getAllAnnouncement();
             setDescription([]);
             setdateTimezon([])
             setbatchInfo([])
-        } else {
+          } else {
             toast.error(res?.data?.message);
-        }
-    })
-    .catch((err) => {
-          toast.error(err.message);
+          }
+        })
+        .catch((err) => {
+          toast.error(err?.response?.data?.message)
         });
     }
-};
+  };
 
 
 
-const validateForm = () => {
+  const validateForm = () => {
     let formIsValid = true;
     let errors = {};
     if (inputValue && !inputValue.name) {
-        formIsValid = false;
-        errorsForAdd["name"] = "*Please Enter Name!";
+      formIsValid = false;
+      errorsForAdd["name"] = "*Please Enter Name!";
     }
-    
+
     if (inputValue && !date) {
-        formIsValid = false;
-        errorsForAdd["date"] = "*Please Upload Date!";
+      formIsValid = false;
+      errorsForAdd["date"] = "*Please Upload Date!";
     }
-    
+
     if (inputValue && !inputValue.DataEntry) {
-        formIsValid = false;
-        errorsForAdd["DataEntry"] = "*Please Upload DataEntry!";
+      formIsValid = false;
+      errorsForAdd["DataEntry"] = "*Please Upload DataEntry!";
     }
-    
+
     if (inputValue && !inputValue.Examiner) {
-        formIsValid = false;
-        errorsForAdd["Examiner"] = "*Please Upload Examiner!";
+      formIsValid = false;
+      errorsForAdd["Examiner"] = "*Please Upload Examiner!";
     }
     setErrors(errors);
     return formIsValid;
-};
-console.log('inputValueForAdd',inputValue)
+  };
 
 
-const handleDeleteAnnouncement = () => {
+  const handleDeleteAnnouncement = () => {
     ApiDelete(`batch/deleteBatch/${idForDeleteAnnouncement}`)
       .then((res) => {
         if (res?.status == 200) {
@@ -325,25 +323,23 @@ const handleDeleteAnnouncement = () => {
         }
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err?.response?.data?.message)
       });
   };
 
-  console.log('asdasdasdasd',date);
 
-  useEffect(() => {}, [inputValue]);
+  useEffect(() => { }, [inputValue]);
 
   const handleUpdateAnnouncementDetails = (e) => {
     e.preventDefault();
-    console.log('1111111111111111111111111111111')
 
     if (validateForm()) {
       let Data = {
         name: inputValue.name,
         date: date,
-        tdid:batchInfo,
-        Examiner:inputValue.Examiner,
-        DataEntry:inputValue.DataEntry
+        tdid: batchInfo,
+        Examiner: inputValue.Examiner,
+        DataEntry: inputValue.DataEntry
       };
       ApiPut(
         `batch/updateBatch/${idForUpdateAnnouncementData}`,
@@ -368,7 +364,7 @@ const handleDeleteAnnouncement = () => {
           }
         })
         .catch((err) => {
-          toast.error(err.message);
+          toast.error(err?.response?.data?.message)
         });
     }
   };
@@ -381,7 +377,7 @@ const handleDeleteAnnouncement = () => {
       width: "65px",
     },
 
-    
+
 
     {
       name: "Batch Name",
@@ -402,45 +398,45 @@ const handleDeleteAnnouncement = () => {
     },
 
     {
-        name: "Date",
-        selector: "date",
-        cell: (row) => {
-          return (
-            <>
-              <p
-                dangerouslySetInnerHTML={{
-                  __html:moment(row?.date).format("ll"),
-                }}
-                className=""
-              />
-            </>
-          );
-        },
-        sortable: true,
+      name: "Date",
+      selector: "date",
+      cell: (row) => {
+        return (
+          <>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: moment(row?.date).format("ll"),
+              }}
+              className=""
+            />
+          </>
+        );
       },
+      sortable: true,
+    },
 
-      {
-        name: "Seat",
-        selector: "numberOFUser",
-        cell: (row) => {
-          return (
-            <>
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: row?.total,
-                }}
-                className=""
-              />
-            </>
-          );
-        },
-        sortable: true,
+    {
+      name: "Seat",
+      selector: "numberOFUser",
+      cell: (row) => {
+        return (
+          <>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: row?.total,
+              }}
+              className=""
+            />
+          </>
+        );
       },
-  
+      sortable: true,
+    },
 
-   
 
-   
+
+
+
     {
       name: "Actions",
       cell: (row) => {
@@ -450,12 +446,12 @@ const handleDeleteAnnouncement = () => {
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
-                    setInputValue({
+                  setInputValue({
                     name: row?.name,
                     date: row?.date,
-                    _id:row?._id,
-                    DataEntry:row?.DataEntry._id,
-                    Examiner:row?.Examiner._id,
+                    _id: row?._id,
+                    DataEntry: row?.DataEntry._id,
+                    Examiner: row?.Examiner._id,
                   });
                   setIsUpdateAnnouncement(true);
                   setIdForUpdateAnnouncementData(row._id);
@@ -463,9 +459,8 @@ const handleDeleteAnnouncement = () => {
                   getDataenterAndApi()
                   getDateAndApi(row?.date);
                   setDate(new Date(row?.date))
-                  const tdidId=row?.tdid.map((data)=>{return data._id})
+                  const tdidId = row?.tdid.map((data) => { return data._id })
                   setbatchInfo(tdidId)
-                  console.log('asdasdasdasdasd',row?.Examiner._id)
                 }}
               >
                 <Tooltip title="Edit Announcement" arrow>
@@ -536,7 +531,7 @@ const handleDeleteAnnouncement = () => {
 
   //for search data
 
-  
+
   const handleSearch = (e) => {
     let val = e.target.value.replace(/[^\w\s]/gi, "");
     setSearch(val);
@@ -582,23 +577,22 @@ const handleDeleteAnnouncement = () => {
   }, [debouncedSearchTerm]);
 
 
-  const [batchInfo, setbatchInfo]=useState([])
+  const [batchInfo, setbatchInfo] = useState([])
 
-  const getBatch=(e,valueId)=>{
-      if(batchInfo.includes(valueId))
-      {
-        setbatchInfo((data)=>{
-            return data.filter((allID)=>{
-                return allID!==valueId
-            })
+  const getBatch = (e, valueId) => {
+    if (batchInfo.includes(valueId)) {
+      setbatchInfo((data) => {
+        return data.filter((allID) => {
+          return allID !== valueId
         })
-      }
-      else{
-        setbatchInfo((data)=>{
-            return [...data,valueId]
-        })
-      }
+      })
     }
+    else {
+      setbatchInfo((data) => {
+        return [...data, valueId]
+      })
+    }
+  }
 
   return (
     <>
@@ -735,7 +729,7 @@ const handleDeleteAnnouncement = () => {
                   </div>
                 </div> */}
 
-                
+
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -794,34 +788,34 @@ const handleDeleteAnnouncement = () => {
                 </div>
 
                 <div className="form-group row">
-                 {dateTimezon.length>0 && (<label className="col-xl-3 col-lg-3 col-form-label">
+                  {dateTimezon.length > 0 && (<label className="col-xl-3 col-lg-3 col-form-label">
                     Select Slot
                   </label>)}
-                <div className="form-group">
+                  <div className="form-group">
 
-                {dateTimezon.length>0 && dateTimezon.map((data, index) => {
-                                                    return (
-                                                        <div
-                                                            className="form-group d-flex align-items-center"
-                                                            key={index}
-                                                        >
-                                                            <input
-                                                                className="mr-3 "
-                                                                type="checkbox"
-                                                                name="getBatch"
-                                                                defaultChecked={data.istrue}
-                                                                value={data._id}
-                                                                onChange={(e)=>getBatch(e,data._id)}
-                                                            />
-                                                            <label>{moment(data.startTime).format("ll")+'  -  '+moment(data.endTime).format("ll")}</label>
-                                                            
-                                                        </div>
-                                                    );
-                                                })}
-                                                </div>
-                                                </div>
+                    {dateTimezon.length > 0 && dateTimezon.map((data, index) => {
+                      return (
+                        <div
+                          className="form-group d-flex align-items-center"
+                          key={index}
+                        >
+                          <input
+                            className="mr-3 "
+                            type="checkbox"
+                            name="getBatch"
+                            defaultChecked={data.istrue}
+                            value={data._id}
+                            onChange={(e) => getBatch(e, data._id)}
+                          />
+                          <label>{moment(data.startTime).format("ll") + '  -  ' + moment(data.endTime).format("ll")}</label>
 
-                    
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -842,7 +836,7 @@ const handleDeleteAnnouncement = () => {
                           Select Examiner
                         </option>
                         {getExaminer?.length > 0 &&
-                            getExaminer?.map((item) => {
+                          getExaminer?.map((item) => {
                             return (
                               <option
                                 key={item._id}
@@ -893,7 +887,7 @@ const handleDeleteAnnouncement = () => {
                           Select DataEntry
                         </option>
                         {getDataenter?.length > 0 &&
-                            getDataenter?.map((item) => {
+                          getDataenter?.map((item) => {
                             return (
                               <option
                                 key={item._id}
@@ -924,7 +918,7 @@ const handleDeleteAnnouncement = () => {
                   </div>
                 </div>
 
-               
+
 
                 <div className="d-flex align-items-center justify-content-center">
                   <button
@@ -995,7 +989,7 @@ const handleDeleteAnnouncement = () => {
                   </div>
                 </div> */}
 
-              
+
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter Name
@@ -1025,7 +1019,7 @@ const handleDeleteAnnouncement = () => {
                   </div>
                 </div>
 
-                
+
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -1054,34 +1048,34 @@ const handleDeleteAnnouncement = () => {
                   </div>
                 </div>
                 <div className="form-group row">
-                 {dateTimezon.length>0 && (<label className="col-xl-3 col-lg-3 col-form-label">
+                  {dateTimezon.length > 0 && (<label className="col-xl-3 col-lg-3 col-form-label">
                     Select Slot
                   </label>)}
-                <div className="form-group">
+                  <div className="form-group">
 
-                {dateTimezon.length>0 && dateTimezon.map((data, index) => {
-                                                    return (
-                                                        <div
-                                                            className="form-group d-flex align-items-center"
-                                                            key={index}
-                                                        >
-                                                            <input
-                                                                className="mr-3 "
-                                                                type="checkbox"
-                                                                name="getBatch"
-                                                                defaultChecked={batchInfo.includes(data._id)}
-                                                                value={data._id}
-                                                                onChange={(e)=>getBatch(e,data._id)}
-                                                            />
-                                                            <label>{moment(data.startTime).format("ll")+'  -  '+moment(data.endTime).format("ll")}</label>
-                                                            
-                                                        </div>
-                                                    );
-                                                })}
-                                                </div>
-                                                </div>
+                    {dateTimezon.length > 0 && dateTimezon.map((data, index) => {
+                      return (
+                        <div
+                          className="form-group d-flex align-items-center"
+                          key={index}
+                        >
+                          <input
+                            className="mr-3 "
+                            type="checkbox"
+                            name="getBatch"
+                            defaultChecked={batchInfo.includes(data._id)}
+                            value={data._id}
+                            onChange={(e) => getBatch(e, data._id)}
+                          />
+                          <label>{moment(data.startTime).format("ll") + '  -  ' + moment(data.endTime).format("ll")}</label>
 
-                    
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -1095,19 +1089,19 @@ const handleDeleteAnnouncement = () => {
                         name="Examiner"
                         value={inputValueForAdd?.Examiner}
                         onChange={(e) => {
-                            handleOnChnage(e);
+                          handleOnChnage(e);
                         }}
                       >
                         <option value="" disabled selected hidden>
                           Select Examiner
                         </option>
                         {getExaminer?.length > 0 &&
-                            getExaminer?.map((item) => {
+                          getExaminer?.map((item) => {
                             return (
                               <option
                                 key={item._id}
                                 value={item?._id}
-                                selected={item?._id===inputValue?.Examiner?true:false}
+                                selected={item?._id === inputValue?.Examiner ? true : false}
                               >
                                 {item.email}
                               </option>
@@ -1140,20 +1134,20 @@ const handleDeleteAnnouncement = () => {
                         name="DataEntry"
                         value={inputValueForAdd?.DataEntry}
                         onChange={(e) => {
-                            handleOnChnage(e);
+                          handleOnChnage(e);
                         }}
                       >
                         <option value="" disabled selected hidden>
                           Select DataEntry
                         </option>
                         {getDataenter?.length > 0 &&
-                            getDataenter?.map((item) => {
+                          getDataenter?.map((item) => {
                             return (
                               <option
                                 key={item._id}
                                 value={item?._id}
                                 selected={
-                                    inputValue?.DataEntry ===
+                                  inputValue?.DataEntry ===
                                     item?._id
                                     ? true
                                     : false
@@ -1220,7 +1214,7 @@ const handleDeleteAnnouncement = () => {
             {isViewMoreAnnouncement === true ? (
               <div className="honda-container">
                 <div className="honda-text-grid">
-                 
+
                   <div className="honda-text-grid-items">
                     <span>Title:</span>
                     <p
@@ -1230,8 +1224,8 @@ const handleDeleteAnnouncement = () => {
                       className=""
                     />
                   </div>
-               
-                
+
+
                   <div className="honda-text-grid-items">
                     <span>Image:</span>
                     <img

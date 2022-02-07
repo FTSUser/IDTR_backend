@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import DataTable, { defaultThemes } from "react-data-table-component";
 import {
   ApiGet,
-  
+
 } from "../../../helpers/API/ApiData";
 
 import Slide from "@material-ui/core/Slide";
@@ -31,18 +31,16 @@ const ContactUs = ({ getNewCount, title }) => {
     document.title = "Honda | ContactUs";
   }, []);
 
- 
-  
+
+
   useEffect(() => {
-    console.log("inputValue", inputValueForAdd);
   }, [inputValueForAdd]);
 
 
   useEffect(() => {
-    console.log("idForEditStatus", idForEditStatus);
   }, [idForEditStatus]);
 
-  
+
 
   useEffect(() => {
     getAllContactUs();
@@ -50,20 +48,18 @@ const ContactUs = ({ getNewCount, title }) => {
 
   const getAllContactUs = async () => {
     setIsLoaderVisible(true);
-      await ApiGet(`contactus/getContactus?page=${page}&limit=${countPerPage}`)
-        .then((res) => {
-          setIsLoaderVisible(false);
-          console.log("artistreport", res);
-          setFilteredContactUs(res?.data?.payload?.Question);
-          setCount(res?.data?.payload?.count);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    await ApiGet(`contactus/getContactus?page=${page}&limit=${countPerPage}`)
+      .then((res) => {
+        setIsLoaderVisible(false);
+        setFilteredContactUs(res?.data?.payload?.Question);
+        setCount(res?.data?.payload?.count);
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message)
+      });
   };
 
   useEffect(() => {
-    console.log("inputValue", inputValue);
   }, [inputValue]);
 
   let i = 0;
@@ -81,41 +77,41 @@ const ContactUs = ({ getNewCount, title }) => {
 
 
     {
-        name: "Email",
-        selector: "email",
-        sortable: true,
-      },
+      name: "Email",
+      selector: "email",
+      sortable: true,
+    },
 
-      {
-        name: "Phone",
-        selector: "phone",
-        sortable: true,
-      },
+    {
+      name: "Phone",
+      selector: "phone",
+      sortable: true,
+    },
 
-      {
-        name: "Subject",
-        cell: (row) => {
-            return(
-                <span>
-                    {row?.subject}
-                </span>
-            )
-        },
-        sortable: true,
-      
+    {
+      name: "Subject",
+      cell: (row) => {
+        return (
+          <span>
+            {row?.subject}
+          </span>
+        )
       },
-      {
-        name: "Description",
-        cell: (row) => {
-            return(
-                <span>
-                    {row?.description === "" ? "-" : row?.description}
-                </span>
-            )
-        },
-        sortable: true,
-      
+      sortable: true,
+
+    },
+    {
+      name: "Description",
+      cell: (row) => {
+        return (
+          <span>
+            {row?.description === "" ? "-" : row?.description}
+          </span>
+        )
       },
+      sortable: true,
+
+    },
   ];
   // * Table Style
   const customStyles = {
@@ -151,14 +147,14 @@ const ContactUs = ({ getNewCount, title }) => {
     },
   };
 
-  
+
 
   return (
     <>
       <div className="card p-1">
         <ToastContainer />
         <div className="p-2 mb-2">
-         
+
           <DataTable
             columns={columns}
             data={filteredContactUs}

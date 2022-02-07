@@ -84,23 +84,21 @@ const FAQ = ({ getNewCount, title }) => {
       await ApiGet(`faq/getAllFAQ?page=${page}&limit=${countPerPage}`)
         .then((res) => {
           setIsLoaderVisible(false);
-          console.log("artistreport", res);
           setFilteredFAQ(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
         .catch((err) => {
-          console.log(err);
+          toast.error(err?.response?.data?.message)
         });
     } else {
       await ApiGet(`faq/getAllFAQ?search=${search}&page=${page}&limit=${countPerPage}`)
         .then((res) => {
           setIsLoaderVisible(false);
-          console.log("artistreport", res);
           setFilteredFAQ(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
         .catch((err) => {
-          console.log(err);
+          toast.error(err?.response?.data?.message)
         });
     }
   };
@@ -127,23 +125,21 @@ const FAQ = ({ getNewCount, title }) => {
         question: inputValueForAdd.question,
         answer: answer,
       };
-      console.log("data",Data)
-      ApiPost(`faq/addFAQ`,Data)
+      ApiPost(`faq/addFAQ`, Data)
         .then((res) => {
-          console.log("resresres", res);
           if (res?.status == 200) {
             setIsAddFAQ(false);
             toast.success(res?.data?.message);
             setInputValueForAdd({});
             setAnswer("");
             getAllFAQ();
-            
+
           } else {
             toast.error(res?.data?.message);
           }
         })
         .catch((err) => {
-          toast.error(err.message);
+          toast.error(err?.response?.data?.message)
         });
     }
   };
@@ -166,7 +162,7 @@ const FAQ = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err?.response?.data?.message)
       });
   };
 
@@ -181,7 +177,6 @@ const FAQ = ({ getNewCount, title }) => {
       };
       ApiPut(`faq/updateFAQ/${idForUpdateFAQData}`, Data)
         .then((res) => {
-          console.log("resres", res);
           if (res?.status == 200) {
             setIsAddFAQ(false);
             toast.success(res?.data?.message);
@@ -194,7 +189,7 @@ const FAQ = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err.message);
+          toast.error(err?.response?.data?.message)
         });
     }
   };
@@ -250,15 +245,15 @@ const FAQ = ({ getNewCount, title }) => {
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
-                    setIsAddFAQ(true);
-                    setIsEdit(true);
+                  setIsAddFAQ(true);
+                  setIsEdit(true);
                   setIdForUpdateFAQData(row._id);
                   setAnswer(row?.answer);
-                  setInputValueForAdd({ 
-                    question:row?.question,
-                    answer:row?.answer
+                  setInputValueForAdd({
+                    question: row?.question,
+                    answer: row?.answer
                   });
-                  
+
                 }}
               >
                 <Tooltip title="Edit Announcement" arrow>
@@ -282,7 +277,6 @@ const FAQ = ({ getNewCount, title }) => {
               onClick={() => {
                 setIsViewMoreFAQ(true);
                 setDataViewMore(row);
-                console.log("rowShow", row);
               }}
             >
               <Tooltip title="Show More" arrow>
@@ -330,7 +324,7 @@ const FAQ = ({ getNewCount, title }) => {
 
   //for search data
 
-  
+
   const handleSearch = (e) => {
     let val = e.target.value.replace(/[^\w\s]/gi, "");
     setSearch(val);
@@ -531,8 +525,9 @@ const FAQ = ({ getNewCount, title }) => {
                 </div>
                 <div className="d-flex align-items-center justify-content-center">
                   <button
-                    onClick={(e) => {isEdit === false ? 
-                      handleAddFAQDetails(e) : handleUpdateFAQDetails(e)
+                    onClick={(e) => {
+                      isEdit === false ?
+                        handleAddFAQDetails(e) : handleUpdateFAQDetails(e)
                     }}
                     className="btn btn-success mr-2"
                   >

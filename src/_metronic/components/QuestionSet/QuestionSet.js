@@ -100,13 +100,12 @@ const QuestionSet = ({ getNewCount, title }) => {
             )
                 .then((res) => {
                     setIsLoaderVisible(false);
-                    console.log("artistreport", res);
                     setFilteredCourseName(res?.data?.payload?.QuestionSet);
                     setCount(res?.data?.payload?.count);
                     setGetCourseType([]);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    toast.error(err?.response?.data?.message)
                 });
         } else {
             await ApiGet(
@@ -114,12 +113,11 @@ const QuestionSet = ({ getNewCount, title }) => {
             )
                 .then((res) => {
                     setIsLoaderVisible(false);
-                    console.log("artistreport", res);
                     setFilteredCourseName(res?.data?.payload?.QuestionSet);
                     setCount(res?.data?.payload?.count);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    toast.error(err?.response?.data?.message)
                 });
         }
     };
@@ -159,7 +157,6 @@ const QuestionSet = ({ getNewCount, title }) => {
             };
             ApiPost(`questionset/addQuestionSet`, Data)
                 .then((res) => {
-                    console.log("resresres", res);
                     if (res?.status == 200) {
                         setIsAddCourseName(false);
                         toast.success(res?.data?.message);
@@ -170,7 +167,7 @@ const QuestionSet = ({ getNewCount, title }) => {
                     }
                 })
                 .catch((err) => {
-                    toast.error(err.message);
+                    toast.error(err?.response?.data?.message)
                 });
         }
     };
@@ -190,7 +187,7 @@ const QuestionSet = ({ getNewCount, title }) => {
                 }
             })
             .catch((err) => {
-                toast.error(err.message);
+                toast.error(err?.response?.data?.message)
             });
     };
 
@@ -204,7 +201,6 @@ const QuestionSet = ({ getNewCount, title }) => {
             };
             ApiPut(`questionset/updateQuestionSet/${idForUpdateCourseNameData}`, Data)
                 .then((res) => {
-                    console.log("resres", res);
                     if (res?.status == 200) {
                         setIsAddCourseName(false);
                         toast.success(res?.data?.message);
@@ -217,7 +213,7 @@ const QuestionSet = ({ getNewCount, title }) => {
                     }
                 })
                 .catch((err) => {
-                    toast.error(err.message);
+                    toast.error(err?.response?.data?.message)
                 });
         }
     };
@@ -256,7 +252,6 @@ const QuestionSet = ({ getNewCount, title }) => {
                             <div
                                 className="cursor-pointer pl-2"
                                 onClick={() => {
-                                    console.log("typetype", row);
                                     setIsAddCourseName(true);
                                     setIdForUpdateCourseNameData(row._id);
                                     setInputValueForAdd({
@@ -392,11 +387,10 @@ const QuestionSet = ({ getNewCount, title }) => {
         // if (!search) {
         await ApiGet(`examiner/getAll`)
             .then((res) => {
-                console.log("regist", res?.data?.payload?.QuestionSet);
                 setAllCourseNameExcel(res?.data?.payload?.QuestionSet);
             })
             .catch((err) => {
-                console.log(err);
+                toast.error(err?.response?.data?.message)
             });
         // }
     };
@@ -413,7 +407,6 @@ const QuestionSet = ({ getNewCount, title }) => {
                 setDataCSV((currVal) => [...currVal, data]);
             });
         }
-        console.log("UsertCsvReport", allCourseNameExcel);
     }, [allCourseNameExcel]);
 
     return (

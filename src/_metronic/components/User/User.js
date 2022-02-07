@@ -174,7 +174,6 @@ const User = ({ getNewCount, title }) => {
 
 
   useEffect(() => {
-    console.log("tableFilterData", tableFilterData);
   }, [tableFilterData])
 
   const handlePaymentClose = () => {
@@ -233,7 +232,6 @@ const User = ({ getNewCount, title }) => {
     setIsAddAnnouncement(false);
   };
   const onChangeDiscloser = (e) => {
-    console.log("eee", e);
     setdicloser(e)
 
   }
@@ -247,18 +245,15 @@ const User = ({ getNewCount, title }) => {
           moment(data.createdAt).unix() > moment(date[0]).unix() &&
           moment(data.createdAt).unix() < moment(date[1]).unix()
         ) {
-          console.log("inifffffff---", data);
           return data;
         }
       });
-      console.log("newData", newData);
       setTableFilterData(newData)
     }
   };
 
   useEffect(() => {
     getAllUser();
-    console.log("countPerPage", countPerPage, page);
   }, [page, countPerPage]);
 
 
@@ -269,19 +264,17 @@ const User = ({ getNewCount, title }) => {
     await ApiGet(`register/getAllRegister?search=${search}&page=${page}&limit=${countPerPage}`)
       .then((res) => {
         setIsLoaderVisible(false);
-        console.log("artistreport", res);
         setFilteredUser(res?.data?.payload?.Question);
         setTableFilterData(res?.data?.payload?.Question);
         setCount(res?.data?.payload?.count);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err?.response?.data?.message)
       });
     // }
   };
 
   useEffect(() => {
-    console.log("inputValue", inputValue);
   }, [inputValue]);
 
   let i = 0;
@@ -342,7 +335,6 @@ const User = ({ getNewCount, title }) => {
               onClick={() => {
                 setIsViewMoreUser(true);
                 setDataViewMore(row);
-                console.log("rowShow", row);
               }}
             >
               <Tooltip title="Show More" arrow>
@@ -355,7 +347,6 @@ const User = ({ getNewCount, title }) => {
                 onClick={() => {
                   setIsPaymentPopUp(true);
                   setDataForPayment(row);
-                  console.log("rowShow111Pay", row);
                 }}
               >
                 {row?.isPaymentDone === false ?
@@ -376,7 +367,6 @@ const User = ({ getNewCount, title }) => {
                       setEditMode(true)
                       let index = getAllVehicalData?.Question?.findIndex((e) => e._id === row?.vcid)
                       let vehical;
-                      console.log("row=======>", row?.dateofCourse);
                       if (index !== -1) {
                         vehical = { label: getAllVehicalData?.Question[index].vehicleCategory, value: getAllVehicalData?.Question[index]._id }
                         setdefaultValue(data => ({ ...data, vehicleCategory: vehical }))
@@ -486,11 +476,10 @@ const User = ({ getNewCount, title }) => {
     // if (!search) {
     await ApiGet(`register/getAll`)
       .then((res) => {
-        console.log("regist", res?.data?.payload?.Question);
         setAllRegisterUserExcel(res?.data?.payload?.Question);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err?.response?.data?.message)
       });
     // }
   };
@@ -536,7 +525,6 @@ const User = ({ getNewCount, title }) => {
         setDataCSV((currVal) => [...currVal, data]);
       });
     }
-    console.log("UsertCsvReport", allRegisterUserExcel);
   }, [allRegisterUserExcel]);
 
 
@@ -737,7 +725,7 @@ const User = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err?.response?.data?.message)
       });
   }
 
@@ -759,7 +747,7 @@ const User = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err?.response?.data?.message)
       });
   }
 
@@ -817,12 +805,10 @@ const User = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err?.response?.data?.message)
       });
   }
 
-  console.log("formdata", formdata);
-  console.log("slot", formdata.sloatId);
   const onChnageForm = (e) => {
     setFormData((formdataAll) => { return { ...formdataAll, [e.target.name]: e.target.value } })
     settypeTrueFalseform(false);
@@ -1059,7 +1045,6 @@ const User = ({ getNewCount, title }) => {
 
 
       let vehical;
-      console.log("row=======>", formdata?.vehicleCategory);
       if (index !== -1) {
         vehical = { label: getAllVehicalData?.Question[index].vehicleCategory, value: getAllVehicalData?.Question[index]._id }
         setdefaultValue(data => ({ ...data, vehicleCategory: vehical }))
@@ -1213,7 +1198,7 @@ const User = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err?.response?.data?.message)
       });
   };
 
@@ -1261,7 +1246,6 @@ const User = ({ getNewCount, title }) => {
         urls = { mediacalCertificate: mediacalCertificate, ...urls }
       }
       if (formdata.idProof && typeof formdata.idProof !== 'string') {
-        console.log("for,data idproof", formdata.idProof);
         let idProof = await uploadS3bucket(formdata.idProof);
         urls = { idProof: idProof, ...urls }
       }
@@ -1424,7 +1408,6 @@ const User = ({ getNewCount, title }) => {
           start="Year"
           depth="Year"
           onChange={(e) => {
-            console.log("e.target.value", e.target.value);
             handleSetDateData(e.target.value);
           }}
         ></DateRangePickerComponent>
@@ -2059,7 +2042,7 @@ const User = ({ getNewCount, title }) => {
                             <div className="d-flex aligncenetr">
                               <input type="checkbox" onChange={e => onChangeDiscloser(e.target.checked)} checked={dicloser} />
                               <div className="s" onClick={() => setModalOpen(!modalOpen)}>Disclooser</div></div>
-                            </div>
+                          </div>
                       }
                       <div
                         className="next-step-alignment"

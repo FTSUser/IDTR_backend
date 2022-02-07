@@ -78,11 +78,9 @@ const Cms = ({ getNewCount, title }) => {
   };
 
   useEffect(() => {
-    console.log("inputValue", inputValueForAdd);
   }, [inputValueForAdd]);
 
   useEffect(() => {
-    console.log("idForEditStatus", idForEditStatus);
   }, [idForEditStatus]);
 
   const handleAdminUpdateClose = () => {
@@ -111,12 +109,10 @@ const Cms = ({ getNewCount, title }) => {
       await ApiGet(`cms/getAllCMS?page=${page}&limit=${countPerPage}`)
         .then((res) => {
           setIsLoaderVisible(false);
-          console.log("artistreport", res);
           setFilteredCms(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
         .catch((err) => {
-          console.log(err);
         });
     } else {
       await ApiGet(
@@ -124,12 +120,10 @@ const Cms = ({ getNewCount, title }) => {
       )
         .then((res) => {
           setIsLoaderVisible(false);
-          console.log("artistreport", res);
           setFilteredCms(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
         .catch((err) => {
-          console.log(err);
         });
     }
   };
@@ -162,10 +156,8 @@ const Cms = ({ getNewCount, title }) => {
         description: description,
         image: inputValueForAdd.image,
       };
-      console.log("data", Data);
       ApiPost(`cms/addCMS`, Data)
         .then((res) => {
-          console.log("resresres", res);
           if (res?.status == 200) {
             setIsAddCms(false);
             toast.success(res?.data?.message);
@@ -177,7 +169,6 @@ const Cms = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err.message);
         });
     }
   };
@@ -202,7 +193,6 @@ const Cms = ({ getNewCount, title }) => {
         setInputValue((cv) => {
           return { ...cv, image: urls };
         });
-        console.log("urls------------1", urls);
       }
       return urls;
     } else {
@@ -230,7 +220,6 @@ const Cms = ({ getNewCount, title }) => {
         setInputValueForAdd((cv) => {
           return { ...cv, image: urls };
         });
-        console.log("urls------------2", urls);
       }
       return urls;
     } else {
@@ -303,7 +292,6 @@ const Cms = ({ getNewCount, title }) => {
   };
 
   useEffect(() => {
-    console.log("inputValue", inputValue);
   }, [inputValue]);
 
   const handleUpdateCmsDetails = (e) => {
@@ -317,7 +305,6 @@ const Cms = ({ getNewCount, title }) => {
       };
       ApiPut(`cms/updateCMS/${idForUpdateCmsData}`, Data)
         .then((res) => {
-          console.log("resres", res);
           if (res?.status == 200) {
             setIsUpdateCms(false);
             toast.success(res?.data?.message);
@@ -329,7 +316,6 @@ const Cms = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err.message);
         });
     }
   };
@@ -422,7 +408,6 @@ const Cms = ({ getNewCount, title }) => {
               onClick={() => {
                 setIsViewMoreCms(true);
                 setDataViewMore(row);
-                console.log("rowShow", row);
               }}
             >
               <Tooltip title="Show More" arrow>

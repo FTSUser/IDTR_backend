@@ -42,7 +42,6 @@ const Banner = ({ getNewCount, title }) => {
   const [date, setDate] = useState(new Date());
 
   const [description, setDescription] = useState("");
-  console.log("dataViewMore", dataViewMore);
   //new data
   const [isUpdateAnnouncement, setIsUpdateAnnouncement] = useState(false);
   const [isAddAnnouncement, setIsAddAnnouncement] = useState(false);
@@ -84,9 +83,9 @@ const Banner = ({ getNewCount, title }) => {
     setDataViewMore({});
   };
 
-  useEffect(() => {}, [inputValueForAdd]);
+  useEffect(() => { }, [inputValueForAdd]);
 
-  useEffect(() => {}, [idForEditStatus]);
+  useEffect(() => { }, [idForEditStatus]);
 
   const handleAdminUpdateClose = () => {
     setInputValue({});
@@ -123,7 +122,7 @@ const Banner = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     } else {
       await ApiGet(
         `banner/getAllBanner?search=${search}&page=${page}&limit=${countPerPage}`
@@ -133,14 +132,14 @@ const Banner = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
   const validateFormForAddAdmin = () => {
     let formIsValid = true;
     let errorsForAdd = {};
-   
+
     if (inputValueForAdd && !inputValueForAdd.title) {
       formIsValid = false;
       errorsForAdd["name"] = "*Please Enter Name!";
@@ -186,9 +185,8 @@ const Banner = ({ getNewCount, title }) => {
     // let imageB64Arr = [];
 
     const file = e?.target?.files[0]
-console.log(file, "fileData")
 
-    if(file){
+    if (file) {
       if (file.type.includes("image")) {
         let config = AwsConfig;
         config = {
@@ -198,7 +196,7 @@ console.log(file, "fileData")
         };
         const Reacts3Client = new S3(config);
         let urls;
-        
+
         let filename = "AboutImage(" + new Date().getTime() + ")";
         let data = await Reacts3Client.uploadFile(file, filename);
         // try {
@@ -208,7 +206,6 @@ console.log(file, "fileData")
           setInputValueForAdd((cv) => {
             return { ...cv, image: urls };
           });
-          console.log("urls====>", urls);
         }
         return urls;
       } else {
@@ -239,35 +236,33 @@ console.log(file, "fileData")
 
   const uploadS3bucket = async (file) => {
     debugger
-    console.log("filesData", file)
-    if(file){
-        if (file.type.includes("image")) {
-          let config = AwsConfig;
-          config = {
-            ...config,
-            dirName: "Cerificate",
-            ACL: "public-read",
-          };
-          const Reacts3Client = new S3(config);
-          let urls;
-          let f = file;
-          let filename = "AboutImage(" + new Date().getTime() + ")";
-          let data = await Reacts3Client.uploadFile(f, filename);
-          // try {
-          // if (data.status === 204) {
-          urls = data.location;
-          if (urls) {
-            setInputValueForAdd((cv) => {
-              return { ...cv, image: urls };
-            });
-            console.log("urls====>", urls);
-          }
-          return urls;
-        } else {
-          errorsForAdd["image"] = "*Please Upload Image!";
+    if (file) {
+      if (file.type.includes("image")) {
+        let config = AwsConfig;
+        config = {
+          ...config,
+          dirName: "Cerificate",
+          ACL: "public-read",
+        };
+        const Reacts3Client = new S3(config);
+        let urls;
+        let f = file;
+        let filename = "AboutImage(" + new Date().getTime() + ")";
+        let data = await Reacts3Client.uploadFile(f, filename);
+        // try {
+        // if (data.status === 204) {
+        urls = data.location;
+        if (urls) {
+          setInputValueForAdd((cv) => {
+            return { ...cv, image: urls };
+          });
         }
-
+        return urls;
+      } else {
+        errorsForAdd["image"] = "*Please Upload Image!";
       }
+
+    }
   };
 
   const getImageArrayFromUpdateUpload = async (e) => {
@@ -344,11 +339,11 @@ console.log(file, "fileData")
         }
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err?.response?.data?.message)
       });
   };
 
-  useEffect(() => {}, [inputValue]);
+  useEffect(() => { }, [inputValue]);
 
   const handleUpdateAnnouncementDetails = (e) => {
     e.preventDefault();
@@ -388,7 +383,7 @@ console.log(file, "fileData")
       width: "65px",
     },
 
-    
+
 
     {
       name: "Title",
@@ -408,9 +403,9 @@ console.log(file, "fileData")
       sortable: true,
     },
 
-   
 
-   
+
+
     {
       name: "Image",
       //   selector: "photo",
@@ -510,7 +505,7 @@ console.log(file, "fileData")
 
   //for search data
 
-  
+
   const handleSearch = (e) => {
     let val = e.target.value.replace(/[^\w\s]/gi, "");
     setSearch(val);
@@ -554,7 +549,6 @@ console.log(file, "fileData")
       getAllAnnouncement();
     }
   }, [debouncedSearchTerm]);
-console.log('filteredAnnouncement',filteredAnnouncement);
   return (
     <>
       <div className="card p-1">
@@ -690,7 +684,7 @@ console.log('filteredAnnouncement',filteredAnnouncement);
                   </div>
                 </div> */}
 
-                
+
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -721,9 +715,9 @@ console.log('filteredAnnouncement',filteredAnnouncement);
                   </div>
                 </div>
 
-              
 
-              
+
+
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -824,7 +818,7 @@ console.log('filteredAnnouncement',filteredAnnouncement);
                   </div>
                 </div> */}
 
-              
+
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter Name
@@ -854,7 +848,7 @@ console.log('filteredAnnouncement',filteredAnnouncement);
                   </div>
                 </div>
 
-                
+
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -929,7 +923,7 @@ console.log('filteredAnnouncement',filteredAnnouncement);
             {isViewMoreAnnouncement === true ? (
               <div className="honda-container">
                 <div className="honda-text-grid">
-                 
+
                   <div className="honda-text-grid-items">
                     <span>Title:</span>
                     <p
@@ -939,8 +933,8 @@ console.log('filteredAnnouncement',filteredAnnouncement);
                       className=""
                     />
                   </div>
-               
-                
+
+
                   <div className="honda-text-grid-items">
                     <span>Image:</span>
                     <img

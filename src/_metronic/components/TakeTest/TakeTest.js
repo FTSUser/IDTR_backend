@@ -769,7 +769,7 @@ const TakeTest = ({ getNewCount, title }) => {
                           }
                           checked={
                             selectedTopSubjects?.length ===
-                            userByAttendece.length
+                              userByAttendece.length
                               ? true
                               : false
                           }

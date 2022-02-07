@@ -71,20 +71,16 @@ const CourseType = ({ getNewCount, title }) => {
   };
 
   useEffect(() => {
-    console.log("inputValueForAdd", inputValueForAdd);
   }, [inputValueForAdd]);
 
   useEffect(() => {
-    console.log("inputValue", inputValue);
   }, [inputValue]);
 
   useEffect(() => {
-    console.log("filteredVehicleCategory", filteredVehicleCategory);
   }, [filteredVehicleCategory]);
 
 
   useEffect(() => {
-    console.log("idForEditStatus", idForEditStatus);
   }, [idForEditStatus]);
 
   const handleAdminUpdateClose = () => {
@@ -112,27 +108,25 @@ const CourseType = ({ getNewCount, title }) => {
   const getAllCourseType = async () => {
     setIsLoaderVisible(true);
     if (!search) {
-    await ApiGet(`courseType/getAllCourseType?page=${page}&limit=${countPerPage}`)
-      .then((res) => {
-        setIsLoaderVisible(false);
-        console.log("artistreport", res);
-        setFilteredCourseType(res?.data?.payload?.Question);
-        setCount(res?.data?.payload?.count);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+      await ApiGet(`courseType/getAllCourseType?page=${page}&limit=${countPerPage}`)
+        .then((res) => {
+          setIsLoaderVisible(false);
+          setFilteredCourseType(res?.data?.payload?.Question);
+          setCount(res?.data?.payload?.count);
+        })
+        .catch((err) => {
+          toast.error(err?.response?.data?.message)
+        })
     } else {
       await ApiGet(`courseType/getAllCourseType?search=${search}&page=${page}&limit=${countPerPage}`)
-      .then((res) => {
-        setIsLoaderVisible(false);
-        console.log("artistreport", res);
-        setFilteredCourseType(res?.data?.payload?.Question);
-        setCount(res?.data?.payload?.count);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+        .then((res) => {
+          setIsLoaderVisible(false);
+          setFilteredCourseType(res?.data?.payload?.Question);
+          setCount(res?.data?.payload?.count);
+        })
+        .catch((err) => {
+          toast.error(err?.response?.data?.message)
+        })
     }
   };
 
@@ -142,12 +136,11 @@ const CourseType = ({ getNewCount, title }) => {
     await ApiGet(`vehicleCategory/getAllVehicleCategory?limit=1000`)
       .then((res) => {
         setIsLoaderVisible(false);
-        console.log("artistreport", res);
         setFilteredVehicleCategory(res?.data?.payload?.Question);
         setCount(res?.data?.payload?.count);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err?.response?.data?.message)
       });
   };
 
@@ -166,7 +159,7 @@ const CourseType = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err?.response?.data?.message)
       });
   };
 
@@ -206,7 +199,6 @@ const CourseType = ({ getNewCount, title }) => {
       };
       ApiPost(`courseType/addCourseType`, Data)
         .then((res) => {
-          console.log("resresres", res);
           if (res?.status == 200) {
             setIsAddCourseType(false);
             toast.success(res?.data?.message);
@@ -217,7 +209,7 @@ const CourseType = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err.message);
+          toast.error(err?.response?.data?.message)
         });
     }
   };
@@ -237,12 +229,11 @@ const CourseType = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err?.response?.data?.message)
       });
   };
 
   useEffect(() => {
-    console.log("inputValue", inputValue);
   }, [inputValue]);
 
   const validateForm = () => {
@@ -279,7 +270,6 @@ const CourseType = ({ getNewCount, title }) => {
       };
       ApiPut(`courseType/updateCourseType/${idForUpdateCourseTypeData}`, Data)
         .then((res) => {
-          console.log("resres", res);
           if (res?.status == 200) {
             setIsUpdateCourseType(false);
             toast.success(res?.data?.message);
@@ -290,7 +280,7 @@ const CourseType = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err.message);
+          toast.error(err?.response?.data?.message)
         });
     }
   };
@@ -360,14 +350,12 @@ const CourseType = ({ getNewCount, title }) => {
                   setIsUpdateCourseType(true);
                   setIdForUpdateCourseTypeData(row._id);
                   getAllVehicleCategory();
-                  console.log("rowcheck", row?.vcid?._id);
 
                   setInputValue({
                     VehicleCategory: row?.vcid?._id,
                     CourseType: row?.courseType,
                     VehicleDescription: row?.description,
                   });
-                  console.log("a", inputValue);
                 }}
               >
                 <Tooltip title="Edit CourseType" arrow>
@@ -427,7 +415,7 @@ const CourseType = ({ getNewCount, title }) => {
 
   //for search data
 
-  
+
   const handleSearch = (e) => {
     let val = e.target.value.replace(/[^\w\s]/gi, "");
     setSearch(val);
@@ -484,11 +472,10 @@ const CourseType = ({ getNewCount, title }) => {
     // if (!search) {
     await ApiGet(`courseType/getAll`)
       .then((res) => {
-        console.log("regist", res?.data?.payload?.Question);
         setAllCourseTypeExcel(res?.data?.payload?.Question);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err?.response?.data?.message)
       });
     // }
   };
@@ -514,7 +501,6 @@ const CourseType = ({ getNewCount, title }) => {
         setDataCSV((currVal) => [...currVal, data]);
       });
     }
-    console.log("UsertCsvReport", allCourseTypeExcel);
   }, [allCourseTypeExcel]);
 
 
@@ -690,7 +676,6 @@ const CourseType = ({ getNewCount, title }) => {
                         </option>
                         {filteredVehicleCategory?.length > 0 &&
                           filteredVehicleCategory?.map((item) => {
-                            console.log("item", filteredVehicleCategory);
                             return (
                               <option key={item._id} value={item?._id}>
                                 {" "}

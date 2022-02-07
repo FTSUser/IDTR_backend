@@ -54,18 +54,13 @@ export default function Login() {
         password: values.password,
         // role:'61aa037f803e260c3821ad0f'
       };
-      console.log("DATA", data);
       await ApiPostNoAuth("admin/login", data)
         .then((res) => {
-          console.log("resres", res);
           if (res.data.result === -1) {
             toast.error(res.data.message);
           } else {
-            console.log("datafunctions", res.data.payload.token);
-            console.log("errrrrrrr")
             authUtil.setToken(res.data.payload.token);
             userUtil.setUserInfo(res.data.payload);
-            console.log("datafunctions", res.data.payload.token);
 
             window.location.reload();
             setLoading(true);
@@ -81,7 +76,6 @@ export default function Login() {
         })
         .catch((error) => {
           toast.error(error.message);
-          console.log("er")
         });
     },
   });

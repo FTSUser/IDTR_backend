@@ -72,11 +72,9 @@ const VehicleCategory = ({ getNewCount, title }) => {
   };
 
   useEffect(() => {
-    console.log("inputValue", inputValueForAdd);
   }, [inputValueForAdd]);
 
   useEffect(() => {
-    console.log("idForEditStatus", idForEditStatus);
   }, [idForEditStatus]);
 
   const handleAdminUpdateClose = () => {
@@ -109,12 +107,11 @@ const VehicleCategory = ({ getNewCount, title }) => {
       )
         .then((res) => {
           setIsLoaderVisible(false);
-          console.log("artistreport", res);
           setFilteredVehicleCategory(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
         .catch((err) => {
-          console.log(err);
+          toast.error(err?.response?.data?.message)
         });
     } else {
       await ApiGet(
@@ -122,12 +119,11 @@ const VehicleCategory = ({ getNewCount, title }) => {
       )
         .then((res) => {
           setIsLoaderVisible(false);
-          console.log("artistreport", res);
           setFilteredVehicleCategory(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
         .catch((err) => {
-          console.log(err);
+          toast.error(err?.response?.data?.message)
         });
     }
   };
@@ -147,7 +143,7 @@ const VehicleCategory = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err?.response?.data?.message)
       });
   };
 
@@ -178,7 +174,6 @@ const VehicleCategory = ({ getNewCount, title }) => {
       };
       ApiPost(`vehicleCategory/addVehicleCategory`, Data)
         .then((res) => {
-          console.log("resresres", res);
           if (res?.status == 200) {
             setIsAddVehicleCategory(false);
             toast.success(res?.data?.message);
@@ -189,7 +184,7 @@ const VehicleCategory = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err.message);
+          toast.error(err?.response?.data?.message)
         });
     }
   };
@@ -229,12 +224,11 @@ const VehicleCategory = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err?.response?.data?.message)
       });
   };
 
   useEffect(() => {
-    console.log("inputValue", inputValue);
   }, [inputValue]);
 
   const handelUpdateVehicleCategoryDetails = (e) => {
@@ -249,7 +243,6 @@ const VehicleCategory = ({ getNewCount, title }) => {
         Data
       )
         .then((res) => {
-          console.log("resres", res);
           if (res?.status == 200) {
             setIsUpdateVehicleCategory(false);
             toast.success(res?.data?.message);
@@ -260,7 +253,7 @@ const VehicleCategory = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err.message);
+          toast.error(err?.response?.data?.message)
         });
     }
   };
@@ -440,11 +433,10 @@ const VehicleCategory = ({ getNewCount, title }) => {
     // if (!search) {
     await ApiGet(`vehicleCategory/getAll`)
       .then((res) => {
-        console.log("regist", res?.data?.payload?.Question);
         setAllVehicleCategoryExcel(res?.data?.payload?.Question);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err?.response?.data?.message)
       });
     // }
   };
@@ -464,7 +456,6 @@ const VehicleCategory = ({ getNewCount, title }) => {
         setDataCSV((currVal) => [...currVal, data]);
       });
     }
-    console.log("UsertCsvReport", allVehicleCategoryExcel);
   }, [allVehicleCategoryExcel]);
 
   return (

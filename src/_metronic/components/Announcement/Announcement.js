@@ -44,7 +44,6 @@ const Announcement = ({ getNewCount, title }) => {
   const [date, setDate] = useState(new Date());
 
   const [description, setDescription] = useState("");
-  console.log("dataViewMore", dataViewMore);
   //new data
   const [isUpdateAnnouncement, setIsUpdateAnnouncement] = useState(false);
   const [isAddAnnouncement, setIsAddAnnouncement] = useState(false);
@@ -194,7 +193,7 @@ const Announcement = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err.message);
+          toast.error(err?.response?.data?.message);
         });
     }
   };
@@ -204,7 +203,6 @@ const Announcement = ({ getNewCount, title }) => {
     // let imageB64Arr = [];
 
     const file = e?.target?.files[0]
-    console.log(file, "fileData")
 
     if (file) {
       if (file.type.includes("image")) {
@@ -226,7 +224,6 @@ const Announcement = ({ getNewCount, title }) => {
           setInputValueForAdd((cv) => {
             return { ...cv, image: urls };
           });
-          console.log("urls====>", urls);
         }
         return urls;
       } else {
@@ -257,7 +254,6 @@ const Announcement = ({ getNewCount, title }) => {
 
   const uploadS3bucket = async (file) => {
     debugger
-    console.log("filesData", file)
     if (file) {
       if (file.type.includes("image")) {
         let config = AwsConfig;
@@ -278,7 +274,6 @@ const Announcement = ({ getNewCount, title }) => {
           setInputValueForAdd((cv) => {
             return { ...cv, image: urls };
           });
-          console.log("urls====>", urls);
         }
         return urls;
       } else {
@@ -377,7 +372,7 @@ const Announcement = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err?.response?.data?.message);
       });
   };
 
@@ -412,7 +407,7 @@ const Announcement = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err.message);
+          toast.error(err?.response?.data?.message);
         });
     }
   };
@@ -592,7 +587,7 @@ const Announcement = ({ getNewCount, title }) => {
 
   //for search data
 
-  
+
   const handleSearch = (e) => {
     let val = e.target.value.replace(/[^\w\s]/gi, "");
     setSearch(val);

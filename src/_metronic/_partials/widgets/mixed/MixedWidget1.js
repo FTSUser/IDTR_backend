@@ -18,7 +18,6 @@ export function MixedWidget1({ className }) {
   const [title, setTitle] = useState("");
   const [monthData, setMonthData] = useState();
 
-  console.log("countDataAll", countDataAll);
 
   useEffect(() => {
     document.title = "Honda | Dashboard";
@@ -50,17 +49,17 @@ export function MixedWidget1({ className }) {
       {/* Header */}
       <div >
         <div className="honda-logo-center-alignment-page">
-        <img src={toAbsoluteUrl("/media/logos/honda-logo.png")}/>
+          <img src={toAbsoluteUrl("/media/logos/honda-logo.png")} />
           {/* Stat */}
           <div
-            
-          >  
+
+          >
           </div>
           {userInfo?.role === "admin" && (
             <>
               <div className="card-spacer">
                 <div className="row m-5">
-                <div className="col bg-light-warning px-6 py-8 rounded-xl mr-5">
+                  <div className="col bg-light-warning px-6 py-8 rounded-xl mr-5">
                     <span className="text-warning font-weight-bold font-size-h3 d-block my-2">
                       {countData?.allUser}
                     </span>

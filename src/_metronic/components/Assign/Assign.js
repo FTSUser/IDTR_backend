@@ -62,7 +62,6 @@ const Assign = ({ getNewCount, title }) => {
     };
 
     const handleOnChnageAdd = (e) => {
-        console.log("Eeeee", e);
         const { name, value } = e.target;
         setInputValueForAdd({ ...inputValueForAdd, [name]: value });
         setErrorsForAdd({ ...errorsForAdd, [name]: "" });
@@ -117,13 +116,13 @@ const Assign = ({ getNewCount, title }) => {
             )
                 .then((res) => {
                     setIsLoaderVisible(false);
-                    console.log("artistreport", res);
                     setFilteredCourseName(res?.data?.payload?.batch);
                     setCount(res?.data?.payload?.count);
 
                 })
                 .catch((err) => {
-                    console.log(err);
+
+                    toast.error(err?.response?.data?.message)
                 });
         } else {
             await ApiGet(
@@ -131,12 +130,11 @@ const Assign = ({ getNewCount, title }) => {
             )
                 .then((res) => {
                     setIsLoaderVisible(false);
-                    console.log("artistreport", res);
                     setFilteredCourseName(res?.data?.payload?.batch);
                     setCount(res?.data?.payload?.count);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    toast.error(err?.response?.data?.message)
                 });
         }
     };
@@ -173,10 +171,8 @@ const Assign = ({ getNewCount, title }) => {
                 assignTo: data
 
             };
-            console.log("data", Data);
             ApiPost(`assginmenu/addAssignMenu`, Data)
                 .then((res) => {
-                    console.log("resresres", res);
                     if (res?.status == 200) {
                         setIsAddCourseName(false);
                         setSelectedCourseType([]);
@@ -188,7 +184,7 @@ const Assign = ({ getNewCount, title }) => {
                     }
                 })
                 .catch((err) => {
-                    toast.error(err.message);
+                    toast.error(err?.response?.data?.message)
                 });
         }
     };
@@ -208,7 +204,7 @@ const Assign = ({ getNewCount, title }) => {
                 }
             })
             .catch((err) => {
-                toast.error(err.message);
+                toast.error(err?.response?.data?.message)
             });
     };
 
@@ -227,7 +223,6 @@ const Assign = ({ getNewCount, title }) => {
             };
             ApiPut(`assginmenu/updateAssignMenu/${idForUpdateCourseNameData}`, Data)
                 .then((res) => {
-                    console.log("resres", res);
                     if (res?.status == 200) {
                         setIsAddCourseName(false);
                         toast.success(res?.data?.message);
@@ -243,7 +238,7 @@ const Assign = ({ getNewCount, title }) => {
                     }
                 })
                 .catch((err) => {
-                    toast.error(err.message);
+                    toast.error(err?.response?.data?.message)
                 });
         }
     };
@@ -308,7 +303,6 @@ const Assign = ({ getNewCount, title }) => {
                             <div
                                 className="cursor-pointer pl-2"
                                 onClick={() => {
-                                    console.log("typetype", row);
                                     setIsAddCourseName(true);
                                     setIdForUpdateCourseNameData(row._id);
                                     setSelectedCourseType(row?.assignTo);
@@ -347,8 +341,7 @@ const Assign = ({ getNewCount, title }) => {
                                 onClick={() => {
                                     setIsViewMoreAboutus(true);
                                     setDataViewMore(row);
-                                    console.log("rowShow", row);
-                                    console.log("isViewMoreAboutus", isViewMoreAboutus);
+
                                 }}
                             >
                                 <Tooltip title="Show More" arrow>
@@ -453,11 +446,10 @@ const Assign = ({ getNewCount, title }) => {
         // if (!search) {
         await ApiGet(`examiner/getAll`)
             .then((res) => {
-                console.log("regist", res?.data?.payload?.Examiner);
                 setAllCourseNameExcel(res?.data?.payload?.Examiner);
             })
             .catch((err) => {
-                console.log(err);
+                toast.error(err?.response?.data?.message)
             });
         // }
     };
@@ -473,7 +465,6 @@ const Assign = ({ getNewCount, title }) => {
                 setDataCSV((currVal) => [...currVal, data]);
             });
         }
-        console.log("UsertCsvReport", allCourseNameExcel);
     }, [allCourseNameExcel]);
 
     return (
