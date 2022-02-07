@@ -178,6 +178,7 @@ const Batch = ({ getNewCount, title }) => {
   }
 
 
+
   const getExaminerAndApi= async ()=>{
     setIsLoaderVisible(true);
       await ApiGet(

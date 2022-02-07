@@ -297,8 +297,28 @@ const Question = (props) => {
           });
       };
 
+    const [AllCategory, setAllCategory] = useState([]);
 
-    let i = 0;
+    const getAllCategory= async (selectdate)=>{
+      selectdate= new Date(selectdate)
+      setIsLoaderVisible(true);
+        await ApiGet(
+          `category/getAllCategory`
+        )
+          .then((res) => {
+            setAllCategory(res?.data?.payload?.Menu)
+          })
+          .catch((err) => {
+            setAllCategory([])
+          });
+    }
+  
+    useEffect(() => {
+      getAllCategory()
+    }, []);
+  
+
+
     const columns = [
         {
             name: "SNo",
@@ -1009,22 +1029,30 @@ const Question = (props) => {
                                     </div>
 
 
-                            <div className="form-group row">
-                                <label className="col-xl-3 col-lg-3 col-form-label">
-                                    Category
+
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                         Category
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
-                                            <input
-                                                type="text"
-                                                className={`form-control form-control-lg form-control-solid `}
-                                                id="Category"
+                                            <select
                                                 name="Category"
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid`}
                                                 value={inputValueForAdd.Category}
                                                 onChange={(e) => {
                                                     handleOnChnageAdd(e);
+                                                    typeChanges(e)
                                                 }}
-                                            />
+                                            >
+                                                <option selected disabled value="">
+                                                    Type
+                                                </option>
+                                                {AllCategory && AllCategory.map((data)=>{
+                                                return (<option value={data._id} >{data.name}</option>)
+                                                })}
+                                            </select>
                                         </div>
                                         <span
                                             style={{
@@ -1036,6 +1064,7 @@ const Question = (props) => {
                                             {errorsForAdd["Category"]}
                                         </span>
                                     </div>
+
                                 </div>
 
 
