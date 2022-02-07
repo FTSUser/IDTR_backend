@@ -102,6 +102,24 @@ export function AsideMenuList({ layoutProps }) {
                           <span className="menu-text">Course Type</span>
                         </NavLink>
                       </li>
+                      <li
+                        className={`menu-item menu-item-submenu ${getMenuItemActive(
+                          "/coursecategory",
+                          false
+                        )}`}
+                        aria-haspopup="true"
+                        data-menu-toggle="hover"
+                      >
+                        <NavLink
+                          className="menu-link"
+                          to="/courseselection/coursecategory"
+                        >
+                          <i className="menu-bullet menu-bullet-dot">
+                            <span />
+                          </i>
+                          <span className="menu-text">Course Category</span>
+                        </NavLink>
+                      </li>
 
                       <li
                         className={`menu-item menu-item-submenu ${getMenuItemActive(
@@ -118,7 +136,7 @@ export function AsideMenuList({ layoutProps }) {
                           <i className="menu-bullet menu-bullet-dot">
                             <span />
                           </i>
-                          <span className="menu-text">Course Category</span>
+                          <span className="menu-text">Course Name</span>
                         </NavLink>
                       </li>
                     </ul>

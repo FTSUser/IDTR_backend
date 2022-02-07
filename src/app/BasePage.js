@@ -4,6 +4,7 @@ import { ContentRoute, LayoutSplashScreen } from "../_metronic/layout";
 import User from "../_metronic/components/User/User";
 import DashboardPage from "./pages/DashboardPage";
 import CourseName from '../_metronic/components/CourseSelection/CourseName'
+import CourseCategory from '../_metronic/components/CourseSelection/CourseCategory'
 import CourseType from '../_metronic/components/CourseSelection/CourseType'
 import VehicleCategory from '../_metronic/components/CourseSelection/VehicleCategory'
 import Cms from '../_metronic/components/Cms/Cms'
@@ -45,6 +46,7 @@ export default function BasePage() {
           <ContentRoute exact path="/cms" component={Cms} />
           <ContentRoute exact path="/information" component={Information} />
           <ContentRoute exact path="/courseselection/coursename" component={CourseName} />
+          <ContentRoute exact path="/courseselection/coursecategory" component={CourseCategory} />
           <ContentRoute exact path="/courseselection/coursetype" component={CourseType} />
           <ContentRoute exact path="/courseselection/vehiclecategory" component={VehicleCategory} />
           <ContentRoute exact path="/user" component={User} />

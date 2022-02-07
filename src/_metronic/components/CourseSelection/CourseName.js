@@ -609,7 +609,7 @@ const CourseName = ({ getNewCount, title }) => {
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2">Course Category</h2>
+              <h2 className="pl-3 pt-2">Course Name</h2>
             </div>
             <div className="col">
               <div>
@@ -618,7 +618,7 @@ const CourseName = ({ getNewCount, title }) => {
                   className={`form-control form-control-lg form-control-solid `}
                   name="search"
                   value={search}
-                  placeholder="Search Course Category"
+                  placeholder="Search Course Name"
                   onChange={(e) => handleSearch(e)}
                 />
               </div>
@@ -632,7 +632,7 @@ const CourseName = ({ getNewCount, title }) => {
                 }}
                 className="btn btn-success mr-2"
               >
-                Add Course Category
+                Add Course Name
               </button>
             </div>
             <div className="cus-medium-button-style button-height">
@@ -665,7 +665,7 @@ const CourseName = ({ getNewCount, title }) => {
             </Modal.Header>
             <Modal.Body>
               Are You Sure To Want To{" "}
-              {statusDisplay === true ? "De-active" : "Active"} this Course Category
+              {statusDisplay === true ? "De-active" : "Active"} this Course Name
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleCloseShowStatus}>
@@ -688,7 +688,7 @@ const CourseName = ({ getNewCount, title }) => {
               <Modal.Title className="text-danger">Alert!</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              Are You Sure To Want To delete this Course Category
+              Are You Sure To Want To delete this Course Name
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
