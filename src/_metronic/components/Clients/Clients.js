@@ -42,7 +42,6 @@ const Clients = ({ getNewCount, title }) => {
   const [date, setDate] = useState(new Date());
 
   const [description, setDescription] = useState("");
-  console.log("dataViewMore", dataViewMore);
   //new data
   const [isUpdateAnnouncement, setIsUpdateAnnouncement] = useState(false);
   const [isAddAnnouncement, setIsAddAnnouncement] = useState(false);
@@ -84,9 +83,9 @@ const Clients = ({ getNewCount, title }) => {
     setDataViewMore({});
   };
 
-  useEffect(() => {}, [inputValueForAdd]);
+  useEffect(() => { }, [inputValueForAdd]);
 
-  useEffect(() => {}, [idForEditStatus]);
+  useEffect(() => { }, [idForEditStatus]);
 
   const handleAdminUpdateClose = () => {
     setInputValue({});
@@ -123,7 +122,7 @@ const Clients = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     } else {
       await ApiGet(
         `client/getAllClient?search=${search}&page=${page}&limit=${countPerPage}`
@@ -133,7 +132,7 @@ const Clients = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
@@ -170,7 +169,7 @@ const Clients = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err.message);
+          toast.error(err?.response?.data?.message)
         });
     }
   };
@@ -181,7 +180,7 @@ const Clients = ({ getNewCount, title }) => {
 
     const file = e?.target?.files[0]
 
-    if(file){
+    if (file) {
       if (file.type.includes("image")) {
         let config = AwsConfig;
         config = {
@@ -191,7 +190,7 @@ const Clients = ({ getNewCount, title }) => {
         };
         const Reacts3Client = new S3(config);
         let urls;
-        
+
         let filename = "AboutImage(" + new Date().getTime() + ")";
         let data = await Reacts3Client.uploadFile(file, filename);
         // try {
@@ -201,7 +200,6 @@ const Clients = ({ getNewCount, title }) => {
           setInputValueForAdd((cv) => {
             return { ...cv, image: urls };
           });
-          console.log("urls====>", urls);
         }
         return urls;
       } else {
@@ -232,35 +230,33 @@ const Clients = ({ getNewCount, title }) => {
 
   const uploadS3bucket = async (file) => {
     debugger
-    console.log("filesData", file)
-    if(file){
-        if (file.type.includes("image")) {
-          let config = AwsConfig;
-          config = {
-            ...config,
-            dirName: "Cerificate",
-            ACL: "public-read",
-          };
-          const Reacts3Client = new S3(config);
-          let urls;
-          let f = file;
-          let filename = "AboutImage(" + new Date().getTime() + ")";
-          let data = await Reacts3Client.uploadFile(f, filename);
-          // try {
-          // if (data.status === 204) {
-          urls = data.location;
-          if (urls) {
-            setInputValueForAdd((cv) => {
-              return { ...cv, image: urls };
-            });
-            console.log("urls====>", urls);
-          }
-          return urls;
-        } else {
-          errorsForAdd["image"] = "*Please Upload Image!";
+    if (file) {
+      if (file.type.includes("image")) {
+        let config = AwsConfig;
+        config = {
+          ...config,
+          dirName: "Cerificate",
+          ACL: "public-read",
+        };
+        const Reacts3Client = new S3(config);
+        let urls;
+        let f = file;
+        let filename = "AboutImage(" + new Date().getTime() + ")";
+        let data = await Reacts3Client.uploadFile(f, filename);
+        // try {
+        // if (data.status === 204) {
+        urls = data.location;
+        if (urls) {
+          setInputValueForAdd((cv) => {
+            return { ...cv, image: urls };
+          });
         }
-
+        return urls;
+      } else {
+        errorsForAdd["image"] = "*Please Upload Image!";
       }
+
+    }
   };
 
   const getImageArrayFromUpdateUpload = async (e) => {
@@ -307,7 +303,7 @@ const Clients = ({ getNewCount, title }) => {
   const validateForm = () => {
     let formIsValid = true;
     let errors = {};
-  
+
     if (inputValue && !inputValue.image) {
       formIsValid = false;
       errors["image"] = "*Please Upload Image!";
@@ -334,11 +330,11 @@ const Clients = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err?.response?.data?.message)
       });
   };
 
-  useEffect(() => {}, [inputValue]);
+  useEffect(() => { }, [inputValue]);
 
   const handleUpdateAnnouncementDetails = (e) => {
     e.preventDefault();
@@ -364,7 +360,7 @@ const Clients = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err.message);
+          toast.error(err?.response?.data?.message)
         });
     }
   };
@@ -377,7 +373,7 @@ const Clients = ({ getNewCount, title }) => {
       width: "65px",
     },
 
-   
+
     {
       name: "Image",
       //   selector: "photo",
@@ -481,7 +477,7 @@ const Clients = ({ getNewCount, title }) => {
 
   //for search data
 
-  
+
   const handleSearch = (e) => {
     let val = e.target.value.replace(/[^\w\s]/gi, "");
     setSearch(val);
@@ -661,7 +657,7 @@ const Clients = ({ getNewCount, title }) => {
                   </div>
                 </div> */}
 
-               
+
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -762,7 +758,7 @@ const Clients = ({ getNewCount, title }) => {
                   </div>
                 </div> */}
 
-               
+
                 {/* update image */}
 
                 <div className="form-group row">
@@ -838,7 +834,7 @@ const Clients = ({ getNewCount, title }) => {
             {isViewMoreAnnouncement === true ? (
               <div className="honda-container">
                 <div className="honda-text-grid">
-          
+
                   <div className="honda-text-grid-items">
                     <span>Image:</span>
                     <img

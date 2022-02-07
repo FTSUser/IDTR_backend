@@ -39,17 +39,15 @@ const Feedback = ({ getNewCount, title }) => {
     await ApiGet(`feedback/getAllFeedback?page=${page}&limit=${countPerPage}`)
       .then((res) => {
         setIsLoaderVisible(false);
-        console.log("artistreport", res);
         setFilteredFeedback(res?.data?.payload?.Question);
         setCount(res?.data?.payload?.count);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err?.response?.data?.message)
       });
   };
 
   useEffect(() => {
-    console.log("inputValue", inputValue);
   }, [inputValue]);
 
   let i = 0;
@@ -149,11 +147,10 @@ const Feedback = ({ getNewCount, title }) => {
     // if (!search) {
     await ApiGet(`feedback/getAll`)
       .then((res) => {
-        console.log("regist", res?.data?.payload?.Question);
         setAllFeedbackExcel(res?.data?.payload?.Question);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err?.response?.data?.message)
       });
     // }
   };
@@ -179,7 +176,6 @@ const Feedback = ({ getNewCount, title }) => {
         setDataCSV((currVal) => [...currVal, data]);
       });
     }
-    console.log("UsertCsvReport", allFeedbackExcel);
   }, [allFeedbackExcel]);
 
   return (

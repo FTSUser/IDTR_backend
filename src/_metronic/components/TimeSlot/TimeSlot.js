@@ -133,11 +133,10 @@ const TimeSlot = ({ getNewCount, title }) => {
     )
       .then((res) => {
         setIsLoaderVisible(false);
-        console.log("artistreport", res);
         setGetCourseType(res?.data?.payload?.courseType);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err?.response?.data?.message)
       });
   };
 
@@ -158,13 +157,12 @@ const TimeSlot = ({ getNewCount, title }) => {
         setFilteredVehicleCategory(res?.data?.payload?.Question);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err?.response?.data?.message)
         setIsLoaderVisible(false);
       });
   };
 
   useEffect(() => {
-    console.log("inputValueForAdd", inputValueForAdd);
   }, [inputValueForAdd]);
 
   useEffect(() => {
@@ -189,7 +187,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         setSelectedCourseName(res?.data?.payload?.courseName);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err?.response?.data?.message)
         setIsLoaderVisible(false);
       });
   };
@@ -212,7 +210,7 @@ const TimeSlot = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err.message);
+          toast.error(err?.response?.data?.message)
         });
     } else {
       await ApiGet(
@@ -228,7 +226,7 @@ const TimeSlot = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err.message);
+          toast.error(err?.response?.data?.message)
         });
     }
   };
@@ -242,7 +240,7 @@ const TimeSlot = ({ getNewCount, title }) => {
   //       setFilteredCourseName(res?.data?.payload?.Question);
   //     })
   //     .catch((err) => {
-  //       console.log(err);
+  //       toast.error(err?.response?.data?.message)
   //     });
   // };
 
@@ -277,7 +275,7 @@ const TimeSlot = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err.message);
+          toast.error(err?.response?.data?.message)
         });
     }
   };
@@ -297,7 +295,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err?.response?.data?.message)
       });
   };
 
@@ -388,13 +386,11 @@ const TimeSlot = ({ getNewCount, title }) => {
             // setSelectedVehicleCategory([]);
             setIsEditPopUp(false);
           } else {
-            console.log("res007", res);
             toast.error(res?.data?.message);
           }
         })
         .catch((err) => {
-          console.log("errerrerr", err?.message);
-          toast.error(err?.message);
+          toast.error(err?.response?.data?.message)
         });
     }
   };
@@ -461,7 +457,6 @@ const TimeSlot = ({ getNewCount, title }) => {
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
-                  console.log("rowrow", row);
                   setIsAddCourseName(true);
                   setIdForUpdateCourseNameData(row._id);
                   getAllVehicleCategory();
@@ -806,7 +801,6 @@ const TimeSlot = ({ getNewCount, title }) => {
                         </option>
                         {filteredVehicleCategory?.length > 0 &&
                           filteredVehicleCategory?.map((item) => {
-                            // console.log("item", filteredVehicleCategory);
                             return (
                               <option
                                 key={item._id}
@@ -991,7 +985,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                 </div>
 
 
-              
+
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter Start Time

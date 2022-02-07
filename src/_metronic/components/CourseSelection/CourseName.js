@@ -96,11 +96,10 @@ const CourseName = ({ getNewCount, title }) => {
     await ApiPost(`courseType/getCoursetypeByVehiclecategory?limit=1000`, Data)
       .then((res) => {
         setIsLoaderVisible(false);
-        console.log("artistreport", res);
         setGetCourseType(res?.data?.payload?.courseType);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err?.response?.data?.message)
       });
   };
 
@@ -116,12 +115,11 @@ const CourseName = ({ getNewCount, title }) => {
     await ApiGet(`vehicleCategory/getAllVehicleCategory?limit=1000`)
       .then((res) => {
         setIsLoaderVisible(false);
-        console.log("artistreport", res);
         setFilteredVehicleCategory(res?.data?.payload?.Question);
         setCount(res?.data?.payload?.count);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err?.response?.data?.message)
       });
   };
 
@@ -133,13 +131,12 @@ const CourseName = ({ getNewCount, title }) => {
       )
         .then((res) => {
           setIsLoaderVisible(false);
-          console.log("artistreport", res);
           setFilteredCourseName(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
           setGetCourseType([]);
         })
         .catch((err) => {
-          console.log(err);
+          toast.error(err?.response?.data?.message)
         });
     } else {
       await ApiGet(
@@ -147,12 +144,11 @@ const CourseName = ({ getNewCount, title }) => {
       )
         .then((res) => {
           setIsLoaderVisible(false);
-          console.log("artistreport", res);
           setFilteredCourseName(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
         .catch((err) => {
-          console.log(err);
+          toast.error(err?.response?.data?.message)
         });
     }
   };
@@ -171,7 +167,7 @@ const CourseName = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err?.response?.data?.message)
       });
   };
 
@@ -257,7 +253,6 @@ const CourseName = ({ getNewCount, title }) => {
       };
       ApiPost(`courseName/addCourseName`, Data)
         .then((res) => {
-          console.log("resresres", res);
           if (res?.status == 200) {
             setIsAddCourseName(false);
             toast.success(res?.data?.message);
@@ -268,7 +263,7 @@ const CourseName = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err.message);
+          toast.error(err?.response?.data?.message)
         });
     }
   };
@@ -288,7 +283,7 @@ const CourseName = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err?.response?.data?.message)
       });
   };
 
@@ -311,7 +306,6 @@ const CourseName = ({ getNewCount, title }) => {
       };
       ApiPut(`courseName/updateCourseName/${idForUpdateCourseNameData}`, Data)
         .then((res) => {
-          console.log("resres", res);
           if (res?.status == 200) {
             setIsAddCourseName(false);
             toast.success(res?.data?.message);
@@ -324,7 +318,7 @@ const CourseName = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err.message);
+          toast.error(err?.response?.data?.message)
         });
     }
   };
@@ -412,7 +406,6 @@ const CourseName = ({ getNewCount, title }) => {
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
-                  console.log("typetype", row);
                   setIsAddCourseName(true);
                   setIdForUpdateCourseNameData(row._id);
                   // getAllCourseType();
@@ -457,8 +450,7 @@ const CourseName = ({ getNewCount, title }) => {
                 onClick={() => {
                   setIsViewMoreAboutus(true);
                   setDataViewMore(row);
-                  console.log("rowShow", row);
-                  console.log("isViewMoreAboutus", isViewMoreAboutus);
+
                 }}
               >
                 <Tooltip title="Show More" arrow>
@@ -563,11 +555,10 @@ const CourseName = ({ getNewCount, title }) => {
     // if (!search) {
     await ApiGet(`courseName/getAll`)
       .then((res) => {
-        console.log("regist", res?.data?.payload?.Question);
         setAllCourseNameExcel(res?.data?.payload?.Question);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err?.response?.data?.message)
       });
     // }
   };
@@ -609,7 +600,6 @@ const CourseName = ({ getNewCount, title }) => {
         setDataCSV((currVal) => [...currVal, data]);
       });
     }
-    console.log("UsertCsvReport", allCourseNameExcel);
   }, [allCourseNameExcel]);
 
   return (
@@ -786,7 +776,6 @@ const CourseName = ({ getNewCount, title }) => {
                         </option>
                         {filteredVehicleCategory?.length > 0 &&
                           filteredVehicleCategory?.map((item) => {
-                            console.log("item", filteredVehicleCategory);
                             return (
                               <option
                                 key={item._id}

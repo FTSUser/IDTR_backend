@@ -9,7 +9,6 @@ import { Link, useHistory } from "react-router-dom";
 export function UserProfileDropdown() {
   let userInfo = getUserInfo();
   const history = useHistory();
-  console.log()
   const Logout = async () => {
     await Auth.deauthenticateLocalUser();
     window.location.reload();
@@ -19,7 +18,6 @@ export function UserProfileDropdown() {
     history.push("/userprofile");
   };
 
-  console.log("userinfoo", userInfo);
 
   return (
     <Dropdown drop="down" alignRight>

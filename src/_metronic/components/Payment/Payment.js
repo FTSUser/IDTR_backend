@@ -67,11 +67,9 @@ const Payment = ({ getNewCount, title }) => {
   };
 
   useEffect(() => {
-    console.log("inputValue", inputValueForAdd);
   }, [inputValueForAdd]);
 
   useEffect(() => {
-    console.log("idForEditStatus", idForEditStatus);
   }, [idForEditStatus]);
 
   useEffect(() => {
@@ -84,18 +82,16 @@ const Payment = ({ getNewCount, title }) => {
     await ApiGet(`payment/getAllPayment?page=${page}&limit=${countPerPage}`)
       .then((res) => {
         setIsLoaderVisible(false);
-        console.log("artistreport", res);
         setFilteredPayment(res?.data?.payload?.Question);
         setCount(res?.data?.payload?.count);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err?.response?.data?.message)
       });
     // }
   };
 
   useEffect(() => {
-    console.log("inputValue", inputValue);
   }, [inputValue]);
 
   let i = 0;
@@ -207,7 +203,7 @@ const Payment = ({ getNewCount, title }) => {
     //           onClick={() => {
     //             setIsViewMoreAboutus(true);
     //             setDataViewMore(row);
-    //             console.log("rowShow", row);
+    //           
     //           }}
     //         >
     //           <Tooltip title="Show More" arrow>
@@ -263,11 +259,10 @@ const Payment = ({ getNewCount, title }) => {
     // if (!search) {
     await ApiGet(`payment/getAll`)
       .then((res) => {
-        console.log("regist", res?.data?.payload?.Question);
         setAllPaymentDetailsExcel(res?.data?.payload?.Question);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err?.response?.data?.message)
       });
     // }
   };
@@ -330,7 +325,6 @@ const Payment = ({ getNewCount, title }) => {
         setDataCSV((currVal) => [...currVal, data]);
       });
     }
-    console.log("UsertCsvReport", allPaymentDetailsExcel);
   }, [allPaymentDetailsExcel]);
 
   return (

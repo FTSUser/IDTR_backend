@@ -60,7 +60,6 @@ const TakeTest = ({ getNewCount, title }) => {
 
 
     useEffect(() => {
-        console.log("attendenceId", attendenceId);
     }, [attendenceId])
 
 
@@ -113,13 +112,11 @@ const TakeTest = ({ getNewCount, title }) => {
             `register/getRegisterByBatch/${id}`
         )
             .then((res) => {
-                console.log("res", res);
                 setUserByAttendece(res?.data?.payload?.users)
                 setAttendenceId(id)
             })
             .catch((err) => {
-                console.log(err);
-                toast.error(err)
+                toast.error(err?.response?.data?.message)
             });
     }
 
@@ -128,39 +125,33 @@ const TakeTest = ({ getNewCount, title }) => {
             `batch/getExamsetByBatch/${id}`
         )
             .then((res) => {
-                console.log("res", res);
                 setQuestionData(res?.data?.payload?.Examset?.questionsList)
             })
             .catch((err) => {
-                console.log(err);
-                toast.error(err)
+                toast.error(err?.response?.data?.message)
             });
     }
 
 
 
 
-    console.log("userInfo", userInfo);
     const getAllCourseName = async () => {
         setIsLoaderVisible(true);
         if (!search) {
             const data = {
                 Examiner: userInfo?.admin?._id
             }
-            console.log("userInfo?._id", userInfo?.admin?._id);
             await ApiGet(
                 `batch/getBatchByExaminer/${data?.Examiner}?page=${page}&limit=${countPerPage}`,
             )
                 .then((res) => {
-                    console.log("res", res);
                     setIsLoaderVisible(false);
-                    console.log("artistreport", res);
                     setFilteredCourseName(res?.data?.payload?.Batch);
                     setCount(res?.data?.payload?.count);
 
                 })
                 .catch((err) => {
-                    console.log(err);
+                    toast.error(err?.response?.data?.message)
                 });
         } else {
             const data = {
@@ -171,12 +162,11 @@ const TakeTest = ({ getNewCount, title }) => {
             )
                 .then((res) => {
                     setIsLoaderVisible(false);
-                    console.log("artistreport", res);
                     setFilteredCourseName(res?.data?.payload?.Batch);
                     setCount(res?.data?.payload?.count);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    toast.error(err?.response?.data?.message)
                 });
         }
     };
@@ -255,8 +245,7 @@ const TakeTest = ({ getNewCount, title }) => {
                                 onClick={() => {
                                     setIsViewMoreAboutus(true);
                                     setDataViewMore(row);
-                                    console.log("rowShow", row);
-                                    console.log("isViewMoreAboutus", isViewMoreAboutus);
+
                                 }}
                             >
                                 <Tooltip title="Show More" arrow>
@@ -362,11 +351,10 @@ const TakeTest = ({ getNewCount, title }) => {
         // if (!search) {
         await ApiGet(`examiner/getAll`)
             .then((res) => {
-                console.log("regist", res?.data?.payload?.Examiner);
                 setAllCourseNameExcel(res?.data?.payload?.Examiner);
             })
             .catch((err) => {
-                console.log(err);
+                toast.error(err?.response?.data?.message)
             });
         // }
     };
@@ -378,13 +366,12 @@ const TakeTest = ({ getNewCount, title }) => {
         }
         await ApiPut(`test/attendence`, data)
             .then((res) => {
-                console.log("attdence", res?.data?.payload);
                 setSelectedTopSubjects([])
                 setIsAddAttedence(false)
                 // setAllCourseNameExcel(res?.data?.payload?.Examiner);
             })
             .catch((err) => {
-                console.log(err);
+                toast.error(err?.response?.data?.message)
             });
     }
 
@@ -401,20 +388,17 @@ const TakeTest = ({ getNewCount, title }) => {
                 setDataCSV((currVal) => [...currVal, data]);
             });
         }
-        console.log("UsertCsvReport", allCourseNameExcel);
     }, [allCourseNameExcel]);
 
 
 
 
     const handleSubjectSelect = (data, id, e) => {
-        console.log("eeeee", e?.target?.name);
         if (e?.target?.name === "selectall") {
             let newArr = [];
             if (selectedTopSubjects.length === data.length) {
                 setSelectedTopSubjects([])
             } else {
-                console.log("in else")
 
                 let newArr = [];
                 data && data?.map((res, key) => {
@@ -442,7 +426,6 @@ const TakeTest = ({ getNewCount, title }) => {
         setErrorsForAdd({ ...errorsForAdd, [name]: "" });
     };
     useEffect(() => {
-        console.log("inputValueForAdd", inputValueForAdd);
     }, [inputValueForAdd])
 
 
@@ -476,7 +459,6 @@ const TakeTest = ({ getNewCount, title }) => {
             await ApiPost(`question/getgenerateQuestion`, data)
                 .then((res) => {
                     if (res?.status == 200) {
-                        console.log("attdence", res?.data?.payload);
                         setSelectedTopSubjects([])
                         setIsAddAttedence(false)
                     } else {

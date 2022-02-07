@@ -59,7 +59,6 @@ const Question = (props) => {
 
     useEffect(() => {
         document.title = "Honda | Question";
-        console.log("propspropsprops", props?.location?.state?.question?._id);
     }, []);
 
     const handleViewMoreClose = () => {
@@ -69,9 +68,9 @@ const Question = (props) => {
 
     const handleOnChnageAdd = (e) => {
         const { name, value } = e.target;
-        if(name==='weight'){
-        setErrorsForAdd({ ...errorsForAdd, [name]: "" });
-        return  setInputValueForAdd({ ...inputValueForAdd, [name]:parseInt(value)});
+        if (name === 'weight') {
+            setErrorsForAdd({ ...errorsForAdd, [name]: "" });
+            return setInputValueForAdd({ ...inputValueForAdd, [name]: parseInt(value) });
         }
         setInputValueForAdd({ ...inputValueForAdd, [name]: value });
         setErrorsForAdd({ ...errorsForAdd, [name]: "" });
@@ -112,26 +111,24 @@ const Question = (props) => {
             )
                 .then((res) => {
                     setIsLoaderVisible(false);
-                    console.log("artistreport", res);
                     setFilteredCourseName(res?.data?.payload?.Question);
                     setCount(res?.data?.payload?.count);
                     setGetCourseType([]);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    toast.error(err?.response?.data?.message)
                 });
         } else {
             await ApiGet(
-                `question/getAllQuestion`, 
+                `question/getAllQuestion`,
             )
                 .then((res) => {
                     setIsLoaderVisible(false);
-                    console.log("artistreport", res);
                     setFilteredCourseName(res?.data?.payload?.Question);
                     setCount(res?.data?.payload?.count);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    toast.error(err?.response?.data?.message)
                 });
         }
     };
@@ -165,8 +162,8 @@ const Question = (props) => {
             formIsValid = false;
             errorsForAdd["Category"] = "*Please Enter Category!";
         }
-        option.map((data)=>{
-            if(data.name===''){
+        option.map((data) => {
+            if (data.name === '') {
                 return toast.error('Enter Question')
             }
         })
@@ -183,16 +180,15 @@ const Question = (props) => {
                 type: inputValueForAdd.type,
                 Option: option,
                 language: inputValueForAdd.language,
-                weight:inputValueForAdd.weight,
-                Category:inputValueForAdd.Category,
-                image:inputValueForAdd.image
+                weight: inputValueForAdd.weight,
+                Category: inputValueForAdd.Category,
+                image: inputValueForAdd.image
 
             };
             let filter = option.filter((e) => e.istrue === true);
             if (filter.length) {
                 ApiPost(`question/addQuestion`, Data)
                     .then((res) => {
-                        console.log("resresres", res);
                         if (res?.status == 200) {
                             setIsAddCourseName(false);
                             toast.success(res?.data?.message);
@@ -203,7 +199,7 @@ const Question = (props) => {
                         }
                     })
                     .catch((err) => {
-                        toast.error(err.message);
+                        toast.error(err?.response?.data?.message)
                     });
             } else {
                 toast.error(`Please select any one ${Data.type}`);
@@ -229,7 +225,7 @@ const Question = (props) => {
                 }
             })
             .catch((err) => {
-                toast.error(err.message);
+                toast.error(err?.response?.data?.message)
             });
     };
 
@@ -241,15 +237,14 @@ const Question = (props) => {
                 type: inputValueForAdd.type,
                 Option: option,
                 language: inputValueForAdd.language,
-                weight:inputValueForAdd.weight,
-                Category:inputValueForAdd.Category,
-                image:inputValueForAdd.image
+                weight: inputValueForAdd.weight,
+                Category: inputValueForAdd.Category,
+                image: inputValueForAdd.image
             };
             let filter = option.filter((e) => e.istrue === true);
             if (filter.length) {
                 ApiPut(`question/updateQuestion/${idForUpdateCourseNameData}`, Data)
                     .then((res) => {
-                        console.log("resres", res);
                         if (res?.status == 200) {
                             setIsAddCourseName(false);
                             toast.success(res?.data?.message);
@@ -262,7 +257,7 @@ const Question = (props) => {
                         }
                     })
                     .catch((err) => {
-                        toast.error(err.message);
+                        toast.error(err?.response?.data?.message)
                     });
             } else {
                 toast.error(`Please select any one ${Data.type}`);
@@ -272,30 +267,30 @@ const Question = (props) => {
 
     const handleUpdateStatusProperty = (status) => {
         ApiPut(`question/updateQuestion/${idForUpdateCourseStatus}`, {
-                Qname: inputValueForAdd.name,
-                type: inputValueForAdd.type,
-                Option: option,
-                language: inputValueForAdd.language,
-                weight:inputValueForAdd.weight,
-                Category:inputValueForAdd.Category,
-                image:inputValueForAdd.image,
-                isActive: status
+            Qname: inputValueForAdd.name,
+            type: inputValueForAdd.type,
+            Option: option,
+            language: inputValueForAdd.language,
+            weight: inputValueForAdd.weight,
+            Category: inputValueForAdd.Category,
+            image: inputValueForAdd.image,
+            isActive: status
 
         })
-          // ApiPut(`property/updateProperty/${idForUpdatePropertyStatus}`)
-          .then((res) => {
-            if (res?.status == 200) {
-              setShowStatus(false);
-              getAllQuestionSet();
-              toast.success("Status updated Successfully");
-            } else {
-              toast.error(res?.data?.message);
-            }
-          })
-          .catch((err) => {
-            toast.error(err.message);
-          });
-      };
+            // ApiPut(`property/updateProperty/${idForUpdatePropertyStatus}`)
+            .then((res) => {
+                if (res?.status == 200) {
+                    setShowStatus(false);
+                    getAllQuestionSet();
+                    toast.success("Status updated Successfully");
+                } else {
+                    toast.error(res?.data?.message);
+                }
+            })
+            .catch((err) => {
+                toast.error(err?.response?.data?.message)
+            });
+    };
 
 
     let i = 0;
@@ -326,17 +321,17 @@ const Question = (props) => {
             name: "Image",
             //   selector: "photo",
             cell: (row) => {
-              return (
-                <>
-                  <div className="p-3">
-                    <img className="max-w-50px zoom" alt="img" src={row?.image} />
-                  </div>
-                </>
-              );
+                return (
+                    <>
+                        <div className="p-3">
+                            <img className="max-w-50px zoom" alt="img" src={row?.image} />
+                        </div>
+                    </>
+                );
             },
             wrap: true,
-          },
-          {
+        },
+        {
             name: "Category",
             selector: "Category",
             sortable: true,
@@ -356,7 +351,6 @@ const Question = (props) => {
                             <div
                                 className="cursor-pointer pl-2"
                                 onClick={() => {
-                                    console.log("typetype", row);
                                     setIsAddCourseName(true);
                                     if (row) {
                                         if (row.type === "mcq") {
@@ -373,21 +367,21 @@ const Question = (props) => {
                                     setInputValueForAdd({
                                         name: row?.Qname,
                                         description: row?.description,
-                                        weight:row?.weight,
+                                        weight: row?.weight,
                                         language: row?.language,
-                                        type:row?.type,
-                                        image:row?.image,
-                                        Category:row?.Category,
+                                        type: row?.type,
+                                        image: row?.image,
+                                        Category: row?.Category,
                                     });
                                     if (row?.type === "mcq") {
-                                            setMcqCheck(true);
-                                            setCheckBoxCheck(false);
+                                        setMcqCheck(true);
+                                        setCheckBoxCheck(false);
 
-                                        } else {
-                                            setMcqCheck(false);
-                                            setCheckBoxCheck(true);
-                                        }
-                                     setIsEditPopUp(true);
+                                    } else {
+                                        setMcqCheck(false);
+                                        setCheckBoxCheck(true);
+                                    }
+                                    setIsEditPopUp(true);
                                 }}
                             >
                                 <Tooltip title="Edit Examiner" arrow>
@@ -412,10 +406,9 @@ const Question = (props) => {
                                 className="cursor-pointer pl-2"
                                 onClick={() => {
                                     setIsViewMoreAboutus(true);
-                                    
+
                                     setDataViewMore(row);
-                                    console.log("rowShow", row);
-                                    console.log("isViewMoreAboutus", isViewMoreAboutus);
+
                                 }}
                             >
                                 <Tooltip title="Show More" arrow>
@@ -432,40 +425,40 @@ const Question = (props) => {
         {
             name: "Display?",
             cell: (row) => {
-              return (
-                <>
-                  <div
-                    className="cursor-pointer"
-                    onClick={() => {
-                      setShowStatus(true);
-                      setIdForUpdateCourseStatus(row?._id);
-                      setStatusDisplay(row?.isActive);
-                      setInputValueForAdd({
-                                        name: row?.Qname,
-                                        description: row?.description,
-                                        weight:row?.weight,
-                                        language: row?.language,
-                                        type:row?.type,
-                                        image:row?.image,
-                                        Category:row?.Category,
-                                    });
-                    }}
-                  >
-                    <Tooltip title="Status Property" arrow>
-                      <div className="cus-medium-button-style widthfixed">
-                        <button className="btn btn-success mr-2">
-                          {row?.isActive === true ? "Active" : "Deactive"}
-                        </button>
-                      </div>
-                    </Tooltip>
-                  </div>
-                </>
-              );
+                return (
+                    <>
+                        <div
+                            className="cursor-pointer"
+                            onClick={() => {
+                                setShowStatus(true);
+                                setIdForUpdateCourseStatus(row?._id);
+                                setStatusDisplay(row?.isActive);
+                                setInputValueForAdd({
+                                    name: row?.Qname,
+                                    description: row?.description,
+                                    weight: row?.weight,
+                                    language: row?.language,
+                                    type: row?.type,
+                                    image: row?.image,
+                                    Category: row?.Category,
+                                });
+                            }}
+                        >
+                            <Tooltip title="Status Property" arrow>
+                                <div className="cus-medium-button-style widthfixed">
+                                    <button className="btn btn-success mr-2">
+                                        {row?.isActive === true ? "Active" : "Deactive"}
+                                    </button>
+                                </div>
+                            </Tooltip>
+                        </div>
+                    </>
+                );
             },
             sortable: true,
-          },
+        },
 
-        
+
     ];
     // * Table Style
     const customStyles = {
@@ -559,11 +552,10 @@ const Question = (props) => {
         // if (!search) {
         await ApiGet(`examiner/getAll`)
             .then((res) => {
-                console.log("regist", res?.data?.payload?.QuestionSet);
                 setAllCourseNameExcel(res?.data?.payload?.QuestionSet);
             })
             .catch((err) => {
-                console.log(err);
+                toast.error(err?.response?.data?.message)
             });
         // }
     };
@@ -580,7 +572,6 @@ const Question = (props) => {
                 setDataCSV((currVal) => [...currVal, data]);
             });
         }
-        console.log("UsertCsvReport", allCourseNameExcel);
     }, [allCourseNameExcel]);
 
     const [mcqCheck, setMcqCheck] = useState(false);
@@ -723,34 +714,33 @@ const Question = (props) => {
         // let files = e.target.files;
         // let imageB64Arr = [];
         const file = e?.target?.files[0]
-        if(file){
-          if (file.type.includes("image")) {
-            let config = AwsConfig;
-            config = {
-              ...config,
-              dirName: "Cerificate",
-              ACL: "public-read",
-            };
-            const Reacts3Client = new S3(config);
-            let urls;
-            
-            let filename = "AboutImage(" + new Date().getTime() + ")";
-            let data = await Reacts3Client.uploadFile(file, filename);
-            // try {
-            // if (data.status === 204) {
-            urls = data.location;
-            if (urls) {
-              setInputValueForAdd((cv) => {
-                return { ...cv, image: urls };
-              });
-              console.log("urls====>", urls);
+        if (file) {
+            if (file.type.includes("image")) {
+                let config = AwsConfig;
+                config = {
+                    ...config,
+                    dirName: "Cerificate",
+                    ACL: "public-read",
+                };
+                const Reacts3Client = new S3(config);
+                let urls;
+
+                let filename = "AboutImage(" + new Date().getTime() + ")";
+                let data = await Reacts3Client.uploadFile(file, filename);
+                // try {
+                // if (data.status === 204) {
+                urls = data.location;
+                if (urls) {
+                    setInputValueForAdd((cv) => {
+                        return { ...cv, image: urls };
+                    });
+                }
+                return urls;
+            } else {
+                errorsForAdd["image"] = "*Please Upload Image!";
             }
-            return urls;
-          } else {
-            errorsForAdd["image"] = "*Please Upload Image!";
-          }
         }
-      };
+    };
 
 
     return (
@@ -984,34 +974,34 @@ const Question = (props) => {
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
-                                        <input
-                                            type="file"
-                                            className={`form-control form-control-lg form-control-solid `}
-                                            name="image"
-                                            // value={productValues.image || null}
-                                            onChange={(e) => {
-                                            getImageArrayFromUpload(e);
-                                            }}
-                                            accept="image/*"
-                                            required
-                                        />
+                                            <input
+                                                type="file"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                name="image"
+                                                // value={productValues.image || null}
+                                                onChange={(e) => {
+                                                    getImageArrayFromUpload(e);
+                                                }}
+                                                accept="image/*"
+                                                required
+                                            />
                                         </div>
                                         <span
-                                        style={{
-                                            color: "red",
-                                            top: "5px",
-                                            fontSize: "12px",
-                                        }}
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
                                         >
-                                        {errorsForAdd["image"]}
+                                            {errorsForAdd["image"]}
                                         </span>
                                     </div>
-                                    </div>
+                                </div>
 
 
-                            <div className="form-group row">
-                                <label className="col-xl-3 col-lg-3 col-form-label">
-                                    Category
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Category
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
@@ -1043,7 +1033,7 @@ const Question = (props) => {
 
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                    Weight
+                                        Weight
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
@@ -1324,27 +1314,27 @@ const Question = (props) => {
 
 
             <Modal show={showStatus} onHide={handleCloseShowStatus}>
-            <Modal.Header closeButton>
-              <Modal.Title className="text-danger">Alert!</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              Are You Sure To Want To{" "}
-              {statusDisplay === true ? "De-active" : "Active"} this course type
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleCloseShowStatus}>
-                Cancel
-              </Button>
-              <Button
-                variant="danger"
-                onClick={(e) => {
-                  handleUpdateStatusProperty(!statusDisplay);
-                }}
-              >
-                {statusDisplay === true ? "De-active" : "Active"}
-              </Button>
-            </Modal.Footer>
-          </Modal>
+                <Modal.Header closeButton>
+                    <Modal.Title className="text-danger">Alert!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Are You Sure To Want To{" "}
+                    {statusDisplay === true ? "De-active" : "Active"} this course type
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseShowStatus}>
+                        Cancel
+                    </Button>
+                    <Button
+                        variant="danger"
+                        onClick={(e) => {
+                            handleUpdateStatusProperty(!statusDisplay);
+                        }}
+                    >
+                        {statusDisplay === true ? "De-active" : "Active"}
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </>
     );
 };

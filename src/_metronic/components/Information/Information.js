@@ -42,7 +42,6 @@ const Information = ({ getNewCount, title }) => {
   const [date, setDate] = useState(new Date());
 
   const [description, setDescription] = useState("");
-  console.log("dataViewMore", dataViewMore);
   //new data
   const [isUpdateAnnouncement, setIsUpdateAnnouncement] = useState(false);
   const [isAddAnnouncement, setIsAddAnnouncement] = useState(false);
@@ -176,7 +175,7 @@ const Information = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err.message);
+          toast.error(err?.response?.data?.message)
         });
     }
   };
@@ -223,7 +222,7 @@ const Information = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err?.response?.data?.message)
       });
   };
 
@@ -254,7 +253,7 @@ const Information = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err.message);
+          toast.error(err?.response?.data?.message)
         });
     }
   };

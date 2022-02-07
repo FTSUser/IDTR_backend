@@ -10,15 +10,14 @@ import "react-toastify/dist/ReactToastify.css";
 // import { requestPassword } from "../_redux/authCrud";
 const token = window.location.search.slice(1)
 
-console.log("token", token)
 const initialValues = {
-    password: "",
-    confirmpassword:""
+  password: "",
+  confirmpassword: ""
 };
 
 function ForgotPassword() {
 
-  
+
 
   const history = useHistory();
 
@@ -32,17 +31,17 @@ function ForgotPassword() {
   const [isRequested] = useState(false);
   const ForgotPasswordSchema = Yup.object().shape({
     password: Yup.string()
-    .min(3, "Minimum 3 symbols")
-    .max(50, "Maximum 50 symbols")
-    .required("Password is Required"),
-    
+      .min(3, "Minimum 3 symbols")
+      .max(50, "Maximum 50 symbols")
+      .required("Password is Required"),
+
     confirmpassword: string()
-    .required("Please confirm your password")
-    .oneOf([ref("password")], "Passwords do not match")
+      .required("Please confirm your password")
+      .oneOf([ref("password")], "Passwords do not match")
 
 
 
-})
+  })
 
   const getInputClasses = (fieldname) => {
     if (formik.touched[fieldname] && formik.errors[fieldname]) {
@@ -62,26 +61,25 @@ function ForgotPassword() {
     onSubmit: async (values, { setStatus, setSubmitting }) => {
       // setLoading(true);
       const data = {
-        token:token,
+        token: token,
         newPassword: values.password,
-   
+
       };
- 
-      console.log("DATA", data);
+
       await ApiPostNoAuth('users/change-password', data)
         .then((res) => {
           try {
             if (parseInt(res.data.status / 100) === 2) {
 
-                history.push('/auth/login')
-                window.location.reload();
-            
-            
-              
-           
-            //   setLoading(true);
-              setSubmitting(false); 
-   
+              history.push('/auth/login')
+              window.location.reload();
+
+
+
+
+              //   setLoading(true);
+              setSubmitting(false);
+
             } else {
               // setLoading(false);
               setSubmitting(false);
@@ -89,15 +87,13 @@ function ForgotPassword() {
               toast.error("Can't Login");
             }
           } catch (err) {
-            console.log("Error : ", err);
             // setLoading(false);
             setSubmitting(false);
             setStatus("Error connecting to network.");
           }
-           
+
         })
         .catch((err) => {
-          console.log(err);
           toast.error("Could not Login");
         });
     },
@@ -111,14 +107,14 @@ function ForgotPassword() {
 
   return (
     <>
-     <ToastContainer />
+      <ToastContainer />
       {isRequested && <Redirect to="/auth" />}
       {!isRequested && (
         <div className="login-form login-forgot" style={{ display: "block" }}>
           <div className="text-center mb-10 mb-lg-20">
             <h3 className="font-size-h1">Ready to Change Password?</h3>
             <div className="text-muted font-weight-bold">
-            Pick a new password
+              Pick a new password
             </div>
           </div>
           <form
@@ -140,7 +136,7 @@ function ForgotPassword() {
                 )}`}
                 name="password"
                 placeholder="New password"
-             
+
                 {...formik.getFieldProps("password")}
               />
               {formik.touched.password && formik.errors.password ? (
@@ -157,7 +153,7 @@ function ForgotPassword() {
                 )}`}
                 name="confirmpassword"
                 placeholder="confirm password"
-       
+
                 {...formik.getFieldProps("confirmpassword")}
               />
               {formik.touched.confirmpassword && formik.errors.confirmpassword ? (
@@ -172,7 +168,7 @@ function ForgotPassword() {
                 type="submit"
                 className="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4"
                 disabled={formik.isSubmitting}
-             
+
               >
                 Submit
               </button>

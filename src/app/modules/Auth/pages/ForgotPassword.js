@@ -49,7 +49,6 @@ function ForgotPassword() {
         email: values.email,
       };
       const role = values.role;
-      console.log("DATA", data);
       await ApiPostNoAuth(`users/forget-password?type=${role}`, data)
         .then((res) => {
           try {
@@ -66,14 +65,12 @@ function ForgotPassword() {
               toast.error("Can't Login");
             }
           } catch (err) {
-            console.log("Error : ", err);
             // setLoading(false);
             setSubmitting(false);
             setStatus("Error connecting to network.");
           }
         })
         .catch((err) => {
-          console.log(err);
           toast.error("Could not Login");
         });
     },
