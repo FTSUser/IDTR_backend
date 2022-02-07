@@ -96,7 +96,7 @@ const TakeTest = ({ getNewCount, title }) => {
 
     const handelCloseQuestion = () => {
         setIsAddQuestion(false)
-
+        setQuestionKEY(0)
 
     };
 
@@ -129,7 +129,7 @@ const TakeTest = ({ getNewCount, title }) => {
         )
             .then((res) => {
                 console.log("res", res);
-                setQuestionData(res?.data?.payload?.Examset)
+                setQuestionData(res?.data?.payload?.Examset?.questionsList)
             })
             .catch((err) => {
                 console.log(err);
@@ -488,7 +488,7 @@ const TakeTest = ({ getNewCount, title }) => {
                 })
                 .catch((err) => {
 
-                    toast.error(err?.message)
+                    toast.error(err?.response?.data?.message)
                 });
         }
     }
@@ -705,10 +705,11 @@ const TakeTest = ({ getNewCount, title }) => {
                             <div>
                                 <div className="container">
                                     <h2>Hello</h2>
-                                    {/* <div className="d-flex">
+
+                                    <div className="d-flex">
                                         <h4 className="mr-3">Question  {questionKEY + 1}</h4>
 
-                                        <h4>{questionData?.question[questionKEY]?.Qname}</h4>
+                                        <h4>{questionData[questionKEY]?.Qname}</h4>
 
                                     </div>
                                     <div>
@@ -716,7 +717,7 @@ const TakeTest = ({ getNewCount, title }) => {
                                         <div className="mb-4">
 
                                             {
-                                                dataViewMore?.question[questionKEY]?.Option.map((data, key) => {
+                                                questionData[questionKEY]?.Option.map((data, key) => {
                                                     return (
                                                         <div className="d-flex mx-3 mb-4">
                                                             <div className="mr-2"><b>({ABC[key]})</b></div>
@@ -732,16 +733,16 @@ const TakeTest = ({ getNewCount, title }) => {
                                         {questionKEY === 0 ? "" :
                                             <button className="btn btn-success mr-3" onClick={() => { setQuestionKEY(questionKEY - 1) }}>Previous</button>
                                         }
-                                        {questionKEY === dataViewMore?.question?.length - 1 ? "" :
+                                        {questionKEY === questionData?.length - 1 ? "" :
                                             <button className="btn btn-success" onClick={() => { setQuestionKEY(questionKEY + 1) }}>Next</button>
                                         }
                                         {
-                                            questionKEY === dataViewMore?.question?.length - 1 ? <>
+                                            questionKEY === questionData?.length - 1 ? <>
                                                 <div className="success">Success</div>
                                             </> : ""
                                         }
 
-                                    </div> */}
+                                    </div>
 
 
                                 </div>
