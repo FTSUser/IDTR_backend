@@ -44,7 +44,11 @@ const CheckTest = ({ getNewCount, title }) => {
     const [dataViewMore, setDataViewMore] = useState({});
     const [userList, setUserList] = useState({});
     const [viewUserDataBatchId, setViewUserDataBatchId] = useState('');
+    const [userIds, setUserId] = useState('');
     const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
+    const [exampPeperSet, openExamPeperSet] = useState(false);
+    const [questionData, setQuestionData] = useState({});
+
     const [isViewUsers, setViewUsers] = useState(false);
 
 
@@ -69,6 +73,11 @@ const CheckTest = ({ getNewCount, title }) => {
         setViewUsers(false);
         setViewUserDataBatchId('');
     };
+    const handlePeperSetClose = () => {
+        openExamPeperSet(false);
+        setUserId('')
+
+    }
 
     const [getAllRole, setgetAllRole] = useState({});
     const getAllRoleData = () => {
@@ -299,11 +308,18 @@ const CheckTest = ({ getNewCount, title }) => {
         // }
     };
 
-    const viewPeperSet = async (id) => {
+    const viewPeperSet = async (id, userId) => {
+        openExamPeperSet(true)
+        setUserId(userId)
+        console.log("_id", userId);
         await ApiGet(`batch/getExamsetByBatch/${id}`)
             .then((res) => {
                 console.log("res", res);
-
+                res?.data?.payload?.Examset?.questionsList?.map((e, index) => {
+                    e.Answer = [];
+                    return e;
+                });
+                setQuestionData(res?.data?.payload?.Examset)
             })
             .catch((err) => {
                 console.log(err);
@@ -326,7 +342,80 @@ const CheckTest = ({ getNewCount, title }) => {
     }, [allCourseNameExcel]);
 
 
+    const createUser = (data) => {
+        console.log("data", data);
+        let checkData = [];
+        questionData?.questionsList.map((e) => {
+            e.Option.map((o) => {
+                delete o._id;
+                return o;
+            });
+            let a = {
+                Question: e?.Qname,
+                Option: e.Option,
+                Answer: e.Answer,
+                type: e.type,
+            };
+            checkData.push(a);
+        });
+        let ans1 = [];
+        questionData?.questionsList?.map((ans) => {
+            console.log("ans", ans);
+            if (!ans.Answer.length) {
+                ans1.push(ans.Answer);
+            } else {
+            }
+        });
+        if (ans1.length) {
+            toast.error("Please Select Answer");
+        } else {
+            const datas = {
+                batch: data?.batchId,
+                uid: userIds,
+                Esid: data?._id,
+                ListofQA: checkData,
+            };
+            ApiPost(`response/addResponse`, datas)
+                .then((res) => {
+                    console.log("res", res);
+                    toast.success(res?.data?.message)
+                    getAllBatchIdWiseUser()
+                    setTimeout(() => {
+                        openExamPeperSet(false);
+                    }, 100);
 
+                })
+                .catch((err) => {
+
+                    toast.error(err?.response?.data?.message);
+                });
+        }
+    }
+
+    const handleQuestion = (data, record, index) => {
+        if (record.type === "mcq") {
+            let index1 = record.Answer.findIndex((e) => e === index + 1);
+            if (index1 === -1) {
+                record.Answer = [index + 1];
+            } else {
+                record.Answer.splice(index1, 1);
+            }
+        } else if (record.type === "checkbox") {
+            let index1 = record.Answer.findIndex((e) => e === index + 1);
+            if (index1 === -1) {
+                record.Answer.push(index + 1);
+            } else {
+                record.Answer.splice(index1, 1);
+            }
+        }
+
+        let index2 = questionData?.questionsList.findIndex((e) => e._id === record._id);
+        console.log("===================", index, index2, questionData.questionsList);
+        if (index2 != -1) {
+            questionData.questionsList[index2] = record;
+        }
+        setQuestionData(questionData);
+    };
 
 
 
@@ -414,6 +503,100 @@ const CheckTest = ({ getNewCount, title }) => {
             </div>
 
 
+            {exampPeperSet ? (
+                <Dialog
+                    fullScreen
+                    open={exampPeperSet}
+                    onClose={handlePeperSetClose}
+                    TransitionComponent={Transition}
+                >
+                    <Toolbar>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            onClick={handlePeperSetClose}
+                            aria-label="close"
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                    </Toolbar>
+                    <List>
+                        {exampPeperSet === true ? (
+                            <div className="honda-container">
+                                <div className="">
+
+                                    {
+                                        console.log("questionData", questionData?.questionsList)
+                                    }
+                                    <div className="questionGrid">
+                                        {
+                                            questionData?.questionsList?.map((data, key) => (
+                                                <div className="questionGridItems">
+                                                    <div className="flexs">
+                                                        <div className="questionCircle mr-3" key={key}> {key + 1}</div>
+
+                                                        {data?.Qname}
+                                                    </div>
+                                                    <div >
+                                                        {data?.Option.map((record, i) => (
+                                                            <>
+                                                                {data.type === "mcq" ? (
+                                                                    <>
+                                                                        <div
+                                                                            className="d-flex align-items-baseline"
+                                                                            key={i}
+                                                                        >
+                                                                            <input
+                                                                                type="radio"
+                                                                                name={key}
+                                                                                id="radio"
+                                                                                defaultChecked={data.istrue}
+                                                                                onChange={(e) =>
+                                                                                    handleQuestion(e, data, i)
+                                                                                }
+                                                                            />
+                                                                            <span className="pl-2">
+                                                                                {" "}
+                                                                                {record?.name}
+                                                                            </span>
+                                                                        </div>
+                                                                    </>
+                                                                ) : (
+                                                                    <>
+                                                                        <div
+                                                                            className="d-flex align-items-baseline"
+                                                                            key={i}
+                                                                        >
+                                                                            <input
+                                                                                type="checkbox"
+                                                                                id={record?.name}
+                                                                                onChange={(e) =>
+                                                                                    handleQuestion(e, data, i)
+                                                                                }
+                                                                            />
+
+                                                                            <span className="pl-2">
+                                                                                {" "}
+                                                                                {record?.name}
+                                                                            </span>
+                                                                        </div>
+                                                                    </>
+                                                                )}
+                                                            </>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                    <button className="btn btn-success mt-5" onClick={() => createUser(questionData)}>Add Data</button>
+
+                                </div>
+                            </div>
+                        ) : null}
+                    </List>
+                </Dialog>
+            ) : null}
             {isViewUsers ? (
                 <Dialog
                     fullScreen
@@ -440,11 +623,12 @@ const CheckTest = ({ getNewCount, title }) => {
 
                                             <div className="card p-5" key={key}>
                                                 <div>{data?.phone}</div>
-                                                <div className="">{data?.fname ? data?.fname : '-'}</div>
-                                                <div className="">{data?.lname ? data?.lname : '-'}</div>
-                                                <div className="">{data?.mname ? data?.mname : '-'}</div>
-                                                <div className="">{data?.email ? data?.email : '-'}</div>
-                                                <div className="view btn btn-success mt-5" onClick={() => viewPeperSet(data?.batchId)}>Check Peper</div>
+                                                <div className="">First Name:{data?.fname ? data?.fname : '-'}</div>
+                                                <div className="">Last Name:{data?.lname ? data?.lname : '-'}</div>
+                                                <div className="">Middle Name:{data?.mname ? data?.mname : '-'}</div>
+                                                <div className="">Email:{data?.email ? data?.email : '-'}</div>
+                                                <div className="">Total Score:{data?.totalScore ? data?.totalScore : 0}</div>
+                                                <div className="view btn btn-success mt-5" onClick={() => viewPeperSet(data?.batchId, data?._id)}>Check Peper</div>
                                             </div>
                                         ))
                                     }

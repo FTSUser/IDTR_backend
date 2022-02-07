@@ -165,3 +165,33 @@ img.cmsImage {
 .mr-3 {
   margin-right: 20px !important;
 }
+
+.questionCircle {
+  background: $primary;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background: #cc0001;
+  color: $white;
+  line-height: 40px;
+  text-align: center;
+}
+.flexs {
+  display: flex;
+  align-items: center;
+}
+.questionGrid {
+  display: grid;
+  margin: 1rem 0 0 0;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  .questionGridItems {
+    padding: 16px;
+    position: relative;
+    border: 1px solid;
+    border-radius: 5px;
+  }
+}
+.padding10 {
+  padding: 10px 0;
+}
