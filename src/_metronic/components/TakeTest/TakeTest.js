@@ -54,6 +54,8 @@ const TakeTest = ({ getNewCount, title }) => {
   const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
   const [selectedTopSubjects, setSelectedTopSubjects] = useState([]);
   const [questionData, setQuestionData] = useState([]);
+  const [successBatchId, setSuucessBatchId] = useState('');
+
   const [attendenceId, setAttendenceId] = useState("");
   const [batchId, setBatchId] = useState("");
   const [tdId, setTdId] = useState([]);
@@ -119,6 +121,7 @@ const TakeTest = ({ getNewCount, title }) => {
       .then((res) => {
         console.log("res", res);
         setQuestionData(res?.data?.payload?.Examset?.questionsList);
+        setSuucessBatchId(res?.data?.payload?.Examset?.batchId)
       })
       .catch((err) => {
         console.log(err);
@@ -466,6 +469,24 @@ const TakeTest = ({ getNewCount, title }) => {
     }
   };
 
+
+  const CompleteBatchById = async () => {
+    console.log("BatchId", successBatchId);
+    await ApiPut(`batch/CompleteBatchById/${successBatchId}`,)
+      .then((res) => {
+        if (res?.status == 200) {
+
+          toast.success(res?.data?.message)
+        } else {
+          toast.error(res?.message);
+        }
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message);
+      });
+  }
+
+
   return (
     <>
       <div className="card p-1">
@@ -725,7 +746,7 @@ const TakeTest = ({ getNewCount, title }) => {
                     )}
                     {questionKEY === questionData?.length - 1 ? (
                       <>
-                        <div className="success">Success</div>
+                        <div className="success btn btn-success" onClick={() => CompleteBatchById()}>Success</div>
                       </>
                     ) : (
                       ""
