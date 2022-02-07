@@ -368,6 +368,7 @@ const TakeTest = ({ getNewCount, title }) => {
         console.log("attdence", res?.data?.payload);
         setSelectedTopSubjects([]);
         setIsAddAttedence(false);
+        getAllCourseName();
         // setAllCourseNameExcel(res?.data?.payload?.Examiner);
       })
       .catch((err) => {
