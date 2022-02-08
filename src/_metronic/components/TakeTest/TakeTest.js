@@ -480,8 +480,7 @@ const TakeTest = ({ getNewCount, title }) => {
       .then((res) => {
         if (res?.status == 200) {
           toast.success(res?.data?.message);
-          setIsAddQuestion(false)
-
+          setIsAddQuestion(false);
         } else {
           toast.error(res?.message);
         }
@@ -702,7 +701,6 @@ const TakeTest = ({ getNewCount, title }) => {
             {isAddQuestion === true ? (
               <div>
                 <div className="container">
-
                   <div className="d-flex">
                     <h4 className="mr-3">Question {questionKEY + 1}</h4>
 
@@ -798,7 +796,7 @@ const TakeTest = ({ getNewCount, title }) => {
                           }
                           checked={
                             selectedTopSubjects?.length ===
-                              userByAttendece.length
+                            userByAttendece.length
                               ? true
                               : false
                           }

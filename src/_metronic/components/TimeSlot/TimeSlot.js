@@ -55,6 +55,8 @@ const TimeSlot = ({ getNewCount, title }) => {
     useState([]);
   const [allCourseTypeForUpdate, setAllCourseTypeForUpdate] = useState([]);
   const [allCourseNameForUpdate, setAllCourseNameForUpdate] = useState([]);
+  const [getCourseCategory, setGetCourseCategory] = useState([]);
+  const [getCourseName, setGetCourseName] = useState([]);
   const [isEditPopUp, setIsEditPopUp] = useState(false);
 
   useEffect(() => {
@@ -68,7 +70,38 @@ const TimeSlot = ({ getNewCount, title }) => {
       setInputValueForAdd({ ...inputValueForAdd, [name]: val });
       setErrorsForAdd({ ...errorsForAdd, [name]: "" });
     } else {
-      const { name, value } = e.target;
+      // const { name, value } = e.target;
+      if (name === "VehicleCategory") {
+        setInputValueForAdd({
+          ...inputValueForAdd,
+          [name]: value,
+          CourseType: "",
+          CourseCategory: "",
+          CourseName:"",
+        });
+        setErrorsForAdd({ ...errorsForAdd, [name]: "" });
+        return;
+      }
+      if (name === "CourseType") {
+        setInputValueForAdd({
+          ...inputValueForAdd,
+          [name]: value,
+          CourseCategory: "",
+          CourseName:"",
+        });
+        setErrorsForAdd({ ...errorsForAdd, [name]: "" });
+        return;
+      }
+      if (name === "CourseCategory") {
+        setInputValueForAdd({
+          ...inputValueForAdd,
+          [name]: value,
+          CourseName:"",
+        });
+        setErrorsForAdd({ ...errorsForAdd, [name]: "" });
+        return;
+      }
+      
       setInputValueForAdd({ ...inputValueForAdd, [name]: value });
       setErrorsForAdd({ ...errorsForAdd, [name]: "" });
     }
@@ -127,16 +160,29 @@ const TimeSlot = ({ getNewCount, title }) => {
     let Data = {
       vehicleCategory: inputValueForAdd?.VehicleCategory,
     };
-    await ApiPost(
-      `courseType/getCoursetypeByVehiclecategory?limit=1000`,
-      Data
-    )
+    await ApiPost(`courseType/getCoursetypeByVehiclecategory?limit=1000`, Data)
       .then((res) => {
         setIsLoaderVisible(false);
         setGetCourseType(res?.data?.payload?.courseType);
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
+        toast.error(err?.response?.data?.message);
+      });
+  };
+
+  const getAllCourseCategory = async () => {
+    setIsLoaderVisible(true);
+    let Data = {
+      vehicleCategory: inputValueForAdd?.VehicleCategory,
+      courseType: inputValueForAdd?.CourseType,
+    };
+    await ApiPost(`courseCategory/getCourseCategoryByCourseType`, Data)
+      .then((res) => {
+        setIsLoaderVisible(false);
+        setGetCourseCategory(res?.data?.payload?.courseCategory);
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message);
       });
   };
 
@@ -146,51 +192,52 @@ const TimeSlot = ({ getNewCount, title }) => {
     }
   }, [inputValueForAdd?.VehicleCategory]);
 
+  useEffect(() => {
+    if (inputValueForAdd?.CourseType?.length > 0) {
+      getAllCourseCategory();
+    }
+  }, [inputValueForAdd?.CourseType]);
+
   const getAllVehicleCategory = async () => {
     setIsLoaderVisible(true);
 
-    await ApiGet(
-      `vehicleCategory/getAllVehicleCategory?limit=1000`
-    )
+    await ApiGet(`vehicleCategory/getAllVehicleCategory?limit=1000`)
       .then((res) => {
         setIsLoaderVisible(false);
         setFilteredVehicleCategory(res?.data?.payload?.Question);
+        setCount(res?.data?.payload?.count);
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
-        setIsLoaderVisible(false);
+        toast.error(err?.response?.data?.message);
       });
   };
 
-  useEffect(() => {
-  }, [inputValueForAdd]);
-
-  useEffect(() => {
-    if (inputValueForAdd?.CourseType?.length > 0) {
-      getAllCourseName();
-    }
-  }, [inputValueForAdd?.CourseType]);
 
   const getAllCourseName = async () => {
     setIsLoaderVisible(true);
     let Data = {
-      courseType: inputValueForAdd?.CourseType,
       vehicleCategory: inputValueForAdd?.VehicleCategory,
+      courseType: inputValueForAdd?.CourseType,
+      courseCategory:inputValueForAdd?.courseCategory,
     };
-
-    await ApiPost(
-      `courseName/getCoursenameByCoursetype?limit=1000`,
-      Data
-    )
+    await ApiPost(`courseName/getCoursenameByCoursetype?limit=1000`, Data)
       .then((res) => {
         setIsLoaderVisible(false);
-        setSelectedCourseName(res?.data?.payload?.courseName);
+        setGetCourseName(res?.data?.payload?.courseName);
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
-        setIsLoaderVisible(false);
+        toast.error(err?.response?.data?.message);
       });
   };
+
+
+  
+  useEffect(() => {
+    if (inputValueForAdd?.CourseCategory?.length > 0) {
+      getAllCourseName();
+    }
+  }, [inputValueForAdd?.CourseCategory]);
+
 
   useEffect(() => {
     getAllTimeSlot();
@@ -465,6 +512,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                     CourseName: row?.cnid,
                     CourseType: row?.ctid,
                     VehicleCategory: row?.vcid,
+                    CourseCategory:row?.ccid
                   });
                   setStartTime(row?.startTime);
                   setEndTime(row?.endTime);
@@ -781,9 +829,9 @@ const TimeSlot = ({ getNewCount, title }) => {
                   </div>
                 </div> */}
 
-                <div className="form-group row">
+<div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Select Vehicle Category
+                    Select vehicle categoryyyyy
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -791,13 +839,13 @@ const TimeSlot = ({ getNewCount, title }) => {
                         className={`form-control form-control-lg form-control-solid `}
                         id="VehicleCategory"
                         name="VehicleCategory"
-                        value={inputValueForAdd?.VehicleCategory}
+                        value={inputValueForAdd.VehicleCategory}
                         onChange={(e) => {
                           handleOnChnageAdd(e);
                         }}
                       >
                         <option value="" disabled selected hidden>
-                          Select Vehicle Category
+                          Select vehicle category
                         </option>
                         {filteredVehicleCategory?.length > 0 &&
                           filteredVehicleCategory?.map((item) => {
@@ -807,7 +855,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                                 value={item?._id}
                                 selected={
                                   inputValueForAdd?.VehicleCategory ===
-                                    item?._id
+                                  item?._id
                                     ? true
                                     : false
                                 }
@@ -833,7 +881,7 @@ const TimeSlot = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Select Course Type
+                    Select course type
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -846,7 +894,16 @@ const TimeSlot = ({ getNewCount, title }) => {
                           handleOnChnageAdd(e);
                         }}
                       >
-                        <option value="" disabled selected hidden>
+                        <option
+                          value=""
+                          disabled
+                          selected={
+                            !!inputValueForAdd?.CourseType === false
+                              ? true
+                              : false
+                          }
+                          hidden
+                        >
                           Select Course Type
                         </option>
                         {getCourseType?.length > 0 &&
@@ -856,13 +913,13 @@ const TimeSlot = ({ getNewCount, title }) => {
                                 key={item._id}
                                 value={item._id}
                                 selected={
-                                  inputValueForAdd?.CourseType === item?._id
+                                  inputValueForAdd?.CourseType === item._id
                                     ? true
                                     : false
                                 }
                               >
                                 {" "}
-                                {item?.courseType}{" "}
+                                {item.courseType}{" "}
                               </option>
                             );
                           })}
@@ -882,7 +939,65 @@ const TimeSlot = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Select Course Name
+                    Select course category
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <div>
+                      <select
+                        className={`form-control form-control-lg form-control-solid `}
+                        id="CourseCategory"
+                        name="CourseCategory"
+                        // value={inputValueForAdd.CourseCategory}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
+                      >
+                        <option
+                          value=""
+                          disabled
+                          selected={
+                            !!inputValueForAdd?.CourseCategory === false
+                              ? true
+                              : false
+                          }
+                          hidden
+                        >
+                          Select course category
+                        </option>
+                        {getCourseCategory?.length > 0 &&
+                          getCourseCategory?.map((item) => {
+                            return (
+                              <option
+                                key={item._id}
+                                value={item._id}
+                                selected={
+                                  inputValueForAdd?.CourseCategory === item._id
+                                    ? true
+                                    : false
+                                }
+                              >
+                                {" "}
+                                {item.courseCategory}{" "}
+                              </option>
+                            );
+                          })}
+                      </select>
+                    </div>
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["CourseCategory"]}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Select course name
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -890,16 +1005,25 @@ const TimeSlot = ({ getNewCount, title }) => {
                         className={`form-control form-control-lg form-control-solid `}
                         id="CourseName"
                         name="CourseName"
-                        // value={inputValueForAdd.CourseName}
+                        // value={inputValueForAdd.CourseCategory}
                         onChange={(e) => {
                           handleOnChnageAdd(e);
                         }}
                       >
-                        <option value="" disabled selected hidden>
-                          Select Course Type
+                        <option
+                          value=""
+                          disabled
+                          selected={
+                            !!inputValueForAdd?.CourseName === false
+                              ? true
+                              : false
+                          }
+                          hidden
+                        >
+                          Select course category
                         </option>
-                        {selectedCourseName?.length > 0 &&
-                          selectedCourseName?.map((item) => {
+                        {getCourseName?.length > 0 &&
+                          getCourseName?.map((item) => {
                             return (
                               <option
                                 key={item._id}
@@ -928,6 +1052,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                     </span>
                   </div>
                 </div>
+                
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
