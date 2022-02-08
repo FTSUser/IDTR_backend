@@ -481,7 +481,7 @@ const Examiner = ({ getNewCount, title }) => {
                                 }}
                                 className="btn btn-success mr-2"
                             >
-                                Add Examiner
+                                Add Role
                             </button>
                         </div>
                         <div className="cus-medium-button-style button-height">
