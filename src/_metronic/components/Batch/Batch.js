@@ -432,6 +432,23 @@ const Batch = ({ getNewCount, title }) => {
       },
       sortable: true,
     },
+    {
+      name: "Total User",
+      selector: "totalUser",
+      cell: (row) => {
+        return (
+          <>{row?.totalUser ? <p
+            dangerouslySetInnerHTML={{
+              __html: row?.totalUser,
+            }}
+            className=""
+          />: <p>{"-"}</p>}
+            
+          </>
+        );
+      },
+      sortable: true,
+    },
 
 
 
