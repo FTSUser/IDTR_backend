@@ -30,7 +30,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const TimeSlot = ({ getNewCount, title }) => {
-  const [filteredCourseName, setFilteredCourseName] = useState([]);
   const [isLoaderVisible, setIsLoaderVisible] = useState(false);
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -46,15 +45,8 @@ const TimeSlot = ({ getNewCount, title }) => {
   const [search, setSearch] = useState("");
   const [getCourseType, setGetCourseType] = useState([]);
   const [filteredVehicleCategory, setFilteredVehicleCategory] = useState([]);
-  const [selectedVehicleCategory, setSelectedVehicleCategory] = useState([]);
-  const [selectedCourseType, setSelectedCourseType] = useState([]);
-  const [selectedCourseName, setSelectedCourseName] = useState([]);
   const [date, setDate] = useState(new Date());
   const [allTimeSlot, setAllTimeSlot] = useState([]);
-  const [allVehicleCategoryForUpdate, setAllVehicleCategoryForUpdate] =
-    useState([]);
-  const [allCourseTypeForUpdate, setAllCourseTypeForUpdate] = useState([]);
-  const [allCourseNameForUpdate, setAllCourseNameForUpdate] = useState([]);
   const [getCourseCategory, setGetCourseCategory] = useState([]);
   const [getCourseName, setGetCourseName] = useState([]);
   const [isEditPopUp, setIsEditPopUp] = useState(false);
@@ -77,7 +69,7 @@ const TimeSlot = ({ getNewCount, title }) => {
           [name]: value,
           CourseType: "",
           CourseCategory: "",
-          CourseName:"",
+          CourseName: "",
         });
         setErrorsForAdd({ ...errorsForAdd, [name]: "" });
         return;
@@ -87,7 +79,7 @@ const TimeSlot = ({ getNewCount, title }) => {
           ...inputValueForAdd,
           [name]: value,
           CourseCategory: "",
-          CourseName:"",
+          CourseName: "",
         });
         setErrorsForAdd({ ...errorsForAdd, [name]: "" });
         return;
@@ -96,12 +88,12 @@ const TimeSlot = ({ getNewCount, title }) => {
         setInputValueForAdd({
           ...inputValueForAdd,
           [name]: value,
-          CourseName:"",
+          CourseName: "",
         });
         setErrorsForAdd({ ...errorsForAdd, [name]: "" });
         return;
       }
-      
+
       setInputValueForAdd({ ...inputValueForAdd, [name]: value });
       setErrorsForAdd({ ...errorsForAdd, [name]: "" });
     }
@@ -111,17 +103,11 @@ const TimeSlot = ({ getNewCount, title }) => {
     setInputValueForAdd({});
     setIsAddCourseName(false);
     setErrorsForAdd({});
-    // setSelectedCourseName([]);
-    // setSelectedCourseType([]);
-    // setSelectedVehicleCategory([]);
     setIsEditPopUp(false);
     setIdForUpdateCourseNameData("");
     setStartTime("");
     setEndTime("");
     setDate(new Date());
-    // setAllVehicleCategoryForUpdate([]);
-    // setAllCourseNameForUpdate([]);
-    // setAllCourseTypeForUpdate([]);
     setNow(moment().hour(0).minute(0));
     setNow1(moment().hour(0).minute(0));
     setIsEditPopUp(false);
@@ -212,13 +198,12 @@ const TimeSlot = ({ getNewCount, title }) => {
       });
   };
 
-
   const getAllCourseName = async () => {
     setIsLoaderVisible(true);
     let Data = {
       vehicleCategory: inputValueForAdd?.VehicleCategory,
       courseType: inputValueForAdd?.CourseType,
-      courseCategory:inputValueForAdd?.courseCategory,
+      courseCategory: inputValueForAdd?.courseCategory,
     };
     await ApiPost(`courseName/getCoursenameByCoursetype?limit=1000`, Data)
       .then((res) => {
@@ -230,14 +215,11 @@ const TimeSlot = ({ getNewCount, title }) => {
       });
   };
 
-
-  
   useEffect(() => {
     if (inputValueForAdd?.CourseCategory?.length > 0) {
       getAllCourseName();
     }
   }, [inputValueForAdd?.CourseCategory]);
-
 
   useEffect(() => {
     getAllTimeSlot();
@@ -257,7 +239,7 @@ const TimeSlot = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err?.response?.data?.message)
+          toast.error(err?.response?.data?.message);
         });
     } else {
       await ApiGet(
@@ -273,23 +255,10 @@ const TimeSlot = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err?.response?.data?.message)
+          toast.error(err?.response?.data?.message);
         });
     }
   };
-
-  // const getAllCourseName = async () => {
-  //   setIsLoaderVisible(true);
-
-  //   await ApiGet(`courseName/getAllCourseName?page=${page}&limit=1000`)
-  //     .then((res) => {
-  //       setIsLoaderVisible(false);
-  //       setFilteredCourseName(res?.data?.payload?.Question);
-  //     })
-  //     .catch((err) => {
-  //       toast.error(err?.response?.data?.message)
-  //     });
-  // };
 
   const handelAddCourseNameDetails = (e) => {
     e.preventDefault();
@@ -313,16 +282,13 @@ const TimeSlot = ({ getNewCount, title }) => {
             getAllTimeSlot();
             setIsAddCourseName(false);
             setErrorsForAdd({});
-            // setSelectedCourseName([]);
-            // setSelectedCourseType([]);
-            // setSelectedVehicleCategory([]);
             setIsEditPopUp(false);
           } else {
             toast.error(res?.data?.message);
           }
         })
         .catch((err) => {
-          toast.error(err?.response?.data?.message)
+          toast.error(err?.response?.data?.message);
         });
     }
   };
@@ -342,7 +308,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
+        toast.error(err?.response?.data?.message);
       });
   };
 
@@ -392,24 +358,6 @@ const TimeSlot = ({ getNewCount, title }) => {
   const handelUpdateTimeSlotDetails = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // const newCourseName = [];
-      // {
-      //   selectedCourseName.map((sub, i) => {
-      //     newCourseName.push(sub._id);
-      //   });
-      // }
-      // const newCourseType = [];
-      // {
-      //   selectedCourseType.map((sub, i) => {
-      //     newCourseType.push(sub._id);
-      //   });
-      // }
-      // const newVehicleCategory = [];
-      // {
-      //   selectedVehicleCategory.map((sub, i) => {
-      //     newVehicleCategory.push(sub._id);
-      //   });
-      // }
       let Data = {
         date: date,
         seat: inputValueForAdd?.seat,
@@ -428,16 +376,13 @@ const TimeSlot = ({ getNewCount, title }) => {
             getAllTimeSlot();
             setIsAddCourseName(false);
             setErrorsForAdd({});
-            // setSelectedCourseName([]);
-            // setSelectedCourseType([]);
-            // setSelectedVehicleCategory([]);
             setIsEditPopUp(false);
           } else {
             toast.error(res?.data?.message);
           }
         })
         .catch((err) => {
-          toast.error(err?.response?.data?.message)
+          toast.error(err?.response?.data?.message);
         });
     }
   };
@@ -512,17 +457,11 @@ const TimeSlot = ({ getNewCount, title }) => {
                     CourseName: row?.cnid,
                     CourseType: row?.ctid,
                     VehicleCategory: row?.vcid,
-                    CourseCategory:row?.ccid
+                    CourseCategory: row?.ccid,
                   });
                   setStartTime(row?.startTime);
                   setEndTime(row?.endTime);
                   setDate(row?.date);
-                  // setSelectedCourseName(row?.cnid);
-                  // setSelectedCourseType(row?.ctid);
-                  // setSelectedVehicleCategory(row?.vcid);
-                  // setAllVehicleCategoryForUpdate(row?.vcid);
-                  // setAllCourseNameForUpdate(row?.cnid);
-                  // setAllCourseTypeForUpdate(row?.ctid);
                   setNow(moment(row?.startTime));
                   setNow1(moment(row?.endTime));
                   setIsEditPopUp(true);
@@ -585,7 +524,6 @@ const TimeSlot = ({ getNewCount, title }) => {
   };
 
   //for search data
-
 
   const handleSearch = (e) => {
     let val = e.target.value.replace(/[^\w\s]/gi, "");
@@ -731,105 +669,7 @@ const TimeSlot = ({ getNewCount, title }) => {
           <List>
             {isAddCourseName === true ? (
               <div className="form ml-30 ">
-                {/* <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Select Vehicle Category
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <div>
-                      <Multiselect
-                        options={filteredVehicleCategory}
-                        onSelect={(selectedList, selectedItem) => {
-                          setSelectedVehicleCategory(selectedList);
-                          setErrorsForAdd({
-                            ...errorsForAdd,
-                            selectedTopSubjects: "",
-                          });
-                        }}
-                        onRemove={(selectedList, removedItem) => {
-                          setSelectedVehicleCategory(selectedList);
-                        }}
-                        displayValue="vehicleCategory"
-                        selectedValues={allVehicleCategoryForUpdate}
-                      />
-                    </div>
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errorsForAdd["VehicleCategory"]}
-                    </span>
-                  </div>
-                </div>
-
                 <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Select Course Type
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <Multiselect
-                      options={getCourseType}
-                      onSelect={(selectedList, selectedItem) => {
-                        setSelectedCourseType(selectedList);
-                        setErrorsForAdd({
-                          ...errorsForAdd,
-                          selectedTopSubjects: "",
-                        });
-                      }}
-                      onRemove={(selectedList, removedItem) => {
-                        setSelectedCourseType(selectedList);
-                      }}
-                      displayValue="courseType"
-                      selectedValues={allCourseTypeForUpdate}
-                    />
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errorsForAdd["CourseType"]}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Select Course Name
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <Multiselect
-                      options={filteredCourseName}
-                      onSelect={(selectedList, selectedItem) => {
-                        setSelectedCourseName(selectedList);
-                        setErrorsForAdd({
-                          ...errorsForAdd,
-                          selectedCourseName: "",
-                        });
-                      }}
-                      onRemove={(selectedList, removedItem) => {
-                        setSelectedCourseName(selectedList);
-                      }}
-                      displayValue="courseName"
-                      selectedValues={allCourseNameForUpdate}
-                    />
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errorsForAdd["CourseName"]}
-                    </span>
-                  </div>
-                </div> */}
-
-<div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Select vehicle categoryyyyy
                   </label>
@@ -1052,7 +892,6 @@ const TimeSlot = ({ getNewCount, title }) => {
                     </span>
                   </div>
                 </div>
-                
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -1108,8 +947,6 @@ const TimeSlot = ({ getNewCount, title }) => {
                     </span>
                   </div>
                 </div>
-
-
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
