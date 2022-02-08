@@ -47,6 +47,7 @@ const CourseName = ({ getNewCount, title }) => {
   const [idForUpdateCourseStatus, setIdForUpdateCourseStatus] = useState("");
   const [statusDisplay, setStatusDisplay] = useState(false);
   const [getCourseType, setGetCourseType] = useState([]);
+  const [getCourseCategory, setGetCourseCategory] = useState([]);
   const [filteredVehicleCategory, setFilteredVehicleCategory] = useState([]);
 
   const [dataViewMore, setDataViewMore] = useState({});
@@ -74,6 +75,7 @@ const CourseName = ({ getNewCount, title }) => {
     setErrorsForAdd({});
     setIsEditPopUp(false);
     setGetCourseType([]);
+    setGetCourseCategory([])
   };
 
   const handleClose = () => {
@@ -103,11 +105,40 @@ const CourseName = ({ getNewCount, title }) => {
       });
   };
 
+
+  const getAllCourseCategory = async () => {
+    setIsLoaderVisible(true);
+    let Data = {
+      vehicleCategory: inputValueForAdd?.VehicleCategory,
+      courseType: inputValueForAdd?.CourseType
+    };
+    await ApiPost(`courseCategory/getCourseCategoryByCourseType`, Data)
+      .then((res) => {
+        setIsLoaderVisible(false);
+        setGetCourseCategory(res?.data?.payload?.courseCategory);
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message)
+      });
+  };
+
+
+
+
+
   useEffect(() => {
     if (inputValueForAdd?.VehicleCategory?.length > 0) {
       getAllCourseType();
+
     }
   }, [inputValueForAdd?.VehicleCategory]);
+
+
+  useEffect(() => {
+    if (inputValueForAdd?.CourseType?.length > 0) {
+      getAllCourseCategory()
+    }
+  }, [inputValueForAdd?.CourseType]);
 
   const getAllVehicleCategory = async () => {
     setIsLoaderVisible(true);
@@ -174,10 +205,7 @@ const CourseName = ({ getNewCount, title }) => {
   const validateFormForAddAdmin = () => {
     let formIsValid = true;
     let errorsForAdd = {};
-    if (inputValueForAdd && !inputValueForAdd.CourseName) {
-      formIsValid = false;
-      errorsForAdd["CourseName"] = "*Please Enter Course Name!";
-    }
+
 
     if (inputValueForAdd && !inputValueForAdd.Description) {
       formIsValid = false;
@@ -187,6 +215,10 @@ const CourseName = ({ getNewCount, title }) => {
     if (inputValueForAdd && !inputValueForAdd.CourseType) {
       formIsValid = false;
       errorsForAdd["CourseType"] = "*Please Enter CourseType!";
+    }
+    if (inputValueForAdd && !inputValueForAdd.CourseCategory) {
+      formIsValid = false;
+      errorsForAdd["CourseCategory"] = "*Please Enter CourseCategory!";
     }
 
     if (inputValueForAdd && !inputValueForAdd.Duration) {
@@ -249,6 +281,7 @@ const CourseName = ({ getNewCount, title }) => {
         validity: inputValueForAdd.Validity,
         price: inputValueForAdd.Price,
         ctid: inputValueForAdd.CourseType,
+        ccid: inputValueForAdd.CourseCategory,
         vcid: inputValueForAdd.VehicleCategory,
       };
       ApiPost(`courseName/addCourseName`, Data)
@@ -302,6 +335,7 @@ const CourseName = ({ getNewCount, title }) => {
         validity: inputValueForAdd?.Validity,
         price: inputValueForAdd?.Price,
         ctid: inputValueForAdd?.CourseType,
+        ccid: inputValueForAdd?.CourseCategory,
         vcid: inputValueForAdd?.VehicleCategory,
       };
       ApiPut(`courseName/updateCourseName/${idForUpdateCourseNameData}`, Data)
@@ -422,8 +456,10 @@ const CourseName = ({ getNewCount, title }) => {
                     Validity: row?.validity,
                     Price: row?.price,
                     CourseType: row?.ctid?._id,
+                    CourseCategory: row?.ccid?._id,
                     VehicleCategory: row?.vcid?._id,
                   });
+                  console.log("row", row);
                   setIsEditPopUp(true);
                 }}
               >
@@ -758,7 +794,7 @@ const CourseName = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Select Vehicle Category
+                    Select vehicle category
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -772,7 +808,7 @@ const CourseName = ({ getNewCount, title }) => {
                         }}
                       >
                         <option value="" disabled selected hidden>
-                          Select Vehicle Category
+                          Select vehicle category
                         </option>
                         {filteredVehicleCategory?.length > 0 &&
                           filteredVehicleCategory?.map((item) => {
@@ -808,7 +844,7 @@ const CourseName = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Select Course Type
+                    Select course type
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -857,11 +893,61 @@ const CourseName = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Course Name
+                    Select course category
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <div>
+                      <select
+                        className={`form-control form-control-lg form-control-solid `}
+                        id="CourseCategory"
+                        name="CourseCategory"
+                        // value={inputValueForAdd.CourseCategory}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
+                      >
+                        <option value="" disabled selected hidden>
+                          Select course type
+                        </option>
+                        {getCourseCategory?.length > 0 &&
+                          getCourseCategory?.map((item) => {
+                            return (
+                              <option
+                                key={item._id}
+                                value={item._id}
+                                selected={
+                                  inputValueForAdd?.CourseCategory === item._id
+                                    ? true
+                                    : false
+                                }
+                              >
+                                {" "}
+                                {item.courseCategory}{" "}
+                              </option>
+                            );
+                          })}
+                      </select>
+                    </div>
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["CourseCategory"]}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Course name
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
                       <input
+                        disabled
                         type="text"
                         className={`form-control form-control-lg form-control-solid `}
                         id="CourseName"
@@ -872,21 +958,13 @@ const CourseName = ({ getNewCount, title }) => {
                         }}
                       />
                     </div>
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errorsForAdd["CourseName"]}
-                    </span>
+
                   </div>
                 </div>
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Course Description
+                    Enter importent note
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -915,7 +993,9 @@ const CourseName = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Duration
+                    Enter duration(in days)
+
+
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -944,7 +1024,9 @@ const CourseName = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Timing
+                    Enter duration (in Hours)
+
+
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -973,7 +1055,7 @@ const CourseName = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Mode
+                    Enter mode of payment
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -1002,7 +1084,9 @@ const CourseName = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Document Required
+                    Enrolment prerequisites( Documents Required)
+
+
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -1031,7 +1115,7 @@ const CourseName = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Validity
+                    Enter validity
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -1060,7 +1144,7 @@ const CourseName = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter System Requirement
+                    Enter system requirement
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -1089,7 +1173,7 @@ const CourseName = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Certificate
+                    Enter certificate
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -1118,7 +1202,9 @@ const CourseName = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Price
+                    Fees(INR)
+
+
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
