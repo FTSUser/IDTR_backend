@@ -1125,7 +1125,7 @@ const User = ({ getNewCount, title }) => {
 
 
     }
-    ApiPost('courseName/getCoursenameByCoursetype?page=${page}&limit=1000', data).then((res) => {
+    ApiPost('courseCategory/getCourseCategoryByCourseType?page=${page}&limit=1000', data).then((res) => {
       setgetAllCourceName(res.data.payload);
 
     })
@@ -1137,7 +1137,7 @@ const User = ({ getNewCount, title }) => {
       courseType: CourceTypeDataedit,
       vehicleCategory: VehicalCategoryDataedit
     }
-    ApiPost('courseName/getCoursenameByCoursetype?page=${page}&limit=1000', data).then((res) => {
+    ApiPost('courseCategory/getCourseCategoryByCourseType?page=${page}&limit=1000', data).then((res) => {
       setgetAllCourceName(res.data.payload);
       const setDataMAin = res?.data?.payload?.courseName?.filter((dataMain) => dataMain._id === cId)
       setdefaultValue(dataasd => ({ ...dataasd, courseCategory: { label: setDataMAin[0].courseName, value: setDataMAin[0]._id } }))
@@ -1547,18 +1547,18 @@ const User = ({ getNewCount, title }) => {
 
                             <Select
                               // isClearable
-                              options={getAllCourceName?.courseName?.map(e => ({ label: e.courseName, value: e._id }))}
-                              name='courseName'
+                              options={getAllCourceName?.courseCategory?.map(e => ({ label: e.courseCategory, value: e._id }))}
+                              name='courseCategory'
                               onChange={(e) => {
                                 setCourceType(e.value)
                                 if (e?.value) {
-                                  let index = getAllCourceName?.courseName?.findIndex(o => o?._id === e?.value);
+                                  let index = getAllCourceName?.courseCategory?.findIndex(o => o?._id === e?.value);
                                   if (index !== -1) {
-                                    setPrice(getAllCourceName?.courseName[index].price)
-                                    setCNID(getAllCourceName?.courseName[index]._id)
+                                    setPrice(getAllCourceName?.courseCategory[index].price)
+                                    setCNID(getAllCourceName?.courseCategory[index]._id)
                                   }
                                 }
-                                onChnagSelectField(e, 'courseName')
+                                onChnagSelectField(e, 'courseCategory')
                               }}
                               defaultValue={defaultValue.courseCategory && defaultValue.courseCategory}
                             />
