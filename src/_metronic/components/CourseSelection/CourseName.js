@@ -63,8 +63,32 @@ const CourseName = ({ getNewCount, title }) => {
     setDataViewMore({});
   };
 
+  useEffect(() => {
+    console.log("inputValueForAdd", inputValueForAdd);
+  }, [inputValueForAdd]);
+
   const handleOnChnageAdd = (e) => {
     const { name, value } = e.target;
+    if (name === "VehicleCategory") {
+      setInputValueForAdd({
+        ...inputValueForAdd,
+        [name]: value,
+        CourseType: "",
+        CourseCategory: "",
+      });
+      setErrorsForAdd({ ...errorsForAdd, [name]: "" });
+      return;
+    }
+    if (name === "CourseType") {
+      setInputValueForAdd({
+        ...inputValueForAdd,
+        [name]: value,
+        CourseCategory: "",
+      });
+      setErrorsForAdd({ ...errorsForAdd, [name]: "" });
+      return;
+    }
+    
     setInputValueForAdd({ ...inputValueForAdd, [name]: value });
     setErrorsForAdd({ ...errorsForAdd, [name]: "" });
   };
@@ -75,7 +99,7 @@ const CourseName = ({ getNewCount, title }) => {
     setErrorsForAdd({});
     setIsEditPopUp(false);
     setGetCourseType([]);
-    setGetCourseCategory([])
+    setGetCourseCategory([]);
   };
 
   const handleClose = () => {
@@ -101,16 +125,15 @@ const CourseName = ({ getNewCount, title }) => {
         setGetCourseType(res?.data?.payload?.courseType);
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
+        toast.error(err?.response?.data?.message);
       });
   };
-
 
   const getAllCourseCategory = async () => {
     setIsLoaderVisible(true);
     let Data = {
       vehicleCategory: inputValueForAdd?.VehicleCategory,
-      courseType: inputValueForAdd?.CourseType
+      courseType: inputValueForAdd?.CourseType,
     };
     await ApiPost(`courseCategory/getCourseCategoryByCourseType`, Data)
       .then((res) => {
@@ -118,25 +141,19 @@ const CourseName = ({ getNewCount, title }) => {
         setGetCourseCategory(res?.data?.payload?.courseCategory);
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
+        toast.error(err?.response?.data?.message);
       });
   };
-
-
-
-
 
   useEffect(() => {
     if (inputValueForAdd?.VehicleCategory?.length > 0) {
       getAllCourseType();
-
     }
   }, [inputValueForAdd?.VehicleCategory]);
 
-
   useEffect(() => {
     if (inputValueForAdd?.CourseType?.length > 0) {
-      getAllCourseCategory()
+      getAllCourseCategory();
     }
   }, [inputValueForAdd?.CourseType]);
 
@@ -150,7 +167,7 @@ const CourseName = ({ getNewCount, title }) => {
         setCount(res?.data?.payload?.count);
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
+        toast.error(err?.response?.data?.message);
       });
   };
 
@@ -167,7 +184,7 @@ const CourseName = ({ getNewCount, title }) => {
           setGetCourseType([]);
         })
         .catch((err) => {
-          toast.error(err?.response?.data?.message)
+          toast.error(err?.response?.data?.message);
         });
     } else {
       await ApiGet(
@@ -179,7 +196,7 @@ const CourseName = ({ getNewCount, title }) => {
           setCount(res?.data?.payload?.count);
         })
         .catch((err) => {
-          toast.error(err?.response?.data?.message)
+          toast.error(err?.response?.data?.message);
         });
     }
   };
@@ -198,7 +215,7 @@ const CourseName = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
+        toast.error(err?.response?.data?.message);
       });
   };
 
@@ -206,10 +223,13 @@ const CourseName = ({ getNewCount, title }) => {
     let formIsValid = true;
     let errorsForAdd = {};
 
-
     if (inputValueForAdd && !inputValueForAdd.Description) {
       formIsValid = false;
       errorsForAdd["Description"] = "*Please Enter Description!";
+    }
+    if (inputValueForAdd && !inputValueForAdd.VehicleCategory) {
+      formIsValid = false;
+      errorsForAdd["VehicleCategory"] = "*Please Enter VehicleCategory!";
     }
 
     if (inputValueForAdd && !inputValueForAdd.CourseType) {
@@ -296,7 +316,7 @@ const CourseName = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err?.response?.data?.message)
+          toast.error(err?.response?.data?.message);
         });
     }
   };
@@ -316,7 +336,7 @@ const CourseName = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
+        toast.error(err?.response?.data?.message);
       });
   };
 
@@ -352,7 +372,7 @@ const CourseName = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err?.response?.data?.message)
+          toast.error(err?.response?.data?.message);
         });
     }
   };
@@ -486,7 +506,6 @@ const CourseName = ({ getNewCount, title }) => {
                 onClick={() => {
                   setIsViewMoreAboutus(true);
                   setDataViewMore(row);
-
                 }}
               >
                 <Tooltip title="Show More" arrow>
@@ -534,7 +553,6 @@ const CourseName = ({ getNewCount, title }) => {
   };
 
   //for search data
-
 
   const handleSearch = (e) => {
     let val = e.target.value.replace(/[^\w\s]/gi, "");
@@ -594,7 +612,7 @@ const CourseName = ({ getNewCount, title }) => {
         setAllCourseNameExcel(res?.data?.payload?.Question);
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
+        toast.error(err?.response?.data?.message);
       });
     // }
   };
@@ -794,7 +812,7 @@ const CourseName = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Select vehicle category
+                    Select vehicle categoryyyyy
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -818,7 +836,7 @@ const CourseName = ({ getNewCount, title }) => {
                                 value={item?._id}
                                 selected={
                                   inputValueForAdd?.VehicleCategory ===
-                                    item?._id
+                                  item?._id
                                     ? true
                                     : false
                                 }
@@ -857,7 +875,16 @@ const CourseName = ({ getNewCount, title }) => {
                           handleOnChnageAdd(e);
                         }}
                       >
-                        <option value="" disabled selected hidden>
+                        <option
+                          value=""
+                          disabled
+                          selected={
+                            !!inputValueForAdd?.CourseType === false
+                              ? true
+                              : false
+                          }
+                          hidden
+                        >
                           Select Course Type
                         </option>
                         {getCourseType?.length > 0 &&
@@ -906,8 +933,17 @@ const CourseName = ({ getNewCount, title }) => {
                           handleOnChnageAdd(e);
                         }}
                       >
-                        <option value="" disabled selected hidden>
-                          Select course type
+                        <option
+                          value=""
+                          disabled
+                          selected={
+                            !!inputValueForAdd?.CourseCategory === false
+                              ? true
+                              : false
+                          }
+                          hidden
+                        >
+                          Select course category
                         </option>
                         {getCourseCategory?.length > 0 &&
                           getCourseCategory?.map((item) => {
@@ -940,27 +976,28 @@ const CourseName = ({ getNewCount, title }) => {
                   </div>
                 </div>
 
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Course name
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <div>
-                      <input
-                        disabled
-                        type="text"
-                        className={`form-control form-control-lg form-control-solid `}
-                        id="CourseName"
-                        name="CourseName"
-                        value={inputValueForAdd.CourseName}
-                        onChange={(e) => {
-                          handleOnChnageAdd(e);
-                        }}
-                      />
+                {isEditPopUp && (
+                  <div className="form-group row">
+                    <label className="col-xl-3 col-lg-3 col-form-label">
+                      Course name
+                    </label>
+                    <div className="col-lg-9 col-xl-6">
+                      <div>
+                        <input
+                          disabled
+                          type="text"
+                          className={`form-control form-control-lg form-control-solid `}
+                          id="CourseName"
+                          name="CourseName"
+                          value={inputValueForAdd.CourseName}
+                          onChange={(e) => {
+                            handleOnChnageAdd(e);
+                          }}
+                        />
+                      </div>
                     </div>
-
                   </div>
-                </div>
+                )}
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -994,8 +1031,6 @@ const CourseName = ({ getNewCount, title }) => {
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter duration(in days)
-
-
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -1025,8 +1060,6 @@ const CourseName = ({ getNewCount, title }) => {
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter duration (in Hours)
-
-
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -1085,8 +1118,6 @@ const CourseName = ({ getNewCount, title }) => {
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enrolment prerequisites( Documents Required)
-
-
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -1203,8 +1234,6 @@ const CourseName = ({ getNewCount, title }) => {
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Fees(INR)
-
-
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>

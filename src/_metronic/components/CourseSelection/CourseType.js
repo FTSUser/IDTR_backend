@@ -180,9 +180,6 @@ const CourseType = ({ getNewCount, title }) => {
       formIsValid = false;
       errorsForAdd["VehicleCategory"] = "*Please Enter Vehicle Category!";
     }
-
-
-
     setErrorsForAdd(errorsForAdd);
     return formIsValid;
   };

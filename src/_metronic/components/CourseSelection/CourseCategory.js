@@ -57,6 +57,10 @@ const CourseCategory = ({ getNewCount, title }) => {
     document.title = "Honda | CourseCategory";
   }, []);
 
+  useEffect(() => {
+    console.log("inputValueForAdd",inputValueForAdd);
+  }, [inputValueForAdd]);
+
   const handleViewMoreClose = () => {
     setIsViewMoreAboutus(false);
     setDataViewMore({});
@@ -64,6 +68,11 @@ const CourseCategory = ({ getNewCount, title }) => {
 
   const handleOnChnageAdd = (e) => {
     const { name, value } = e.target;
+    if(name === "VehicleCategory"){
+      setInputValueForAdd({ ...inputValueForAdd, [name]: value, CourseType: ""});
+      setErrorsForAdd({ ...errorsForAdd, [name]: "" });
+      return
+    }
     setInputValueForAdd({ ...inputValueForAdd, [name]: value });
     setErrorsForAdd({ ...errorsForAdd, [name]: "" });
   };
@@ -83,6 +92,8 @@ const CourseCategory = ({ getNewCount, title }) => {
   const handleCloseShowStatus = () => {
     setShowStatus(false);
   };
+
+ 
 
   useEffect(() => {
     getAllCourseName();
@@ -182,9 +193,9 @@ const CourseCategory = ({ getNewCount, title }) => {
       formIsValid = false;
       errorsForAdd["CourseType"] = "*Please Enter CourseType!";
     }
-    if (inputValueForAdd && !inputValueForAdd.CourseType) {
+    if (inputValueForAdd && !inputValueForAdd.VehicleCategory) {
       formIsValid = false;
-      errorsForAdd["CourseType"] = "*Please Enter CourseType!";
+      errorsForAdd["VehicleCategory"] = "*Please Enter VehicleCategory!";
     }
 
     setErrorsForAdd(errorsForAdd);
@@ -727,7 +738,11 @@ const CourseCategory = ({ getNewCount, title }) => {
                           handleOnChnageAdd(e);
                         }}
                       >
-                        <option value="" disabled selected hidden>
+                        <option value="" disabled selected={
+                                  !!inputValueForAdd?.CourseType === false
+                                    ? true
+                                    : false
+                                } hidden>
                           Select Course Type
                         </option>
                         {getCourseType?.length > 0 &&

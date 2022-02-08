@@ -68,7 +68,27 @@ const TimeSlot = ({ getNewCount, title }) => {
       setInputValueForAdd({ ...inputValueForAdd, [name]: val });
       setErrorsForAdd({ ...errorsForAdd, [name]: "" });
     } else {
-      const { name, value } = e.target;
+      // const { name, value } = e.target;
+      if (name === "VehicleCategory") {
+        setInputValueForAdd({
+          ...inputValueForAdd,
+          [name]: value,
+          CourseType: "",
+          CourseName: "",
+        });
+        setErrorsForAdd({ ...errorsForAdd, [name]: "" });
+        return;
+      }
+      if (name === "CourseType") {
+        setInputValueForAdd({
+          ...inputValueForAdd,
+          [name]: value,
+          CourseName: "",
+        });
+        setErrorsForAdd({ ...errorsForAdd, [name]: "" });
+        return;
+      }
+      
       setInputValueForAdd({ ...inputValueForAdd, [name]: value });
       setErrorsForAdd({ ...errorsForAdd, [name]: "" });
     }
@@ -846,7 +866,11 @@ const TimeSlot = ({ getNewCount, title }) => {
                           handleOnChnageAdd(e);
                         }}
                       >
-                        <option value="" disabled selected hidden>
+                        <option value="" disabled selected={
+                            !!inputValueForAdd?.CourseType === false
+                              ? true
+                              : false
+                          } hidden>
                           Select Course Type
                         </option>
                         {getCourseType?.length > 0 &&
@@ -895,7 +919,11 @@ const TimeSlot = ({ getNewCount, title }) => {
                           handleOnChnageAdd(e);
                         }}
                       >
-                        <option value="" disabled selected hidden>
+                        <option value="" disabled selected={
+                            !!inputValueForAdd?.CourseName === false
+                              ? true
+                              : false
+                          } hidden>
                           Select Course Type
                         </option>
                         {selectedCourseName?.length > 0 &&
