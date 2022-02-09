@@ -14,7 +14,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Dialog from "@material-ui/core/Dialog";
 import S3 from "react-aws-s3";
-import Select from 'react-select';
+import Select from "react-select";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 import List from "@material-ui/core/List";
@@ -36,7 +36,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { Modal } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 
-
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -48,8 +47,6 @@ const User = ({ getNewCount, title }) => {
   const [dataViewMore, setDataViewMore] = useState({});
   const [isViewMoreUser, setIsViewMoreUser] = useState(false);
 
-
-
   //new data
 
   const [inputValue, setInputValue] = useState({});
@@ -60,8 +57,7 @@ const User = ({ getNewCount, title }) => {
   const [setStartValue, startValue] = useState("");
   const [allRegisterUserExcel, setAllRegisterUserExcel] = useState([]);
   const [dataCSV, setDataCSV] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false)
-
+  const [modalOpen, setModalOpen] = useState(false);
 
   const [tableFilterData, setTableFilterData] = useState({});
   const [isAddAnnouncement, setIsAddAnnouncement] = useState(false);
@@ -88,7 +84,6 @@ const User = ({ getNewCount, title }) => {
     document.title = "Honda | User";
   }, []);
 
-
   // const startValue = new Date(
   //   new Date().getFullYear(),
   //   new Date().getMonth(),
@@ -105,12 +100,10 @@ const User = ({ getNewCount, title }) => {
   const [getCourseNameByID, setgetNameByID] = useState();
   const [getSeat, setSeat] = useState([]);
 
-
-
   const userInfo = JSON.parse(localStorage.getItem("userData"));
   const [VehicalCategoryData, setVehicalCategoryData] = useState("");
   const [TrainningDate, setTrainningDate] = useState("");
-  const [CourceTypeData, setCourceTypeData] = useState('');
+  const [CourceTypeData, setCourceTypeData] = useState("");
   const [price, setPrice] = useState("");
   const [cnid, setCNID] = useState("");
   const [alertForSlot, setAlertForSlot] = useState();
@@ -118,129 +111,117 @@ const User = ({ getNewCount, title }) => {
   const [defaultValue, setdefaultValue] = useState({
     vehicleCategory: null,
     courseType: null,
-    courseCategory: null
-  })
-
+    courseCategory: null,
+  });
 
   const [submitpayment, setSubmitPayment] = useState(false);
   const [paymentId, setPaymentId] = useState();
 
-
-
-
   const [CourceType, setCourceType] = useState("");
   const [updateCall, setUpdateCall] = useState(false);
 
-
-
   const [typeTrueFalseform, settypeTrueFalseform] = useState(false);
-  const [errorShow, seterrorShow] = useState('');
+  const [errorShow, seterrorShow] = useState("");
 
   const [tab, setTab] = useState("course");
 
   const [formdata, setFormData] = useState({
-
-    vehicleCategory: '',
-    courseType: '',
-    courseName: '',
-    courseCategory: '',
-    firstname: '',
-    middlename: '',
-    lastname: '',
-    dateofCourse: '',
-    DateofBirth: '',
-    qualification: '',
-    gender: '',
-    address: '',
-    state: '',
-    driverlicense: '',
-    district: '',
-    city: '',
-    email: '',
-    phone: '',
-    pin: '',
-    license: '',
-    issueDate: '',
-    validDate: '',
-    authority: '',
+    vehicleCategory: "",
+    courseType: "",
+    courseName: "",
+    courseCategory: "",
+    firstname: "",
+    middlename: "",
+    lastname: "",
+    dateofCourse: "",
+    DateofBirth: "",
+    qualification: "",
+    gender: "",
+    address: "",
+    state: "",
+    driverlicense: "",
+    district: "",
+    city: "",
+    email: "",
+    phone: "",
+    pin: "",
+    license: "",
+    issueDate: "",
+    validDate: "",
+    authority: "",
     passport: null,
     driviniglicencephoto: null,
     idProof: null,
     mediacalCertificate: null,
-    bloodgroup: '',
-    preferdate: '',
-    trainddateid: '',
-    sloatId: '',
-    authoritycity: '',
-    authoritydistrict: '',
-    type: ''
-  })
+    bloodgroup: "",
+    preferdate: "",
+    trainddateid: "",
+    sloatId: "",
+    authoritycity: "",
+    authoritydistrict: "",
+    type: "",
+  });
 
-
-  useEffect(() => {
-  }, [tableFilterData])
+  useEffect(() => {}, [tableFilterData]);
 
   const handlePaymentClose = () => {
-    setIsPaymentPopUp(false)
-    setDataForPayment([])
-  }
+    setIsPaymentPopUp(false);
+    setDataForPayment([]);
+  };
 
   const handleAddAdminClose = () => {
-    setSeat([])
-    setFormData(
-      {
-        vehicleCategory: '',
-        courseType: '',
-        courseName: '',
-        courseCategory:'',
-        firstname: '',
-        middlename: '',
-        lastname: '',
-        dateofCourse: '',
-        DateofBirth: '',
-        qualification: '',
-        gender: '',
-        address: '',
-        state: '',
-        driverlicense: '',
-        district: '',
-        city: '',
-        email: '',
-        phone: '',
-        pin: '',
-        license: '',
-        issueDate: '',
-        validDate: '',
-        authority: '',
-        passport: null,
-        driviniglicencephoto: null,
-        idProof: null,
-        mediacalCertificate: null,
-        bloodgroup: '',
-        preferdate: '',
-        trainddateid: '',
-        sloatId: '',
-        authoritycity: '',
-        authoritydistrict: '',
-        type: ''
-      }
-    )
-    setEditMode(false)
+    setSeat([]);
+    setFormData({
+      vehicleCategory: "",
+      courseType: "",
+      courseName: "",
+      courseCategory: "",
+      firstname: "",
+      middlename: "",
+      lastname: "",
+      dateofCourse: "",
+      DateofBirth: "",
+      qualification: "",
+      gender: "",
+      address: "",
+      state: "",
+      driverlicense: "",
+      district: "",
+      city: "",
+      email: "",
+      phone: "",
+      pin: "",
+      license: "",
+      issueDate: "",
+      validDate: "",
+      authority: "",
+      passport: null,
+      driviniglicencephoto: null,
+      idProof: null,
+      mediacalCertificate: null,
+      bloodgroup: "",
+      preferdate: "",
+      trainddateid: "",
+      sloatId: "",
+      authoritycity: "",
+      authoritydistrict: "",
+      type: "",
+    });
+    setEditMode(false);
     setInputValue({});
-    setCourceTypeData('')
-    setgetNameByID()
-    setTab("course")
+    setCourceTypeData("");
+    setgetNameByID();
+    setTab("course");
     setdefaultValue({
       vehicleCategory: null,
       courseType: null,
-      courseCategory: null
-    })
+      courseCategory: null,
+    });
     setIsAddAnnouncement(false);
   };
   const onChangeDiscloser = (e) => {
-    setdicloser(e)
-
-  }
+    setdicloser(e);
+  };
   const handleSetDateData = (date) => {
     setTableFilterData([]);
     if (!date) {
@@ -254,7 +235,7 @@ const User = ({ getNewCount, title }) => {
           return data;
         }
       });
-      setTableFilterData(newData)
+      setTableFilterData(newData);
     }
   };
 
@@ -279,19 +260,18 @@ const User = ({ getNewCount, title }) => {
     }
   }, [updateCall]);
 
-
   //end test
 
   useEffect(() => {
     getAllUser();
   }, [page, countPerPage]);
 
-
-
   const getAllUser = async () => {
     setIsLoaderVisible(true);
-    // if (!search) { 
-    await ApiGet(`register/getAllRegister?search=${search}&page=${page}&limit=${countPerPage}`)
+    // if (!search) {
+    await ApiGet(
+      `register/getAllRegister?search=${search}&page=${page}&limit=${countPerPage}`
+    )
       .then((res) => {
         setIsLoaderVisible(false);
         setFilteredUser(res?.data?.payload?.Question);
@@ -299,13 +279,12 @@ const User = ({ getNewCount, title }) => {
         setCount(res?.data?.payload?.count);
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
+        toast.error(err?.response?.data?.message);
       });
     // }
   };
 
-  useEffect(() => {
-  }, [inputValue]);
+  useEffect(() => {}, [inputValue]);
 
   let i = 0;
   const columns = [
@@ -379,84 +358,95 @@ const User = ({ getNewCount, title }) => {
                   setDataForPayment(row);
                 }}
               >
-                {row?.isPaymentDone === false ?
-
-                  <img src="media/allIconsForTable/rs.png" /> : ""}
-
+                {row?.isPaymentDone === false ? (
+                  <img src="media/allIconsForTable/rs.png" />
+                ) : (
+                  ""
+                )}
               </div>
             </Tooltip>
-            <div
-              className="cursor-pointer pl-2"
-            >
-              {!row?.uid ?
+            <div className="cursor-pointer pl-2">
+              {!row?.uid ? (
                 <>
                   <Tooltip title="Edit" arrow>
-                    <CreateIcon onClick={() => {
-                      setTab('course')
-                      setIsAddAnnouncement(true);
-                      setEditMode(true)
-                      let index = getAllVehicalData?.Question?.findIndex((e) => e._id === row?.vcid)
-                      let vehical;
-                      if (index !== -1) {
-                        vehical = { label: getAllVehicalData?.Question[index].vehicleCategory, value: getAllVehicalData?.Question[index]._id }
-                        setdefaultValue(data => ({ ...data, vehicleCategory: vehical }))
-                      }
-                      setVehicalCategoryData(row?.vcid)
-                      getAllCourseTypeDataEdit(row?.vcid, row?.ctid)
-                      getAllCourseNameEdit(row?.ctid, row?.vcid, row?.cnid)
-                      setCNID(row?.cnid)
-                      setFormData({
-                        _id: row?._id,
-                        vehicleCategory: row?.vcid,
-                        courseType: row?.ctid,
-                        courseName: row?.cnid,
-                        courseCategory: row?.ccid,
-                        firstname: row?.fname,
-                        middlename: row?.mname,
-                        lastname: row?.lname,
-                        dateofCourse: row?.dateofCourse,
-                        DateofBirth: row?.DoB,
-                        qualification: row?.qualification,
-                        gender: row?.gender,
-                        address: row?.address,
-                        state: row?.state,
-                        driverlicense: row?.drivingLicenseNumber,
-                        district: row?.district,
-                        city: row?.city,
-                        email: row?.email,
-                        phone: row?.phone,
-                        pin: row?.pincode,
-                        license: row?.lcid,
-                        issueDate: row?.issueDate,
-                        validDate: row?.validTill,
-                        authority: row?.Authority,
-                        passport: row?.passportPhoto,
-                        driviniglicencephoto: row?.drivingLicense,
-                        idProof: row?.IDproof,
-                        mediacalCertificate: row?.medicalCertificate,
-                        bloodgroup: row?.bloodGroup,
-                        preferdate: row?.dateofCourse,
-                        trainddateid: row?.trainddateid,
-                        sloatId: row?.tdid,
-                        authoritycity: row?.authoritycity,
-                        authoritydistrict: row?.authoritydistrict,
-                        type: row?.type
-                      })
-                      getTrainignDateEditData(row?.dateofCourse, row?.cnid)
-
-                    }} />
+                    <CreateIcon
+                      onClick={() => {
+                        setTab("course");
+                        setIsAddAnnouncement(true);
+                        setEditMode(true);
+                        let index = getAllVehicalData?.Question?.findIndex(
+                          (e) => e._id === row?.vcid
+                        );
+                        let vehical;
+                        if (index !== -1) {
+                          vehical = {
+                            label:
+                              getAllVehicalData?.Question[index]
+                                .vehicleCategory,
+                            value: getAllVehicalData?.Question[index]._id,
+                          };
+                          setdefaultValue((data) => ({
+                            ...data,
+                            vehicleCategory: vehical,
+                          }));
+                        }
+                        setVehicalCategoryData(row?.vcid);
+                        getAllCourseTypeDataEdit(row?.vcid, row?.ctid);
+                        getAllCourseNameEdit(row?.ctid, row?.vcid, row?.cnid);
+                        setCNID(row?.cnid);
+                        setFormData({
+                          _id: row?._id,
+                          vehicleCategory: row?.vcid,
+                          courseType: row?.ctid,
+                          courseName: row?.cnid,
+                          courseCategory: row?.ccid,
+                          firstname: row?.fname,
+                          middlename: row?.mname,
+                          lastname: row?.lname,
+                          dateofCourse: row?.dateofCourse,
+                          DateofBirth: row?.DoB,
+                          qualification: row?.qualification,
+                          gender: row?.gender,
+                          address: row?.address,
+                          state: row?.state,
+                          driverlicense: row?.drivingLicenseNumber,
+                          district: row?.district,
+                          city: row?.city,
+                          email: row?.email,
+                          phone: row?.phone,
+                          pin: row?.pincode,
+                          license: row?.lcid,
+                          issueDate: row?.issueDate,
+                          validDate: row?.validTill,
+                          authority: row?.Authority,
+                          passport: row?.passportPhoto,
+                          driviniglicencephoto: row?.drivingLicense,
+                          idProof: row?.IDproof,
+                          mediacalCertificate: row?.medicalCertificate,
+                          bloodgroup: row?.bloodGroup,
+                          preferdate: row?.dateofCourse,
+                          trainddateid: row?.trainddateid,
+                          sloatId: row?.tdid,
+                          authoritycity: row?.authoritycity,
+                          authoritydistrict: row?.authoritydistrict,
+                          type: row?.type,
+                        });
+                        getTrainignDateEditData(row?.dateofCourse, row?.cnid);
+                      }}
+                    />
                   </Tooltip>
                   <Tooltip title="Delete" arrow>
-                    <DeleteIcon onClick={() => {
-                      setShow(true);
-                      setIdForDeleteAnnouncement(row?._id);
-                    }} />
+                    <DeleteIcon
+                      onClick={() => {
+                        setShow(true);
+                        setIdForDeleteAnnouncement(row?._id);
+                      }}
+                    />
                   </Tooltip>
                 </>
-                :
+              ) : (
                 ""
-              }
-
+              )}
             </div>
           </>
         );
@@ -510,7 +500,7 @@ const User = ({ getNewCount, title }) => {
         setAllRegisterUserExcel(res?.data?.payload?.Question);
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
+        toast.error(err?.response?.data?.message);
       });
     // }
   };
@@ -541,13 +531,20 @@ const User = ({ getNewCount, title }) => {
           Authoritycity: registerUser?.authoritycity,
           Authoritydistrict: registerUser?.authoritydistrict,
           PaymentType: registerUser?.type,
-          dateofMakePayment: registerUser?.dateofMakePayment === null ? "Payment Panding" : registerUser?.dateofMakePayment,
-          IsPaymentDone: registerUser?.isPaymentDone === null ? "Payment Panding" : registerUser?.isPaymentDone,
-          paymentId: registerUser?.paymentId === null ? "Payment Panding" : registerUser?.paymentId,
+          dateofMakePayment:
+            registerUser?.dateofMakePayment === null
+              ? "Payment Panding"
+              : registerUser?.dateofMakePayment,
+          IsPaymentDone:
+            registerUser?.isPaymentDone === null
+              ? "Payment Panding"
+              : registerUser?.isPaymentDone,
+          paymentId:
+            registerUser?.paymentId === null
+              ? "Payment Panding"
+              : registerUser?.paymentId,
           lcid: registerUser?.lcid,
           IssueDate: moment(registerUser?.issueDate).format("ll"),
-
-
 
           //new test
           // tdid: "61dfe45964926806043a1ea5",
@@ -558,193 +555,197 @@ const User = ({ getNewCount, title }) => {
     }
   }, [allRegisterUserExcel]);
 
-
-
-
   const districts = [
     {
-      "name": "Ambala"
-    }, {
-      "name": "Bhiwani"
-    }, { "name": "Charkhi Dadri" },
+      name: "Ambala",
+    },
     {
-      "name": "Faridabad"
-    }, {
-      "name": "Fatehabad"
-    }, {
-      "name": "Gurgaon"
-    }, {
-      "name": "Hisar"
-    }, {
-      "name": "Jhajjar"
-    }, {
-      "name": "Jind"
-    }, {
-      "name": "Kaithal"
-    }, {
-      "name": "Karnal"
-    }, {
-      "name": "Kurukshetra"
-    }, {
-      "name": "Mahendragarh"
-    }, {
-      "name": "Mewat"
-    }, {
-      "name": "Palwal"
-    }, {
-      "name": "Panchkula"
-    }, {
-      "name": "Panipat"
-    }, {
-      "name": "Rewari"
-    }, {
-      "name": "Rohtak"
-    }, {
-      "name": "Sirsa"
-    }, {
-      "name": "Sonipat"
-    }, {
-      "name": "Yamunanagar"
-    },];
+      name: "Bhiwani",
+    },
+    { name: "Charkhi Dadri" },
+    {
+      name: "Faridabad",
+    },
+    {
+      name: "Fatehabad",
+    },
+    {
+      name: "Gurgaon",
+    },
+    {
+      name: "Hisar",
+    },
+    {
+      name: "Jhajjar",
+    },
+    {
+      name: "Jind",
+    },
+    {
+      name: "Kaithal",
+    },
+    {
+      name: "Karnal",
+    },
+    {
+      name: "Kurukshetra",
+    },
+    {
+      name: "Mahendragarh",
+    },
+    {
+      name: "Mewat",
+    },
+    {
+      name: "Palwal",
+    },
+    {
+      name: "Panchkula",
+    },
+    {
+      name: "Panipat",
+    },
+    {
+      name: "Rewari",
+    },
+    {
+      name: "Rohtak",
+    },
+    {
+      name: "Sirsa",
+    },
+    {
+      name: "Sonipat",
+    },
+    {
+      name: "Yamunanagar",
+    },
+  ];
 
   const city = [
-
-    { "name": "Ambala", },
-    { "name": "Asankhurd", },
-    { "name": "Assandh", },
-    { "name": "Ateli", },
-    { "name": "Babiyal", },
-    { "name": "Bahadurgarh", },
-    { "name": "Barwala", },
-    { "name": "Bhiwani", },
-    { "name": "Charkhi Dadri", },
-    { "name": "Cheeka", },
-    { "name": "Ellenabad 2", },
-    { "name": "Faridabad", },
-    { "name": "Fatehabad", },
-    { "name": "Ganaur", },
-    { "name": "Gharaunda", },
-    { "name": "Gohana", },
-    { "name": "Gurgaon", },
-    { "name": "Haibat(Yamuna Nagar)", },
-    { "name": "Hansi", },
-    { "name": "Hisar", },
-    { "name": "Hodal", },
-    { "name": "Jhajjar", },
-    { "name": "Jind" },
-    { "name": "Kaithal", },
-    { "name": "Kalan Wali", },
-    { "name": "Kalka", },
-    { "name": "Karnal", },
-    { "name": "Ladwa", },
-    { "name": "Mahendragarh", },
-    { "name": "Mandi Dabwali", },
-    { "name": "Narnaul", },
-    { "name": "Narwana", },
-    { "name": "Palwal", },
-    { "name": "Panchkula", },
-    { "name": "Panipat", },
-    { "name": "Pehowa", },
-    { "name": "Pinjore", },
-    { "name": "Rania", },
-    { "name": "Ratia", },
-    { "name": "Rewari", },
-    { "name": "Rohtak", },
-    { "name": "Safidon", },
-    { "name": "Samalkha", },
-    { "name": "Shahbad", },
-    { "name": "Sirsa", },
-    { "name": "Sohna", },
-    { "name": "Sonipat", },
-    { "name": "Taraori", },
-    { "name": "Thanesar", },
-    { "name": "Tohana", },
-    { "name": "Yamunanagar", },
+    { name: "Ambala" },
+    { name: "Asankhurd" },
+    { name: "Assandh" },
+    { name: "Ateli" },
+    { name: "Babiyal" },
+    { name: "Bahadurgarh" },
+    { name: "Barwala" },
+    { name: "Bhiwani" },
+    { name: "Charkhi Dadri" },
+    { name: "Cheeka" },
+    { name: "Ellenabad 2" },
+    { name: "Faridabad" },
+    { name: "Fatehabad" },
+    { name: "Ganaur" },
+    { name: "Gharaunda" },
+    { name: "Gohana" },
+    { name: "Gurgaon" },
+    { name: "Haibat(Yamuna Nagar)" },
+    { name: "Hansi" },
+    { name: "Hisar" },
+    { name: "Hodal" },
+    { name: "Jhajjar" },
+    { name: "Jind" },
+    { name: "Kaithal" },
+    { name: "Kalan Wali" },
+    { name: "Kalka" },
+    { name: "Karnal" },
+    { name: "Ladwa" },
+    { name: "Mahendragarh" },
+    { name: "Mandi Dabwali" },
+    { name: "Narnaul" },
+    { name: "Narwana" },
+    { name: "Palwal" },
+    { name: "Panchkula" },
+    { name: "Panipat" },
+    { name: "Pehowa" },
+    { name: "Pinjore" },
+    { name: "Rania" },
+    { name: "Ratia" },
+    { name: "Rewari" },
+    { name: "Rohtak" },
+    { name: "Safidon" },
+    { name: "Samalkha" },
+    { name: "Shahbad" },
+    { name: "Sirsa" },
+    { name: "Sohna" },
+    { name: "Sonipat" },
+    { name: "Taraori" },
+    { name: "Thanesar" },
+    { name: "Tohana" },
+    { name: "Yamunanagar" },
   ];
-  const state = [
-    { "name": "Haryana", },
-
-  ];
+  const state = [{ name: "Haryana" }];
   const qualification = [
-    { "name": "10 Standard Graduate" },
-    { "name": "12th Standard Graduate" },
-    { "name": "Undergraduate" },
-    { "name": "Postgraduate" },
-
+    { name: "10 Standard Graduate" },
+    { name: "12th Standard Graduate" },
+    { name: "Undergraduate" },
+    { name: "Postgraduate" },
   ];
 
   const bloodgroupData = [
-    { "name": "A+" },
-    { "name": "A-" },
-    { "name": "B+" },
-    { "name": "B-" },
-    { "name": "AB+" },
-    { "name": "AB-" },
-    { "name": "O+" },
-    { "name": "O-" },
-    { "name": "NA" },
-
-
-  ]
+    { name: "A+" },
+    { name: "A-" },
+    { name: "B+" },
+    { name: "B-" },
+    { name: "AB+" },
+    { name: "AB-" },
+    { name: "O+" },
+    { name: "O-" },
+    { name: "NA" },
+  ];
   const gender = [
-    { "name": "Male" },
-    { "name": "Female" },
-    { "name": "Transgender" },
-
-
-  ]
+    { name: "Male" },
+    { name: "Female" },
+    { name: "Transgender" },
+  ];
   const licenseCategoryData = [
-    { "name": "Learner" },
-    { "name": "Permanent" },
-    { "name": "Renewal" },
-    { "name": "NA" },
-  ]
-  const licenseAuthorityData = [
-    { "name": "Haryana" },
-
-  ]
+    { name: "Learner" },
+    { name: "Permanent" },
+    { name: "Renewal" },
+    { name: "NA" },
+  ];
+  const licenseAuthorityData = [{ name: "Haryana" }];
   const history = useHistory();
 
   const register = () => {
     const data = {
-      "vcid": formdata.vehicleCategory,
-      "ctid": formdata.courseType,
-      "cnid": formdata.courseName,
-      "ccid": formdata.courseCategory,
-      "lcid": formdata.license,
-      "dateofCourse": formdata.preferdate,
-      "drivingLicenseNumber": formdata.driverlicense,
-      "fname": formdata.firstname,
-      "mname": formdata.middlename,
-      "lname": formdata.lastname,
-      "DoB": formdata.DateofBirth,
-      "qualification": formdata.qualification,
-      "gender": formdata.gender,
-      "address": formdata.address,
-      "state": "Haryana",
-      "city": formdata.city,
-      "district": formdata.district,
-      "pincode": formdata.pin,
-      "email": formdata.email,
-      "phone": formdata.phone,
-      "permanentDLnumber": formdata.driverlicense,
-      "issueDate": formdata.issueDate,
-      "validTill": formdata.validDate,
-      "Authority": "Haryana",
-      "passportPhoto": formdata.passport,
-      "drivingLicense": formdata.driviniglicencephoto,
-      "IDproof": formdata.idProof,
-      "medicalCertificate": formdata.mediacalCertificate,
-      "bloodGroup": formdata.bloodgroup,
-      "paymentId": paymentId,
-      "uid": userInfo?.payload?.user?._id,
-      "tdid": formdata.sloatId,
-      "authoritycity": formdata.authoritycity,
-      "authoritydistrict": formdata.authoritydistrict,
-      "type": formdata.type
-
-
-    }
+      vcid: formdata.vehicleCategory,
+      ctid: formdata.courseType,
+      cnid: formdata.courseName,
+      ccid: formdata.courseCategory,
+      lcid: formdata.license,
+      dateofCourse: formdata.preferdate,
+      drivingLicenseNumber: formdata.driverlicense,
+      fname: formdata.firstname,
+      mname: formdata.middlename,
+      lname: formdata.lastname,
+      DoB: formdata.DateofBirth,
+      qualification: formdata.qualification,
+      gender: formdata.gender,
+      address: formdata.address,
+      state: "Haryana",
+      city: formdata.city,
+      district: formdata.district,
+      pincode: formdata.pin,
+      email: formdata.email,
+      phone: formdata.phone,
+      permanentDLnumber: formdata.driverlicense,
+      issueDate: formdata.issueDate,
+      validTill: formdata.validDate,
+      Authority: "Haryana",
+      passportPhoto: formdata.passport,
+      drivingLicense: formdata.driviniglicencephoto,
+      IDproof: formdata.idProof,
+      medicalCertificate: formdata.mediacalCertificate,
+      bloodGroup: formdata.bloodgroup,
+      paymentId: paymentId,
+      uid: userInfo?.payload?.user?._id,
+      tdid: formdata.sloatId,
+      authoritycity: formdata.authoritycity,
+      authoritydistrict: formdata.authoritydistrict,
+      type: formdata.type,
+    };
     ApiPost("register/addRegister", data)
       .then((res) => {
         if (res?.status == 200) {
@@ -757,79 +758,76 @@ const User = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
+        toast.error(err?.response?.data?.message);
       });
-  }
+  };
 
   const handleOfflinePayment = () => {
     const data = {
       receiptDate: new Date(),
       receiptNumber: dataForPayment?._id,
-      isPaymentDone: true
-    }
+      isPaymentDone: true,
+    };
     ApiPut("register/offlinePayment", data)
       .then((res) => {
         if (res?.status == 200) {
-          setIsPaymentPopUp(false)
+          setIsPaymentPopUp(false);
           toast.success(res?.data?.message);
-          setDataForPayment([])
+          setDataForPayment([]);
           getAllUser();
         } else {
           toast.error(res?.data?.message);
         }
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
+        toast.error(err?.response?.data?.message);
       });
-  }
-
+  };
 
   const updateData = () => {
     const data = {
-      "vcid": formdata.vehicleCategory,
-      "ctid": formdata.courseType,
-      "cnid": formdata.courseName,
-      "ccid": formdata.courseCategory,
-      "lcid": formdata.license,
-      "dateofCourse": formdata.preferdate,
-      "drivingLicenseNumber": formdata.driverlicense,
-      "fname": formdata.firstname,
-      "mname": formdata.middlename,
-      "lname": formdata.lastname,
-      "DoB": formdata.DateofBirth,
-      "qualification": formdata.qualification,
-      "gender": formdata.gender,
-      "address": formdata.address,
-      "state": "Haryana",
-      "city": formdata.city,
-      "district": formdata.district,
-      "pincode": formdata.pin,
-      "email": formdata.email,
-      "phone": formdata.phone,
-      "permanentDLnumber": formdata.driverlicense,
-      "issueDate": formdata.issueDate,
-      "validTill": formdata.validDate,
-      "Authority": "Haryana",
-      "passportPhoto": formdata.passport,
-      "drivingLicense": formdata.driviniglicencephoto,
-      "IDproof": formdata.idProof,
-      "medicalCertificate": formdata.mediacalCertificate,
-      "bloodGroup": formdata.bloodgroup,
-      "paymentId": paymentId,
-      "uid": userInfo?.payload?.user?._id,
-      "tdid": formdata.sloatId,
-      "authoritycity": formdata.authoritycity,
-      "authoritydistrict": formdata.authoritydistrict,
-      "type": formdata.type
-
-
-    }
+      vcid: formdata.vehicleCategory,
+      ctid: formdata.courseType,
+      cnid: formdata.courseName,
+      ccid: formdata.courseCategory,
+      lcid: formdata.license,
+      dateofCourse: formdata.preferdate,
+      drivingLicenseNumber: formdata.driverlicense,
+      fname: formdata.firstname,
+      mname: formdata.middlename,
+      lname: formdata.lastname,
+      DoB: formdata.DateofBirth,
+      qualification: formdata.qualification,
+      gender: formdata.gender,
+      address: formdata.address,
+      state: "Haryana",
+      city: formdata.city,
+      district: formdata.district,
+      pincode: formdata.pin,
+      email: formdata.email,
+      phone: formdata.phone,
+      permanentDLnumber: formdata.driverlicense,
+      issueDate: formdata.issueDate,
+      validTill: formdata.validDate,
+      Authority: "Haryana",
+      passportPhoto: formdata.passport,
+      drivingLicense: formdata.driviniglicencephoto,
+      IDproof: formdata.idProof,
+      medicalCertificate: formdata.mediacalCertificate,
+      bloodGroup: formdata.bloodgroup,
+      paymentId: paymentId,
+      uid: userInfo?.payload?.user?._id,
+      tdid: formdata.sloatId,
+      authoritycity: formdata.authoritycity,
+      authoritydistrict: formdata.authoritydistrict,
+      type: formdata.type,
+    };
     ApiPut(`register/updateRegister/${formdata._id}`, data)
       .then((res) => {
         if (res?.status == 200) {
           setIsAddAnnouncement(false);
           toast.success(res?.data?.message);
-          setTab("course")
+          setTab("course");
 
           // setInputValueForAdd({});
           getAllUser();
@@ -838,26 +836,32 @@ const User = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
+        toast.error(err?.response?.data?.message);
       });
-  }
+  };
 
   const onChnageForm = (e) => {
-    setFormData((formdataAll) => { return { ...formdataAll, [e.target.name]: e.target.value } })
+    setFormData((formdataAll) => {
+      return { ...formdataAll, [e.target.name]: e.target.value };
+    });
     settypeTrueFalseform(false);
-    seterrorShow('');
-  }
+    seterrorShow("");
+  };
 
   const onChnagSelectField = (e, name) => {
-    setFormData((formdataAll) => { return { ...formdataAll, [name]: e.value } })
+    setFormData((formdataAll) => {
+      return { ...formdataAll, [name]: e.value };
+    });
     settypeTrueFalseform(false);
-    seterrorShow('');
-  }
+    seterrorShow("");
+  };
   const onChangImage = (e, name) => {
-    setFormData((formdataAll) => { return { ...formdataAll, [name]: e } })
-    settypeTrueFalseform(false)
-    seterrorShow('');
-  }
+    setFormData((formdataAll) => {
+      return { ...formdataAll, [name]: e };
+    });
+    settypeTrueFalseform(false);
+    seterrorShow("");
+  };
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -898,180 +902,148 @@ const User = ({ getNewCount, title }) => {
   };
 
   const handleOnClick = (e, key) => {
-
     e.preventDefault();
 
-
     if (key === "personal") {
-      if (formdata.vehicleCategory == '') {
-
-        seterrorShow('Vehicle Category')
-        toast.error(`Sorry! Vehicle Category must be specified`)
-        settypeTrueFalseform(true)
-      }
-      else if (formdata.courseType == '') {
-        toast.error(`Sorry! Course Type must be specified`)
-        seterrorShow('Course Type')
-        settypeTrueFalseform(true)
-      }
-      else if (formdata.courseCategory == '') {
-        toast.error(`Sorry! Course Category must be specified`)
-        seterrorShow('Course Category')
-        settypeTrueFalseform(true)
-      }
-      else if (formdata.courseName == '') {
-        toast.error(`Sorry! Course Category must be specified`)
-        seterrorShow('Course Category')
-        settypeTrueFalseform(true)
-      }
-
-      else if (formdata.license === '') {
-        toast.error(`Sorry! License Category must be specified`)
-        seterrorShow('License Category ')
-        settypeTrueFalseform(true)
-      }
-      else if (formdata.driverlicense === '') {
-        toast.error(`Sorry! Driver's License Number must be specified`)
-        seterrorShow(`Driver's License Number`)
-        settypeTrueFalseform(true)
-      }
-
-      else if (formdata.issueDate === '') {
-        toast.error(`Sorry! Issue Date must be specified`)
-        seterrorShow('Issue Date')
-        settypeTrueFalseform(true)
-      }
-      else if (formdata.validDate === '') {
-        toast.error(`Sorry! Valid Date must be specified`)
-        seterrorShow('Valid Date')
-        settypeTrueFalseform(true)
+      if (formdata.vehicleCategory == "") {
+        seterrorShow("Vehicle Category");
+        toast.error(`Sorry! Vehicle Category must be specified`);
+        settypeTrueFalseform(true);
+      } else if (formdata.courseType == "") {
+        toast.error(`Sorry! Course Type must be specified`);
+        seterrorShow("Course Type");
+        settypeTrueFalseform(true);
+      } else if (formdata.courseCategory == "") {
+        toast.error(`Sorry! Course Category must be specified`);
+        seterrorShow("Course Category");
+        settypeTrueFalseform(true);
+      } else if (formdata.courseName == "") {
+        toast.error(`Sorry! Course Category must be specified`);
+        seterrorShow("Course Category");
+        settypeTrueFalseform(true);
+      } else if (formdata.license === "") {
+        toast.error(`Sorry! License Category must be specified`);
+        seterrorShow("License Category ");
+        settypeTrueFalseform(true);
+         
+      } else if (formdata?.license != "NA" &&formdata.driverlicense === "") {
+        toast.error(`Sorry! Driver's License Number must be specified`);
+        seterrorShow(`Driver's License Number`);
+        settypeTrueFalseform(true);
+      } else if (formdata?.license != "NA" &&formdata.issueDate === "") {
+        toast.error(`Sorry! Issue Date must be specified`);
+        seterrorShow("Issue Date");
+        settypeTrueFalseform(true);
+      } else if (formdata?.license != "NA" &&formdata.validDate === "") {
+        toast.error(`Sorry! Valid Date must be specified`);
+        seterrorShow("Valid Date");
+        settypeTrueFalseform(true);
       }
       // else if (formdata.authority === '') {
       //   toast.error(`Sorry! License Authority must be specified`)
       //   seterrorShow('License Authority')
       //   settypeTrueFalseform(true)
       // }
-      else if (formdata.authoritycity === '') {
-        toast.error(`Sorry! License Authority City must be specified`)
-        seterrorShow('License Authority City')
-        settypeTrueFalseform(true)
+      else if (formdata.authoritycity === "") {
+        toast.error(`Sorry! License Authority City must be specified`);
+        seterrorShow("License Authority City");
+        settypeTrueFalseform(true);
+      } else if (formdata.authoritydistrict === "") {
+        toast.error(`Sorry! License Authority District must be specified`);
+        seterrorShow("License Authority Disctrict");
+        settypeTrueFalseform(true);
+      } else if (formdata.preferdate === "") {
+        toast.error(`Sorry! Preferred Training Date must be specified`);
+        seterrorShow("Preferred Training Date");
+        settypeTrueFalseform(true);
+      } else if (formdata.sloatId === "") {
+        toast.error(`Sorry! Slot must be specified`);
+        seterrorShow("Slot");
+        settypeTrueFalseform(true);
+      } else if (alertForSlot === 0) {
+        toast.error(`Sorry! Sloat Not Available`);
+        seterrorShow("Sloat Not Available");
+        settypeTrueFalseform(true);
+      } else {
+        setTab(key);
       }
-      else if (formdata.authoritydistrict === '') {
-        toast.error(`Sorry! License Authority District must be specified`)
-        seterrorShow('License Authority Disctrict')
-        settypeTrueFalseform(true)
-      }
-      else if (formdata.preferdate === '') {
-        toast.error(`Sorry! Preferred Training Date must be specified`)
-        seterrorShow('Preferred Training Date')
-        settypeTrueFalseform(true)
-      }
-      else if (formdata.sloatId === '') {
-        toast.error(`Sorry! Slot must be specified`)
-        seterrorShow('Slot')
-        settypeTrueFalseform(true)
-      }
-      else if (alertForSlot === 0) {
-        toast.error(`Sorry! Sloat Not Available`)
-        seterrorShow('Sloat Not Available')
-        settypeTrueFalseform(true)
-      }
-      else {
-        setTab(key)
-      }
-    }
-    else if (key === "document") {
-      if (formdata.firstname === '') {
-        toast.error(`Sorry! First name must be specified`)
-        seterrorShow('First name')
-        settypeTrueFalseform(true)
-      }
-
-      else if (formdata.DateofBirth === '') {
-        toast.error(`Sorry! Date of Birth must be specified`)
-        seterrorShow('Date of Birth')
-        settypeTrueFalseform(true)
-      }
-
-      else if (formdata.qualification === '') {
-        toast.error(`Sorry! Qualification must be specified`)
-        seterrorShow('Qualification')
-        settypeTrueFalseform(true)
-      }
-      else if (formdata.gender === '') {
-        toast.error(`Sorry! Gender must be specified`)
-        seterrorShow('Gender')
-        settypeTrueFalseform(true)
-      }
-      else if (formdata.address === '') {
-        toast.error(`Sorry! Address must be specified`)
-        seterrorShow('Address')
-        settypeTrueFalseform(true)
+    } else if (key === "document") {
+      if (formdata.firstname === "") {
+        toast.error(`Sorry! First name must be specified`);
+        seterrorShow("First name");
+        settypeTrueFalseform(true);
+      } else if (formdata.DateofBirth === "") {
+        toast.error(`Sorry! Date of Birth must be specified`);
+        seterrorShow("Date of Birth");
+        settypeTrueFalseform(true);
+      } else if (formdata.qualification === "") {
+        toast.error(`Sorry! Qualification must be specified`);
+        seterrorShow("Qualification");
+        settypeTrueFalseform(true);
+      } else if (formdata.gender === "") {
+        toast.error(`Sorry! Gender must be specified`);
+        seterrorShow("Gender");
+        settypeTrueFalseform(true);
+      } else if (formdata.address === "") {
+        toast.error(`Sorry! Address must be specified`);
+        seterrorShow("Address");
+        settypeTrueFalseform(true);
       }
       // else if (formdata.state === '') {
       //   toast.error(`Sorry! State must be specified`)
       //   seterrorShow('State')
       //   settypeTrueFalseform(true)
       // }
-      else if (formdata.district === '') {
-        toast.error(`Sorry! District must be specified`)
-        seterrorShow('District')
-        settypeTrueFalseform(true)
+      else if (formdata.district === "") {
+        toast.error(`Sorry! District must be specified`);
+        seterrorShow("District");
+        settypeTrueFalseform(true);
+      } else if (formdata.city === "") {
+        toast.error(`Sorry! City must be specified`);
+        seterrorShow("City");
+        settypeTrueFalseform(true);
+      } else if (formdata.pin === "") {
+        toast.error(`Sorry! PIN must be specified`);
+        seterrorShow("PIN");
+        settypeTrueFalseform(true);
+      } else if (formdata.phone === "") {
+        toast.error(`Sorry! Phone must be specified`);
+        seterrorShow("Phone");
+        settypeTrueFalseform(true);
+      } else if (formdata.phone.length < 10) {
+        toast.error(`Sorry! Phone Number Not Valid must be specified`);
+        seterrorShow("Phone Number Not Valid");
+        settypeTrueFalseform(true);
+      } else {
+        seterrorShow("");
+        settypeTrueFalseform(false);
+        setTab(key);
       }
-      else if (formdata.city === '') {
-        toast.error(`Sorry! City must be specified`)
-        seterrorShow('City')
-        settypeTrueFalseform(true)
-      }
-      else if (formdata.pin === '') {
-        toast.error(`Sorry! PIN must be specified`)
-        seterrorShow('PIN')
-        settypeTrueFalseform(true)
-      }
-      else if (formdata.phone === '') {
-        toast.error(`Sorry! Phone must be specified`)
-        seterrorShow('Phone')
-        settypeTrueFalseform(true)
-      }
-      else if (formdata.phone.length < 10) {
-        toast.error(`Sorry! Phone Number Not Valid must be specified`)
-        seterrorShow('Phone Number Not Valid')
-        settypeTrueFalseform(true)
-      }
-      else {
-        seterrorShow('')
-        settypeTrueFalseform(false)
-        setTab(key)
-      }
-    }
-
-    else if (key === "payment") {
-
+    } else if (key === "payment") {
       if (formdata.passport === null) {
-        toast.error("Select passport photo")
-        seterrorShow('Passport Photo')
-        settypeTrueFalseform(true)
+        toast.error("Select passport photo");
+        seterrorShow("Passport Photo");
+        settypeTrueFalseform(true);
+      } else if (formdata.driviniglicencephoto === null) {
+        toast.error("Select driving license photo");
+        seterrorShow("Driving license photo");
+        settypeTrueFalseform(true);
+      } else if (
+        typeof formdata.passport === "object" &&
+        typeof formdata.driviniglicencephoto === "object" &&
+        typeof formdata.idProof === "object" &&
+        typeof formdata.mediacalCertificate === "object"
+      ) {
+        toast.error("Please click on upload button");
+      } else {
+        seterrorShow("");
+        settypeTrueFalseform(false);
+        setTab(key);
       }
-      else if (formdata.driviniglicencephoto === null) {
-        toast.error("Select driving license photo")
-        seterrorShow('Driving license photo')
-        settypeTrueFalseform(true)
-      }
-
-      else if (typeof formdata.passport === "object" && typeof formdata.driviniglicencephoto === "object" && typeof formdata.idProof === "object" && typeof formdata.mediacalCertificate === "object") {
-        toast.error("Please click on upload button")
-      }
-      else {
-        seterrorShow('')
-        settypeTrueFalseform(false)
-        setTab(key)
-      }
-
-    }
-    else {
-      seterrorShow('')
-      settypeTrueFalseform(false)
-      setTab(key)
+    } else {
+      seterrorShow("");
+      settypeTrueFalseform(false);
+      setTab(key);
     }
   };
   // const previousClick = (e, key) => {
@@ -1080,7 +1052,6 @@ const User = ({ getNewCount, title }) => {
   //     let vehaicalId = formdata.vehicleCategory;
   //     let courseTypeId = formdata.courseType;
   //     let courseNameId = formdata.courseName;
-
 
   //     let vehical;
   //     if (index !== -1) {
@@ -1093,7 +1064,6 @@ const User = ({ getNewCount, title }) => {
   //     setTimeout(() => {
   //       setTab(key)
   //     }, 1000);
-
 
   //   } else if (key === "personal") {
   //     setTab(key)
@@ -1120,11 +1090,16 @@ const User = ({ getNewCount, title }) => {
         label: getAllVehicalData?.Question[index].vehicleCategory,
         value: getAllVehicalData?.Question[index]._id,
       };
-      setdefaultValue((data) => ({ ...data, vehicleCategory: vehical} ));
+      setdefaultValue((data) => ({ ...data, vehicleCategory: vehical }));
     }
     setVehicalCategoryData(formdata?.vehicleCategory);
     getAllCourseTypeDataEdit(vehaicalId, courseTypeId);
-    getAllCourseNameEdit(courseTypeId, vehaicalId,courseCategoryId, courseNameId);
+    getAllCourseNameEdit(
+      courseTypeId,
+      vehaicalId,
+      courseCategoryId,
+      courseNameId
+    );
     getAllCourseCategoryEdit(courseTypeId, vehaicalId, courseCategoryId);
     if (key === "course") {
       setTimeout(() => {
@@ -1139,70 +1114,79 @@ const User = ({ getNewCount, title }) => {
     }
   };
 
-
   const getAllVehicleCategory = () => {
-    ApiGet('vehicleCategory/getAllVehicleCategory?page=${page}&limit=1000',).then((res) => {
+    ApiGet(
+      "vehicleCategory/getAllVehicleCategory?page=${page}&limit=1000"
+    ).then((res) => {
       setgetAllVehicalData(res.data.payload);
-    })
-  }
+    });
+  };
   const getAllCourseType = () => {
-
-    setgetAllCourceName()
-    setgetAllCourceType()
+    setgetAllCourceName();
+    setgetAllCourceType();
     const data = {
-      vehicleCategory: VehicalCategoryData
-    }
-    ApiPost('courseType/getCoursetypeByVehiclecategory?page=${page}&limit=1000', data).then((res) => {
+      vehicleCategory: VehicalCategoryData,
+    };
+    ApiPost(
+      "courseType/getCoursetypeByVehiclecategory?page=${page}&limit=1000",
+      data
+    ).then((res) => {
       setgetAllCourceType(res.data.payload);
-    })
-  }
+    });
+  };
 
   const getCourseNames = () => {
-    ApiGet(`courseName/getCourseNameById/${cnid}`,).then((res) => {
-
+    ApiGet(`courseName/getCourseNameById/${cnid}`).then((res) => {
       setgetNameByID(res.data.payload.Property);
-
-    })
-  }
-
+    });
+  };
 
   const getAllCourseTypeDataEdit = async (dataID, cidmain) => {
-
-    setgetAllCourceName()
-    setgetAllCourceType()
+    setgetAllCourceName();
+    setgetAllCourceType();
     const data = {
-      vehicleCategory: dataID
-    }
-    ApiPost('courseType/getCoursetypeByVehiclecategory?page=${page}&limit=1000', data).then(async (res) => {
+      vehicleCategory: dataID,
+    };
+    ApiPost(
+      "courseType/getCoursetypeByVehiclecategory?page=${page}&limit=1000",
+      data
+    ).then(async (res) => {
       setgetAllCourceType(res.data.payload);
-      const dataselect = res?.data?.payload?.courseType?.filter((data) => data._id === cidmain)
+      const dataselect = res?.data?.payload?.courseType?.filter(
+        (data) => data._id === cidmain
+      );
       if (dataselect.length >= 0) {
-        setdefaultValue((valueDefult) => ({ ...valueDefult, courseType: { label: dataselect[0]?.description, value: dataselect[0]?._id } }))
+        setdefaultValue((valueDefult) => ({
+          ...valueDefult,
+          courseType: {
+            label: dataselect[0]?.description,
+            value: dataselect[0]?._id,
+          },
+        }));
       }
-    })
-  }
-
-
-
+    });
+  };
 
   useEffect(() => {
     if (cnid) {
-      getCourseNames()
+      getCourseNames();
     }
-  }, [cnid])
+  }, [cnid]);
 
   const getAllCourseName = () => {
     const data = {
       courseType: CourceTypeData,
       vehicleCategory: VehicalCategoryData,
-      courseCategory: CourceCategoryData
-    }
-    ApiPost('courseName/getCoursenameByCoursetype?page=${page}&limit=1000', data).then((res) => {
+      courseCategory: CourceCategoryData,
+    };
+    ApiPost(
+      "courseName/getCoursenameByCoursetype?page=${page}&limit=1000",
+      data
+    ).then((res) => {
       setgetAllCourceName(res.data.payload);
-
-    })
-    setUpdateCall(false)
-  }
+    });
+    setUpdateCall(false);
+  };
 
   const getAllCourseNameEdit = async (
     CourceTypeDataedit,
@@ -1213,7 +1197,7 @@ const User = ({ getNewCount, title }) => {
     const data = {
       courseType: CourceTypeDataedit,
       vehicleCategory: VehicalCategoryDataedit,
-      courseCategory:CourseCategoryDataedit,
+      courseCategory: CourseCategoryDataedit,
     };
     ApiPost(
       "courseName/getCoursenameByCoursetype?page=${page}&limit=10000",
@@ -1227,7 +1211,7 @@ const User = ({ getNewCount, title }) => {
         ...dataasd,
         courseName: {
           label: setDataMAin[0]?.courseName,
-          value: setDataMAin[0]?._id
+          value: setDataMAin[0]?._id,
         },
       }));
     });
@@ -1253,11 +1237,11 @@ const User = ({ getNewCount, title }) => {
       const setDataMAin = res?.data?.payload?.courseCategory?.filter(
         (dataMain) => dataMain._id === cId
       );
-      console.log("setDataMAin",setDataMAin);
+      console.log("setDataMAin", setDataMAin);
       setdefaultValue((dataasd) => ({
         ...dataasd,
         courseCategory: {
-          label:setDataMAin[0]?.courseCategory,
+          label: setDataMAin[0]?.courseCategory,
           value: setDataMAin[0]?._id,
         },
       }));
@@ -1272,10 +1256,9 @@ const User = ({ getNewCount, title }) => {
   }, [formdata?.courseCategory]);
   useEffect(() => {
     if (formdata.vehicleCategory) {
-      getAllCourseType()
+      getAllCourseType();
     }
-  }, [formdata?.vehicleCategory])
-
+  }, [formdata?.vehicleCategory]);
 
   useEffect(() => {
     getAllVehicleCategory();
@@ -1283,21 +1266,22 @@ const User = ({ getNewCount, title }) => {
   const getTrainignDate = () => {
     const data = {
       date: formdata.preferdate,
-      coursenameid: formdata.courseName
-    }
-    ApiGet(`trainingDate/getDate?date=${data.date}&cnid=${data.coursenameid}`,).then((res) => {
+      coursenameid: formdata.courseName,
+    };
+    ApiGet(
+      `trainingDate/getDate?date=${data.date}&cnid=${data.coursenameid}`
+    ).then((res) => {
       if (res.data.payload) {
         // setTimeout(() => {
-        setSeat(res.data.payload?.subMenu)
+        setSeat(res.data.payload?.subMenu);
         // }, 1000);
       }
-    })
-  }
+    });
+  };
 
   const handleClose = () => {
     setShow(false);
   };
-
 
   const handleDeleteAnnouncement = () => {
     ApiDelete(`register/deleteRegister/${idForDeleteAnnouncement}`)
@@ -1317,30 +1301,31 @@ const User = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
+        toast.error(err?.response?.data?.message);
       });
   };
-
 
   const getTrainignDateEditData = (preferdate, courseName) => {
     const data = {
       date: preferdate,
-      coursenameid: courseName
-    }
-    ApiGet(`trainingDate/getDate?date=${data.date}&cnid=${data.coursenameid}`,).then((res) => {
+      coursenameid: courseName,
+    };
+    ApiGet(
+      `trainingDate/getDate?date=${data.date}&cnid=${data.coursenameid}`
+    ).then((res) => {
       if (res.data.payload) {
         // setTimeout(() => {
-        setSeat(res.data.payload?.subMenu)
+        setSeat(res.data.payload?.subMenu);
         // }, 1000);
       }
-    })
-  }
+    });
+  };
 
   const checkTrainnigDate = () => {
     if (formdata.preferdate && formdata.courseName) {
-      getTrainignDate()
+      getTrainignDate();
     }
-  }
+  };
   // const disablePastDate = () => {
   //   const today = new Date();
   //   const dd = String(today.getDate() + 1).padStart(2, "0");
@@ -1352,27 +1337,37 @@ const User = ({ getNewCount, title }) => {
   const uploadCertificate = async () => {
     let urls = {};
     if (formdata.passport && formdata.driviniglicencephoto) {
-      if (formdata.passport && typeof formdata.passport !== 'string') {
+      if (formdata.passport && typeof formdata.passport !== "string") {
         let passport1 = await uploadS3bucket(formdata.passport);
-        urls = { passport: passport1, ...urls }
+        urls = { passport: passport1, ...urls };
       }
-      if (formdata.driviniglicencephoto && typeof formdata.driviniglicencephoto !== 'string') {
-        let driviniglicencephoto = await uploadS3bucket(formdata.driviniglicencephoto);
-        urls = { driviniglicencephoto: driviniglicencephoto, ...urls }
+      if (
+        formdata.driviniglicencephoto &&
+        typeof formdata.driviniglicencephoto !== "string"
+      ) {
+        let driviniglicencephoto = await uploadS3bucket(
+          formdata.driviniglicencephoto
+        );
+        urls = { driviniglicencephoto: driviniglicencephoto, ...urls };
       }
-      if (formdata.mediacalCertificate && typeof formdata.mediacalCertificate !== 'string') {
-        let mediacalCertificate = await uploadS3bucket(formdata.mediacalCertificate);
-        urls = { mediacalCertificate: mediacalCertificate, ...urls }
+      if (
+        formdata.mediacalCertificate &&
+        typeof formdata.mediacalCertificate !== "string"
+      ) {
+        let mediacalCertificate = await uploadS3bucket(
+          formdata.mediacalCertificate
+        );
+        urls = { mediacalCertificate: mediacalCertificate, ...urls };
       }
-      if (formdata.idProof && typeof formdata.idProof !== 'string') {
+      if (formdata.idProof && typeof formdata.idProof !== "string") {
         let idProof = await uploadS3bucket(formdata.idProof);
-        urls = { idProof: idProof, ...urls }
+        urls = { idProof: idProof, ...urls };
       }
-      setFormData({ ...formdata, ...urls })
+      setFormData({ ...formdata, ...urls });
     } else {
       toast.error("Please Select file before Uploading");
     }
-  }
+  };
 
   const uploadS3bucket = async (file) => {
     let config = AwsConfig;
@@ -1380,7 +1375,6 @@ const User = ({ getNewCount, title }) => {
       ...config,
       dirName: "Cerificate",
       ACL: "public-read",
-
     };
     const Reacts3Client = new S3(config);
     let urls;
@@ -1390,18 +1384,14 @@ const User = ({ getNewCount, title }) => {
     let data = await Reacts3Client.uploadFile(f, filename);
     try {
       if (data.status === 204) {
-        toast.success("Document uploaded successfully ")
+        toast.success("Document uploaded successfully ");
         urls = data.location;
-        return urls
+        return urls;
       } else {
         toast.error("Failed to upload image:", f.name);
-
       }
-    } catch (err) {
-
-    }
-  }
-
+    } catch (err) {}
+  };
 
   const handleSearch = (e) => {
     let val = e.target.value.replace(/[^\w\s]/gi, "");
@@ -1411,17 +1401,14 @@ const User = ({ getNewCount, title }) => {
   const debouncedSearchTerm = useDebounce(search, 500);
   function useDebounce(value, delay) {
     const [debouncedValue, setDebouncedValue] = useState(value);
-    useEffect(
-      () => {
-        const handler = setTimeout(() => {
-          setDebouncedValue(value);
-        }, delay);
-        return () => {
-          clearTimeout(handler);
-        };
-      },
-      [value, delay]
-    );
+    useEffect(() => {
+      const handler = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+      return () => {
+        clearTimeout(handler);
+      };
+    }, [value, delay]);
     return debouncedValue;
   }
 
@@ -1476,9 +1463,7 @@ const User = ({ getNewCount, title }) => {
               <Modal.Header closeButton>
                 <Modal.Title className="text-danger">Alert!</Modal.Title>
               </Modal.Header>
-              <Modal.Body>
-                Are You Sure To Want To delete this User
-              </Modal.Body>
+              <Modal.Body>Are You Sure To Want To delete this User</Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                   cancel
@@ -1581,355 +1566,425 @@ const User = ({ getNewCount, title }) => {
             {isAddAnnouncement === true ? (
               <div className="register-page-alignment ">
                 <div className="container">
-                  <div className="breadcrumbs-alignment">
-
-                  </div>
+                  <div className="breadcrumbs-alignment"></div>
                   <div className="page-title-alignment">
-                    <h1>
-                      Driver Training Course Registration Portal
-                    </h1>
+                    <h1>Driver Training Course Registration Portal</h1>
                   </div>
                   <div className="tab-design">
                     <ul>
-                      <li
-                        className={tab === 'course' && "tab-active"}
-
-                      >
+                      <li className={tab === "course" && "tab-active"}>
                         Course Selection
                       </li>
-                      <li
-                        className={tab === 'personal' && "tab-active"}
-
-                      >
+                      <li className={tab === "personal" && "tab-active"}>
                         Personal Information
                       </li>
-                      <li
-                        className={tab === 'document' && "tab-active"}
-
-                      >
+                      <li className={tab === "document" && "tab-active"}>
                         Document Upload
                       </li>
-                      <li
-                        className={tab === 'payment' && "tab-active"}
-
-                      >
+                      <li className={tab === "payment" && "tab-active"}>
                         Payment
                       </li>
                     </ul>
                   </div>
-                  {tab === 'course' && (
+                  {tab === "course" && (
                     <div className="tab-details-alignment">
                       <div className="tab-details-title">
                         <h2>Course Selection</h2>
                       </div>
                       <div className="register-grid">
                         <div className="register-grid-items12">
-                          <label>Vehicle Category<span>*</span></label>
+                          <label>
+                            Vehicle Category<span>*</span>
+                          </label>
                           <Select
                             // styles={colourStyles}
                             // isClearable
-                            options={getAllVehicalData?.Question?.map(e => ({ label: e.vehicleCategory, value: e._id }))}
-                            name='vehicleCategory'
+                            options={getAllVehicalData?.Question?.map((e) => ({
+                              label: e.vehicleCategory,
+                              value: e._id,
+                            }))}
+                            name="vehicleCategory"
                             onChange={(e) => {
-                              setCourceTypeData('');
-                              setCourceType('');
-                              onChnagSelectField(e, 'vehicleCategory')
-                              setVehicalCategoryData(e.value)
+                              setCourceTypeData("");
+                              setCourceType("");
+                              onChnagSelectField(e, "vehicleCategory");
+                              setVehicalCategoryData(e.value);
                             }}
                             defaultValue={defaultValue.vehicleCategory}
                           />
                         </div>
 
                         <div className="register-grid-items12">
-                          <label>Course Type<span>*</span></label>
+                          <label>
+                            Course Type<span>*</span>
+                          </label>
                           {(editMode ? defaultValue.courseType : true) && (
                             <Select
-                              options={getAllCourceType?.courseType?.map(e => ({ label: e.courseType, value: e._id }))}
-                              name='courseType'
+                              options={getAllCourceType?.courseType?.map(
+                                (e) => ({ label: e.courseType, value: e._id })
+                              )}
+                              name="courseType"
                               onChange={(e) => {
-                                setCourceType('')
-                                onChnagSelectField(e, 'courseType')
+                                setCourceType("");
+                                onChnagSelectField(e, "courseType");
                                 setCourceTypeData(e.value);
-                                setUpdateCall(true)
+                                setUpdateCall(true);
                               }}
-                              defaultValue={defaultValue.courseType !== null && defaultValue.courseType}
+                              defaultValue={
+                                defaultValue.courseType !== null &&
+                                defaultValue.courseType
+                              }
                             />
                           )}
-
-
-
                         </div>
 
                         {/* for course category test*/}
 
-                <div className="register-grid-items12 ">
-                  <label>
-                    Course Category<span>*</span>
-                  </label>
-                  <Select
-                    // isClearable
-                    options={getAllCourceCategory?.courseCategory?.map((e) => ({
-                      label: e.courseCategory,
-                      value: e._id,
-                    }))}
-                    name="courseCategory"
-                    onChange={(e) => {
-                      setCourceType(e.value);
-                      setCourceCategoryData(e.value)
-                      if (e?.value) {
-                        let index =
-                          getAllCourceCategory?.courseCategory?.findIndex(
-                            (o) => o?._id === e?.value
-                          );
-                        
-                      }
-                      onChnagSelectField(e, "courseCategory");
-                    }}
-                    defaultValue={
-                      defaultValue.courseCategory && defaultValue.courseCategory
-                    }
-                  />
-                </div>
+                        <div className="register-grid-items12 ">
+                          <label>
+                            Course Category<span>*</span>
+                          </label>
+                          <Select
+                            // isClearable
+                            options={getAllCourceCategory?.courseCategory?.map(
+                              (e) => ({
+                                label: e.courseCategory,
+                                value: e._id,
+                              })
+                            )}
+                            name="courseCategory"
+                            onChange={(e) => {
+                              setCourceType(e.value);
+                              setCourceCategoryData(e.value);
+                              if (e?.value) {
+                                let index =
+                                  getAllCourceCategory?.courseCategory?.findIndex(
+                                    (o) => o?._id === e?.value
+                                  );
+                              }
+                              onChnagSelectField(e, "courseCategory");
+                            }}
+                            defaultValue={
+                              defaultValue.courseCategory &&
+                              defaultValue.courseCategory
+                            }
+                          />
+                        </div>
 
-                {/* end test */}
+                        {/* end test */}
 
-                <div className="register-grid-items12 ">
-                  <label>
-                    Course Name<span>*</span>
-                  </label>
-                  <Select
-                    // isClearable
-                    options={getAllCourceName?.courseName?.map((e) => ({
-                      label: e.courseName,
-                      value: e._id,
-                    }))}
-                    name="courseName"
-                    onChange={(e) => {
-                      // setCourceType(e.value);
-                      // setCourceCategory(e.value)
-                      setCourceNameData(e.value)
-                      if (e?.value) {
-                        let index = getAllCourceName?.courseName?.findIndex(
-                          (o) => o?._id === e?.value
-                        );
-                        if (index !== -1) {
-                          setPrice(
-                            getAllCourceName?.courseName[index].price
-                          );
-                          setCNID(
-                            getAllCourceName?.courseName[index]._id
-                          );
-                        }
-                      }
-                      onChnagSelectField(e, "courseName");
-                    }}
-                    defaultValue={
-                      defaultValue.courseName && defaultValue.courseName
-                    }
-                  />
-                </div>
+                        <div className="register-grid-items12 ">
+                          <label>
+                            Course Name<span>*</span>
+                          </label>
+                          <Select
+                            // isClearable
+                            options={getAllCourceName?.courseName?.map((e) => ({
+                              label: e.courseName,
+                              value: e._id,
+                            }))}
+                            name="courseName"
+                            onChange={(e) => {
+                              // setCourceType(e.value);
+                              // setCourceCategory(e.value)
+                              setCourceNameData(e.value);
+                              if (e?.value) {
+                                let index =
+                                  getAllCourceName?.courseName?.findIndex(
+                                    (o) => o?._id === e?.value
+                                  );
+                                if (index !== -1) {
+                                  setPrice(
+                                    getAllCourceName?.courseName[index].price
+                                  );
+                                  setCNID(
+                                    getAllCourceName?.courseName[index]._id
+                                  );
+                                }
+                              }
+                              onChnagSelectField(e, "courseName");
+                            }}
+                            defaultValue={
+                              defaultValue.courseName && defaultValue.courseName
+                            }
+                          />
+                        </div>
                         {/* <div className="register-grid-items">
                   <label>Date of Course<span>*</span></label>
                   <input type="date" placeholder="" name='dateofCourse' value={formdata.dateofCourse} onChange={e => onChnageForm(e)} />
                 </div> */}
                         <div className="register-grid-items12 ">
-                          <label>License Category<span>*</span></label>
+                          <label>
+                            License Category<span>*</span>
+                          </label>
                           <Select
-                            options={licenseCategoryData.map(e => ({ label: e.name, value: e.name }))}
-                            name='license'
-                            onChange={e => onChnagSelectField(e, 'license')}
-                            defaultValue={{ label: formdata.license, value: formdata.license }}
+                            options={licenseCategoryData.map((e) => ({
+                              label: e.name,
+                              value: e.name,
+                            }))}
+                            name="license"
+                            onChange={(e) => onChnagSelectField(e, "license")}
+                            defaultValue={{
+                              label: formdata.license,
+                              value: formdata.license,
+                            }}
                           />
-
                         </div>
-                        <div className="register-grid-items ">
-                          <label>Driver's License No.<span>*</span></label>
-                          <input type="text" name='driverlicense' value={formdata.driverlicense} onChange={e => onChnageForm(e)} />
-                        </div>
-                        <div className="register-grid-items">
-                          <label>Issue Date<span>*</span></label>
-                          <input type="date" placeholder="" name='issueDate' value={(formdata.issueDate).slice(0, 10)} onChange={e => onChnageForm(e)} />
-                        </div>
-                        <div className="register-grid-items">
-                          <label>Valid Till<span>*</span></label>
-                          <input type="date" placeholder="" name='validDate' value={(formdata.validDate).slice(0, 10)} onChange={e => onChnageForm(e)} />
-                        </div>
-                        <div className="register-grid-items">
-
+                        {formdata?.license != "NA" && 
+                        <>
+                          <div className="register-grid-items ">
+                          <label>
+                            Driver's License No.<span>*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="driverlicense"
+                            value={formdata.driverlicense}
+                            onChange={(e) => onChnageForm(e)}
+                          />
                         </div>
                         <div className="register-grid-items">
-
+                          <label>
+                            Issue Date<span>*</span>
+                          </label>
+                          <input
+                            type="date"
+                            placeholder=""
+                            name="issueDate"
+                            value={formdata.issueDate.slice(0, 10)}
+                            onChange={(e) => onChnageForm(e)}
+                          />
                         </div>
+                        <div className="register-grid-items">
+                          <label>
+                            Valid Till<span>*</span>
+                          </label>
+                          <input
+                            type="date"
+                            placeholder=""
+                            name="validDate"
+                            value={formdata.validDate.slice(0, 10)}
+                            onChange={(e) => onChnageForm(e)}
+                          />
+                        </div>
+                        </>
+                        }
+                        
+                        <div className="register-grid-items"></div>
+                        <div className="register-grid-items"></div>
 
                         <div className="register-grid-items12">
-                          <label>License Authority<span>*</span></label>
-
+                          <label>
+                            License Authority<span>*</span>
+                          </label>
 
                           <Select
-                            options={state.map(e => ({ label: e.name, value: e.name }))}
-                            name='authority'
-                            onChange={e => onChnagSelectField(e, 'authority')}
-                            defaultValue={{ label: "Haryana", value: "Haryana" }}
+                            options={state.map((e) => ({
+                              label: e.name,
+                              value: e.name,
+                            }))}
+                            name="authority"
+                            onChange={(e) => onChnagSelectField(e, "authority")}
+                            defaultValue={{
+                              label: "Haryana",
+                              value: "Haryana",
+                            }}
                           />
                         </div>
                         <div className="register-grid-items12">
-                          <label>License Authority (District)<span>*</span></label>
+                          <label>
+                            License Authority (District)<span>*</span>
+                          </label>
 
                           <Select
-                            options={districts.map(e => ({ label: e.name, value: e.name }))}
-                            name='authoritydistrict'
-                            onChange={e => onChnagSelectField(e, 'authoritydistrict')}
-                            defaultValue={{ label: formdata.authoritydistrict, value: formdata.authoritydistrict }}
-
+                            options={districts.map((e) => ({
+                              label: e.name,
+                              value: e.name,
+                            }))}
+                            name="authoritydistrict"
+                            onChange={(e) =>
+                              onChnagSelectField(e, "authoritydistrict")
+                            }
+                            defaultValue={{
+                              label: formdata.authoritydistrict,
+                              value: formdata.authoritydistrict,
+                            }}
                           />
                         </div>
                         <div className="register-grid-items12">
-                          <label>License Authority (Town / city)<span>*</span></label>
+                          <label>
+                            License Authority (Town / city)<span>*</span>
+                          </label>
 
                           <Select
-                            options={city.map(e => ({ label: e.name, value: e.name }))}
-                            name='authoritycity'
-                            onChange={e => onChnagSelectField(e, 'authoritycity')}
-                            defaultValue={{ label: formdata.authoritycity, value: formdata.authoritycity }}
+                            options={city.map((e) => ({
+                              label: e.name,
+                              value: e.name,
+                            }))}
+                            name="authoritycity"
+                            onChange={(e) =>
+                              onChnagSelectField(e, "authoritycity")
+                            }
+                            defaultValue={{
+                              label: formdata.authoritycity,
+                              value: formdata.authoritycity,
+                            }}
                           />
                         </div>
-
                       </div>
                       <div className="full-fill-information">
-                        {
-
-                          CourceType ? (
+                        {CourceType ? (
+                          <div>
                             <div>
-                              <div>
-                                <div className="sub-title">
-                                  <p>{getCourseNameByID?.courseName}</p>
-
-                                </div>
-                                <div className="information">
-                                  <p>
-                                    <span>Duration:</span> {getCourseNameByID?.duration}
-                                  </p>
-                                  <p>
-                                    <span>System Requirement:</span> {getCourseNameByID?.systemRequirement}
-                                  </p>
-                                  <p>
-                                    <span>System Requirement:</span> Smart Phone, 4 GB data per
-                                    day, google meet app, whatsapp{" "}
-                                  </p>
-                                  <p>
-                                    <span>Certificate:</span> {getCourseNameByID?.certificate}
-                                  </p>
-
-                                </div>
-                              </div>
-
-                            </div>
-                          ) : (
-                            <div>
-                              <div className="sub-title-one">
-                                <p>Course Type Description :</p>
+                              <div className="sub-title">
+                                <p>{getCourseNameByID?.courseName}</p>
                               </div>
                               <div className="information">
-                                <p><span>1 Learner:</span>Long duration program suitable for beginner/ new learner</p>
-                                <p><span>2 Refresher </span>Short duration program suitable for existing driver</p>
-                                <p><span>3 Evaluation </span>Test of driving skill and knowledge</p>
+                                <p>
+                                  <span>Duration:</span>{" "}
+                                  {getCourseNameByID?.duration}
+                                </p>
+                                <p>
+                                  <span>System Requirement:</span>{" "}
+                                  {getCourseNameByID?.systemRequirement}
+                                </p>
+                                <p>
+                                  <span>System Requirement:</span> Smart Phone,
+                                  4 GB data per day, google meet app, whatsapp{" "}
+                                </p>
+                                <p>
+                                  <span>Certificate:</span>{" "}
+                                  {getCourseNameByID?.certificate}
+                                </p>
                               </div>
                             </div>
-                          )
-                        }
-
-
-
-
+                          </div>
+                        ) : (
+                          <div>
+                            <div className="sub-title-one">
+                              <p>Course Type Description :</p>
+                            </div>
+                            <div className="information">
+                              <p>
+                                <span>1 Learner:</span>Long duration program
+                                suitable for beginner/ new learner
+                              </p>
+                              <p>
+                                <span>2 Refresher </span>Short duration program
+                                suitable for existing driver
+                              </p>
+                              <p>
+                                <span>3 Evaluation </span>Test of driving skill
+                                and knowledge
+                              </p>
+                            </div>
+                          </div>
+                        )}
                       </div>
                       <div className="register-grid search-button-alignment">
                         <div className="register-grid-items">
-                          <label>Preferred Training Date<span>*</span></label>
-                          <input type="date" placeholder="Vehicle Category" min={moment(new Date).format("YYYY-MM-DD")} onChange={(e) => {
-                            onChnageForm(e)
-                            // disablePastDate()
-                          }
-
-                          }
-                            name='preferdate' value={(formdata.preferdate.slice(0, 10))}
+                          <label>
+                            Preferred Training Date<span>*</span>
+                          </label>
+                          <input
+                            type="date"
+                            placeholder="Vehicle Category"
+                            min={moment(new Date()).format("YYYY-MM-DD")}
+                            onChange={(e) => {
+                              onChnageForm(e);
+                              // disablePastDate()
+                            }}
+                            name="preferdate"
+                            value={formdata.preferdate.slice(0, 10)}
                           />
                         </div>
                         <div className="register-grid-items">
-                          {
-                            cnid ? <button onClick={(e) => checkTrainnigDate()} >Search</button> : <button className="disabled" >Search</button>
-                          }
+                          {cnid ? (
+                            <button onClick={(e) => checkTrainnigDate()}>
+                              Search
+                            </button>
+                          ) : (
+                            <button className="disabled">Search</button>
+                          )}
                         </div>
                       </div>
                       <div>
-                        {getSeat && getSeat.length > 0 ?
-
-
-
-                          <Carousel responsive={{
-                            superLargeDesktop: {
-                              // the naming can be any, depends on you.
-                              breakpoint: { max: 4000, min: 3000 },
-                              items: 4,
-                            },
-                            desktop: {
-                              breakpoint: { max: 3000, min: 1024 },
-                              items: 5,
-                            },
-                            tablet: {
-                              breakpoint: { max: 1024, min: 464 },
-                              items: 2,
-                            },
-                            mobile: {
-                              breakpoint: { max: 464, min: 0 },
-                              items: 1,
-                            },
-                          }} >
+                        {getSeat && getSeat.length > 0 ? (
+                          <Carousel
+                            responsive={{
+                              superLargeDesktop: {
+                                // the naming can be any, depends on you.
+                                breakpoint: { max: 4000, min: 3000 },
+                                items: 4,
+                              },
+                              desktop: {
+                                breakpoint: { max: 3000, min: 1024 },
+                                items: 5,
+                              },
+                              tablet: {
+                                breakpoint: { max: 1024, min: 464 },
+                                items: 2,
+                              },
+                              mobile: {
+                                breakpoint: { max: 464, min: 0 },
+                                items: 1,
+                              },
+                            }}
+                          >
                             {getSeat?.map((data, key) => {
                               return (
-                                <div key={key} className={`calender-box un-active-background ${formdata.sloatId === data._id ? "activeSlot" : ''}`}
-                                  name="trainddateid" value={formdata.trainddateid} onClick={(e) => {
-                                    onChnagSelectField({ value: data?._id }, 'sloatId')
-                                    setAlertForSlot(data?.seat)
+                                <div
+                                  key={key}
+                                  className={`calender-box un-active-background ${
+                                    formdata.sloatId === data._id
+                                      ? "activeSlot"
+                                      : ""
+                                  }`}
+                                  name="trainddateid"
+                                  value={formdata.trainddateid}
+                                  onClick={(e) => {
+                                    onChnagSelectField(
+                                      { value: data?._id },
+                                      "sloatId"
+                                    );
+                                    setAlertForSlot(data?.seat);
                                   }}
                                 >
                                   <div className="cus-box-alignment">
-                                    <h2> {moment(data.date).format(
-                                      "YYYY-MM-DD "
-                                    )}</h2>
-                                    <p> Time: {moment(data.startTime).format(
-                                      "h:mm "
-                                    )} -  {moment(data.endTime).format(
-                                      "h:mm "
-                                    )}  </p>
+                                    <h2>
+                                      {" "}
+                                      {moment(data.date).format("YYYY-MM-DD ")}
+                                    </h2>
+                                    <p>
+                                      {" "}
+                                      Time:{" "}
+                                      {moment(data.startTime).format(
+                                        "h:mm "
+                                      )} -{" "}
+                                      {moment(data.endTime).format("h:mm ")}{" "}
+                                    </p>
 
-                                    <p>Seat:  {data?.seat ? data?.seat : 'N.A'}</p>
+                                    <p>
+                                      Seat: {data?.seat ? data?.seat : "N.A"}
+                                    </p>
                                   </div>
                                 </div>
-                              )
+                              );
                             })}
                           </Carousel>
-
-                          :
-
+                        ) : (
                           <div className="calender-box un-active-background">
                             <div className="cus-box-alignment">
                               <h2>No Slot Available</h2>
                             </div>
                           </div>
-
-
-
-
-
-                        }
+                        )}
                       </div>
-
 
                       {typeTrueFalseform && (
                         <div className="alert mt-top">
                           <div className="alert-bottom">
-                            <p>Sorry! {errorShow} must be specified
-                            </p>
+                            <p>Sorry! {errorShow} must be specified</p>
                           </div>
                         </div>
                       )}
@@ -1944,12 +1999,13 @@ const User = ({ getNewCount, title }) => {
                 ) : ('')
               } */}
 
-                      <div
-                        className="next-step-alignment"
-
-                      >
-
-                        <button onClick={(e) => handleOnClick(e, "personal")} className="fill-button">Next</button>
+                      <div className="next-step-alignment">
+                        <button
+                          onClick={(e) => handleOnClick(e, "personal")}
+                          className="fill-button"
+                        >
+                          Next
+                        </button>
                       </div>
                     </div>
                   )}
@@ -1959,207 +2015,397 @@ const User = ({ getNewCount, title }) => {
                         <h2>Personal Information</h2>
                       </div>
                       <div className="Personal-details-background">
-                        <p><b>Please fill your personal information!</b></p>
+                        <p>
+                          <b>Please fill your personal information!</b>
+                        </p>
                         <p>All *(star) fields are mandatory</p>
                       </div>
                       <div className="form-boder-box">
                         <div className="register-grid-two">
                           <div className="register-grid-items">
-                            <label>First Name<span>*</span></label>
-                            <input type="text" placeholder="First Name" name='firstname' value={formdata.firstname} onChange={e => onChnageForm(e)} />
+                            <label>
+                              First Name<span>*</span>
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="First Name"
+                              name="firstname"
+                              value={formdata.firstname}
+                              onChange={(e) => onChnageForm(e)}
+                            />
                           </div>
                           <div className="register-grid-items">
                             <label>Middle Name</label>
-                            <input type="text" placeholder="Middle Name" name='middlename' value={formdata.middlename} onChange={e => onChnageForm(e)} />
+                            <input
+                              type="text"
+                              placeholder="Middle Name"
+                              name="middlename"
+                              value={formdata.middlename}
+                              onChange={(e) => onChnageForm(e)}
+                            />
                           </div>
                           <div className="register-grid-items">
                             <label>Last Name</label>
-                            <input type="text" placeholder="Last Name" name='lastname' value={formdata.lastname} onChange={e => onChnageForm(e)} />
+                            <input
+                              type="text"
+                              placeholder="Last Name"
+                              name="lastname"
+                              value={formdata.lastname}
+                              onChange={(e) => onChnageForm(e)}
+                            />
                           </div>
                           <div className="register-grid-items">
-                            <label>Date of Birth<span>*</span></label>
+                            <label>
+                              Date of Birth<span>*</span>
+                            </label>
                             {/* <input type="date" name='DateofBirth' value={formdata.DateofBirth} onChange={e => onChnageForm(e)} /> */}
 
-                            <input type="date" name='DateofBirth' value={`${new Date(formdata.DateofBirth).getFullYear()}${new Date(formdata.DateofBirth).getMonth() < 9 ? '-0' : '-'}${new Date(formdata.DateofBirth).getMonth() + 1}-${new Date(formdata.DateofBirth).getDate()}`} onChange={e => onChnageForm(e)} />
+                            <input
+                              type="date"
+                              name="DateofBirth"
+                              value={`${new Date(
+                                formdata.DateofBirth
+                              ).getFullYear()}${
+                                new Date(formdata.DateofBirth).getMonth() < 9
+                                  ? "-0"
+                                  : "-"
+                              }${
+                                new Date(formdata.DateofBirth).getMonth() + 1
+                              }-${new Date(formdata.DateofBirth).getDate()}`}
+                              onChange={(e) => onChnageForm(e)}
+                            />
                           </div>
-
                         </div>
                         <div className="two-col-grid">
                           <div className="register-grid-items12">
-                            <label>Qualification<span>*</span></label>
+                            <label>
+                              Qualification<span>*</span>
+                            </label>
                             {/* <input type="text" placeholder="Select" name='qualification' value={formdata.qualification} onChange={e => onChnageForm(e)} /> */}
                             <Select
-                              options={qualification.map(e => ({ label: e.name, value: e.name }))}
-                              name='qualification'
-                              onChange={e => onChnagSelectField(e, 'qualification')}
-                              defaultValue={{ label: formdata.qualification, value: formdata.qualification }}
+                              options={qualification.map((e) => ({
+                                label: e.name,
+                                value: e.name,
+                              }))}
+                              name="qualification"
+                              onChange={(e) =>
+                                onChnagSelectField(e, "qualification")
+                              }
+                              defaultValue={{
+                                label: formdata.qualification,
+                                value: formdata.qualification,
+                              }}
                             />
                           </div>
                           <div className="register-grid-items12">
-                            <label>Gender<span>*</span></label>
+                            <label>
+                              Gender<span>*</span>
+                            </label>
                             {/* <input type="text" placeholder="Select" name='gender' value={formdata.gender} onChange={e => onChnageForm(e)} /> */}
                             <Select
-                              options={gender.map(e => ({ label: e.name, value: e.name }))}
-                              name='gender'
-                              onChange={e => onChnagSelectField(e, 'gender')}
-                              defaultValue={{ label: formdata.gender, value: formdata.gender }}
-
+                              options={gender.map((e) => ({
+                                label: e.name,
+                                value: e.name,
+                              }))}
+                              name="gender"
+                              onChange={(e) => onChnagSelectField(e, "gender")}
+                              defaultValue={{
+                                label: formdata.gender,
+                                value: formdata.gender,
+                              }}
                             />
                           </div>
                         </div>
                         <div className="two-col-grid">
                           <div className="register-grid-items register-full-width">
-                            <label>Address as per License<span>*</span> (Flat/House No, Locality, Street Name, Locality)</label>
-                            <input type="text" placeholder="Street Address" name='address' value={formdata.address} onChange={e => onChnageForm(e)} />
+                            <label>
+                              Address as per License<span>*</span> (Flat/House
+                              No, Locality, Street Name, Locality)
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="Street Address"
+                              name="address"
+                              value={formdata.address}
+                              onChange={(e) => onChnageForm(e)}
+                            />
                           </div>
                         </div>
                         <div className="register-grid-one">
                           <div className="register-grid-items12">
-                            <label>State<span>*</span></label>
+                            <label>
+                              State<span>*</span>
+                            </label>
                             {/* <input type="text" placeholder="State" disabled name='state' value={formdata.state} onChange={e => onChnageForm(e)} /> */}
                             <Select
-                              options={state.map(e => ({ label: e.name, value: e.name }))}
-                              name='state'
-                              onChange={e => onChnagSelectField(e, 'state')}
-                              defaultValue={{ label: "Haryana", value: "Haryana" }}
+                              options={state.map((e) => ({
+                                label: e.name,
+                                value: e.name,
+                              }))}
+                              name="state"
+                              onChange={(e) => onChnagSelectField(e, "state")}
+                              defaultValue={{
+                                label: "Haryana",
+                                value: "Haryana",
+                              }}
                             />
                           </div>
                           <div className="register-grid-items12">
-                            <label>District<span>*</span></label>
+                            <label>
+                              District<span>*</span>
+                            </label>
                             {/* <input type="text" placeholder="District" name='district' value={formdata.district} onChange={e => onChnageForm(e)} /> */}
                             <Select
-                              options={districts.map(e => ({ label: e.name, value: e.name }))}
-                              name='district'
-                              onChange={e => onChnagSelectField(e, 'district')}
-                              defaultValue={{ label: formdata.district, value: formdata.district }}
-
+                              options={districts.map((e) => ({
+                                label: e.name,
+                                value: e.name,
+                              }))}
+                              name="district"
+                              onChange={(e) =>
+                                onChnagSelectField(e, "district")
+                              }
+                              defaultValue={{
+                                label: formdata.district,
+                                value: formdata.district,
+                              }}
                             />
                           </div>
                           <div className="register-grid-items12">
-                            <label>Town / city<span>*</span></label>
+                            <label>
+                              Town / city<span>*</span>
+                            </label>
                             {/* <input type="text" placeholder="city" name='city' value={formdata.city} onChange={e => onChnageForm(e)} /> */}
                             <Select
-                              options={city.map(e => ({ label: e.name, value: e.name }))}
-                              name='city'
-                              onChange={e => onChnagSelectField(e, 'city')}
-                              defaultValue={{ label: formdata.city, value: formdata.city }}
-
+                              options={city.map((e) => ({
+                                label: e.name,
+                                value: e.name,
+                              }))}
+                              name="city"
+                              onChange={(e) => onChnagSelectField(e, "city")}
+                              defaultValue={{
+                                label: formdata.city,
+                                value: formdata.city,
+                              }}
                             />
                           </div>
                           <div className="register-grid-items">
-                            <label>PIN<span>*</span></label>
-                            <input type="text"
+                            <label>
+                              PIN<span>*</span>
+                            </label>
+                            <input
+                              type="text"
                               onKeyPress={(event) => {
                                 if (!/[0-9]/.test(event.key)) {
                                   event.preventDefault();
                                 }
                               }}
-                              placeholder="Pin" name='pin' value={formdata.pin} onChange={e => onChnageForm(e)} />
+                              placeholder="Pin"
+                              name="pin"
+                              value={formdata.pin}
+                              onChange={(e) => onChnageForm(e)}
+                            />
                           </div>
                         </div>
                         <div className="two-col-grid">
                           <div className="register-grid-items">
-                            <label>Email address<span></span></label>
-                            <input type="text" placeholder="Email Address" name='email' value={formdata.email} onChange={e => onChnageForm(e)} />
+                            <label>
+                              Email address<span></span>
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="Email Address"
+                              name="email"
+                              value={formdata.email}
+                              onChange={(e) => onChnageForm(e)}
+                            />
                           </div>
                           <div className="register-grid-items">
-                            <label>Phone<span>*</span></label>
-                            <input type="text" placeholder="9874 456 458"
+                            <label>
+                              Phone<span>*</span>
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="9874 456 458"
                               maxLength={10}
                               onKeyPress={(event) => {
                                 if (!/[0-9]/.test(event.key)) {
                                   event.preventDefault();
                                 }
                               }}
-                              name='phone' value={formdata.phone} onChange={e => onChnageForm(e)} />
+                              name="phone"
+                              value={formdata.phone}
+                              onChange={(e) => onChnageForm(e)}
+                            />
                           </div>
                         </div>
-
                       </div>
                       {typeTrueFalseform && (
                         <div className="alert mt-top">
                           <div className="alert-bottom">
-                            <p>Sorry! {errorShow} must be specified
-                            </p>
+                            <p>Sorry! {errorShow} must be specified</p>
                           </div>
                         </div>
                       )}
 
-                      <div
-                        className="next-step-alignment"
-                      >
-                        <button onClick={(e) => previousClick(e, "course")} className="out-line-button">Previous</button>
-                        <button onClick={(e) => handleOnClick(e, "document")} className="fill-button">Next</button>
+                      <div className="next-step-alignment">
+                        <button
+                          onClick={(e) => previousClick(e, "course")}
+                          className="out-line-button"
+                        >
+                          Previous
+                        </button>
+                        <button
+                          onClick={(e) => handleOnClick(e, "document")}
+                          className="fill-button"
+                        >
+                          Next
+                        </button>
                       </div>
                     </div>
                   )}
-                  {tab === 'document' && (
+                  {tab === "document" && (
                     <div className="tab-details-alignment">
                       <div className="tab-details-title">
                         <h2>Document Upload</h2>
                       </div>
                       <div className="upload-decuments-background">
-                        <p><b>Please upload documents!</b></p>
+                        <p>
+                          <b>Please upload documents!</b>
+                        </p>
                         <ul>
-                          <li>Passport size photo must be clear and less than 1 mb(jpg, jpeg, png)</li>
-                          <li>Rest all documents less than 5 mb(jpg, jpeg, png, pdf)</li>
-                          <li>Name of document should not contain any special characters or space(eg @,)</li>
+                          <li>
+                            Passport size photo must be clear and less than 1
+                            mb(jpg, jpeg, png)
+                          </li>
+                          <li>
+                            Rest all documents less than 5 mb(jpg, jpeg, png,
+                            pdf)
+                          </li>
+                          <li>
+                            Name of document should not contain any special
+                            characters or space(eg @,)
+                          </li>
                         </ul>
                       </div>
                       <div className="photo-upload-from">
-                        <p> 1. Passport Photo<span className="star-color">*</span>:  less than 1 mb.(jpg, jpeg, PNG)/ Rest all documents less than 5 mb (jpg, jpeg, PNG, pdf)</p>
-                        <input type="file" name='passport' onChange={e => onChangImage(e.target.files[0], "passport")} />
+                        <p>
+                          {" "}
+                          1. Passport Photo<span className="star-color">*</span>
+                          : less than 1 mb.(jpg, jpeg, PNG)/ Rest all documents
+                          less than 5 mb (jpg, jpeg, PNG, pdf)
+                        </p>
+                        <input
+                          type="file"
+                          name="passport"
+                          onChange={(e) =>
+                            onChangImage(e.target.files[0], "passport")
+                          }
+                        />
                       </div>
                       <div className="photo-upload-from">
-                        <p>2. Driving License<span className="star-color">*</span> (Not valid incase of NA)</p>
-                        <input type="file" name='driviniglicencephoto' onChange={e => onChangImage(e.target.files[0], "driviniglicencephoto")} />
+                        <p>
+                          2. Driving License
+                          <span className="star-color">*</span> (Not valid
+                          incase of NA)
+                        </p>
+                        <input
+                          type="file"
+                          name="driviniglicencephoto"
+                          onChange={(e) =>
+                            onChangImage(
+                              e.target.files[0],
+                              "driviniglicencephoto"
+                            )
+                          }
+                        />
                       </div>
                       <div className="photo-upload-from">
-                        <p>3. ID Proof: Acceptable formats - Utility Bills (water, electricity, phone or gas bill)/ Aadhaar Card (UID)/Voter ID Card or Election Commission Photo ID Card/Ration Card</p>
-                        <input type="file"
-                          name='idProof'
-                          onChange={e => onChangImage(e.target.files[0], "idProof")} />
+                        <p>
+                          3. ID Proof: Acceptable formats - Utility Bills
+                          (water, electricity, phone or gas bill)/ Aadhaar Card
+                          (UID)/Voter ID Card or Election Commission Photo ID
+                          Card/Ration Card
+                        </p>
+                        <input
+                          type="file"
+                          name="idProof"
+                          onChange={(e) =>
+                            onChangImage(e.target.files[0], "idProof")
+                          }
+                        />
                       </div>
                       <div className="photo-upload-from">
-                        <p>4. Upload Medical certificate: For Eye vision and color blindness </p>
-                        <input type="file" name='mediacalCertificate'
-                          onChange={e => onChangImage(e.target.files[0], "mediacalCertificate")} />
+                        <p>
+                          4. Upload Medical certificate: For Eye vision and
+                          color blindness{" "}
+                        </p>
+                        <input
+                          type="file"
+                          name="mediacalCertificate"
+                          onChange={(e) =>
+                            onChangImage(
+                              e.target.files[0],
+                              "mediacalCertificate"
+                            )
+                          }
+                        />
                       </div>
                       <div className="photo-upload-from dropdown-style-change">
                         <p>5. Enter Blood Group </p>
                         <div className="register-grid-items12">
                           {/* <input type="text" placeholder="Select" name='qualification' value={formdata.qualification} onChange={e => onChnageForm(e)} /> */}
                           <Select
-                            options={bloodgroupData.map(e => ({ label: e.name, value: e.name }))}
-                            name='bloodgroup'
-                            onChange={e => onChnagSelectField(e, 'bloodgroup')}
-                            defaultValue={{ label: formdata.bloodgroup, value: formdata.bloodgroup }}
-
+                            options={bloodgroupData.map((e) => ({
+                              label: e.name,
+                              value: e.name,
+                            }))}
+                            name="bloodgroup"
+                            onChange={(e) =>
+                              onChnagSelectField(e, "bloodgroup")
+                            }
+                            defaultValue={{
+                              label: formdata.bloodgroup,
+                              value: formdata.bloodgroup,
+                            }}
                           />
                         </div>
                       </div>
                       {typeTrueFalseform && (
                         <div className="alert mt-top">
                           <div className="alert-bottom">
-                            <p>Sorry! {errorShow} must be specified
-                            </p>
+                            <p>Sorry! {errorShow} must be specified</p>
                           </div>
                         </div>
                       )}
-                      {
-                        formdata.driviniglicencephoto && formdata.passport ?
-                          <div className="next-step-alignment">
-                            <button className="fill-button" onClick={() => uploadCertificate()}>Upload</button>
-                          </div> : <div className="next-step-alignment">
-                            <button className="fill-button disabled">Upload</button>
-                          </div>
-                      }
-                      <div
-                        className="next-step-alignment"
-                      >
-                        <button onClick={(e) => previousClick(e, "personal")} className="out-line-button">Previous</button>
-                        <button onClick={(e) => handleOnClick(e, "payment")} className="fill-button">Next</button>
-
+                      {formdata.driviniglicencephoto && formdata.passport ? (
+                        <div className="next-step-alignment">
+                          <button
+                            className="fill-button"
+                            onClick={() => uploadCertificate()}
+                          >
+                            Upload
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="next-step-alignment">
+                          <button className="fill-button disabled">
+                            Upload
+                          </button>
+                        </div>
+                      )}
+                      <div className="next-step-alignment">
+                        <button
+                          onClick={(e) => previousClick(e, "personal")}
+                          className="out-line-button"
+                        >
+                          Previous
+                        </button>
+                        <button
+                          onClick={(e) => handleOnClick(e, "payment")}
+                          className="fill-button"
+                        >
+                          Next
+                        </button>
                       </div>
                     </div>
                   )}
@@ -2175,224 +2421,415 @@ const User = ({ getNewCount, title }) => {
 
                         </div> */}
                         <div className="d-flex aligncenetr">
-                          <input type="radio"
-
-                            placeholder="offline" name='type' value="offline" onChange={e => onChnageForm(e)} />
-                          <label className="s" htmlFor="offline">offline</label>
-
+                          <input
+                            type="radio"
+                            placeholder="offline"
+                            name="type"
+                            value="offline"
+                            onChange={(e) => onChnageForm(e)}
+                          />
+                          <label className="s" htmlFor="offline">
+                            offline
+                          </label>
                         </div>
                       </div>
-                      {
-                        formdata?.type === 'online' ?
-                          <div className="mt-3">
-                            <div className="d-flex aligncenetr">
-                              <input type="checkbox" onChange={e => onChangeDiscloser(e.target.checked)} checked={dicloser} />
-                              <div className="s" onClick={() => setModalOpen(!modalOpen)}>Disclooser</div>
+                      {formdata?.type === "online" ? (
+                        <div className="mt-3">
+                          <div className="d-flex aligncenetr">
+                            <input
+                              type="checkbox"
+                              onChange={(e) =>
+                                onChangeDiscloser(e.target.checked)
+                              }
+                              checked={dicloser}
+                            />
+                            <div
+                              className="s"
+                              onClick={() => setModalOpen(!modalOpen)}
+                            >
+                              Disclooser
                             </div>
-                            {dicloser && (
-                              <PaymentData price={price} cnid={cnid} vcid={formdata.vehicleCategory} ctid={formdata.courseType} tdid={formdata.sloatId} hhhhh={(data) => {
-                                setSubmitPayment(data)
-
+                          </div>
+                          {dicloser && (
+                            <PaymentData
+                              price={price}
+                              cnid={cnid}
+                              vcid={formdata.vehicleCategory}
+                              ctid={formdata.courseType}
+                              tdid={formdata.sloatId}
+                              hhhhh={(data) => {
+                                setSubmitPayment(data);
                               }}
-                                paymentId={(data) => {
-                                  setPaymentId(data)
-
-                                }} />)
-                            }
+                              paymentId={(data) => {
+                                setPaymentId(data);
+                              }}
+                            />
+                          )}
+                        </div>
+                      ) : (
+                        <div>
+                          <div className="d-flex aligncenetr">
+                            <input
+                              type="checkbox"
+                              onChange={(e) =>
+                                onChangeDiscloser(e.target.checked)
+                              }
+                              checked={dicloser}
+                            />
+                            <div
+                              className="s"
+                              onClick={() => setModalOpen(!modalOpen)}
+                            >
+                              Disclooser
+                            </div>
                           </div>
-                          : <div>
-                            <div className="d-flex aligncenetr">
-                              <input type="checkbox" onChange={e => onChangeDiscloser(e.target.checked)} checked={dicloser} />
-                              <div className="s" onClick={() => setModalOpen(!modalOpen)}>Disclooser</div></div>
-                          </div>
-                      }
-                      <div
-                        className="next-step-alignment"
-                      >
-                        <button className="out-line-button" onClick={(e) => handleOnClick(e, "document")}>Previous</button>
+                        </div>
+                      )}
+                      <div className="next-step-alignment">
+                        <button
+                          className="out-line-button"
+                          onClick={(e) => handleOnClick(e, "document")}
+                        >
+                          Previous
+                        </button>
 
-                        {!editMode ? (
-                          dicloser && (formdata.type === "online" ? submitpayment : true) && <button className="fill-button" onClick={() => register()}>Submit</button>
-                        ) : (dicloser && (formdata.type === "online" ? submitpayment : true) && <button className="fill-button" onClick={() => updateData()}>Update</button>)}
-
+                        {!editMode
+                          ? dicloser &&
+                            (formdata.type === "online"
+                              ? submitpayment
+                              : true) && (
+                              <button
+                                className="fill-button"
+                                onClick={() => register()}
+                              >
+                                Submit
+                              </button>
+                            )
+                          : dicloser &&
+                            (formdata.type === "online"
+                              ? submitpayment
+                              : true) && (
+                              <button
+                                className="fill-button"
+                                onClick={() => updateData()}
+                              >
+                                Update
+                              </button>
+                            )}
                       </div>
                     </div>
                   )}
-                  {
-                    modalOpen && (
-                      <div className='feedback-background-blur'>
-                        <div className='feedback-modal'>
-                          <div className='modal-header'>
-                            <h1>Disclose</h1>
-                            <i onClick={() => setModalOpen(false)} class="fas fa-times"></i>
-                          </div>
-                          <div className='modal-body'>
-                            <p>
-                              <b>
-                                Cautionary statement regarding forward-looking information
-                              </b>
-                            </p>
-                            <p>
+                  {modalOpen && (
+                    <div className="feedback-background-blur">
+                      <div className="feedback-modal">
+                        <div className="modal-header">
+                          <h1>Disclose</h1>
+                          <i
+                            onClick={() => setModalOpen(false)}
+                            class="fas fa-times"
+                          ></i>
+                        </div>
+                        <div className="modal-body">
+                          <p>
+                            <b>
+                              Cautionary statement regarding forward-looking
+                              information
+                            </b>
+                          </p>
+                          <p>
+                            This Site contains statements that constitute
+                            forward-looking statements within the meaning of the
+                            Private Securities Litigation Reform Act of 1995. In
+                            addition, in the future we, and others on our
+                            behalf, may make statements that constitute
+                            forward-looking statements. Such forward-looking
+                            statements may include, without limitation,
+                            statements relating to the following:
+                          </p>
+                          <ul>
+                            <li>
+                              <p> our plans, objectives or goals;</p>
+                            </li>
+                            <li>
+                              <p>
+                                {" "}
+                                our future economic performance or prospects;
+                              </p>
+                            </li>
+                            <li>
+                              <p>
+                                {" "}
+                                the potential effect on our future performance
+                                of certain contingencies; and
+                              </p>
+                            </li>
+                            <li>
+                              <p>assumptions underlying any such statements.</p>
+                            </li>
+                          </ul>
+                          <p>
+                            Words such as “believes,” “anticipates,” “expects,”
+                            “intends” and “plans” and similar expressions are
+                            intended to identify forward-looking statements but
+                            are not the exclusive means of identifying such
+                            statements. We do not intend to update these
+                            forward-looking statements except as may be required
+                            by applicable securities laws. By their very nature,
+                            forward-looking statements involve inherent risks
+                            and uncertainties, both general and specific, and
+                            risks exist that predictions, forecasts, projections
+                            and other outcomes described or implied in
+                            forward-looking statements will not be achieved. We
+                            caution you that a number of important factors could
+                            cause results to differ materially from the plans,
+                            objectives, expectations, estimates and intentions
+                            expressed in such forward-looking statements. These
+                            factors include:
+                          </p>
+                          <ul>
+                            <li>
+                              <p>
+                                {" "}
+                                the ability to maintain sufficient liquidity and
+                                access capital markets;
+                              </p>
+                            </li>
+                            <li>
+                              <p>
+                                {" "}
+                                market and interest rate fluctuations and
+                                interest rate levels;
+                              </p>
+                            </li>
+                            <li>
+                              <p>
+                                {" "}
+                                the strength of the global economy in general
+                                and the strength of the economies of the
+                                countries in which we conduct our operations, in
+                                particular the risk of continued slow economic
+                                recovery or downturn in the US or other
+                                developed countries in the future;
+                              </p>
+                            </li>
+                            <li>
+                              <p>
+                                {" "}
+                                the direct and indirect impacts of deterioration
+                                or slow recovery in residential and commercial
+                                real estate markets;
+                              </p>
+                            </li>
+                            <li>
+                              <p>
+                                adverse rating actions by credit rating agencies
+                                in respect of sovereign issuers, structured
+                                credit products or other credit-related
+                                exposures;
+                              </p>
+                            </li>
+                            <li>
+                              <p>
+                                the ability to achieve our strategic objectives,
+                                including improved performance, reduced risks,
+                                lower costs and more efficient use of capital;
+                              </p>
+                            </li>
 
-                              This Site contains statements that constitute forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995. In addition, in the future we, and others on our behalf, may make statements that constitute forward-looking statements. Such forward-looking statements may include, without limitation, statements relating to the following:
+                            <li>
+                              <p>
+                                the ability of counterparties to meet their
+                                obligations to us;
+                              </p>
+                            </li>
+                            <li>
+                              <p>
+                                the effects of, and changes in, fiscal,
+                                monetary, trade and tax policies, and currency
+                                fluctuations;
+                              </p>
+                            </li>
 
-                            </p>
-                            <ul>
-                              <li><p> our plans, objectives or goals;</p></li>
-                              <li><p> our future economic performance or prospects;</p></li>
-                              <li><p> the potential effect on our future performance of certain contingencies; and</p></li>
-                              <li><p>assumptions underlying any such statements.</p></li>
-                            </ul>
-                            <p>
-                              Words such as “believes,” “anticipates,” “expects,” “intends” and “plans” and similar expressions are intended to identify forward-looking statements but are not the exclusive means of identifying such statements. We do not intend to update these forward-looking statements except as may be required by applicable securities laws. By their very nature, forward-looking statements involve inherent risks and uncertainties, both general and specific, and risks exist that predictions, forecasts, projections and other outcomes described or implied in forward-looking statements will not be achieved. We caution you that a number of important factors could cause results to differ materially from the plans, objectives, expectations, estimates and intentions expressed in such forward-looking statements. These factors include:
+                            <li>
+                              <p>
+                                political and social developments, including
+                                war, civil unrest or terrorist activity;
+                              </p>
+                            </li>
+                            <li>
+                              <p>
+                                the possibility of foreign exchange controls,
+                                expropriation, nationalization or confiscation
+                                of assets in countries in which we conduct our
+                                operations;
+                              </p>
+                            </li>
 
-                            </p>
-                            <ul>
-                              <li><p> the ability to maintain sufficient liquidity and access capital markets;</p></li>
-                              <li><p> market and interest rate fluctuations and interest rate levels;</p></li>
-                              <li><p> the strength of the global economy in general and the strength of the economies of the countries in which we conduct our operations, in particular the risk of continued slow economic recovery or downturn in the US or other developed countries in the future;
-                              </p></li>
-                              <li><p>  the direct and indirect impacts of deterioration or slow recovery in residential and commercial real estate markets;</p></li>
-                              <li>
-                                <p>
-                                  adverse rating actions by credit rating agencies in respect of sovereign issuers, structured credit products or other credit-related exposures;
+                            <li>
+                              <p>
+                                operational factors such as systems failure,
+                                human error, or the failure to implement
+                                procedures properly;
+                              </p>
+                            </li>
+                            <li>
+                              <p>
+                                actions taken by regulators with respect to our
+                                business and practices in one or more of the
+                                countries in which we conduct our operations;
+                              </p>
+                            </li>
+                            <li>
+                              <p>
+                                the effects of changes in laws, regulations or
+                                accounting policies or practices;
+                              </p>
+                            </li>
+                            <li>
+                              <p>
+                                competition in geographic and business areas in
+                                which we conduct our operations;
+                              </p>
+                            </li>
 
-                                </p>
-                              </li>
-                              <li>
-                                <p>
-                                  the ability to achieve our strategic objectives, including improved performance, reduced risks, lower costs and more efficient use of capital;
+                            <li>
+                              <p>
+                                the ability to retain and recruit qualified
+                                personnel;
+                              </p>
+                            </li>
+                            <li>
+                              <p>
+                                the ability to maintain our reputation and
+                                promote our brand;
+                              </p>
+                            </li>
+                            <li>
+                              <p>
+                                the ability to increase market share and control
+                                expenses;
+                              </p>
+                            </li>
+                            <li>
+                              <p>technological changes;</p>
+                            </li>
+                            <li>
+                              <p>
+                                the timely development and acceptance of our new
+                                products and services and the perceived overall
+                                value of these products and services by users;
+                              </p>
+                            </li>
+                            <li>
+                              <p>
+                                acquisitions, including the ability to integrate
+                                acquired businesses successfully, and
+                                divestitures, including the ability to sell
+                                non-core assets;
+                              </p>
+                            </li>
+                            <li>
+                              <p>
+                                the adverse resolution of litigation and other
+                                contingencies;
+                              </p>
+                            </li>
+                            <li>
+                              <p>
+                                the ability to achieve our cost efficiency goals
+                                and cost targets; and
+                              </p>
+                            </li>
+                            <li>
+                              <p>
+                                our success at managing the risks involved in
+                                the foregoing.
+                              </p>
+                            </li>
+                          </ul>
+                          <p>
+                            We caution you that the foregoing list of important
+                            factors is not exclusive. When evaluating
+                            forward-looking statements, you should carefully
+                            consider the foregoing factors and other
+                            uncertainties and events, including the information
+                            set forth in our most recent Annual Report under
+                            “Risk Factors” and in our other public filings
+                          </p>
 
-                                </p>
-                              </li>
+                          <p>
+                            <b>
+                              {" "}
+                              Cautionary Statement Regarding Non-GAAP Financial
+                              Information
+                            </b>
+                          </p>
+                          <p>
+                            This Site may contain non-GAAP financial
+                            information. If such non-GAAP financial information
+                            is disclosed, the most directly comparable measures
+                            under generally accepted accounting principles is
+                            provided in our most recent periodic report or in
+                            our other public filings.
+                          </p>
+                          <p>
+                            <b>
+                              {" "}
+                              Other information about disclosure on this site
+                            </b>
+                          </p>
+                          <p>
+                            On this Site, adjusted cost run-rate results are
+                            measured against our annualized 6M11 expense run
+                            rate measured at constant foreign exchange rates and
+                            adjusted to exclude business realignment and other
+                            significant non-operating expenses and variable
+                            compensation expenses.
+                          </p>
 
-                              <li>
-                                <p>
-                                  the ability of counterparties to meet their obligations to us;
-                                </p>
-                              </li>
-                              <li>
-                                <p>
-                                  the effects of, and changes in, fiscal, monetary, trade and tax policies, and currency fluctuations;
-
-                                </p>
-                              </li>
-
-                              <li>
-                                <p>
-                                  political and social developments, including war, civil unrest or terrorist activity;
-                                </p>
-                              </li>
-                              <li>
-                                <p>
-                                  the possibility of foreign exchange controls, expropriation, nationalization or confiscation of assets in countries in which we conduct our operations;
-                                </p>
-                              </li>
-
-                              <li>
-                                <p>
-                                  operational factors such as systems failure, human error, or the failure to implement procedures properly;
-                                </p>
-                              </li>
-                              <li>
-                                <p>
-                                  actions taken by regulators with respect to our business and practices in one or more of the countries in which we conduct our operations;
-                                </p>
-                              </li>
-                              <li>
-                                <p>
-                                  the effects of changes in laws, regulations or accounting policies or practices;
-                                </p>
-                              </li>
-                              <li>
-                                <p>
-                                  competition in geographic and business areas in which we conduct our operations;
-                                </p>
-                              </li>
-
-                              <li>
-                                <p>
-                                  the ability to retain and recruit qualified personnel;
-                                </p>
-                              </li>
-                              <li>
-                                <p>
-                                  the ability to maintain our reputation and promote our brand;
-                                </p>
-                              </li>
-                              <li>
-                                <p>
-                                  the ability to increase market share and control expenses;
-                                </p>
-                              </li>
-                              <li>
-                                <p>
-                                  technological changes;
-                                </p>
-                              </li>
-                              <li>
-                                <p>
-                                  the timely development and acceptance of our new products and services and the perceived overall value of these products and services by users;
-                                </p>
-                              </li>
-                              <li>
-                                <p>
-                                  acquisitions, including the ability to integrate acquired businesses successfully, and divestitures, including the ability to sell non-core assets;
-                                </p>
-                              </li>
-                              <li>
-                                <p>
-                                  the adverse resolution of litigation and other contingencies;
-                                </p>
-                              </li>
-                              <li>
-                                <p>
-                                  the ability to achieve our cost efficiency goals and cost targets; and
-                                </p>
-                              </li>
-                              <li>
-                                <p>
-                                  our success at managing the risks involved in the foregoing.
-                                </p>
-                              </li>
-                            </ul>
-                            <p>
-                              We caution you that the foregoing list of important factors is not exclusive. When evaluating forward-looking statements, you should carefully consider the foregoing factors and other uncertainties and events, including the information set forth in our most recent Annual Report under “Risk Factors” and in our other public filings
-                            </p>
-
-                            <p>
-                              <b> Cautionary Statement Regarding Non-GAAP Financial Information</b>
-                            </p>
-                            <p>
-                              This Site may contain non-GAAP financial information. If such non-GAAP financial information is disclosed, the most directly comparable measures under generally accepted accounting principles is provided in our most recent periodic report or in our other public filings.
-
-                            </p>
-                            <p><b> Other information about disclosure on this site</b></p>
-                            <p>
-                              On this Site, adjusted cost run-rate results are measured against our annualized 6M11 expense run rate measured at constant foreign exchange rates and adjusted to exclude business realignment and other significant non-operating expenses and variable compensation expenses.
-
-                            </p>
-
-                            <p>
-                              As of January 1, 2013, Basel III was implemented in Switzerland along with the “Too Big to Fail” legislation and regulations thereunder. Our related disclosures are in accordance with our current interpretation of such requirements, including relevant assumptions. Changes in the interpretation of these requirements in Switzerland or in any of our assumptions or estimates could result in different numbers from those shown herein. Capital and ratio numbers for periods prior to 2013 herein are based on estimates, which are calculated as if the Basel III framework had been in place in Switzerland during such periods.
-
-                            </p>
-                            <p>
-                              Unless otherwise noted, leverage ratio, leverage exposure and total capital amounts included herein are based on the current FINMA framework. The Swiss Total Capital leverage ratio is calculated as Swiss Total Capital, divided by a three-month average leverage exposure, which consists of balance sheet assets, off-balance sheet exposures, which consist of guarantees and commitments, and regulatory adjustments, which include cash collateral netting reversals and derivative add-ons.
-
-                            </p>
-                            <p>
-                              For further information on Core results, refer to “Results overview” in II – Operating and financial review – Core Results in our most recent Annual Report.
-
-                            </p>
-                            <p>
-                              All opinions and estimates expressed in this Site constitute our judgment as of publication and do not constitute general or specific investment legal, tax or accounting advice of any kind
-                            </p>
-                          </div>
+                          <p>
+                            As of January 1, 2013, Basel III was implemented in
+                            Switzerland along with the “Too Big to Fail”
+                            legislation and regulations thereunder. Our related
+                            disclosures are in accordance with our current
+                            interpretation of such requirements, including
+                            relevant assumptions. Changes in the interpretation
+                            of these requirements in Switzerland or in any of
+                            our assumptions or estimates could result in
+                            different numbers from those shown herein. Capital
+                            and ratio numbers for periods prior to 2013 herein
+                            are based on estimates, which are calculated as if
+                            the Basel III framework had been in place in
+                            Switzerland during such periods.
+                          </p>
+                          <p>
+                            Unless otherwise noted, leverage ratio, leverage
+                            exposure and total capital amounts included herein
+                            are based on the current FINMA framework. The Swiss
+                            Total Capital leverage ratio is calculated as Swiss
+                            Total Capital, divided by a three-month average
+                            leverage exposure, which consists of balance sheet
+                            assets, off-balance sheet exposures, which consist
+                            of guarantees and commitments, and regulatory
+                            adjustments, which include cash collateral netting
+                            reversals and derivative add-ons.
+                          </p>
+                          <p>
+                            For further information on Core results, refer to
+                            “Results overview” in II – Operating and financial
+                            review – Core Results in our most recent Annual
+                            Report.
+                          </p>
+                          <p>
+                            All opinions and estimates expressed in this Site
+                            constitute our judgment as of publication and do not
+                            constitute general or specific investment legal, tax
+                            or accounting advice of any kind
+                          </p>
                         </div>
                       </div>
-                    )
-                  }
+                    </div>
+                  )}
                 </div>
               </div>
             ) : null}
@@ -2423,13 +2860,28 @@ const User = ({ getNewCount, title }) => {
                 <div className="honda-text-grid">
                   <div className="honda-text-grid-items">
                     <span>Photo:</span>
-                    {dataViewMore?.passportPhoto === null || dataViewMore?.passportPhoto === "" || !dataViewMore?.passportPhoto ? "No Data" : <img className="view" src={dataViewMore?.passportPhoto} alt="No Image" />}
+                    {dataViewMore?.passportPhoto === null ||
+                    dataViewMore?.passportPhoto === "" ||
+                    !dataViewMore?.passportPhoto ? (
+                      "No Data"
+                    ) : (
+                      <img
+                        className="view"
+                        src={dataViewMore?.passportPhoto}
+                        alt="No Image"
+                      />
+                    )}
                   </div>
                   <div className="honda-text-grid-items">
                     <span>First Name:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.fname === null || dataViewMore?.fname === "" || !dataViewMore?.fname ? "No data" : dataViewMore?.fname,
+                        __html:
+                          dataViewMore?.fname === null ||
+                          dataViewMore?.fname === "" ||
+                          !dataViewMore?.fname
+                            ? "No data"
+                            : dataViewMore?.fname,
                       }}
                       className=""
                     />
@@ -2438,7 +2890,12 @@ const User = ({ getNewCount, title }) => {
                     <span>Middle Name:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.mname === null || dataViewMore?.mname === "" || !dataViewMore?.mname ? "No data" : dataViewMore?.mname,
+                        __html:
+                          dataViewMore?.mname === null ||
+                          dataViewMore?.mname === "" ||
+                          !dataViewMore?.mname
+                            ? "No data"
+                            : dataViewMore?.mname,
                       }}
                       className=""
                     />
@@ -2447,7 +2904,12 @@ const User = ({ getNewCount, title }) => {
                     <span>Last Name:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.lname === null || dataViewMore?.lname === "" || !dataViewMore?.lname ? "No data" : dataViewMore?.lname,
+                        __html:
+                          dataViewMore?.lname === null ||
+                          dataViewMore?.lname === "" ||
+                          !dataViewMore?.lname
+                            ? "No data"
+                            : dataViewMore?.lname,
                       }}
                       className=""
                     />
@@ -2456,7 +2918,12 @@ const User = ({ getNewCount, title }) => {
                     <span>Date of Birth:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.DoB === null || dataViewMore?.DoB === "" || !dataViewMore?.DoB ? "No data" : moment(dataViewMore?.DoB).format("ll"),
+                        __html:
+                          dataViewMore?.DoB === null ||
+                          dataViewMore?.DoB === "" ||
+                          !dataViewMore?.DoB
+                            ? "No data"
+                            : moment(dataViewMore?.DoB).format("ll"),
                       }}
                       className=""
                     />
@@ -2465,7 +2932,12 @@ const User = ({ getNewCount, title }) => {
                     <span>Qualification:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.qualification === null || dataViewMore?.qualification === "" || !dataViewMore?.qualification ? "No data" : dataViewMore?.qualification,
+                        __html:
+                          dataViewMore?.qualification === null ||
+                          dataViewMore?.qualification === "" ||
+                          !dataViewMore?.qualification
+                            ? "No data"
+                            : dataViewMore?.qualification,
                       }}
                       className=""
                     />
@@ -2474,7 +2946,12 @@ const User = ({ getNewCount, title }) => {
                     <span>Gender:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.gender === null || dataViewMore?.gender === "" || !dataViewMore?.gender ? "No data" : dataViewMore?.gender,
+                        __html:
+                          dataViewMore?.gender === null ||
+                          dataViewMore?.gender === "" ||
+                          !dataViewMore?.gender
+                            ? "No data"
+                            : dataViewMore?.gender,
                       }}
                       className=""
                     />
@@ -2483,7 +2960,12 @@ const User = ({ getNewCount, title }) => {
                     <span>Address:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.address === null || dataViewMore?.address === "" || !dataViewMore?.address ? "No data" : dataViewMore?.address,
+                        __html:
+                          dataViewMore?.address === null ||
+                          dataViewMore?.address === "" ||
+                          !dataViewMore?.address
+                            ? "No data"
+                            : dataViewMore?.address,
                       }}
                       className=""
                     />
@@ -2492,7 +2974,12 @@ const User = ({ getNewCount, title }) => {
                     <span>State:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.state === null || dataViewMore?.state === "" || !dataViewMore?.state ? "No data" : dataViewMore?.state,
+                        __html:
+                          dataViewMore?.state === null ||
+                          dataViewMore?.state === "" ||
+                          !dataViewMore?.state
+                            ? "No data"
+                            : dataViewMore?.state,
                       }}
                       className=""
                     />
@@ -2501,7 +2988,12 @@ const User = ({ getNewCount, title }) => {
                     <span>City:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.city === null || dataViewMore?.city === "" || !dataViewMore?.city ? "No data" : dataViewMore?.city,
+                        __html:
+                          dataViewMore?.city === null ||
+                          dataViewMore?.city === "" ||
+                          !dataViewMore?.city
+                            ? "No data"
+                            : dataViewMore?.city,
                       }}
                       className=""
                     />
@@ -2510,7 +3002,12 @@ const User = ({ getNewCount, title }) => {
                     <span>District:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.district === null || dataViewMore?.district === "" || !dataViewMore?.district ? "No data" : dataViewMore?.district,
+                        __html:
+                          dataViewMore?.district === null ||
+                          dataViewMore?.district === "" ||
+                          !dataViewMore?.district
+                            ? "No data"
+                            : dataViewMore?.district,
                       }}
                       className=""
                     />
@@ -2519,7 +3016,12 @@ const User = ({ getNewCount, title }) => {
                     <span>Email:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.email === null || dataViewMore?.email === "" || !dataViewMore?.email ? "No data" : dataViewMore?.email,
+                        __html:
+                          dataViewMore?.email === null ||
+                          dataViewMore?.email === "" ||
+                          !dataViewMore?.email
+                            ? "No data"
+                            : dataViewMore?.email,
                       }}
                       className=""
                     />
@@ -2528,7 +3030,12 @@ const User = ({ getNewCount, title }) => {
                     <span>Phone:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.phone === null || dataViewMore?.phone === "" || !dataViewMore?.phone ? "No data" : dataViewMore?.phone,
+                        __html:
+                          dataViewMore?.phone === null ||
+                          dataViewMore?.phone === "" ||
+                          !dataViewMore?.phone
+                            ? "No data"
+                            : dataViewMore?.phone,
                       }}
                       className=""
                     />
@@ -2537,7 +3044,12 @@ const User = ({ getNewCount, title }) => {
                     <span>Pincode:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.pincode === null || dataViewMore?.pincode === "" || !dataViewMore?.pincode ? "No data" : dataViewMore?.pincode,
+                        __html:
+                          dataViewMore?.pincode === null ||
+                          dataViewMore?.pincode === "" ||
+                          !dataViewMore?.pincode
+                            ? "No data"
+                            : dataViewMore?.pincode,
                       }}
                       className=""
                     />
@@ -2546,7 +3058,12 @@ const User = ({ getNewCount, title }) => {
                     <span>Permanent DLnumber:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.permanentDLnumber === null || dataViewMore?.permanentDLnumber === "" || !dataViewMore?.permanentDLnumber ? "No data" : dataViewMore?.permanentDLnumber,
+                        __html:
+                          dataViewMore?.permanentDLnumber === null ||
+                          dataViewMore?.permanentDLnumber === "" ||
+                          !dataViewMore?.permanentDLnumber
+                            ? "No data"
+                            : dataViewMore?.permanentDLnumber,
                       }}
                       className=""
                     />
@@ -2555,7 +3072,12 @@ const User = ({ getNewCount, title }) => {
                     <span>Issue Date:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.issueDate === null || dataViewMore?.issueDate === "" || !dataViewMore?.issueDate ? "No data" : dataViewMore?.issueDate,
+                        __html:
+                          dataViewMore?.issueDate === null ||
+                          dataViewMore?.issueDate === "" ||
+                          !dataViewMore?.issueDate
+                            ? "No data"
+                            : dataViewMore?.issueDate,
                       }}
                       className=""
                     />
@@ -2564,7 +3086,12 @@ const User = ({ getNewCount, title }) => {
                     <span>Valid Till:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.validTill === null || dataViewMore?.validTill === "" || !dataViewMore?.validTill ? "No data" : dataViewMore?.validTill,
+                        __html:
+                          dataViewMore?.validTill === null ||
+                          dataViewMore?.validTill === "" ||
+                          !dataViewMore?.validTill
+                            ? "No data"
+                            : dataViewMore?.validTill,
                       }}
                       className=""
                     />
@@ -2573,7 +3100,12 @@ const User = ({ getNewCount, title }) => {
                     <span>Authority:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.Authority === null || dataViewMore?.Authority === "" || !dataViewMore?.Authority ? "No data" : dataViewMore?.Authority,
+                        __html:
+                          dataViewMore?.Authority === null ||
+                          dataViewMore?.Authority === "" ||
+                          !dataViewMore?.Authority
+                            ? "No data"
+                            : dataViewMore?.Authority,
                       }}
                       className=""
                     />
@@ -2582,7 +3114,12 @@ const User = ({ getNewCount, title }) => {
                     <span>Blood Group:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.bloodGroup === null || dataViewMore?.bloodGroup === "" || !dataViewMore?.bloodGroup ? "No data" : dataViewMore?.bloodGroup,
+                        __html:
+                          dataViewMore?.bloodGroup === null ||
+                          dataViewMore?.bloodGroup === "" ||
+                          !dataViewMore?.bloodGroup
+                            ? "No data"
+                            : dataViewMore?.bloodGroup,
                       }}
                       className=""
                     />
@@ -2592,17 +3129,42 @@ const User = ({ getNewCount, title }) => {
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Driving License Image:</span>
-                    {dataViewMore?.drivingLicense === null || dataViewMore?.drivingLicense === "" || !dataViewMore?.drivingLicense ? "No Data" : <img className="view" src={dataViewMore?.drivingLicense} alt="No Image" />}
+                    {dataViewMore?.drivingLicense === null ||
+                    dataViewMore?.drivingLicense === "" ||
+                    !dataViewMore?.drivingLicense ? (
+                      "No Data"
+                    ) : (
+                      <img
+                        className="view"
+                        src={dataViewMore?.drivingLicense}
+                        alt="No Image"
+                      />
+                    )}
                   </div>
                   <div className="honda-text-grid-items">
                     <span>ID Proof:</span>
-                    {dataViewMore?.IDproof === null || dataViewMore?.IDproof === "" || !dataViewMore?.IDproof ? "No Data" : <img className="view" src={dataViewMore?.IDproof} alt="No Image" />}
+                    {dataViewMore?.IDproof === null ||
+                    dataViewMore?.IDproof === "" ||
+                    !dataViewMore?.IDproof ? (
+                      "No Data"
+                    ) : (
+                      <img
+                        className="view"
+                        src={dataViewMore?.IDproof}
+                        alt="No Image"
+                      />
+                    )}
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Authority City:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.authoritycity === null || dataViewMore?.authoritycity === "" || !dataViewMore?.authoritycity ? "No data" : dataViewMore?.authoritycity,
+                        __html:
+                          dataViewMore?.authoritycity === null ||
+                          dataViewMore?.authoritycity === "" ||
+                          !dataViewMore?.authoritycity
+                            ? "No data"
+                            : dataViewMore?.authoritycity,
                       }}
                       className=""
                     />
@@ -2611,12 +3173,16 @@ const User = ({ getNewCount, title }) => {
                     <span>Authority District:</span>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.authoritydistrict === null || dataViewMore?.authoritydistrict === "" || !dataViewMore?.authoritydistrict ? "No data" : dataViewMore?.authoritydistrict,
+                        __html:
+                          dataViewMore?.authoritydistrict === null ||
+                          dataViewMore?.authoritydistrict === "" ||
+                          !dataViewMore?.authoritydistrict
+                            ? "No data"
+                            : dataViewMore?.authoritydistrict,
                       }}
                       className=""
                     />
                   </div>
-
                 </div>
               </div>
             ) : null}
@@ -2650,7 +3216,12 @@ const User = ({ getNewCount, title }) => {
                       <span>Receipt Amount:</span>
                       <p
                         dangerouslySetInnerHTML={{
-                          __html: dataForPayment?.courseName[0]?.price === null || dataForPayment?.courseName[0]?.price === "" || !dataForPayment?.courseName[0]?.price ? "No data" : dataForPayment?.courseName[0]?.price,
+                          __html:
+                            dataForPayment?.courseName[0]?.price === null ||
+                            dataForPayment?.courseName[0]?.price === "" ||
+                            !dataForPayment?.courseName[0]?.price
+                              ? "No data"
+                              : dataForPayment?.courseName[0]?.price,
                         }}
                         className=""
                       />
@@ -2659,16 +3230,23 @@ const User = ({ getNewCount, title }) => {
                       <span>Receipt Id:</span>
                       <p
                         dangerouslySetInnerHTML={{
-                          __html: dataForPayment?._id === null || dataForPayment?._id === "" || !dataForPayment?._id ? "No data" : dataForPayment?._id,
+                          __html:
+                            dataForPayment?._id === null ||
+                            dataForPayment?._id === "" ||
+                            !dataForPayment?._id
+                              ? "No data"
+                              : dataForPayment?._id,
                         }}
                         className=""
                       />
                     </div>
                     <div className="honda-text-grid-items">
                       <span>User Name:</span>
-                      <p>{dataForPayment?.fname}{" "}{dataForPayment?.mname}{" "}{dataForPayment?.lname}</p>
+                      <p>
+                        {dataForPayment?.fname} {dataForPayment?.mname}{" "}
+                        {dataForPayment?.lname}
+                      </p>
                     </div>
-
                   </div>
                 </div>
                 <div className="d-flex align-items-center justify-content-center">
@@ -2678,7 +3256,6 @@ const User = ({ getNewCount, title }) => {
                     }}
                     className="btn btn-succes mr-2"
                   >
-
                     Make A Payment
                   </button>
                 </div>
