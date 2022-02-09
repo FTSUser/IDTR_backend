@@ -228,6 +228,7 @@ const User = ({ getNewCount, title }) => {
     setEditMode(false)
     setInputValue({});
     setCourceTypeData('')
+    setgetNameByID()
     setTab("course")
     setdefaultValue({
       vehicleCategory: null,
