@@ -62,7 +62,6 @@ const Batch = ({ getNewCount, title }) => {
   const [getExaminer, setgetExaminer] = useState([]);
   const [getDataenter, setgetDataenter] = useState([]);
 
-
   useEffect(() => {
     document.title = "Honda | Banner";
     getDateAndApi(new Date());
@@ -88,9 +87,9 @@ const Batch = ({ getNewCount, title }) => {
     setDataViewMore({});
   };
 
-  useEffect(() => { }, [inputValueForAdd]);
+  useEffect(() => {}, [inputValueForAdd]);
 
-  useEffect(() => { }, [idForEditStatus]);
+  useEffect(() => {}, [idForEditStatus]);
 
   const handleAdminUpdateClose = () => {
     setInputValue({});
@@ -99,12 +98,10 @@ const Batch = ({ getNewCount, title }) => {
     setShow(false);
     getDateAndApi(new Date());
     setIsAddAnnouncement(false);
-    getAllAnnouncement()
+    getAllAnnouncement();
     setIsUpdateAnnouncement(false);
-    setdateTimezon([])
-    setbatchInfo([])
-
-
+    setdateTimezon([]);
+    setbatchInfo([]);
   };
 
   const handleAddAdminClose = () => {
@@ -113,23 +110,21 @@ const Batch = ({ getNewCount, title }) => {
     setDate(new Date());
     getDateAndApi(new Date());
     setIsAddAnnouncement(false);
-    getAllAnnouncement()
-    setdateTimezon([])
-    setbatchInfo([])
-
-
+    getAllAnnouncement();
+    setdateTimezon([]);
+    setbatchInfo([]);
   };
 
   const handleClose = () => {
     setShow(false);
     setInputValue({});
     setDescription([]);
-    setdateTimezon([])
-    setbatchInfo([])
+    setdateTimezon([]);
+    setbatchInfo([]);
     setDate(new Date());
     getDateAndApi(new Date());
     setIsAddAnnouncement(false);
-    getAllAnnouncement()
+    getAllAnnouncement();
   };
 
   useEffect(() => {
@@ -139,15 +134,13 @@ const Batch = ({ getNewCount, title }) => {
   const getAllAnnouncement = async () => {
     setIsLoaderVisible(true);
     if (!search) {
-      await ApiGet(
-        `batch/getAllBatch?page=${page}&limit=${countPerPage}`
-      )
+      await ApiGet(`batch/getAllBatch?page=${page}&limit=${countPerPage}`)
         .then((res) => {
           setIsLoaderVisible(false);
           setFilteredAnnouncement(res?.data?.payload?.batch);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => { });
+        .catch((err) => {});
     } else {
       await ApiGet(
         `batch/getAllBatch?search=${search}&page=${page}&limit=${countPerPage}`
@@ -157,61 +150,65 @@ const Batch = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.batch);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => { });
+        .catch((err) => {});
     }
   };
 
-
   const getDateAndApi = async (selectdate) => {
-    selectdate = new Date(selectdate)
+    selectdate = new Date(selectdate);
     setIsLoaderVisible(true);
     await ApiGet(
-      `trainingDate/getData?date=${selectdate.getFullYear() + "-" + (selectdate.getMonth() < 9 ? ("0" + (selectdate.getMonth() + 1)) : (selectdate.getMonth() + 1)) + '-' + (selectdate.getDate() < 9 ? ("0" + (selectdate.getDate())) : (selectdate.getDate()))}`
+      `trainingDate/getData?date=${
+        selectdate.getFullYear() +
+        "-" +
+        (selectdate.getMonth() < 9
+          ? "0" + (selectdate.getMonth() + 1)
+          : selectdate.getMonth() + 1) +
+        "-" +
+        (selectdate.getDate() < 9
+          ? "0" + selectdate.getDate()
+          : selectdate.getDate())
+      }`
     )
       .then((res) => {
-        setdateTimezon((res?.data?.payload?.subMenu) ? (res?.data?.payload?.subMenu) : [])
+        setdateTimezon(
+          res?.data?.payload?.subMenu ? res?.data?.payload?.subMenu : []
+        );
       })
       .catch((err) => {
-        setdateTimezon([])
+        setdateTimezon([]);
       });
-  }
-
-
+  };
 
   const getExaminerAndApi = async () => {
     setIsLoaderVisible(true);
-    await ApiGet(
-      `admin/get-examiners`
-    )
+    await ApiGet(`admin/get-examiners`)
       .then((res) => {
-        setgetExaminer((res?.data?.payload?.Examiner) ? (res?.data?.payload?.Examiner) : [])
+        setgetExaminer(
+          res?.data?.payload?.Examiner ? res?.data?.payload?.Examiner : []
+        );
       })
       .catch((err) => {
-        setgetExaminer([])
+        setgetExaminer([]);
       });
-  }
+  };
   const getDataenterAndApi = async () => {
     setIsLoaderVisible(true);
-    await ApiGet(
-      `admin/get-dataentry`
-    )
+    await ApiGet(`admin/get-dataentry`)
       .then((res) => {
-        setgetDataenter((res?.data?.payload?.DataEntry) ? (res?.data?.payload?.DataEntry) : [])
+        setgetDataenter(
+          res?.data?.payload?.DataEntry ? res?.data?.payload?.DataEntry : []
+        );
       })
       .catch((err) => {
-        setgetDataenter([])
+        setgetDataenter([]);
       });
-  }
+  };
 
   useEffect(() => {
-    getExaminerAndApi()
-    getDataenterAndApi()
+    getExaminerAndApi();
+    getDataenterAndApi();
   }, []);
-
-
-
-
-
 
   const validateFormForAddAdmin = () => {
     let formIsValid = true;
@@ -241,8 +238,6 @@ const Batch = ({ getNewCount, title }) => {
     return formIsValid;
   };
 
-
-
   const handleAddAnnouncementDetails = (e) => {
     e.preventDefault();
     if (validateFormForAddAdmin()) {
@@ -251,8 +246,7 @@ const Batch = ({ getNewCount, title }) => {
         date: date,
         tdid: batchInfo,
         Examiner: inputValueForAdd.Examiner,
-        DataEntry: inputValueForAdd.DataEntry
-
+        DataEntry: inputValueForAdd.DataEntry,
       };
       ApiPost(`batch/addBatch`, Data)
         .then((res) => {
@@ -264,19 +258,17 @@ const Batch = ({ getNewCount, title }) => {
             setDate(new Date());
             getAllAnnouncement();
             setDescription([]);
-            setdateTimezon([])
-            setbatchInfo([])
+            setdateTimezon([]);
+            setbatchInfo([]);
           } else {
             toast.error(res?.data?.message);
           }
         })
         .catch((err) => {
-          toast.error(err?.response?.data?.message)
+          toast.error(err?.response?.data?.message);
         });
     }
   };
-
-
 
   const validateForm = () => {
     let formIsValid = true;
@@ -304,7 +296,6 @@ const Batch = ({ getNewCount, title }) => {
     return formIsValid;
   };
 
-
   const handleDeleteAnnouncement = () => {
     ApiDelete(`batch/deleteBatch/${idForDeleteAnnouncement}`)
       .then((res) => {
@@ -323,12 +314,11 @@ const Batch = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
+        toast.error(err?.response?.data?.message);
       });
   };
 
-
-  useEffect(() => { }, [inputValue]);
+  useEffect(() => {}, [inputValue]);
 
   const handleUpdateAnnouncementDetails = (e) => {
     e.preventDefault();
@@ -339,12 +329,9 @@ const Batch = ({ getNewCount, title }) => {
         date: date,
         tdid: batchInfo,
         Examiner: inputValue.Examiner,
-        DataEntry: inputValue.DataEntry
+        DataEntry: inputValue.DataEntry,
       };
-      ApiPut(
-        `batch/updateBatch/${idForUpdateAnnouncementData}`,
-        Data
-      )
+      ApiPut(`batch/updateBatch/${idForUpdateAnnouncementData}`, Data)
         .then((res) => {
           if (res?.status == 200) {
             setIsUpdateAnnouncement(false);
@@ -354,8 +341,8 @@ const Batch = ({ getNewCount, title }) => {
             setDate(new Date());
             getAllAnnouncement();
             setDescription([]);
-            setdateTimezon([])
-            setbatchInfo([])
+            setdateTimezon([]);
+            setbatchInfo([]);
             setDescription("");
             setDate(new Date());
             getAllAnnouncement();
@@ -364,7 +351,7 @@ const Batch = ({ getNewCount, title }) => {
           }
         })
         .catch((err) => {
-          toast.error(err?.response?.data?.message)
+          toast.error(err?.response?.data?.message);
         });
     }
   };
@@ -376,8 +363,6 @@ const Batch = ({ getNewCount, title }) => {
       cell: (row, index) => (page - 1) * countPerPage + (index + 1),
       width: "65px",
     },
-
-
 
     {
       name: "Batch Name",
@@ -437,23 +422,22 @@ const Batch = ({ getNewCount, title }) => {
       selector: "totalUser",
       cell: (row) => {
         return (
-          <>{row?.totalUser ? <p
-            dangerouslySetInnerHTML={{
-              __html: row?.totalUser,
-            }}
-            className=""
-          />: <p>{"-"}</p>}
-            
+          <>
+            {row?.totalUser ? (
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: row?.totalUser,
+                }}
+                className=""
+              />
+            ) : (
+              <p>{"-"}</p>
+            )}
           </>
         );
       },
       sortable: true,
     },
-
-
-
-
-
     {
       name: "Actions",
       cell: (row) => {
@@ -472,12 +456,14 @@ const Batch = ({ getNewCount, title }) => {
                   });
                   setIsUpdateAnnouncement(true);
                   setIdForUpdateAnnouncementData(row._id);
-                  getExaminerAndApi()
-                  getDataenterAndApi()
+                  getExaminerAndApi();
+                  getDataenterAndApi();
                   getDateAndApi(row?.date);
-                  setDate(new Date(row?.date))
-                  const tdidId = row?.tdid.map((data) => { return data._id })
-                  setbatchInfo(tdidId)
+                  setDate(new Date(row?.date));
+                  const tdidId = row?.tdid.map((data) => {
+                    return data._id;
+                  });
+                  setbatchInfo(tdidId);
                 }}
               >
                 <Tooltip title="Edit Announcement" arrow>
@@ -512,6 +498,30 @@ const Batch = ({ getNewCount, title }) => {
       },
     },
   ];
+  const columnsUser = [
+    {
+        name: "SNo",
+        cell: (row, index) => (page - 1) * countPerPage + (index + 1),
+        width: "65px",
+    },
+    {
+        name: "Email",
+        selector: "email",
+    },
+    {
+        name: "First Name",
+        selector: "fname",
+    },
+    {
+        name: "Middle Name",
+        selector: "mname",
+    },
+    {
+        name: "Last Name",
+        selector: "lname",
+        width: "200px",
+    },
+];
   // * Table Style
   const customStyles = {
     header: {
@@ -547,7 +557,6 @@ const Batch = ({ getNewCount, title }) => {
   };
 
   //for search data
-
 
   const handleSearch = (e) => {
     let val = e.target.value.replace(/[^\w\s]/gi, "");
@@ -593,23 +602,21 @@ const Batch = ({ getNewCount, title }) => {
     }
   }, [debouncedSearchTerm]);
 
-
-  const [batchInfo, setbatchInfo] = useState([])
+  const [batchInfo, setbatchInfo] = useState([]);
 
   const getBatch = (e, valueId) => {
     if (batchInfo.includes(valueId)) {
       setbatchInfo((data) => {
         return data.filter((allID) => {
-          return allID !== valueId
-        })
-      })
-    }
-    else {
+          return allID !== valueId;
+        });
+      });
+    } else {
       setbatchInfo((data) => {
-        return [...data, valueId]
-      })
+        return [...data, valueId];
+      });
     }
-  }
+  };
 
   return (
     <>
@@ -649,9 +656,7 @@ const Batch = ({ getNewCount, title }) => {
             <Modal.Header closeButton>
               <Modal.Title className="text-danger">Alert!</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-              Are You Sure To Want To delete this Banner
-            </Modal.Body>
+            <Modal.Body>Are You Sure To Want To delete this Banner</Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
                 cancel
@@ -746,8 +751,6 @@ const Batch = ({ getNewCount, title }) => {
                   </div>
                 </div> */}
 
-
-
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter Name
@@ -805,34 +808,37 @@ const Batch = ({ getNewCount, title }) => {
                 </div>
 
                 <div className="form-group row">
-                  {dateTimezon.length > 0 && (<label className="col-xl-3 col-lg-3 col-form-label">
-                    Select Slot
-                  </label>)}
+                  {dateTimezon.length > 0 && (
+                    <label className="col-xl-3 col-lg-3 col-form-label">
+                      Select Slot
+                    </label>
+                  )}
                   <div className="form-group">
-
-                    {dateTimezon.length > 0 && dateTimezon.map((data, index) => {
-                      return (
-                        <div
-                          className="form-group d-flex align-items-center"
-                          key={index}
-                        >
-                          <input
-                            className="mr-3 "
-                            type="checkbox"
-                            name="getBatch"
-                            defaultChecked={data.istrue}
-                            value={data._id}
-                            onChange={(e) => getBatch(e, data._id)}
-                          />
-                          <label>{moment(data.startTime).format("ll") + '  -  ' + moment(data.endTime).format("ll")}</label>
-
-                        </div>
-                      );
-                    })}
+                    {dateTimezon.length > 0 &&
+                      dateTimezon.map((data, index) => {
+                        return (
+                          <div
+                            className="form-group d-flex align-items-center"
+                            key={index}
+                          >
+                            <input
+                              className="mr-3 "
+                              type="checkbox"
+                              name="getBatch"
+                              defaultChecked={data.istrue}
+                              value={data._id}
+                              onChange={(e) => getBatch(e, data._id)}
+                            />
+                            <label>
+                              {moment(data.startTime).format("ll") +
+                                "  -  " +
+                                moment(data.endTime).format("ll")}
+                            </label>
+                          </div>
+                        );
+                      })}
                   </div>
                 </div>
-
-
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -859,8 +865,7 @@ const Batch = ({ getNewCount, title }) => {
                                 key={item._id}
                                 value={item?._id}
                                 selected={
-                                  inputValueForAdd?.Examiner ===
-                                    item?._id
+                                  inputValueForAdd?.Examiner === item?._id
                                     ? true
                                     : false
                                 }
@@ -883,7 +888,6 @@ const Batch = ({ getNewCount, title }) => {
                     </span>
                   </div>
                 </div>
-
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -910,8 +914,7 @@ const Batch = ({ getNewCount, title }) => {
                                 key={item._id}
                                 value={item?._id}
                                 selected={
-                                  inputValueForAdd?.DataEntry ===
-                                    item?._id
+                                  inputValueForAdd?.DataEntry === item?._id
                                     ? true
                                     : false
                                 }
@@ -934,8 +937,6 @@ const Batch = ({ getNewCount, title }) => {
                     </span>
                   </div>
                 </div>
-
-
 
                 <div className="d-flex align-items-center justify-content-center">
                   <button
@@ -1006,7 +1007,6 @@ const Batch = ({ getNewCount, title }) => {
                   </div>
                 </div> */}
 
-
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter Name
@@ -1036,8 +1036,6 @@ const Batch = ({ getNewCount, title }) => {
                   </div>
                 </div>
 
-
-
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Select Date
@@ -1065,34 +1063,37 @@ const Batch = ({ getNewCount, title }) => {
                   </div>
                 </div>
                 <div className="form-group row">
-                  {dateTimezon.length > 0 && (<label className="col-xl-3 col-lg-3 col-form-label">
-                    Select Slot
-                  </label>)}
+                  {dateTimezon.length > 0 && (
+                    <label className="col-xl-3 col-lg-3 col-form-label">
+                      Select Slot
+                    </label>
+                  )}
                   <div className="form-group">
-
-                    {dateTimezon.length > 0 && dateTimezon.map((data, index) => {
-                      return (
-                        <div
-                          className="form-group d-flex align-items-center"
-                          key={index}
-                        >
-                          <input
-                            className="mr-3 "
-                            type="checkbox"
-                            name="getBatch"
-                            defaultChecked={batchInfo.includes(data._id)}
-                            value={data._id}
-                            onChange={(e) => getBatch(e, data._id)}
-                          />
-                          <label>{moment(data.startTime).format("ll") + '  -  ' + moment(data.endTime).format("ll")}</label>
-
-                        </div>
-                      );
-                    })}
+                    {dateTimezon.length > 0 &&
+                      dateTimezon.map((data, index) => {
+                        return (
+                          <div
+                            className="form-group d-flex align-items-center"
+                            key={index}
+                          >
+                            <input
+                              className="mr-3 "
+                              type="checkbox"
+                              name="getBatch"
+                              defaultChecked={batchInfo.includes(data._id)}
+                              value={data._id}
+                              onChange={(e) => getBatch(e, data._id)}
+                            />
+                            <label>
+                              {moment(data.startTime).format("ll") +
+                                "  -  " +
+                                moment(data.endTime).format("ll")}
+                            </label>
+                          </div>
+                        );
+                      })}
                   </div>
                 </div>
-
-
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -1118,7 +1119,11 @@ const Batch = ({ getNewCount, title }) => {
                               <option
                                 key={item._id}
                                 value={item?._id}
-                                selected={item?._id === inputValue?.Examiner ? true : false}
+                                selected={
+                                  item?._id === inputValue?.Examiner
+                                    ? true
+                                    : false
+                                }
                               >
                                 {item.email}
                               </option>
@@ -1137,7 +1142,6 @@ const Batch = ({ getNewCount, title }) => {
                     </span>
                   </div>
                 </div>
-
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -1164,8 +1168,7 @@ const Batch = ({ getNewCount, title }) => {
                                 key={item._id}
                                 value={item?._id}
                                 selected={
-                                  inputValue?.DataEntry ===
-                                    item?._id
+                                  inputValue?.DataEntry === item?._id
                                     ? true
                                     : false
                                 }
@@ -1231,27 +1234,42 @@ const Batch = ({ getNewCount, title }) => {
             {isViewMoreAnnouncement === true ? (
               <div className="honda-container">
                 <div className="honda-text-grid">
-
                   <div className="honda-text-grid-items">
-                    <span>Title:</span>
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.title,
-                      }}
-                      className=""
-                    />
+                    <span>Batch Name:</span>
+                    <p>{dataViewMore?.name}</p>
                   </div>
-
-
                   <div className="honda-text-grid-items">
-                    <span>Image:</span>
-                    <img
-                      src={dataViewMore?.image}
-                      alt=""
-                      height="90px"
-                      width="170px"
-                    />
+                    <span>Date:</span>
+                    <p>{moment(dataViewMore?.date).format("ll")}</p>
                   </div>
+                  <div className="honda-text-grid-items">
+                    <span>Total:</span>
+                    <p>{dataViewMore?.total}</p>
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>User Data:</span>
+                    <DataTable
+                    columns={columnsUser}
+                    data={dataViewMore?.User}
+                    customStyles={customStyles}
+                    style={{
+                      marginTop: "-3rem",
+                    }}
+                    progressPending={isLoaderVisible}
+                    progressComponent={
+                      <Loader
+                        type="Puff"
+                        color="#334D52"
+                        height={30}
+                        width={30}
+                      />
+                    }
+                    highlightOnHover
+                    pagination
+                    paginationServer
+                  />
+                  </div>
+                  
                 </div>
               </div>
             ) : null}
