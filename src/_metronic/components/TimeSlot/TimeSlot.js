@@ -272,6 +272,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         cnid: inputValueForAdd?.CourseName,
         ctid: inputValueForAdd?.CourseType,
         vcid: inputValueForAdd?.VehicleCategory,
+        ccid: inputValueForAdd?.CourseCategory
       };
       ApiPost(`trainingDate/addDate`, Data)
         .then((res) => {
@@ -366,6 +367,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         cnid: inputValueForAdd?.CourseName,
         ctid: inputValueForAdd?.CourseType,
         vcid: inputValueForAdd?.VehicleCategory,
+        ccid: inputValueForAdd?.CourseCategory
       };
       ApiPut(`trainingDate/updateDate/${idForUpdateCourseNameData}`, Data)
         .then((res) => {

@@ -73,6 +73,9 @@ const User = ({ getNewCount, title }) => {
   const [loading, setLoading] = useState(false);
   const [idForDeleteAnnouncement, setIdForDeleteAnnouncement] = useState("");
   const [search, setSearch] = useState("");
+  const [getAllCourceCategory, setgetAllCourceCategory] = useState({});
+  const [CourceCategoryData, setCourceCategoryData] = useState("");
+  const [CourceNameData, setCourceNameData] = useState("");
 
   const [idForUpdateAnnouncementData, setIdForUpdateAnnouncementData] =
     useState("");
@@ -140,6 +143,7 @@ const User = ({ getNewCount, title }) => {
     vehicleCategory: '',
     courseType: '',
     courseName: '',
+    courseCategory: '',
     firstname: '',
     middlename: '',
     lastname: '',
@@ -188,6 +192,7 @@ const User = ({ getNewCount, title }) => {
         vehicleCategory: '',
         courseType: '',
         courseName: '',
+        courseCategory:'',
         firstname: '',
         middlename: '',
         lastname: '',
@@ -251,6 +256,30 @@ const User = ({ getNewCount, title }) => {
       setTableFilterData(newData)
     }
   };
+
+  //test
+  const getAllCourseCategory = () => {
+    const data = {
+      courseType: CourceTypeData,
+      vehicleCategory: VehicalCategoryData,
+    };
+    ApiPost(
+      "courseCategory/getCourseCategoryByCourseType?page=${page}&limit=1000",
+      data
+    ).then((res) => {
+      setgetAllCourceCategory(res.data.payload);
+    });
+    setUpdateCall(false);
+  };
+
+  useEffect(() => {
+    if (updateCall) {
+      getAllCourseCategory();
+    }
+  }, [updateCall]);
+
+
+  //end test
 
   useEffect(() => {
     getAllUser();
@@ -380,6 +409,7 @@ const User = ({ getNewCount, title }) => {
                         vehicleCategory: row?.vcid,
                         courseType: row?.ctid,
                         courseName: row?.cnid,
+                        courseCategory: row?.ccid,
                         firstname: row?.fname,
                         middlename: row?.mname,
                         lastname: row?.lname,
@@ -679,6 +709,7 @@ const User = ({ getNewCount, title }) => {
       "vcid": formdata.vehicleCategory,
       "ctid": formdata.courseType,
       "cnid": formdata.courseName,
+      "ccid": formdata.courseCategory,
       "lcid": formdata.license,
       "dateofCourse": formdata.preferdate,
       "drivingLicenseNumber": formdata.driverlicense,
@@ -757,6 +788,7 @@ const User = ({ getNewCount, title }) => {
       "vcid": formdata.vehicleCategory,
       "ctid": formdata.courseType,
       "cnid": formdata.courseName,
+      "ccid": formdata.courseCategory,
       "lcid": formdata.license,
       "dateofCourse": formdata.preferdate,
       "drivingLicenseNumber": formdata.driverlicense,
@@ -879,6 +911,11 @@ const User = ({ getNewCount, title }) => {
       else if (formdata.courseType == '') {
         toast.error(`Sorry! Course Type must be specified`)
         seterrorShow('Course Type')
+        settypeTrueFalseform(true)
+      }
+      else if (formdata.courseCategory == '') {
+        toast.error(`Sorry! Course Category must be specified`)
+        seterrorShow('Course Category')
         settypeTrueFalseform(true)
       }
       else if (formdata.courseName == '') {
@@ -1036,35 +1073,70 @@ const User = ({ getNewCount, title }) => {
       setTab(key)
     }
   };
+  // const previousClick = (e, key) => {
+  //   if (key === "course") {
+  //     let index = getAllVehicalData?.Question?.findIndex((e) => e._id === formdata?.vehicleCategory);
+  //     let vehaicalId = formdata.vehicleCategory;
+  //     let courseTypeId = formdata.courseType;
+  //     let courseNameId = formdata.courseName;
+
+
+  //     let vehical;
+  //     if (index !== -1) {
+  //       vehical = { label: getAllVehicalData?.Question[index].vehicleCategory, value: getAllVehicalData?.Question[index]._id }
+  //       setdefaultValue(data => ({ ...data, vehicleCategory: vehical }))
+  //     }
+  //     setVehicalCategoryData(formdata?.vehicleCategory)
+  //     getAllCourseTypeDataEdit(vehaicalId, courseTypeId)
+  //     getAllCourseNameEdit(courseTypeId, vehaicalId, courseNameId)
+  //     setTimeout(() => {
+  //       setTab(key)
+  //     }, 1000);
+
+
+  //   } else if (key === "personal") {
+  //     setTab(key)
+  //   } else if (key === "document") {
+  //     setTab(key)
+  //   } else if (key === "payment") {
+  //     setTab(key)
+  //   }
+  // }
+
   const previousClick = (e, key) => {
-    if (key === "course") {
-      let index = getAllVehicalData?.Question?.findIndex((e) => e._id === formdata?.vehicleCategory);
-      let vehaicalId = formdata.vehicleCategory;
-      let courseTypeId = formdata.courseType;
-      let courseNameId = formdata.courseName;
+    let index = getAllVehicalData?.Question?.findIndex(
+      (e) => e._id === formdata?.vehicleCategory
+    );
+    let vehaicalId = formdata.vehicleCategory;
+    let courseTypeId = formdata.courseType;
+    let courseNameId = formdata.courseName;
+    let courseCategoryId = formdata.courseCategory;
 
-
-      let vehical;
-      if (index !== -1) {
-        vehical = { label: getAllVehicalData?.Question[index].vehicleCategory, value: getAllVehicalData?.Question[index]._id }
-        setdefaultValue(data => ({ ...data, vehicleCategory: vehical }))
-      }
-      setVehicalCategoryData(formdata?.vehicleCategory)
-      getAllCourseTypeDataEdit(vehaicalId, courseTypeId)
-      getAllCourseNameEdit(courseTypeId, vehaicalId, courseNameId)
-      setTimeout(() => {
-        setTab(key)
-      }, 1000);
-
-
-    } else if (key === "personal") {
-      setTab(key)
-    } else if (key === "document") {
-      setTab(key)
-    } else if (key === "payment") {
-      setTab(key)
+    let vehical;
+    console.log("row=======>", formdata?.vehicleCategory);
+    if (index !== -1) {
+      vehical = {
+        label: getAllVehicalData?.Question[index].vehicleCategory,
+        value: getAllVehicalData?.Question[index]._id,
+      };
+      setdefaultValue((data) => ({ ...data, vehicleCategory: vehical} ));
     }
-  }
+    setVehicalCategoryData(formdata?.vehicleCategory);
+    getAllCourseTypeDataEdit(vehaicalId, courseTypeId);
+    getAllCourseNameEdit(courseTypeId, vehaicalId,courseCategoryId, courseNameId);
+    getAllCourseCategoryEdit(courseTypeId, vehaicalId, courseCategoryId);
+    if (key === "course") {
+      setTimeout(() => {
+        setTab(key);
+      }, 1500);
+    } else if (key === "personal") {
+      setTab(key);
+    } else if (key === "document") {
+      setTab(key);
+    } else if (key === "payment") {
+      setTab(key);
+    }
+  };
 
 
   const getAllVehicleCategory = () => {
@@ -1121,9 +1193,8 @@ const User = ({ getNewCount, title }) => {
   const getAllCourseName = () => {
     const data = {
       courseType: CourceTypeData,
-      vehicleCategory: VehicalCategoryData
-
-
+      vehicleCategory: VehicalCategoryData,
+      courseCategory: CourceCategoryData
     }
     ApiPost('courseName/getCoursenameByCoursetype?page=${page}&limit=1000', data).then((res) => {
       setgetAllCourceName(res.data.payload);
@@ -1132,25 +1203,72 @@ const User = ({ getNewCount, title }) => {
     setUpdateCall(false)
   }
 
-  const getAllCourseNameEdit = async (CourceTypeDataedit, VehicalCategoryDataedit, cId) => {
+  const getAllCourseNameEdit = async (
+    CourceTypeDataedit,
+    VehicalCategoryDataedit,
+    CourseCategoryDataedit,
+    cId
+  ) => {
     const data = {
       courseType: CourceTypeDataedit,
-      vehicleCategory: VehicalCategoryDataedit
-    }
-    ApiPost('courseName/getCoursenameByCoursetype?page=${page}&limit=1000', data).then((res) => {
+      vehicleCategory: VehicalCategoryDataedit,
+      courseCategory:CourseCategoryDataedit,
+    };
+    ApiPost(
+      "courseName/getCoursenameByCoursetype?page=${page}&limit=10000",
+      data
+    ).then((res) => {
       setgetAllCourceName(res.data.payload);
-      const setDataMAin = res?.data?.payload?.courseName?.filter((dataMain) => dataMain._id === cId)
-      setdefaultValue(dataasd => ({ ...dataasd, courseCategory: { label: setDataMAin[0].courseName, value: setDataMAin[0]._id } }))
-    }
-    )
-    setUpdateCall(false)
-  }
+      const setDataMAin = res?.data?.payload?.courseName?.filter(
+        (dataMain) => dataMain._id === cId
+      );
+      setdefaultValue((dataasd) => ({
+        ...dataasd,
+        courseName: {
+          label: setDataMAin[0]?.courseName,
+          value: setDataMAin[0]?._id
+        },
+      }));
+    });
+    setUpdateCall(false);
+  };
+  const getAllCourseCategoryEdit = async (
+    CourceTypeDataedit,
+    VehicalCategoryDataedit,
+    cId
+  ) => {
+    setgetAllCourceName();
+    setgetAllCourceType();
+    setgetAllCourceCategory();
+    const data = {
+      courseType: CourceTypeDataedit,
+      vehicleCategory: VehicalCategoryDataedit,
+    };
+    ApiPost(
+      "courseCategory/getCourseCategoryByCourseType?page=${page}&limit=10000",
+      data
+    ).then((res) => {
+      setgetAllCourceCategory(res.data.payload);
+      const setDataMAin = res?.data?.payload?.courseCategory?.filter(
+        (dataMain) => dataMain._id === cId
+      );
+      console.log("setDataMAin",setDataMAin);
+      setdefaultValue((dataasd) => ({
+        ...dataasd,
+        courseCategory: {
+          label:setDataMAin[0]?.courseCategory,
+          value: setDataMAin[0]?._id,
+        },
+      }));
+    });
+    setUpdateCall(false);
+  };
 
   useEffect(() => {
-    if (updateCall) {
-      getAllCourseName()
+    if (formdata?.courseCategory) {
+      getAllCourseName();
     }
-  }, [updateCall])
+  }, [formdata?.courseCategory]);
   useEffect(() => {
     if (formdata.vehicleCategory) {
       getAllCourseType()
@@ -1541,30 +1659,74 @@ const User = ({ getNewCount, title }) => {
 
                         </div>
 
-                        <div className="register-grid-items12 ">
-                          <label>Course Category<span>*</span></label>
-                          {(editMode ? defaultValue.courseCategory : true) && (
+                        {/* for course category test*/}
 
-                            <Select
-                              // isClearable
-                              options={getAllCourceName?.courseName?.map(e => ({ label: e.courseName, value: e._id }))}
-                              name='courseName'
-                              onChange={(e) => {
-                                setCourceType(e.value)
-                                if (e?.value) {
-                                  let index = getAllCourceName?.courseName?.findIndex(o => o?._id === e?.value);
-                                  if (index !== -1) {
-                                    setPrice(getAllCourceName?.courseName[index].price)
-                                    setCNID(getAllCourceName?.courseName[index]._id)
-                                  }
-                                }
-                                onChnagSelectField(e, 'courseName')
-                              }}
-                              defaultValue={defaultValue.courseCategory && defaultValue.courseCategory}
-                            />
-                          )}
+                <div className="register-grid-items12 ">
+                  <label>
+                    Course Category<span>*</span>
+                  </label>
+                  <Select
+                    // isClearable
+                    options={getAllCourceCategory?.courseCategory?.map((e) => ({
+                      label: e.courseCategory,
+                      value: e._id,
+                    }))}
+                    name="courseCategory"
+                    onChange={(e) => {
+                      setCourceType(e.value);
+                      setCourceCategoryData(e.value)
+                      if (e?.value) {
+                        let index =
+                          getAllCourceCategory?.courseCategory?.findIndex(
+                            (o) => o?._id === e?.value
+                          );
+                        
+                      }
+                      onChnagSelectField(e, "courseCategory");
+                    }}
+                    defaultValue={
+                      defaultValue.courseCategory && defaultValue.courseCategory
+                    }
+                  />
+                </div>
 
-                        </div>
+                {/* end test */}
+
+                <div className="register-grid-items12 ">
+                  <label>
+                    Course Name<span>*</span>
+                  </label>
+                  <Select
+                    // isClearable
+                    options={getAllCourceName?.courseName?.map((e) => ({
+                      label: e.courseName,
+                      value: e._id,
+                    }))}
+                    name="courseName"
+                    onChange={(e) => {
+                      // setCourceType(e.value);
+                      // setCourceCategory(e.value)
+                      setCourceNameData(e.value)
+                      if (e?.value) {
+                        let index = getAllCourceName?.courseName?.findIndex(
+                          (o) => o?._id === e?.value
+                        );
+                        if (index !== -1) {
+                          setPrice(
+                            getAllCourceName?.courseName[index].price
+                          );
+                          setCNID(
+                            getAllCourceName?.courseName[index]._id
+                          );
+                        }
+                      }
+                      onChnagSelectField(e, "courseName");
+                    }}
+                    defaultValue={
+                      defaultValue.courseName && defaultValue.courseName
+                    }
+                  />
+                </div>
                         {/* <div className="register-grid-items">
                   <label>Date of Course<span>*</span></label>
                   <input type="date" placeholder="" name='dateofCourse' value={formdata.dateofCourse} onChange={e => onChnageForm(e)} />
