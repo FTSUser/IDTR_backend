@@ -1837,24 +1837,28 @@ const User = ({ getNewCount, title }) => {
                           <div>
                             <div>
                               <div className="sub-title">
-                                <p>{getCourseNameByID?.courseName}</p>
+                              
                               </div>
                               <div className="information">
+                                <p>
+                                <span>Course Name:</span>{" "}
+                                {getCourseNameByID?.courseName}
+                                </p>
                                 <p>
                                   <span>Duration:</span>{" "}
                                   {getCourseNameByID?.duration}
                                 </p>
                                 <p>
-                                  <span>System Requirement:</span>{" "}
-                                  {getCourseNameByID?.systemRequirement}
+                                  <span>Timing:</span>{" "}
+                                  {getCourseNameByID?.timing}
                                 </p>
                                 <p>
-                                  <span>System Requirement:</span> Smart Phone,
-                                  4 GB data per day, google meet app, whatsapp{" "}
+                                  <span>Fees:</span> {" "}
+                                  {getCourseNameByID?.price}
                                 </p>
                                 <p>
-                                  <span>Certificate:</span>{" "}
-                                  {getCourseNameByID?.certificate}
+                                  <span>Mode of Payment:</span>{" "}
+                                  {getCourseNameByID?.mode}
                                 </p>
                               </div>
                             </div>
