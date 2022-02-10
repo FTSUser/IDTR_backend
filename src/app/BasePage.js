@@ -30,6 +30,9 @@ import Assign from "../_metronic/components/Assign/Assign";
 import TakeTest from "../_metronic/components/TakeTest/TakeTest";
 import CheckQuestion from "../_metronic/components/CheckQuestion/CheckQuestion";
 import CheckTest from "../_metronic/components/CheckQuestion/CheckQuestion";
+import Testomonial from "../_metronic/components/Testomonial/Testomonial";
+import HelpfulTips from "../_metronic/components/HelpfulTips/HelpfulTips";
+
 export default function BasePage() {
   let userInfo = getUserInfo()
 
@@ -54,6 +57,8 @@ export default function BasePage() {
           <ContentRoute exact path="/payment" component={Payment} />
           <ContentRoute exact path="/take-test" component={TakeTest} />
           <ContentRoute exact path="/check-question" component={CheckTest} />
+          <ContentRoute exact path="/testomonial" component={Testomonial} />
+          <ContentRoute exact path="/helpful-tips" component={HelpfulTips} />
 
 
           <ContentRoute exact path="/announcement" component={Announcement} />
