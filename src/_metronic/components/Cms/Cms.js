@@ -25,6 +25,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { AwsConfig } from "../../../config/S3Backet/app.config";
 import S3 from "react-aws-s3";
+import moment from "moment";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -326,6 +327,15 @@ const Cms = ({ getNewCount, title }) => {
       name: "SNo",
       cell: (row, index) => (page - 1) * countPerPage + (index + 1),
       width: "65px",
+    },
+    {
+      name: "Date",
+      cell: (row) => {
+        return <span>{moment(row?.createdAt).format("ll")}</span>;
+      },
+      selector: (row) => row?.createdAt,
+      sortable: true,
+      // width: "65px",
     },
     {
       name: "Title",

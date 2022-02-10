@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import DataTable, { defaultThemes } from "react-data-table-component";
 import "./User.scss";
 
@@ -35,12 +35,127 @@ import CreateIcon from "@material-ui/icons/Create";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Modal } from "react-bootstrap";
 import { Button } from "react-bootstrap";
+import Logo from './honda.png';
+import { useReactToPrint } from "react-to-print";
+import ReactToPrint from "react-to-print";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+// for pdf generation
+
+class ComponentToPrints extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = this.props;
+  }
+
+  componentDidMount() { 
+    this.setState(this.props);
+    console.log('I was triggered during componentDidMount',this.props)
+  }
+  
+
+
+  render() {
+    return (
+      <>
+        <div class="invoice-box">
+          <table>
+            <tr class="top">
+              <td colspan="2">
+                <table>
+                  <tr>
+                    <td>
+
+                      <b>Institute of Driving and Traffic Research (IDTR)</b>
+                      <p>A joint venture of Transport Department, <br /> Government of Haryana & Honda IDTR</p>
+                      <p>GST Number:121222</p>
+                    </td>
+                    <td class="title">
+                      <img src={Logo} />
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr class="information">
+              <td colspan="2">
+                <table>
+                  <tr>
+                    <td>
+                      Created: {moment(this?.props?.data?.createdAt).format(
+                        "DD-MM-YYYY "
+                      )}
+                    </td>
+                    <td>
+                      <h3>TAX INVOICE</h3>
+                      Invoice #: {this.props?.data?._id}<br />
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr className=''>
+              <td >
+
+                <td>Invoice To: {`${this.props?.data?.fname} `} </td>
+                <td>{this.props?.data?.lname}</td>
+
+              </td>
+            </tr>
+
+            <tr class="heading">
+              <td>Payment Method</td>
+
+
+            </tr>
+
+            <tr class="details">
+              <td>{this.props?.data?.type}</td>
+            </tr>
+
+            <tr class="heading">
+              <td>Item</td>
+              <td>GST</td>
+              <td>COST</td>
+
+            </tr>
+
+            <tr class="item">
+              <td>{this.props?.data?.courseName[0]?.courseName}</td>
+              <td>12FC34343433</td>
+              <td>&#x20b9;{this.props?.data?.courseName[0]?.price}</td>
+            </tr>
+
+
+            <tr></tr>
+            <tr class="total top">
+              <td></td>
+
+              <td>Total: &#x20b9;{this.props?.data?.courseName[0]?.price}</td>
+            </tr>
+            <tr class="total">
+              <td></td>
+
+              <td>Grand Total: &#x20b9;{this.props?.data?.courseName[0]?.price}</td>
+            </tr>
+          </table>
+        </div>
+      </>
+    );
+  }
+
+}
+
+//testing end
+
+
 const User = ({ getNewCount, title }) => {
+  const ref = React.createRef();
+  const itemsRef = useRef([]);
   const [filteredUser, setFilteredUser] = useState({});
   const [isLoaderVisible, setIsLoaderVisible] = useState(false);
 
@@ -346,7 +461,6 @@ const User = ({ getNewCount, title }) => {
       selector: "gender",
       sortable: true,
     },
-
     {
       name: "Actions",
       cell: (row) => {
@@ -363,6 +477,23 @@ const User = ({ getNewCount, title }) => {
                 <InfoOutlinedIcon />
               </Tooltip>
             </div>
+            {/* <div
+              className="cursor-pointer pl-2"
+            >
+              <Tooltip title="Generate Pdf" arrow>
+              <ReactToPrint
+                      trigger={() => <button className='center-button pdf-button'>Generate PDF</button>}
+                      content={() => itemsRef.current[i]}
+                    />
+                    <div style={{ display: 'none' }}>
+                      <div ref={el => (itemsRef.current[i] = el)} id={row?._id} >
+                        <ComponentToPrints
+                          data={row}
+                        />
+                      </div>
+                    </div>
+              </Tooltip>
+            </div> */}
             <Tooltip title="Make a Payment" arrow>
               <div
                 className="cursor-pointer pl-2"
@@ -408,7 +539,7 @@ const User = ({ getNewCount, title }) => {
                         getAllCourseCategoryEdit(row?.ctid, row?.vcid, row?.ccid);
                         getAllCourseNameEdit(row?.ctid, row?.vcid, row?.ccid, row?.cnid);
                         setCNID(row?.cnid);
-                        {row?.license === "NA" ? 
+                        
                         setFormData({
                           _id: row?._id,
                           vehicleCategory: row?.vcid,
@@ -442,48 +573,11 @@ const User = ({ getNewCount, title }) => {
                           authoritycity: row?.authoritycity,
                           authoritydistrict: row?.authoritydistrict,
                           type: row?.type,
-                          driverlicense: "",
-                          issueDate: "",
-                          validDate: "",
-                        }) : 
-                        setFormData({
-                          _id: row?._id,
-                          vehicleCategory: row?.vcid,
-                          courseType: row?.ctid,
-                          courseName: row?.cnid,
-                          courseCategory: row?.ccid,
-                          firstname: row?.fname,
-                          middlename: row?.mname,
-                          lastname: row?.lname,
-                          dateofCourse: row?.dateofCourse,
-                          DateofBirth: row?.DoB,
-                          qualification: row?.qualification,
-                          gender: row?.gender,
-                          address: row?.address,
-                          state: row?.state,
-                          district: row?.district,
-                          city: row?.city,
-                          email: row?.email,
-                          phone: row?.phone,
-                          pin: row?.pincode,
-                          license: row?.lcid,
-                          driverlicense: row?.drivingLicenseNumber,
-                          issueDate: row?.issueDate,
-                          validDate: row?.validTill,
-                          authority: row?.Authority,
-                          passport: row?.passportPhoto,
-                          driviniglicencephoto: row?.drivingLicense,
-                          idProof: row?.IDproof,
-                          mediacalCertificate: row?.medicalCertificate,
-                          bloodgroup: row?.bloodGroup,
-                          preferdate: row?.dateofCourse,
-                          trainddateid: row?.trainddateid,
-                          sloatId: row?.tdid,
-                          authoritycity: row?.authoritycity,
-                          authoritydistrict: row?.authoritydistrict,
-                          type: row?.type,
+                          driverlicense: row?.license === "NA" ? "":row?.drivingLicenseNumber,
+                          issueDate: row?.license === "NA" ? "" : row?.issueDate,
+                          validDate: row?.license === "NA" ? "" : row?.validTill,
                         })
-                      } 
+                      
                         getTrainignDateEditData(row?.dateofCourse, row?.cnid);
                       }}
                     />
