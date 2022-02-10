@@ -830,9 +830,9 @@ const Batch = ({ getNewCount, title }) => {
                               onChange={(e) => getBatch(e, data._id)}
                             />
                             <label>
-                              {moment(data.startTime).format("ll") +
-                                "  -  " +
-                                moment(data.endTime).format("ll")}
+                              {moment(data.startTime).format("ll")  + " " + moment(data.startTime).format("LT")+
+                                "-" +
+                                moment(data.endTime).format("ll") + " " +moment(data.startTime).format("LT")}
                             </label>
                           </div>
                         );
@@ -1085,9 +1085,9 @@ const Batch = ({ getNewCount, title }) => {
                               onChange={(e) => getBatch(e, data._id)}
                             />
                             <label>
-                              {moment(data.startTime).format("ll") +
-                                "  -  " +
-                                moment(data.endTime).format("ll")}
+                              {moment(data.startTime).format("ll")  + " " + moment(data.startTime).format("LT")+
+                                "-" +
+                                moment(data.endTime).format("ll") + " " +moment(data.startTime).format("LT")}
                             </label>
                           </div>
                         );
@@ -1243,8 +1243,12 @@ const Batch = ({ getNewCount, title }) => {
                     <p>{moment(dataViewMore?.date).format("ll")}</p>
                   </div>
                   <div className="honda-text-grid-items">
-                    <span>Total:</span>
+                    <span>Total Seat:</span>
                     <p>{dataViewMore?.total}</p>
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Total User:</span>
+                    <p>{dataViewMore?.totalUser ? dataViewMore?.totalUser : "-"}</p>
                   </div>
                   <div className="honda-text-grid-items">
                     <span>User Data:</span>
@@ -1269,7 +1273,6 @@ const Batch = ({ getNewCount, title }) => {
                     paginationServer
                   />
                   </div>
-                  
                 </div>
               </div>
             ) : null}
