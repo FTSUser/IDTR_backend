@@ -382,9 +382,15 @@ const Banner = ({ getNewCount, title }) => {
       cell: (row, index) => (page - 1) * countPerPage + (index + 1),
       width: "65px",
     },
-
-
-
+    {
+      name: "Date",
+      cell: (row) => {
+        return <span>{moment(row?.createdAt).format("ll")}</span>;
+      },
+      selector: (row) => row?.createdAt,
+      sortable: true,
+      // width: "65px",
+    },
     {
       name: "Title",
       selector: "title",

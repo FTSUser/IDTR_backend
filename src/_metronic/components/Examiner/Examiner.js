@@ -265,6 +265,15 @@ const Examiner = ({ getNewCount, title }) => {
             width: "65px",
         },
         {
+            name: "Date",
+            cell: (row) => {
+              return <span>{moment(row?.createdAt).format("ll")}</span>;
+            },
+            selector: (row) => row?.createdAt,
+            sortable: true,
+            // width: "65px",
+          },
+        {
             name: "Name",
             selector: "name",
             sortable: true,
@@ -460,7 +469,7 @@ const Examiner = ({ getNewCount, title }) => {
                 <div className="p-2 mb-2">
                     <div className="row mb-4 pr-3">
                         <div className="col d-flex justify-content-between">
-                            <h2 className="pl-3 pt-2">Examiner</h2>
+                            <h2 className="pl-3 pt-2">Assign Role</h2>
                         </div>
                         <div className="col">
                             <div>
@@ -469,7 +478,7 @@ const Examiner = ({ getNewCount, title }) => {
                                     className={`form-control form-control-lg form-control-solid `}
                                     name="search"
                                     value={search}
-                                    placeholder="Search Examiner"
+                                    placeholder="Search Role"
                                     onChange={(e) => handleSearch(e)}
                                 />
                             </div>

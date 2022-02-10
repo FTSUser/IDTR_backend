@@ -187,7 +187,11 @@ const TakeTest = ({ getNewCount, title }) => {
       selector: (row) => row?.total,
       sortable: true,
     },
-
+    {
+      name: "User",
+      selector: (row) => row?.totalUser === "" || !row?.totalUser  ? "-" : row?.totalUser,
+      sortable: true,
+    },
     {
       name: "Actions",
       cell: (row) => {

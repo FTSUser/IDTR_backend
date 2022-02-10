@@ -58,10 +58,14 @@ const Batch = ({ getNewCount, title }) => {
   const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
+  const [pageForBatch, setPageForBatch] = useState(1);
+  const [countPerPageForBatch, setCountPerPageForBatch] = useState(0);
   const [countPerPage, setCountPerPage] = useState(10);
   const [search, setSearch] = useState("");
   const [getExaminer, setgetExaminer] = useState([]);
   const [getDataenter, setgetDataenter] = useState([]);
+  const [responseByBatch, setResponseByBatch] = useState([]);
+  const [idForgetResponseByBatch, setIdForgetResponseByBatch] = useState();
 
   useEffect(() => {
     document.title = "Honda | Banner";
@@ -86,6 +90,7 @@ const Batch = ({ getNewCount, title }) => {
   const handleViewMoreClose = () => {
     setIsViewMoreAnnouncement(false);
     setDataViewMore({});
+    setIdForgetResponseByBatch("")
   };
 
   useEffect(() => {}, [inputValueForAdd]);
@@ -205,6 +210,29 @@ const Batch = ({ getNewCount, title }) => {
         setgetDataenter([]);
       });
   };
+
+  useEffect(() =>{
+    console.log("idForgetResponseByBatch",idForgetResponseByBatch);
+  },[idForgetResponseByBatch])
+
+  //getResponseByBatch
+
+  useEffect(() =>{
+    if(pageForBatch != 1){
+      getResponseByBatch(idForgetResponseByBatch)
+    }
+  },[countPerPageForBatch,pageForBatch])
+
+  const getResponseByBatch = async (id) =>{
+    await ApiGet(`response/getResponseByBatch/${id}?page=${pageForBatch}&limit=${countPerPageForBatch}`)
+      .then((res) => {
+        console.log("resrtr",res?.data?.payload?.Paper);
+        setResponseByBatch(res?.data?.payload?.Paper);
+      })
+      .catch((err) => {
+        toast.error(err?.message);
+      });
+  }
 
   useEffect(() => {
     getExaminerAndApi();
@@ -486,8 +514,11 @@ const Batch = ({ getNewCount, title }) => {
             <div
               className="cursor-pointer pl-2"
               onClick={() => {
+                setIdForgetResponseByBatch(row?._id)
                 setIsViewMoreAnnouncement(true);
                 setDataViewMore(row);
+                getResponseByBatch(row?._id);
+                
               }}
             >
               <Tooltip title="Show More" arrow>
@@ -504,6 +535,15 @@ const Batch = ({ getNewCount, title }) => {
       name: "SNo",
       cell: (row, index) => (page - 1) * countPerPage + (index + 1),
       width: "65px",
+    },
+    {
+      name: "Date",
+      cell: (row) => {
+        return <span>{moment(row?.createdAt).format("ll")}</span>;
+      },
+      selector: (row) => row?.createdAt,
+      sortable: true,
+      // width: "65px",
     },
     {
       name: "Email",

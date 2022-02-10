@@ -281,6 +281,15 @@ const CourseCategory = ({ getNewCount, title }) => {
       width: "65px",
     },
     {
+      name: "Date",
+      cell: (row) => {
+        return <span>{moment(row?.createdAt).format("ll")}</span>;
+      },
+      selector: (row) => row?.createdAt,
+      sortable: true,
+      // width: "65px",
+    },
+    {
         name: "courseCategory",
         selector: (row) => row?.courseCategory,
         sortable: true,

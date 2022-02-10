@@ -9,6 +9,7 @@ import Slide from "@material-ui/core/Slide";
 
 import Loader from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
+import moment from "moment";
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -68,6 +69,15 @@ const ContactUs = ({ getNewCount, title }) => {
       name: "SNo",
       cell: (row, index) => (page - 1) * countPerPage + (index + 1),
       width: "65px",
+    },
+    {
+      name: "Date",
+      cell: (row) => {
+        return <span>{moment(row?.createdAt).format("ll")}</span>;
+      },
+      selector: (row) => row?.createdAt,
+      sortable: true,
+      // width: "65px",
     },
     {
       name: "Name",
