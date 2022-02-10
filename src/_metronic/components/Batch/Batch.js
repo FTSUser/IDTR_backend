@@ -784,7 +784,7 @@ const Batch = ({ getNewCount, title }) => {
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Select Date
                   </label>
-                  <div className="col-lg-9 col-xl-6">
+                  <div className="col-lg-9 col-xl-6 cus-data-input-style">
                     <DatePicker
                       id="date"
                       format="DD/MM/YYYY"
@@ -813,12 +813,12 @@ const Batch = ({ getNewCount, title }) => {
                       Select Slot
                     </label>
                   )}
-                  <div className="form-group">
+                  <div className="">
                     {dateTimezon.length > 0 &&
                       dateTimezon.map((data, index) => {
                         return (
                           <div
-                            className="form-group d-flex align-items-center"
+                            className="d-flex align-items-center check-new-design"
                             key={index}
                           >
                             <input
@@ -1040,7 +1040,7 @@ const Batch = ({ getNewCount, title }) => {
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Select Date
                   </label>
-                  <div className="col-lg-9 col-xl-6">
+                  <div className="col-lg-9 col-xl-6 cus-data-input-style">
                     <DatePicker
                       id="date"
                       format="DD/MM/YYYY"

@@ -218,3 +218,35 @@ body {
 		margin: 0;
 	}
 }
+
+
+
+.cus-data-input-style {
+	span {
+		a {
+			height: 100%;
+			display: flex;
+			align-items: center;
+		}
+	}
+	input {
+		height: 44.5px;
+		padding: 0.825rem 1.42rem;
+    	font-size: 1.08rem;
+		border: none;
+		border: 1px solid #c4c4c4;
+		background-color: #F3F6F9;
+	}
+}
+
+.check-new-design {
+	padding: 0 12.5px;
+	input[type="checkbox"] {
+		width: 16px;
+		height: 16px;
+	}
+	label {
+		padding-bottom: 0px !important;
+		margin-bottom: 0px !important;
+	}
+}
