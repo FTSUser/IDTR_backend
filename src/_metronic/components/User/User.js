@@ -46,6 +46,7 @@ const User = ({ getNewCount, title }) => {
 
   const [dataViewMore, setDataViewMore] = useState({});
   const [isViewMoreUser, setIsViewMoreUser] = useState(false);
+  const [dataForEdit, setDataForEdit] = useState();
 
   //new data
 
@@ -70,8 +71,6 @@ const User = ({ getNewCount, title }) => {
   const [idForDeleteAnnouncement, setIdForDeleteAnnouncement] = useState("");
   const [search, setSearch] = useState("");
   const [getAllCourceCategory, setgetAllCourceCategory] = useState({});
-  const [CourceCategoryData, setCourceCategoryData] = useState("");
-  const [CourceNameData, setCourceNameData] = useState("");
 
   const [idForUpdateAnnouncementData, setIdForUpdateAnnouncementData] =
     useState("");
@@ -83,6 +82,8 @@ const User = ({ getNewCount, title }) => {
   useEffect(() => {
     document.title = "Honda | User";
   }, []);
+
+ 
 
   // const startValue = new Date(
   //   new Date().getFullYear(),
@@ -104,6 +105,8 @@ const User = ({ getNewCount, title }) => {
   const [VehicalCategoryData, setVehicalCategoryData] = useState("");
   const [TrainningDate, setTrainningDate] = useState("");
   const [CourceTypeData, setCourceTypeData] = useState("");
+  const [CourceCategoryData, setCourceCategoryData] = useState("");
+  const [CourceNameData, setCourceNameData] = useState("");
   const [price, setPrice] = useState("");
   const [cnid, setCNID] = useState("");
   const [alertForSlot, setAlertForSlot] = useState();
@@ -164,6 +167,11 @@ const User = ({ getNewCount, title }) => {
 
   useEffect(() => {}, [tableFilterData]);
 
+
+  useEffect(() => {
+    console.log("formdata",formdata);
+  }, [formdata]);
+
   const handlePaymentClose = () => {
     setIsPaymentPopUp(false);
     setDataForPayment([]);
@@ -210,12 +218,15 @@ const User = ({ getNewCount, title }) => {
     setEditMode(false);
     setInputValue({});
     setCourceTypeData("");
+    setCourceCategoryData("");
+    setCourceNameData("")
     setgetNameByID();
     setTab("course");
     setdefaultValue({
       vehicleCategory: null,
       courseType: null,
       courseCategory: null,
+      courseCategoryId: null,
     });
     setIsAddAnnouncement(false);
   };
@@ -394,7 +405,8 @@ const User = ({ getNewCount, title }) => {
                         }
                         setVehicalCategoryData(row?.vcid);
                         getAllCourseTypeDataEdit(row?.vcid, row?.ctid);
-                        getAllCourseNameEdit(row?.ctid, row?.vcid, row?.cnid);
+                        getAllCourseCategoryEdit(row?.ctid, row?.vcid, row?.ccid);
+                        getAllCourseNameEdit(row?.ctid, row?.vcid, row?.ccid, row?.cnid);
                         setCNID(row?.cnid);
                         {row?.license === "NA" ? 
                         setFormData({
@@ -750,14 +762,15 @@ const User = ({ getNewCount, title }) => {
   const history = useHistory();
 
   const register = () => {
-    const data = {
+    const data = 
+    {
       vcid: formdata.vehicleCategory,
       ctid: formdata.courseType,
       cnid: formdata.courseName,
       ccid: formdata.courseCategory,
       lcid: formdata.license,
       dateofCourse: formdata.preferdate,
-      drivingLicenseNumber: formdata.driverlicense,
+      drivingLicenseNumber: formdata.license === "NA" ? "" : formdata.driverlicense,
       fname: formdata.firstname,
       mname: formdata.middlename,
       lname: formdata.lastname,
@@ -772,8 +785,8 @@ const User = ({ getNewCount, title }) => {
       email: formdata.email,
       phone: formdata.phone,
       permanentDLnumber: formdata.driverlicense,
-      issueDate: formdata.issueDate,
-      validTill: formdata.validDate,
+      issueDate: formdata.license === "NA" ? "" : formdata.issueDate,
+      validTill: formdata.license === "NA" ? "" : formdata.validDate,
       Authority: "Haryana",
       passportPhoto: formdata.passport,
       drivingLicense: formdata.driviniglicencephoto,
@@ -786,7 +799,10 @@ const User = ({ getNewCount, title }) => {
       authoritycity: formdata.authoritycity,
       authoritydistrict: formdata.authoritydistrict,
       type: formdata.type,
-    };
+    }
+
+    console.log("datadata", data);
+
     ApiPost("register/addRegister", data)
       .then((res) => {
         if (res?.status == 200) {
@@ -825,6 +841,8 @@ const User = ({ getNewCount, title }) => {
       });
   };
 
+
+
   const updateData = () => {
     const data = {
       vcid: formdata.vehicleCategory,
@@ -833,7 +851,7 @@ const User = ({ getNewCount, title }) => {
       ccid: formdata.courseCategory,
       lcid: formdata.license,
       dateofCourse: formdata.preferdate,
-      drivingLicenseNumber: formdata.driverlicense,
+      drivingLicenseNumber: formdata.license === "NA" ? "" : formdata.driverlicense,
       fname: formdata.firstname,
       mname: formdata.middlename,
       lname: formdata.lastname,
@@ -848,8 +866,8 @@ const User = ({ getNewCount, title }) => {
       email: formdata.email,
       phone: formdata.phone,
       permanentDLnumber: formdata.driverlicense,
-      issueDate: formdata.issueDate,
-      validTill: formdata.validDate,
+      issueDate: formdata.license === "NA" ? "" : formdata.issueDate,
+      validTill: formdata.license === "NA" ? "" : formdata.validDate,
       Authority: "Haryana",
       passportPhoto: formdata.passport,
       drivingLicense: formdata.driviniglicencephoto,
@@ -862,7 +880,10 @@ const User = ({ getNewCount, title }) => {
       authoritycity: formdata.authoritycity,
       authoritydistrict: formdata.authoritydistrict,
       type: formdata.type,
-    };
+    }
+
+    console.log("dataForEdit",data);
+    
     ApiPut(`register/updateRegister/${formdata._id}`, data)
       .then((res) => {
         if (res?.status == 200) {
@@ -1221,7 +1242,7 @@ const User = ({ getNewCount, title }) => {
       courseCategory: CourceCategoryData,
     };
     ApiPost(
-      "courseName/getCoursenameByCoursetype?page=${page}&limit=1000",
+      "courseName/getCoursenameByCoursetype?page=${page}&limit=10000",
       data
     ).then((res) => {
       setgetAllCourceName(res.data.payload);
@@ -1300,7 +1321,6 @@ const User = ({ getNewCount, title }) => {
       getAllCourseType();
     }
   }, [formdata?.vehicleCategory]);
-
   useEffect(() => {
     getAllVehicleCategory();
   }, []);
@@ -1687,6 +1707,7 @@ const User = ({ getNewCount, title }) => {
                           <label>
                             Course Category<span>*</span>
                           </label>
+                          {(editMode ? defaultValue?.courseCategory : true) && 
                           <Select
                             // isClearable
                             options={getAllCourceCategory?.courseCategory?.map(
@@ -1712,6 +1733,7 @@ const User = ({ getNewCount, title }) => {
                               defaultValue.courseCategory
                             }
                           />
+}
                         </div>
 
                         {/* end test */}
@@ -1720,37 +1742,40 @@ const User = ({ getNewCount, title }) => {
                           <label>
                             Course Name<span>*</span>
                           </label>
+                          {(editMode ? defaultValue?.courseName : true) &&
                           <Select
-                            // isClearable
-                            options={getAllCourceName?.courseName?.map((e) => ({
-                              label: e.courseName,
-                              value: e._id,
-                            }))}
-                            name="courseName"
-                            onChange={(e) => {
-                              // setCourceType(e.value);
-                              // setCourceCategory(e.value)
-                              setCourceNameData(e.value);
-                              if (e?.value) {
-                                let index =
-                                  getAllCourceName?.courseName?.findIndex(
-                                    (o) => o?._id === e?.value
-                                  );
-                                if (index !== -1) {
-                                  setPrice(
-                                    getAllCourceName?.courseName[index].price
-                                  );
-                                  setCNID(
-                                    getAllCourceName?.courseName[index]._id
-                                  );
-                                }
+                          // isClearable
+                          options={getAllCourceName?.courseName?.map((e) => ({
+                            label: e.courseName,
+                            value: e._id,
+                          }))}
+                          name="courseName"
+                          onChange={(e) => {
+                            // setCourceType(e.value);
+                            // setCourceCategory(e.value)
+                            setCourceNameData(e.value);
+                            if (e?.value) {
+                              let index =
+                                getAllCourceName?.courseName?.findIndex(
+                                  (o) => o?._id === e?.value
+                                );
+                              if (index !== -1) {
+                                setPrice(
+                                  getAllCourceName?.courseName[index].price
+                                );
+                                setCNID(
+                                  getAllCourceName?.courseName[index]._id
+                                );
                               }
-                              onChnagSelectField(e, "courseName");
-                            }}
-                            defaultValue={
-                              defaultValue.courseName && defaultValue.courseName
                             }
-                          />
+                            onChnagSelectField(e, "courseName");
+                          }}
+                          defaultValue={
+                            defaultValue.courseName && defaultValue.courseName
+                          }
+                        />
+                          }
+                          
                         </div>
                         <div className="register-grid-items12 ">
                           <label>
@@ -1790,7 +1815,7 @@ const User = ({ getNewCount, title }) => {
                             type="date"
                             placeholder=""
                             name="issueDate"
-                            value={formdata.issueDate.slice(0, 10)}
+                            value={formdata.issueDate ? formdata.issueDate.slice(0, 10) :  formdata.issueDate}
                             onChange={(e) => onChnageForm(e)}
                           />
                         </div>
@@ -1802,7 +1827,7 @@ const User = ({ getNewCount, title }) => {
                             type="date"
                             placeholder=""
                             name="validDate"
-                            value={formdata.validDate.slice(0, 10)}
+                            value={formdata.validDate ? formdata.validDate.slice(0, 10) : formdata.validDate}
                             onChange={(e) => onChnageForm(e)}
                           />
                         </div>

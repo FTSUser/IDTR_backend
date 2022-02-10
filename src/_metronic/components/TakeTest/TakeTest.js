@@ -193,7 +193,7 @@ const TakeTest = ({ getNewCount, title }) => {
       cell: (row) => {
         return (
           <>
-            {row?.isAttendanceTake && (
+            {row?.isAttendanceTake && !row?.isExamGenerate && (
               <div className="d-flex justify-content-between">
                 <div
                   className="cursor-pointer pl-2"

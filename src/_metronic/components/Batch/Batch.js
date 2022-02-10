@@ -27,6 +27,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import moment from "moment";
 import S3 from "react-aws-s3";
 import { AwsConfig } from "../../../config/S3Backet/app.config";
+import CsvDownload from "react-json-to-csv";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -500,28 +501,28 @@ const Batch = ({ getNewCount, title }) => {
   ];
   const columnsUser = [
     {
-        name: "SNo",
-        cell: (row, index) => (page - 1) * countPerPage + (index + 1),
-        width: "65px",
+      name: "SNo",
+      cell: (row, index) => (page - 1) * countPerPage + (index + 1),
+      width: "65px",
     },
     {
-        name: "Email",
-        selector: "email",
+      name: "Email",
+      selector: "email",
     },
     {
-        name: "First Name",
-        selector: "fname",
+      name: "First Name",
+      selector: "fname",
     },
     {
-        name: "Middle Name",
-        selector: "mname",
+      name: "Middle Name",
+      selector: "mname",
     },
     {
-        name: "Last Name",
-        selector: "lname",
-        width: "200px",
+      name: "Last Name",
+      selector: "lname",
+      width: "200px",
     },
-];
+  ];
   // * Table Style
   const customStyles = {
     header: {
@@ -617,6 +618,7 @@ const Batch = ({ getNewCount, title }) => {
       });
     }
   };
+
 
   return (
     <>
@@ -830,9 +832,13 @@ const Batch = ({ getNewCount, title }) => {
                               onChange={(e) => getBatch(e, data._id)}
                             />
                             <label>
-                              {moment(data.startTime).format("ll")  + " " + moment(data.startTime).format("LT")+
+                              {moment(data.startTime).format("ll") +
+                                " " +
+                                moment(data.startTime).format("LT") +
                                 "-" +
-                                moment(data.endTime).format("ll") + " " +moment(data.endTime).format("LT")}
+                                moment(data.endTime).format("ll") +
+                                " " +
+                                moment(data.endTime).format("LT")}
                             </label>
                           </div>
                         );
@@ -1085,9 +1091,13 @@ const Batch = ({ getNewCount, title }) => {
                               onChange={(e) => getBatch(e, data._id)}
                             />
                             <label>
-                            {moment(data.startTime).format("ll")  + " " + moment(data.startTime).format("LT")+
+                              {moment(data.startTime).format("ll") +
+                                " " +
+                                moment(data.startTime).format("LT") +
                                 "-" +
-                                moment(data.endTime).format("ll") + " " +moment(data.endTime).format("LT")}
+                                moment(data.endTime).format("ll") +
+                                " " +
+                                moment(data.endTime).format("LT")}
                             </label>
                           </div>
                         );
@@ -1248,30 +1258,32 @@ const Batch = ({ getNewCount, title }) => {
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Total User:</span>
-                    <p>{dataViewMore?.totalUser ? dataViewMore?.totalUser : "-"}</p>
+                    <p>
+                      {dataViewMore?.totalUser ? dataViewMore?.totalUser : "-"}
+                    </p>
                   </div>
                   <div className="honda-text-grid-items">
                     <span>User Data:</span>
                     <DataTable
-                    columns={columnsUser}
-                    data={dataViewMore?.User}
-                    customStyles={customStyles}
-                    style={{
-                      marginTop: "-3rem",
-                    }}
-                    progressPending={isLoaderVisible}
-                    progressComponent={
-                      <Loader
-                        type="Puff"
-                        color="#334D52"
-                        height={30}
-                        width={30}
-                      />
-                    }
-                    highlightOnHover
-                    pagination
-                    paginationServer
-                  />
+                      columns={columnsUser}
+                      data={dataViewMore?.User}
+                      customStyles={customStyles}
+                      style={{
+                        marginTop: "-3rem",
+                      }}
+                      progressPending={isLoaderVisible}
+                      progressComponent={
+                        <Loader
+                          type="Puff"
+                          color="#334D52"
+                          height={30}
+                          width={30}
+                        />
+                      }
+                      highlightOnHover
+                      pagination
+                      paginationServer
+                    />
                   </div>
                 </div>
               </div>
