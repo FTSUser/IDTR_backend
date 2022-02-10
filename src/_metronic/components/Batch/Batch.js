@@ -832,7 +832,7 @@ const Batch = ({ getNewCount, title }) => {
                             <label>
                               {moment(data.startTime).format("ll")  + " " + moment(data.startTime).format("LT")+
                                 "-" +
-                                moment(data.endTime).format("ll") + " " +moment(data.startTime).format("LT")}
+                                moment(data.endTime).format("ll") + " " +moment(data.endTime).format("LT")}
                             </label>
                           </div>
                         );
@@ -1085,9 +1085,9 @@ const Batch = ({ getNewCount, title }) => {
                               onChange={(e) => getBatch(e, data._id)}
                             />
                             <label>
-                              {moment(data.startTime).format("ll")  + " " + moment(data.startTime).format("LT")+
+                            {moment(data.startTime).format("ll")  + " " + moment(data.startTime).format("LT")+
                                 "-" +
-                                moment(data.endTime).format("ll") + " " +moment(data.startTime).format("LT")}
+                                moment(data.endTime).format("ll") + " " +moment(data.endTime).format("LT")}
                             </label>
                           </div>
                         );

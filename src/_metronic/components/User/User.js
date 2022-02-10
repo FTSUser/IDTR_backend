@@ -254,6 +254,8 @@ const User = ({ getNewCount, title }) => {
     setUpdateCall(false);
   };
 
+
+
   useEffect(() => {
     if (updateCall) {
       getAllCourseCategory();
@@ -394,6 +396,7 @@ const User = ({ getNewCount, title }) => {
                         getAllCourseTypeDataEdit(row?.vcid, row?.ctid);
                         getAllCourseNameEdit(row?.ctid, row?.vcid, row?.cnid);
                         setCNID(row?.cnid);
+                        {row?.license === "NA" ? 
                         setFormData({
                           _id: row?._id,
                           vehicleCategory: row?.vcid,
@@ -409,13 +412,50 @@ const User = ({ getNewCount, title }) => {
                           gender: row?.gender,
                           address: row?.address,
                           state: row?.state,
-                          driverlicense: row?.drivingLicenseNumber,
                           district: row?.district,
                           city: row?.city,
                           email: row?.email,
                           phone: row?.phone,
                           pin: row?.pincode,
                           license: row?.lcid,
+                          authority: row?.Authority,
+                          passport: row?.passportPhoto,
+                          driviniglicencephoto: row?.drivingLicense,
+                          idProof: row?.IDproof,
+                          mediacalCertificate: row?.medicalCertificate,
+                          bloodgroup: row?.bloodGroup,
+                          preferdate: row?.dateofCourse,
+                          trainddateid: row?.trainddateid,
+                          sloatId: row?.tdid,
+                          authoritycity: row?.authoritycity,
+                          authoritydistrict: row?.authoritydistrict,
+                          type: row?.type,
+                          driverlicense: "",
+                          issueDate: "",
+                          validDate: "",
+                        }) : 
+                        setFormData({
+                          _id: row?._id,
+                          vehicleCategory: row?.vcid,
+                          courseType: row?.ctid,
+                          courseName: row?.cnid,
+                          courseCategory: row?.ccid,
+                          firstname: row?.fname,
+                          middlename: row?.mname,
+                          lastname: row?.lname,
+                          dateofCourse: row?.dateofCourse,
+                          DateofBirth: row?.DoB,
+                          qualification: row?.qualification,
+                          gender: row?.gender,
+                          address: row?.address,
+                          state: row?.state,
+                          district: row?.district,
+                          city: row?.city,
+                          email: row?.email,
+                          phone: row?.phone,
+                          pin: row?.pincode,
+                          license: row?.lcid,
+                          driverlicense: row?.drivingLicenseNumber,
                           issueDate: row?.issueDate,
                           validDate: row?.validTill,
                           authority: row?.Authority,
@@ -430,7 +470,8 @@ const User = ({ getNewCount, title }) => {
                           authoritycity: row?.authoritycity,
                           authoritydistrict: row?.authoritydistrict,
                           type: row?.type,
-                        });
+                        })
+                      } 
                         getTrainignDateEditData(row?.dateofCourse, row?.cnid);
                       }}
                     />
@@ -1709,10 +1750,6 @@ const User = ({ getNewCount, title }) => {
                             }
                           />
                         </div>
-                        {/* <div className="register-grid-items">
-                  <label>Date of Course<span>*</span></label>
-                  <input type="date" placeholder="" name='dateofCourse' value={formdata.dateofCourse} onChange={e => onChnageForm(e)} />
-                </div> */}
                         <div className="register-grid-items12 ">
                           <label>
                             License Category<span>*</span>
