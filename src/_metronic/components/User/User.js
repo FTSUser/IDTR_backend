@@ -52,8 +52,7 @@ class ComponentToPrints extends React.Component {
   }
 
   componentDidMount() { 
-    this.setState(this.props);
-    console.log('I was triggered during componentDidMount',this.props)
+    this.setState({...this.props});
   }
   
 
@@ -464,6 +463,7 @@ const User = ({ getNewCount, title }) => {
     {
       name: "Actions",
       cell: (row) => {
+        console.log( " fsdfsdfsdfs",row);
         return (
           <>
             <div
@@ -477,23 +477,23 @@ const User = ({ getNewCount, title }) => {
                 <InfoOutlinedIcon />
               </Tooltip>
             </div>
-            {/* <div
+            <div
               className="cursor-pointer pl-2"
             >
-              <Tooltip title="Generate Pdf" arrow>
+              {/* <Tooltip title="Generate Pdf" arrow> */}
               <ReactToPrint
-                      trigger={() => <button className='center-button pdf-button'>Generate PDF</button>}
-                      content={() => itemsRef.current[i]}
+                      trigger={() => <button className="btn btn-success mr-2">PDF</button>}
+                      content={() => itemsRef.current[row._id]}
                     />
                     <div style={{ display: 'none' }}>
-                      <div ref={el => (itemsRef.current[i] = el)} id={row?._id} >
+                      <div ref={el => (itemsRef.current[row._id] = el)} id={row?._id} >
                         <ComponentToPrints
                           data={row}
                         />
                       </div>
                     </div>
-              </Tooltip>
-            </div> */}
+              {/* </Tooltip> */}
+            </div>
             <Tooltip title="Make a Payment" arrow>
               <div
                 className="cursor-pointer pl-2"
