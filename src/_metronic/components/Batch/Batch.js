@@ -58,14 +58,16 @@ const Batch = ({ getNewCount, title }) => {
   const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
+  const [countForBatch, setCountForBatch] = useState(0);
   const [pageForBatch, setPageForBatch] = useState(1);
-  const [countPerPageForBatch, setCountPerPageForBatch] = useState(0);
+  const [countPerPageForBatch, setCountPerPageForBatch] = useState(10);
   const [countPerPage, setCountPerPage] = useState(10);
   const [search, setSearch] = useState("");
   const [getExaminer, setgetExaminer] = useState([]);
   const [getDataenter, setgetDataenter] = useState([]);
   const [responseByBatch, setResponseByBatch] = useState([]);
   const [idForgetResponseByBatch, setIdForgetResponseByBatch] = useState();
+  const [isPaperViewModel, setIsPaperViewModel] = useState(false);
 
   useEffect(() => {
     document.title = "Honda | Banner";
@@ -90,7 +92,9 @@ const Batch = ({ getNewCount, title }) => {
   const handleViewMoreClose = () => {
     setIsViewMoreAnnouncement(false);
     setDataViewMore({});
-    setIdForgetResponseByBatch("")
+    setIdForgetResponseByBatch("");
+    setResponseByBatch([])
+    setCountForBatch(0)
   };
 
   useEffect(() => {}, [inputValueForAdd]);
@@ -119,6 +123,11 @@ const Batch = ({ getNewCount, title }) => {
     getAllAnnouncement();
     setdateTimezon([]);
     setbatchInfo([]);
+  };
+
+  const handleViewMorePaper = () => {
+    setIsPaperViewModel(false)
+    
   };
 
   const handleClose = () => {
@@ -211,28 +220,45 @@ const Batch = ({ getNewCount, title }) => {
       });
   };
 
-  useEffect(() =>{
-    console.log("idForgetResponseByBatch",idForgetResponseByBatch);
-  },[idForgetResponseByBatch])
+  useEffect(() => {
+    console.log("idForgetResponseByBatch", idForgetResponseByBatch);
+  }, [idForgetResponseByBatch]);
 
   //getResponseByBatch
 
-  useEffect(() =>{
-    if(pageForBatch != 1){
-      getResponseByBatch(idForgetResponseByBatch)
+  useEffect(() => {
+    if(idForgetResponseByBatch) {
+      getResponseByBatch(idForgetResponseByBatch);
     }
-  },[countPerPageForBatch,pageForBatch])
+  }, [pageForBatch, countPerPageForBatch]);
 
-  const getResponseByBatch = async (id) =>{
-    await ApiGet(`response/getResponseByBatch/${id}?page=${pageForBatch}&limit=${countPerPageForBatch}`)
+  const getResponseByBatch = async (id) => {
+    await ApiGet(
+      `register/getRegisterByBatch/${id}?page=${pageForBatch}&limit=${countPerPageForBatch}`
+    )
       .then((res) => {
-        console.log("resrtr",res?.data?.payload?.Paper);
-        setResponseByBatch(res?.data?.payload?.Paper);
+        console.log("resrtr", res?.data?.payload?.users);
+        setResponseByBatch(res?.data?.payload?.users);
+        setCountForBatch(res?.data?.payload?.count);
       })
       .catch((err) => {
-        toast.error(err?.message);
+        // toast.error(err?.message);
+        console.log(err?.message);
       });
-  }
+  };
+
+  const getPapersetByUserId = async (id) => {
+    await ApiGet(
+      `response/getResponseByUser/${id}`
+    )
+      .then((res) => {
+        console.log("resrtrssdf", res?.data?.payload);
+      })
+      .catch((err) => {
+        // toast.error(err?.message);
+        console.log(err?.message);
+      });
+  };
 
   useEffect(() => {
     getExaminerAndApi();
@@ -514,11 +540,10 @@ const Batch = ({ getNewCount, title }) => {
             <div
               className="cursor-pointer pl-2"
               onClick={() => {
-                setIdForgetResponseByBatch(row?._id)
+                setIdForgetResponseByBatch(row?._id);
                 setIsViewMoreAnnouncement(true);
                 setDataViewMore(row);
                 getResponseByBatch(row?._id);
-                
               }}
             >
               <Tooltip title="Show More" arrow>
@@ -533,7 +558,7 @@ const Batch = ({ getNewCount, title }) => {
   const columnsUser = [
     {
       name: "SNo",
-      cell: (row, index) => (page - 1) * countPerPage + (index + 1),
+      cell: (row, index) => (pageForBatch - 1) * countPerPageForBatch + (index + 1),
       width: "65px",
     },
     {
@@ -548,19 +573,69 @@ const Batch = ({ getNewCount, title }) => {
     {
       name: "Email",
       selector: "email",
+      cell: (row) => {
+        return (
+          <>
+            <p>{row?.email ? row?.email : "-"}</p>
+          </>
+        );
+      },
     },
     {
       name: "First Name",
       selector: "fname",
+      cell: (row) => {
+        return (
+          <>
+            <p>{row?.fname ? row?.fname : "-"}</p>
+          </>
+        );
+      },
     },
     {
       name: "Middle Name",
       selector: "mname",
+      cell: (row) => {
+        return (
+          <>
+            <p>{row?.mname ? row?.mname : "-"}</p>
+          </>
+        );
+      },
     },
     {
       name: "Last Name",
       selector: "lname",
+      cell: (row) => {
+        return (
+          <>
+            <p>{row?.lname ? row?.lname : "-"}</p>
+          </>
+        );
+      },
       width: "200px",
+    },
+    {
+      name: "Actions",
+      cell: (row) => {
+        return (
+          <>
+            <div className="d-flex justify-content-between">
+              <div
+                className="cursor-pointer pl-2"
+                onClick={() => {
+                  setIsPaperViewModel(true);
+                  getPapersetByUserId(row?.batchId)
+                }}
+              >
+                <Tooltip title="Edit Announcement" arrow>
+                  <CreateIcon />
+                </Tooltip>
+              </div>
+            </div>
+          </>
+        );
+      },
     },
   ];
   // * Table Style
@@ -658,7 +733,6 @@ const Batch = ({ getNewCount, title }) => {
       });
     }
   };
-
 
   return (
     <>
@@ -1304,7 +1378,7 @@ const Batch = ({ getNewCount, title }) => {
                   </div>
                   <div className="honda-text-grid-items">
                     <span>User Data:</span>
-                    <DataTable
+                    {/* <DataTable
                       columns={columnsUser}
                       data={dataViewMore?.User}
                       customStyles={customStyles}
@@ -1323,7 +1397,67 @@ const Batch = ({ getNewCount, title }) => {
                       highlightOnHover
                       pagination
                       paginationServer
+                    /> */}
+                    <DataTable
+                      columns={columnsUser}
+                      data={responseByBatch}
+                      customStyles={customStyles}
+                      style={{
+                        marginTop: "-3rem",
+                      }}
+                      progressPending={isLoaderVisible}
+                      progressComponent={
+                        <Loader
+                          type="Puff"
+                          color="#334D52"
+                          height={30}
+                          width={30}
+                        />
+                      }
+                      highlightOnHover
+                      pagination
+                      paginationServer
+                      paginationTotalRows={countForBatch}
+                      paginationPerPage={countPerPage}
+                      paginationRowsPerPageOptions={[10, 20, 25, 50, 100]}
+                      paginationDefaultPage={pageForBatch}
+                      onChangePage={(page) => {
+                        setPageForBatch(page);
+                      }}
+                      onChangeRowsPerPage={(rowPerPage) => {
+                        setCountPerPageForBatch(rowPerPage);
+                      }}
                     />
+                  </div>
+                </div>
+              </div>
+            ) : null}
+          </List>
+        </Dialog>
+      ) : null}
+      {isPaperViewModel ? (
+        <Dialog
+          fullScreen
+          open={isPaperViewModel}
+          onClose={handleViewMorePaper}
+          TransitionComponent={Transition}
+        >
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleViewMorePaper}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </Toolbar>
+          <List>
+            {isViewMoreAnnouncement === true ? (
+              <div className="honda-container">
+                <div className="honda-text-grid">
+                  <div className="honda-text-grid-items">
+                    <span>Batch Name:</span>
                   </div>
                 </div>
               </div>
