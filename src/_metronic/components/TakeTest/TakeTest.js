@@ -212,7 +212,7 @@ const TakeTest = ({ getNewCount, title }) => {
             {row?.isExamGenerate ? (
               <div>
                 <div
-                  className="btn btn-success mr-3"
+                  className="btn btn-success ml-2"
                   onClick={() => {
                     setIsAddQuestion(true);
                     viewPeperSet(row?._id);
@@ -725,7 +725,7 @@ const TakeTest = ({ getNewCount, title }) => {
                       ""
                     ) : (
                       <button
-                        className="btn btn-success mr-3"
+                        className="btn btn-success m-1"
                         onClick={() => {
                           setQuestionKEY(questionKEY - 1);
                         }}

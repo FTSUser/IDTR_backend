@@ -924,11 +924,11 @@ const TimeSlot = ({ getNewCount, title }) => {
                   </div>
                 </div>
 
-                <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
+                <div className="row">
+                  <label className="col-lg-3 col-form-label">
                     Select Date
                   </label>
-                  <div className="col-lg-9 col-xl-6">
+                  <div className="col-lg-6 cus-data-input-style">
                     <DatePicker
                       id="date"
                       format="DD/MM/YYYY"
@@ -951,10 +951,10 @@ const TimeSlot = ({ getNewCount, title }) => {
                 </div>
 
                 <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
+                  <label className="col-lg-3 col-form-label">
                     Enter Start Time
                   </label>
-                  <div className="col-lg-9 col-xl-6">
+                  <div className="col-lg-9 cus-data-input-style">
                     <TimePicker
                       showSecond={false}
                       defaultValue={now}
@@ -976,10 +976,10 @@ const TimeSlot = ({ getNewCount, title }) => {
                 </div>
 
                 <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
+                  <label className="col-lg-3 col-form-label">
                     Enter End Time
                   </label>
-                  <div className="col-lg-9 col-xl-6">
+                  <div className="col-lg-9 cus-data-input-style">
                     <TimePicker
                       showSecond={false}
                       defaultValue={now1}

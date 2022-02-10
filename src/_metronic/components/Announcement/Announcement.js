@@ -771,7 +771,7 @@ const Announcement = ({ getNewCount, title }) => {
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter Date
                   </label>
-                  <div className="col-lg-9 col-xl-6">
+                  <div className="col-lg-9 col-xl-6 cus-data-input-style">
                     <div>
                       <DatePicker
                         id="date"
@@ -984,7 +984,7 @@ const Announcement = ({ getNewCount, title }) => {
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter Date
                   </label>
-                  <div className="col-lg-9 col-xl-6">
+                  <div className="col-lg-9 col-xl-6 cus-data-input-style">
                     <div>
                       <DatePicker
                         id="date"

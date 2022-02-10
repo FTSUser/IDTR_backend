@@ -1545,17 +1545,19 @@ const User = ({ getNewCount, title }) => {
             </div>
           </div>
         </div>
-        <DateRangePickerComponent
-          placeholder="Enter Date Range"
-          startDate={startValue}
-          endDate={endValue}
-          format="dd-MMM-yy"
-          start="Year"
-          depth="Year"
-          onChange={(e) => {
-            handleSetDateData(e.target.value);
-          }}
-        ></DateRangePickerComponent>
+        <div style={{ width:"30%" , paddingLeft:"15px"}}>
+          <DateRangePickerComponent
+            placeholder="Enter Date Range"
+            startDate={startValue}
+            endDate={endValue}
+            format="dd-MMM-yy"
+            start="Year"
+            depth="Year"
+            onChange={(e) => {
+              handleSetDateData(e.target.value);
+            }}
+          ></DateRangePickerComponent>
+        </div>
         <div className="p-2 mb-2">
           <DataTable
             columns={columns}
@@ -1807,7 +1809,6 @@ const User = ({ getNewCount, title }) => {
                         </>
                         }
                         
-                        <div className="register-grid-items"></div>
                         <div className="register-grid-items"></div>
 
                         <div className="register-grid-items12">
