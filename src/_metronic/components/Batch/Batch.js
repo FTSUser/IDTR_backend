@@ -265,6 +265,10 @@ const Batch = ({ getNewCount, title }) => {
     getDataenterAndApi();
   }, []);
 
+  useEffect(() => {
+    console.log("batchInfo",batchInfo);
+  }, [batchInfo]);
+
   const validateFormForAddAdmin = () => {
     let formIsValid = true;
     let errorsForAdd = {};
@@ -277,6 +281,10 @@ const Batch = ({ getNewCount, title }) => {
     if (inputValueForAdd && !date) {
       formIsValid = false;
       errorsForAdd["date"] = "*Please Upload Date!";
+    }
+    if (batchInfo?.length === 0) {
+      formIsValid = false;
+      errorsForAdd["batchInfo"] = "*Please Select Batch!";
     }
 
     if (inputValueForAdd && !inputValueForAdd.DataEntry) {
@@ -295,6 +303,9 @@ const Batch = ({ getNewCount, title }) => {
 
   const handleAddAnnouncementDetails = (e) => {
     e.preventDefault();
+    if(dateTimezon.length === 0) {
+      toast.error("No slot available for this date")
+    }
     if (validateFormForAddAdmin()) {
       let Data = {
         name: inputValueForAdd.name,
@@ -337,6 +348,10 @@ const Batch = ({ getNewCount, title }) => {
       formIsValid = false;
       errorsForAdd["date"] = "*Please Upload Date!";
     }
+    if (batchInfo?.length === 0) {
+      formIsValid = false;
+      errorsForAdd["batchInfo"] = "*Please Select Batch!";
+    }
 
     if (inputValue && !inputValue.DataEntry) {
       formIsValid = false;
@@ -377,6 +392,10 @@ const Batch = ({ getNewCount, title }) => {
 
   const handleUpdateAnnouncementDetails = (e) => {
     e.preventDefault();
+
+    if(dateTimezon.length === 0) {
+      toast.error("No slot available for this date")
+    }
 
     if (validateForm()) {
       let Data = {
@@ -948,7 +967,9 @@ const Batch = ({ getNewCount, title }) => {
                               name="getBatch"
                               defaultChecked={data.istrue}
                               value={data._id}
-                              onChange={(e) => getBatch(e, data._id)}
+                              onChange={(e) => {getBatch(e, data._id)
+                                setErrorsForAdd({ ...errorsForAdd, batchInfo: "" })
+                              }}
                             />
                             <label>
                               {moment(data.startTime).format("ll") +
@@ -962,6 +983,15 @@ const Batch = ({ getNewCount, title }) => {
                           </div>
                         );
                       })}
+                      <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["batchInfo"]}
+                    </span>
                   </div>
                 </div>
 
@@ -1207,7 +1237,9 @@ const Batch = ({ getNewCount, title }) => {
                               name="getBatch"
                               defaultChecked={batchInfo.includes(data._id)}
                               value={data._id}
-                              onChange={(e) => getBatch(e, data._id)}
+                              onChange={(e) =>{ getBatch(e, data._id)
+                                setErrorsForAdd({ ...errorsForAdd, batchInfo: "" });
+                              }}
                             />
                             <label>
                               {moment(data.startTime).format("ll") +
@@ -1221,6 +1253,15 @@ const Batch = ({ getNewCount, title }) => {
                           </div>
                         );
                       })}
+                      <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["batchInfo"]}
+                    </span>
                   </div>
                 </div>
 
