@@ -482,7 +482,7 @@ const User = ({ getNewCount, title }) => {
             >
               {/* <Tooltip title="Generate Pdf" arrow> */}
               <ReactToPrint
-                      trigger={() => <button className="btn btn-success mr-2">PDF</button>}
+                      trigger={() => <button className="btn btn-success mr-2">Invoice</button>}
                       content={() => itemsRef.current[row._id]}
                     />
                     <div style={{ display: 'none' }}>

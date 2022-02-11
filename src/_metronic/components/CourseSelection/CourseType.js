@@ -344,46 +344,46 @@ const CourseType = ({ getNewCount, title }) => {
     },
 
 
-    {
-      name: "Actions",
-      cell: (row) => {
-        return (
-          <>
-            <div className="d-flex justify-content-between">
-              <div
-                className="cursor-pointer pl-2"
-                onClick={() => {
-                  setIsUpdateCourseType(true);
-                  setIdForUpdateCourseTypeData(row._id);
-                  getAllVehicleCategory();
+    // {
+    //   name: "Actions",
+    //   cell: (row) => {
+    //     return (
+    //       <>
+    //         <div className="d-flex justify-content-between">
+    //           <div
+    //             className="cursor-pointer pl-2"
+    //             onClick={() => {
+    //               setIsUpdateCourseType(true);
+    //               setIdForUpdateCourseTypeData(row._id);
+    //               getAllVehicleCategory();
 
-                  setInputValue({
-                    VehicleCategory: row?.vcid?._id,
-                    CourseType: row?.courseType,
-                    VehicleDescription: row?.description,
-                  });
-                }}
-              >
-                <Tooltip title="Edit CourseType" arrow>
-                  <CreateIcon />
-                </Tooltip>
-              </div>
-            </div>
-            <div
-              className="cursor-pointer"
-              onClick={() => {
-                setShow(true);
-                setIdForDeleteCourseType(row?._id);
-              }}
-            >
-              <Tooltip title="Delete Course Type" arrow>
-                <DeleteIcon />
-              </Tooltip>
-            </div>
-          </>
-        );
-      },
-    },
+    //               setInputValue({
+    //                 VehicleCategory: row?.vcid?._id,
+    //                 CourseType: row?.courseType,
+    //                 VehicleDescription: row?.description,
+    //               });
+    //             }}
+    //           >
+    //             <Tooltip title="Edit CourseType" arrow>
+    //               <CreateIcon />
+    //             </Tooltip>
+    //           </div>
+    //         </div>
+    //         <div
+    //           className="cursor-pointer"
+    //           onClick={() => {
+    //             setShow(true);
+    //             setIdForDeleteCourseType(row?._id);
+    //           }}
+    //         >
+    //           <Tooltip title="Delete Course Type" arrow>
+    //             <DeleteIcon />
+    //           </Tooltip>
+    //         </div>
+    //       </>
+    //     );
+    //   },
+    // },
   ];
   // * Table Style
   const customStyles = {

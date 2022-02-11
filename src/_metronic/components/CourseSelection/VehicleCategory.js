@@ -312,43 +312,43 @@ const VehicleCategory = ({ getNewCount, title }) => {
       sortable: true,
     },
 
-    {
-      name: "Actions",
-      cell: (row) => {
-        return (
-          <>
-            <div className="d-flex justify-content-between">
-              <div
-                className="cursor-pointer pl-2"
-                onClick={() => {
-                  setIsUpdateVehicleCategory(true);
-                  setIdForUpdateVehicleCategoryData(row._id);
-                  setInputValue({
-                    VehicleCategory: row?.vehicleCategory,
-                    VehicleDescription: row?.description,
-                  });
-                }}
-              >
-                <Tooltip title="Edit VehicleCategory" arrow>
-                  <CreateIcon />
-                </Tooltip>
-              </div>
-            </div>
-            <div
-              className="cursor-pointer"
-              onClick={() => {
-                setShow(true);
-                setIdForDeleteVehicleCategory(row?._id);
-              }}
-            >
-              <Tooltip title="Delete VehicleCategory" arrow>
-                <DeleteIcon />
-              </Tooltip>
-            </div>
-          </>
-        );
-      },
-    },
+    // {
+    //   name: "Actions",
+    //   cell: (row) => {
+    //     return (
+    //       <>
+    //         <div className="d-flex justify-content-between">
+    //           <div
+    //             className="cursor-pointer pl-2"
+    //             onClick={() => {
+    //               setIsUpdateVehicleCategory(true);
+    //               setIdForUpdateVehicleCategoryData(row._id);
+    //               setInputValue({
+    //                 VehicleCategory: row?.vehicleCategory,
+    //                 VehicleDescription: row?.description,
+    //               });
+    //             }}
+    //           >
+    //             <Tooltip title="Edit VehicleCategory" arrow>
+    //               <CreateIcon />
+    //             </Tooltip>
+    //           </div>
+    //         </div>
+    //         <div
+    //           className="cursor-pointer"
+    //           onClick={() => {
+    //             setShow(true);
+    //             setIdForDeleteVehicleCategory(row?._id);
+    //           }}
+    //         >
+    //           <Tooltip title="Delete VehicleCategory" arrow>
+    //             <DeleteIcon />
+    //           </Tooltip>
+    //         </div>
+    //       </>
+    //     );
+    //   },
+    // },
   ];
   // * Table Style
   const customStyles = {
