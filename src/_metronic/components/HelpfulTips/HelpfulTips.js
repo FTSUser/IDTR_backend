@@ -155,6 +155,17 @@ const HelpfulTips = ({ getNewCount, title }) => {
     return formIsValid;
   };
 
+
+  useEffect(() =>{
+    console.log("inputValueForAdd",inputValueForAdd);
+  },[inputValueForAdd])
+
+  useEffect(() =>{
+    console.log("inputValue",inputValue);
+  },[inputValue])
+
+
+
   const handleAddHelpfulTipsDetails = (e) => {
     e.preventDefault();
     if (validateFormForAddAdmin()) {
@@ -478,10 +489,7 @@ const HelpfulTips = ({ getNewCount, title }) => {
                   setInputValue({
                     titleName: row?.titleName,
                     image: row?.image,
-                    description: row?.description,
                     video: row?.video
-
-                    
                   });
 
                   setDescription(row?.description);

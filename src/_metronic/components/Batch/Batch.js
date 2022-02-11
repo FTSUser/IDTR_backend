@@ -94,6 +94,7 @@ const Batch = ({ getNewCount, title }) => {
     setDataViewMore({});
     setIdForgetResponseByBatch("");
     setResponseByBatch([])
+    setPageForBatch(1)
     setCountForBatch(0)
   };
 
@@ -521,7 +522,7 @@ const Batch = ({ getNewCount, title }) => {
                   setbatchInfo(tdidId);
                 }}
               >
-                <Tooltip title="Edit Announcement" arrow>
+                <Tooltip title="Edit Batch" arrow>
                   <CreateIcon />
                 </Tooltip>
               </div>
@@ -621,17 +622,20 @@ const Batch = ({ getNewCount, title }) => {
         return (
           <>
             <div className="d-flex justify-content-between">
+              {row?.isPaperDone && 
               <div
-                className="cursor-pointer pl-2"
-                onClick={() => {
-                  setIsPaperViewModel(true);
-                  getPapersetByUserId(row?.batchId)
-                }}
-              >
-                <Tooltip title="Edit Announcement" arrow>
-                  <CreateIcon />
-                </Tooltip>
-              </div>
+              className="cursor-pointer pl-2"
+              onClick={() => {
+                setIsPaperViewModel(true);
+                getPapersetByUserId(row?._id)
+              }}
+            >
+              <Tooltip title="View Paperset" arrow>
+                <CreateIcon />
+              </Tooltip>
+            </div>
+              }
+              
             </div>
           </>
         );
