@@ -630,9 +630,11 @@ const Batch = ({ getNewCount, title }) => {
                     getPapersetByUserId(row?._id);
                   }}
                 >
-                  <Tooltip title="View Paperset" arrow>
-                  <InfoOutlinedIcon />
-                  </Tooltip>
+                 <div className="cus-medium-button-style widthfixed">
+                  <button className="btn btn-success mr-2">
+                    View Paperset
+                  </button>
+                </div>
                 </div>
               )}
             </div>
