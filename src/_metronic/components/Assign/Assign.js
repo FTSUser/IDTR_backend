@@ -497,7 +497,7 @@ const Assign = ({ getNewCount, title }) => {
                                 />
                             </div>
                         </div>
-                        <div className="cus-medium-button-style button-height">
+                        {/* <div className="cus-medium-button-style button-height">
                             <button
                                 onClick={() => {
                                     setIsAddCourseName(true);
@@ -506,7 +506,7 @@ const Assign = ({ getNewCount, title }) => {
                             >
                                 Add Assign
                             </button>
-                        </div>
+                        </div> */}
                         <div className="cus-medium-button-style button-height">
                             <CsvDownload
                                 className={``}
