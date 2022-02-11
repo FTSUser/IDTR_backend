@@ -325,7 +325,10 @@ const TimeSlot = ({ getNewCount, title }) => {
       formIsValid = false;
       errorsForAdd["CourseType"] = "*Please Enter CourseType!";
     }
-
+    if (inputValueForAdd && !inputValueForAdd.CourseCategory) {
+      formIsValid = false;
+      errorsForAdd["CourseCategory"] = "*Please Enter CourseCategory!";
+    }
     if (inputValueForAdd && !inputValueForAdd.CourseName) {
       formIsValid = false;
       errorsForAdd["CourseName"] = "*Please Enter CourseName!";
@@ -673,7 +676,7 @@ const TimeSlot = ({ getNewCount, title }) => {
               <div className="form ml-30 ">
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Select vehicle categoryyyyy
+                    Select vehicle category
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -924,7 +927,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                   </div>
                 </div>
 
-                <div className="row">
+                <div className="form-group row">
                   <label className="col-lg-3 col-form-label">
                     Select Date
                   </label>
@@ -1009,7 +1012,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                     }}
                     className="btn btn-success mr-2"
                   >
-                    <span>Update Details</span>
+                    <span>Add Details</span>
                     {loading && (
                       <span className="mx-3 spinner spinner-white"></span>
                     )}

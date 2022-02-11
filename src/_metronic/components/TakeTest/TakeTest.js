@@ -222,7 +222,7 @@ const TakeTest = ({ getNewCount, title }) => {
               </div>
             )}
 
-            {row?.isExamGenerate ? (
+            {row?.isExamGenerate && !row?.complete ? (
               <div>
                 <div
                   className="btn btn-success ml-2"
@@ -494,6 +494,7 @@ const TakeTest = ({ getNewCount, title }) => {
         if (res?.status == 200) {
           toast.success(res?.data?.message);
           setIsAddQuestion(false);
+          getAllCourseName()
         } else {
           toast.error(res?.message);
         }

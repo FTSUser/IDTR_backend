@@ -821,7 +821,7 @@ const CourseName = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Select vehicle categoryyyyy
+                    Select vehicle category
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
