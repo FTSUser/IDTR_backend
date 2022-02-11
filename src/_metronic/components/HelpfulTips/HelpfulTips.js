@@ -746,7 +746,7 @@ const HelpfulTips = ({ getNewCount, title }) => {
                       <CKEditor
                         id="description"
                         editor={ClassicEditor}
-                        value={inputValueForAdd.description}
+                        value={description}
                         data={description}
                         onChange={(descriptionData, editor) => {
                           setDescription(editor.getData());

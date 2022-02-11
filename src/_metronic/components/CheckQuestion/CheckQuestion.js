@@ -175,8 +175,13 @@ const CheckTest = ({ getNewCount, title }) => {
         },
 
         {
-            name: "Seat",
+            name: "Available Seat",
             selector: (row) => row?.total,
+            sortable: true,
+        },
+        {
+            name: "Total User",
+            selector: (row) => row?.totalUser,
             sortable: true,
         },
 
@@ -637,7 +642,8 @@ const CheckTest = ({ getNewCount, title }) => {
                                                 <div className="">Middle Name:{data?.mname ? data?.mname : '-'}</div>
                                                 <div className="">Email:{data?.email ? data?.email : '-'}</div>
                                                 <div className="">Total Score:{data?.totalScore ? data?.totalScore : 0}</div>
-                                                <div className="view btn btn-success mt-5" onClick={() => viewPeperSet(data?.batchId, data?._id)}>Check Peper</div>
+                                                {data?.totalScore ? "" : <div className="view btn btn-success mt-5" onClick={() => viewPeperSet(data?.batchId, data?._id)}>Check Paper</div>}
+                                                
                                             </div>
                                         ))
                                     }
@@ -682,8 +688,12 @@ const CheckTest = ({ getNewCount, title }) => {
                                         />
                                     </div>
                                     <div className="honda-text-grid-items">
-                                        <span>Total Seat:</span>
+                                        <span>Available Seat:</span>
                                         {<div>{dataViewMore?.total}</div>}
+                                    </div>
+                                    <div className="honda-text-grid-items">
+                                        <span>Total User:</span>
+                                        {<div>{dataViewMore?.totalUser}</div>}
                                     </div>
                                 </div>
                             </div>

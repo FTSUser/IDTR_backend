@@ -68,6 +68,7 @@ const Batch = ({ getNewCount, title }) => {
   const [responseByBatch, setResponseByBatch] = useState([]);
   const [idForgetResponseByBatch, setIdForgetResponseByBatch] = useState();
   const [isPaperViewModel, setIsPaperViewModel] = useState(false);
+  const [paperSet, setPaperSet] = useState([]);
 
   useEffect(() => {
     document.title = "Honda | Banner";
@@ -93,9 +94,9 @@ const Batch = ({ getNewCount, title }) => {
     setIsViewMoreAnnouncement(false);
     setDataViewMore({});
     setIdForgetResponseByBatch("");
-    setResponseByBatch([])
-    setPageForBatch(1)
-    setCountForBatch(0)
+    setResponseByBatch([]);
+    setPageForBatch(1);
+    setCountForBatch(0);
   };
 
   useEffect(() => {}, [inputValueForAdd]);
@@ -127,8 +128,7 @@ const Batch = ({ getNewCount, title }) => {
   };
 
   const handleViewMorePaper = () => {
-    setIsPaperViewModel(false)
-    
+    setIsPaperViewModel(false);
   };
 
   const handleClose = () => {
@@ -228,7 +228,7 @@ const Batch = ({ getNewCount, title }) => {
   //getResponseByBatch
 
   useEffect(() => {
-    if(idForgetResponseByBatch) {
+    if (idForgetResponseByBatch) {
       getResponseByBatch(idForgetResponseByBatch);
     }
   }, [pageForBatch, countPerPageForBatch]);
@@ -249,14 +249,13 @@ const Batch = ({ getNewCount, title }) => {
   };
 
   const getPapersetByUserId = async (id) => {
-    await ApiGet(
-      `response/getResponseByUser/${id}`
-    )
+    await ApiGet(`response/getResponseByUser/${id}`)
       .then((res) => {
-        console.log("resrtrssdf", res?.data?.payload);
+        console.log("resrtrssdf", res?.data?.payload?.Response);
+        setPaperSet(res?.data?.payload?.Response)
       })
       .catch((err) => {
-        // toast.error(err?.message);
+        toast.error(err?.message);
         console.log(err?.message);
       });
   };
@@ -559,7 +558,8 @@ const Batch = ({ getNewCount, title }) => {
   const columnsUser = [
     {
       name: "SNo",
-      cell: (row, index) => (pageForBatch - 1) * countPerPageForBatch + (index + 1),
+      cell: (row, index) =>
+        (pageForBatch - 1) * countPerPageForBatch + (index + 1),
       width: "65px",
     },
     {
@@ -622,20 +622,19 @@ const Batch = ({ getNewCount, title }) => {
         return (
           <>
             <div className="d-flex justify-content-between">
-              {row?.isPaperDone && 
-              <div
-              className="cursor-pointer pl-2"
-              onClick={() => {
-                setIsPaperViewModel(true);
-                getPapersetByUserId(row?._id)
-              }}
-            >
-              <Tooltip title="View Paperset" arrow>
-                <CreateIcon />
-              </Tooltip>
-            </div>
-              }
-              
+              {row?.isPaperDone && (
+                <div
+                  className="cursor-pointer pl-2"
+                  onClick={() => {
+                    setIsPaperViewModel(true);
+                    getPapersetByUserId(row?._id);
+                  }}
+                >
+                  <Tooltip title="View Paperset" arrow>
+                  <InfoOutlinedIcon />
+                  </Tooltip>
+                </div>
+              )}
             </div>
           </>
         );
@@ -1459,9 +1458,64 @@ const Batch = ({ getNewCount, title }) => {
           <List>
             {isViewMoreAnnouncement === true ? (
               <div className="honda-container">
-                <div className="honda-text-grid">
-                  <div className="honda-text-grid-items">
-                    <span>Batch Name:</span>
+                <div className="">
+                  {console.log("questionData", paperSet[0]?.ListofQA)}
+                  <div className="questionGrid">
+                    {paperSet[0]?.ListofQA?.map((data, key) => (
+                      <div className="questionGridItems">
+                        <div className="flexs">
+                          <div className="questionCircle mr-3" key={key}>
+                            {" "}
+                            {key + 1}
+                          </div>
+
+                          {data?.Qname}
+                        </div>
+                        <div>
+                          {data?.Option.map((record, i) => (
+                            <>
+                              {data.type === "mcq" ? (
+                                <>
+                                  <div
+                                    className="d-flex align-items-baseline"
+                                    key={i}
+                                  >
+                                    <input
+                                      type="radio"
+                                      name={key}
+                                      id="radio"
+                                      defaultChecked={record?.istrue}
+                                      disabled
+                                    />
+                                    <span className="pl-2">
+                                      {" "}
+                                      {record?.name}
+                                    </span>
+                                  </div>
+                                </>
+                              ) : (
+                                <>
+                                  <div
+                                    className="d-flex align-items-baseline"
+                                    key={i}
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      id={record?.name}
+                                    />
+
+                                    <span className="pl-2">
+                                      {" "}
+                                      {record?.name}
+                                    </span>
+                                  </div>
+                                </>
+                              )}
+                            </>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

@@ -1909,6 +1909,7 @@ const User = ({ getNewCount, title }) => {
                             type="date"
                             placeholder=""
                             name="issueDate"
+                            max={moment(new Date()).format("YYYY-MM-DD")}
                             value={formdata.issueDate ? formdata.issueDate.slice(0, 10) :  formdata.issueDate}
                             onChange={(e) => onChnageForm(e)}
                           />
@@ -1921,6 +1922,7 @@ const User = ({ getNewCount, title }) => {
                             type="date"
                             placeholder=""
                             name="validDate"
+                            min={moment(new Date()).format("YYYY-MM-DD")}
                             value={formdata.validDate ? formdata.validDate.slice(0, 10) : formdata.validDate}
                             onChange={(e) => onChnageForm(e)}
                           />
@@ -2224,15 +2226,17 @@ const User = ({ getNewCount, title }) => {
                             <input
                               type="date"
                               name="DateofBirth"
-                              value={`${new Date(
-                                formdata.DateofBirth
-                              ).getFullYear()}${
-                                new Date(formdata.DateofBirth).getMonth() < 9
-                                  ? "-0"
-                                  : "-"
-                              }${
-                                new Date(formdata.DateofBirth).getMonth() + 1
-                              }-${new Date(formdata.DateofBirth).getDate()}`}
+                              // value={`${new Date(
+                              //   formdata.DateofBirth
+                              // ).getFullYear()}${
+                              //   new Date(formdata.DateofBirth).getMonth() < 9
+                              //     ? "-0"
+                              //     : "-"
+                              // }${
+                              //   new Date(formdata.DateofBirth).getMonth() + 1
+                              // }-${new Date(formdata.DateofBirth).getDate()}`}
+                              value={formdata.DateofBirth}
+                              max={moment(new Date()).format("YYYY-MM-DD")}
                               onChange={(e) => onChnageForm(e)}
                             />
                           </div>

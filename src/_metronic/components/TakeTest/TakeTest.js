@@ -192,7 +192,7 @@ const TakeTest = ({ getNewCount, title }) => {
     },
 
     {
-      name: "Seat",
+      name: "Available Seat",
       selector: (row) => row?.total,
       sortable: true,
     },
@@ -910,6 +910,10 @@ const TakeTest = ({ getNewCount, title }) => {
                   <div className="honda-text-grid-items">
                     <span>Total Seat:</span>
                     {<div>{dataViewMore?.total}</div>}
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Available Seat</span>
+                    {<div>{dataViewMore?.totalUser}</div>}
                   </div>
                 </div>
               </div>

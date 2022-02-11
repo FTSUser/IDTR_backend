@@ -226,6 +226,15 @@ const QuestionSet = ({ getNewCount, title }) => {
             width: "65px",
         },
         {
+            name: "Date",
+            cell: (row) => {
+              return <span>{moment(row?.createdAt).format("ll")}</span>;
+            },
+            selector: (row) => row?.createdAt,
+            sortable: true,
+            // width: "65px",
+          },
+        {
             name: "Name",
             selector: "name",
             sortable: true,
