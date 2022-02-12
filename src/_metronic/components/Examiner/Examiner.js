@@ -267,12 +267,12 @@ const Examiner = ({ getNewCount, title }) => {
         {
             name: "Date",
             cell: (row) => {
-              return <span>{moment(row?.createdAt).format("ll")}</span>;
+                return <span>{moment(row?.createdAt).format("ll")}</span>;
             },
             selector: (row) => row?.createdAt,
             sortable: true,
             // width: "65px",
-          },
+        },
         {
             name: "Name",
             selector: "name",
@@ -741,17 +741,23 @@ const Examiner = ({ getNewCount, title }) => {
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
-                                            <input
-                                                type="text"
-                                                className={`form-control form-control-lg form-control-solid `}
-                                                id="password"
-                                                name="password"
+                                            {
+                                                isEditPopUp === false ? <input
+                                                    type="text"
+                                                    className={`form-control form-control-lg form-control-solid `}
+                                                    id="password"
+                                                    name="password"
 
-                                                value={inputValueForAdd.password}
-                                                onChange={(e) => {
-                                                    handleOnChnageAdd(e);
-                                                }}
-                                            />
+                                                    value={inputValueForAdd.password}
+                                                    onChange={(e) => {
+                                                        handleOnChnageAdd(e);
+                                                    }}
+                                                /> : <input
+                                                    className={`form-control form-control-lg form-control-solid `}
+
+                                                    type="password" placeholder="*****" disabled />
+                                            }
+
                                         </div>
                                         <span
                                             style={{
