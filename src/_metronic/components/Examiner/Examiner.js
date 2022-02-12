@@ -456,6 +456,7 @@ const Examiner = ({ getNewCount, title }) => {
                     ExaminerName: registerUser?.name,
                     ExaminerEmail: registerUser?.email,
                     ExaminerPhone: registerUser?.phone,
+                    RoleId:registerUser?._id
                 };
                 setDataCSV((currVal) => [...currVal, data]);
             });
