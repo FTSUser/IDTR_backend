@@ -172,6 +172,7 @@ const User = ({ getNewCount, title }) => {
   const [setStartValue, startValue] = useState("");
   const [allRegisterUserExcel, setAllRegisterUserExcel] = useState([]);
   const [dataCSV, setDataCSV] = useState([]);
+  const [dataCSVLogs, setDataCSVLogs] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
 
   const [tableFilterData, setTableFilterData] = useState({});
@@ -185,6 +186,7 @@ const User = ({ getNewCount, title }) => {
   const [idForDeleteAnnouncement, setIdForDeleteAnnouncement] = useState("");
   const [search, setSearch] = useState("");
   const [getAllCourceCategory, setgetAllCourceCategory] = useState({});
+  const [logsData, setLogsData] = useState({});
 
   const [idForUpdateAnnouncementData, setIdForUpdateAnnouncementData] =
     useState("");
@@ -411,7 +413,55 @@ const User = ({ getNewCount, title }) => {
     // }
   };
 
-  useEffect(() => { }, [inputValue]);
+
+  const getAdminLogs = async (id) => {
+    await ApiGet(
+      `admin/get-admin-login-log/${id}`
+    )
+      .then((res) => {
+        console.log("loglog",res?.data?.payload?.user);
+        setLogsData(res?.data?.payload?.user)
+        if (res?.data?.payload?.user?.length > 0) {
+          let test = res?.data?.payload?.user.map((registerUser, key) => {
+            return {
+              Number: key + 1,
+              LoginDate:registerUser?.createdAt,
+            };
+          });
+          let finalPdf = [...dataCSVLogs, test];
+          return(<>
+          <CsvDownload
+                className={``}
+                data={finalPdf}
+                filename="Donations.csv"
+                style={{
+                  backgroundColor: "#CC0001",
+                  borderRadius: "6px",
+                  border: "1px solid #fff",
+                  display: "inline-block",
+                  cursor: "pointer",
+                  color: "#FFFFFF",
+                  fontSize: "12px",
+                  padding: "10px 18px",
+                  textDecoration: "none",
+                  position: "right",
+                }}
+              />
+
+          </>)
+          // setDataCSVLogs((currVal) => [...currVal, test]);
+        }
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message);
+      });
+    // }
+  };
+
+
+
+
+  useEffect(() => {}, [inputValue]);
 
   let i = 0;
   const columns = [
@@ -599,6 +649,42 @@ const User = ({ getNewCount, title }) => {
         );
       },
     },
+    // {
+    //   name: "Actions",
+    //   cell: (row) => {
+    //     console.log( " fsdfsdfsdfs",row);
+    //     return (
+    //       <>
+    //         <div
+    //           className="cursor-pointer pl-2"
+    //           onClick={async () => {
+    //             await getAdminLogs(row?.uid)
+    //           }}
+    //         >
+    //           <CsvDownload
+    //             className={``}
+    //             data={dataCSVLogs}
+    //             filename="Donations.csv"
+    //             style={{
+    //               backgroundColor: "#CC0001",
+    //               borderRadius: "6px",
+    //               border: "1px solid #fff",
+    //               display: "inline-block",
+    //               cursor: "pointer",
+    //               color: "#FFFFFF",
+    //               fontSize: "12px",
+    //               padding: "10px 18px",
+    //               textDecoration: "none",
+    //               position: "right",
+    //             }}
+    //           >
+    //             Export to Excel
+    //           </CsvDownload>
+    //         </div>
+    //       </>
+    //     );
+    //   },
+    // },
   ];
   // * Table Style
   const customStyles = {
@@ -651,56 +737,67 @@ const User = ({ getNewCount, title }) => {
       });
     // }
   };
+
+  useEffect(() => {
+    if (logsData?.length > 0) {
+      logsData.map((registerUser, key) => {
+        let data = {
+          Number: key + 1,
+          LoginDate:registerUser?.createdAt,
+        };
+        setDataCSVLogs((currVal) => [...currVal, data]);
+      });
+    }
+  },[logsData])
+
   useEffect(() => {
     if (allRegisterUserExcel) {
       allRegisterUserExcel.map((registerUser, key) => {
         let data = {
           Number: key + 1,
-          CreatedAt: registerUser?.createdAt,
-          CreatedBy: registerUser?.createdBy,
-          Authority: registerUser?.Authority,
-          FirstName: registerUser?.fname,
-          MiddleName: registerUser?.mname,
-          LastName: registerUser?.lname,
-          Gender: registerUser?.gender,
-          BloodGroup: registerUser?.bloodGroup,
-          ValidTill: moment(registerUser?.validTill).format("ll"),
-          Email: registerUser?.email,
-          Phone: registerUser?.phone,
-          Qualification: registerUser?.qualification,
-          DrivingLicenseNumber: registerUser?.drivingLicenseNumber,
-          DoB: moment(registerUser?.DoB).format("ll"),
-          Address: registerUser?.address,
-          City: registerUser?.city,
-          District: registerUser?.district,
-          State: registerUser?.state,
-          Pincode: registerUser?.pincode,
-          Authoritycity: registerUser?.authoritycity,
-          Authoritydistrict: registerUser?.authoritydistrict,
-          PaymentType: registerUser?.type,
-          dateofMakePayment:
-            registerUser?.dateofMakePayment === null
-              ? "Payment Panding"
-              : registerUser?.dateofMakePayment,
-          IsPaymentDone:
-            registerUser?.isPaymentDone === null
-              ? "Payment Panding"
-              : registerUser?.isPaymentDone,
-          paymentId:
-            registerUser?.paymentId === null
-              ? "Payment Panding"
-              : registerUser?.paymentId,
-          lcid: registerUser?.lcid,
-          IssueDate: moment(registerUser?.issueDate).format("ll"),
-
-          //new test
-          // tdid: "61dfe45964926806043a1ea5",
-          // uid: "61e53e6c8edfdb46301d51a4",
+          UserID:registerUser?._id,
+          FirstName:registerUser?.fname,
+          MiddleName:registerUser?.mname ? registerUser?.mname : "-",
+          LastName:registerUser?.lname ? registerUser?.lname : "-",
+          EmailAddress:registerUser?.email ? registerUser?.email : "-",
+          MobileNumber:registerUser?.phone,
+          RegistrationType:registerUser?.RegistrationType ? registerUser?.RegistrationType :"-",
+          FatherName:registerUser?.fatherName ? registerUser?.fatherName : "-",
+          DateOfBirth:moment(registerUser?.DoB).format("ll"),
+          Qualification:registerUser?.qualification,
+          Gender:registerUser?.gender,
+          AddressLine:registerUser?.address,
+          State:registerUser?.state,
+          District:registerUser?.district,
+          TownORCity:registerUser?.city,
+          PIN:registerUser?.pincode,
+          SelectIDTRCentre:registerUser?.IDTRcenter ? registerUser?.IDTRcenter : "-",
+          CourseType:registerUser?.ctid?.courseType,
+          VehicleCategory:registerUser?.vcid?.vehicleCategory,
+          CourseName:registerUser?.cnid?.courseName,
+          DateOfCourse:moment(registerUser?.dateofCourse).format("ll"),
+          LicenseCategory:registerUser?.lcid,
+          DrivingLicence:registerUser?.drivingLicense,
+          IssueDate:registerUser?.issueDate ?  moment(registerUser?.issueDate).format("ll") : "-",
+          ValidTill:registerUser?.validTill ? moment(registerUser?.validTill).format("ll") : "-",
+          LicenseAuthorityState :registerUser?.Authority,
+          LicenseAuthorityCity :registerUser?.authoritycity,
+          LicenseAuthorityDistrict :registerUser?.authoritydistrict,
+          PassportPhoto:registerUser?.passportPhoto,
+          DrivingLicenseImage:registerUser?.drivingLicense,
+          OtherIDProofDownload:registerUser?.IDproof === null ? "-":registerUser?.IDproof,
+          VisionInformation:registerUser?.medicalCertificate === null ? "-":registerUser?.medicalCertificate ,
+          ColorBlindness:registerUser?.medicalCertificate === null ? "-":registerUser?.medicalCertificate,
+          BloodGroup:registerUser?.bloodGroup === "" ||  registerUser?.bloodGroup === null? "-":registerUser?.bloodGroup,
+          IsPaymentDone: registerUser?.isPaymentDone === null || registerUser?.isPaymentDone === false? "Payment Panding": registerUser?.isPaymentDone,
+          PaymentMode:registerUser?.type,
+          TransactionID:registerUser?.paymentId === null? "Payment Panding": registerUser?.paymentId,
+          RegisterationDate:registerUser?.createdAt,
         };
         setDataCSV((currVal) => [...currVal, data]);
       });
     }
-  }, [allRegisterUserExcel]);
+  }, [allRegisterUserExcel])
 
   const districts = [
     {
@@ -893,6 +990,7 @@ const User = ({ getNewCount, title }) => {
       authoritycity: formdata.authoritycity,
       authoritydistrict: formdata.authoritydistrict,
       type: formdata.type,
+      RegistrationType:"counter"
     }
 
     console.log("datadata", data);
@@ -974,6 +1072,7 @@ const User = ({ getNewCount, title }) => {
       authoritycity: formdata.authoritycity,
       authoritydistrict: formdata.authoritydistrict,
       type: formdata.type,
+      RegistrationType:"counter"
     }
 
     console.log("dataForEdit", data);
