@@ -700,7 +700,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                                 value={item?._id}
                                 selected={
                                   inputValueForAdd?.VehicleCategory ===
-                                  item?._id
+                                    item?._id
                                     ? true
                                     : false
                                 }
@@ -1012,7 +1012,9 @@ const TimeSlot = ({ getNewCount, title }) => {
                     }}
                     className="btn btn-success mr-2"
                   >
-                    <span>Add Details</span>
+
+                    <span>{isEditPopUp === false ? 'Add' : 'Edit'}  Time Slot</span>
+
                     {loading && (
                       <span className="mx-3 spinner spinner-white"></span>
                     )}

@@ -58,7 +58,7 @@ const CourseCategory = ({ getNewCount, title }) => {
   }, []);
 
   useEffect(() => {
-    console.log("inputValueForAdd",inputValueForAdd);
+    console.log("inputValueForAdd", inputValueForAdd);
   }, [inputValueForAdd]);
 
   const handleViewMoreClose = () => {
@@ -68,8 +68,8 @@ const CourseCategory = ({ getNewCount, title }) => {
 
   const handleOnChnageAdd = (e) => {
     const { name, value } = e.target;
-    if(name === "VehicleCategory"){
-      setInputValueForAdd({ ...inputValueForAdd, [name]: value, CourseType: ""});
+    if (name === "VehicleCategory") {
+      setInputValueForAdd({ ...inputValueForAdd, [name]: value, CourseType: "" });
       setErrorsForAdd({ ...errorsForAdd, [name]: "" });
       return
     }
@@ -93,7 +93,7 @@ const CourseCategory = ({ getNewCount, title }) => {
     setShowStatus(false);
   };
 
- 
+
 
   useEffect(() => {
     getAllCourseName();
@@ -290,16 +290,16 @@ const CourseCategory = ({ getNewCount, title }) => {
       // width: "65px",
     },
     {
-        name: "courseCategory",
-        selector: (row) => row?.courseCategory,
-        sortable: true,
-      },
+      name: "courseCategory",
+      selector: (row) => row?.courseCategory,
+      sortable: true,
+    },
     {
       name: "CourseType",
       selector: (row) => row?.ctid?.courseType,
       sortable: true,
     },
-    
+
     {
       name: "VehicleCategory",
       selector: (row) => row?.vcid?.vehicleCategory,
@@ -748,10 +748,10 @@ const CourseCategory = ({ getNewCount, title }) => {
                         }}
                       >
                         <option value="" disabled selected={
-                                  !!inputValueForAdd?.CourseType === false
-                                    ? true
-                                    : false
-                                } hidden>
+                          !!inputValueForAdd?.CourseType === false
+                            ? true
+                            : false
+                        } hidden>
                           Select Course Type
                         </option>
                         {getCourseType?.length > 0 &&
@@ -814,7 +814,7 @@ const CourseCategory = ({ getNewCount, title }) => {
                   </div>
                 </div>
 
-                
+
                 <div className="d-flex align-items-center justify-content-center">
                   <button
                     onClick={(e) => {
@@ -824,7 +824,7 @@ const CourseCategory = ({ getNewCount, title }) => {
                     }}
                     className="btn btn-success mr-2"
                   >
-                    <span>Add Details</span>
+                    <span>{isEditPopUp === false ? 'Add' : 'Edit'}  Course Category</span>
                     {loading && (
                       <span className="mx-3 spinner spinner-white"></span>
                     )}
@@ -858,15 +858,15 @@ const CourseCategory = ({ getNewCount, title }) => {
               <div className="honda-container">
                 <div className="honda-text-grid">
                   <div className="honda-text-grid-items">
-                  <div className="honda-text-grid-items">
-                    <span>Course Category</span>
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.courseCategory,
-                      }}
-                      className=""
-                    />
-                  </div>
+                    <div className="honda-text-grid-items">
+                      <span>Course Category</span>
+                      <p
+                        dangerouslySetInnerHTML={{
+                          __html: dataViewMore?.courseCategory,
+                        }}
+                        className=""
+                      />
+                    </div>
                     <span>Course Type</span>
                     <p
                       dangerouslySetInnerHTML={{
@@ -884,7 +884,7 @@ const CourseCategory = ({ getNewCount, title }) => {
                       className=""
                     />
                   </div>
-                  
+
                 </div>
               </div>
             ) : null}

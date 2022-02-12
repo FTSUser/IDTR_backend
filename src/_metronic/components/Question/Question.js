@@ -107,7 +107,7 @@ const Question = (props) => {
         setIsLoaderVisible(true);
         if (!search) {
             await ApiGet(
-                `question/getAllQuestion`,
+                `question/getAllQuestion?search=${search}&page=${page}&limit=${countPerPage}`,
             )
                 .then((res) => {
                     setIsLoaderVisible(false);
@@ -120,7 +120,7 @@ const Question = (props) => {
                 });
         } else {
             await ApiGet(
-                `question/getAllQuestion`,
+                `question/getAllQuestion?search=${search}&page=${page}&limit=${countPerPage}`,
             )
                 .then((res) => {
                     setIsLoaderVisible(false);
@@ -323,12 +323,12 @@ const Question = (props) => {
         {
             name: "Date",
             cell: (row) => {
-              return <span>{moment(row?.createdAt).format("ll")}</span>;
+                return <span>{moment(row?.createdAt).format("ll")}</span>;
             },
             selector: (row) => row?.createdAt,
             sortable: true,
             // width: "65px",
-          },
+        },
         {
             name: "Question Name",
             selector: "Qname",

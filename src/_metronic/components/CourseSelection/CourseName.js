@@ -88,7 +88,7 @@ const CourseName = ({ getNewCount, title }) => {
       setErrorsForAdd({ ...errorsForAdd, [name]: "" });
       return;
     }
-    
+
     setInputValueForAdd({ ...inputValueForAdd, [name]: value });
     setErrorsForAdd({ ...errorsForAdd, [name]: "" });
   };
@@ -845,7 +845,7 @@ const CourseName = ({ getNewCount, title }) => {
                                 value={item?._id}
                                 selected={
                                   inputValueForAdd?.VehicleCategory ===
-                                  item?._id
+                                    item?._id
                                     ? true
                                     : false
                                 }
@@ -1278,7 +1278,9 @@ const CourseName = ({ getNewCount, title }) => {
                     }}
                     className="btn btn-success mr-2"
                   >
-                    <span>Add Details</span>
+
+                    <span>{isEditPopUp === false ? 'Add' : 'Edit'}  Course Name</span>
+
                     {loading && (
                       <span className="mx-3 spinner spinner-white"></span>
                     )}

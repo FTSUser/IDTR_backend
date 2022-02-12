@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import DataTable, { defaultThemes } from "react-data-table-component";
 import "./User.scss";
 
@@ -51,10 +51,10 @@ class ComponentToPrints extends React.Component {
     this.state = this.props;
   }
 
-  componentDidMount() { 
-    this.setState({...this.props});
+  componentDidMount() {
+    this.setState({ ...this.props });
   }
-  
+
 
 
   render() {
@@ -197,7 +197,7 @@ const User = ({ getNewCount, title }) => {
     document.title = "Honda | User";
   }, []);
 
- 
+
 
   // const startValue = new Date(
   //   new Date().getFullYear(),
@@ -279,11 +279,11 @@ const User = ({ getNewCount, title }) => {
     type: "",
   });
 
-  useEffect(() => {}, [tableFilterData]);
+  useEffect(() => { }, [tableFilterData]);
 
 
   useEffect(() => {
-    console.log("formdata",formdata);
+    console.log("formdata", formdata);
   }, [formdata]);
 
   const handlePaymentClose = () => {
@@ -411,7 +411,7 @@ const User = ({ getNewCount, title }) => {
     // }
   };
 
-  useEffect(() => {}, [inputValue]);
+  useEffect(() => { }, [inputValue]);
 
   let i = 0;
   const columns = [
@@ -463,7 +463,7 @@ const User = ({ getNewCount, title }) => {
     {
       name: "Actions",
       cell: (row) => {
-        console.log( " fsdfsdfsdfs",row);
+        console.log(" fsdfsdfsdfs", row);
         return (
           <>
             <div
@@ -482,16 +482,16 @@ const User = ({ getNewCount, title }) => {
             >
               {/* <Tooltip title="Generate Pdf" arrow> */}
               <ReactToPrint
-                      trigger={() => <button className="btn btn-success mr-2">Invoice</button>}
-                      content={() => itemsRef.current[row._id]}
-                    />
-                    <div style={{ display: 'none' }}>
-                      <div ref={el => (itemsRef.current[row._id] = el)} id={row?._id} >
-                        <ComponentToPrints
-                          data={row}
-                        />
-                      </div>
-                    </div>
+                trigger={() => <button className="btn btn-success mr-2">Invoice</button>}
+                content={() => itemsRef.current[row._id]}
+              />
+              <div style={{ display: 'none' }}>
+                <div ref={el => (itemsRef.current[row._id] = el)} id={row?._id} >
+                  <ComponentToPrints
+                    data={row}
+                  />
+                </div>
+              </div>
               {/* </Tooltip> */}
             </div>
             <Tooltip title="Make a Payment" arrow>
@@ -539,7 +539,7 @@ const User = ({ getNewCount, title }) => {
                         getAllCourseCategoryEdit(row?.ctid, row?.vcid, row?.ccid);
                         getAllCourseNameEdit(row?.ctid, row?.vcid, row?.ccid, row?.cnid);
                         setCNID(row?.cnid);
-                        
+
                         setFormData({
                           _id: row?._id,
                           vehicleCategory: row?.vcid,
@@ -573,11 +573,11 @@ const User = ({ getNewCount, title }) => {
                           authoritycity: row?.authoritycity,
                           authoritydistrict: row?.authoritydistrict,
                           type: row?.type,
-                          driverlicense: row?.license === "NA" ? "":row?.drivingLicenseNumber,
+                          driverlicense: row?.license === "NA" ? "" : row?.drivingLicenseNumber,
                           issueDate: row?.license === "NA" ? "" : row?.issueDate,
                           validDate: row?.license === "NA" ? "" : row?.validTill,
                         })
-                      
+
                         getTrainignDateEditData(row?.dateofCourse, row?.cnid);
                       }}
                     />
@@ -856,7 +856,7 @@ const User = ({ getNewCount, title }) => {
   const history = useHistory();
 
   const register = () => {
-    const data = 
+    const data =
     {
       vcid: formdata.vehicleCategory,
       ctid: formdata.courseType,
@@ -976,8 +976,8 @@ const User = ({ getNewCount, title }) => {
       type: formdata.type,
     }
 
-    console.log("dataForEdit",data);
-    
+    console.log("dataForEdit", data);
+
     ApiPut(`register/updateRegister/${formdata._id}`, data)
       .then((res) => {
         if (res?.status == 200) {
@@ -1081,16 +1081,16 @@ const User = ({ getNewCount, title }) => {
         toast.error(`Sorry! License Category must be specified`);
         seterrorShow("License Category ");
         settypeTrueFalseform(true);
-         
-      } else if (formdata?.license != "NA" &&formdata.driverlicense === "") {
+
+      } else if (formdata?.license != "NA" && formdata.driverlicense === "") {
         toast.error(`Sorry! Driver's License Number must be specified`);
         seterrorShow(`Driver's License Number`);
         settypeTrueFalseform(true);
-      } else if (formdata?.license != "NA" &&formdata.issueDate === "") {
+      } else if (formdata?.license != "NA" && formdata.issueDate === "") {
         toast.error(`Sorry! Issue Date must be specified`);
         seterrorShow("Issue Date");
         settypeTrueFalseform(true);
-      } else if (formdata?.license != "NA" &&formdata.validDate === "") {
+      } else if (formdata?.license != "NA" && formdata.validDate === "") {
         toast.error(`Sorry! Valid Date must be specified`);
         seterrorShow("Valid Date");
         settypeTrueFalseform(true);
@@ -1545,7 +1545,7 @@ const User = ({ getNewCount, title }) => {
       } else {
         toast.error("Failed to upload image:", f.name);
       }
-    } catch (err) {}
+    } catch (err) { }
   };
 
   const handleSearch = (e) => {
@@ -1659,7 +1659,7 @@ const User = ({ getNewCount, title }) => {
             </div>
           </div>
         </div>
-        <div style={{ width:"30%" , paddingLeft:"15px"}}>
+        <div style={{ width: "30%", paddingLeft: "15px" }}>
           <DateRangePickerComponent
             placeholder="Enter Date Range"
             startDate={startValue}
@@ -1801,33 +1801,33 @@ const User = ({ getNewCount, title }) => {
                           <label>
                             Course Category<span>*</span>
                           </label>
-                          {(editMode ? defaultValue?.courseCategory : true) && 
-                          <Select
-                            // isClearable
-                            options={getAllCourceCategory?.courseCategory?.map(
-                              (e) => ({
-                                label: e.courseCategory,
-                                value: e._id,
-                              })
-                            )}
-                            name="courseCategory"
-                            onChange={(e) => {
-                              setCourceType(e.value);
-                              setCourceCategoryData(e.value);
-                              if (e?.value) {
-                                let index =
-                                  getAllCourceCategory?.courseCategory?.findIndex(
-                                    (o) => o?._id === e?.value
-                                  );
+                          {(editMode ? defaultValue?.courseCategory : true) &&
+                            <Select
+                              // isClearable
+                              options={getAllCourceCategory?.courseCategory?.map(
+                                (e) => ({
+                                  label: e.courseCategory,
+                                  value: e._id,
+                                })
+                              )}
+                              name="courseCategory"
+                              onChange={(e) => {
+                                setCourceType(e.value);
+                                setCourceCategoryData(e.value);
+                                if (e?.value) {
+                                  let index =
+                                    getAllCourceCategory?.courseCategory?.findIndex(
+                                      (o) => o?._id === e?.value
+                                    );
+                                }
+                                onChnagSelectField(e, "courseCategory");
+                              }}
+                              defaultValue={
+                                defaultValue.courseCategory &&
+                                defaultValue.courseCategory
                               }
-                              onChnagSelectField(e, "courseCategory");
-                            }}
-                            defaultValue={
-                              defaultValue.courseCategory &&
-                              defaultValue.courseCategory
-                            }
-                          />
-}
+                            />
+                          }
                         </div>
 
                         {/* end test */}
@@ -1837,39 +1837,39 @@ const User = ({ getNewCount, title }) => {
                             Course Name<span>*</span>
                           </label>
                           {(editMode ? defaultValue?.courseName : true) &&
-                          <Select
-                          // isClearable
-                          options={getAllCourceName?.courseName?.map((e) => ({
-                            label: e.courseName,
-                            value: e._id,
-                          }))}
-                          name="courseName"
-                          onChange={(e) => {
-                            // setCourceType(e.value);
-                            // setCourceCategory(e.value)
-                            setCourceNameData(e.value);
-                            if (e?.value) {
-                              let index =
-                                getAllCourceName?.courseName?.findIndex(
-                                  (o) => o?._id === e?.value
-                                );
-                              if (index !== -1) {
-                                setPrice(
-                                  getAllCourceName?.courseName[index].price
-                                );
-                                setCNID(
-                                  getAllCourceName?.courseName[index]._id
-                                );
+                            <Select
+                              // isClearable
+                              options={getAllCourceName?.courseName?.map((e) => ({
+                                label: e.courseName,
+                                value: e._id,
+                              }))}
+                              name="courseName"
+                              onChange={(e) => {
+                                // setCourceType(e.value);
+                                // setCourceCategory(e.value)
+                                setCourceNameData(e.value);
+                                if (e?.value) {
+                                  let index =
+                                    getAllCourceName?.courseName?.findIndex(
+                                      (o) => o?._id === e?.value
+                                    );
+                                  if (index !== -1) {
+                                    setPrice(
+                                      getAllCourceName?.courseName[index].price
+                                    );
+                                    setCNID(
+                                      getAllCourceName?.courseName[index]._id
+                                    );
+                                  }
+                                }
+                                onChnagSelectField(e, "courseName");
+                              }}
+                              defaultValue={
+                                defaultValue.courseName && defaultValue.courseName
                               }
-                            }
-                            onChnagSelectField(e, "courseName");
-                          }}
-                          defaultValue={
-                            defaultValue.courseName && defaultValue.courseName
+                            />
                           }
-                        />
-                          }
-                          
+
                         </div>
                         <div className="register-grid-items12 ">
                           <label>
@@ -1888,48 +1888,48 @@ const User = ({ getNewCount, title }) => {
                             }}
                           />
                         </div>
-                        {formdata?.license != "NA" && 
-                        <>
-                          <div className="register-grid-items ">
-                          <label>
-                            Driver's License No.<span>*</span>
-                          </label>
-                          <input
-                            type="text"
-                            name="driverlicense"
-                            value={formdata.driverlicense}
-                            onChange={(e) => onChnageForm(e)}
-                          />
-                        </div>
-                        <div className="register-grid-items">
-                          <label>
-                            Issue Date<span>*</span>
-                          </label>
-                          <input
-                            type="date"
-                            placeholder=""
-                            name="issueDate"
-                            max={moment(new Date()).format("YYYY-MM-DD")}
-                            value={formdata.issueDate ? formdata.issueDate.slice(0, 10) :  formdata.issueDate}
-                            onChange={(e) => onChnageForm(e)}
-                          />
-                        </div>
-                        <div className="register-grid-items">
-                          <label>
-                            Valid Till<span>*</span>
-                          </label>
-                          <input
-                            type="date"
-                            placeholder=""
-                            name="validDate"
-                            min={moment(new Date()).format("YYYY-MM-DD")}
-                            value={formdata.validDate ? formdata.validDate.slice(0, 10) : formdata.validDate}
-                            onChange={(e) => onChnageForm(e)}
-                          />
-                        </div>
-                        </>
+                        {formdata?.license != "NA" &&
+                          <>
+                            <div className="register-grid-items ">
+                              <label>
+                                Driver's License No.<span>*</span>
+                              </label>
+                              <input
+                                type="text"
+                                name="driverlicense"
+                                value={formdata.driverlicense}
+                                onChange={(e) => onChnageForm(e)}
+                              />
+                            </div>
+                            <div className="register-grid-items">
+                              <label>
+                                Issue Date<span>*</span>
+                              </label>
+                              <input
+                                type="date"
+                                placeholder=""
+                                name="issueDate"
+                                max={moment(new Date()).format("YYYY-MM-DD")}
+                                value={formdata.issueDate ? formdata.issueDate.slice(0, 10) : formdata.issueDate}
+                                onChange={(e) => onChnageForm(e)}
+                              />
+                            </div>
+                            <div className="register-grid-items">
+                              <label>
+                                Valid Till<span>*</span>
+                              </label>
+                              <input
+                                type="date"
+                                placeholder=""
+                                name="validDate"
+                                min={moment(new Date()).format("YYYY-MM-DD")}
+                                value={formdata.validDate ? formdata.validDate.slice(0, 10) : formdata.validDate}
+                                onChange={(e) => onChnageForm(e)}
+                              />
+                            </div>
+                          </>
                         }
-                        
+
                         <div className="register-grid-items"></div>
 
                         <div className="register-grid-items12">
@@ -1996,12 +1996,12 @@ const User = ({ getNewCount, title }) => {
                           <div>
                             <div>
                               <div className="sub-title">
-                              
+
                               </div>
                               <div className="information">
                                 <p>
-                                <span>Course Name:</span>{" "}
-                                {getCourseNameByID?.courseName}
+                                  <span>Course Name:</span>{" "}
+                                  {getCourseNameByID?.courseName}
                                 </p>
                                 <p>
                                   <span>Duration:</span>{" "}
@@ -2098,11 +2098,10 @@ const User = ({ getNewCount, title }) => {
                               return (
                                 <div
                                   key={key}
-                                  className={`calender-box un-active-background ${
-                                    formdata.sloatId === data._id
-                                      ? "activeSlot"
-                                      : ""
-                                  }`}
+                                  className={`calender-box un-active-background ${formdata.sloatId === data._id
+                                    ? "activeSlot"
+                                    : ""
+                                    }`}
                                   name="trainddateid"
                                   value={formdata.trainddateid}
                                   onClick={(e) => {
@@ -2578,13 +2577,13 @@ const User = ({ getNewCount, title }) => {
                     <div className="tab-details-alignment">
                       <div className="payment-title">Payment Type</div>
                       <div className="d-flex ">
-                        {/* <div className="d-flex aligncenetr">
+                        <div className="d-flex aligncenetr">
                           <input type="radio"
 
                             placeholder="online" name='type' value="online" onChange={e => onChnageForm(e)} />
                           <label htmlFor="online">online</label>
 
-                        </div> */}
+                        </div>
                         <div className="d-flex aligncenetr">
                           <input
                             type="radio"
@@ -2660,27 +2659,27 @@ const User = ({ getNewCount, title }) => {
 
                         {!editMode
                           ? dicloser &&
-                            (formdata.type === "online"
-                              ? submitpayment
-                              : true) && (
-                              <button
-                                className="fill-button"
-                                onClick={() => register()}
-                              >
-                                Submit
-                              </button>
-                            )
+                          (formdata.type === "online"
+                            ? submitpayment
+                            : true) && (
+                            <button
+                              className="fill-button"
+                              onClick={() => register()}
+                            >
+                              Submit
+                            </button>
+                          )
                           : dicloser &&
-                            (formdata.type === "online"
-                              ? submitpayment
-                              : true) && (
-                              <button
-                                className="fill-button"
-                                onClick={() => updateData()}
-                              >
-                                Update
-                              </button>
-                            )}
+                          (formdata.type === "online"
+                            ? submitpayment
+                            : true) && (
+                            <button
+                              className="fill-button"
+                              onClick={() => updateData()}
+                            >
+                              Update
+                            </button>
+                          )}
                       </div>
                     </div>
                   )}
@@ -3026,8 +3025,8 @@ const User = ({ getNewCount, title }) => {
                   <div className="honda-text-grid-items">
                     <span>Photo:</span>
                     {dataViewMore?.passportPhoto === null ||
-                    dataViewMore?.passportPhoto === "" ||
-                    !dataViewMore?.passportPhoto ? (
+                      dataViewMore?.passportPhoto === "" ||
+                      !dataViewMore?.passportPhoto ? (
                       "No Data"
                     ) : (
                       <img
@@ -3043,8 +3042,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.fname === null ||
-                          dataViewMore?.fname === "" ||
-                          !dataViewMore?.fname
+                            dataViewMore?.fname === "" ||
+                            !dataViewMore?.fname
                             ? "No data"
                             : dataViewMore?.fname,
                       }}
@@ -3057,8 +3056,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.mname === null ||
-                          dataViewMore?.mname === "" ||
-                          !dataViewMore?.mname
+                            dataViewMore?.mname === "" ||
+                            !dataViewMore?.mname
                             ? "No data"
                             : dataViewMore?.mname,
                       }}
@@ -3071,8 +3070,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.lname === null ||
-                          dataViewMore?.lname === "" ||
-                          !dataViewMore?.lname
+                            dataViewMore?.lname === "" ||
+                            !dataViewMore?.lname
                             ? "No data"
                             : dataViewMore?.lname,
                       }}
@@ -3085,8 +3084,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.DoB === null ||
-                          dataViewMore?.DoB === "" ||
-                          !dataViewMore?.DoB
+                            dataViewMore?.DoB === "" ||
+                            !dataViewMore?.DoB
                             ? "No data"
                             : moment(dataViewMore?.DoB).format("ll"),
                       }}
@@ -3099,8 +3098,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.qualification === null ||
-                          dataViewMore?.qualification === "" ||
-                          !dataViewMore?.qualification
+                            dataViewMore?.qualification === "" ||
+                            !dataViewMore?.qualification
                             ? "No data"
                             : dataViewMore?.qualification,
                       }}
@@ -3113,8 +3112,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.gender === null ||
-                          dataViewMore?.gender === "" ||
-                          !dataViewMore?.gender
+                            dataViewMore?.gender === "" ||
+                            !dataViewMore?.gender
                             ? "No data"
                             : dataViewMore?.gender,
                       }}
@@ -3127,8 +3126,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.address === null ||
-                          dataViewMore?.address === "" ||
-                          !dataViewMore?.address
+                            dataViewMore?.address === "" ||
+                            !dataViewMore?.address
                             ? "No data"
                             : dataViewMore?.address,
                       }}
@@ -3141,8 +3140,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.state === null ||
-                          dataViewMore?.state === "" ||
-                          !dataViewMore?.state
+                            dataViewMore?.state === "" ||
+                            !dataViewMore?.state
                             ? "No data"
                             : dataViewMore?.state,
                       }}
@@ -3155,8 +3154,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.city === null ||
-                          dataViewMore?.city === "" ||
-                          !dataViewMore?.city
+                            dataViewMore?.city === "" ||
+                            !dataViewMore?.city
                             ? "No data"
                             : dataViewMore?.city,
                       }}
@@ -3169,8 +3168,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.district === null ||
-                          dataViewMore?.district === "" ||
-                          !dataViewMore?.district
+                            dataViewMore?.district === "" ||
+                            !dataViewMore?.district
                             ? "No data"
                             : dataViewMore?.district,
                       }}
@@ -3183,8 +3182,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.email === null ||
-                          dataViewMore?.email === "" ||
-                          !dataViewMore?.email
+                            dataViewMore?.email === "" ||
+                            !dataViewMore?.email
                             ? "No data"
                             : dataViewMore?.email,
                       }}
@@ -3197,8 +3196,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.phone === null ||
-                          dataViewMore?.phone === "" ||
-                          !dataViewMore?.phone
+                            dataViewMore?.phone === "" ||
+                            !dataViewMore?.phone
                             ? "No data"
                             : dataViewMore?.phone,
                       }}
@@ -3211,8 +3210,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.pincode === null ||
-                          dataViewMore?.pincode === "" ||
-                          !dataViewMore?.pincode
+                            dataViewMore?.pincode === "" ||
+                            !dataViewMore?.pincode
                             ? "No data"
                             : dataViewMore?.pincode,
                       }}
@@ -3225,8 +3224,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.permanentDLnumber === null ||
-                          dataViewMore?.permanentDLnumber === "" ||
-                          !dataViewMore?.permanentDLnumber
+                            dataViewMore?.permanentDLnumber === "" ||
+                            !dataViewMore?.permanentDLnumber
                             ? "No data"
                             : dataViewMore?.permanentDLnumber,
                       }}
@@ -3239,8 +3238,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.issueDate === null ||
-                          dataViewMore?.issueDate === "" ||
-                          !dataViewMore?.issueDate
+                            dataViewMore?.issueDate === "" ||
+                            !dataViewMore?.issueDate
                             ? "No data"
                             : dataViewMore?.issueDate,
                       }}
@@ -3253,8 +3252,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.validTill === null ||
-                          dataViewMore?.validTill === "" ||
-                          !dataViewMore?.validTill
+                            dataViewMore?.validTill === "" ||
+                            !dataViewMore?.validTill
                             ? "No data"
                             : dataViewMore?.validTill,
                       }}
@@ -3267,8 +3266,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.Authority === null ||
-                          dataViewMore?.Authority === "" ||
-                          !dataViewMore?.Authority
+                            dataViewMore?.Authority === "" ||
+                            !dataViewMore?.Authority
                             ? "No data"
                             : dataViewMore?.Authority,
                       }}
@@ -3281,8 +3280,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.bloodGroup === null ||
-                          dataViewMore?.bloodGroup === "" ||
-                          !dataViewMore?.bloodGroup
+                            dataViewMore?.bloodGroup === "" ||
+                            !dataViewMore?.bloodGroup
                             ? "No data"
                             : dataViewMore?.bloodGroup,
                       }}
@@ -3295,8 +3294,8 @@ const User = ({ getNewCount, title }) => {
                   <div className="honda-text-grid-items">
                     <span>Driving License Image:</span>
                     {dataViewMore?.drivingLicense === null ||
-                    dataViewMore?.drivingLicense === "" ||
-                    !dataViewMore?.drivingLicense ? (
+                      dataViewMore?.drivingLicense === "" ||
+                      !dataViewMore?.drivingLicense ? (
                       "No Data"
                     ) : (
                       <img
@@ -3309,8 +3308,8 @@ const User = ({ getNewCount, title }) => {
                   <div className="honda-text-grid-items">
                     <span>ID Proof:</span>
                     {dataViewMore?.IDproof === null ||
-                    dataViewMore?.IDproof === "" ||
-                    !dataViewMore?.IDproof ? (
+                      dataViewMore?.IDproof === "" ||
+                      !dataViewMore?.IDproof ? (
                       "No Data"
                     ) : (
                       <img
@@ -3326,8 +3325,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.authoritycity === null ||
-                          dataViewMore?.authoritycity === "" ||
-                          !dataViewMore?.authoritycity
+                            dataViewMore?.authoritycity === "" ||
+                            !dataViewMore?.authoritycity
                             ? "No data"
                             : dataViewMore?.authoritycity,
                       }}
@@ -3340,8 +3339,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.authoritydistrict === null ||
-                          dataViewMore?.authoritydistrict === "" ||
-                          !dataViewMore?.authoritydistrict
+                            dataViewMore?.authoritydistrict === "" ||
+                            !dataViewMore?.authoritydistrict
                             ? "No data"
                             : dataViewMore?.authoritydistrict,
                       }}
@@ -3383,8 +3382,8 @@ const User = ({ getNewCount, title }) => {
                         dangerouslySetInnerHTML={{
                           __html:
                             dataForPayment?.courseName[0]?.price === null ||
-                            dataForPayment?.courseName[0]?.price === "" ||
-                            !dataForPayment?.courseName[0]?.price
+                              dataForPayment?.courseName[0]?.price === "" ||
+                              !dataForPayment?.courseName[0]?.price
                               ? "No data"
                               : dataForPayment?.courseName[0]?.price,
                         }}
@@ -3397,8 +3396,8 @@ const User = ({ getNewCount, title }) => {
                         dangerouslySetInnerHTML={{
                           __html:
                             dataForPayment?._id === null ||
-                            dataForPayment?._id === "" ||
-                            !dataForPayment?._id
+                              dataForPayment?._id === "" ||
+                              !dataForPayment?._id
                               ? "No data"
                               : dataForPayment?._id,
                         }}
