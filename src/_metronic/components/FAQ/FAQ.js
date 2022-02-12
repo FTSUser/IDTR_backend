@@ -531,7 +531,7 @@ const FAQ = ({ getNewCount, title }) => {
                     }}
                     className="btn btn-success mr-2"
                   >
-                    <span>Add Details</span>
+                    <span>{isEdit === false ? 'Add' : 'Edit'} FAQ</span>
                     {loading && (
                       <span className="mx-3 spinner spinner-white"></span>
                     )}
