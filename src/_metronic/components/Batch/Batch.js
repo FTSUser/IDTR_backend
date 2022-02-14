@@ -102,8 +102,8 @@ const Batch = ({ getNewCount, title }) => {
   };
 
   useEffect(() => {
-    console.log("allDataForResultDownload",allDataForResultDownload);
-   }, [allDataForResultDownload]);
+    console.log("allDataForResultDownload", allDataForResultDownload);
+  }, [allDataForResultDownload]);
 
   // useEffect(() => { }, [idForEditStatus]);
 
@@ -160,8 +160,7 @@ const Batch = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.batch);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {
-         });
+        .catch((err) => {});
     } else {
       await ApiGet(
         `batch/getAllBatch?search=${search}&page=${page}&limit=${countPerPage}`
@@ -171,7 +170,7 @@ const Batch = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.batch);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => { });
+        .catch((err) => {});
     }
   };
 
@@ -179,15 +178,16 @@ const Batch = ({ getNewCount, title }) => {
     selectdate = new Date(selectdate);
     setIsLoaderVisible(true);
     await ApiGet(
-      `trainingDate/getData?date=${selectdate.getFullYear() +
-      "-" +
-      (selectdate.getMonth() < 9
-        ? "0" + (selectdate.getMonth() + 1)
-        : selectdate.getMonth() + 1) +
-      "-" +
-      (selectdate.getDate() < 9
-        ? "0" + selectdate.getDate()
-        : selectdate.getDate())
+      `trainingDate/getData?date=${
+        selectdate.getFullYear() +
+        "-" +
+        (selectdate.getMonth() < 9
+          ? "0" + (selectdate.getMonth() + 1)
+          : selectdate.getMonth() + 1) +
+        "-" +
+        (selectdate.getDate() < 9
+          ? "0" + selectdate.getDate()
+          : selectdate.getDate())
       }`
     )
       .then((res) => {
@@ -253,11 +253,9 @@ const Batch = ({ getNewCount, title }) => {
   };
 
   const getAllResponseByBatch = async (id) => {
-    await ApiGet(
-      `response/getResponseByUserWithoutPagination/${id}`
-    )
+    await ApiGet(`response/getResponseByUserWithoutPagination/${id}`)
       .then((res) => {
-        console.log("resresres",res?.data?.payload);
+        console.log("resresres", res?.data?.payload);
         setAllDataForResultDownload(res?.data?.payload?.findResponse);
       })
       .catch((err) => {
@@ -592,7 +590,7 @@ const Batch = ({ getNewCount, title }) => {
                 setIsViewMoreAnnouncement(true);
                 setDataViewMore(row);
                 getResponseByBatch(row?._id);
-                getAllResponseByBatch(row?._id)
+                getAllResponseByBatch(row?._id);
               }}
             >
               <Tooltip title="Show More" arrow>
@@ -817,24 +815,30 @@ const Batch = ({ getNewCount, title }) => {
         let data = {
           Number: key + 1,
           UserID: registerUser?.uid?._id,
-          FirstName:registerUser?.uid?.fname,
-          LastName:registerUser?.uid?.lname,
-          EmailAddress:registerUser?.uid?.email,
-          MobileNumber:registerUser?.uid?.phone,
-          CourseType:registerUser?.uid?.cnid?.ccid?.ctid?.courseType,
-          VehicleCategory:registerUser?.uid?.cnid?.ccid?.ctid?.vcid?.vehicleCategory,
-          CourseName:registerUser?.uid?.cnid?.courseName,
-          DateOfCourse:moment(registerUser?.uid?.dateofCourse).format("ll"),
-          LicenseCategory:registerUser?.uid?.lcid,
-          DriveringLicenseNo:registerUser?.uid?.drivingLicenseNumber ? registerUser?.uid?.drivingLicenseNumber : "-",
-          CalendarSlotSelected:moment(registerUser?.uid?.tdid?.date).format("ll"),
-          TestLanguage:registerUser?.Esid?.language,
-          TotalQuestions :registerUser?.Esid?.no,
-          QuestionsAnsweredCorrectly:registerUser?.uid?.totalScore,
-          QuestionsAnsweredIncorrectly:registerUser?.Esid?.no-registerUser?.uid?.totalScore,
-          Status:"-",
-          DataEntryUser:registerUser?.batch?.DataEntry?.name,
-          DataEntryUserID:registerUser?.batch?.Examiner?.name,
+          FirstName: registerUser?.uid?.fname,
+          LastName: registerUser?.uid?.lname,
+          EmailAddress: registerUser?.uid?.email,
+          MobileNumber: registerUser?.uid?.phone,
+          CourseType: registerUser?.uid?.cnid?.ccid?.ctid?.courseType,
+          VehicleCategory:
+            registerUser?.uid?.cnid?.ccid?.ctid?.vcid?.vehicleCategory,
+          CourseName: registerUser?.uid?.cnid?.courseName,
+          DateOfCourse: moment(registerUser?.uid?.dateofCourse).format("ll"),
+          LicenseCategory: registerUser?.uid?.lcid,
+          DriveringLicenseNo: registerUser?.uid?.drivingLicenseNumber
+            ? registerUser?.uid?.drivingLicenseNumber
+            : "-",
+          CalendarSlotSelected: moment(registerUser?.uid?.tdid?.date).format(
+            "ll"
+          ),
+          TestLanguage: registerUser?.Esid?.language,
+          TotalQuestions: registerUser?.Esid?.no,
+          QuestionsAnsweredCorrectly: registerUser?.uid?.totalScore,
+          QuestionsAnsweredIncorrectly:
+            registerUser?.Esid?.no - registerUser?.uid?.totalScore,
+          Status: "-",
+          DataEntryUser: registerUser?.batch?.DataEntry?.name,
+          DataEntryUserID: registerUser?.batch?.Examiner?.name,
         };
         setDataCSVResults((currVal) => [...currVal, data]);
       });
@@ -1219,36 +1223,6 @@ const Batch = ({ getNewCount, title }) => {
           <List>
             {isUpdateAnnouncement === true ? (
               <div className="form ml-30 ">
-                {/* Ameninties Name */}
-                {/* <div className="form-group row">
-                  <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Date
-                  </label>
-                  <div className="col-lg-9 col-xl-6">
-                    <div>
-                      <input
-                        type="text"
-                        className={`form-control form-control-lg form-control-solid `}
-                        id="date"
-                        name="date"
-                        value={inputValue.date}
-                        onChange={(e) => {
-                          handleOnChnage(e);
-                        }}
-                      />
-                    </div>
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errors["date"]}
-                    </span>
-                  </div>
-                </div> */}
-
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter Name
@@ -1515,34 +1489,55 @@ const Batch = ({ getNewCount, title }) => {
                   </div>
                   <div className="honda-text-grid-items">
                     <span>User Data:</span>
-                    <div
-              className="cursor-pointer pl-2"
-            >
-              {allDataForResultDownload?.length > 0 ?
-               <CsvDownload
-               className={``}
-               data={dataCSVResults}
-               filename="Donations.csv"
-               style={{
-                 backgroundColor: "#CC0001",
-                 borderRadius: "6px",
-                 border: "1px solid #fff",
-                 display: "inline-block",
-                 cursor: "pointer",
-                 color: "#FFFFFF",
-                 fontSize: "12px",
-                 padding: "10px 18px",
-                 textDecoration: "none",
-                 position: "right",
-               }}
-             >
-               Download Test Data
-             </CsvDownload>
-            :
-             "No test Data"
-               }  
-             
-            </div>
+                    <div className="cursor-pointer pl-2">
+                      {allDataForResultDownload?.length > 0 ? (
+                        <CsvDownload
+                          className={``}
+                          data={dataCSVResults}
+                          filename="Donations.csv"
+                          style={{
+                            backgroundColor: "#CC0001",
+                            borderRadius: "6px",
+                            border: "1px solid #fff",
+                            display: "inline-block",
+                            cursor: "pointer",
+                            color: "#FFFFFF",
+                            fontSize: "12px",
+                            padding: "10px 18px",
+                            textDecoration: "none",
+                            position: "right",
+                          }}
+                        >
+                          Download Test Data
+                        </CsvDownload>
+                      ) : (
+                        "No test Data"
+                      )}
+
+                      {allDataForResultDownload?.length > 0 ? (
+                        <CsvDownload
+                          className={``}
+                          data={dataCSVResults}
+                          filename="Donations.csv"
+                          style={{
+                            backgroundColor: "#CC0001",
+                            borderRadius: "6px",
+                            border: "1px solid #fff",
+                            display: "inline-block",
+                            cursor: "pointer",
+                            color: "#FFFFFF",
+                            fontSize: "12px",
+                            padding: "10px 18px",
+                            textDecoration: "none",
+                            position: "right",
+                          }}
+                        >
+                          Download Test Data
+                        </CsvDownload>
+                      ) : (
+                        "No test Data"
+                      )}
+                    </div>
                     {/* <DataTable
                       columns={columnsUser}
                       data={dataViewMore?.User}
@@ -1632,7 +1627,6 @@ const Batch = ({ getNewCount, title }) => {
                           </div>
 
                           {data?.Qname}
-
                         </div>
                         <div className="">
                           Right / Wrong:{" "}
@@ -1645,9 +1639,7 @@ const Batch = ({ getNewCount, title }) => {
                               {data?.Answer?.findIndex(
                                 (e) => e === record?.no
                               ) !== -1 ? (
-                                <div className="green">
-                                  {record?.name}
-                                </div>
+                                <div className="green">{record?.name}</div>
                               ) : (
                                 <div className="">{record?.name}</div>
                               )}
