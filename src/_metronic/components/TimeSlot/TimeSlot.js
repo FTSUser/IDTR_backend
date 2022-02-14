@@ -24,6 +24,7 @@ import moment from "moment";
 import "rc-time-picker/assets/index.css";
 import TimePicker from "rc-time-picker";
 import DatePicker from "react-datepicker";
+import CsvDownload from "react-json-to-csv";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -50,6 +51,9 @@ const TimeSlot = ({ getNewCount, title }) => {
   const [getCourseCategory, setGetCourseCategory] = useState([]);
   const [getCourseName, setGetCourseName] = useState([]);
   const [isEditPopUp, setIsEditPopUp] = useState(false);
+  const [allPaymentDetailsExcel, setAllPaymentDetailsExcel] = useState([]);
+
+  const [dataCSV, setDataCSV] = useState([]);
 
   useEffect(() => {
     document.title = "Honda | TimeSlot";
@@ -98,6 +102,41 @@ const TimeSlot = ({ getNewCount, title }) => {
       setErrorsForAdd({ ...errorsForAdd, [name]: "" });
     }
   };
+  useEffect(() => {
+    getAllPaymentDetailsForExcel();
+  }, []);
+
+  const getAllPaymentDetailsForExcel = async () => {
+    // if (!search) {
+    await ApiGet(`trainingDate/getAllDateWithoutPagination`)
+      .then((res) => {
+        setAllPaymentDetailsExcel(res?.data?.payload?.Question);
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message)
+      });
+    // }
+  };
+  useEffect(() => {
+    if (allPaymentDetailsExcel) {
+      allPaymentDetailsExcel.map((registerUser, key) => {
+        let data = {
+          Number: key + 1,
+
+          courseName: registerUser?.courseName[0]?.courseName,
+          courseType: registerUser?.courseType[0]?.courseType,
+          vehicleCategory: registerUser?.vehicleCategory[0]?.vehicleCategory,
+          createdBy: registerUser?.cnid?.createdBy,
+          seat: registerUser?.seat,
+          startTime: moment(registerUser?.startTime).format("LT"),
+          endTime: moment(registerUser?.endTime).format("LT"),
+          createdAt: moment(registerUser?.cnid?.createdAt).format("ll"),
+          created: moment(registerUser?.cnid?.created).format("ll"),
+        };
+        setDataCSV((currVal) => [...currVal, data]);
+      });
+    }
+  }, [allPaymentDetailsExcel]);
 
   const handleAddAdminClose = () => {
     setInputValueForAdd({});
@@ -599,6 +638,28 @@ const TimeSlot = ({ getNewCount, title }) => {
               >
                 Add Time Slot
               </button>
+            </div>
+            <div className="cus-medium-button-style button-height">
+              <CsvDownload
+                className={``}
+                data={dataCSV}
+                filename="Donations.csv"
+                style={{
+                  //pass other props, like styles
+                  backgroundColor: "#CC0001",
+                  borderRadius: "6px",
+                  border: "1px solid #fff",
+                  display: "inline-block",
+                  cursor: "pointer",
+                  color: "#FFFFFF",
+                  fontSize: "12px",
+                  padding: "10px 18px",
+                  textDecoration: "none",
+                  position: "right",
+                }}
+              >
+                Export to Excel
+              </CsvDownload>
             </div>
           </div>
 
