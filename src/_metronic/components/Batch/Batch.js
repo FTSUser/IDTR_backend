@@ -69,6 +69,8 @@ const Batch = ({ getNewCount, title }) => {
   const [idForgetResponseByBatch, setIdForgetResponseByBatch] = useState();
   const [isPaperViewModel, setIsPaperViewModel] = useState(false);
   const [paperSet, setPaperSet] = useState([]);
+  const [allDataForResultDownload, setAllDataForResultDownload] = useState([]);
+  const [dataCSVResults, setDataCSVResults] = useState([]);
 
   useEffect(() => {
     document.title = "Honda | Banner";
@@ -243,6 +245,19 @@ const Batch = ({ getNewCount, title }) => {
       })
       .catch((err) => {
         // toast.error(err?.message);
+        console.log(err?.message);
+      });
+  };
+
+  const getAllResponseByBatch = async (id) => {
+    await ApiGet(
+      `response/getResponseByUserWithoutPagination/${id}`
+    )
+      .then((res) => {
+        console.log("resres",res?.data?.payload?.Response[0]?.User);
+        setAllDataForResultDownload(res?.data?.payload?.Response[0]?.User);
+      })
+      .catch((err) => {
         console.log(err?.message);
       });
   };
@@ -574,6 +589,7 @@ const Batch = ({ getNewCount, title }) => {
                 setIsViewMoreAnnouncement(true);
                 setDataViewMore(row);
                 getResponseByBatch(row?._id);
+                getAllResponseByBatch(row?._id)
               }}
             >
               <Tooltip title="Show More" arrow>
@@ -694,32 +710,6 @@ const Batch = ({ getNewCount, title }) => {
         );
       },
     },
-    {
-      name: "Result Data",
-      cell: (row) => {
-        return (
-          <>
-            <div className="d-flex justify-content-between">
-              {row?.isPaperDone && (
-                <div
-                  className="cursor-pointer pl-2"
-                  onClick={() => {
-                    // setIsPaperViewModel(true);
-                    // getPapersetByUserId(row?._id);
-                  }}
-                >
-                  <div className="cus-medium-button-style widthfixed">
-                    <button className="btn btn-success mr-2">
-                      Download Result 
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          </>
-        );
-      },
-    },
   ];
   // * Table Style
   const customStyles = {
@@ -816,6 +806,45 @@ const Batch = ({ getNewCount, title }) => {
       });
     }
   };
+
+  //for excel generation
+  useEffect(() => {
+    if (allDataForResultDownload) {
+      allDataForResultDownload.map((registerUser, key) => {
+        let data = {
+          Number: key + 1,
+          UserID: "",
+          FirstName:"",
+          LastName:"",
+          EmailAddress:"",
+          MobileNumber:"",
+          CourseType:"",
+          VehicleCategory:"",
+          CourseName:"",
+          DateOfCourse:"",
+          LicenseCategory:"",
+          DriveringLicenseNo:"",
+          CalendarSlotSelected:"",
+          TestLanguage:"",
+          TotalQuestions :"",
+          QuestionsAnsweredCorrectly:"",
+          QuestionsAnsweredIncorrectly:"",
+          Status:"",
+          NoOfAttempts:"",
+          DataEntryUser:"",
+          DataEntryUserID:"",
+
+
+          //new one
+          IP:registerUser?.ip,
+          Device:registerUser?.device,
+          MobileNumber:registerUser?.uid?.phone,
+          RegistrationDate:moment(registerUser?.uid?.registrationDate).format("ll")
+        };
+        setDataCSVResults((currVal) => [...currVal, data]);
+      });
+    }
+  }, [allDataForResultDownload]);
 
   return (
     <>
@@ -1491,6 +1520,29 @@ const Batch = ({ getNewCount, title }) => {
                   </div>
                   <div className="honda-text-grid-items">
                     <span>User Data:</span>
+                    <div
+              className="cursor-pointer pl-2"
+            >
+              <CsvDownload
+                className={``}
+                data={dataCSVResults}
+                filename="Donations.csv"
+                style={{
+                  backgroundColor: "#CC0001",
+                  borderRadius: "6px",
+                  border: "1px solid #fff",
+                  display: "inline-block",
+                  cursor: "pointer",
+                  color: "#FFFFFF",
+                  fontSize: "12px",
+                  padding: "10px 18px",
+                  textDecoration: "none",
+                  position: "right",
+                }}
+              >
+                Export to Excel
+              </CsvDownload>
+            </div>
                     {/* <DataTable
                       columns={columnsUser}
                       data={dataViewMore?.User}
