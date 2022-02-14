@@ -101,9 +101,11 @@ const Batch = ({ getNewCount, title }) => {
     setCountForBatch(0);
   };
 
-  useEffect(() => { }, [inputValueForAdd]);
+  useEffect(() => {
+    console.log("allDataForResultDownload",allDataForResultDownload);
+   }, [allDataForResultDownload]);
 
-  useEffect(() => { }, [idForEditStatus]);
+  // useEffect(() => { }, [idForEditStatus]);
 
   const handleAdminUpdateClose = () => {
     setInputValue({});
@@ -1536,9 +1538,9 @@ const Batch = ({ getNewCount, title }) => {
              >
                Export to Excel
              </CsvDownload>
-             :
+            :
              "No test Data"
-               } 
+               }  
              
             </div>
                     {/* <DataTable
