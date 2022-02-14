@@ -579,9 +579,9 @@ const Question = (props) => {
 
     const getAllQuestionSetForExcel = async () => {
         // if (!search) {
-        await ApiGet(`examiner/getAll`)
+        await ApiGet(`question/getAll`)
             .then((res) => {
-                setAllCourseNameExcel(res?.data?.payload?.QuestionSet);
+                setAllCourseNameExcel(res?.data?.payload?.Question);
             })
             .catch((err) => {
                 toast.error(err?.response?.data?.message)
@@ -594,9 +594,12 @@ const Question = (props) => {
                 let data = {
                     Number: key + 1,
                     CreatedAt: moment(registerUser?.createdAt).format("ll"),
-                    QuestionSetName: registerUser?.name,
-                    QuestionSetDescription: registerUser?.description,
-                    QuestionSetLanguage: registerUser?.language,
+                    QuestionName: registerUser?.Qname,
+                    language: registerUser?.language,
+                    type: registerUser?.type,
+                    weight: registerUser?.weight,
+                    Category: registerUser?.Category,
+                    image: registerUser?.image,
                 };
                 setDataCSV((currVal) => [...currVal, data]);
             });
