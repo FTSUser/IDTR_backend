@@ -1536,7 +1536,7 @@ const Batch = ({ getNewCount, title }) => {
                  position: "right",
                }}
              >
-               Export to Excel
+               Download Test Data
              </CsvDownload>
             :
              "No test Data"
