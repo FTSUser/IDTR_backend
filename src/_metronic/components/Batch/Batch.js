@@ -813,10 +813,10 @@ const Batch = ({ getNewCount, title }) => {
       allDataForResultDownload.map((registerUser, key) => {
         let data = {
           Number: key + 1,
-          UserID: "",
-          FirstName:"",
-          LastName:"",
-          EmailAddress:"",
+          UserID: registerUser?._id,
+          FirstName:registerUser?.fname,
+          LastName:registerUser?.mname,
+          EmailAddress:registerUser?.email,
           MobileNumber:"",
           CourseType:"",
           VehicleCategory:"",
