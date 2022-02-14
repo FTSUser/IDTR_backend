@@ -1279,7 +1279,7 @@ const CourseName = ({ getNewCount, title }) => {
                     className="btn btn-success mr-2"
                   >
 
-                    <span>{isEditPopUp === false ? 'Add' : 'Edit'}  Course Name</span>
+                    <span>{isEditPopUp === false ? 'Add' : 'Update'}  Course Name</span>
 
                     {loading && (
                       <span className="mx-3 spinner spinner-white"></span>

@@ -479,7 +479,7 @@ const CourseCategory = ({ getNewCount, title }) => {
 
   const getAllCourseNameForExcel = async () => {
     // if (!search) {
-    await ApiGet(`courseName/getAll`)
+    await ApiGet(`courseCategory/getAll`)
       .then((res) => {
         setAllCourseNameExcel(res?.data?.payload?.Question);
       })
@@ -493,35 +493,14 @@ const CourseCategory = ({ getNewCount, title }) => {
       allCourseNameExcel.map((registerUser, key) => {
         let data = {
           Number: key + 1,
+          CourseCategory: registerUser?.courseCategory,
+          CourseType: registerUser?.ctid?.courseType,
+          VehicleCategory: registerUser?.vcid?.vehicleCategory,
+          Description: registerUser?.description,
           CreatedAt: moment(registerUser?.createdAt).format("ll"),
           CreatedBy: registerUser?.createdBy,
-          SystemRequirement: registerUser?.systemRequirement,
-          Price: registerUser?.price,
-          Mode: registerUser?.mode,
-          Duration: registerUser?.duration,
-          Timing: registerUser?.timing,
-          Certificate: registerUser?.certificate,
-          Validity: registerUser?.validity,
-          DocumentRequired: registerUser?.documentRequired,
-          CourseName: registerUser?.courseName,
-          Description: registerUser?.description,
-          IsActive: registerUser?.isActive,
           UpdatedAt: moment(registerUser?.updatedAt).format("ll"),
           UpdatedBy: registerUser?.updatedBy,
-          CreatedAtVC: moment(registerUser?.vcid?.createdAt).format("ll"),
-          CreatedByVC: registerUser?.vcid?.createdBy,
-          VehicleCategory: registerUser?.vcid?.vehicleCategory,
-          DescriptionVC: registerUser?.vcid?.description,
-          IsActiveVC: registerUser?.vcid?.isActive,
-          UpdatedAtVC: moment(registerUser?.vcid?.updatedAt).format("ll"),
-          UpdatedByVC: registerUser?.vcid?.updatedBy,
-          CreatedAtCT: moment(registerUser?.ctid?.createdAt).format("ll"),
-          CreatedByCT: registerUser?.ctid?.createdBy,
-          CourseType: registerUser?.ctid?.courseType,
-          DescriptionCT: registerUser?.ctid?.description,
-          IsActiveCT: registerUser?.ctid?.isActive,
-          UpdatedAtCT: moment(registerUser?.ctid?.updatedAt).format("ll"),
-          UpdatedByCT: registerUser?.ctid?.updatedBy,
         };
         setDataCSV((currVal) => [...currVal, data]);
       });
@@ -824,7 +803,7 @@ const CourseCategory = ({ getNewCount, title }) => {
                     }}
                     className="btn btn-success mr-2"
                   >
-                    <span>{isEditPopUp === false ? 'Add' : 'Edit'}  Course Category</span>
+                    <span>{isEditPopUp === false ? 'Add' : 'Update'}  Course Category</span>
                     {loading && (
                       <span className="mx-3 spinner spinner-white"></span>
                     )}
