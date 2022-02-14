@@ -158,7 +158,8 @@ const Batch = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.batch);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => { });
+        .catch((err) => {
+         });
     } else {
       await ApiGet(
         `batch/getAllBatch?search=${search}&page=${page}&limit=${countPerPage}`
@@ -254,8 +255,8 @@ const Batch = ({ getNewCount, title }) => {
       `response/getResponseByUserWithoutPagination/${id}`
     )
       .then((res) => {
-        console.log("resres",res?.data?.payload?.Response[0]?.User);
-        setAllDataForResultDownload(res?.data?.payload?.Response[0]?.User);
+        console.log("resresres",res?.data?.payload);
+        setAllDataForResultDownload(res?.data?.payload?.findResponse);
       })
       .catch((err) => {
         console.log(err?.message);
@@ -265,8 +266,8 @@ const Batch = ({ getNewCount, title }) => {
   const getPapersetByUserId = async (id) => {
     await ApiGet(`response/getResponseByUser/${id}`)
       .then((res) => {
-        console.log("resrtrssdf", res?.data?.payload?.Response);
-        setPaperSet(res?.data?.payload?.Response);
+        console.log("resrtrssdf", res?.data?.payload?.Response[0]);
+        // setPaperSet(res?.data?.payload?.Response[0]);
       })
       .catch((err) => {
         toast.error(err?.message);
@@ -807,39 +808,31 @@ const Batch = ({ getNewCount, title }) => {
     }
   };
 
-  //for excel generation
+  // for excel generation
   useEffect(() => {
     if (allDataForResultDownload) {
       allDataForResultDownload.map((registerUser, key) => {
         let data = {
           Number: key + 1,
-          UserID: registerUser?._id,
-          FirstName:registerUser?.fname,
-          LastName:registerUser?.mname,
-          EmailAddress:registerUser?.email,
-          MobileNumber:"",
-          CourseType:"",
-          VehicleCategory:"",
-          CourseName:"",
-          DateOfCourse:"",
-          LicenseCategory:"",
-          DriveringLicenseNo:"",
-          CalendarSlotSelected:"",
-          TestLanguage:"",
-          TotalQuestions :"",
-          QuestionsAnsweredCorrectly:"",
-          QuestionsAnsweredIncorrectly:"",
-          Status:"",
-          NoOfAttempts:"",
-          DataEntryUser:"",
-          DataEntryUserID:"",
-
-
-          //new one
-          IP:registerUser?.ip,
-          Device:registerUser?.device,
+          UserID: registerUser?.uid?._id,
+          FirstName:registerUser?.uid?.fname,
+          LastName:registerUser?.uid?.lname,
+          EmailAddress:registerUser?.uid?.email,
           MobileNumber:registerUser?.uid?.phone,
-          RegistrationDate:moment(registerUser?.uid?.registrationDate).format("ll")
+          CourseType:registerUser?.uid?.cnid?.ccid?.ctid?.courseType,
+          VehicleCategory:registerUser?.uid?.cnid?.ccid?.ctid?.vcid?.vehicleCategory,
+          CourseName:registerUser?.uid?.cnid?.courseName,
+          DateOfCourse:moment(registerUser?.uid?.dateofCourse).format("ll"),
+          LicenseCategory:registerUser?.uid?.lcid,
+          DriveringLicenseNo:registerUser?.uid?.drivingLicenseNumber ? registerUser?.uid?.drivingLicenseNumber : "-",
+          CalendarSlotSelected:moment(registerUser?.uid?.tdid?.date).format("ll"),
+          TestLanguage:registerUser?.Esid?.language,
+          TotalQuestions :registerUser?.Esid?.no,
+          QuestionsAnsweredCorrectly:registerUser?.uid?.totalScore,
+          QuestionsAnsweredIncorrectly:registerUser?.Esid?.no-registerUser?.uid?.totalScore,
+          Status:"-",
+          DataEntryUser:registerUser?.batch?.DataEntry?.name,
+          DataEntryUserID:registerUser?.batch?.Examiner?.name,
         };
         setDataCSVResults((currVal) => [...currVal, data]);
       });
@@ -1523,25 +1516,30 @@ const Batch = ({ getNewCount, title }) => {
                     <div
               className="cursor-pointer pl-2"
             >
-              <CsvDownload
-                className={``}
-                data={dataCSVResults}
-                filename="Donations.csv"
-                style={{
-                  backgroundColor: "#CC0001",
-                  borderRadius: "6px",
-                  border: "1px solid #fff",
-                  display: "inline-block",
-                  cursor: "pointer",
-                  color: "#FFFFFF",
-                  fontSize: "12px",
-                  padding: "10px 18px",
-                  textDecoration: "none",
-                  position: "right",
-                }}
-              >
-                Export to Excel
-              </CsvDownload>
+              {allDataForResultDownload?.length > 0 ?
+               <CsvDownload
+               className={``}
+               data={dataCSVResults}
+               filename="Donations.csv"
+               style={{
+                 backgroundColor: "#CC0001",
+                 borderRadius: "6px",
+                 border: "1px solid #fff",
+                 display: "inline-block",
+                 cursor: "pointer",
+                 color: "#FFFFFF",
+                 fontSize: "12px",
+                 padding: "10px 18px",
+                 textDecoration: "none",
+                 position: "right",
+               }}
+             >
+               Export to Excel
+             </CsvDownload>
+             :
+             "No test Data"
+               } 
+             
             </div>
                     {/* <DataTable
                       columns={columnsUser}
