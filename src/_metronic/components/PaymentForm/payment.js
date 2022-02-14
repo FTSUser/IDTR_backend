@@ -61,7 +61,8 @@ function PaymentData(props) {
                     paymentId: response.razorpay_payment_id,
                     razorpayOrderId: response.razorpay_order_id,
                     razorpaySignature: response.razorpay_signature,
-                    price: props.price
+                    price: props.price,
+                    type: "online"
 
                 };
 

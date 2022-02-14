@@ -287,7 +287,7 @@ const User = ({ getNewCount, title }) => {
     type: "",
   });
 
-  useEffect(() => {}, [tableFilterData]);
+  useEffect(() => { }, [tableFilterData]);
 
   useEffect(() => {
     console.log("formdata", formdata);
@@ -428,7 +428,7 @@ const User = ({ getNewCount, title }) => {
     // }
   };
 
-  useEffect(() => {}, [inputValue]);
+  useEffect(() => { }, [inputValue]);
 
   let i = 0;
   const columns = [
@@ -690,7 +690,7 @@ const User = ({ getNewCount, title }) => {
     {
       name: "Actions",
       cell: (row) => {
-        console.log( " fsdfsdfsdfs",row);
+        console.log(" fsdfsdfsdfs", row);
         return (
           <>
             <div
@@ -779,10 +779,10 @@ const User = ({ getNewCount, title }) => {
         let data = {
           Number: key + 1,
           UserID: registerUser?.uid?._id,
-          IP:registerUser?.ip,
-          Device:registerUser?.device,
-          MobileNumber:registerUser?.uid?.phone,
-          RegistrationDate:moment(registerUser?.uid?.registrationDate).format("ll")
+          IP: registerUser?.ip,
+          Device: registerUser?.device,
+          MobileNumber: registerUser?.uid?.phone,
+          RegistrationDate: moment(registerUser?.uid?.registrationDate).format("ll")
         };
         setDataCSVLogs((currVal) => [...currVal, data]);
       });
@@ -848,7 +848,7 @@ const User = ({ getNewCount, title }) => {
               : registerUser?.bloodGroup,
           IsPaymentDone:
             registerUser?.isPaymentDone === null ||
-            registerUser?.isPaymentDone === false
+              registerUser?.isPaymentDone === false
               ? "Payment Panding"
               : registerUser?.isPaymentDone,
           PaymentMode: registerUser?.type,
@@ -1083,6 +1083,7 @@ const User = ({ getNewCount, title }) => {
       receiptDate: new Date(),
       receiptNumber: dataForPayment?._id,
       isPaymentDone: true,
+      type: "offline"
     };
     ApiPut("register/offlinePayment", data)
       .then((res) => {
@@ -1709,7 +1710,7 @@ const User = ({ getNewCount, title }) => {
       } else {
         toast.error("Failed to upload image:", f.name);
       }
-    } catch (err) {}
+    } catch (err) { }
   };
 
   const handleSearch = (e) => {
@@ -3185,8 +3186,8 @@ const User = ({ getNewCount, title }) => {
                   <div className="honda-text-grid-items">
                     <span>Photo:</span>
                     {dataViewMore?.passportPhoto === null ||
-                    dataViewMore?.passportPhoto === "" ||
-                    !dataViewMore?.passportPhoto ? (
+                      dataViewMore?.passportPhoto === "" ||
+                      !dataViewMore?.passportPhoto ? (
                       "No Data"
                     ) : (
                       <img
@@ -3202,8 +3203,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.fname === null ||
-                          dataViewMore?.fname === "" ||
-                          !dataViewMore?.fname
+                            dataViewMore?.fname === "" ||
+                            !dataViewMore?.fname
                             ? "No data"
                             : dataViewMore?.fname,
                       }}
@@ -3216,8 +3217,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.mname === null ||
-                          dataViewMore?.mname === "" ||
-                          !dataViewMore?.mname
+                            dataViewMore?.mname === "" ||
+                            !dataViewMore?.mname
                             ? "No data"
                             : dataViewMore?.mname,
                       }}
@@ -3230,8 +3231,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.lname === null ||
-                          dataViewMore?.lname === "" ||
-                          !dataViewMore?.lname
+                            dataViewMore?.lname === "" ||
+                            !dataViewMore?.lname
                             ? "No data"
                             : dataViewMore?.lname,
                       }}
@@ -3244,8 +3245,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.DoB === null ||
-                          dataViewMore?.DoB === "" ||
-                          !dataViewMore?.DoB
+                            dataViewMore?.DoB === "" ||
+                            !dataViewMore?.DoB
                             ? "No data"
                             : moment(dataViewMore?.DoB).format("ll"),
                       }}
@@ -3258,8 +3259,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.qualification === null ||
-                          dataViewMore?.qualification === "" ||
-                          !dataViewMore?.qualification
+                            dataViewMore?.qualification === "" ||
+                            !dataViewMore?.qualification
                             ? "No data"
                             : dataViewMore?.qualification,
                       }}
@@ -3272,8 +3273,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.gender === null ||
-                          dataViewMore?.gender === "" ||
-                          !dataViewMore?.gender
+                            dataViewMore?.gender === "" ||
+                            !dataViewMore?.gender
                             ? "No data"
                             : dataViewMore?.gender,
                       }}
@@ -3286,8 +3287,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.address === null ||
-                          dataViewMore?.address === "" ||
-                          !dataViewMore?.address
+                            dataViewMore?.address === "" ||
+                            !dataViewMore?.address
                             ? "No data"
                             : dataViewMore?.address,
                       }}
@@ -3300,8 +3301,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.state === null ||
-                          dataViewMore?.state === "" ||
-                          !dataViewMore?.state
+                            dataViewMore?.state === "" ||
+                            !dataViewMore?.state
                             ? "No data"
                             : dataViewMore?.state,
                       }}
@@ -3314,8 +3315,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.city === null ||
-                          dataViewMore?.city === "" ||
-                          !dataViewMore?.city
+                            dataViewMore?.city === "" ||
+                            !dataViewMore?.city
                             ? "No data"
                             : dataViewMore?.city,
                       }}
@@ -3328,8 +3329,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.district === null ||
-                          dataViewMore?.district === "" ||
-                          !dataViewMore?.district
+                            dataViewMore?.district === "" ||
+                            !dataViewMore?.district
                             ? "No data"
                             : dataViewMore?.district,
                       }}
@@ -3342,8 +3343,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.email === null ||
-                          dataViewMore?.email === "" ||
-                          !dataViewMore?.email
+                            dataViewMore?.email === "" ||
+                            !dataViewMore?.email
                             ? "No data"
                             : dataViewMore?.email,
                       }}
@@ -3356,8 +3357,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.phone === null ||
-                          dataViewMore?.phone === "" ||
-                          !dataViewMore?.phone
+                            dataViewMore?.phone === "" ||
+                            !dataViewMore?.phone
                             ? "No data"
                             : dataViewMore?.phone,
                       }}
@@ -3370,8 +3371,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.pincode === null ||
-                          dataViewMore?.pincode === "" ||
-                          !dataViewMore?.pincode
+                            dataViewMore?.pincode === "" ||
+                            !dataViewMore?.pincode
                             ? "No data"
                             : dataViewMore?.pincode,
                       }}
@@ -3384,8 +3385,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.permanentDLnumber === null ||
-                          dataViewMore?.permanentDLnumber === "" ||
-                          !dataViewMore?.permanentDLnumber
+                            dataViewMore?.permanentDLnumber === "" ||
+                            !dataViewMore?.permanentDLnumber
                             ? "No data"
                             : dataViewMore?.permanentDLnumber,
                       }}
@@ -3398,8 +3399,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.issueDate === null ||
-                          dataViewMore?.issueDate === "" ||
-                          !dataViewMore?.issueDate
+                            dataViewMore?.issueDate === "" ||
+                            !dataViewMore?.issueDate
                             ? "No data"
                             : dataViewMore?.issueDate,
                       }}
@@ -3412,8 +3413,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.validTill === null ||
-                          dataViewMore?.validTill === "" ||
-                          !dataViewMore?.validTill
+                            dataViewMore?.validTill === "" ||
+                            !dataViewMore?.validTill
                             ? "No data"
                             : dataViewMore?.validTill,
                       }}
@@ -3426,8 +3427,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.Authority === null ||
-                          dataViewMore?.Authority === "" ||
-                          !dataViewMore?.Authority
+                            dataViewMore?.Authority === "" ||
+                            !dataViewMore?.Authority
                             ? "No data"
                             : dataViewMore?.Authority,
                       }}
@@ -3440,8 +3441,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.bloodGroup === null ||
-                          dataViewMore?.bloodGroup === "" ||
-                          !dataViewMore?.bloodGroup
+                            dataViewMore?.bloodGroup === "" ||
+                            !dataViewMore?.bloodGroup
                             ? "No data"
                             : dataViewMore?.bloodGroup,
                       }}
@@ -3454,8 +3455,8 @@ const User = ({ getNewCount, title }) => {
                   <div className="honda-text-grid-items">
                     <span>Driving License Image:</span>
                     {dataViewMore?.drivingLicense === null ||
-                    dataViewMore?.drivingLicense === "" ||
-                    !dataViewMore?.drivingLicense ? (
+                      dataViewMore?.drivingLicense === "" ||
+                      !dataViewMore?.drivingLicense ? (
                       "No Data"
                     ) : (
                       <img
@@ -3468,8 +3469,8 @@ const User = ({ getNewCount, title }) => {
                   <div className="honda-text-grid-items">
                     <span>ID Proof:</span>
                     {dataViewMore?.IDproof === null ||
-                    dataViewMore?.IDproof === "" ||
-                    !dataViewMore?.IDproof ? (
+                      dataViewMore?.IDproof === "" ||
+                      !dataViewMore?.IDproof ? (
                       "No Data"
                     ) : (
                       <img
@@ -3485,8 +3486,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.authoritycity === null ||
-                          dataViewMore?.authoritycity === "" ||
-                          !dataViewMore?.authoritycity
+                            dataViewMore?.authoritycity === "" ||
+                            !dataViewMore?.authoritycity
                             ? "No data"
                             : dataViewMore?.authoritycity,
                       }}
@@ -3499,8 +3500,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.authoritydistrict === null ||
-                          dataViewMore?.authoritydistrict === "" ||
-                          !dataViewMore?.authoritydistrict
+                            dataViewMore?.authoritydistrict === "" ||
+                            !dataViewMore?.authoritydistrict
                             ? "No data"
                             : dataViewMore?.authoritydistrict,
                       }}
@@ -3542,8 +3543,8 @@ const User = ({ getNewCount, title }) => {
                         dangerouslySetInnerHTML={{
                           __html:
                             dataForPayment?.courseName[0]?.price === null ||
-                            dataForPayment?.courseName[0]?.price === "" ||
-                            !dataForPayment?.courseName[0]?.price
+                              dataForPayment?.courseName[0]?.price === "" ||
+                              !dataForPayment?.courseName[0]?.price
                               ? "No data"
                               : dataForPayment?.courseName[0]?.price,
                         }}
@@ -3556,8 +3557,8 @@ const User = ({ getNewCount, title }) => {
                         dangerouslySetInnerHTML={{
                           __html:
                             dataForPayment?._id === null ||
-                            dataForPayment?._id === "" ||
-                            !dataForPayment?._id
+                              dataForPayment?._id === "" ||
+                              !dataForPayment?._id
                               ? "No data"
                               : dataForPayment?._id,
                         }}
