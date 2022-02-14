@@ -1490,7 +1490,7 @@ const Batch = ({ getNewCount, title }) => {
                   <div className="honda-text-grid-items">
                     <span>User Data:</span>
                     <div className="cursor-pointer pl-2">
-                      {allDataForResultDownload?.length > 0 ? (
+                      {/* {allDataForResultDownload?.length > 0 ? (
                         <CsvDownload
                           className={``}
                           data={dataCSVResults}
@@ -1512,7 +1512,7 @@ const Batch = ({ getNewCount, title }) => {
                         </CsvDownload>
                       ) : (
                         "No test Data"
-                      )}
+                      )} */}
 
                       {allDataForResultDownload?.length > 0 ? (
                         <CsvDownload
