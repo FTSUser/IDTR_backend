@@ -854,10 +854,7 @@ img.view {
     object-fit: contain !important;
 }
 
-
-//for pdf generation 
-
-
+//for pdf generation
 
 .top {
     margin-top: 40px !important;
@@ -877,9 +874,6 @@ img.view {
     height: 40px !important;
     line-height: 20px !important;
 }
-
-
-
 
 .booking-text-grid1 {
     display: grid;
@@ -984,6 +978,13 @@ img.view {
     padding: 20px 0;
 }
 
-
-
-
+.modelFixed {
+    position: fixed !important;
+    top: 0;
+    height: 100%;
+    z-index: 111;
+    background: #fafafa;
+    overflow: scroll !important;
+    width: 100%;
+    left: 0;
+}

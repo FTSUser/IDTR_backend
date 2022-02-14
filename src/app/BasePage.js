@@ -49,10 +49,10 @@ export default function BasePage() {
 
           <ContentRoute exact path="/cms" component={Cms} />
           <ContentRoute exact path="/information" component={Information} />
-          <ContentRoute exact path="/courseselection/coursename" component={CourseName} />
-          <ContentRoute exact path="/courseselection/coursecategory" component={CourseCategory} />
-          <ContentRoute exact path="/courseselection/coursetype" component={CourseType} />
-          <ContentRoute exact path="/courseselection/vehiclecategory" component={VehicleCategory} />
+          <ContentRoute exact path="/coursename" component={CourseName} />
+          <ContentRoute exact path="/coursecategory" component={CourseCategory} />
+          <ContentRoute exact path="/coursetype" component={CourseType} />
+          <ContentRoute exact path="/vehiclecategory" component={VehicleCategory} />
           <ContentRoute exact path="/user" component={User} />
           <ContentRoute exact path="/payment" component={Payment} />
           <ContentRoute exact path="/take-test" component={TakeTest} />

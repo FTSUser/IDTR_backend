@@ -419,34 +419,34 @@ const User = ({ getNewCount, title }) => {
       `admin/get-admin-login-log/${id}`
     )
       .then((res) => {
-        console.log("loglog",res?.data?.payload?.user);
+        console.log("loglog", res?.data?.payload?.user);
         setLogsData(res?.data?.payload?.user)
         if (res?.data?.payload?.user?.length > 0) {
           let test = res?.data?.payload?.user.map((registerUser, key) => {
             return {
               Number: key + 1,
-              LoginDate:registerUser?.createdAt,
+              LoginDate: registerUser?.createdAt,
             };
           });
           let finalPdf = [...dataCSVLogs, test];
-          return(<>
-          <CsvDownload
-                className={``}
-                data={finalPdf}
-                filename="Donations.csv"
-                style={{
-                  backgroundColor: "#CC0001",
-                  borderRadius: "6px",
-                  border: "1px solid #fff",
-                  display: "inline-block",
-                  cursor: "pointer",
-                  color: "#FFFFFF",
-                  fontSize: "12px",
-                  padding: "10px 18px",
-                  textDecoration: "none",
-                  position: "right",
-                }}
-              />
+          return (<>
+            <CsvDownload
+              className={``}
+              data={finalPdf}
+              filename="Donations.csv"
+              style={{
+                backgroundColor: "#CC0001",
+                borderRadius: "6px",
+                border: "1px solid #fff",
+                display: "inline-block",
+                cursor: "pointer",
+                color: "#FFFFFF",
+                fontSize: "12px",
+                padding: "10px 18px",
+                textDecoration: "none",
+                position: "right",
+              }}
+            />
 
           </>)
           // setDataCSVLogs((currVal) => [...currVal, test]);
@@ -461,7 +461,7 @@ const User = ({ getNewCount, title }) => {
 
 
 
-  useEffect(() => {}, [inputValue]);
+  useEffect(() => { }, [inputValue]);
 
   let i = 0;
   const columns = [
@@ -743,56 +743,56 @@ const User = ({ getNewCount, title }) => {
       logsData.map((registerUser, key) => {
         let data = {
           Number: key + 1,
-          LoginDate:registerUser?.createdAt,
+          LoginDate: registerUser?.createdAt,
         };
         setDataCSVLogs((currVal) => [...currVal, data]);
       });
     }
-  },[logsData])
+  }, [logsData])
 
   useEffect(() => {
     if (allRegisterUserExcel) {
       allRegisterUserExcel.map((registerUser, key) => {
         let data = {
           Number: key + 1,
-          UserID:registerUser?._id,
-          FirstName:registerUser?.fname,
-          MiddleName:registerUser?.mname ? registerUser?.mname : "-",
-          LastName:registerUser?.lname ? registerUser?.lname : "-",
-          EmailAddress:registerUser?.email ? registerUser?.email : "-",
-          MobileNumber:registerUser?.phone,
-          RegistrationType:registerUser?.RegistrationType ? registerUser?.RegistrationType :"-",
-          FatherName:registerUser?.fatherName ? registerUser?.fatherName : "-",
-          DateOfBirth:moment(registerUser?.DoB).format("ll"),
-          Qualification:registerUser?.qualification,
-          Gender:registerUser?.gender,
-          AddressLine:registerUser?.address,
-          State:registerUser?.state,
-          District:registerUser?.district,
-          TownORCity:registerUser?.city,
-          PIN:registerUser?.pincode,
-          SelectIDTRCentre:registerUser?.IDTRcenter ? registerUser?.IDTRcenter : "-",
-          CourseType:registerUser?.ctid?.courseType,
-          VehicleCategory:registerUser?.vcid?.vehicleCategory,
-          CourseName:registerUser?.cnid?.courseName,
-          DateOfCourse:moment(registerUser?.dateofCourse).format("ll"),
-          LicenseCategory:registerUser?.lcid,
-          DrivingLicence:registerUser?.drivingLicense,
-          IssueDate:registerUser?.issueDate ?  moment(registerUser?.issueDate).format("ll") : "-",
-          ValidTill:registerUser?.validTill ? moment(registerUser?.validTill).format("ll") : "-",
-          LicenseAuthorityState :registerUser?.Authority,
-          LicenseAuthorityCity :registerUser?.authoritycity,
-          LicenseAuthorityDistrict :registerUser?.authoritydistrict,
-          PassportPhoto:registerUser?.passportPhoto,
-          DrivingLicenseImage:registerUser?.drivingLicense,
-          OtherIDProofDownload:registerUser?.IDproof === null ? "-":registerUser?.IDproof,
-          VisionInformation:registerUser?.medicalCertificate === null ? "-":registerUser?.medicalCertificate ,
-          ColorBlindness:registerUser?.medicalCertificate === null ? "-":registerUser?.medicalCertificate,
-          BloodGroup:registerUser?.bloodGroup === "" ||  registerUser?.bloodGroup === null? "-":registerUser?.bloodGroup,
-          IsPaymentDone: registerUser?.isPaymentDone === null || registerUser?.isPaymentDone === false? "Payment Panding": registerUser?.isPaymentDone,
-          PaymentMode:registerUser?.type,
-          TransactionID:registerUser?.paymentId === null? "Payment Panding": registerUser?.paymentId,
-          RegisterationDate:registerUser?.createdAt,
+          UserID: registerUser?._id,
+          FirstName: registerUser?.fname,
+          MiddleName: registerUser?.mname ? registerUser?.mname : "-",
+          LastName: registerUser?.lname ? registerUser?.lname : "-",
+          EmailAddress: registerUser?.email ? registerUser?.email : "-",
+          MobileNumber: registerUser?.phone,
+          RegistrationType: registerUser?.RegistrationType ? registerUser?.RegistrationType : "-",
+          FatherName: registerUser?.fatherName ? registerUser?.fatherName : "-",
+          DateOfBirth: moment(registerUser?.DoB).format("ll"),
+          Qualification: registerUser?.qualification,
+          Gender: registerUser?.gender,
+          AddressLine: registerUser?.address,
+          State: registerUser?.state,
+          District: registerUser?.district,
+          TownORCity: registerUser?.city,
+          PIN: registerUser?.pincode,
+          SelectIDTRCentre: registerUser?.IDTRcenter ? registerUser?.IDTRcenter : "-",
+          CourseType: registerUser?.ctid?.courseType,
+          VehicleCategory: registerUser?.vcid?.vehicleCategory,
+          CourseName: registerUser?.cnid?.courseName,
+          DateOfCourse: moment(registerUser?.dateofCourse).format("ll"),
+          LicenseCategory: registerUser?.lcid,
+          DrivingLicence: registerUser?.drivingLicense,
+          IssueDate: registerUser?.issueDate ? moment(registerUser?.issueDate).format("ll") : "-",
+          ValidTill: registerUser?.validTill ? moment(registerUser?.validTill).format("ll") : "-",
+          LicenseAuthorityState: registerUser?.Authority,
+          LicenseAuthorityCity: registerUser?.authoritycity,
+          LicenseAuthorityDistrict: registerUser?.authoritydistrict,
+          PassportPhoto: registerUser?.passportPhoto,
+          DrivingLicenseImage: registerUser?.drivingLicense,
+          OtherIDProofDownload: registerUser?.IDproof === null ? "-" : registerUser?.IDproof,
+          VisionInformation: registerUser?.medicalCertificate === null ? "-" : registerUser?.medicalCertificate,
+          ColorBlindness: registerUser?.medicalCertificate === null ? "-" : registerUser?.medicalCertificate,
+          BloodGroup: registerUser?.bloodGroup === "" || registerUser?.bloodGroup === null ? "-" : registerUser?.bloodGroup,
+          IsPaymentDone: registerUser?.isPaymentDone === null || registerUser?.isPaymentDone === false ? "Payment Panding" : registerUser?.isPaymentDone,
+          PaymentMode: registerUser?.type,
+          TransactionID: registerUser?.paymentId === null ? "Payment Panding" : registerUser?.paymentId,
+          RegisterationDate: registerUser?.createdAt,
         };
         setDataCSV((currVal) => [...currVal, data]);
       });
@@ -990,7 +990,7 @@ const User = ({ getNewCount, title }) => {
       authoritycity: formdata.authoritycity,
       authoritydistrict: formdata.authoritydistrict,
       type: formdata.type,
-      RegistrationType:"counter"
+      RegistrationType: "counter"
     }
 
     console.log("datadata", data);
@@ -1072,7 +1072,7 @@ const User = ({ getNewCount, title }) => {
       authoritycity: formdata.authoritycity,
       authoritydistrict: formdata.authoritydistrict,
       type: formdata.type,
-      RegistrationType:"counter"
+      RegistrationType: "counter"
     }
 
     console.log("dataForEdit", data);
@@ -1800,14 +1800,10 @@ const User = ({ getNewCount, title }) => {
         </div>
       </div>
       {/* view more */}
-
+      {console.log("isAddAnnouncement", isAddAnnouncement)}
       {isAddAnnouncement ? (
-        <Dialog
-          fullScreen
-          open={isAddAnnouncement}
-          onClose={handleAddAdminClose}
-          TransitionComponent={Transition}
-        >
+
+        <List className="modelFixed">
           <Toolbar>
             <IconButton
               edge="start"
@@ -1818,438 +1814,438 @@ const User = ({ getNewCount, title }) => {
               <CloseIcon />
             </IconButton>
           </Toolbar>
-          <List>
-            {isAddAnnouncement === true ? (
-              <div className="register-page-alignment ">
-                <div className="container">
-                  <div className="breadcrumbs-alignment"></div>
-                  <div className="page-title-alignment">
-                    <h1>Driver Training Course Registration Portal</h1>
-                  </div>
-                  <div className="tab-design">
-                    <ul>
-                      <li className={tab === "course" && "tab-active"}>
-                        Course Selection
-                      </li>
-                      <li className={tab === "personal" && "tab-active"}>
-                        Personal Information
-                      </li>
-                      <li className={tab === "document" && "tab-active"}>
-                        Document Upload
-                      </li>
-                      <li className={tab === "payment" && "tab-active"}>
-                        Payment
-                      </li>
-                    </ul>
-                  </div>
-                  {tab === "course" && (
-                    <div className="tab-details-alignment">
-                      <div className="tab-details-title">
-                        <h2>Course Selection</h2>
+          {isAddAnnouncement === true ? (
+            <div className="register-page-alignment ">
+              <div className="container">
+                <div className="breadcrumbs-alignment"></div>
+                <div className="page-title-alignment">
+                  <h1>Driver Training Course Registration Portal</h1>
+
+                </div>
+                <div className="tab-design">
+                  <ul>
+                    <li className={tab === "course" && "tab-active"}>
+                      Course Selection
+                    </li>
+                    <li className={tab === "personal" && "tab-active"}>
+                      Personal Information
+                    </li>
+                    <li className={tab === "document" && "tab-active"}>
+                      Document Upload
+                    </li>
+                    <li className={tab === "payment" && "tab-active"}>
+                      Payment
+                    </li>
+                  </ul>
+                </div>
+                {tab === "course" && (
+                  <div className="tab-details-alignment">
+                    <div className="tab-details-title">
+                      <h2>Course Selection</h2>
+                    </div>
+                    <div className="register-grid">
+                      <div className="register-grid-items12">
+                        <label>
+                          Vehicle Category<span>*</span>
+                        </label>
+                        <Select
+                          // styles={colourStyles}
+                          // isClearable
+                          options={getAllVehicalData?.Question?.map((e) => ({
+                            label: e.vehicleCategory,
+                            value: e._id,
+                          }))}
+                          name="vehicleCategory"
+                          onChange={(e) => {
+                            setCourceTypeData("");
+                            setCourceType("");
+                            onChnagSelectField(e, "vehicleCategory");
+                            setVehicalCategoryData(e.value);
+                          }}
+                          defaultValue={defaultValue.vehicleCategory}
+                        />
                       </div>
-                      <div className="register-grid">
-                        <div className="register-grid-items12">
-                          <label>
-                            Vehicle Category<span>*</span>
-                          </label>
+
+                      <div className="register-grid-items12">
+                        <label>
+                          Course Type<span>*</span>
+                        </label>
+                        {(editMode ? defaultValue.courseType : true) && (
                           <Select
-                            // styles={colourStyles}
+                            options={getAllCourceType?.courseType?.map(
+                              (e) => ({ label: e.courseType, value: e._id })
+                            )}
+                            name="courseType"
+                            onChange={(e) => {
+                              setCourceType("");
+                              onChnagSelectField(e, "courseType");
+                              setCourceTypeData(e.value);
+                              setUpdateCall(true);
+                            }}
+                            defaultValue={
+                              defaultValue.courseType !== null &&
+                              defaultValue.courseType
+                            }
+                          />
+                        )}
+                      </div>
+
+                      {/* for course category test*/}
+
+                      <div className="register-grid-items12 ">
+                        <label>
+                          Course Category<span>*</span>
+                        </label>
+                        {(editMode ? defaultValue?.courseCategory : true) &&
+                          <Select
                             // isClearable
-                            options={getAllVehicalData?.Question?.map((e) => ({
-                              label: e.vehicleCategory,
+                            options={getAllCourceCategory?.courseCategory?.map(
+                              (e) => ({
+                                label: e.courseCategory,
+                                value: e._id,
+                              })
+                            )}
+                            name="courseCategory"
+                            onChange={(e) => {
+                              setCourceType(e.value);
+                              setCourceCategoryData(e.value);
+                              if (e?.value) {
+                                let index =
+                                  getAllCourceCategory?.courseCategory?.findIndex(
+                                    (o) => o?._id === e?.value
+                                  );
+                              }
+                              onChnagSelectField(e, "courseCategory");
+                            }}
+                            defaultValue={
+                              defaultValue.courseCategory &&
+                              defaultValue.courseCategory
+                            }
+                          />
+                        }
+                      </div>
+
+                      {/* end test */}
+
+                      <div className="register-grid-items12 ">
+                        <label>
+                          Course Name<span>*</span>
+                        </label>
+                        {(editMode ? defaultValue?.courseName : true) &&
+                          <Select
+                            // isClearable
+                            options={getAllCourceName?.courseName?.map((e) => ({
+                              label: e.courseName,
                               value: e._id,
                             }))}
-                            name="vehicleCategory"
+                            name="courseName"
                             onChange={(e) => {
-                              setCourceTypeData("");
-                              setCourceType("");
-                              onChnagSelectField(e, "vehicleCategory");
-                              setVehicalCategoryData(e.value);
-                            }}
-                            defaultValue={defaultValue.vehicleCategory}
-                          />
-                        </div>
-
-                        <div className="register-grid-items12">
-                          <label>
-                            Course Type<span>*</span>
-                          </label>
-                          {(editMode ? defaultValue.courseType : true) && (
-                            <Select
-                              options={getAllCourceType?.courseType?.map(
-                                (e) => ({ label: e.courseType, value: e._id })
-                              )}
-                              name="courseType"
-                              onChange={(e) => {
-                                setCourceType("");
-                                onChnagSelectField(e, "courseType");
-                                setCourceTypeData(e.value);
-                                setUpdateCall(true);
-                              }}
-                              defaultValue={
-                                defaultValue.courseType !== null &&
-                                defaultValue.courseType
-                              }
-                            />
-                          )}
-                        </div>
-
-                        {/* for course category test*/}
-
-                        <div className="register-grid-items12 ">
-                          <label>
-                            Course Category<span>*</span>
-                          </label>
-                          {(editMode ? defaultValue?.courseCategory : true) &&
-                            <Select
-                              // isClearable
-                              options={getAllCourceCategory?.courseCategory?.map(
-                                (e) => ({
-                                  label: e.courseCategory,
-                                  value: e._id,
-                                })
-                              )}
-                              name="courseCategory"
-                              onChange={(e) => {
-                                setCourceType(e.value);
-                                setCourceCategoryData(e.value);
-                                if (e?.value) {
-                                  let index =
-                                    getAllCourceCategory?.courseCategory?.findIndex(
-                                      (o) => o?._id === e?.value
-                                    );
+                              // setCourceType(e.value);
+                              // setCourceCategory(e.value)
+                              setCourceNameData(e.value);
+                              if (e?.value) {
+                                let index =
+                                  getAllCourceName?.courseName?.findIndex(
+                                    (o) => o?._id === e?.value
+                                  );
+                                if (index !== -1) {
+                                  setPrice(
+                                    getAllCourceName?.courseName[index].price
+                                  );
+                                  setCNID(
+                                    getAllCourceName?.courseName[index]._id
+                                  );
                                 }
-                                onChnagSelectField(e, "courseCategory");
-                              }}
-                              defaultValue={
-                                defaultValue.courseCategory &&
-                                defaultValue.courseCategory
                               }
-                            />
-                          }
-                        </div>
-
-                        {/* end test */}
-
-                        <div className="register-grid-items12 ">
-                          <label>
-                            Course Name<span>*</span>
-                          </label>
-                          {(editMode ? defaultValue?.courseName : true) &&
-                            <Select
-                              // isClearable
-                              options={getAllCourceName?.courseName?.map((e) => ({
-                                label: e.courseName,
-                                value: e._id,
-                              }))}
-                              name="courseName"
-                              onChange={(e) => {
-                                // setCourceType(e.value);
-                                // setCourceCategory(e.value)
-                                setCourceNameData(e.value);
-                                if (e?.value) {
-                                  let index =
-                                    getAllCourceName?.courseName?.findIndex(
-                                      (o) => o?._id === e?.value
-                                    );
-                                  if (index !== -1) {
-                                    setPrice(
-                                      getAllCourceName?.courseName[index].price
-                                    );
-                                    setCNID(
-                                      getAllCourceName?.courseName[index]._id
-                                    );
-                                  }
-                                }
-                                onChnagSelectField(e, "courseName");
-                              }}
-                              defaultValue={
-                                defaultValue.courseName && defaultValue.courseName
-                              }
-                            />
-                          }
-
-                        </div>
-                        <div className="register-grid-items12 ">
-                          <label>
-                            License Category<span>*</span>
-                          </label>
-                          <Select
-                            options={licenseCategoryData.map((e) => ({
-                              label: e.name,
-                              value: e.name,
-                            }))}
-                            name="license"
-                            onChange={(e) => onChnagSelectField(e, "license")}
-                            defaultValue={{
-                              label: formdata.license,
-                              value: formdata.license,
+                              onChnagSelectField(e, "courseName");
                             }}
+                            defaultValue={
+                              defaultValue.courseName && defaultValue.courseName
+                            }
                           />
-                        </div>
-                        {formdata?.license != "NA" &&
-                          <>
-                            <div className="register-grid-items ">
-                              <label>
-                                Driver's License No.<span>*</span>
-                              </label>
-                              <input
-                                type="text"
-                                name="driverlicense"
-                                value={formdata.driverlicense}
-                                onChange={(e) => onChnageForm(e)}
-                              />
-                            </div>
-                            <div className="register-grid-items">
-                              <label>
-                                Issue Date<span>*</span>
-                              </label>
-                              <input
-                                type="date"
-                                placeholder=""
-                                name="issueDate"
-                                max={moment(new Date()).format("YYYY-MM-DD")}
-                                value={formdata.issueDate ? formdata.issueDate.slice(0, 10) : formdata.issueDate}
-                                onChange={(e) => onChnageForm(e)}
-                              />
-                            </div>
-                            <div className="register-grid-items">
-                              <label>
-                                Valid Till<span>*</span>
-                              </label>
-                              <input
-                                type="date"
-                                placeholder=""
-                                name="validDate"
-                                min={moment(new Date()).format("YYYY-MM-DD")}
-                                value={formdata.validDate ? formdata.validDate.slice(0, 10) : formdata.validDate}
-                                onChange={(e) => onChnageForm(e)}
-                              />
-                            </div>
-                          </>
                         }
 
-                        <div className="register-grid-items"></div>
-
-                        <div className="register-grid-items12">
-                          <label>
-                            License Authority<span>*</span>
-                          </label>
-
-                          <Select
-                            options={state.map((e) => ({
-                              label: e.name,
-                              value: e.name,
-                            }))}
-                            name="authority"
-                            onChange={(e) => onChnagSelectField(e, "authority")}
-                            defaultValue={{
-                              label: "Haryana",
-                              value: "Haryana",
-                            }}
-                          />
-                        </div>
-                        <div className="register-grid-items12">
-                          <label>
-                            License Authority (District)<span>*</span>
-                          </label>
-
-                          <Select
-                            options={districts.map((e) => ({
-                              label: e.name,
-                              value: e.name,
-                            }))}
-                            name="authoritydistrict"
-                            onChange={(e) =>
-                              onChnagSelectField(e, "authoritydistrict")
-                            }
-                            defaultValue={{
-                              label: formdata.authoritydistrict,
-                              value: formdata.authoritydistrict,
-                            }}
-                          />
-                        </div>
-                        <div className="register-grid-items12">
-                          <label>
-                            License Authority (Town / city)<span>*</span>
-                          </label>
-
-                          <Select
-                            options={city.map((e) => ({
-                              label: e.name,
-                              value: e.name,
-                            }))}
-                            name="authoritycity"
-                            onChange={(e) =>
-                              onChnagSelectField(e, "authoritycity")
-                            }
-                            defaultValue={{
-                              label: formdata.authoritycity,
-                              value: formdata.authoritycity,
-                            }}
-                          />
-                        </div>
                       </div>
-                      <div className="full-fill-information">
-                        {CourceType ? (
-                          <div>
-                            <div>
-                              <div className="sub-title">
-
-                              </div>
-                              <div className="information">
-                                <p>
-                                  <span>Course Name:</span>{" "}
-                                  {getCourseNameByID?.courseName}
-                                </p>
-                                <p>
-                                  <span>Duration:</span>{" "}
-                                  {getCourseNameByID?.duration}
-                                </p>
-                                <p>
-                                  <span>Timing:</span>{" "}
-                                  {getCourseNameByID?.timing}
-                                </p>
-                                <p>
-                                  <span>Fees:</span> {" "}
-                                  {getCourseNameByID?.price}
-                                </p>
-                                <p>
-                                  <span>Mode of Payment:</span>{" "}
-                                  {getCourseNameByID?.mode}
-                                </p>
-                              </div>
-                            </div>
+                      <div className="register-grid-items12 ">
+                        <label>
+                          License Category<span>*</span>
+                        </label>
+                        <Select
+                          options={licenseCategoryData.map((e) => ({
+                            label: e.name,
+                            value: e.name,
+                          }))}
+                          name="license"
+                          onChange={(e) => onChnagSelectField(e, "license")}
+                          defaultValue={{
+                            label: formdata.license,
+                            value: formdata.license,
+                          }}
+                        />
+                      </div>
+                      {formdata?.license != "NA" &&
+                        <>
+                          <div className="register-grid-items ">
+                            <label>
+                              Driver's License No.<span>*</span>
+                            </label>
+                            <input
+                              type="text"
+                              name="driverlicense"
+                              value={formdata.driverlicense}
+                              onChange={(e) => onChnageForm(e)}
+                            />
                           </div>
-                        ) : (
+                          <div className="register-grid-items">
+                            <label>
+                              Issue Date<span>*</span>
+                            </label>
+                            <input
+                              type="date"
+                              placeholder=""
+                              name="issueDate"
+                              max={moment(new Date()).format("YYYY-MM-DD")}
+                              value={formdata.issueDate ? formdata.issueDate.slice(0, 10) : formdata.issueDate}
+                              onChange={(e) => onChnageForm(e)}
+                            />
+                          </div>
+                          <div className="register-grid-items">
+                            <label>
+                              Valid Till<span>*</span>
+                            </label>
+                            <input
+                              type="date"
+                              placeholder=""
+                              name="validDate"
+                              min={moment(new Date()).format("YYYY-MM-DD")}
+                              value={formdata.validDate ? formdata.validDate.slice(0, 10) : formdata.validDate}
+                              onChange={(e) => onChnageForm(e)}
+                            />
+                          </div>
+                        </>
+                      }
+
+                      <div className="register-grid-items"></div>
+
+                      <div className="register-grid-items12">
+                        <label>
+                          License Authority<span>*</span>
+                        </label>
+
+                        <Select
+                          options={state.map((e) => ({
+                            label: e.name,
+                            value: e.name,
+                          }))}
+                          name="authority"
+                          onChange={(e) => onChnagSelectField(e, "authority")}
+                          defaultValue={{
+                            label: "Haryana",
+                            value: "Haryana",
+                          }}
+                        />
+                      </div>
+                      <div className="register-grid-items12">
+                        <label>
+                          License Authority (District)<span>*</span>
+                        </label>
+
+                        <Select
+                          options={districts.map((e) => ({
+                            label: e.name,
+                            value: e.name,
+                          }))}
+                          name="authoritydistrict"
+                          onChange={(e) =>
+                            onChnagSelectField(e, "authoritydistrict")
+                          }
+                          defaultValue={{
+                            label: formdata.authoritydistrict,
+                            value: formdata.authoritydistrict,
+                          }}
+                        />
+                      </div>
+                      <div className="register-grid-items12">
+                        <label>
+                          License Authority (Town / city)<span>*</span>
+                        </label>
+
+                        <Select
+                          options={city.map((e) => ({
+                            label: e.name,
+                            value: e.name,
+                          }))}
+                          name="authoritycity"
+                          onChange={(e) =>
+                            onChnagSelectField(e, "authoritycity")
+                          }
+                          defaultValue={{
+                            label: formdata.authoritycity,
+                            value: formdata.authoritycity,
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="full-fill-information">
+                      {CourceType ? (
+                        <div>
                           <div>
-                            <div className="sub-title-one">
-                              <p>Course Type Description :</p>
+                            <div className="sub-title">
+
                             </div>
                             <div className="information">
                               <p>
-                                <span>1 Learner:</span>Long duration program
-                                suitable for beginner/ new learner
+                                <span>Course Name:</span>{" "}
+                                {getCourseNameByID?.courseName}
                               </p>
                               <p>
-                                <span>2 Refresher </span>Short duration program
-                                suitable for existing driver
+                                <span>Duration:</span>{" "}
+                                {getCourseNameByID?.duration}
                               </p>
                               <p>
-                                <span>3 Evaluation </span>Test of driving skill
-                                and knowledge
+                                <span>Timing:</span>{" "}
+                                {getCourseNameByID?.timing}
+                              </p>
+                              <p>
+                                <span>Fees:</span> {" "}
+                                {getCourseNameByID?.price}
+                              </p>
+                              <p>
+                                <span>Mode of Payment:</span>{" "}
+                                {getCourseNameByID?.mode}
                               </p>
                             </div>
                           </div>
-                        )}
-                      </div>
-                      <div className="register-grid search-button-alignment">
-                        <div className="register-grid-items">
-                          <label>
-                            Preferred Training Date<span>*</span>
-                          </label>
-                          <input
-                            type="date"
-                            placeholder="Vehicle Category"
-                            min={moment(new Date()).format("YYYY-MM-DD")}
-                            onChange={(e) => {
-                              onChnageForm(e);
-                              // disablePastDate()
-                            }}
-                            name="preferdate"
-                            value={formdata.preferdate.slice(0, 10)}
-                          />
                         </div>
-                        <div className="register-grid-items">
-                          {cnid ? (
-                            <button onClick={(e) => checkTrainnigDate()}>
-                              Search
-                            </button>
-                          ) : (
-                            <button className="disabled">Search</button>
-                          )}
-                        </div>
-                      </div>
-                      <div>
-                        {getSeat && getSeat.length > 0 ? (
-                          <Carousel
-                            responsive={{
-                              superLargeDesktop: {
-                                // the naming can be any, depends on you.
-                                breakpoint: { max: 4000, min: 3000 },
-                                items: 4,
-                              },
-                              desktop: {
-                                breakpoint: { max: 3000, min: 1024 },
-                                items: 5,
-                              },
-                              tablet: {
-                                breakpoint: { max: 1024, min: 464 },
-                                items: 2,
-                              },
-                              mobile: {
-                                breakpoint: { max: 464, min: 0 },
-                                items: 1,
-                              },
-                            }}
-                          >
-                            {getSeat?.map((data, key) => {
-                              return (
-                                <div
-                                  key={key}
-                                  className={`calender-box un-active-background ${formdata.sloatId === data._id
-                                    ? "activeSlot"
-                                    : ""
-                                    }`}
-                                  name="trainddateid"
-                                  value={formdata.trainddateid}
-                                  onClick={(e) => {
-                                    onChnagSelectField(
-                                      { value: data?._id },
-                                      "sloatId"
-                                    );
-                                    setAlertForSlot(data?.seat);
-                                  }}
-                                >
-                                  <div className="cus-box-alignment">
-                                    <h2>
-                                      {" "}
-                                      {moment(data.date).format("YYYY-MM-DD ")}
-                                    </h2>
-                                    <p>
-                                      {" "}
-                                      Time:{" "}
-                                      {moment(data.startTime).format(
-                                        "h:mm "
-                                      )} -{" "}
-                                      {moment(data.endTime).format("h:mm ")}{" "}
-                                    </p>
-
-                                    <p>
-                                      Seat: {data?.seat ? data?.seat : "N.A"}
-                                    </p>
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </Carousel>
-                        ) : (
-                          <div className="calender-box un-active-background">
-                            <div className="cus-box-alignment">
-                              <h2>No Slot Available</h2>
-                            </div>
+                      ) : (
+                        <div>
+                          <div className="sub-title-one">
+                            <p>Course Type Description :</p>
                           </div>
-                        )}
-                      </div>
-
-                      {typeTrueFalseform && (
-                        <div className="alert mt-top">
-                          <div className="alert-bottom">
-                            <p>Sorry! {errorShow} must be specified</p>
+                          <div className="information">
+                            <p>
+                              <span>1 Learner:</span>Long duration program
+                              suitable for beginner/ new learner
+                            </p>
+                            <p>
+                              <span>2 Refresher </span>Short duration program
+                              suitable for existing driver
+                            </p>
+                            <p>
+                              <span>3 Evaluation </span>Test of driving skill
+                              and knowledge
+                            </p>
                           </div>
                         </div>
                       )}
-                      {/* {
+                    </div>
+                    <div className="register-grid search-button-alignment">
+                      <div className="register-grid-items">
+                        <label>
+                          Preferred Training Date<span>*</span>
+                        </label>
+                        <input
+                          type="date"
+                          placeholder="Vehicle Category"
+                          min={moment(new Date()).format("YYYY-MM-DD")}
+                          onChange={(e) => {
+                            onChnageForm(e);
+                            // disablePastDate()
+                          }}
+                          name="preferdate"
+                          value={formdata.preferdate.slice(0, 10)}
+                        />
+                      </div>
+                      <div className="register-grid-items">
+                        {cnid ? (
+                          <button onClick={(e) => checkTrainnigDate()}>
+                            Search
+                          </button>
+                        ) : (
+                          <button className="disabled">Search</button>
+                        )}
+                      </div>
+                    </div>
+                    <div>
+                      {getSeat && getSeat.length > 0 ? (
+                        <Carousel
+                          responsive={{
+                            superLargeDesktop: {
+                              // the naming can be any, depends on you.
+                              breakpoint: { max: 4000, min: 3000 },
+                              items: 4,
+                            },
+                            desktop: {
+                              breakpoint: { max: 3000, min: 1024 },
+                              items: 5,
+                            },
+                            tablet: {
+                              breakpoint: { max: 1024, min: 464 },
+                              items: 2,
+                            },
+                            mobile: {
+                              breakpoint: { max: 464, min: 0 },
+                              items: 1,
+                            },
+                          }}
+                        >
+                          {getSeat?.map((data, key) => {
+                            return (
+                              <div
+                                key={key}
+                                className={`calender-box un-active-background ${formdata.sloatId === data._id
+                                  ? "activeSlot"
+                                  : ""
+                                  }`}
+                                name="trainddateid"
+                                value={formdata.trainddateid}
+                                onClick={(e) => {
+                                  onChnagSelectField(
+                                    { value: data?._id },
+                                    "sloatId"
+                                  );
+                                  setAlertForSlot(data?.seat);
+                                }}
+                              >
+                                <div className="cus-box-alignment">
+                                  <h2>
+                                    {" "}
+                                    {moment(data.date).format("YYYY-MM-DD ")}
+                                  </h2>
+                                  <p>
+                                    {" "}
+                                    Time:{" "}
+                                    {moment(data.startTime).format(
+                                      "h:mm "
+                                    )} -{" "}
+                                    {moment(data.endTime).format("h:mm ")}{" "}
+                                  </p>
+
+                                  <p>
+                                    Seat: {data?.seat ? data?.seat : "N.A"}
+                                  </p>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </Carousel>
+                      ) : (
+                        <div className="calender-box un-active-background">
+                          <div className="cus-box-alignment">
+                            <h2>No Slot Available</h2>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {typeTrueFalseform && (
+                      <div className="alert mt-top">
+                        <div className="alert-bottom">
+                          <p>Sorry! {errorShow} must be specified</p>
+                        </div>
+                      </div>
+                    )}
+                    {/* {
                 nameTrueFalse ? (
                   <div className="alert">
                     <div className="alert-bottom">
@@ -2260,844 +2256,844 @@ const User = ({ getNewCount, title }) => {
                 ) : ('')
               } */}
 
-                      <div className="next-step-alignment">
-                        <button
-                          onClick={(e) => handleOnClick(e, "personal")}
-                          className="fill-button"
-                        >
-                          Next
-                        </button>
-                      </div>
+                    <div className="next-step-alignment">
+                      <button
+                        onClick={(e) => handleOnClick(e, "personal")}
+                        className="fill-button"
+                      >
+                        Next
+                      </button>
                     </div>
-                  )}
-                  {tab === "personal" && (
-                    <div className="tab-details-alignment">
-                      <div className="tab-details-title">
-                        <h2>Personal Information</h2>
-                      </div>
-                      <div className="Personal-details-background">
-                        <p>
-                          <b>Please fill your personal information!</b>
-                        </p>
-                        <p>All *(star) fields are mandatory</p>
-                      </div>
-                      <div className="form-boder-box">
-                        <div className="register-grid-two">
-                          <div className="register-grid-items">
-                            <label>
-                              First Name<span>*</span>
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="First Name"
-                              name="firstname"
-                              value={formdata.firstname}
-                              onChange={(e) => onChnageForm(e)}
-                            />
-                          </div>
-                          <div className="register-grid-items">
-                            <label>Middle Name</label>
-                            <input
-                              type="text"
-                              placeholder="Middle Name"
-                              name="middlename"
-                              value={formdata.middlename}
-                              onChange={(e) => onChnageForm(e)}
-                            />
-                          </div>
-                          <div className="register-grid-items">
-                            <label>Last Name</label>
-                            <input
-                              type="text"
-                              placeholder="Last Name"
-                              name="lastname"
-                              value={formdata.lastname}
-                              onChange={(e) => onChnageForm(e)}
-                            />
-                          </div>
-                          <div className="register-grid-items">
-                            <label>
-                              Date of Birth<span>*</span>
-                            </label>
-                            {/* <input type="date" name='DateofBirth' value={formdata.DateofBirth} onChange={e => onChnageForm(e)} /> */}
-
-                            <input
-                              type="date"
-                              name="DateofBirth"
-                              // value={`${new Date(
-                              //   formdata.DateofBirth
-                              // ).getFullYear()}${
-                              //   new Date(formdata.DateofBirth).getMonth() < 9
-                              //     ? "-0"
-                              //     : "-"
-                              // }${
-                              //   new Date(formdata.DateofBirth).getMonth() + 1
-                              // }-${new Date(formdata.DateofBirth).getDate()}`}
-                              value={formdata.DateofBirth}
-                              max={moment(new Date()).format("YYYY-MM-DD")}
-                              onChange={(e) => onChnageForm(e)}
-                            />
-                          </div>
-                        </div>
-                        <div className="two-col-grid">
-                          <div className="register-grid-items12">
-                            <label>
-                              Qualification<span>*</span>
-                            </label>
-                            {/* <input type="text" placeholder="Select" name='qualification' value={formdata.qualification} onChange={e => onChnageForm(e)} /> */}
-                            <Select
-                              options={qualification.map((e) => ({
-                                label: e.name,
-                                value: e.name,
-                              }))}
-                              name="qualification"
-                              onChange={(e) =>
-                                onChnagSelectField(e, "qualification")
-                              }
-                              defaultValue={{
-                                label: formdata.qualification,
-                                value: formdata.qualification,
-                              }}
-                            />
-                          </div>
-                          <div className="register-grid-items12">
-                            <label>
-                              Gender<span>*</span>
-                            </label>
-                            {/* <input type="text" placeholder="Select" name='gender' value={formdata.gender} onChange={e => onChnageForm(e)} /> */}
-                            <Select
-                              options={gender.map((e) => ({
-                                label: e.name,
-                                value: e.name,
-                              }))}
-                              name="gender"
-                              onChange={(e) => onChnagSelectField(e, "gender")}
-                              defaultValue={{
-                                label: formdata.gender,
-                                value: formdata.gender,
-                              }}
-                            />
-                          </div>
-                        </div>
-                        <div className="two-col-grid">
-                          <div className="register-grid-items register-full-width">
-                            <label>
-                              Address as per License<span>*</span> (Flat/House
-                              No, Locality, Street Name, Locality)
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="Street Address"
-                              name="address"
-                              value={formdata.address}
-                              onChange={(e) => onChnageForm(e)}
-                            />
-                          </div>
-                        </div>
-                        <div className="register-grid-one">
-                          <div className="register-grid-items12">
-                            <label>
-                              State<span>*</span>
-                            </label>
-                            {/* <input type="text" placeholder="State" disabled name='state' value={formdata.state} onChange={e => onChnageForm(e)} /> */}
-                            <Select
-                              options={state.map((e) => ({
-                                label: e.name,
-                                value: e.name,
-                              }))}
-                              name="state"
-                              onChange={(e) => onChnagSelectField(e, "state")}
-                              defaultValue={{
-                                label: "Haryana",
-                                value: "Haryana",
-                              }}
-                            />
-                          </div>
-                          <div className="register-grid-items12">
-                            <label>
-                              District<span>*</span>
-                            </label>
-                            {/* <input type="text" placeholder="District" name='district' value={formdata.district} onChange={e => onChnageForm(e)} /> */}
-                            <Select
-                              options={districts.map((e) => ({
-                                label: e.name,
-                                value: e.name,
-                              }))}
-                              name="district"
-                              onChange={(e) =>
-                                onChnagSelectField(e, "district")
-                              }
-                              defaultValue={{
-                                label: formdata.district,
-                                value: formdata.district,
-                              }}
-                            />
-                          </div>
-                          <div className="register-grid-items12">
-                            <label>
-                              Town / city<span>*</span>
-                            </label>
-                            {/* <input type="text" placeholder="city" name='city' value={formdata.city} onChange={e => onChnageForm(e)} /> */}
-                            <Select
-                              options={city.map((e) => ({
-                                label: e.name,
-                                value: e.name,
-                              }))}
-                              name="city"
-                              onChange={(e) => onChnagSelectField(e, "city")}
-                              defaultValue={{
-                                label: formdata.city,
-                                value: formdata.city,
-                              }}
-                            />
-                          </div>
-                          <div className="register-grid-items">
-                            <label>
-                              PIN<span>*</span>
-                            </label>
-                            <input
-                              type="text"
-                              onKeyPress={(event) => {
-                                if (!/[0-9]/.test(event.key)) {
-                                  event.preventDefault();
-                                }
-                              }}
-                              placeholder="Pin"
-                              name="pin"
-                              value={formdata.pin}
-                              onChange={(e) => onChnageForm(e)}
-                            />
-                          </div>
-                        </div>
-                        <div className="two-col-grid">
-                          <div className="register-grid-items">
-                            <label>
-                              Email address<span></span>
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="Email Address"
-                              name="email"
-                              value={formdata.email}
-                              onChange={(e) => onChnageForm(e)}
-                            />
-                          </div>
-                          <div className="register-grid-items">
-                            <label>
-                              Phone<span>*</span>
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="9874 456 458"
-                              maxLength={10}
-                              onKeyPress={(event) => {
-                                if (!/[0-9]/.test(event.key)) {
-                                  event.preventDefault();
-                                }
-                              }}
-                              name="phone"
-                              value={formdata.phone}
-                              onChange={(e) => onChnageForm(e)}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      {typeTrueFalseform && (
-                        <div className="alert mt-top">
-                          <div className="alert-bottom">
-                            <p>Sorry! {errorShow} must be specified</p>
-                          </div>
-                        </div>
-                      )}
-
-                      <div className="next-step-alignment">
-                        <button
-                          onClick={(e) => previousClick(e, "course")}
-                          className="out-line-button"
-                        >
-                          Previous
-                        </button>
-                        <button
-                          onClick={(e) => handleOnClick(e, "document")}
-                          className="fill-button"
-                        >
-                          Next
-                        </button>
-                      </div>
+                  </div>
+                )}
+                {tab === "personal" && (
+                  <div className="tab-details-alignment">
+                    <div className="tab-details-title">
+                      <h2>Personal Information</h2>
                     </div>
-                  )}
-                  {tab === "document" && (
-                    <div className="tab-details-alignment">
-                      <div className="tab-details-title">
-                        <h2>Document Upload</h2>
+                    <div className="Personal-details-background">
+                      <p>
+                        <b>Please fill your personal information!</b>
+                      </p>
+                      <p>All *(star) fields are mandatory</p>
+                    </div>
+                    <div className="form-boder-box">
+                      <div className="register-grid-two">
+                        <div className="register-grid-items">
+                          <label>
+                            First Name<span>*</span>
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="First Name"
+                            name="firstname"
+                            value={formdata.firstname}
+                            onChange={(e) => onChnageForm(e)}
+                          />
+                        </div>
+                        <div className="register-grid-items">
+                          <label>Middle Name</label>
+                          <input
+                            type="text"
+                            placeholder="Middle Name"
+                            name="middlename"
+                            value={formdata.middlename}
+                            onChange={(e) => onChnageForm(e)}
+                          />
+                        </div>
+                        <div className="register-grid-items">
+                          <label>Last Name</label>
+                          <input
+                            type="text"
+                            placeholder="Last Name"
+                            name="lastname"
+                            value={formdata.lastname}
+                            onChange={(e) => onChnageForm(e)}
+                          />
+                        </div>
+                        <div className="register-grid-items">
+                          <label>
+                            Date of Birth<span>*</span>
+                          </label>
+                          {/* <input type="date" name='DateofBirth' value={formdata.DateofBirth} onChange={e => onChnageForm(e)} /> */}
+
+                          <input
+                            type="date"
+                            name="DateofBirth"
+                            // value={`${new Date(
+                            //   formdata.DateofBirth
+                            // ).getFullYear()}${
+                            //   new Date(formdata.DateofBirth).getMonth() < 9
+                            //     ? "-0"
+                            //     : "-"
+                            // }${
+                            //   new Date(formdata.DateofBirth).getMonth() + 1
+                            // }-${new Date(formdata.DateofBirth).getDate()}`}
+                            value={formdata.DateofBirth}
+                            max={moment(new Date()).format("YYYY-MM-DD")}
+                            onChange={(e) => onChnageForm(e)}
+                          />
+                        </div>
                       </div>
-                      <div className="upload-decuments-background">
-                        <p>
-                          <b>Please upload documents!</b>
-                        </p>
-                        <ul>
-                          <li>
-                            Passport size photo must be clear and less than 1
-                            mb(jpg, jpeg, png)
-                          </li>
-                          <li>
-                            Rest all documents less than 5 mb(jpg, jpeg, png,
-                            pdf)
-                          </li>
-                          <li>
-                            Name of document should not contain any special
-                            characters or space(eg @,)
-                          </li>
-                        </ul>
-                      </div>
-                      <div className="photo-upload-from">
-                        <p>
-                          {" "}
-                          1. Passport Photo<span className="star-color">*</span>
-                          : less than 1 mb.(jpg, jpeg, PNG)/ Rest all documents
-                          less than 5 mb (jpg, jpeg, PNG, pdf)
-                        </p>
-                        <input
-                          type="file"
-                          name="passport"
-                          onChange={(e) =>
-                            onChangImage(e.target.files[0], "passport")
-                          }
-                        />
-                      </div>
-                      <div className="photo-upload-from">
-                        <p>
-                          2. Driving License
-                          <span className="star-color">*</span> (Not valid
-                          incase of NA)
-                        </p>
-                        <input
-                          type="file"
-                          name="driviniglicencephoto"
-                          onChange={(e) =>
-                            onChangImage(
-                              e.target.files[0],
-                              "driviniglicencephoto"
-                            )
-                          }
-                        />
-                      </div>
-                      <div className="photo-upload-from">
-                        <p>
-                          3. ID Proof: Acceptable formats - Utility Bills
-                          (water, electricity, phone or gas bill)/ Aadhaar Card
-                          (UID)/Voter ID Card or Election Commission Photo ID
-                          Card/Ration Card
-                        </p>
-                        <input
-                          type="file"
-                          name="idProof"
-                          onChange={(e) =>
-                            onChangImage(e.target.files[0], "idProof")
-                          }
-                        />
-                      </div>
-                      <div className="photo-upload-from">
-                        <p>
-                          4. Upload Medical certificate: For Eye vision and
-                          color blindness{" "}
-                        </p>
-                        <input
-                          type="file"
-                          name="mediacalCertificate"
-                          onChange={(e) =>
-                            onChangImage(
-                              e.target.files[0],
-                              "mediacalCertificate"
-                            )
-                          }
-                        />
-                      </div>
-                      <div className="photo-upload-from dropdown-style-change">
-                        <p>5. Enter Blood Group </p>
+                      <div className="two-col-grid">
                         <div className="register-grid-items12">
+                          <label>
+                            Qualification<span>*</span>
+                          </label>
                           {/* <input type="text" placeholder="Select" name='qualification' value={formdata.qualification} onChange={e => onChnageForm(e)} /> */}
                           <Select
-                            options={bloodgroupData.map((e) => ({
+                            options={qualification.map((e) => ({
                               label: e.name,
                               value: e.name,
                             }))}
-                            name="bloodgroup"
+                            name="qualification"
                             onChange={(e) =>
-                              onChnagSelectField(e, "bloodgroup")
+                              onChnagSelectField(e, "qualification")
                             }
                             defaultValue={{
-                              label: formdata.bloodgroup,
-                              value: formdata.bloodgroup,
+                              label: formdata.qualification,
+                              value: formdata.qualification,
+                            }}
+                          />
+                        </div>
+                        <div className="register-grid-items12">
+                          <label>
+                            Gender<span>*</span>
+                          </label>
+                          {/* <input type="text" placeholder="Select" name='gender' value={formdata.gender} onChange={e => onChnageForm(e)} /> */}
+                          <Select
+                            options={gender.map((e) => ({
+                              label: e.name,
+                              value: e.name,
+                            }))}
+                            name="gender"
+                            onChange={(e) => onChnagSelectField(e, "gender")}
+                            defaultValue={{
+                              label: formdata.gender,
+                              value: formdata.gender,
                             }}
                           />
                         </div>
                       </div>
-                      {typeTrueFalseform && (
-                        <div className="alert mt-top">
-                          <div className="alert-bottom">
-                            <p>Sorry! {errorShow} must be specified</p>
-                          </div>
-                        </div>
-                      )}
-                      {formdata.driviniglicencephoto && formdata.passport ? (
-                        <div className="next-step-alignment">
-                          <button
-                            className="fill-button"
-                            onClick={() => uploadCertificate()}
-                          >
-                            Upload
-                          </button>
-                        </div>
-                      ) : (
-                        <div className="next-step-alignment">
-                          <button className="fill-button disabled">
-                            Upload
-                          </button>
-                        </div>
-                      )}
-                      <div className="next-step-alignment">
-                        <button
-                          onClick={(e) => previousClick(e, "personal")}
-                          className="out-line-button"
-                        >
-                          Previous
-                        </button>
-                        <button
-                          onClick={(e) => handleOnClick(e, "payment")}
-                          className="fill-button"
-                        >
-                          Next
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                  {tab === "payment" && (
-                    <div className="tab-details-alignment">
-                      <div className="payment-title">Payment Type</div>
-                      <div className="d-flex ">
-                        <div className="d-flex aligncenetr">
-                          <input type="radio"
-
-                            placeholder="online" name='type' value="online" onChange={e => onChnageForm(e)} />
-                          <label htmlFor="online">online</label>
-
-                        </div>
-                        <div className="d-flex aligncenetr">
+                      <div className="two-col-grid">
+                        <div className="register-grid-items register-full-width">
+                          <label>
+                            Address as per License<span>*</span> (Flat/House
+                            No, Locality, Street Name, Locality)
+                          </label>
                           <input
-                            type="radio"
-                            placeholder="offline"
-                            name="type"
-                            value="offline"
+                            type="text"
+                            placeholder="Street Address"
+                            name="address"
+                            value={formdata.address}
                             onChange={(e) => onChnageForm(e)}
                           />
-                          <label className="s" htmlFor="offline">
-                            offline
-                          </label>
                         </div>
                       </div>
-                      {formdata?.type === "online" ? (
-                        <div className="mt-3">
-                          <div className="d-flex aligncenetr">
-                            <input
-                              type="checkbox"
-                              onChange={(e) =>
-                                onChangeDiscloser(e.target.checked)
-                              }
-                              checked={dicloser}
-                            />
-                            <div
-                              className="s"
-                              onClick={() => setModalOpen(!modalOpen)}
-                            >
-                              Disclooser
-                            </div>
-                          </div>
-                          {dicloser && (
-                            <PaymentData
-                              price={price}
-                              cnid={cnid}
-                              vcid={formdata.vehicleCategory}
-                              ctid={formdata.courseType}
-                              tdid={formdata.sloatId}
-                              hhhhh={(data) => {
-                                setSubmitPayment(data);
-                              }}
-                              paymentId={(data) => {
-                                setPaymentId(data);
-                              }}
-                            />
-                          )}
+                      <div className="register-grid-one">
+                        <div className="register-grid-items12">
+                          <label>
+                            State<span>*</span>
+                          </label>
+                          {/* <input type="text" placeholder="State" disabled name='state' value={formdata.state} onChange={e => onChnageForm(e)} /> */}
+                          <Select
+                            options={state.map((e) => ({
+                              label: e.name,
+                              value: e.name,
+                            }))}
+                            name="state"
+                            onChange={(e) => onChnagSelectField(e, "state")}
+                            defaultValue={{
+                              label: "Haryana",
+                              value: "Haryana",
+                            }}
+                          />
                         </div>
-                      ) : (
-                        <div>
-                          <div className="d-flex aligncenetr">
-                            <input
-                              type="checkbox"
-                              onChange={(e) =>
-                                onChangeDiscloser(e.target.checked)
-                              }
-                              checked={dicloser}
-                            />
-                            <div
-                              className="s"
-                              onClick={() => setModalOpen(!modalOpen)}
-                            >
-                              Disclooser
-                            </div>
-                          </div>
+                        <div className="register-grid-items12">
+                          <label>
+                            District<span>*</span>
+                          </label>
+                          {/* <input type="text" placeholder="District" name='district' value={formdata.district} onChange={e => onChnageForm(e)} /> */}
+                          <Select
+                            options={districts.map((e) => ({
+                              label: e.name,
+                              value: e.name,
+                            }))}
+                            name="district"
+                            onChange={(e) =>
+                              onChnagSelectField(e, "district")
+                            }
+                            defaultValue={{
+                              label: formdata.district,
+                              value: formdata.district,
+                            }}
+                          />
                         </div>
-                      )}
+                        <div className="register-grid-items12">
+                          <label>
+                            Town / city<span>*</span>
+                          </label>
+                          {/* <input type="text" placeholder="city" name='city' value={formdata.city} onChange={e => onChnageForm(e)} /> */}
+                          <Select
+                            options={city.map((e) => ({
+                              label: e.name,
+                              value: e.name,
+                            }))}
+                            name="city"
+                            onChange={(e) => onChnagSelectField(e, "city")}
+                            defaultValue={{
+                              label: formdata.city,
+                              value: formdata.city,
+                            }}
+                          />
+                        </div>
+                        <div className="register-grid-items">
+                          <label>
+                            PIN<span>*</span>
+                          </label>
+                          <input
+                            type="text"
+                            onKeyPress={(event) => {
+                              if (!/[0-9]/.test(event.key)) {
+                                event.preventDefault();
+                              }
+                            }}
+                            placeholder="Pin"
+                            name="pin"
+                            value={formdata.pin}
+                            onChange={(e) => onChnageForm(e)}
+                          />
+                        </div>
+                      </div>
+                      <div className="two-col-grid">
+                        <div className="register-grid-items">
+                          <label>
+                            Email address<span></span>
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Email Address"
+                            name="email"
+                            value={formdata.email}
+                            onChange={(e) => onChnageForm(e)}
+                          />
+                        </div>
+                        <div className="register-grid-items">
+                          <label>
+                            Phone<span>*</span>
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="9874 456 458"
+                            maxLength={10}
+                            onKeyPress={(event) => {
+                              if (!/[0-9]/.test(event.key)) {
+                                event.preventDefault();
+                              }
+                            }}
+                            name="phone"
+                            value={formdata.phone}
+                            onChange={(e) => onChnageForm(e)}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    {typeTrueFalseform && (
+                      <div className="alert mt-top">
+                        <div className="alert-bottom">
+                          <p>Sorry! {errorShow} must be specified</p>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="next-step-alignment">
+                      <button
+                        onClick={(e) => previousClick(e, "course")}
+                        className="out-line-button"
+                      >
+                        Previous
+                      </button>
+                      <button
+                        onClick={(e) => handleOnClick(e, "document")}
+                        className="fill-button"
+                      >
+                        Next
+                      </button>
+                    </div>
+                  </div>
+                )}
+                {tab === "document" && (
+                  <div className="tab-details-alignment">
+                    <div className="tab-details-title">
+                      <h2>Document Upload</h2>
+                    </div>
+                    <div className="upload-decuments-background">
+                      <p>
+                        <b>Please upload documents!</b>
+                      </p>
+                      <ul>
+                        <li>
+                          Passport size photo must be clear and less than 1
+                          mb(jpg, jpeg, png)
+                        </li>
+                        <li>
+                          Rest all documents less than 5 mb(jpg, jpeg, png,
+                          pdf)
+                        </li>
+                        <li>
+                          Name of document should not contain any special
+                          characters or space(eg @,)
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="photo-upload-from">
+                      <p>
+                        {" "}
+                        1. Passport Photo<span className="star-color">*</span>
+                        : less than 1 mb.(jpg, jpeg, PNG)/ Rest all documents
+                        less than 5 mb (jpg, jpeg, PNG, pdf)
+                      </p>
+                      <input
+                        type="file"
+                        name="passport"
+                        onChange={(e) =>
+                          onChangImage(e.target.files[0], "passport")
+                        }
+                      />
+                    </div>
+                    <div className="photo-upload-from">
+                      <p>
+                        2. Driving License
+                        <span className="star-color">*</span> (Not valid
+                        incase of NA)
+                      </p>
+                      <input
+                        type="file"
+                        name="driviniglicencephoto"
+                        onChange={(e) =>
+                          onChangImage(
+                            e.target.files[0],
+                            "driviniglicencephoto"
+                          )
+                        }
+                      />
+                    </div>
+                    <div className="photo-upload-from">
+                      <p>
+                        3. ID Proof: Acceptable formats - Utility Bills
+                        (water, electricity, phone or gas bill)/ Aadhaar Card
+                        (UID)/Voter ID Card or Election Commission Photo ID
+                        Card/Ration Card
+                      </p>
+                      <input
+                        type="file"
+                        name="idProof"
+                        onChange={(e) =>
+                          onChangImage(e.target.files[0], "idProof")
+                        }
+                      />
+                    </div>
+                    <div className="photo-upload-from">
+                      <p>
+                        4. Upload Medical certificate: For Eye vision and
+                        color blindness{" "}
+                      </p>
+                      <input
+                        type="file"
+                        name="mediacalCertificate"
+                        onChange={(e) =>
+                          onChangImage(
+                            e.target.files[0],
+                            "mediacalCertificate"
+                          )
+                        }
+                      />
+                    </div>
+                    <div className="photo-upload-from dropdown-style-change">
+                      <p>5. Enter Blood Group </p>
+                      <div className="register-grid-items12">
+                        {/* <input type="text" placeholder="Select" name='qualification' value={formdata.qualification} onChange={e => onChnageForm(e)} /> */}
+                        <Select
+                          options={bloodgroupData.map((e) => ({
+                            label: e.name,
+                            value: e.name,
+                          }))}
+                          name="bloodgroup"
+                          onChange={(e) =>
+                            onChnagSelectField(e, "bloodgroup")
+                          }
+                          defaultValue={{
+                            label: formdata.bloodgroup,
+                            value: formdata.bloodgroup,
+                          }}
+                        />
+                      </div>
+                    </div>
+                    {typeTrueFalseform && (
+                      <div className="alert mt-top">
+                        <div className="alert-bottom">
+                          <p>Sorry! {errorShow} must be specified</p>
+                        </div>
+                      </div>
+                    )}
+                    {formdata.driviniglicencephoto && formdata.passport ? (
                       <div className="next-step-alignment">
                         <button
-                          className="out-line-button"
-                          onClick={(e) => handleOnClick(e, "document")}
+                          className="fill-button"
+                          onClick={() => uploadCertificate()}
                         >
-                          Previous
+                          Upload
                         </button>
+                      </div>
+                    ) : (
+                      <div className="next-step-alignment">
+                        <button className="fill-button disabled">
+                          Upload
+                        </button>
+                      </div>
+                    )}
+                    <div className="next-step-alignment">
+                      <button
+                        onClick={(e) => previousClick(e, "personal")}
+                        className="out-line-button"
+                      >
+                        Previous
+                      </button>
+                      <button
+                        onClick={(e) => handleOnClick(e, "payment")}
+                        className="fill-button"
+                      >
+                        Next
+                      </button>
+                    </div>
+                  </div>
+                )}
+                {tab === "payment" && (
+                  <div className="tab-details-alignment">
+                    <div className="payment-title">Payment Type</div>
+                    <div className="d-flex ">
+                      <div className="d-flex aligncenetr">
+                        <input type="radio"
 
-                        {!editMode
-                          ? dicloser &&
-                          (formdata.type === "online"
-                            ? submitpayment
-                            : true) && (
-                            <button
-                              className="fill-button"
-                              onClick={() => register()}
-                            >
-                              Submit
-                            </button>
-                          )
-                          : dicloser &&
-                          (formdata.type === "online"
-                            ? submitpayment
-                            : true) && (
-                            <button
-                              className="fill-button"
-                              onClick={() => updateData()}
-                            >
-                              Update
-                            </button>
-                          )}
+                          placeholder="online" name='type' value="online" onChange={e => onChnageForm(e)} />
+                        <label htmlFor="online">online</label>
+
+                      </div>
+                      <div className="d-flex aligncenetr">
+                        <input
+                          type="radio"
+                          placeholder="offline"
+                          name="type"
+                          value="offline"
+                          onChange={(e) => onChnageForm(e)}
+                        />
+                        <label className="s" htmlFor="offline">
+                          offline
+                        </label>
                       </div>
                     </div>
-                  )}
-                  {modalOpen && (
-                    <div className="feedback-background-blur">
-                      <div className="feedback-modal">
-                        <div className="modal-header">
-                          <h1>Disclose</h1>
-                          <i
-                            onClick={() => setModalOpen(false)}
-                            class="fas fa-times"
-                          ></i>
+                    {formdata?.type === "online" ? (
+                      <div className="mt-3">
+                        <div className="d-flex aligncenetr">
+                          <input
+                            type="checkbox"
+                            onChange={(e) =>
+                              onChangeDiscloser(e.target.checked)
+                            }
+                            checked={dicloser}
+                          />
+                          <div
+                            className="s"
+                            onClick={() => setModalOpen(!modalOpen)}
+                          >
+                            Disclooser
+                          </div>
                         </div>
-                        <div className="modal-body">
-                          <p>
-                            <b>
-                              Cautionary statement regarding forward-looking
-                              information
-                            </b>
-                          </p>
-                          <p>
-                            This Site contains statements that constitute
-                            forward-looking statements within the meaning of the
-                            Private Securities Litigation Reform Act of 1995. In
-                            addition, in the future we, and others on our
-                            behalf, may make statements that constitute
-                            forward-looking statements. Such forward-looking
-                            statements may include, without limitation,
-                            statements relating to the following:
-                          </p>
-                          <ul>
-                            <li>
-                              <p> our plans, objectives or goals;</p>
-                            </li>
-                            <li>
-                              <p>
-                                {" "}
-                                our future economic performance or prospects;
-                              </p>
-                            </li>
-                            <li>
-                              <p>
-                                {" "}
-                                the potential effect on our future performance
-                                of certain contingencies; and
-                              </p>
-                            </li>
-                            <li>
-                              <p>assumptions underlying any such statements.</p>
-                            </li>
-                          </ul>
-                          <p>
-                            Words such as “believes,” “anticipates,” “expects,”
-                            “intends” and “plans” and similar expressions are
-                            intended to identify forward-looking statements but
-                            are not the exclusive means of identifying such
-                            statements. We do not intend to update these
-                            forward-looking statements except as may be required
-                            by applicable securities laws. By their very nature,
-                            forward-looking statements involve inherent risks
-                            and uncertainties, both general and specific, and
-                            risks exist that predictions, forecasts, projections
-                            and other outcomes described or implied in
-                            forward-looking statements will not be achieved. We
-                            caution you that a number of important factors could
-                            cause results to differ materially from the plans,
-                            objectives, expectations, estimates and intentions
-                            expressed in such forward-looking statements. These
-                            factors include:
-                          </p>
-                          <ul>
-                            <li>
-                              <p>
-                                {" "}
-                                the ability to maintain sufficient liquidity and
-                                access capital markets;
-                              </p>
-                            </li>
-                            <li>
-                              <p>
-                                {" "}
-                                market and interest rate fluctuations and
-                                interest rate levels;
-                              </p>
-                            </li>
-                            <li>
-                              <p>
-                                {" "}
-                                the strength of the global economy in general
-                                and the strength of the economies of the
-                                countries in which we conduct our operations, in
-                                particular the risk of continued slow economic
-                                recovery or downturn in the US or other
-                                developed countries in the future;
-                              </p>
-                            </li>
-                            <li>
-                              <p>
-                                {" "}
-                                the direct and indirect impacts of deterioration
-                                or slow recovery in residential and commercial
-                                real estate markets;
-                              </p>
-                            </li>
-                            <li>
-                              <p>
-                                adverse rating actions by credit rating agencies
-                                in respect of sovereign issuers, structured
-                                credit products or other credit-related
-                                exposures;
-                              </p>
-                            </li>
-                            <li>
-                              <p>
-                                the ability to achieve our strategic objectives,
-                                including improved performance, reduced risks,
-                                lower costs and more efficient use of capital;
-                              </p>
-                            </li>
-
-                            <li>
-                              <p>
-                                the ability of counterparties to meet their
-                                obligations to us;
-                              </p>
-                            </li>
-                            <li>
-                              <p>
-                                the effects of, and changes in, fiscal,
-                                monetary, trade and tax policies, and currency
-                                fluctuations;
-                              </p>
-                            </li>
-
-                            <li>
-                              <p>
-                                political and social developments, including
-                                war, civil unrest or terrorist activity;
-                              </p>
-                            </li>
-                            <li>
-                              <p>
-                                the possibility of foreign exchange controls,
-                                expropriation, nationalization or confiscation
-                                of assets in countries in which we conduct our
-                                operations;
-                              </p>
-                            </li>
-
-                            <li>
-                              <p>
-                                operational factors such as systems failure,
-                                human error, or the failure to implement
-                                procedures properly;
-                              </p>
-                            </li>
-                            <li>
-                              <p>
-                                actions taken by regulators with respect to our
-                                business and practices in one or more of the
-                                countries in which we conduct our operations;
-                              </p>
-                            </li>
-                            <li>
-                              <p>
-                                the effects of changes in laws, regulations or
-                                accounting policies or practices;
-                              </p>
-                            </li>
-                            <li>
-                              <p>
-                                competition in geographic and business areas in
-                                which we conduct our operations;
-                              </p>
-                            </li>
-
-                            <li>
-                              <p>
-                                the ability to retain and recruit qualified
-                                personnel;
-                              </p>
-                            </li>
-                            <li>
-                              <p>
-                                the ability to maintain our reputation and
-                                promote our brand;
-                              </p>
-                            </li>
-                            <li>
-                              <p>
-                                the ability to increase market share and control
-                                expenses;
-                              </p>
-                            </li>
-                            <li>
-                              <p>technological changes;</p>
-                            </li>
-                            <li>
-                              <p>
-                                the timely development and acceptance of our new
-                                products and services and the perceived overall
-                                value of these products and services by users;
-                              </p>
-                            </li>
-                            <li>
-                              <p>
-                                acquisitions, including the ability to integrate
-                                acquired businesses successfully, and
-                                divestitures, including the ability to sell
-                                non-core assets;
-                              </p>
-                            </li>
-                            <li>
-                              <p>
-                                the adverse resolution of litigation and other
-                                contingencies;
-                              </p>
-                            </li>
-                            <li>
-                              <p>
-                                the ability to achieve our cost efficiency goals
-                                and cost targets; and
-                              </p>
-                            </li>
-                            <li>
-                              <p>
-                                our success at managing the risks involved in
-                                the foregoing.
-                              </p>
-                            </li>
-                          </ul>
-                          <p>
-                            We caution you that the foregoing list of important
-                            factors is not exclusive. When evaluating
-                            forward-looking statements, you should carefully
-                            consider the foregoing factors and other
-                            uncertainties and events, including the information
-                            set forth in our most recent Annual Report under
-                            “Risk Factors” and in our other public filings
-                          </p>
-
-                          <p>
-                            <b>
-                              {" "}
-                              Cautionary Statement Regarding Non-GAAP Financial
-                              Information
-                            </b>
-                          </p>
-                          <p>
-                            This Site may contain non-GAAP financial
-                            information. If such non-GAAP financial information
-                            is disclosed, the most directly comparable measures
-                            under generally accepted accounting principles is
-                            provided in our most recent periodic report or in
-                            our other public filings.
-                          </p>
-                          <p>
-                            <b>
-                              {" "}
-                              Other information about disclosure on this site
-                            </b>
-                          </p>
-                          <p>
-                            On this Site, adjusted cost run-rate results are
-                            measured against our annualized 6M11 expense run
-                            rate measured at constant foreign exchange rates and
-                            adjusted to exclude business realignment and other
-                            significant non-operating expenses and variable
-                            compensation expenses.
-                          </p>
-
-                          <p>
-                            As of January 1, 2013, Basel III was implemented in
-                            Switzerland along with the “Too Big to Fail”
-                            legislation and regulations thereunder. Our related
-                            disclosures are in accordance with our current
-                            interpretation of such requirements, including
-                            relevant assumptions. Changes in the interpretation
-                            of these requirements in Switzerland or in any of
-                            our assumptions or estimates could result in
-                            different numbers from those shown herein. Capital
-                            and ratio numbers for periods prior to 2013 herein
-                            are based on estimates, which are calculated as if
-                            the Basel III framework had been in place in
-                            Switzerland during such periods.
-                          </p>
-                          <p>
-                            Unless otherwise noted, leverage ratio, leverage
-                            exposure and total capital amounts included herein
-                            are based on the current FINMA framework. The Swiss
-                            Total Capital leverage ratio is calculated as Swiss
-                            Total Capital, divided by a three-month average
-                            leverage exposure, which consists of balance sheet
-                            assets, off-balance sheet exposures, which consist
-                            of guarantees and commitments, and regulatory
-                            adjustments, which include cash collateral netting
-                            reversals and derivative add-ons.
-                          </p>
-                          <p>
-                            For further information on Core results, refer to
-                            “Results overview” in II – Operating and financial
-                            review – Core Results in our most recent Annual
-                            Report.
-                          </p>
-                          <p>
-                            All opinions and estimates expressed in this Site
-                            constitute our judgment as of publication and do not
-                            constitute general or specific investment legal, tax
-                            or accounting advice of any kind
-                          </p>
+                        {dicloser && (
+                          <PaymentData
+                            price={price}
+                            cnid={cnid}
+                            vcid={formdata.vehicleCategory}
+                            ctid={formdata.courseType}
+                            tdid={formdata.sloatId}
+                            hhhhh={(data) => {
+                              setSubmitPayment(data);
+                            }}
+                            paymentId={(data) => {
+                              setPaymentId(data);
+                            }}
+                          />
+                        )}
+                      </div>
+                    ) : (
+                      <div>
+                        <div className="d-flex aligncenetr">
+                          <input
+                            type="checkbox"
+                            onChange={(e) =>
+                              onChangeDiscloser(e.target.checked)
+                            }
+                            checked={dicloser}
+                          />
+                          <div
+                            className="s"
+                            onClick={() => setModalOpen(!modalOpen)}
+                          >
+                            Disclooser
+                          </div>
                         </div>
                       </div>
+                    )}
+                    <div className="next-step-alignment">
+                      <button
+                        className="out-line-button"
+                        onClick={(e) => handleOnClick(e, "document")}
+                      >
+                        Previous
+                      </button>
+
+                      {!editMode
+                        ? dicloser &&
+                        (formdata.type === "online"
+                          ? submitpayment
+                          : true) && (
+                          <button
+                            className="fill-button"
+                            onClick={() => register()}
+                          >
+                            Submit
+                          </button>
+                        )
+                        : dicloser &&
+                        (formdata.type === "online"
+                          ? submitpayment
+                          : true) && (
+                          <button
+                            className="fill-button"
+                            onClick={() => updateData()}
+                          >
+                            Update
+                          </button>
+                        )}
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
+                {modalOpen && (
+                  <div className="feedback-background-blur">
+                    <div className="feedback-modal">
+                      <div className="modal-header">
+                        <h1>Disclose</h1>
+                        <i
+                          onClick={() => setModalOpen(false)}
+                          class="fas fa-times"
+                        ></i>
+                      </div>
+                      <div className="modal-body">
+                        <p>
+                          <b>
+                            Cautionary statement regarding forward-looking
+                            information
+                          </b>
+                        </p>
+                        <p>
+                          This Site contains statements that constitute
+                          forward-looking statements within the meaning of the
+                          Private Securities Litigation Reform Act of 1995. In
+                          addition, in the future we, and others on our
+                          behalf, may make statements that constitute
+                          forward-looking statements. Such forward-looking
+                          statements may include, without limitation,
+                          statements relating to the following:
+                        </p>
+                        <ul>
+                          <li>
+                            <p> our plans, objectives or goals;</p>
+                          </li>
+                          <li>
+                            <p>
+                              {" "}
+                              our future economic performance or prospects;
+                            </p>
+                          </li>
+                          <li>
+                            <p>
+                              {" "}
+                              the potential effect on our future performance
+                              of certain contingencies; and
+                            </p>
+                          </li>
+                          <li>
+                            <p>assumptions underlying any such statements.</p>
+                          </li>
+                        </ul>
+                        <p>
+                          Words such as “believes,” “anticipates,” “expects,”
+                          “intends” and “plans” and similar expressions are
+                          intended to identify forward-looking statements but
+                          are not the exclusive means of identifying such
+                          statements. We do not intend to update these
+                          forward-looking statements except as may be required
+                          by applicable securities laws. By their very nature,
+                          forward-looking statements involve inherent risks
+                          and uncertainties, both general and specific, and
+                          risks exist that predictions, forecasts, projections
+                          and other outcomes described or implied in
+                          forward-looking statements will not be achieved. We
+                          caution you that a number of important factors could
+                          cause results to differ materially from the plans,
+                          objectives, expectations, estimates and intentions
+                          expressed in such forward-looking statements. These
+                          factors include:
+                        </p>
+                        <ul>
+                          <li>
+                            <p>
+                              {" "}
+                              the ability to maintain sufficient liquidity and
+                              access capital markets;
+                            </p>
+                          </li>
+                          <li>
+                            <p>
+                              {" "}
+                              market and interest rate fluctuations and
+                              interest rate levels;
+                            </p>
+                          </li>
+                          <li>
+                            <p>
+                              {" "}
+                              the strength of the global economy in general
+                              and the strength of the economies of the
+                              countries in which we conduct our operations, in
+                              particular the risk of continued slow economic
+                              recovery or downturn in the US or other
+                              developed countries in the future;
+                            </p>
+                          </li>
+                          <li>
+                            <p>
+                              {" "}
+                              the direct and indirect impacts of deterioration
+                              or slow recovery in residential and commercial
+                              real estate markets;
+                            </p>
+                          </li>
+                          <li>
+                            <p>
+                              adverse rating actions by credit rating agencies
+                              in respect of sovereign issuers, structured
+                              credit products or other credit-related
+                              exposures;
+                            </p>
+                          </li>
+                          <li>
+                            <p>
+                              the ability to achieve our strategic objectives,
+                              including improved performance, reduced risks,
+                              lower costs and more efficient use of capital;
+                            </p>
+                          </li>
+
+                          <li>
+                            <p>
+                              the ability of counterparties to meet their
+                              obligations to us;
+                            </p>
+                          </li>
+                          <li>
+                            <p>
+                              the effects of, and changes in, fiscal,
+                              monetary, trade and tax policies, and currency
+                              fluctuations;
+                            </p>
+                          </li>
+
+                          <li>
+                            <p>
+                              political and social developments, including
+                              war, civil unrest or terrorist activity;
+                            </p>
+                          </li>
+                          <li>
+                            <p>
+                              the possibility of foreign exchange controls,
+                              expropriation, nationalization or confiscation
+                              of assets in countries in which we conduct our
+                              operations;
+                            </p>
+                          </li>
+
+                          <li>
+                            <p>
+                              operational factors such as systems failure,
+                              human error, or the failure to implement
+                              procedures properly;
+                            </p>
+                          </li>
+                          <li>
+                            <p>
+                              actions taken by regulators with respect to our
+                              business and practices in one or more of the
+                              countries in which we conduct our operations;
+                            </p>
+                          </li>
+                          <li>
+                            <p>
+                              the effects of changes in laws, regulations or
+                              accounting policies or practices;
+                            </p>
+                          </li>
+                          <li>
+                            <p>
+                              competition in geographic and business areas in
+                              which we conduct our operations;
+                            </p>
+                          </li>
+
+                          <li>
+                            <p>
+                              the ability to retain and recruit qualified
+                              personnel;
+                            </p>
+                          </li>
+                          <li>
+                            <p>
+                              the ability to maintain our reputation and
+                              promote our brand;
+                            </p>
+                          </li>
+                          <li>
+                            <p>
+                              the ability to increase market share and control
+                              expenses;
+                            </p>
+                          </li>
+                          <li>
+                            <p>technological changes;</p>
+                          </li>
+                          <li>
+                            <p>
+                              the timely development and acceptance of our new
+                              products and services and the perceived overall
+                              value of these products and services by users;
+                            </p>
+                          </li>
+                          <li>
+                            <p>
+                              acquisitions, including the ability to integrate
+                              acquired businesses successfully, and
+                              divestitures, including the ability to sell
+                              non-core assets;
+                            </p>
+                          </li>
+                          <li>
+                            <p>
+                              the adverse resolution of litigation and other
+                              contingencies;
+                            </p>
+                          </li>
+                          <li>
+                            <p>
+                              the ability to achieve our cost efficiency goals
+                              and cost targets; and
+                            </p>
+                          </li>
+                          <li>
+                            <p>
+                              our success at managing the risks involved in
+                              the foregoing.
+                            </p>
+                          </li>
+                        </ul>
+                        <p>
+                          We caution you that the foregoing list of important
+                          factors is not exclusive. When evaluating
+                          forward-looking statements, you should carefully
+                          consider the foregoing factors and other
+                          uncertainties and events, including the information
+                          set forth in our most recent Annual Report under
+                          “Risk Factors” and in our other public filings
+                        </p>
+
+                        <p>
+                          <b>
+                            {" "}
+                            Cautionary Statement Regarding Non-GAAP Financial
+                            Information
+                          </b>
+                        </p>
+                        <p>
+                          This Site may contain non-GAAP financial
+                          information. If such non-GAAP financial information
+                          is disclosed, the most directly comparable measures
+                          under generally accepted accounting principles is
+                          provided in our most recent periodic report or in
+                          our other public filings.
+                        </p>
+                        <p>
+                          <b>
+                            {" "}
+                            Other information about disclosure on this site
+                          </b>
+                        </p>
+                        <p>
+                          On this Site, adjusted cost run-rate results are
+                          measured against our annualized 6M11 expense run
+                          rate measured at constant foreign exchange rates and
+                          adjusted to exclude business realignment and other
+                          significant non-operating expenses and variable
+                          compensation expenses.
+                        </p>
+
+                        <p>
+                          As of January 1, 2013, Basel III was implemented in
+                          Switzerland along with the “Too Big to Fail”
+                          legislation and regulations thereunder. Our related
+                          disclosures are in accordance with our current
+                          interpretation of such requirements, including
+                          relevant assumptions. Changes in the interpretation
+                          of these requirements in Switzerland or in any of
+                          our assumptions or estimates could result in
+                          different numbers from those shown herein. Capital
+                          and ratio numbers for periods prior to 2013 herein
+                          are based on estimates, which are calculated as if
+                          the Basel III framework had been in place in
+                          Switzerland during such periods.
+                        </p>
+                        <p>
+                          Unless otherwise noted, leverage ratio, leverage
+                          exposure and total capital amounts included herein
+                          are based on the current FINMA framework. The Swiss
+                          Total Capital leverage ratio is calculated as Swiss
+                          Total Capital, divided by a three-month average
+                          leverage exposure, which consists of balance sheet
+                          assets, off-balance sheet exposures, which consist
+                          of guarantees and commitments, and regulatory
+                          adjustments, which include cash collateral netting
+                          reversals and derivative add-ons.
+                        </p>
+                        <p>
+                          For further information on Core results, refer to
+                          “Results overview” in II – Operating and financial
+                          review – Core Results in our most recent Annual
+                          Report.
+                        </p>
+                        <p>
+                          All opinions and estimates expressed in this Site
+                          constitute our judgment as of publication and do not
+                          constitute general or specific investment legal, tax
+                          or accounting advice of any kind
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
-            ) : null}
-          </List>
-        </Dialog>
+            </div>
+          ) : null}
+        </List>
+
       ) : null}
 
       {isViewMoreUser ? (

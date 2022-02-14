@@ -99,9 +99,9 @@ const Batch = ({ getNewCount, title }) => {
     setCountForBatch(0);
   };
 
-  useEffect(() => {}, [inputValueForAdd]);
+  useEffect(() => { }, [inputValueForAdd]);
 
-  useEffect(() => {}, [idForEditStatus]);
+  useEffect(() => { }, [idForEditStatus]);
 
   const handleAdminUpdateClose = () => {
     setInputValue({});
@@ -156,7 +156,7 @@ const Batch = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.batch);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     } else {
       await ApiGet(
         `batch/getAllBatch?search=${search}&page=${page}&limit=${countPerPage}`
@@ -166,7 +166,7 @@ const Batch = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.batch);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
@@ -174,16 +174,15 @@ const Batch = ({ getNewCount, title }) => {
     selectdate = new Date(selectdate);
     setIsLoaderVisible(true);
     await ApiGet(
-      `trainingDate/getData?date=${
-        selectdate.getFullYear() +
-        "-" +
-        (selectdate.getMonth() < 9
-          ? "0" + (selectdate.getMonth() + 1)
-          : selectdate.getMonth() + 1) +
-        "-" +
-        (selectdate.getDate() < 9
-          ? "0" + selectdate.getDate()
-          : selectdate.getDate())
+      `trainingDate/getData?date=${selectdate.getFullYear() +
+      "-" +
+      (selectdate.getMonth() < 9
+        ? "0" + (selectdate.getMonth() + 1)
+        : selectdate.getMonth() + 1) +
+      "-" +
+      (selectdate.getDate() < 9
+        ? "0" + selectdate.getDate()
+        : selectdate.getDate())
       }`
     )
       .then((res) => {
@@ -266,7 +265,7 @@ const Batch = ({ getNewCount, title }) => {
   }, []);
 
   useEffect(() => {
-    console.log("batchInfo",batchInfo);
+    console.log("batchInfo", batchInfo);
   }, [batchInfo]);
 
   const validateFormForAddAdmin = () => {
@@ -303,7 +302,7 @@ const Batch = ({ getNewCount, title }) => {
 
   const handleAddAnnouncementDetails = (e) => {
     e.preventDefault();
-    if(dateTimezon.length === 0) {
+    if (dateTimezon.length === 0) {
       toast.error("No slot available for this date")
     }
     if (validateFormForAddAdmin()) {
@@ -388,12 +387,12 @@ const Batch = ({ getNewCount, title }) => {
       });
   };
 
-  useEffect(() => {}, [inputValue]);
+  useEffect(() => { }, [inputValue]);
 
   const handleUpdateAnnouncementDetails = (e) => {
     e.preventDefault();
 
-    if(dateTimezon.length === 0) {
+    if (dateTimezon.length === 0) {
       toast.error("No slot available for this date")
     }
 
@@ -649,11 +648,11 @@ const Batch = ({ getNewCount, title }) => {
                     getPapersetByUserId(row?._id);
                   }}
                 >
-                 <div className="cus-medium-button-style widthfixed">
-                  <button className="btn btn-success mr-2">
-                    View Paperset
-                  </button>
-                </div>
+                  <div className="cus-medium-button-style widthfixed">
+                    <button className="btn btn-success mr-2">
+                      View Paperset
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -967,7 +966,8 @@ const Batch = ({ getNewCount, title }) => {
                               name="getBatch"
                               defaultChecked={data.istrue}
                               value={data._id}
-                              onChange={(e) => {getBatch(e, data._id)
+                              onChange={(e) => {
+                                getBatch(e, data._id)
                                 setErrorsForAdd({ ...errorsForAdd, batchInfo: "" })
                               }}
                             />
@@ -983,7 +983,7 @@ const Batch = ({ getNewCount, title }) => {
                           </div>
                         );
                       })}
-                      <span
+                    <span
                       style={{
                         color: "red",
                         top: "5px",
@@ -1237,7 +1237,8 @@ const Batch = ({ getNewCount, title }) => {
                               name="getBatch"
                               defaultChecked={batchInfo.includes(data._id)}
                               value={data._id}
-                              onChange={(e) =>{ getBatch(e, data._id)
+                              onChange={(e) => {
+                                getBatch(e, data._id)
                                 setErrorsForAdd({ ...errorsForAdd, batchInfo: "" });
                               }}
                             />
@@ -1253,7 +1254,7 @@ const Batch = ({ getNewCount, title }) => {
                           </div>
                         );
                       })}
-                      <span
+                    <span
                       style={{
                         color: "red",
                         top: "5px",
@@ -1513,11 +1514,27 @@ const Batch = ({ getNewCount, title }) => {
                           </div>
 
                           {data?.Qname}
+
+                        </div>
+                        <div className="">
+                          Right / Wrong:{" "}
+                          <span>{data.isRight ? "Right" : "Wrong"}</span>
                         </div>
                         <div>
                           {data?.Option.map((record, i) => (
                             <>
-                              {data.type === "mcq" ? (
+                              {record?.istrue}
+                              {data?.Answer?.findIndex(
+                                (e) => e === record?.no
+                              ) !== -1 ? (
+                                <div className="green">
+                                  {record?.name}
+                                </div>
+                              ) : (
+                                <div className="">{record?.name}</div>
+                              )}
+
+                              {/* {data.type === "mcq" ? (
                                 <>
                                   <div
                                     className="d-flex align-items-baseline"
@@ -1553,7 +1570,7 @@ const Batch = ({ getNewCount, title }) => {
                                     </span>
                                   </div>
                                 </>
-                              )}
+                              )} */}
                             </>
                           ))}
                         </div>

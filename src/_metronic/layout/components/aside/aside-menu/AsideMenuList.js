@@ -54,7 +54,7 @@ export function AsideMenuList({ layoutProps }) {
                 >
                   <NavLink
                     className="menu-link menu-toggle"
-                    to="/courseselection/vehiclecategory"
+                    to="/vehiclecategory"
                   >
                     <span className="svg-icon menu-icon">
                       <img src="media/allIconsForTable/course.svg" />
@@ -76,7 +76,7 @@ export function AsideMenuList({ layoutProps }) {
                       >
                         <NavLink
                           className="menu-link"
-                          to="/courseselection/vehiclecategory"
+                          to="/vehiclecategory"
                         >
                           <i className="menu-bullet menu-bullet-dot">
                             <span />
@@ -94,7 +94,7 @@ export function AsideMenuList({ layoutProps }) {
                       >
                         <NavLink
                           className="menu-link"
-                          to="/courseselection/coursetype"
+                          to="/coursetype"
                         >
                           <i className="menu-bullet menu-bullet-dot">
                             <span />
@@ -112,7 +112,7 @@ export function AsideMenuList({ layoutProps }) {
                       >
                         <NavLink
                           className="menu-link"
-                          to="/courseselection/coursecategory"
+                          to="/coursecategory"
                         >
                           <i className="menu-bullet menu-bullet-dot">
                             <span />
@@ -131,7 +131,7 @@ export function AsideMenuList({ layoutProps }) {
                       >
                         <NavLink
                           className="menu-link"
-                          to="/courseselection/coursename"
+                          to="/coursename"
                         >
                           <i className="menu-bullet menu-bullet-dot">
                             <span />
