@@ -35,7 +35,7 @@ import CreateIcon from "@material-ui/icons/Create";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Modal } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import Logo from './honda.png';
+import Logo from "./honda.png";
 import { useReactToPrint } from "react-to-print";
 import ReactToPrint from "react-to-print";
 
@@ -55,8 +55,6 @@ class ComponentToPrints extends React.Component {
     this.setState({ ...this.props });
   }
 
-
-
   render() {
     return (
       <>
@@ -67,9 +65,11 @@ class ComponentToPrints extends React.Component {
                 <table>
                   <tr>
                     <td>
-
                       <b>Institute of Driving and Traffic Research (IDTR)</b>
-                      <p>A joint venture of Transport Department, <br /> Government of Haryana & Honda IDTR</p>
+                      <p>
+                        A joint venture of Transport Department, <br />{" "}
+                        Government of Haryana & Honda IDTR
+                      </p>
                       <p>GST Number:121222</p>
                     </td>
                     <td class="title">
@@ -85,31 +85,29 @@ class ComponentToPrints extends React.Component {
                 <table>
                   <tr>
                     <td>
-                      Created: {moment(this?.props?.data?.createdAt).format(
+                      Created:{" "}
+                      {moment(this?.props?.data?.createdAt).format(
                         "DD-MM-YYYY "
                       )}
                     </td>
                     <td>
                       <h3>TAX INVOICE</h3>
-                      Invoice #: {this.props?.data?._id}<br />
+                      Invoice #: {this.props?.data?._id}
+                      <br />
                     </td>
                   </tr>
                 </table>
               </td>
             </tr>
-            <tr className=''>
-              <td >
-
+            <tr className="">
+              <td>
                 <td>Invoice To: {`${this.props?.data?.fname} `} </td>
                 <td>{this.props?.data?.lname}</td>
-
               </td>
             </tr>
 
             <tr class="heading">
               <td>Payment Method</td>
-
-
             </tr>
 
             <tr class="details">
@@ -120,7 +118,6 @@ class ComponentToPrints extends React.Component {
               <td>Item</td>
               <td>GST</td>
               <td>COST</td>
-
             </tr>
 
             <tr class="item">
@@ -128,7 +125,6 @@ class ComponentToPrints extends React.Component {
               <td>12FC34343433</td>
               <td>&#x20b9;{this.props?.data?.courseName[0]?.price}</td>
             </tr>
-
 
             <tr></tr>
             <tr class="total top">
@@ -139,18 +135,18 @@ class ComponentToPrints extends React.Component {
             <tr class="total">
               <td></td>
 
-              <td>Grand Total: &#x20b9;{this.props?.data?.courseName[0]?.price}</td>
+              <td>
+                Grand Total: &#x20b9;{this.props?.data?.courseName[0]?.price}
+              </td>
             </tr>
           </table>
         </div>
       </>
     );
   }
-
 }
 
 //testing end
-
 
 const User = ({ getNewCount, title }) => {
   const ref = React.createRef();
@@ -186,20 +182,30 @@ const User = ({ getNewCount, title }) => {
   const [idForDeleteAnnouncement, setIdForDeleteAnnouncement] = useState("");
   const [search, setSearch] = useState("");
   const [getAllCourceCategory, setgetAllCourceCategory] = useState({});
-  const [logsData, setLogsData] = useState({});
+  const [logsData
+    , setLogsData] = useState({});
+  const [modelForUserLogs, setModelForUserLogs] = useState(false);
+  const [dataForUserLogCSV, setDataForUserLogCSV] = useState([]);
 
   const [idForUpdateAnnouncementData, setIdForUpdateAnnouncementData] =
     useState("");
+
   const handleViewMoreClose = () => {
     setIsViewMoreUser(false);
     setDataViewMore({});
+  };
+
+  const handleCloseForUserLogs = () => {
+    setModelForUserLogs(false);
   };
 
   useEffect(() => {
     document.title = "Honda | User";
   }, []);
 
-
+  useEffect(() => {
+    console.log("dataForUserLogCSV", logsData);
+  }, [logsData]);
 
   // const startValue = new Date(
   //   new Date().getFullYear(),
@@ -281,8 +287,7 @@ const User = ({ getNewCount, title }) => {
     type: "",
   });
 
-  useEffect(() => { }, [tableFilterData]);
-
+  useEffect(() => {}, [tableFilterData]);
 
   useEffect(() => {
     console.log("formdata", formdata);
@@ -335,7 +340,7 @@ const User = ({ getNewCount, title }) => {
     setInputValue({});
     setCourceTypeData("");
     setCourceCategoryData("");
-    setCourceNameData("")
+    setCourceNameData("");
     setgetNameByID();
     setTab("course");
     setdefaultValue({
@@ -381,8 +386,6 @@ const User = ({ getNewCount, title }) => {
     setUpdateCall(false);
   };
 
-
-
   useEffect(() => {
     if (updateCall) {
       getAllCourseCategory();
@@ -413,53 +416,17 @@ const User = ({ getNewCount, title }) => {
     // }
   };
 
-
   const getAdminLogs = async (id) => {
-    await ApiGet(
-      `admin/get-admin-login-log/${id}`
-    )
+    await ApiGet(`admin/get-admin-login-log/${id}`)
       .then((res) => {
-        console.log("loglog",res?.data?.payload?.user);
-        setLogsData(res?.data?.payload?.user)
-        if (res?.data?.payload?.user?.length > 0) {
-          let test = res?.data?.payload?.user.map((registerUser, key) => {
-            return {
-              Number: key + 1,
-              LoginDate:registerUser?.createdAt,
-            };
-          });
-          let finalPdf = [...dataCSVLogs, test];
-          return(<>
-          <CsvDownload
-                className={``}
-                data={finalPdf}
-                filename="Donations.csv"
-                style={{
-                  backgroundColor: "#CC0001",
-                  borderRadius: "6px",
-                  border: "1px solid #fff",
-                  display: "inline-block",
-                  cursor: "pointer",
-                  color: "#FFFFFF",
-                  fontSize: "12px",
-                  padding: "10px 18px",
-                  textDecoration: "none",
-                  position: "right",
-                }}
-              />
-
-          </>)
-          // setDataCSVLogs((currVal) => [...currVal, test]);
-        }
+        console.log("loglog", res?.data?.payload?.user);
+        setLogsData(res?.data?.payload?.user);
       })
       .catch((err) => {
         toast.error(err?.response?.data?.message);
       });
     // }
   };
-
-
-
 
   useEffect(() => {}, [inputValue]);
 
@@ -527,19 +494,20 @@ const User = ({ getNewCount, title }) => {
                 <InfoOutlinedIcon />
               </Tooltip>
             </div>
-            <div
-              className="cursor-pointer pl-2"
-            >
+            <div className="cursor-pointer pl-2">
               {/* <Tooltip title="Generate Pdf" arrow> */}
               <ReactToPrint
-                trigger={() => <button className="btn btn-success mr-2">Invoice</button>}
+                trigger={() => (
+                  <button className="btn btn-success mr-2">Invoice</button>
+                )}
                 content={() => itemsRef.current[row._id]}
               />
-              <div style={{ display: 'none' }}>
-                <div ref={el => (itemsRef.current[row._id] = el)} id={row?._id} >
-                  <ComponentToPrints
-                    data={row}
-                  />
+              <div style={{ display: "none" }}>
+                <div
+                  ref={(el) => (itemsRef.current[row._id] = el)}
+                  id={row?._id}
+                >
+                  <ComponentToPrints data={row} />
                 </div>
               </div>
               {/* </Tooltip> */}
@@ -586,8 +554,17 @@ const User = ({ getNewCount, title }) => {
                         }
                         setVehicalCategoryData(row?.vcid);
                         getAllCourseTypeDataEdit(row?.vcid, row?.ctid);
-                        getAllCourseCategoryEdit(row?.ctid, row?.vcid, row?.ccid);
-                        getAllCourseNameEdit(row?.ctid, row?.vcid, row?.ccid, row?.cnid);
+                        getAllCourseCategoryEdit(
+                          row?.ctid,
+                          row?.vcid,
+                          row?.ccid
+                        );
+                        getAllCourseNameEdit(
+                          row?.ctid,
+                          row?.vcid,
+                          row?.ccid,
+                          row?.cnid
+                        );
                         setCNID(row?.cnid);
 
                         setFormData({
@@ -623,10 +600,15 @@ const User = ({ getNewCount, title }) => {
                           authoritycity: row?.authoritycity,
                           authoritydistrict: row?.authoritydistrict,
                           type: row?.type,
-                          driverlicense: row?.license === "NA" ? "" : row?.drivingLicenseNumber,
-                          issueDate: row?.license === "NA" ? "" : row?.issueDate,
-                          validDate: row?.license === "NA" ? "" : row?.validTill,
-                        })
+                          driverlicense:
+                            row?.license === "NA"
+                              ? ""
+                              : row?.drivingLicenseNumber,
+                          issueDate:
+                            row?.license === "NA" ? "" : row?.issueDate,
+                          validDate:
+                            row?.license === "NA" ? "" : row?.validTill,
+                        });
 
                         getTrainignDateEditData(row?.dateofCourse, row?.cnid);
                       }}
@@ -649,42 +631,95 @@ const User = ({ getNewCount, title }) => {
         );
       },
     },
-    // {
-    //   name: "Actions",
-    //   cell: (row) => {
-    //     console.log( " fsdfsdfsdfs",row);
-    //     return (
-    //       <>
-    //         <div
-    //           className="cursor-pointer pl-2"
-    //           onClick={async () => {
-    //             await getAdminLogs(row?.uid)
-    //           }}
-    //         >
-    //           <CsvDownload
-    //             className={``}
-    //             data={dataCSVLogs}
-    //             filename="Donations.csv"
-    //             style={{
-    //               backgroundColor: "#CC0001",
-    //               borderRadius: "6px",
-    //               border: "1px solid #fff",
-    //               display: "inline-block",
-    //               cursor: "pointer",
-    //               color: "#FFFFFF",
-    //               fontSize: "12px",
-    //               padding: "10px 18px",
-    //               textDecoration: "none",
-    //               position: "right",
-    //             }}
-    //           >
-    //             Export to Excel
-    //           </CsvDownload>
-    //         </div>
-    //       </>
-    //     );
-    //   },
-    // },
+    {
+      name: "Actions",
+      cell: (row) => {
+        console.log(" fsdfsdfsdfs", row);
+        return (
+          <>
+            {row?.uid && (
+              <div
+                className="cursor-pointer pl-2"
+                onClick={async () => {
+                  await getAdminLogs(row?.uid);
+                  setModelForUserLogs(true);
+                }}
+              >
+                <button className="btn btn-success mr-2">User Logs</button>
+              </div>
+            )}
+          </>
+        );
+      },
+    },
+  ];
+  const columnsForUserLogs = [
+    {
+      name: "Date",
+      cell: (row) => {
+        return <span>{moment(row?.createdAt).format("ll")}</span>;
+      },
+      sortable: true,
+    },
+    {
+      name: "Device",
+      selector: "device",
+      sortable: true,
+    },
+    {
+      name: "IP",
+      selector: "ip",
+      sortable: true,
+    },
+    {
+      name: "User Email",
+      selector: row => row?.uid?.email,
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.uid?.email === "" ? "-" : row?.uid?.email}</span>;
+      },
+    },
+    {
+      name: "User Phone",
+      selector: row => row?.uid?.phone,
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.uid?.phone === "" ? "-" : row?.uid?.phone}</span>;
+      },
+    },
+    {
+      name: "Actions",
+      cell: (row) => {
+        console.log( " fsdfsdfsdfs",row);
+        return (
+          <>
+            <div
+              className="cursor-pointer pl-2"
+            >
+              <CsvDownload
+                className={``}
+                data={dataCSVLogs}
+                filename="Donations.csv"
+                style={{
+                  backgroundColor: "#CC0001",
+                  borderRadius: "6px",
+                  border: "1px solid #fff",
+                  display: "inline-block",
+                  cursor: "pointer",
+                  color: "#FFFFFF",
+                  fontSize: "12px",
+                  padding: "10px 18px",
+                  textDecoration: "none",
+                  position: "right",
+                }}
+              >
+                Export to Excel
+              </CsvDownload>
+            </div>
+          </>
+        );
+      },
+    },
   ];
   // * Table Style
   const customStyles = {
@@ -743,61 +778,93 @@ const User = ({ getNewCount, title }) => {
       logsData.map((registerUser, key) => {
         let data = {
           Number: key + 1,
-          LoginDate:registerUser?.createdAt,
+          UserID: registerUser?.uid?._id,
+          IP:registerUser?.ip,
+          Device:registerUser?.device,
+          MobileNumber:registerUser?.uid?.phone,
+          RegistrationDate:moment(registerUser?.uid?.registrationDate).format("ll")
         };
         setDataCSVLogs((currVal) => [...currVal, data]);
       });
     }
-  },[logsData])
+  }, [logsData]);
 
   useEffect(() => {
     if (allRegisterUserExcel) {
       allRegisterUserExcel.map((registerUser, key) => {
         let data = {
           Number: key + 1,
-          UserID:registerUser?._id,
-          FirstName:registerUser?.fname,
-          MiddleName:registerUser?.mname ? registerUser?.mname : "-",
-          LastName:registerUser?.lname ? registerUser?.lname : "-",
-          EmailAddress:registerUser?.email ? registerUser?.email : "-",
-          MobileNumber:registerUser?.phone,
-          RegistrationType:registerUser?.RegistrationType ? registerUser?.RegistrationType :"-",
-          FatherName:registerUser?.fatherName ? registerUser?.fatherName : "-",
-          DateOfBirth:moment(registerUser?.DoB).format("ll"),
-          Qualification:registerUser?.qualification,
-          Gender:registerUser?.gender,
-          AddressLine:registerUser?.address,
-          State:registerUser?.state,
-          District:registerUser?.district,
-          TownORCity:registerUser?.city,
-          PIN:registerUser?.pincode,
-          SelectIDTRCentre:registerUser?.IDTRcenter ? registerUser?.IDTRcenter : "-",
-          CourseType:registerUser?.ctid?.courseType,
-          VehicleCategory:registerUser?.vcid?.vehicleCategory,
-          CourseName:registerUser?.cnid?.courseName,
-          DateOfCourse:moment(registerUser?.dateofCourse).format("ll"),
-          LicenseCategory:registerUser?.lcid,
-          DrivingLicence:registerUser?.drivingLicense,
-          IssueDate:registerUser?.issueDate ?  moment(registerUser?.issueDate).format("ll") : "-",
-          ValidTill:registerUser?.validTill ? moment(registerUser?.validTill).format("ll") : "-",
-          LicenseAuthorityState :registerUser?.Authority,
-          LicenseAuthorityCity :registerUser?.authoritycity,
-          LicenseAuthorityDistrict :registerUser?.authoritydistrict,
-          PassportPhoto:registerUser?.passportPhoto,
-          DrivingLicenseImage:registerUser?.drivingLicense,
-          OtherIDProofDownload:registerUser?.IDproof === null ? "-":registerUser?.IDproof,
-          VisionInformation:registerUser?.medicalCertificate === null ? "-":registerUser?.medicalCertificate ,
-          ColorBlindness:registerUser?.medicalCertificate === null ? "-":registerUser?.medicalCertificate,
-          BloodGroup:registerUser?.bloodGroup === "" ||  registerUser?.bloodGroup === null? "-":registerUser?.bloodGroup,
-          IsPaymentDone: registerUser?.isPaymentDone === null || registerUser?.isPaymentDone === false? "Payment Panding": registerUser?.isPaymentDone,
-          PaymentMode:registerUser?.type,
-          TransactionID:registerUser?.paymentId === null? "Payment Panding": registerUser?.paymentId,
-          RegisterationDate:registerUser?.createdAt,
+          UserID: registerUser?._id,
+          FirstName: registerUser?.fname,
+          MiddleName: registerUser?.mname ? registerUser?.mname : "-",
+          LastName: registerUser?.lname ? registerUser?.lname : "-",
+          EmailAddress: registerUser?.email ? registerUser?.email : "-",
+          MobileNumber: registerUser?.phone,
+          RegistrationType: registerUser?.RegistrationType
+            ? registerUser?.RegistrationType
+            : "-",
+          FatherName: registerUser?.fatherName ? registerUser?.fatherName : "-",
+          DateOfBirth: moment(registerUser?.DoB).format("ll"),
+          Qualification: registerUser?.qualification,
+          Gender: registerUser?.gender,
+          AddressLine: registerUser?.address,
+          State: registerUser?.state,
+          District: registerUser?.district,
+          TownORCity: registerUser?.city,
+          PIN: registerUser?.pincode,
+          SelectIDTRCentre: registerUser?.IDTRcenter
+            ? registerUser?.IDTRcenter
+            : "-",
+          CourseType: registerUser?.ctid?.courseType,
+          VehicleCategory: registerUser?.vcid?.vehicleCategory,
+          CourseName: registerUser?.cnid?.courseName,
+          DateOfCourse: moment(registerUser?.dateofCourse).format("ll"),
+          LicenseCategory: registerUser?.lcid,
+          DrivingLicence: registerUser?.drivingLicense,
+          IssueDate: registerUser?.issueDate
+            ? moment(registerUser?.issueDate).format("ll")
+            : "-",
+          ValidTill: registerUser?.validTill
+            ? moment(registerUser?.validTill).format("ll")
+            : "-",
+          LicenseAuthorityState: registerUser?.Authority,
+          LicenseAuthorityCity: registerUser?.authoritycity,
+          LicenseAuthorityDistrict: registerUser?.authoritydistrict,
+          PassportPhoto: registerUser?.passportPhoto,
+          DrivingLicenseImage: registerUser?.drivingLicense,
+          OtherIDProofDownload:
+            registerUser?.IDproof === null ? "-" : registerUser?.IDproof,
+          VisionInformation:
+            registerUser?.medicalCertificate === null
+              ? "-"
+              : registerUser?.medicalCertificate,
+          ColorBlindness:
+            registerUser?.medicalCertificate === null
+              ? "-"
+              : registerUser?.medicalCertificate,
+          BloodGroup:
+            registerUser?.bloodGroup === "" || registerUser?.bloodGroup === null
+              ? "-"
+              : registerUser?.bloodGroup,
+          IsPaymentDone:
+            registerUser?.isPaymentDone === null ||
+            registerUser?.isPaymentDone === false
+              ? "Payment Panding"
+              : registerUser?.isPaymentDone,
+          PaymentMode: registerUser?.type,
+          TransactionID:
+            registerUser?.paymentId === null
+              ? "Payment Panding"
+              : registerUser?.paymentId,
+          RegisterationDate: registerUser?.createdAt,
         };
         setDataCSV((currVal) => [...currVal, data]);
       });
     }
-  }, [allRegisterUserExcel])
+  }, [allRegisterUserExcel]);
+
+
+
 
   const districts = [
     {
@@ -953,15 +1020,15 @@ const User = ({ getNewCount, title }) => {
   const history = useHistory();
 
   const register = () => {
-    const data =
-    {
+    const data = {
       vcid: formdata.vehicleCategory,
       ctid: formdata.courseType,
       cnid: formdata.courseName,
       ccid: formdata.courseCategory,
       lcid: formdata.license,
       dateofCourse: formdata.preferdate,
-      drivingLicenseNumber: formdata.license === "NA" ? "" : formdata.driverlicense,
+      drivingLicenseNumber:
+        formdata.license === "NA" ? "" : formdata.driverlicense,
       fname: formdata.firstname,
       mname: formdata.middlename,
       lname: formdata.lastname,
@@ -990,8 +1057,8 @@ const User = ({ getNewCount, title }) => {
       authoritycity: formdata.authoritycity,
       authoritydistrict: formdata.authoritydistrict,
       type: formdata.type,
-      RegistrationType:"counter"
-    }
+      RegistrationType: "counter",
+    };
 
     console.log("datadata", data);
 
@@ -1033,8 +1100,6 @@ const User = ({ getNewCount, title }) => {
       });
   };
 
-
-
   const updateData = () => {
     const data = {
       vcid: formdata.vehicleCategory,
@@ -1043,7 +1108,8 @@ const User = ({ getNewCount, title }) => {
       ccid: formdata.courseCategory,
       lcid: formdata.license,
       dateofCourse: formdata.preferdate,
-      drivingLicenseNumber: formdata.license === "NA" ? "" : formdata.driverlicense,
+      drivingLicenseNumber:
+        formdata.license === "NA" ? "" : formdata.driverlicense,
       fname: formdata.firstname,
       mname: formdata.middlename,
       lname: formdata.lastname,
@@ -1072,8 +1138,8 @@ const User = ({ getNewCount, title }) => {
       authoritycity: formdata.authoritycity,
       authoritydistrict: formdata.authoritydistrict,
       type: formdata.type,
-      RegistrationType:"counter"
-    }
+      RegistrationType: "counter",
+    };
 
     console.log("dataForEdit", data);
 
@@ -1180,7 +1246,6 @@ const User = ({ getNewCount, title }) => {
         toast.error(`Sorry! License Category must be specified`);
         seterrorShow("License Category ");
         settypeTrueFalseform(true);
-
       } else if (formdata?.license != "NA" && formdata.driverlicense === "") {
         toast.error(`Sorry! Driver's License Number must be specified`);
         seterrorShow(`Driver's License Number`);
@@ -1644,7 +1709,7 @@ const User = ({ getNewCount, title }) => {
       } else {
         toast.error("Failed to upload image:", f.name);
       }
-    } catch (err) { }
+    } catch (err) {}
   };
 
   const handleSearch = (e) => {
@@ -1900,7 +1965,7 @@ const User = ({ getNewCount, title }) => {
                           <label>
                             Course Category<span>*</span>
                           </label>
-                          {(editMode ? defaultValue?.courseCategory : true) &&
+                          {(editMode ? defaultValue?.courseCategory : true) && (
                             <Select
                               // isClearable
                               options={getAllCourceCategory?.courseCategory?.map(
@@ -1926,7 +1991,7 @@ const User = ({ getNewCount, title }) => {
                                 defaultValue.courseCategory
                               }
                             />
-                          }
+                          )}
                         </div>
 
                         {/* end test */}
@@ -1935,13 +2000,15 @@ const User = ({ getNewCount, title }) => {
                           <label>
                             Course Name<span>*</span>
                           </label>
-                          {(editMode ? defaultValue?.courseName : true) &&
+                          {(editMode ? defaultValue?.courseName : true) && (
                             <Select
                               // isClearable
-                              options={getAllCourceName?.courseName?.map((e) => ({
-                                label: e.courseName,
-                                value: e._id,
-                              }))}
+                              options={getAllCourceName?.courseName?.map(
+                                (e) => ({
+                                  label: e.courseName,
+                                  value: e._id,
+                                })
+                              )}
                               name="courseName"
                               onChange={(e) => {
                                 // setCourceType(e.value);
@@ -1964,11 +2031,11 @@ const User = ({ getNewCount, title }) => {
                                 onChnagSelectField(e, "courseName");
                               }}
                               defaultValue={
-                                defaultValue.courseName && defaultValue.courseName
+                                defaultValue.courseName &&
+                                defaultValue.courseName
                               }
                             />
-                          }
-
+                          )}
                         </div>
                         <div className="register-grid-items12 ">
                           <label>
@@ -1987,7 +2054,7 @@ const User = ({ getNewCount, title }) => {
                             }}
                           />
                         </div>
-                        {formdata?.license != "NA" &&
+                        {formdata?.license != "NA" && (
                           <>
                             <div className="register-grid-items ">
                               <label>
@@ -2009,7 +2076,11 @@ const User = ({ getNewCount, title }) => {
                                 placeholder=""
                                 name="issueDate"
                                 max={moment(new Date()).format("YYYY-MM-DD")}
-                                value={formdata.issueDate ? formdata.issueDate.slice(0, 10) : formdata.issueDate}
+                                value={
+                                  formdata.issueDate
+                                    ? formdata.issueDate.slice(0, 10)
+                                    : formdata.issueDate
+                                }
                                 onChange={(e) => onChnageForm(e)}
                               />
                             </div>
@@ -2022,12 +2093,16 @@ const User = ({ getNewCount, title }) => {
                                 placeholder=""
                                 name="validDate"
                                 min={moment(new Date()).format("YYYY-MM-DD")}
-                                value={formdata.validDate ? formdata.validDate.slice(0, 10) : formdata.validDate}
+                                value={
+                                  formdata.validDate
+                                    ? formdata.validDate.slice(0, 10)
+                                    : formdata.validDate
+                                }
                                 onChange={(e) => onChnageForm(e)}
                               />
                             </div>
                           </>
-                        }
+                        )}
 
                         <div className="register-grid-items"></div>
 
@@ -2094,9 +2169,7 @@ const User = ({ getNewCount, title }) => {
                         {CourceType ? (
                           <div>
                             <div>
-                              <div className="sub-title">
-
-                              </div>
+                              <div className="sub-title"></div>
                               <div className="information">
                                 <p>
                                   <span>Course Name:</span>{" "}
@@ -2111,8 +2184,7 @@ const User = ({ getNewCount, title }) => {
                                   {getCourseNameByID?.timing}
                                 </p>
                                 <p>
-                                  <span>Fees:</span> {" "}
-                                  {getCourseNameByID?.price}
+                                  <span>Fees:</span> {getCourseNameByID?.price}
                                 </p>
                                 <p>
                                   <span>Mode of Payment:</span>{" "}
@@ -2197,10 +2269,11 @@ const User = ({ getNewCount, title }) => {
                               return (
                                 <div
                                   key={key}
-                                  className={`calender-box un-active-background ${formdata.sloatId === data._id
-                                    ? "activeSlot"
-                                    : ""
-                                    }`}
+                                  className={`calender-box un-active-background ${
+                                    formdata.sloatId === data._id
+                                      ? "activeSlot"
+                                      : ""
+                                  }`}
                                   name="trainddateid"
                                   value={formdata.trainddateid}
                                   onClick={(e) => {
@@ -2677,11 +2750,14 @@ const User = ({ getNewCount, title }) => {
                       <div className="payment-title">Payment Type</div>
                       <div className="d-flex ">
                         <div className="d-flex aligncenetr">
-                          <input type="radio"
-
-                            placeholder="online" name='type' value="online" onChange={e => onChnageForm(e)} />
+                          <input
+                            type="radio"
+                            placeholder="online"
+                            name="type"
+                            value="online"
+                            onChange={(e) => onChnageForm(e)}
+                          />
                           <label htmlFor="online">online</label>
-
                         </div>
                         <div className="d-flex aligncenetr">
                           <input
@@ -2758,27 +2834,27 @@ const User = ({ getNewCount, title }) => {
 
                         {!editMode
                           ? dicloser &&
-                          (formdata.type === "online"
-                            ? submitpayment
-                            : true) && (
-                            <button
-                              className="fill-button"
-                              onClick={() => register()}
-                            >
-                              Submit
-                            </button>
-                          )
+                            (formdata.type === "online"
+                              ? submitpayment
+                              : true) && (
+                              <button
+                                className="fill-button"
+                                onClick={() => register()}
+                              >
+                                Submit
+                              </button>
+                            )
                           : dicloser &&
-                          (formdata.type === "online"
-                            ? submitpayment
-                            : true) && (
-                            <button
-                              className="fill-button"
-                              onClick={() => updateData()}
-                            >
-                              Update
-                            </button>
-                          )}
+                            (formdata.type === "online"
+                              ? submitpayment
+                              : true) && (
+                              <button
+                                className="fill-button"
+                                onClick={() => updateData()}
+                              >
+                                Update
+                              </button>
+                            )}
                       </div>
                     </div>
                   )}
@@ -3124,8 +3200,8 @@ const User = ({ getNewCount, title }) => {
                   <div className="honda-text-grid-items">
                     <span>Photo:</span>
                     {dataViewMore?.passportPhoto === null ||
-                      dataViewMore?.passportPhoto === "" ||
-                      !dataViewMore?.passportPhoto ? (
+                    dataViewMore?.passportPhoto === "" ||
+                    !dataViewMore?.passportPhoto ? (
                       "No Data"
                     ) : (
                       <img
@@ -3141,8 +3217,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.fname === null ||
-                            dataViewMore?.fname === "" ||
-                            !dataViewMore?.fname
+                          dataViewMore?.fname === "" ||
+                          !dataViewMore?.fname
                             ? "No data"
                             : dataViewMore?.fname,
                       }}
@@ -3155,8 +3231,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.mname === null ||
-                            dataViewMore?.mname === "" ||
-                            !dataViewMore?.mname
+                          dataViewMore?.mname === "" ||
+                          !dataViewMore?.mname
                             ? "No data"
                             : dataViewMore?.mname,
                       }}
@@ -3169,8 +3245,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.lname === null ||
-                            dataViewMore?.lname === "" ||
-                            !dataViewMore?.lname
+                          dataViewMore?.lname === "" ||
+                          !dataViewMore?.lname
                             ? "No data"
                             : dataViewMore?.lname,
                       }}
@@ -3183,8 +3259,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.DoB === null ||
-                            dataViewMore?.DoB === "" ||
-                            !dataViewMore?.DoB
+                          dataViewMore?.DoB === "" ||
+                          !dataViewMore?.DoB
                             ? "No data"
                             : moment(dataViewMore?.DoB).format("ll"),
                       }}
@@ -3197,8 +3273,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.qualification === null ||
-                            dataViewMore?.qualification === "" ||
-                            !dataViewMore?.qualification
+                          dataViewMore?.qualification === "" ||
+                          !dataViewMore?.qualification
                             ? "No data"
                             : dataViewMore?.qualification,
                       }}
@@ -3211,8 +3287,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.gender === null ||
-                            dataViewMore?.gender === "" ||
-                            !dataViewMore?.gender
+                          dataViewMore?.gender === "" ||
+                          !dataViewMore?.gender
                             ? "No data"
                             : dataViewMore?.gender,
                       }}
@@ -3225,8 +3301,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.address === null ||
-                            dataViewMore?.address === "" ||
-                            !dataViewMore?.address
+                          dataViewMore?.address === "" ||
+                          !dataViewMore?.address
                             ? "No data"
                             : dataViewMore?.address,
                       }}
@@ -3239,8 +3315,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.state === null ||
-                            dataViewMore?.state === "" ||
-                            !dataViewMore?.state
+                          dataViewMore?.state === "" ||
+                          !dataViewMore?.state
                             ? "No data"
                             : dataViewMore?.state,
                       }}
@@ -3253,8 +3329,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.city === null ||
-                            dataViewMore?.city === "" ||
-                            !dataViewMore?.city
+                          dataViewMore?.city === "" ||
+                          !dataViewMore?.city
                             ? "No data"
                             : dataViewMore?.city,
                       }}
@@ -3267,8 +3343,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.district === null ||
-                            dataViewMore?.district === "" ||
-                            !dataViewMore?.district
+                          dataViewMore?.district === "" ||
+                          !dataViewMore?.district
                             ? "No data"
                             : dataViewMore?.district,
                       }}
@@ -3281,8 +3357,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.email === null ||
-                            dataViewMore?.email === "" ||
-                            !dataViewMore?.email
+                          dataViewMore?.email === "" ||
+                          !dataViewMore?.email
                             ? "No data"
                             : dataViewMore?.email,
                       }}
@@ -3295,8 +3371,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.phone === null ||
-                            dataViewMore?.phone === "" ||
-                            !dataViewMore?.phone
+                          dataViewMore?.phone === "" ||
+                          !dataViewMore?.phone
                             ? "No data"
                             : dataViewMore?.phone,
                       }}
@@ -3309,8 +3385,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.pincode === null ||
-                            dataViewMore?.pincode === "" ||
-                            !dataViewMore?.pincode
+                          dataViewMore?.pincode === "" ||
+                          !dataViewMore?.pincode
                             ? "No data"
                             : dataViewMore?.pincode,
                       }}
@@ -3323,8 +3399,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.permanentDLnumber === null ||
-                            dataViewMore?.permanentDLnumber === "" ||
-                            !dataViewMore?.permanentDLnumber
+                          dataViewMore?.permanentDLnumber === "" ||
+                          !dataViewMore?.permanentDLnumber
                             ? "No data"
                             : dataViewMore?.permanentDLnumber,
                       }}
@@ -3337,8 +3413,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.issueDate === null ||
-                            dataViewMore?.issueDate === "" ||
-                            !dataViewMore?.issueDate
+                          dataViewMore?.issueDate === "" ||
+                          !dataViewMore?.issueDate
                             ? "No data"
                             : dataViewMore?.issueDate,
                       }}
@@ -3351,8 +3427,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.validTill === null ||
-                            dataViewMore?.validTill === "" ||
-                            !dataViewMore?.validTill
+                          dataViewMore?.validTill === "" ||
+                          !dataViewMore?.validTill
                             ? "No data"
                             : dataViewMore?.validTill,
                       }}
@@ -3365,8 +3441,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.Authority === null ||
-                            dataViewMore?.Authority === "" ||
-                            !dataViewMore?.Authority
+                          dataViewMore?.Authority === "" ||
+                          !dataViewMore?.Authority
                             ? "No data"
                             : dataViewMore?.Authority,
                       }}
@@ -3379,8 +3455,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.bloodGroup === null ||
-                            dataViewMore?.bloodGroup === "" ||
-                            !dataViewMore?.bloodGroup
+                          dataViewMore?.bloodGroup === "" ||
+                          !dataViewMore?.bloodGroup
                             ? "No data"
                             : dataViewMore?.bloodGroup,
                       }}
@@ -3393,8 +3469,8 @@ const User = ({ getNewCount, title }) => {
                   <div className="honda-text-grid-items">
                     <span>Driving License Image:</span>
                     {dataViewMore?.drivingLicense === null ||
-                      dataViewMore?.drivingLicense === "" ||
-                      !dataViewMore?.drivingLicense ? (
+                    dataViewMore?.drivingLicense === "" ||
+                    !dataViewMore?.drivingLicense ? (
                       "No Data"
                     ) : (
                       <img
@@ -3407,8 +3483,8 @@ const User = ({ getNewCount, title }) => {
                   <div className="honda-text-grid-items">
                     <span>ID Proof:</span>
                     {dataViewMore?.IDproof === null ||
-                      dataViewMore?.IDproof === "" ||
-                      !dataViewMore?.IDproof ? (
+                    dataViewMore?.IDproof === "" ||
+                    !dataViewMore?.IDproof ? (
                       "No Data"
                     ) : (
                       <img
@@ -3424,8 +3500,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.authoritycity === null ||
-                            dataViewMore?.authoritycity === "" ||
-                            !dataViewMore?.authoritycity
+                          dataViewMore?.authoritycity === "" ||
+                          !dataViewMore?.authoritycity
                             ? "No data"
                             : dataViewMore?.authoritycity,
                       }}
@@ -3438,8 +3514,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.authoritydistrict === null ||
-                            dataViewMore?.authoritydistrict === "" ||
-                            !dataViewMore?.authoritydistrict
+                          dataViewMore?.authoritydistrict === "" ||
+                          !dataViewMore?.authoritydistrict
                             ? "No data"
                             : dataViewMore?.authoritydistrict,
                       }}
@@ -3481,8 +3557,8 @@ const User = ({ getNewCount, title }) => {
                         dangerouslySetInnerHTML={{
                           __html:
                             dataForPayment?.courseName[0]?.price === null ||
-                              dataForPayment?.courseName[0]?.price === "" ||
-                              !dataForPayment?.courseName[0]?.price
+                            dataForPayment?.courseName[0]?.price === "" ||
+                            !dataForPayment?.courseName[0]?.price
                               ? "No data"
                               : dataForPayment?.courseName[0]?.price,
                         }}
@@ -3495,8 +3571,8 @@ const User = ({ getNewCount, title }) => {
                         dangerouslySetInnerHTML={{
                           __html:
                             dataForPayment?._id === null ||
-                              dataForPayment?._id === "" ||
-                              !dataForPayment?._id
+                            dataForPayment?._id === "" ||
+                            !dataForPayment?._id
                               ? "No data"
                               : dataForPayment?._id,
                         }}
@@ -3521,6 +3597,56 @@ const User = ({ getNewCount, title }) => {
                   >
                     Make A Payment
                   </button>
+                </div>
+              </div>
+            ) : null}
+          </List>
+        </Dialog>
+      ) : null}
+
+      {modelForUserLogs ? (
+        <Dialog
+          fullScreen
+          open={modelForUserLogs}
+          onClose={handleCloseForUserLogs}
+          TransitionComponent={Transition}
+        >
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleCloseForUserLogs}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </Toolbar>
+          <List>
+            {modelForUserLogs === true ? (
+              <div className="honda-container">
+                <div className="honda-container-height">
+                  <div className="honda-text-grid">
+                    <div className="honda-text-grid-items">
+                      <DataTable
+                        columns={columnsForUserLogs}
+                        data={logsData}
+                        customStyles={customStyles}
+                        style={{
+                          marginTop: "-3rem",
+                        }}
+                        progressPending={isLoaderVisible}
+                        progressComponent={
+                          <Loader
+                            type="Puff"
+                            color="#334D52"
+                            height={30}
+                            width={30}
+                          />
+                        }
+                        highlightOnHove
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             ) : null}

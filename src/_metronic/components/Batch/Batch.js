@@ -252,7 +252,7 @@ const Batch = ({ getNewCount, title }) => {
     await ApiGet(`response/getResponseByUser/${id}`)
       .then((res) => {
         console.log("resrtrssdf", res?.data?.payload?.Response);
-        setPaperSet(res?.data?.payload?.Response)
+        setPaperSet(res?.data?.payload?.Response);
       })
       .catch((err) => {
         toast.error(err?.message);
@@ -266,7 +266,7 @@ const Batch = ({ getNewCount, title }) => {
   }, []);
 
   useEffect(() => {
-    console.log("batchInfo",batchInfo);
+    console.log("batchInfo", batchInfo);
   }, [batchInfo]);
 
   const validateFormForAddAdmin = () => {
@@ -303,8 +303,8 @@ const Batch = ({ getNewCount, title }) => {
 
   const handleAddAnnouncementDetails = (e) => {
     e.preventDefault();
-    if(dateTimezon.length === 0) {
-      toast.error("No slot available for this date")
+    if (dateTimezon.length === 0) {
+      toast.error("No slot available for this date");
     }
     if (validateFormForAddAdmin()) {
       let Data = {
@@ -388,13 +388,25 @@ const Batch = ({ getNewCount, title }) => {
       });
   };
 
+  // const getResultData = async (id) => {
+  //   await ApiGet(`response/getResponseByUser/${id}`)
+  //     .then((res) => {
+  //       console.log("loglog", res?.data?.payload);
+  //       // setResultData(res?.data?.payload?.user);
+  //     })
+  //     .catch((err) => {
+  //       toast.error(err?.response?.data?.message);
+  //     });
+  //   // }
+  // };
+
   useEffect(() => {}, [inputValue]);
 
   const handleUpdateAnnouncementDetails = (e) => {
     e.preventDefault();
 
-    if(dateTimezon.length === 0) {
-      toast.error("No slot available for this date")
+    if (dateTimezon.length === 0) {
+      toast.error("No slot available for this date");
     }
 
     if (validateForm()) {
@@ -573,7 +585,29 @@ const Batch = ({ getNewCount, title }) => {
         );
       },
     },
+    // {
+    //   name: "Test Data",
+    //   cell: (row) => {
+    //     console.log(" fsdfsdfsdfs", row);
+    //     return (
+    //       <>
+    //         {row?.completeResponse && (
+    //           <div
+    //             className="cursor-pointer pl-2"
+    //             onClick={async () => {
+    //               await getResultData(row?.User[0]?._id);
+    //               // setModelForUserLogs(true);
+    //             }}
+    //           >
+    //             <button className="btn btn-success mr-2">User Logs</button>
+    //           </div>
+    //         )}
+    //       </>
+    //     );
+    //   },
+    // },
   ];
+
   const columnsUser = [
     {
       name: "SNo",
@@ -649,11 +683,37 @@ const Batch = ({ getNewCount, title }) => {
                     getPapersetByUserId(row?._id);
                   }}
                 >
-                 <div className="cus-medium-button-style widthfixed">
-                  <button className="btn btn-success mr-2">
-                    View Paperset
-                  </button>
+                  <div className="cus-medium-button-style widthfixed">
+                    <button className="btn btn-success mr-2">
+                      View Paperset
+                    </button>
+                  </div>
                 </div>
+              )}
+            </div>
+          </>
+        );
+      },
+    },
+    {
+      name: "Result Data",
+      cell: (row) => {
+        return (
+          <>
+            <div className="d-flex justify-content-between">
+              {row?.isPaperDone && (
+                <div
+                  className="cursor-pointer pl-2"
+                  onClick={() => {
+                    // setIsPaperViewModel(true);
+                    // getPapersetByUserId(row?._id);
+                  }}
+                >
+                  <div className="cus-medium-button-style widthfixed">
+                    <button className="btn btn-success mr-2">
+                      Download Result 
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -967,8 +1027,12 @@ const Batch = ({ getNewCount, title }) => {
                               name="getBatch"
                               defaultChecked={data.istrue}
                               value={data._id}
-                              onChange={(e) => {getBatch(e, data._id)
-                                setErrorsForAdd({ ...errorsForAdd, batchInfo: "" })
+                              onChange={(e) => {
+                                getBatch(e, data._id);
+                                setErrorsForAdd({
+                                  ...errorsForAdd,
+                                  batchInfo: "",
+                                });
                               }}
                             />
                             <label>
@@ -983,7 +1047,7 @@ const Batch = ({ getNewCount, title }) => {
                           </div>
                         );
                       })}
-                      <span
+                    <span
                       style={{
                         color: "red",
                         top: "5px",
@@ -1237,8 +1301,12 @@ const Batch = ({ getNewCount, title }) => {
                               name="getBatch"
                               defaultChecked={batchInfo.includes(data._id)}
                               value={data._id}
-                              onChange={(e) =>{ getBatch(e, data._id)
-                                setErrorsForAdd({ ...errorsForAdd, batchInfo: "" });
+                              onChange={(e) => {
+                                getBatch(e, data._id);
+                                setErrorsForAdd({
+                                  ...errorsForAdd,
+                                  batchInfo: "",
+                                });
                               }}
                             />
                             <label>
@@ -1253,7 +1321,7 @@ const Batch = ({ getNewCount, title }) => {
                           </div>
                         );
                       })}
-                      <span
+                    <span
                       style={{
                         color: "red",
                         top: "5px",
@@ -1542,10 +1610,7 @@ const Batch = ({ getNewCount, title }) => {
                                     className="d-flex align-items-baseline"
                                     key={i}
                                   >
-                                    <input
-                                      type="checkbox"
-                                      id={record?.name}
-                                    />
+                                    <input type="checkbox" id={record?.name} />
 
                                     <span className="pl-2">
                                       {" "}
