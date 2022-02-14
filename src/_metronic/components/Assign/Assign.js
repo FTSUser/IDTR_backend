@@ -253,12 +253,12 @@ const Assign = ({ getNewCount, title }) => {
         {
             name: "Date",
             cell: (row) => {
-              return <span>{moment(row?.createdAt).format("ll")}</span>;
+                return <span>{moment(row?.createdAt).format("ll")}</span>;
             },
             selector: (row) => row?.createdAt,
             sortable: true,
             // width: "65px",
-          },
+        },
         {
             name: "Menu",
             cell: (row) => {
@@ -507,7 +507,7 @@ const Assign = ({ getNewCount, title }) => {
                                 Add Assign
                             </button>
                         </div> */}
-                        <div className="cus-medium-button-style button-height">
+                        {/* <div className="cus-medium-button-style button-height">
                             <CsvDownload
                                 className={``}
                                 data={dataCSV}
@@ -528,7 +528,7 @@ const Assign = ({ getNewCount, title }) => {
                             >
                                 Export to Excel
                             </CsvDownload>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* delete model */}

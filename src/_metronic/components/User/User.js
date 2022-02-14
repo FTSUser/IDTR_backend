@@ -495,10 +495,11 @@ const User = ({ getNewCount, title }) => {
               </Tooltip>
             </div>
             <div className="cursor-pointer pl-2">
-              {/* <Tooltip title="Generate Pdf" arrow> */}
               <ReactToPrint
                 trigger={() => (
-                  <button className="btn btn-success mr-2">Invoice</button>
+                  <Tooltip title="Generate Pdf" arrow>
+                    <img src="media/allIconsForTable/invoice.png" />
+                  </Tooltip>
                 )}
                 content={() => itemsRef.current[row._id]}
               />
@@ -510,7 +511,7 @@ const User = ({ getNewCount, title }) => {
                   <ComponentToPrints data={row} />
                 </div>
               </div>
-              {/* </Tooltip> */}
+
             </div>
             <Tooltip title="Make a Payment" arrow>
               <div
@@ -521,7 +522,7 @@ const User = ({ getNewCount, title }) => {
                 }}
               >
                 {row?.isPaymentDone === false ? (
-                  <img src="media/allIconsForTable/rs.png" />
+                  <img src="media/allIconsForTable/makepayment.png" />
                 ) : (
                   ""
                 )}
@@ -1079,10 +1080,16 @@ const User = ({ getNewCount, title }) => {
   };
 
   const handleOfflinePayment = () => {
+    console.log("dataForPayment", dataForPayment);
     const data = {
       receiptDate: new Date(),
       receiptNumber: dataForPayment?._id,
       isPaymentDone: true,
+      price: dataForPayment?.courseName[0].price,
+      cnid: dataForPayment?.courseName[0]._id,
+      vcid: dataForPayment.vehicleCategory[0]?._id,
+      ctid: dataForPayment.courseType[0]?._id,
+      tdid: dataForPayment.trainingDate[0]?._id,
       type: "offline"
     };
     ApiPut("register/offlinePayment", data)

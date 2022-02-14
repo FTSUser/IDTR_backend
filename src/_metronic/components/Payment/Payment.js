@@ -151,6 +151,18 @@ const Payment = ({ getNewCount, title }) => {
 
       // width: "65px",
     },
+    {
+      name: "Payment Type",
+      cell: (row) => {
+        return (
+          <span>{row?.type === null || !row?.type ? "-" : row?.type}</span>
+        );
+      },
+      selector: (row) => row?.createdAt,
+      sortable: true,
+
+      // width: "65px",
+    },
 
     {
       name: "Course Name",

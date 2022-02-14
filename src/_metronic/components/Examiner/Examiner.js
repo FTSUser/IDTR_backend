@@ -235,7 +235,7 @@ const Examiner = ({ getNewCount, title }) => {
                 name: inputValueForAdd?.name,
                 email: inputValueForAdd?.email,
                 phone: inputValueForAdd?.phone,
-                password: inputValueForAdd?.password,
+                // password: inputValueForAdd?.password,
                 role: inputValueForAdd?.role
             };
             ApiPut(`examiner/updateExaminer/${idForUpdateCourseNameData}`, Data)
@@ -456,7 +456,7 @@ const Examiner = ({ getNewCount, title }) => {
                     ExaminerName: registerUser?.name,
                     ExaminerEmail: registerUser?.email,
                     ExaminerPhone: registerUser?.phone,
-                    RoleId:registerUser?._id
+                    RoleId: registerUser?._id
                 };
                 setDataCSV((currVal) => [...currVal, data]);
             });

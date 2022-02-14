@@ -1074,7 +1074,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                     className="btn btn-success mr-2"
                   >
 
-                    <span>{isEditPopUp === false ? 'Add' : 'Edit'}  Time Slot</span>
+                    <span>{isEditPopUp === false ? 'Add' : 'Update'}  Time Slot</span>
 
                     {loading && (
                       <span className="mx-3 spinner spinner-white"></span>
