@@ -206,12 +206,12 @@ const FAQ = ({ getNewCount, title }) => {
       cell: (row) => {
         return (
           <span>
-            {moment(row?.date).format('ll')}
+            {moment(row?.createdAt).format('ll')}
           </span>
         );
       },
       sortable: true,
-      selector: row => row?.date,
+      selector: row => row?.createdAt,
     },
     {
       name: "Question",

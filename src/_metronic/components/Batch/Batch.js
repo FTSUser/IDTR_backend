@@ -73,6 +73,7 @@ const Batch = ({ getNewCount, title }) => {
   const [allDataForAttendance, setAllDataForAttendance] = useState([]);
   const [dataCSVResults, setDataCSVResults] = useState([]);
   const [dataCSVForAttendance, setDataCSVForAttendance] = useState([]);
+  const [currentDate, setCurrentDate] = useState(new Date(date));
 
   useEffect(() => {
     document.title = "Honda | Banner";
@@ -1073,6 +1074,7 @@ const Batch = ({ getNewCount, title }) => {
                         getDateAndApi(date);
                         setErrorsForAdd({ ...errorsForAdd, date: "" });
                       }}
+                      minDate={currentDate}
                     />
                     <span
                       style={{
@@ -1318,6 +1320,7 @@ const Batch = ({ getNewCount, title }) => {
                         getDateAndApi(date);
                         setErrorsForAdd({ ...errorsForAdd, date: "" });
                       }}
+                      minDate={currentDate}
                     />
                     <span
                       style={{

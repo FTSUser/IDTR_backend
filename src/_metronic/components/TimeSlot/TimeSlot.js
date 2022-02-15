@@ -52,6 +52,7 @@ const TimeSlot = ({ getNewCount, title }) => {
   const [getCourseName, setGetCourseName] = useState([]);
   const [isEditPopUp, setIsEditPopUp] = useState(false);
   const [allPaymentDetailsExcel, setAllPaymentDetailsExcel] = useState([]);
+  const [currentDate, setCurrentDate] = useState(new Date(date));
 
   const [dataCSV, setDataCSV] = useState([]);
 
@@ -1001,6 +1002,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                         setDate(date);
                         setErrorsForAdd({ ...errorsForAdd, date: "" });
                       }}
+                      minDate={currentDate}
                     />
                     <span
                       style={{
