@@ -1090,7 +1090,8 @@ const User = ({ getNewCount, title }) => {
       vcid: dataForPayment.vehicleCategory[0]?._id,
       ctid: dataForPayment.courseType[0]?._id,
       tdid: dataForPayment.trainingDate[0]?._id,
-      type: "offline"
+      type: "offline",
+      phone: dataForPayment?.phone
     };
     ApiPut("register/offlinePayment", data)
       .then((res) => {

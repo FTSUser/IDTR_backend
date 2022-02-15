@@ -112,10 +112,10 @@ const Payment = ({ getNewCount, title }) => {
       sortable: true,
     },
     {
-      name: "User Phone",
+      name: "Mobile Number",
       cell: (row) => {
         return (
-          <span>{row?.uid === null || !row?.uid ? "-" : row?.uid?.phone}</span>
+          <span>{row?.uid === null || !row?.uid ? row?.phone : row?.uid?.phone}</span>
         );
       },
       selector: (row) => row?.uid?.phone,
@@ -155,7 +155,7 @@ const Payment = ({ getNewCount, title }) => {
       name: "Payment Type",
       cell: (row) => {
         return (
-          <span>{row?.type === null || !row?.type ? "-" : row?.type}</span>
+          <span>{row?.type === null || !row?.type ? "online" : row?.type}</span>
         );
       },
       selector: (row) => row?.createdAt,

@@ -1589,7 +1589,7 @@ const Batch = ({ getNewCount, title }) => {
                           Download Attendance Data
                         </CsvDownload>
                       ) : (
-                        "No test Data"
+                        "No Attendance Data"
                       )}
                     </div>
                     <DataTable
