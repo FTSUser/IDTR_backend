@@ -412,7 +412,7 @@ const CheckTest = ({ getNewCount, title }) => {
                 return o;
             });
             let a = {
-                Question: e?.Qname,
+                Qname: e?.Qname,
                 Option: e.Option,
                 Answer: e.Answer,
                 type: e.type,
