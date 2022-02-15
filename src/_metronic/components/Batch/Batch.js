@@ -70,7 +70,9 @@ const Batch = ({ getNewCount, title }) => {
   const [isPaperViewModel, setIsPaperViewModel] = useState(false);
   const [paperSet, setPaperSet] = useState([]);
   const [allDataForResultDownload, setAllDataForResultDownload] = useState([]);
+  const [allDataForAttendance, setAllDataForAttendance] = useState([]);
   const [dataCSVResults, setDataCSVResults] = useState([]);
+  const [dataCSVForAttendance, setDataCSVForAttendance] = useState([]);
 
   useEffect(() => {
     document.title = "Honda | Banner";
@@ -257,6 +259,17 @@ const Batch = ({ getNewCount, title }) => {
       .then((res) => {
         console.log("resresres", res?.data?.payload);
         setAllDataForResultDownload(res?.data?.payload?.findResponse);
+      })
+      .catch((err) => {
+        console.log(err?.message);
+      });
+  };
+
+  const getAllResponseByBatchForUser = async (id) => {
+    await ApiGet(`response/getResponseByBatch/${id}`)
+      .then((res) => {
+        console.log("resresresres", res?.data?.payload?.findResponse);
+        setAllDataForAttendance(res?.data?.payload?.findResponse);
       })
       .catch((err) => {
         console.log(err?.message);
@@ -591,6 +604,8 @@ const Batch = ({ getNewCount, title }) => {
                 setDataViewMore(row);
                 getResponseByBatch(row?._id);
                 getAllResponseByBatch(row?._id);
+                getResponseByBatch(row?._id)
+                getAllResponseByBatchForUser(row?._id)
               }}
             >
               <Tooltip title="Show More" arrow>
@@ -844,6 +859,43 @@ const Batch = ({ getNewCount, title }) => {
       });
     }
   }, [allDataForResultDownload]);
+
+
+  useEffect(() => {
+    if (allDataForAttendance) {
+      allDataForAttendance.map((registerUser, key) => {
+        let data = {
+          Number: key + 1,
+          UserID: registerUser?.uid?._id,
+          FirstName: registerUser?.uid?.fname,
+          LastName: registerUser?.uid?.lname,
+          EmailAddress: registerUser?.uid?.email,
+          MobileNumber: registerUser?.uid?.phone,
+          CourseType: registerUser?.uid?.cnid?.ccid?.ctid?.courseType,
+          VehicleCategory:
+            registerUser?.uid?.cnid?.ccid?.ctid?.vcid?.vehicleCategory,
+          CourseName: registerUser?.uid?.cnid?.courseName,
+          DateOfCourse: moment(registerUser?.uid?.dateofCourse).format("ll"),
+          LicenseCategory: registerUser?.uid?.lcid,
+          DriveringLicenseNo: registerUser?.uid?.drivingLicenseNumber
+            ? registerUser?.uid?.drivingLicenseNumber
+            : "-",
+          CalendarSlotSelected: moment(registerUser?.uid?.tdid?.date).format(
+            "ll"
+          ),
+          TestLanguage: registerUser?.Esid?.language,
+          TotalQuestions: registerUser?.Esid?.no,
+          QuestionsAnsweredCorrectly: registerUser?.uid?.totalScore,
+          QuestionsAnsweredIncorrectly:
+            registerUser?.Esid?.no - registerUser?.uid?.totalScore,
+          Status: "-",
+          DataEntryUser: registerUser?.batch?.DataEntry?.name,
+          DataEntryUserID: registerUser?.batch?.Examiner?.name,
+        };
+        setDataCSVForAttendance((currVal) => [...currVal, data]);
+      });
+    }
+  }, [allDataForAttendance]);
 
   return (
     <>
@@ -1490,30 +1542,6 @@ const Batch = ({ getNewCount, title }) => {
                   <div className="honda-text-grid-items">
                     <span>User Data:</span>
                     <div className="cursor-pointer pl-2">
-                      {/* {allDataForResultDownload?.length > 0 ? (
-                        <CsvDownload
-                          className={``}
-                          data={dataCSVResults}
-                          filename="Donations.csv"
-                          style={{
-                            backgroundColor: "#CC0001",
-                            borderRadius: "6px",
-                            border: "1px solid #fff",
-                            display: "inline-block",
-                            cursor: "pointer",
-                            color: "#FFFFFF",
-                            fontSize: "12px",
-                            padding: "10px 18px",
-                            textDecoration: "none",
-                            position: "right",
-                          }}
-                        >
-                          Download Test Data
-                        </CsvDownload>
-                      ) : (
-                        "No test Data"
-                      )} */}
-
                       {allDataForResultDownload?.length > 0 ? (
                         <CsvDownload
                           className={``}
@@ -1537,27 +1565,31 @@ const Batch = ({ getNewCount, title }) => {
                       ) : (
                         "No test Data"
                       )}
+
+                      {allDataForAttendance?.length > 0 ? (
+                        <CsvDownload
+                          className={``}
+                          data={dataCSVForAttendance}
+                          filename="Donations.csv"
+                          style={{
+                            backgroundColor: "#CC0001",
+                            borderRadius: "6px",
+                            border: "1px solid #fff",
+                            display: "inline-block",
+                            cursor: "pointer",
+                            color: "#FFFFFF",
+                            fontSize: "12px",
+                            padding: "10px 18px",
+                            textDecoration: "none",
+                            position: "right",
+                          }}
+                        >
+                          Download Attendance Data
+                        </CsvDownload>
+                      ) : (
+                        "No test Data"
+                      )}
                     </div>
-                    {/* <DataTable
-                      columns={columnsUser}
-                      data={dataViewMore?.User}
-                      customStyles={customStyles}
-                      style={{
-                        marginTop: "-3rem",
-                      }}
-                      progressPending={isLoaderVisible}
-                      progressComponent={
-                        <Loader
-                          type="Puff"
-                          color="#334D52"
-                          height={30}
-                          width={30}
-                        />
-                      }
-                      highlightOnHover
-                      pagination
-                      paginationServer
-                    /> */}
                     <DataTable
                       columns={columnsUser}
                       data={responseByBatch}
