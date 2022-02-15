@@ -160,7 +160,7 @@ const Batch = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.batch);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     } else {
       await ApiGet(
         `batch/getAllBatch?search=${search}&page=${page}&limit=${countPerPage}`
@@ -170,7 +170,7 @@ const Batch = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.batch);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
@@ -178,16 +178,15 @@ const Batch = ({ getNewCount, title }) => {
     selectdate = new Date(selectdate);
     setIsLoaderVisible(true);
     await ApiGet(
-      `trainingDate/getData?date=${
-        selectdate.getFullYear() +
-        "-" +
-        (selectdate.getMonth() < 9
-          ? "0" + (selectdate.getMonth() + 1)
-          : selectdate.getMonth() + 1) +
-        "-" +
-        (selectdate.getDate() < 9
-          ? "0" + selectdate.getDate()
-          : selectdate.getDate())
+      `trainingDate/getData?date=${selectdate.getFullYear() +
+      "-" +
+      (selectdate.getMonth() < 9
+        ? "0" + (selectdate.getMonth() + 1)
+        : selectdate.getMonth() + 1) +
+      "-" +
+      (selectdate.getDate() < 9
+        ? "0" + selectdate.getDate()
+        : selectdate.getDate())
       }`
     )
       .then((res) => {
@@ -267,7 +266,7 @@ const Batch = ({ getNewCount, title }) => {
     await ApiGet(`response/getResponseByUser/${id}`)
       .then((res) => {
         console.log("resrtrssdf", res?.data?.payload?.Response[0]);
-        // setPaperSet(res?.data?.payload?.Response[0]);
+        setPaperSet(res?.data?.payload?.Response[0]);
       })
       .catch((err) => {
         toast.error(err?.message);
@@ -415,7 +414,7 @@ const Batch = ({ getNewCount, title }) => {
   //   // }
   // };
 
-  useEffect(() => {}, [inputValue]);
+  useEffect(() => { }, [inputValue]);
 
   const handleUpdateAnnouncementDetails = (e) => {
     e.preventDefault();
@@ -1616,9 +1615,9 @@ const Batch = ({ getNewCount, title }) => {
             {isViewMoreAnnouncement === true ? (
               <div className="honda-container">
                 <div className="">
-                  {console.log("questionData", paperSet[0]?.ListofQA)}
+                  {console.log("questionData", paperSet?.ListofQA)}
                   <div className="questionGrid">
-                    {paperSet[0]?.ListofQA?.map((data, key) => (
+                    {paperSet?.ListofQA?.map((data, key) => (
                       <div className="questionGridItems">
                         <div className="flexs">
                           <div className="questionCircle mr-3" key={key}>
