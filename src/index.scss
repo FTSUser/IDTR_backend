@@ -42,7 +42,14 @@
 // .example-highlight {
 //   padding: 0rem 1.5rem 1.75rem !important;
 // }
-
+.bolds{
+  font-weight: bold;
+  padding-right: 20px;
+}
+.flelxcenter{
+  display: flex;
+  align-items: baseline;
+}
 .example-highlight > pre {
   background: none transparent !important;
   margin: 0 !important;

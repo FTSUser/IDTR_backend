@@ -480,10 +480,10 @@ const CheckTest = ({ getNewCount, title }) => {
             toast.error("Please Select Answer");
         } else {
             const datas = {
-               
+
                 ListofQA: checkData,
             };
-            console.log("datas",datas);
+            console.log("datas", datas);
             ApiPut(`response/updateResponse/${data?._id}`, datas)
                 .then((res) => {
                     console.log("res", res);
@@ -502,7 +502,7 @@ const CheckTest = ({ getNewCount, title }) => {
     }
 
     const handleCheckQuestion = (data, record, index) => {
-        console.log("datasss",data,record,index);
+        console.log("datasss", data, record, index);
         if (record.type === "mcq") {
             let index1 = record.Answer.findIndex((e) => e === index + 1);
             if (index1 === -1) {
@@ -856,12 +856,16 @@ const CheckTest = ({ getNewCount, title }) => {
                                         userList?.users?.map((data, key) => (
 
                                             <div className="card p-5" key={key}>
-                                                <div>{data?.phone}</div>
-                                                <div className="">First Name:{data?.fname ? data?.fname : '-'}</div>
-                                                <div className="">Last Name:{data?.lname ? data?.lname : '-'}</div>
-                                                <div className="">Middle Name:{data?.mname ? data?.mname : '-'}</div>
-                                                <div className="">Email:{data?.email ? data?.email : '-'}</div>
-                                                <div className="">Total Score:{data?.totalScore ? data?.totalScore : 0}</div>
+
+                                                <div className="flelxcenter"><span className="bolds">User ID:</span>{data?._id ? data?._id : '-'}</div>
+                                                <div className="flelxcenter"><span className="bolds">First Name:</span>{data?.fname ? data?.fname : '-'}</div>
+                                                <div className="flelxcenter"><span className="bolds">Last Name:</span> {data?.lname ? data?.lname : '-'}</div>
+                                                <div className="flelxcenter"><span className="bolds">Mobile Number:</span> {data?.phone ? data?.phone : '-'}</div>
+                                                <div className="flelxcenter"><span className="bolds">Email ID:</span> {data?.email ? data?.email : '-'}</div>
+                                                <div className="flelxcenter"><span className="bolds">Test Language:</span> {userList?.Examset[0]?.language ? userList?.Examset[0]?.language : '-'}</div>
+                                                <div className="flelxcenter"><span className="bolds">Attendance:</span>{data?.isAttendence ? 'Yes' : '-'}</div>
+                                                <div className="flelxcenter"><span className="bolds">Passing Score:</span> {data?.totalScore ? data?.totalScore : 'N/A'}</div>
+                                                <div className="flelxcenter"><span className="bolds">Final Result Status:</span> {data?.isPass ? 'Pass' : 'Fail'}</div>
                                                 {data?.totalScore ? "" : <div className="view btn btn-success mt-5" onClick={() => viewPeperSet(data?.batchId, data?._id)}>Check Paper</div>}
                                                 {data?.status === 'noRequest' && data?.isPaperDone ? <div className="view btn btn-success mt-5" onClick={() => reCheckPeper(data?._id)}>Re-Check Paper</div> : ''}
                                                 {data?.status === 'pending' && <div className="view btn btn-success mt-5 disabled" >Requested</div>}

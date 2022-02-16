@@ -227,7 +227,7 @@ const TimeSlot = ({ getNewCount, title }) => {
   const getAllVehicleCategory = async () => {
     setIsLoaderVisible(true);
 
-    await ApiGet(`vehicleCategory/getAllVehicleCategory?limit=1000`)
+    await ApiGet(`vehicleCategory/getAll`)
       .then((res) => {
         setIsLoaderVisible(false);
         setFilteredVehicleCategory(res?.data?.payload?.Question);
@@ -302,13 +302,18 @@ const TimeSlot = ({ getNewCount, title }) => {
 
   const handelAddCourseNameDetails = (e) => {
     e.preventDefault();
+    let s = moment(new Date(startTime)).format("HH:MM")
+    let start  = moment(date).set({hour:s.split(":")[0],minute:s.split(":")[1]})
 
+    let eTime = moment(new Date(endTime)).format("HH:MM")
+    let end  = moment(date).set({hour:eTime.split(":")[0],minute:eTime.split(":")[1]})
+   console.log("startTimestartTime",date,start,s);
     if (validateForm()) {
       let Data = {
         date: date,
         seat: inputValueForAdd?.seat,
-        endTime: endTime,
-        startTime: startTime,
+        endTime: end,
+        startTime: start,
         cnid: inputValueForAdd?.CourseName,
         ctid: inputValueForAdd?.CourseType,
         vcid: inputValueForAdd?.VehicleCategory,
