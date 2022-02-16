@@ -75,7 +75,7 @@ export default function Login() {
           }
         })
         .catch((error) => {
-          toast.error(error.message);
+          toast.error(error?.response?.data?.message);
         });
     },
   });
