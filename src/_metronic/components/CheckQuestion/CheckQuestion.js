@@ -452,7 +452,80 @@ const CheckTest = ({ getNewCount, title }) => {
                 });
         }
     }
+    const updateUser = (data) => {
+        console.log("data", data);
+        let checkData = [];
+        paperSet?.ListofQA.map((e) => {
+            e.Option.map((o) => {
+                delete o._id;
+                return o;
+            });
+            let a = {
+                Qname: e?.Qname,
+                Option: e.Option,
+                Answer: e.Answer,
+                type: e.type,
+            };
+            checkData.push(a);
+        });
+        let ans1 = [];
+        paperSet?.ListofQA?.map((ans) => {
+            console.log("ans", ans);
+            if (!ans.Answer.length) {
+                ans1.push(ans.Answer);
+            } else {
+            }
+        });
+        if (ans1.length) {
+            toast.error("Please Select Answer");
+        } else {
+            const datas = {
+               
+                ListofQA: checkData,
+            };
+            console.log("datas",datas);
+            ApiPut(`response/updateResponse/${data?._id}`, datas)
+                .then((res) => {
+                    console.log("res", res);
+                    toast.success(res?.data?.message)
+                    getAllBatchIdWiseUser()
+                    setTimeout(() => {
+                        openExamPeperSet(false);
+                    }, 100);
 
+                })
+                .catch((err) => {
+
+                    toast.error(err?.response?.data?.message);
+                });
+        }
+    }
+
+    const handleCheckQuestion = (data, record, index) => {
+        console.log("datasss",data,record,index);
+        if (record.type === "mcq") {
+            let index1 = record.Answer.findIndex((e) => e === index + 1);
+            if (index1 === -1) {
+                record.Answer = [index + 1];
+            } else {
+                record.Answer.splice(index1, 1);
+            }
+        } else if (record.type === "checkbox") {
+            let index1 = record.Answer.findIndex((e) => e === index + 1);
+            if (index1 === -1) {
+                record.Answer.push(index + 1);
+            } else {
+                record.Answer.splice(index1, 1);
+            }
+        }
+
+        let index2 = paperSet?.ListofQA.findIndex((e) => e._id === record._id);
+        console.log("===================", index, index2, paperSet.ListofQA);
+        if (index2 != -1) {
+            paperSet.ListofQA[index2] = record;
+        }
+        setPaperSet(paperSet);
+    };
     const handleQuestion = (data, record, index) => {
         if (record.type === "mcq") {
             let index1 = record.Answer.findIndex((e) => e === index + 1);
@@ -710,7 +783,7 @@ const CheckTest = ({ getNewCount, title }) => {
                                                                                 id={record?.name + i}
                                                                                 defaultChecked={data.Answer?.length ? data.Answer[0] === Number(i) + 1 ? true : false : false}
                                                                                 onChange={(e) =>
-                                                                                    handleQuestion(e, data, i)
+                                                                                    handleCheckQuestion(e, data, i)
                                                                                 }
                                                                             />
                                                                             <span className="pl-2">
@@ -729,7 +802,7 @@ const CheckTest = ({ getNewCount, title }) => {
                                                                                 type="checkbox"
                                                                                 id={record?.name}
                                                                                 onChange={(e) =>
-                                                                                    handleQuestion(e, data, i)
+                                                                                    handleCheckQuestion(e, data, i)
                                                                                 }
                                                                                 defaultChecked={data.Answer?.length ? data.Answer.find(e => e === Number(i) + 1) ? true : false : false}
                                                                             />
@@ -748,7 +821,7 @@ const CheckTest = ({ getNewCount, title }) => {
                                             ))
                                         }
                                     </div>
-                                    <button className="btn btn-success mt-5" onClick={() => createUser(questionData)}>Update Paper</button>
+                                    <button className="btn btn-success mt-5" onClick={() => updateUser(paperSet)}>Update Paper</button>
 
                                 </div>
                             </div>
