@@ -133,7 +133,7 @@ const CourseType = ({ getNewCount, title }) => {
   const getAllVehicleCategory = async () => {
     setIsLoaderVisible(true);
 
-    await ApiGet(`vehicleCategory/getAllVehicleCategory?limit=1000`)
+    await ApiGet(`vehicleCategory/getAll`)
       .then((res) => {
         setIsLoaderVisible(false);
         setFilteredVehicleCategory(res?.data?.payload?.Question);

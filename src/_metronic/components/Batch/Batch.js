@@ -433,9 +433,9 @@ const Batch = ({ getNewCount, title }) => {
   const handleUpdateAnnouncementDetails = (e) => {
     e.preventDefault();
 
-    if (dateTimezon.length === 0) {
-      toast.error("No slot available for this date");
-    }
+    // if (dateTimezon.length === 0) {
+    //   toast.error("No slot available for this date");
+    // }
 
     if (validateForm()) {
       let Data = {
@@ -1311,6 +1311,7 @@ const Batch = ({ getNewCount, title }) => {
                   </label>
                   <div className="col-lg-9 col-xl-6 cus-data-input-style">
                     <DatePicker
+                    disabled
                       id="date"
                       format="DD/MM/YYYY"
                       selected={new Date(date)}
