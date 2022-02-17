@@ -362,7 +362,13 @@ const Question = (props) => {
         },
         {
             name: "Category",
-            selector: "Category",
+            cell: (row) => {
+                return (
+                    <div>
+                        {row?.Category?.name}
+                    </div>
+                );
+            },
             sortable: true,
         },
         {
@@ -394,13 +400,14 @@ const Question = (props) => {
                                     setIdForUpdateCourseNameData(row._id);
                                     setOption(row?.Option)
                                     setInputValueForAdd({
+
                                         name: row?.Qname,
                                         description: row?.description,
                                         weight: row?.weight,
                                         language: row?.language,
                                         type: row?.type,
                                         image: row?.image,
-                                        Category: row?.Category,
+                                        Category: row?.Category?._id,
                                     });
                                     if (row?.type === "mcq") {
                                         setMcqCheck(true);
@@ -410,6 +417,7 @@ const Question = (props) => {
                                         setMcqCheck(false);
                                         setCheckBoxCheck(true);
                                     }
+                                    console.log("row", row?.Category?.name);
                                     setIsEditPopUp(true);
                                 }}
                             >
@@ -469,7 +477,7 @@ const Question = (props) => {
                                     language: row?.language,
                                     type: row?.type,
                                     image: row?.image,
-                                    Category: row?.Category,
+                                    Category: row?.Category?.name,
                                 });
                             }}
                         >
@@ -1038,22 +1046,37 @@ const Question = (props) => {
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
+
                                             <select
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="Category"
                                                 name="Category"
-                                                type="text"
-                                                className={`form-control form-control-lg form-control-solid`}
-                                                value={inputValueForAdd.Category}
+                                                value={inputValueForAdd?.Category}
                                                 onChange={(e) => {
                                                     handleOnChnageAdd(e);
-                                                    typeChanges(e)
                                                 }}
                                             >
-                                                <option selected disabled value="">
-                                                    Type
+                                                <option value="" disabled selected hidden>
+                                                    Select Question Category
                                                 </option>
-                                                {AllCategory && AllCategory.map((data) => {
-                                                    return (<option value={data._id} >{data.name}</option>)
-                                                })}
+
+                                                {AllCategory?.length > 0 &&
+                                                    AllCategory?.map((item) => {
+                                                        return (
+                                                            <option
+                                                                key={item._id}
+                                                                value={item?._id}
+                                                                selected={
+                                                                    inputValueForAdd?.Category === item?._id
+                                                                        ? true
+                                                                        : false
+                                                                }
+                                                            >
+                                                                {" "}
+                                                                {item.name}{" "}
+                                                            </option>
+                                                        );
+                                                    })}
                                             </select>
                                         </div>
                                         <span
@@ -1327,6 +1350,15 @@ const Question = (props) => {
                                         <p
                                             dangerouslySetInnerHTML={{
                                                 __html: dataViewMore?.type,
+                                            }}
+                                            className=""
+                                        />
+                                    </div>
+                                    <div className="honda-text-grid-items">
+                                        <span>Question Category Type:</span>
+                                        <p
+                                            dangerouslySetInnerHTML={{
+                                                __html: dataViewMore?.Category?.name,
                                             }}
                                             className=""
                                         />
