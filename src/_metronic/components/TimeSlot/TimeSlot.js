@@ -123,7 +123,6 @@ const TimeSlot = ({ getNewCount, title }) => {
       allPaymentDetailsExcel.map((registerUser, key) => {
         let data = {
           Number: key + 1,
-
           courseName: registerUser?.courseName[0]?.courseName,
           courseType: registerUser?.courseType[0]?.courseType,
           vehicleCategory: registerUser?.vehicleCategory[0]?.vehicleCategory,
@@ -131,8 +130,7 @@ const TimeSlot = ({ getNewCount, title }) => {
           seat: registerUser?.seat,
           startTime: moment(registerUser?.startTime).format("LT"),
           endTime: moment(registerUser?.endTime).format("LT"),
-          createdAt: moment(registerUser?.cnid?.createdAt).format("ll"),
-          created: moment(registerUser?.cnid?.created).format("ll"),
+          createdAt: moment(registerUser?.date).format("ll"),
         };
         setDataCSV((currVal) => [...currVal, data]);
       });

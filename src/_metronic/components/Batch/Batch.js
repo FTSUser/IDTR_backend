@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import DataTable, { defaultThemes } from "react-data-table-component";
 import {
   ApiGet,
@@ -28,11 +28,371 @@ import moment from "moment";
 import S3 from "react-aws-s3";
 import { AwsConfig } from "../../../config/S3Backet/app.config";
 import CsvDownload from "react-json-to-csv";
+import Logo from "./honda.png";
+import ReactToPrint from "react-to-print";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+class ComponentToPrints extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = this.props;
+  }
+
+  componentDidMount() {
+    this.setState({ ...this.props });
+  }
+
+  render() {
+    return (
+      <>
+        <div class="invoice-box">
+          <table>
+            <tr class="top">
+              <td colspan="2">
+                <table>
+                  <tr>
+                    <td>
+                      <b>Institute of Driving and Traffic Research (IDTR)</b>
+                      <p>
+                        A joint venture of Transport Department, <br />{" "}
+                        Government of Haryana & Honda IDTR
+                      </p>
+                    </td>
+                    <td class="title">
+                      <img src={Logo} />
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr class="information">
+              <td colspan="2">
+                <table>
+                  <tr>
+                    <td>
+                      Created:{" "}
+                      {moment(this?.props?.data?.createdAt).format(
+                        "DD-MM-YYYY "
+                      )}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Batch Name: {`${this.props?.data?.name} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>TotalUser: {`${this.props?.data?.totalUser} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>TotalSeat: {`${this.props?.data?.total} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>
+                  Total user of this batch: {`${this.props?.data?.totalUser} `}{" "}
+                </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Examiner: {`${this.props?.data?.Examiner?.email} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>
+                  Attendance Done?:{" "}
+                  {`${
+                    this.props?.data?.Examiner?.isAttendence
+                      ? "Done"
+                      : "Not Yet"
+                  } `}{" "}
+                </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>
+                  Examiner Phone: {`${this.props?.data?.Examiner?.phone} `}{" "}
+                </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>
+                  Course Name:{" "}
+                  {`${this.props?.data?.tdid[0]?.cnid?.courseName} `}{" "}
+                </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>
+                  Course Category:{" "}
+                  {`${this.props?.data?.tdid[0]?.cnid?.ccid?.courseCategory} `}{" "}
+                </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>
+                  Course Category:{" "}
+                  {`${this.props?.data?.tdid[0]?.cnid?.ccid?.ctid?.courseType} `}{" "}
+                </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>
+                  Course Price: {`${this.props?.data?.tdid[0]?.cnid?.price} `}{" "}
+                </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>
+                  Course Duration:{" "}
+                  {`${this.props?.data?.tdid[0]?.cnid?.duration} `}{" "}
+                </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>
+                  Mode of exam: {`${this.props?.data?.tdid[0]?.cnid?.mode} `}{" "}
+                </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>
+                  Required Documents:{" "}
+                  {`${this.props?.data?.tdid[0]?.cnid?.documentRequired} `}{" "}
+                </td>
+              </td>
+            </tr>
+            {/* <tr className="">
+              <td>
+                <td>Examiner Phone: {`${this.props?.data?.Examiner?.phone} `} </td>
+              </td>
+            </tr> */}
+
+            {/* <tr class="heading">
+              <td>Payment Method</td>
+            </tr> */}
+
+            {/* <tr class="details">
+              <td>{this.props?.data?.type}</td>
+            </tr> */}
+
+            {/* <tr class="heading">
+              <td>Item</td>
+              <td>GST</td>
+              <td>COST</td>
+            </tr>
+
+            <tr class="item">
+              <td>{this.props?.data?.courseName[0]?.courseName}</td>
+              <td>12FC34343433</td>
+              <td>&#x20b9;{this.props?.data?.courseName[0]?.price}</td>
+            </tr> */}
+          </table>
+        </div>
+      </>
+    );
+  }
+}
+class ComponentToPrintsForUser extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = this.props;
+  }
+
+  componentDidMount() {
+    this.setState({ ...this.props });
+  }
+
+  render() {
+    return (
+      <>
+        <div class="invoice-box">
+          <table>
+            <tr class="top">
+              <td colspan="2">
+                <table>
+                  <tr>
+                    <td>
+                      <b>Institute of Driving and Traffic Research (IDTR)</b>
+                      <p>
+                        A joint venture of Transport Department, <br />{" "}
+                        Government of Haryana & Honda IDTR
+                      </p>
+                    </td>
+                    <td class="title">
+                      <img src={Logo} />
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr class="information">
+              <td colspan="2">
+                <table>
+                  <tr>
+                    <td>
+                      Created:{" "}
+                      {moment(this?.props?.data?.createdAt).format(
+                        "DD-MM-YYYY "
+                      )}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>First Name: {`${this?.props?.data?.fname} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Middle Name: {`${this?.props?.data?.mname} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Last Name: {`${this?.props?.data?.lname} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Email: {`${this?.props?.data?.email} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Phone: {`${this?.props?.data?.phone ? this?.props?.data?.phone : "No Data"} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Gender: {`${this?.props?.data?.gender} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Address: {`${this?.props?.data?.address} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>City: {`${this?.props?.data?.city} `} </td>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Created: {moment(this?.props?.data?.DoB).format("DD-MM-YYYY ")}
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Address: {`${this?.props?.data?.address} `} </td>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Date of course: {moment(this?.props?.data?.dateofCourse).format("DD-MM-YYYY ")}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Pass?: {moment(this?.props?.data?.isPass ? "Pass" : "Fail").format("DD-MM-YYYY ")}
+              </td>
+            </tr>
+            <tr>
+              <td>
+              LCID: {moment(this?.props?.data?.lcid ).format("DD-MM-YYYY ")}
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Percentage: {`${this?.props?.data?.percentage} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>TotalScore: {`${this?.props?.data?.totalScore} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Status: {`${this?.props?.data?.status} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Type: {`${this?.props?.data?.type} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Authoritydistrict: {`${this?.props?.data?.authoritydistrict} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Authoritycity: {`${this?.props?.data?.authoritycity} `} </td>
+              </td>
+            </tr>
+            
+            {/* <tr className="">
+              <td>
+                <td>Examiner Phone: {`${this.props?.data?.Examiner?.phone} `} </td>
+              </td>
+            </tr> */}
+
+            {/* <tr class="heading">
+              <td>Payment Method</td>
+            </tr> */}
+
+            {/* <tr class="details">
+              <td>{this.props?.data?.type}</td>
+            </tr> */}
+
+            {/* <tr class="heading">
+              <td>Item</td>
+              <td>GST</td>
+              <td>COST</td>
+            </tr>
+
+            <tr class="item">
+              <td>{this.props?.data?.courseName[0]?.courseName}</td>
+              <td>12FC34343433</td>
+              <td>&#x20b9;{this.props?.data?.courseName[0]?.price}</td>
+            </tr> */}
+          </table>
+        </div>
+      </>
+    );
+  }
+}
+
 const Batch = ({ getNewCount, title }) => {
+  const ref = React.createRef();
+  const itemsRef = useRef([]);
+  const itemsRefForUser = useRef([]);
   const [filteredAnnouncement, setFilteredAnnouncement] = useState({});
   const [isLoaderVisible, setIsLoaderVisible] = useState(false);
   const [show, setShow] = useState(false);
@@ -163,7 +523,7 @@ const Batch = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.batch);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => { });
+        .catch((err) => {});
     } else {
       await ApiGet(
         `batch/getAllBatch?search=${search}&page=${page}&limit=${countPerPage}`
@@ -173,7 +533,7 @@ const Batch = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.batch);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => { });
+        .catch((err) => {});
     }
   };
 
@@ -181,15 +541,16 @@ const Batch = ({ getNewCount, title }) => {
     selectdate = new Date(selectdate);
     setIsLoaderVisible(true);
     await ApiGet(
-      `trainingDate/getData?date=${selectdate.getFullYear() +
-      "-" +
-      (selectdate.getMonth() < 9
-        ? "0" + (selectdate.getMonth() + 1)
-        : selectdate.getMonth() + 1) +
-      "-" +
-      (selectdate.getDate() < 9
-        ? "0" + selectdate.getDate()
-        : selectdate.getDate())
+      `trainingDate/getData?date=${
+        selectdate.getFullYear() +
+        "-" +
+        (selectdate.getMonth() < 9
+          ? "0" + (selectdate.getMonth() + 1)
+          : selectdate.getMonth() + 1) +
+        "-" +
+        (selectdate.getDate() < 9
+          ? "0" + selectdate.getDate()
+          : selectdate.getDate())
       }`
     )
       .then((res) => {
@@ -428,7 +789,7 @@ const Batch = ({ getNewCount, title }) => {
   //   // }
   // };
 
-  useEffect(() => { }, [inputValue]);
+  useEffect(() => {}, [inputValue]);
 
   const handleUpdateAnnouncementDetails = (e) => {
     e.preventDefault();
@@ -604,13 +965,31 @@ const Batch = ({ getNewCount, title }) => {
                 setDataViewMore(row);
                 getResponseByBatch(row?._id);
                 getAllResponseByBatch(row?._id);
-                getResponseByBatch(row?._id)
-                getAllResponseByBatchForUser(row?._id)
+                getResponseByBatch(row?._id);
+                getAllResponseByBatchForUser(row?._id);
               }}
             >
               <Tooltip title="Show More" arrow>
                 <InfoOutlinedIcon />
               </Tooltip>
+            </div>
+            <div className="cursor-pointer pl-2">
+              <ReactToPrint
+                trigger={() => (
+                  <Tooltip title="Generate Pdf" arrow>
+                    <img src="media/allIconsForTable/invoice.png" />
+                  </Tooltip>
+                )}
+                content={() => itemsRef.current[row._id]}
+              />
+              <div style={{ display: "none" }}>
+                <div
+                  ref={(el) => (itemsRef.current[row._id] = el)}
+                  id={row?._id}
+                >
+                  <ComponentToPrints data={row} />
+                </div>
+              </div>
             </div>
           </>
         );
@@ -721,6 +1100,24 @@ const Batch = ({ getNewCount, title }) => {
                   </div>
                 </div>
               )}
+            </div>
+            <div className="cursor-pointer pl-2">
+              <ReactToPrint
+                trigger={() => (
+                  <Tooltip title="Generate Pdf" arrow>
+                    <img src="media/allIconsForTable/invoice.png" />
+                  </Tooltip>
+                )}
+                content={() => itemsRefForUser.current[row._id]}
+              />
+              <div style={{ display: "none" }}>
+                <div
+                  ref={(el) => (itemsRefForUser.current[row._id] = el)}
+                  id={row?._id}
+                >
+                  <ComponentToPrintsForUser data={row} />
+                </div>
+              </div>
             </div>
           </>
         );
@@ -859,7 +1256,6 @@ const Batch = ({ getNewCount, title }) => {
       });
     }
   }, [allDataForResultDownload]);
-
 
   useEffect(() => {
     if (allDataForAttendance) {
@@ -1311,7 +1707,7 @@ const Batch = ({ getNewCount, title }) => {
                   </label>
                   <div className="col-lg-9 col-xl-6 cus-data-input-style">
                     <DatePicker
-                    disabled
+                      disabled
                       id="date"
                       format="DD/MM/YYYY"
                       selected={new Date(date)}
