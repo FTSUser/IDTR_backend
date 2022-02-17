@@ -86,8 +86,8 @@ const Examiner = ({ getNewCount, title }) => {
     };
     const [getAllRole, setgetAllRole] = useState({});
     const getAllRoleData = () => {
-        ApiGet('role').then((res) => {
-            setgetAllRole(res.data.payload.allRole);
+        ApiGet('role/getSpecificRole').then((res) => {
+            setgetAllRole(res.data.payload.Role);
         })
     }
     useEffect(() => {
