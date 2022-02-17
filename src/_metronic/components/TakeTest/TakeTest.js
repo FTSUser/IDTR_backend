@@ -207,7 +207,7 @@ const TakeTest = ({ getNewCount, title }) => {
         return (
           <>
             {row?.isAttendanceTake && !row?.isExamGenerate && (
-              <div className="d-flex justify-content-between">
+              <div className="d-flex  justify-content-between">
                 <div
                   className="cursor-pointer pl-2"
                   onClick={() => {
@@ -715,16 +715,20 @@ const TakeTest = ({ getNewCount, title }) => {
             {isAddQuestion === true ? (
               <div>
                 <div className="container">
-                  <div className="d-flex">
+                 <div className="centerAlign">
+                 <div className="d-flex centeralign">
                     <h4 className="mr-3">Question {questionKEY + 1}</h4>
 
                     <h4>{questionData[questionKEY]?.Qname}</h4>
                   </div>
                   <div>
+                    <img src={questionData[questionKEY]?.image ? questionData[questionKEY]?.image : ''} alt="" />
+                  </div>
+                  <div>
                     <div className="mb-4">
                       {questionData[questionKEY]?.Option.map((data, key) => {
                         return (
-                          <div className="d-flex mx-3 mb-4">
+                          <div className="d-flex centeralign mx-3 mb-4">
                             <div className="mr-2">
                               <b>({ABC[key]})</b>
                             </div>
@@ -772,6 +776,7 @@ const TakeTest = ({ getNewCount, title }) => {
                       ""
                     )}
                   </div>
+                 </div>
                 </div>
               </div>
             ) : null}
@@ -800,7 +805,7 @@ const TakeTest = ({ getNewCount, title }) => {
               <div>
                 <div className="container">
                   <div className="">
-                    <div className="d-flex">
+                    <div className="d-flex centeralign">
                       <div className="mr-3">
                         <input
                           type="checkbox"
@@ -825,7 +830,7 @@ const TakeTest = ({ getNewCount, title }) => {
                       userByAttendece?.map((data, key) => {
                         return (
                           <>
-                            <div className="d-flex " key={key}>
+                            <div className="d-flex centeralign " key={key}>
                               <div className="mr-3">
                                 <input
                                   type="checkbox"

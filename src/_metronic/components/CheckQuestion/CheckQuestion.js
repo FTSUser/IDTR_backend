@@ -671,6 +671,9 @@ const CheckTest = ({ getNewCount, title }) => {
 
                                                         {data?.Qname}
                                                     </div>
+                                                    <div>
+                                                        <img src={data?.image ? data?.image :''} alt="" />
+                                                    </div>
                                                     <div >
                                                         {data?.Option.map((record, i) => (
                                                             <>
@@ -767,6 +770,10 @@ const CheckTest = ({ getNewCount, title }) => {
                                                         <div className="questionCircle mr-3" key={key}> {key + 1}</div>
 
                                                         {data?.Qname}
+                                                    </div>
+                                                    <div>
+                                                        <img src={data?.image ? data?.image :''} alt="" />
+                                                        
                                                     </div>
                                                     <div >
                                                         {data?.Option.map((record, i) => (
