@@ -131,8 +131,7 @@ const TimeSlot = ({ getNewCount, title }) => {
           seat: registerUser?.seat,
           startTime: moment(registerUser?.startTime).format("LT"),
           endTime: moment(registerUser?.endTime).format("LT"),
-          createdAt: moment(registerUser?.cnid?.createdAt).format("ll"),
-          created: moment(registerUser?.cnid?.created).format("ll"),
+          createdAt: moment(registerUser?.date).format("ll"),
         };
         setDataCSV((currVal) => [...currVal, data]);
       });
