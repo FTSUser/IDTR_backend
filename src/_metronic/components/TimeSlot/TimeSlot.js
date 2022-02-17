@@ -123,7 +123,6 @@ const TimeSlot = ({ getNewCount, title }) => {
       allPaymentDetailsExcel.map((registerUser, key) => {
         let data = {
           Number: key + 1,
-
           courseName: registerUser?.courseName[0]?.courseName,
           courseType: registerUser?.courseType[0]?.courseType,
           vehicleCategory: registerUser?.vehicleCategory[0]?.vehicleCategory,

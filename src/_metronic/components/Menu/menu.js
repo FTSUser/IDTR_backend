@@ -471,7 +471,7 @@ const Menu = ({ getNewCount, title }) => {
                                 Add Menu
                             </button>
                         </div>
-                        <div className="cus-medium-button-style button-height">
+                        {/* <div className="cus-medium-button-style button-height">
                             <CsvDownload
                                 className={``}
                                 data={dataCSV}
@@ -492,7 +492,7 @@ const Menu = ({ getNewCount, title }) => {
                             >
                                 Export to Excel
                             </CsvDownload>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* delete model */}
