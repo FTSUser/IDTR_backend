@@ -391,9 +391,9 @@ const QuestionCategory = ({ getNewCount, title }) => {
 
     const getAllCourseNameForExcel = async () => {
         // if (!search) {
-        await ApiGet(`category/getAllCategory`)
+        await ApiGet(`category/getAll`)
             .then((res) => {
-                setAllCourseNameExcel(res?.data?.payload?.Examiner);
+                setAllCourseNameExcel(res?.data?.payload?.Menu);
             })
             .catch((err) => {
                 toast.error(err?.response?.data?.message)
@@ -405,8 +405,9 @@ const QuestionCategory = ({ getNewCount, title }) => {
             allCourseNameExcel.map((registerUser, key) => {
                 let data = {
                     Number: key + 1,
+                    QuestionCategoryName: registerUser?.name,
+                    QuestionCategoryNameId: registerUser?._id,
                     CreatedAt: moment(registerUser?.createdAt).format("ll"),
-                    MenuName: registerUser?.name,
 
                 };
                 setDataCSV((currVal) => [...currVal, data]);
@@ -445,7 +446,7 @@ const QuestionCategory = ({ getNewCount, title }) => {
                                 Add Question Category
                             </button>
                         </div>
-                        {/* <div className="cus-medium-button-style button-height">
+                        <div className="cus-medium-button-style button-height">
                             <CsvDownload
                                 className={``}
                                 data={dataCSV}
@@ -466,7 +467,7 @@ const QuestionCategory = ({ getNewCount, title }) => {
                             >
                                 Export to Excel
                             </CsvDownload>
-                        </div> */}
+                        </div>
                     </div>
 
                     {/* delete model */}

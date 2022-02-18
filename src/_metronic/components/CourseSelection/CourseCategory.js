@@ -494,8 +494,11 @@ const CourseCategory = ({ getNewCount, title }) => {
         let data = {
           Number: key + 1,
           CourseCategory: registerUser?.courseCategory,
+          CourseCategoryId: registerUser?._id,
           CourseType: registerUser?.ctid?.courseType,
+          CourseTypeId: registerUser?.ctid?._id,
           VehicleCategory: registerUser?.vcid?.vehicleCategory,
+          VehicleCategoryId: registerUser?.vcid?._id,
           Description: registerUser?.description,
           CreatedAt: moment(registerUser?.createdAt).format("ll"),
           CreatedBy: registerUser?.createdBy,

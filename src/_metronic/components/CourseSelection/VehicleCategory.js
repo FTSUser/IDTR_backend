@@ -457,6 +457,7 @@ const VehicleCategory = ({ getNewCount, title }) => {
           CreatedAt: moment(registerUser?.createdAt).format("ll"),
           CreatedBy: registerUser?.createdBy,
           VehicleCategory: registerUser?.vehicleCategory,
+          VehicleCategoryID: registerUser?._id,
           Description: registerUser?.description,
           IsActive: registerUser?.isActive,
           UpdatedAt: moment(registerUser?.updatedAt).format("ll"),
