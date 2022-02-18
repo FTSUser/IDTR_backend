@@ -92,6 +92,14 @@ const Feedback = ({ getNewCount, title }) => {
       selector: "feedbackCategory",
       sortable: true,
     },
+    {
+      name: "Sub Category",
+     
+      cell: (row) => {
+        return <span>{row?.subCategory ?  row?.subCategory : '-'}</span>;
+      },
+      sortable: true,
+    },
 
     {
       name: "Rating",

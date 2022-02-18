@@ -357,7 +357,7 @@ const Testomonial = ({ getNewCount, title }) => {
           <>
             <div className="p-3">
               <img
-                className="max-w-250px zoom"
+                className="w-100 zoom"
                 alt="img"
                 src={row?.image && row?.image}
               />
