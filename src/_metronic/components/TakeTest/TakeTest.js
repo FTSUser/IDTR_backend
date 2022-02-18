@@ -849,7 +849,7 @@ const TakeTest = ({ getNewCount, title }) => {
                               </div>
                               <div className="">
                                 <div>
-                                  {data?.email} {data?.fname} {data?.phone}
+                                  {data?.email ? data?.email : "-"} {data?.fname ? data?.fname : "-"} {data?.phone ? data?.phone : "-"}
                                 </div>
                               </div>
                             </div>
