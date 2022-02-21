@@ -1058,7 +1058,7 @@ const User = ({ getNewCount, title }) => {
       authoritycity: formdata.authoritycity,
       authoritydistrict: formdata.authoritydistrict,
       type: formdata.type,
-      RegistrationType: "counter",
+      Registrationtype: "counter",
     };
 
     console.log("datadata", data);
@@ -1147,7 +1147,7 @@ const User = ({ getNewCount, title }) => {
       authoritycity: formdata.authoritycity,
       authoritydistrict: formdata.authoritydistrict,
       type: formdata.type,
-      RegistrationType: "counter",
+      Registrationtype: "counter",
     };
 
     console.log("dataForEdit", data);
