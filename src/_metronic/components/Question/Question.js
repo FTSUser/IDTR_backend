@@ -25,6 +25,7 @@ import moment from "moment";
 import CsvDownload from "react-json-to-csv";
 import S3 from "react-aws-s3";
 import { AwsConfig } from "../../../config/S3Backet/app.config";
+import { ExportCSV } from "./SampleExcel";
 
 
 
@@ -352,8 +353,10 @@ const Question = (props) => {
             cell: (row) => {
                 return (
                     <>
-                        <div className="p-3">
-                            <img className="max-w-50px zoom" alt="img" src={row?.image} />
+                        <div className="p-3">{
+                            row?.image ? <img className="max-w-50px zoom" alt="img" src={row?.image} /> : '-'
+                        }
+                            
                         </div>
                     </>
                 );
@@ -625,6 +628,28 @@ const Question = (props) => {
             setMcqCheck(false);
         }
     }
+
+    const onBulkUpload = async (e) => {
+        e.preventDefault();
+        if (e.target.files[0]) {
+
+            let formData = new FormData();
+            formData.append("csv", e.target.files[0]);
+            await ApiPost("question/uploadcsv", formData)
+                .then((res) => {
+                    getAllQuestionSet()
+                    toast.success(res.data.message);
+                })
+                .catch((err) => {
+                    toast.error(err.message);
+                });
+        } else {
+            toast.error("Please Select Excel File !");
+        }
+    };
+
+
+
     const [option, setOption] = useState([
         {
             no: "1",
@@ -837,6 +862,27 @@ const Question = (props) => {
                             >
                                 Add Question
                             </button>
+                        </div>
+                        <div>
+                            <ExportCSV />{" "}
+                            <input
+                                type="file"
+                                id="upload"
+                                style={{ display: "none" }}
+                                className="btn btn-success"
+                                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                onChange={(e) => onBulkUpload(e)}
+
+                            />
+                            <buttton
+                                className="btn btn-success mr-2"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    document.getElementById("upload").click();
+                                }}
+
+                            >Upload Excel File</buttton>
+
                         </div>
                         <div className="cus-medium-button-style button-height">
                             <CsvDownload

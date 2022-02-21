@@ -793,17 +793,17 @@ const User = ({ getNewCount, title }) => {
   useEffect(() => {
     if (allRegisterUserExcel) {
       allRegisterUserExcel.map((registerUser, key) => {
+        console.log("registerUser?.uid?.",registerUser?.uid?.Registrationtype);
         let data = {
           Number: key + 1,
           UserID: registerUser?._id,
+          RegistrationTypes: registerUser?.uid?.Registrationtype,
           FirstName: registerUser?.fname,
           MiddleName: registerUser?.mname ? registerUser?.mname : "-",
           LastName: registerUser?.lname ? registerUser?.lname : "-",
           EmailAddress: registerUser?.email ? registerUser?.email : "-",
           MobileNumber: registerUser?.phone,
-          RegistrationType: registerUser?.RegistrationType
-            ? registerUser?.RegistrationType
-            : "-",
+         
           FatherName: registerUser?.fatherName ? registerUser?.fatherName : "-",
           DateOfBirth: moment(registerUser?.DoB).format("ll"),
           Qualification: registerUser?.qualification,
