@@ -30,6 +30,7 @@ import { AwsConfig } from "../../../config/S3Backet/app.config";
 import CsvDownload from "react-json-to-csv";
 import Logo from "./honda.png";
 import ReactToPrint from "react-to-print";
+import { ExportCSV } from "./SampleExcel";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -1293,6 +1294,33 @@ const Batch = ({ getNewCount, title }) => {
     }
   }, [allDataForAttendance]);
 
+
+  const onBulkUpload = async (e) => {
+    e.preventDefault();
+    if (e.target.files[0]) {
+
+        let formData = new FormData();
+        formData.append("csv", e.target.files[0]);
+        await ApiPost("batch/uploadcsv", formData)
+            .then((res) => {
+                if (res.data?.result === 0) {
+                  getResponseByBatch();
+                    toast.success(res.data.message);
+                }else{
+                    toast.error(res.data.message);
+                }
+                let img = document.getElementById("upload");
+                img.value = null
+            })
+            .catch((err) => {
+                toast.error(err);
+            });
+    } else {
+        toast.error("Please Select Excel File !");
+    }
+};
+
+
   return (
     <>
       <div className="card p-1">
@@ -1324,6 +1352,27 @@ const Batch = ({ getNewCount, title }) => {
                 Add Batch
               </button>
             </div>
+            <div>
+                            <ExportCSV />{" "}
+                            <input
+                                type="file"
+                                id="upload"
+                                style={{ display: "none" }}
+                                className="btn btn-success"
+                                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                onChange={(e) => onBulkUpload(e)}
+
+                            />
+                            <buttton
+                                className="btn btn-success mr-2"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    document.getElementById("upload").click();
+                                }}
+
+                            >Upload Excel File</buttton>
+
+                        </div>
           </div>
 
           {/* delete model */}

@@ -356,7 +356,7 @@ const Question = (props) => {
                         <div className="p-3">{
                             row?.image ? <img className="max-w-50px zoom" alt="img" src={row?.image} /> : '-'
                         }
-                            
+
                         </div>
                     </>
                 );
@@ -637,11 +637,17 @@ const Question = (props) => {
             formData.append("csv", e.target.files[0]);
             await ApiPost("question/uploadcsv", formData)
                 .then((res) => {
-                    getAllQuestionSet()
-                    toast.success(res.data.message);
+                    if (res.data?.result === 0) {
+                        getAllQuestionSet();
+                        toast.success(res.data.message);
+                    }else{
+                        toast.error(res.data.message);
+                    }
+                    let img = document.getElementById("upload");
+                    img.value = null
                 })
                 .catch((err) => {
-                    toast.error(err.message);
+                    toast.error(err);
                 });
         } else {
             toast.error("Please Select Excel File !");
