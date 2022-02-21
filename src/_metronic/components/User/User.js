@@ -417,7 +417,7 @@ const User = ({ getNewCount, title }) => {
   };
 
   const getAdminLogs = async (id) => {
-    await ApiGet(`admin/get-admin-login-log/${id}`)
+    await ApiGet(`admin/get-admin-login-log/${id?._id}`)
       .then((res) => {
         console.log("loglog", res?.data?.payload?.user);
         setLogsData(res?.data?.payload?.user);

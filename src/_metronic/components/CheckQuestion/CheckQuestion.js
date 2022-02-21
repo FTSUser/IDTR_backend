@@ -504,7 +504,7 @@ const CheckTest = ({ getNewCount, title }) => {
     openExamPeperSet(true);
     setUserId(userId);
     console.log("_id", userId);
-    await ApiGet(`batch/getExamsetByBatch/${id}`)
+    await ApiGet(`batch/getExamsetByBatch/${id?._id}`)
       .then((res) => {
         console.log("res", res);
         res?.data?.payload?.Examset?.questionsList?.map((e, index) => {
