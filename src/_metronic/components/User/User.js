@@ -672,7 +672,7 @@ const User = ({ getNewCount, title }) => {
       selector: "ip",
       sortable: true,
     },
-   
+    
     {
       name: "User Phone",
       selector: row => row?.uid?.phone,
@@ -786,11 +786,11 @@ const User = ({ getNewCount, title }) => {
   useEffect(() => {
     if (allRegisterUserExcel) {
       allRegisterUserExcel.map((registerUser, key) => {
-        console.log("registerUser?.uid?.",registerUser?.uid?.Registrationtype);
+        console.log("registerUser?.uid?.",registerUser?.Registrationtype);
         let data = {
           Number: key + 1,
           UserID: registerUser?._id,
-          RegistrationType: registerUser?.Registrationtype,
+          RegistrationTypes: registerUser?.Registrationtype,
           FirstName: registerUser?.fname,
           MiddleName: registerUser?.mname ? registerUser?.mname : "-",
           LastName: registerUser?.lname ? registerUser?.lname : "-",
@@ -1051,7 +1051,7 @@ const User = ({ getNewCount, title }) => {
       authoritycity: formdata.authoritycity,
       authoritydistrict: formdata.authoritydistrict,
       type: formdata.type,
-      RegistrationType: "counter",
+      Registrationtype: "counter",
     };
 
     console.log("datadata", data);
@@ -1140,7 +1140,7 @@ const User = ({ getNewCount, title }) => {
       authoritycity: formdata.authoritycity,
       authoritydistrict: formdata.authoritydistrict,
       type: formdata.type,
-      RegistrationType: "counter",
+      Registrationtype: "counter",
     };
 
     console.log("dataForEdit", data);
