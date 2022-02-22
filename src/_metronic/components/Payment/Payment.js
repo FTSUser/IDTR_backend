@@ -58,7 +58,7 @@ const Payment = ({ getNewCount, title }) => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    document.title = "Honda | Payment";
+    document.title = "Honda | Payment History";
   }, []);
 
   const handleViewMoreClose = () => {
@@ -346,7 +346,7 @@ const Payment = ({ getNewCount, title }) => {
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2">Payment Details</h2>
+              <h2 className="pl-3 pt-2">Payment History</h2>
             </div>
             <div className="cus-medium-button-style button-height">
               <CsvDownload

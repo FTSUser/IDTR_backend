@@ -25,248 +25,91 @@ import { ToastContainer, toast } from "react-toastify";
 import moment from "moment";
 import CsvDownload from "react-json-to-csv";
 import Multiselect from "multiselect-react-dropdown";
+import { ReportExcel } from "./ReportExcel";
+import { DateRangePickerComponent } from "@syncfusion/ej2-react-calendars";
+import { addDays } from "date-fns/esm";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const Report = ({ getNewCount, title }) => {
-    const [filteredCourseName, setFilteredCourseName] = useState({});
-    const [isLoaderVisible, setIsLoaderVisible] = useState(false);
-    const [show, setShow] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [isAddCourseName, setIsAddCourseName] = useState(false);
-    const [idForUpdateCourseNameData, setIdForUpdateCourseNameData] =
-        useState("");
-    const [inputValueForAdd, setInputValueForAdd] = useState({});
-    const [errorsForAdd, setErrorsForAdd] = useState({});
-    const [idForDeleteCourseName, setIdForDeleteCourseName] = useState("");
-    const [page, setPage] = useState(1);
-    const [count, setCount] = useState(0);
-    const [countPerPage, setCountPerPage] = useState(10);
-    const [search, setSearch] = useState("");
-    const [dataViewMore, setDataViewMore] = useState({});
-    const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
-    const [isEditPopUp, setIsEditPopUp] = useState(false);
-    const [selectedCourseType, setSelectedCourseType] = useState([]);
-    const [allCourseTypeForUpdate, setAllCourseTypeForUpdate] = useState([]);
+const data = [
+    {
+        "_id": "6214a53e5413504c352f8dc6",
+        "name": "Timeslot",
+        "endPoint": "trainingDate/getAllDateWithoutPagination"
+    },
+    {
+        "_id": "62106ded491bcd2a1683a487",
+        "name": "User",
+        "endPoint": "register/getAll"
+    },
+    {
+        "_id": "620e42b6924864153489ea0a",
+        "name": "Vehicle Category",
+        "endPoint": "vehicleCategory/getAll"
+    },
+    {
+        "_id": "620b94feef74e22a3f7554ef",
+        "name": "Course Type",
+        "endPoint": "courseType/getAll"
+    },
+    {
+        "_id": "6204f0790d11261d68edf5dd",
+        "name": "Course Category",
+        "endPoint": "courseCategory/getAll"
+    },
+    {
+        "_id": "6204f06b0d11261d68edf5d5",
+        "name": "Course Name",
+        "endPoint": "courseName/getAll"
+    },
+    {
+        "_id": "61fd0cd5df3e201fe081ff8c",
+        "name": "Payment",
+        "endPoint": "payment/getAll"
+    },
+    {
+        "_id": "61fce992a6682147b4c29b19",
+        "name": "Question Category",
+        "endPoint": "category/getAll"
+    },
+    {
+        "_id": "61fce98ba6682147b4c29b11",
+        "name": "Question",
+        "endPoint": "question/getAll"
+    },
+    {
+        "_id": "61fccb27eb9ffd140891e6e0",
+        "name": "Feedback",
+        "endPoint": "feedback/getAll"
+    }
+]
 
+const Report = ({ getNewCount, title }) => {
     useEffect(() => {
         document.title = "Honda | Report";
     }, []);
 
-    const handleViewMoreClose = () => {
-        setIsViewMoreAboutus(false);
-        setDataViewMore({});
-    };
-
-    const handleOnChnageAdd = (e) => {
-        const { name, value } = e.target;
-        setInputValueForAdd({ ...inputValueForAdd, [name]: value });
-        setErrorsForAdd({ ...errorsForAdd, [name]: "" });
-    };
-
-    const [getAllRole, setgetAllRole] = useState({});
-    const getAllRoleData = () => {
-        ApiGet('role').then((res) => {
-            setgetAllRole(res.data.payload.allRole);
-        })
-    }
-    const handleAddAdminClose = () => {
-        setInputValueForAdd({});
-        setIsAddCourseName(false);
-        setErrorsForAdd({});
-        setSelectedCourseType([]);
-        setIsEditPopUp(false);
-        setAllCourseTypeForUpdate([]);
-
-
-    };
-
-    const handleClose = () => {
-        setShow(false);
-    };
-
-
-
-    useEffect(() => {
-        getAllCourseName();
-        getAllRoleData()
-    }, [page, countPerPage]);
-
-
-
-
-    const getAllCourseName = async () => {
-        setIsLoaderVisible(true);
-        if (!search) {
-            await ApiGet(
-                `menu/getAllMenu?page=${page}&limit=${countPerPage}`
-            )
-                .then((res) => {
-                    setIsLoaderVisible(false);
-                    setFilteredCourseName(res?.data?.payload?.Menu);
-                    setCount(res?.data?.payload?.count);
-
-                })
-                .catch((err) => {
-                    toast.error(err?.response?.data?.message)
-                });
-        } else {
-            await ApiGet(
-                `menu/getAllMenu?search=${search}&page=${page}&limit=${countPerPage}`
-            )
-                .then((res) => {
-                    setIsLoaderVisible(false);
-                    setFilteredCourseName(res?.data?.payload?.Menu);
-                    setCount(res?.data?.payload?.count);
-                })
-                .catch((err) => {
-                    toast.error(err?.response?.data?.message)
-                });
-        }
-    };
-
-
-
-    const validateFormForAddAdmin = () => {
-        let formIsValid = true;
-        let errorsForAdd = {};
-        if (inputValueForAdd && !inputValueForAdd.name) {
-            formIsValid = false;
-            errorsForAdd["name"] = "*Please Enter Name!";
-        }
-        // if (selectedCourseType?.length === 0) {
-        //     formIsValid = false;
-        //     errorsForAdd["role"] = "*Please Enter role!";
-        // }
-
-
-
-        setErrorsForAdd(errorsForAdd);
-        return formIsValid;
-    };
-
-    const handelAddCourseNameDetails = (e) => {
-        e.preventDefault();
-        if (validateFormForAddAdmin()) {
-            let data = []
-            selectedCourseType.map(o => data.push(o._id))
-            let Data = {
-                name: inputValueForAdd.name,
-                // assignTo: data
-
-            };
-            ApiPost(`menu/addMenu`, Data)
-                .then((res) => {
-                    if (res?.status == 200) {
-                        setIsAddCourseName(false);
-                        setSelectedCourseType([]);
-                        toast.success(res?.data?.message);
-                        setInputValueForAdd({});
-                        getAllCourseName();
-                    } else {
-                        toast.error(res?.data?.message);
-                    }
-                })
-                .catch((err) => {
-                    toast.error(err?.response?.data?.message)
-                });
-        }
-    };
-
-    const handleDeleteCourseName = () => {
-        ApiDelete(`menu/deleteMenu/${idForDeleteCourseName}`)
-            .then((res) => {
-                if (res?.status == 200) {
-                    setShow(false);
-                    toast.success("Deleted Successfully");
-                    getAllCourseName();
-                    setPage(1);
-                    setCount(0);
-                    setCountPerPage(countPerPage);
-                } else {
-                    toast.error(res?.data?.message);
-                }
-            })
-            .catch((err) => {
-                toast.error(err?.response?.data?.message)
-            });
-    };
-
-    const handelUpdateCourseNameDetails = (e) => {
-        e.preventDefault();
-        if (validateFormForAddAdmin()) {
-            let data = []
-            selectedCourseType.map(o => data.push(o._id))
-            let Data = {
-                name: inputValueForAdd?.name,
-                // assignTo: data
-            };
-            ApiPut(`menu/updateMenu/${idForUpdateCourseNameData}`, Data)
-                .then((res) => {
-                    if (res?.status == 200) {
-                        setIsAddCourseName(false);
-                        toast.success(res?.data?.message);
-                        setInputValueForAdd({});
-                        getAllCourseName();
-                        setSelectedCourseType([]);
-                        setIsEditPopUp(false);
-
-                    } else {
-                        toast.error(res?.data?.message);
-                    }
-                })
-                .catch((err) => {
-                    toast.error(err?.response?.data?.message)
-                });
-        }
-    };
 
     let i = 0;
     const columns = [
         {
             name: "SNo",
-            cell: (row, index) => (page - 1) * countPerPage + (index + 1),
+            cell: (row, index) => index + 1,
             width: "65px",
         },
-       
         {
             name: "Name",
             selector: "name",
             sortable: true,
         },
-
-
-
         {
             name: "Actions",
             cell: (row) => {
                 return (
                     <>
-                     
-                        <>
-                        <CsvDownload
-                                className={``}
-                                data={dataCSV}
-                                filename="Donations.csv"
-                                style={{
-                                    //pass other props, like styles
-                                    backgroundColor: "#CC0001",
-                                    borderRadius: "6px",
-                                    border: "1px solid #fff",
-                                    display: "inline-block",
-                                    cursor: "pointer",
-                                    color: "#FFFFFF",
-                                    fontSize: "12px",
-                                    padding: "10px 18px",
-                                    textDecoration: "none",
-                                    position: "right",
-                                }}
-                            >
-                                Export to Excel
-                            </CsvDownload>
-                        </>
+                        <ReportExcel type={row} date={statesate} />
                     </>
                 );
             },
@@ -309,9 +152,9 @@ const Report = ({ getNewCount, title }) => {
     //for search data
 
 
-   
 
- 
+
+
     //for excel file
     const [allCourseNameExcel, setAllCourseNameExcel] = useState([]);
     const [dataCSV, setDataCSV] = useState([]);
@@ -344,6 +187,21 @@ const Report = ({ getNewCount, title }) => {
         }
     }, [allCourseNameExcel]);
 
+
+    const [statesate, setState] = useState([
+        {
+            startDate: null,
+            endDate: null,
+            key: 'selection'
+        }
+    ]);
+
+
+    const handleSetDateData = async (data) => {
+        console.log("date", data);
+        setState(data);
+    }
+
     return (
         <>
             <div className="card p-1">
@@ -353,41 +211,32 @@ const Report = ({ getNewCount, title }) => {
                         <div className="col d-flex justify-content-between">
                             <h2 className="pl-3 pt-2">Report</h2>
                         </div>
-                      
-                     
+                        <DateRangePickerComponent
+                            onChange={(e) => {
+                                handleSetDateData(e.target.value);
+                            }}
+                            showSelectionPreview={true}
+                            moveRangeOnFirstSelection={false}
+                            months={2}
+                            ranges={statesate}
+                            direction="horizontal"
+                        />
                     </div>
-
-                   
 
                     <DataTable
                         columns={columns}
-                        data={filteredCourseName}
+                        data={data}
                         customStyles={customStyles}
                         style={{
                             marginTop: "-3rem",
                         }}
-                        progressPending={isLoaderVisible}
                         progressComponent={
                             <Loader type="Puff" color="#334D52" height={30} width={30} />
                         }
                         highlightOnHover
-                        pagination
-                        paginationServer
-                        paginationTotalRows={count}
-                        paginationPerPage={countPerPage}
-                        paginationRowsPerPageOptions={[10, 20, 25, 50, 100]}
-                        paginationDefaultPage={page}
-                        onChangePage={(page) => {
-                            setPage(page);
-                        }}
-                        onChangeRowsPerPage={(rowPerPage) => {
-                            setCountPerPage(rowPerPage);
-                        }}
                     />
                 </div>
             </div>
-
-     
         </>
     );
 };

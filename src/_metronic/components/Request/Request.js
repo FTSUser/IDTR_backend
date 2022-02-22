@@ -50,7 +50,7 @@ const Request = ({ getNewCount, title }) => {
     const [isEdit, setIsEdit] = useState(false);
 
     useEffect(() => {
-        document.title = "Honda | Request";
+        document.title = "Honda | Recheck Request ";
     }, []);
 
 
@@ -127,10 +127,22 @@ const Request = ({ getNewCount, title }) => {
             width: "65px",
         },
         {
-            name: "Name",
+            name: "First Name",
 
             sortable: true,
             selector: row => row?.fname,
+        },
+        {
+            name: "Last Name",
+
+            sortable: true,
+            selector: row => row?.lname,
+        },
+        {
+            name: "Email",
+
+            sortable: true,
+            selector: row => row?.email ? row?.email : '-' ,
         },
         {
             name: "Mobile Number",
@@ -150,7 +162,7 @@ const Request = ({ getNewCount, title }) => {
                         </div>
                         <div className="d-flex justify-content-between">
                             <Tooltip title="Rejected" arrow>
-                                <button className="btn btn-success" onClick={() => rejected(row)}>Rejected</button>
+                                <button className="btn btn-success" onClick={() => rejected(row)}>Reject</button>
                             </Tooltip>
                         </div>
 
@@ -240,7 +252,7 @@ const Request = ({ getNewCount, title }) => {
                 <div className="p-2 mb-2">
                     <div className="row mb-4 pr-3">
                         <div className="col d-flex justify-content-between">
-                            <h2 className="pl-3 pt-2">Request</h2>
+                            <h2 className="pl-3 pt-2"> Recheck Request</h2>
                         </div>
                         <div className="col">
                             <div>
@@ -249,7 +261,7 @@ const Request = ({ getNewCount, title }) => {
                                     className={`form-control form-control-lg form-control-solid `}
                                     name="search"
                                     value={search}
-                                    placeholder="Search Request"
+                                    placeholder="Search  Recheck Request"
                                     onChange={(e) => handleSearch(e)}
                                 />
                             </div>

@@ -154,10 +154,7 @@ const Question = (props) => {
             errorsForAdd["type"] = "*Please Enter type!";
         }
 
-        if (inputValueForAdd && !inputValueForAdd.weight) {
-            formIsValid = false;
-            errorsForAdd["weight"] = "*Please Enter weight!";
-        }
+       
 
         if (inputValueForAdd && !inputValueForAdd.Category) {
             formIsValid = false;
@@ -181,7 +178,7 @@ const Question = (props) => {
                 type: inputValueForAdd.type,
                 Option: option,
                 language: inputValueForAdd.language,
-                weight: inputValueForAdd.weight,
+                // weight: inputValueForAdd.weight,
                 Category: inputValueForAdd.Category,
                 image: inputValueForAdd.image
 
@@ -238,7 +235,7 @@ const Question = (props) => {
                 type: inputValueForAdd.type,
                 Option: option,
                 language: inputValueForAdd.language,
-                weight: inputValueForAdd.weight,
+                // weight: inputValueForAdd.weight,
                 Category: inputValueForAdd.Category,
                 image: inputValueForAdd.image
             };
@@ -272,7 +269,7 @@ const Question = (props) => {
             type: inputValueForAdd.type,
             Option: option,
             language: inputValueForAdd.language,
-            weight: inputValueForAdd.weight,
+            // weight: inputValueForAdd.weight,
             Category: inputValueForAdd.Category,
             image: inputValueForAdd.image,
             isActive: status
@@ -374,11 +371,11 @@ const Question = (props) => {
             },
             sortable: true,
         },
-        {
-            name: "Weight",
-            selector: "weight",
-            sortable: true,
-        },
+        // {
+        //     name: "Weight",
+        //     selector: "weight",
+        //     sortable: true,
+        // },
 
         {
             name: "Actions",
@@ -1032,7 +1029,7 @@ const Question = (props) => {
 
 
                                             >
-                                                <option>Select Languagae...</option>
+                                                <option>Select Language</option>
                                                 <option value="english" selected={
                                                     inputValueForAdd?.language ===
                                                         "english"
@@ -1148,7 +1145,7 @@ const Question = (props) => {
 
 
 
-                                <div className="form-group row">
+                                {/* <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
                                         Weight
                                     </label>
@@ -1175,7 +1172,7 @@ const Question = (props) => {
                                             {errorsForAdd["weight"]}
                                         </span>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
