@@ -677,7 +677,7 @@ const User = ({ getNewCount, title }) => {
       selector: row => row?.uid?.email,
       sortable: true,
       cell: (row) => {
-        return <span>{row?.uid?.email === "" ? "-" : row?.uid?.email}</span>;
+        return <span>{row?.uid?.email ? row?.uid?.email : "-"}</span>;
       },
     },
     {
