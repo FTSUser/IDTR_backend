@@ -929,12 +929,15 @@ const Batch = ({ getNewCount, title }) => {
                     _id: row?._id,
                     DataEntry: row?.DataEntry._id,
                     Examiner: row?.Examiner._id,
+                  
                   });
+                  
+                  setdateTimezon(row?.tdid)
                   setIsUpdateAnnouncement(true);
                   setIdForUpdateAnnouncementData(row._id);
                   getExaminerAndApi();
                   getDataenterAndApi();
-                  getDateAndApi(row?.date);
+                  // getDateAndApi(row?.date);
                   setDate(new Date(row?.date));
                   const tdidId = row?.tdid.map((data) => {
                     return data._id;
@@ -1796,6 +1799,7 @@ const Batch = ({ getNewCount, title }) => {
                               className="mr-3 "
                               type="checkbox"
                               name="getBatch"
+                              disabled
                               defaultChecked={batchInfo.includes(data._id)}
                               value={data._id}
                               onChange={(e) => {

@@ -75,6 +75,7 @@ const Feedback = ({ getNewCount, title }) => {
     {
       name: "Email",
       selector: "email",
+      width: "250px",
       sortable: true,
       cell: (row) => {
         return <span>{row?.email === "" ? "-" : row?.email}</span>;

@@ -1029,7 +1029,8 @@ const Question = (props) => {
 
 
                                             >
-                                                <option>Select Language</option>
+                                                <option>Select Language
+                                                </option>
                                                 <option value="english" selected={
                                                     inputValueForAdd?.language ===
                                                         "english"
@@ -1442,7 +1443,7 @@ const Question = (props) => {
                 </Modal.Header>
                 <Modal.Body>
                     Are You Sure To Want To{" "}
-                    {statusDisplay === true ? "De-active" : "Active"} this course type
+                    {statusDisplay === true ? "De-active" : "Active"} this Question
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseShowStatus}>

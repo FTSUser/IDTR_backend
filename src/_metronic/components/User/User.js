@@ -3575,6 +3575,20 @@ const User = ({ getNewCount, title }) => {
                       />
                     )}
                   </div>
+                  <div className="honda-text-grid-items">
+                    <span>Medical Certificate:</span>
+                    {dataViewMore?.medicalCertificate === null ||
+                      dataViewMore?.medicalCertificate === "" ||
+                      !dataViewMore?.medicalCertificate ? (
+                      "No Data"
+                    ) : (
+                      <img
+                        className="view"
+                        src={dataViewMore?.medicalCertificate}
+                        alt="No Image"
+                      />
+                    )}
+                  </div>
                   </div>
                 
               </div>
