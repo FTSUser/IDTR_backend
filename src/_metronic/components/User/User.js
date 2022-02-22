@@ -38,6 +38,7 @@ import { Button } from "react-bootstrap";
 import Logo from "./honda.png";
 import { useReactToPrint } from "react-to-print";
 import ReactToPrint from "react-to-print";
+import { addDays } from "date-fns";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -243,6 +244,7 @@ const User = ({ getNewCount, title }) => {
   const [paymentId, setPaymentId] = useState();
 
   const [CourceType, setCourceType] = useState("");
+  const [dateForFilter, setDateForFilter] = useState();
   const [updateCall, setUpdateCall] = useState(false);
 
   const [typeTrueFalseform, settypeTrueFalseform] = useState(false);
@@ -288,6 +290,10 @@ const User = ({ getNewCount, title }) => {
   });
 
   useEffect(() => { }, [tableFilterData]);
+  useEffect(() => {
+    console.log("dateForFilter",dateForFilter);
+
+   }, [dateForFilter]);
 
   useEffect(() => {
     console.log("formdata", formdata);
@@ -354,21 +360,42 @@ const User = ({ getNewCount, title }) => {
   const onChangeDiscloser = (e) => {
     setdicloser(e);
   };
-  const handleSetDateData = (date) => {
-    setTableFilterData([]);
-    if (!date) {
-      setTableFilterData(filteredUser);
-    } else {
-      let newData = filteredUser.filter((data) => {
-        if (
-          moment(data.createdAt).unix() > moment(date[0]).unix() &&
-          moment(data.createdAt).unix() < moment(date[1]).unix()
-        ) {
-          return data;
-        }
+  const handleSetDateData =async  (dateForFilter) => {
+    console.log("date",dateForFilter);
+    if(dateForFilter){
+
+    
+    await ApiGet(
+      `register/getRecordsByRange?startDate=${moment(dateForFilter[0]).format('MM/DD/YYYY')}&endDate=${moment(dateForFilter[1]).format('MM/DD/YYYY')}&page=${page}&limit=${countPerPage}`
+    )
+      .then((res) => {
+        // setTableFilterData(tableFilterData);
+       console.log("res",res);
+       setCount(res?.data?.payload?.count)
+       setTableFilterData(res?.data?.payload?.Question);
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message);
       });
-      setTableFilterData(newData);
+    }else{
+      
+      getAllUser()
     }
+    // setTableFilterData([]);
+    // if (!date) {
+    //   setTableFilterData(tableFilterData);
+      
+    // } else {
+    //   let newData = tableFilterData.filter((data) => {
+    //     if (
+    //       moment(data.createdAt).unix() > moment(date[0]).unix() &&
+    //       moment(data.createdAt).unix() < moment(date[1]).unix()
+    //     ) {
+    //       return data;
+    //     }
+    //   });
+    //   setTableFilterData(newData);
+    // }
   };
 
   //test
@@ -395,7 +422,13 @@ const User = ({ getNewCount, title }) => {
   //end test
 
   useEffect(() => {
-    getAllUser();
+    if(dateForFilter){
+      handleSetDateData(dateForFilter)
+    }else{
+      
+      getAllUser();
+    }
+    
   }, [page, countPerPage]);
 
   const getAllUser = async () => {
@@ -513,21 +546,7 @@ const User = ({ getNewCount, title }) => {
               </div>
 
             </div>
-            <Tooltip title="Make a Payment" arrow>
-              <div
-                className="cursor-pointer pl-2"
-                onClick={() => {
-                  setIsPaymentPopUp(true);
-                  setDataForPayment(row);
-                }}
-              >
-                {row?.isPaymentDone === false ? (
-                  <img src="media/allIconsForTable/makepayment.png" />
-                ) : (
-                  ""
-                )}
-              </div>
-            </Tooltip>
+          
             <div className="cursor-pointer pl-2">
               {!row?.uid ? (
                 <>
@@ -628,7 +647,23 @@ const User = ({ getNewCount, title }) => {
                 ""
               )}
             </div>
+            <Tooltip title="Make a Payment" arrow>
+              <div
+                className="cursor-pointer pl-2"
+                onClick={() => {
+                  setIsPaymentPopUp(true);
+                  setDataForPayment(row);
+                }}
+              >
+                {row?.isPaymentDone === false ? (
+                  <img src="media/allIconsForTable/makepayment.png" />
+                ) : (
+                  ""
+                )}
+              </div>
+            </Tooltip>
           </>
+          
         );
       },
     },
@@ -1368,6 +1403,13 @@ const User = ({ getNewCount, title }) => {
       setTab(key);
     }
   };
+  const [statesate, setState] = useState([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 7),
+      key: 'selection'
+    }
+  ]);
   // const previousClick = (e, key) => {
   //   if (key === "course") {
   //     let index = getAllVehicalData?.Question?.findIndex((e) => e._id === formdata?.vehicleCategory);
@@ -1835,7 +1877,7 @@ const User = ({ getNewCount, title }) => {
           </div>
         </div>
         <div style={{ width: "30%", paddingLeft: "15px" }}>
-          <DateRangePickerComponent
+          {/* <DateRangePickerComponent
             placeholder="Enter Date Range"
             startDate={startValue}
             endDate={endValue}
@@ -1845,7 +1887,18 @@ const User = ({ getNewCount, title }) => {
             onChange={(e) => {
               handleSetDateData(e.target.value);
             }}
-          ></DateRangePickerComponent>
+          ></DateRangePickerComponent> */}
+          <DateRangePickerComponent
+   onChange={(e) => {
+    handleSetDateData(e.target.value);
+  setDateForFilter(e.target.value)
+  }}
+  showSelectionPreview={true}
+  moveRangeOnFirstSelection={false}
+  months={2}
+  ranges={statesate}
+  direction="horizontal"
+/>
         </div>
         <div className="p-2 mb-2">
           <DataTable
@@ -3193,20 +3246,7 @@ const User = ({ getNewCount, title }) => {
             {isViewMoreUser === true ? (
               <div className="honda-container">
                 <div className="honda-text-grid">
-                  <div className="honda-text-grid-items">
-                    <span>Photo:</span>
-                    {dataViewMore?.passportPhoto === null ||
-                      dataViewMore?.passportPhoto === "" ||
-                      !dataViewMore?.passportPhoto ? (
-                      "No Data"
-                    ) : (
-                      <img
-                        className="view"
-                        src={dataViewMore?.passportPhoto}
-                        alt="No Image"
-                      />
-                    )}
-                  </div>
+                
                   <div className="honda-text-grid-items">
                     <span>First Name:</span>
                     <p
@@ -3459,37 +3499,7 @@ const User = ({ getNewCount, title }) => {
                       className=""
                     />
                   </div>
-                  <div className="honda-text-grid-items">
-                    <span>Other Information:</span>
-                  </div>
-                  <div className="honda-text-grid-items">
-                    <span>Driving License Image:</span>
-                    {dataViewMore?.drivingLicense === null ||
-                      dataViewMore?.drivingLicense === "" ||
-                      !dataViewMore?.drivingLicense ? (
-                      "No Data"
-                    ) : (
-                      <img
-                        className="view"
-                        src={dataViewMore?.drivingLicense}
-                        alt="No Image"
-                      />
-                    )}
-                  </div>
-                  <div className="honda-text-grid-items">
-                    <span>ID Proof:</span>
-                    {dataViewMore?.IDproof === null ||
-                      dataViewMore?.IDproof === "" ||
-                      !dataViewMore?.IDproof ? (
-                      "No Data"
-                    ) : (
-                      <img
-                        className="view"
-                        src={dataViewMore?.IDproof}
-                        alt="No Image"
-                      />
-                    )}
-                  </div>
+                  
                   <div className="honda-text-grid-items">
                     <span>Authority City:</span>
                     <p
@@ -3519,6 +3529,54 @@ const User = ({ getNewCount, title }) => {
                     />
                   </div>
                 </div>
+                <div className="honda-text-grid-items">
+                    <span>Other Information:</span>
+                  </div>
+                  <div className="honda-text-grid">
+                  <div className="honda-text-grid-items">
+                    <span>Photo:</span>
+                    {dataViewMore?.passportPhoto === null ||
+                      dataViewMore?.passportPhoto === "" ||
+                      !dataViewMore?.passportPhoto ? (
+                      "No Data"
+                    ) : (
+                      <img
+                        className="view"
+                        src={dataViewMore?.passportPhoto}
+                        alt="No Image"
+                      />
+                    )}
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Driving License Image:</span>
+                    {dataViewMore?.drivingLicense === null ||
+                      dataViewMore?.drivingLicense === "" ||
+                      !dataViewMore?.drivingLicense ? (
+                      "No Data"
+                    ) : (
+                      <img
+                        className="view"
+                        src={dataViewMore?.drivingLicense}
+                        alt="No Image"
+                      />
+                    )}
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>ID Proof:</span>
+                    {dataViewMore?.IDproof === null ||
+                      dataViewMore?.IDproof === "" ||
+                      !dataViewMore?.IDproof ? (
+                      "No Data"
+                    ) : (
+                      <img
+                        className="view"
+                        src={dataViewMore?.IDproof}
+                        alt="No Image"
+                      />
+                    )}
+                  </div>
+                  </div>
+                
               </div>
             ) : null}
           </List>

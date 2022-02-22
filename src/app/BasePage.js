@@ -35,6 +35,7 @@ import HelpfulTips from "../_metronic/components/HelpfulTips/HelpfulTips";
 import Request from "../_metronic/components/Request/Request";
 import QuestionCategory from "../_metronic/components/QuestionCategory/QuestionCategory";
 import Images from "../_metronic/components/Images/Images";
+import Report from "../_metronic/components/Report/Report";
 
 export default function BasePage() {
   let userInfo = getUserInfo()
@@ -65,6 +66,7 @@ export default function BasePage() {
           <ContentRoute exact path="/helpful-tips" component={HelpfulTips} />
           <ContentRoute exact path="/request" component={Request} />
           <ContentRoute exact path="/images" component={Images} />
+          <ContentRoute exact path="/report" component={Report} />
 
 
           <ContentRoute exact path="/announcement" component={Announcement} />
