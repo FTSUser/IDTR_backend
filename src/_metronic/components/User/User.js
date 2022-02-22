@@ -672,14 +672,7 @@ const User = ({ getNewCount, title }) => {
       selector: "ip",
       sortable: true,
     },
-    {
-      name: "User Email",
-      selector: row => row?.uid?.email,
-      sortable: true,
-      cell: (row) => {
-        return <span>{row?.uid?.email === "" ? "-" : row?.uid?.email}</span>;
-      },
-    },
+   
     {
       name: "User Phone",
       selector: row => row?.uid?.phone,
@@ -797,7 +790,7 @@ const User = ({ getNewCount, title }) => {
         let data = {
           Number: key + 1,
           UserID: registerUser?._id,
-          RegistrationTypes: registerUser?.uid?.Registrationtype,
+          RegistrationType: registerUser?.Registrationtype,
           FirstName: registerUser?.fname,
           MiddleName: registerUser?.mname ? registerUser?.mname : "-",
           LastName: registerUser?.lname ? registerUser?.lname : "-",
@@ -1664,8 +1657,10 @@ const User = ({ getNewCount, title }) => {
 
   const uploadCertificate = async () => {
     let urls = {};
+    let data = [];
     if (formdata.passport && formdata.driviniglicencephoto) {
       if (formdata.passport && typeof formdata.passport !== "string") {
+        data.push(formdata.passport);
         let passport1 = await uploadS3bucket(formdata.passport);
         urls = { passport: passport1, ...urls };
       }
@@ -1673,6 +1668,7 @@ const User = ({ getNewCount, title }) => {
         formdata.driviniglicencephoto &&
         typeof formdata.driviniglicencephoto !== "string"
       ) {
+        data.push(formdata.driviniglicencephoto);
         let driviniglicencephoto = await uploadS3bucket(
           formdata.driviniglicencephoto
         );
@@ -1682,14 +1678,20 @@ const User = ({ getNewCount, title }) => {
         formdata.mediacalCertificate &&
         typeof formdata.mediacalCertificate !== "string"
       ) {
+        data.push(formdata.mediacalCertificate);
         let mediacalCertificate = await uploadS3bucket(
           formdata.mediacalCertificate
         );
         urls = { mediacalCertificate: mediacalCertificate, ...urls };
       }
       if (formdata.idProof && typeof formdata.idProof !== "string") {
+        data.push(formdata.idProof);
+
         let idProof = await uploadS3bucket(formdata.idProof);
         urls = { idProof: idProof, ...urls };
+      }
+      if (Object.keys(urls).length === data.length) {
+        toast.success("Document uploaded successfully ");
       }
       setFormData({ ...formdata, ...urls });
     } else {
@@ -1712,7 +1714,7 @@ const User = ({ getNewCount, title }) => {
     let data = await Reacts3Client.uploadFile(f, filename);
     try {
       if (data.status === 204) {
-        toast.success("Document uploaded successfully ");
+       
         urls = data.location;
         return urls;
       } else {

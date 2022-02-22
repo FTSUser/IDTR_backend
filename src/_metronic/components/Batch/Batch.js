@@ -2108,18 +2108,22 @@ const Batch = ({ getNewCount, title }) => {
 
                           {data?.Qname}
                         </div>
+                        <div>
+  <img src={data?.image} alt="" />
+</div>
                         <div className="">
                           Right / Wrong:{" "}
-                          <span>{data.isRight ? "Right" : "Wrong"}</span>
+                          <span>{data.isRight ? <div className="green">Right</div> : <div className="red">Wrong</div>}</span>
                         </div>
                         <div>
                           {data?.Option.map((record, i) => (
                             <>
                               {record?.istrue}
+                  
                               {data?.Answer?.findIndex(
                                 (e) => e === record?.no
                               ) !== -1 ? (
-                                <div className="green">{record?.name}</div>
+                                <div className=""><b>{record?.name}</b></div>
                               ) : (
                                 <div className="">{record?.name}</div>
                               )}

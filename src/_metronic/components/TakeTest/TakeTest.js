@@ -722,7 +722,7 @@ const TakeTest = ({ getNewCount, title }) => {
                     <h4>{questionData[questionKEY]?.Qname}</h4>
                   </div>
                   <div>
-                    <img src={questionData[questionKEY]?.image ? questionData[questionKEY]?.image : ''} alt="" />
+                    <img src={questionData[questionKEY]?.image ? questionData[questionKEY]?.image : ''} className="img-fluid" style={{height:"200px"}} alt="" />
                   </div>
                   <div>
                     <div className="mb-4">

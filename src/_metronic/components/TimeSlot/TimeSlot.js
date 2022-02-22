@@ -25,6 +25,7 @@ import "rc-time-picker/assets/index.css";
 import TimePicker from "rc-time-picker";
 import DatePicker from "react-datepicker";
 import CsvDownload from "react-json-to-csv";
+import { ExportCSV } from "./SampleExcel";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -300,12 +301,14 @@ const TimeSlot = ({ getNewCount, title }) => {
 
   const handelAddCourseNameDetails = (e) => {
     e.preventDefault();
-    let s = moment(new Date(startTime)).format("HH:MM")
-    let start  = moment(date).set({hour:s.split(":")[0],minute:s.split(":")[1]})
+    let sTimeHour = new Date(startTime).getHours();
+    let sTimeMinute = new Date(startTime).getMinutes();
+    let start  = moment(date).set({hour:sTimeHour,minute:sTimeMinute})
 
-    let eTime = moment(new Date(endTime)).format("HH:MM")
-    let end  = moment(date).set({hour:eTime.split(":")[0],minute:eTime.split(":")[1]})
-   console.log("startTimestartTime",date,start,s);
+    let eTimeHour = new Date(endTime).getHours();
+    let eTimeMinute = new Date(endTime).getMinutes();
+    let end  = moment(date).set({hour:eTimeHour,minute:eTimeMinute})
+  
     if (validateForm()) {
       let Data = {
         date: date,
@@ -317,6 +320,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         vcid: inputValueForAdd?.VehicleCategory,
         ccid: inputValueForAdd?.CourseCategory
       };
+      console.log("data",Data);
       ApiPost(`trainingDate/addDate`, Data)
         .then((res) => {
           if (res?.status == 200) {
@@ -609,6 +613,33 @@ const TimeSlot = ({ getNewCount, title }) => {
     }
   }, [debouncedSearchTerm]);
 
+  const onBulkUpload = async (e) => {
+    e.preventDefault();
+    if (e.target.files[0]) {
+
+        let formData = new FormData();
+        formData.append("csv", e.target.files[0]);
+        await ApiPost("trainingDate/uploadcsv", formData)
+            .then((res) => {
+                if (res.data?.result === 0) {
+                  getAllTimeSlot();
+                    toast.success(res.data.message);
+                }else{
+                    toast.error(res.data.message);
+                }
+                let img = document.getElementById("upload");
+                img.value = null
+            })
+            .catch((err) => {
+                toast.error(err);
+            });
+    } else {
+        toast.error("Please Select Excel File !");
+    }
+};
+
+
+
   return (
     <>
       <div className="card p-1">
@@ -665,6 +696,27 @@ const TimeSlot = ({ getNewCount, title }) => {
                 Export to Excel
               </CsvDownload>
             </div>
+            <div>
+                            <ExportCSV />{" "}
+                            <input
+                                type="file"
+                                id="upload"
+                                style={{ display: "none" }}
+                                className="btn btn-success"
+                                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                onChange={(e) => onBulkUpload(e)}
+
+                            />
+                            <buttton
+                                className="btn btn-success mr-2"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    document.getElementById("upload").click();
+                                }}
+
+                            >Upload Excel File</buttton>
+
+                        </div>
           </div>
 
           {/* delete model */}

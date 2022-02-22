@@ -628,11 +628,10 @@ const Question = (props) => {
             setMcqCheck(false);
         }
     }
-
     const onBulkUpload = async (e) => {
         e.preventDefault();
         if (e.target.files[0]) {
-
+    
             let formData = new FormData();
             formData.append("csv", e.target.files[0]);
             await ApiPost("question/uploadcsv", formData)
@@ -653,6 +652,8 @@ const Question = (props) => {
             toast.error("Please Select Excel File !");
         }
     };
+    
+    
 
 
 
