@@ -1094,8 +1094,9 @@ const User = ({ getNewCount, title }) => {
     ApiPost("register/addRegister", data)
       .then((res) => {
         if (res?.status == 200) {
-          setIsAddAnnouncement(false);
           toast.success(res?.data?.message);
+          handleAddAdminClose()
+          // setIsAddAnnouncement(false);
           // setInputValueForAdd({});
           getAllUser();
         } else {
