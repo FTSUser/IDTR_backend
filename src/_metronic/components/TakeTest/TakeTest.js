@@ -859,7 +859,7 @@ const TakeTest = ({ getNewCount, title }) => {
                   </div>
 
                   {selectedTopSubjects?.length > 0 && (
-                    <div className="">
+                    <div className="text-center mb-3">
                       <div
                         className="btn btn-success"
                         onClick={() => addUserAttedence()}

@@ -120,6 +120,7 @@ const Payment = ({ getNewCount, title }) => {
       },
       selector: (row) => row?.uid?.phone,
       sortable: true,
+      width: "150px",
     },
     {
       name: "Date",
@@ -129,7 +130,8 @@ const Payment = ({ getNewCount, title }) => {
       selector: (row) => row?.created,
       sortable: true,
 
-      // width: "65px",
+      width: "150px",
+
     },
     {
       name: "Time",
@@ -161,7 +163,7 @@ const Payment = ({ getNewCount, title }) => {
       selector: (row) => row?.createdAt,
       sortable: true,
 
-      // width: "65px",
+     
     },
 
     {

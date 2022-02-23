@@ -36,6 +36,7 @@ import Request from "../_metronic/components/Request/Request";
 import QuestionCategory from "../_metronic/components/QuestionCategory/QuestionCategory";
 import Images from "../_metronic/components/Images/Images";
 import Report from "../_metronic/components/Report/Report";
+import CancleCourse from "../_metronic/components/CanleCourse/CancleCourse";
 
 export default function BasePage() {
   let userInfo = getUserInfo()
@@ -67,6 +68,7 @@ export default function BasePage() {
           <ContentRoute exact path="/recheck-request" component={Request} />
           <ContentRoute exact path="/images" component={Images} />
           <ContentRoute exact path="/report" component={Report} />
+          <ContentRoute exact path="/cancel-course" component={CancleCourse} />
 
 
           <ContentRoute exact path="/announcement" component={Announcement} />

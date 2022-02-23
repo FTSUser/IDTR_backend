@@ -60,6 +60,9 @@ const Announcement = ({ getNewCount, title }) => {
   const [count, setCount] = useState(0);
   const [countPerPage, setCountPerPage] = useState(10);
   const [search, setSearch] = useState("");
+  const [showStatus, setShowStatus] = useState(false);
+  const [idForUpdateCourseStatus, setIdForUpdateCourseStatus] = useState("");
+  const [statusDisplay, setStatusDisplay] = useState(false);
 
   useEffect(() => {
     document.title = "Honda | Announcement";
@@ -73,7 +76,26 @@ const Announcement = ({ getNewCount, title }) => {
     setInputValue({ ...inputValue, [name]: value });
     setErrors({ ...errors, [name]: "" });
   };
-
+  const handleCloseShowStatus = () => {
+    setShowStatus(false);
+  };
+  const handleUpdateStatusCourseName = (status) => {
+    ApiPut(`announcement/updateStatus/${idForUpdateCourseStatus}`, {
+      isActive: status,
+    })
+      .then((res) => {
+        if (res?.status == 200) {
+          setShowStatus(false);
+          toast.success("Status updated Successfully");
+          getAllAnnouncement();
+        } else {
+          toast.error(res?.data?.message);
+        }
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message);
+      });
+  };
   const handleOnChnageAdd = (e) => {
     const { name, value } = e.target;
     setInputValueForAdd({ ...inputValueForAdd, [name]: value });
@@ -174,7 +196,6 @@ const Announcement = ({ getNewCount, title }) => {
       let Data = {
         date: date.toLocaleDateString(),
         name: inputValueForAdd.name,
-
         type: inputValueForAdd.type,
         description: description,
         image: inputValueForAdd.image,
@@ -385,7 +406,6 @@ const Announcement = ({ getNewCount, title }) => {
       let Data = {
         date: date,
         name: inputValue.name,
-
         type: inputValue.type,
         description: description,
         image: inputValue.image,
@@ -503,7 +523,24 @@ const Announcement = ({ getNewCount, title }) => {
       cell: (row) => {
         return (
           <>
+           <div
+              className="cursor-pointer"
+              onClick={() => {
+                setShowStatus(true);
+                setIdForUpdateCourseStatus(row?._id);
+                setStatusDisplay(row?.isActive);
+              }}
+            >
+              <Tooltip title="Status Property" arrow>
+                <div className="cus-medium-button-style widthfixed">
+                  <button className="btn btn-success mr-2">
+                    {row?.isActive === true ? "Active" : "Deactive"}
+                  </button>
+                </div>
+              </Tooltip>
+            </div>
             <div className="d-flex justify-content-between">
+           
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
@@ -524,6 +561,7 @@ const Announcement = ({ getNewCount, title }) => {
                 </Tooltip>
               </div>
             </div>
+
             <div
               className="cursor-pointer"
               onClick={() => {
@@ -664,6 +702,30 @@ const Announcement = ({ getNewCount, title }) => {
               </button>
             </div>
           </div>
+
+
+          <Modal show={showStatus} onHide={handleCloseShowStatus}>
+            <Modal.Header closeButton>
+              <Modal.Title className="text-danger">Alert!</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are You Sure To Want To{" "}
+              {statusDisplay === true ? "De-active" : "Active"} this Annoucemet
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseShowStatus}>
+                Cancel
+              </Button>
+              <Button
+                variant="danger"
+                onClick={(e) => {
+                  handleUpdateStatusCourseName(!statusDisplay);
+                }}
+              >
+                {statusDisplay === true ? "De-active" : "Active"}
+              </Button>
+            </Modal.Footer>
+          </Modal>
 
           {/* delete model */}
           <Modal show={show} onHide={handleClose}>
@@ -829,16 +891,23 @@ const Announcement = ({ getNewCount, title }) => {
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
-                      <input
-                        type="text"
-                        className={`form-control form-control-lg form-control-solid `}
-                        id="type"
+
+                      <select
+                        className={`form-control form-control-lg form-control-solid`}
                         name="type"
                         value={inputValueForAdd.type}
                         onChange={(e) => {
                           handleOnChnageAdd(e);
-                        }}
-                      />
+                        }}>
+                        <option>Select Type
+                        </option>
+                        <option value="General" >General </option>
+                        <option value="News">News</option>
+                        <option value="Update" >Update</option>
+                        <option value="Important">Important</option>
+
+                      </select>
+
                     </div>
                     <span
                       style={{
@@ -1042,16 +1111,41 @@ const Announcement = ({ getNewCount, title }) => {
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
-                      <input
-                        type="text"
-                        className={`form-control form-control-lg form-control-solid `}
-                        id="type"
+                    <select
+                        className={`form-control form-control-lg form-control-solid`}
                         name="type"
                         value={inputValue.type}
                         onChange={(e) => {
                           handleOnChnage(e);
-                        }}
-                      />
+                        }}>
+                        <option>Select Type
+                        </option>
+                        <option value="General" selected={
+                          inputValue?.type ===
+                            "General"
+                            ? true
+                            : false
+                        }>General </option>
+                        <option value="News" selected={
+                          inputValue?.type ===
+                            "News"
+                            ? true
+                            : false
+                        }>News</option>
+                        <option value="Update" selected={
+                          inputValue?.type ===
+                            "Update"
+                            ? true
+                            : false
+                        }>Update</option>
+                        <option value="Important" selected={
+                          inputValue?.type ===
+                            "Important"
+                            ? true
+                            : false
+                        }>Important</option>
+
+                      </select>
                     </div>
                     <span
                       style={{

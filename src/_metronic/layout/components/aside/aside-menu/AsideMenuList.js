@@ -36,6 +36,18 @@ export function AsideMenuList({ layoutProps }) {
             <span className="menu-text">Dashboard</span>
           </NavLink>
         </li>
+        {/* <li
+            className={`menu-item ${getMenuItemActive("/menu", false)}`}
+            aria-haspopup="true"
+          >
+            <NavLink className="menu-link" to="/menu">
+              <span className="svg-icon menu-icon">
+
+                <img src="media/allIconsForTable/user.svg" />
+              </span>
+              <span className="menu-text">Menu</span>
+            </NavLink>
+          </li> */}
         {
           userInfo?.menu[0]?.menu?.map((data, key) => {
             return (
