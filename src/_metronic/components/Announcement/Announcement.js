@@ -831,7 +831,7 @@ const Announcement = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Date
+                    Enter Announcement Date
                   </label>
                   <div className="col-lg-9 col-xl-6 cus-data-input-style">
                     <div>
@@ -858,7 +858,7 @@ const Announcement = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Name
+                    Enter Announcement Name
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -887,7 +887,7 @@ const Announcement = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Type
+                    Enter Announcement Type
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -923,7 +923,7 @@ const Announcement = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Description
+                    Enter Announcement Description
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -952,7 +952,7 @@ const Announcement = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Image
+                  Announcement Image
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -1051,7 +1051,7 @@ const Announcement = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Date
+                    Enter Announcement Date
                   </label>
                   <div className="col-lg-9 col-xl-6 cus-data-input-style">
                     <div>
@@ -1078,7 +1078,7 @@ const Announcement = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Name
+                    Enter Announcement Name
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -1107,7 +1107,7 @@ const Announcement = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Type
+                    Enter Announcement Type
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -1161,7 +1161,7 @@ const Announcement = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Description
+                    Enter Announcement Description
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -1191,7 +1191,7 @@ const Announcement = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Image
+                  Announcement  Image
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
