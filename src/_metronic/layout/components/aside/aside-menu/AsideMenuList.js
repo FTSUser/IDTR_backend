@@ -156,7 +156,7 @@ export function AsideMenuList({ layoutProps }) {
                 </li>
               ) : <li
                 className={`menu-item menu-item-submenu ${getMenuItemActive(
-                  "/dashboard",
+                  `/${data?.name.trim().toLowerCase().replace(' ', '-')}`,
                   true
                 )}`}
                 aria-haspopup="true"
