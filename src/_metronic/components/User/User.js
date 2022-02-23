@@ -1633,7 +1633,7 @@ const User = ({ getNewCount, title }) => {
       coursenameid: formdata.courseName,
     };
     ApiGet(
-      `trainingDate/getData?date=${data.date}`
+      `trainingDate/getDatePrevious?date=${data.date}`
     ).then((res) => {
       if (res.data.payload) {
         // setTimeout(() => {
