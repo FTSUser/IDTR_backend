@@ -112,6 +112,71 @@ export const ReportExcel = (props) => {
         });
         return modifyData;
     }
+    const onVehicleCategoryModifyData = async (array) => {
+        let modifyData = [];
+        array.map((registerUser, key) => {
+             let data = {
+                Number: key + 1,
+                CreatedAt: moment(registerUser?.createdAt).format("ll"),
+                CreatedBy: registerUser?.createdBy,
+                VehicleCategory: registerUser?.vehicleCategory,
+                VehicleCategoryID: registerUser?._id,
+                Description: registerUser?.description,
+                IsActive: registerUser?.isActive,
+                UpdatedAt: moment(registerUser?.updatedAt).format("ll"),
+                UpdatedBy: registerUser?.updatedBy,
+              };
+            modifyData.push(data);
+        });
+        return modifyData;
+    }
+    const onCourseTypeModifyData = async (array) => {
+        let modifyData = [];
+        array.map((registerUser, key) => {
+            let data = {
+                CreatedAt: moment(registerUser?.createdAt).format("ll"),
+                CreatedBy: registerUser?.createdBy,
+                CourseType: registerUser?.courseType,
+                CourseTypeId: registerUser?._id,
+                Description: registerUser?.description,
+                IsActive: registerUser?.isActive,
+                UpdatedAt: moment(registerUser?.updatedAt).format("ll"),
+                UpdatedBy: registerUser?.updatedBy,
+                CreatedAtVC: moment(registerUser?.vcid?.createdAt).format("ll"),
+                CreatedByVC: registerUser?.vcid?.createdBy,
+                VehicleCategory: registerUser?.vcid?.vehicleCategory,
+                VehicleCategoryId: registerUser?.vcid?._id,
+                DescriptionVC: registerUser?.vcid?.description,
+                IsActiveVC: registerUser?.vcid?.isActive,
+                UpdatedAtVC: moment(registerUser?.vcid?.updatedAt).format("ll"),
+                UpdatedByVC: registerUser?.vcid?.updatedBy,
+              };
+            modifyData.push(data);
+        });
+        return modifyData;
+    }
+    const onCourseCategoryModifyData = async (array) => {
+        let modifyData = [];
+        array.map((registerUser, key) => {
+            let data = {
+                Number: key + 1,
+                CourseCategory: registerUser?.courseCategory,
+                CourseCategoryId: registerUser?._id,
+                CourseType: registerUser?.ctid?.courseType,
+                CourseTypeId: registerUser?.ctid?._id,
+                VehicleCategory: registerUser?.vcid?.vehicleCategory,
+                VehicleCategoryId: registerUser?.vcid?._id,
+                Description: registerUser?.description,
+                CreatedAt: moment(registerUser?.createdAt).format("ll"),
+                CreatedBy: registerUser?.createdBy,
+                UpdatedAt: moment(registerUser?.updatedAt).format("ll"),
+                UpdatedBy: registerUser?.updatedBy,
+              };
+            modifyData.push(data);
+        });
+        return modifyData;
+    }
+
 
     const exportToCSV = async () => {
         if (type?.endPoint) {
@@ -132,6 +197,15 @@ export const ReportExcel = (props) => {
                 }
                 if (type?.name === 'User') {
                     csvData = await onUserModifyData(data?.data?.payload?.Question);
+                }
+                if (type?.name === 'Vehicle Category') {
+                    csvData = await onVehicleCategoryModifyData(data?.data?.payload?.Question);
+                }
+                if (type?.name === 'Course Type') {
+                    csvData = await onCourseTypeModifyData(data?.data?.payload?.Question);
+                }
+                if (type?.name === 'Course Category') {
+                    csvData = await onCourseCategoryModifyData(data?.data?.payload?.Question);
                 }
 
                 let ws = XLSX.utils.json_to_sheet(csvData);
