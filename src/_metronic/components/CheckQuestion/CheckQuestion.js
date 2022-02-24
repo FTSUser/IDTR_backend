@@ -578,6 +578,7 @@ const CheckTest = ({ getNewCount, title }) => {
       });
       let a = {
         Qname: e?.Qname,
+        image:e?.image,
         Option: e.Option,
         Answer: e.Answer,
         type: e.type,
