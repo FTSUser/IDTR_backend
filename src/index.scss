@@ -214,3 +214,20 @@ img.cmsImage {
 .centerAlign{
   text-align: center;
 }
+
+.questionGridNew {
+  display: grid;
+  grid-template-columns: minmax(0 , 1fr);
+  gap: 30px;
+  .questionGridItems {
+    border: 1px solid #d0d0d0;
+    padding: 15px;
+    border-radius: 4px;
+
+    p {
+      font-size: 18px;
+      color: #323232;
+      margin: 0;
+    }
+  }
+}

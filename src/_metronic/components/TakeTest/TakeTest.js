@@ -716,29 +716,31 @@ const TakeTest = ({ getNewCount, title }) => {
               <div>
                 <div className="container">
                  <div className="centerAlign">
-                 <div className="d-flex centeralign">
-                    <h4 className="mr-3">Question {questionKEY + 1}</h4>
-
-                    <h4>{questionData[questionKEY]?.Qname}</h4>
-                  </div>
-                  <div>
+                  <div className="take-test-height-qus">
+                  <div className="d-flex centeralign">
+                      <h4 className="mr-3" style={{ fontSize:"30px"}}>Question {questionKEY + 1}</h4>
+                      <h4  style={{ fontSize:"30px"}}>{questionData[questionKEY]?.Qname}</h4>
+                    </div>
+                    <div style={{ padding:"20px 0 0 0"}}>
                     <img src={questionData[questionKEY]?.image ? questionData[questionKEY]?.image : ''} className="img-fluid" style={{height:"200px"}} alt="" />
                   </div>
                   <div>
                     <div className="mb-4">
                       {questionData[questionKEY]?.Option.map((data, key) => {
                         return (
-                          <div className="d-flex centeralign mx-3 mb-4">
-                            <div className="mr-2">
+                          <div className="d-flex centeralign mx-3 mb-4 ques-text-design-style" style={{ padding:"20px 0 0 0"}}>
+                            <div className="mr-2"  style={{ fontSize:"16px"}}>
                               <b>({ABC[key]})</b>
                             </div>
-                            <div>{data?.name}</div>
+                            <div style={{ fontSize:"16px"}}>{data?.name}</div>
                           </div>
                         );
                       })}
                     </div>
                   </div>
-                  <div>
+
+                  </div>
+                  <div className="take-test-all-button-alignment">
                     {questionKEY === 0 ? (
                       ""
                     ) : (
@@ -804,70 +806,77 @@ const TakeTest = ({ getNewCount, title }) => {
             {isAddAttedence === true ? (
               <div>
                 <div className="container">
-                  <div className="">
-                    <div className="d-flex centeralign">
-                      <div className="mr-3">
-                        <input
-                          type="checkbox"
-                          name="selectall"
-                          onChange={(e) =>
-                            handleSubjectSelect(userByAttendece, "id", e)
-                          }
-                          checked={
-                            selectedTopSubjects?.length ===
-                            userByAttendece.length
-                              ? true
-                              : false
-                          }
-                        />
+                  <div className="take-test-box-center-alignment">
+                    <div className="take-test-box">
+                      <div className="checkbox-design-change">
+                        <div className="">
+                          <input
+                            type="checkbox"
+                            name="selectall"
+                            onChange={(e) =>
+                              handleSubjectSelect(userByAttendece, "id", e)
+                            }
+                            checked={
+                              selectedTopSubjects?.length ===
+                              userByAttendece.length
+                                ? true
+                                : false
+                            }
+                          />
+                        </div>
+                        <div>
+                          <div>
+                            <span>Select All</span>
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <div>Select All</div>
-                      </div>
-                    </div>
 
-                    {userByAttendece?.length > 0 &&
-                      userByAttendece?.map((data, key) => {
-                        return (
-                          <>
-                            <div className="d-flex centeralign " key={key}>
-                              <div className="mr-3">
-                                <input
-                                  type="checkbox"
-                                  checked={
-                                    selectedTopSubjects?.find(
-                                      (ss) => ss === data?._id
-                                    )
-                                      ? true
-                                      : false
-                                  }
-                                  // onChange={(e) => addAttendence(e)} />
-                                  onChange={() =>
-                                    handleSubjectSelect(data, data?._id, "e")
-                                  }
-                                />
-                              </div>
-                              <div className="">
-                                <div>
-                                  {data?.email ? data?.email : "-"} {data?.fname ? data?.fname : "-"} {data?.phone ? data?.phone : "-"}
+                      {userByAttendece?.length > 0 &&
+                        userByAttendece?.map((data, key) => {
+                          return (
+                            <>
+                              <div className="checkbox-design-change" key={key}>
+                                <div className="">
+                                  <input
+                                    type="checkbox"
+                                    checked={
+                                      selectedTopSubjects?.find(
+                                        (ss) => ss === data?._id
+                                      )
+                                        ? true
+                                        : false
+                                    }
+                                    // onChange={(e) => addAttendence(e)} />
+                                    onChange={() =>
+                                      handleSubjectSelect(data, data?._id, "e")
+                                    }
+                                  />
+                                </div>
+                                <div className="">
+                                  <div>
+                                    <span>
+                                      {data?.email ? data?.email : "-"} {data?.fname ? data?.fname : "-"} {data?.phone ? data?.phone : "-"}
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </>
-                        );
-                      })}
-                  </div>
+                            </>
+                          );
+                        })}
+                    
 
-                  {selectedTopSubjects?.length > 0 && (
-                    <div className="text-center mb-3">
-                      <div
-                        className="btn btn-success"
-                        onClick={() => addUserAttedence()}
-                      >
-                        Add Attedence
+                    {selectedTopSubjects?.length > 0 && (
+                      <div className="text-center mb-3">
+                        <div
+                          className="btn btn-success"
+                          onClick={() => addUserAttedence()}
+                        >
+                          Add Attedence
+                        </div>
                       </div>
+                    )}
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
             ) : null}

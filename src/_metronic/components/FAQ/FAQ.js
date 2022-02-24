@@ -562,23 +562,37 @@ const FAQ = ({ getNewCount, title }) => {
           </Toolbar>
           <List>
             {isViewMoreFAQ === true ? (
-              <div className="form ml-30 ">
-                <div className="form-group row mb-0">
-                  <p>Question:</p>
+              <div className="honda-container">
+                <div className="other-information-child-text-style1">
+                  <h2>FAQ</h2>
                 </div>
-                <div className="form-group row mr-20">
-                  <p>{dataViewMore?.question}</p>
-                </div>
-                <div className="form-group row mb-0">
+                <div className="honda-text-grid12 honda-text-grid-border">
+                  <div className="honda-text-grid-items">
+                    <p>Question:</p>
+                    <span>{dataViewMore?.question}</span>
+                  </div>
+                  <div className="honda-text-grid-items">
                   <p>Answer:</p>
-                </div>
-                <div className="form-group row mr-20">
-                  <p
+                  <span
+                  style={{ fontSize:"16px" , color:"#757575" }}
                     dangerouslySetInnerHTML={{
                       __html: dataViewMore?.answer,
                     }}
                     className=""
                   />
+                  </div>
+                </div>
+                <div className="form-group row mb-0">
+
+                </div>
+                <div className="form-group row mr-20">
+                  <p></p>
+                </div>
+                <div className="form-group row mb-0">
+                
+                </div>
+                <div className="form-group row mr-20">
+                  
                 </div>
               </div>
             ) : null}

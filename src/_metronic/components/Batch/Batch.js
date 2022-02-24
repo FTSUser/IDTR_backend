@@ -284,7 +284,14 @@ class ComponentToPrintsForUser extends React.Component {
             </tr>
             <tr className="">
               <td>
-                <td>Phone: {`${this?.props?.data?.phone ? this?.props?.data?.phone : "No Data"} `} </td>
+                <td>
+                  Phone:{" "}
+                  {`${
+                    this?.props?.data?.phone
+                      ? this?.props?.data?.phone
+                      : "No Data"
+                  } `}{" "}
+                </td>
               </td>
             </tr>
             <tr className="">
@@ -314,17 +321,21 @@ class ComponentToPrintsForUser extends React.Component {
             </tr>
             <tr>
               <td>
-                Date of course: {moment(this?.props?.data?.dateofCourse).format("DD-MM-YYYY ")}
+                Date of course:{" "}
+                {moment(this?.props?.data?.dateofCourse).format("DD-MM-YYYY ")}
               </td>
             </tr>
             <tr>
               <td>
-                Pass?: {moment(this?.props?.data?.isPass ? "Pass" : "Fail").format("DD-MM-YYYY ")}
+                Pass?:{" "}
+                {moment(this?.props?.data?.isPass ? "Pass" : "Fail").format(
+                  "DD-MM-YYYY "
+                )}
               </td>
             </tr>
             <tr>
               <td>
-              LCID: {moment(this?.props?.data?.lcid ).format("DD-MM-YYYY ")}
+                LCID: {moment(this?.props?.data?.lcid).format("DD-MM-YYYY ")}
               </td>
             </tr>
             <tr className="">
@@ -349,15 +360,20 @@ class ComponentToPrintsForUser extends React.Component {
             </tr>
             <tr className="">
               <td>
-                <td>Authoritydistrict: {`${this?.props?.data?.authoritydistrict} `} </td>
+                <td>
+                  Authoritydistrict:{" "}
+                  {`${this?.props?.data?.authoritydistrict} `}{" "}
+                </td>
               </td>
             </tr>
             <tr className="">
               <td>
-                <td>Authoritycity: {`${this?.props?.data?.authoritycity} `} </td>
+                <td>
+                  Authoritycity: {`${this?.props?.data?.authoritycity} `}{" "}
+                </td>
               </td>
             </tr>
-            
+
             {/* <tr className="">
               <td>
                 <td>Examiner Phone: {`${this.props?.data?.Examiner?.phone} `} </td>
@@ -929,10 +945,9 @@ const Batch = ({ getNewCount, title }) => {
                     _id: row?._id,
                     DataEntry: row?.DataEntry._id,
                     Examiner: row?.Examiner._id,
-                  
                   });
-                  
-                  setdateTimezon(row?.tdid)
+
+                  setdateTimezon(row?.tdid);
                   setIsUpdateAnnouncement(true);
                   setIdForUpdateAnnouncementData(row._id);
                   getExaminerAndApi();
@@ -1097,7 +1112,7 @@ const Batch = ({ getNewCount, title }) => {
                     getPapersetByUserId(row?._id);
                   }}
                 >
-                  <div className="cus-medium-button-style widthfixed">
+                  <div className="cus-medium-button-style">
                     <button className="btn btn-success mr-2">
                       View Paperset
                     </button>
@@ -1297,32 +1312,29 @@ const Batch = ({ getNewCount, title }) => {
     }
   }, [allDataForAttendance]);
 
-
   const onBulkUpload = async (e) => {
     e.preventDefault();
     if (e.target.files[0]) {
-
-        let formData = new FormData();
-        formData.append("csv", e.target.files[0]);
-        await ApiPost("batch/uploadcsv", formData)
-            .then((res) => {
-                if (res.data?.result === 0) {
-                  getResponseByBatch();
-                    toast.success(res.data.message);
-                }else{
-                    toast.error(res.data.message);
-                }
-                let img = document.getElementById("upload");
-                img.value = null
-            })
-            .catch((err) => {
-                toast.error(err);
-            });
+      let formData = new FormData();
+      formData.append("csv", e.target.files[0]);
+      await ApiPost("batch/uploadcsv", formData)
+        .then((res) => {
+          if (res.data?.result === 0) {
+            getResponseByBatch();
+            toast.success(res.data.message);
+          } else {
+            toast.error(res.data.message);
+          }
+          let img = document.getElementById("upload");
+          img.value = null;
+        })
+        .catch((err) => {
+          toast.error(err);
+        });
     } else {
-        toast.error("Please Select Excel File !");
+      toast.error("Please Select Excel File !");
     }
-};
-
+  };
 
   return (
     <>
@@ -1356,26 +1368,25 @@ const Batch = ({ getNewCount, title }) => {
               </button>
             </div>
             <div>
-                            <ExportCSV />{" "}
-                            <input
-                                type="file"
-                                id="upload"
-                                style={{ display: "none" }}
-                                className="btn btn-success"
-                                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                                onChange={(e) => onBulkUpload(e)}
-
-                            />
-                            <buttton
-                                className="btn btn-success mr-2"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    document.getElementById("upload").click();
-                                }}
-
-                            >Upload Excel File</buttton>
-
-                        </div>
+              <ExportCSV />{" "}
+              <input
+                type="file"
+                id="upload"
+                style={{ display: "none" }}
+                className="btn btn-success"
+                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                onChange={(e) => onBulkUpload(e)}
+              />
+              <buttton
+                className="btn btn-success mr-2"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("upload").click();
+                }}
+              >
+                Upload Excel File
+              </buttton>
+            </div>
           </div>
 
           {/* delete model */}
@@ -1972,7 +1983,10 @@ const Batch = ({ getNewCount, title }) => {
           <List>
             {isViewMoreAnnouncement === true ? (
               <div className="honda-container">
-                <div className="honda-text-grid">
+                <div className="other-information-child-text-style1">
+                    <h2>Batch Information</h2>
+                  </div>
+                <div className="honda-text-grid honda-text-grid-border">
                   <div className="honda-text-grid-items">
                     <span>Batch Name:</span>
                     <p>{dataViewMore?.name}</p>
@@ -1991,88 +2005,90 @@ const Batch = ({ getNewCount, title }) => {
                       {dataViewMore?.totalUser ? dataViewMore?.totalUser : "-"}
                     </p>
                   </div>
-                  <div className="honda-text-grid-items">
-                    <span>User Data:</span>
-                    <div className="cursor-pointer pl-2">
-                      {allDataForResultDownload?.length > 0 ? (
-                        <CsvDownload
-                          className={``}
-                          data={dataCSVResults}
-                          filename="Donations.csv"
-                          style={{
-                            backgroundColor: "#CC0001",
-                            borderRadius: "6px",
-                            border: "1px solid #fff",
-                            display: "inline-block",
-                            cursor: "pointer",
-                            color: "#FFFFFF",
-                            fontSize: "12px",
-                            padding: "10px 18px",
-                            textDecoration: "none",
-                            position: "right",
-                          }}
-                        >
-                          Download Test Data
-                        </CsvDownload>
-                      ) : (
-                        "No test Data"
-                      )}
-
-                      {allDataForAttendance?.length > 0 ? (
-                        <CsvDownload
-                          className={``}
-                          data={dataCSVForAttendance}
-                          filename="Donations.csv"
-                          style={{
-                            backgroundColor: "#CC0001",
-                            borderRadius: "6px",
-                            border: "1px solid #fff",
-                            display: "inline-block",
-                            cursor: "pointer",
-                            color: "#FFFFFF",
-                            fontSize: "12px",
-                            padding: "10px 18px",
-                            textDecoration: "none",
-                            position: "right",
-                          }}
-                        >
-                          Download Attendance Data
-                        </CsvDownload>
-                      ) : (
-                        "No Attendance Data"
-                      )}
-                    </div>
-                    <DataTable
-                      columns={columnsUser}
-                      data={responseByBatch}
-                      customStyles={customStyles}
-                      style={{
-                        marginTop: "-3rem",
-                      }}
-                      progressPending={isLoaderVisible}
-                      progressComponent={
-                        <Loader
-                          type="Puff"
-                          color="#334D52"
-                          height={30}
-                          width={30}
-                        />
-                      }
-                      highlightOnHover
-                      pagination
-                      paginationServer
-                      paginationTotalRows={countForBatch}
-                      paginationPerPage={countPerPage}
-                      paginationRowsPerPageOptions={[10, 20, 25, 50, 100]}
-                      paginationDefaultPage={pageForBatch}
-                      onChangePage={(page) => {
-                        setPageForBatch(page);
-                      }}
-                      onChangeRowsPerPage={(rowPerPage) => {
-                        setCountPerPageForBatch(rowPerPage);
-                      }}
-                    />
+                </div>
+                <div className="other-information-child-text-style1">
+                    <h2>User Data</h2>
                   </div>
+                <div className="">
+                  <div className="cursor-pointer pl-2">
+                    {allDataForResultDownload?.length > 0 ? (
+                      <CsvDownload
+                        className={``}
+                        data={dataCSVResults}
+                        filename="Donations.csv"
+                        style={{
+                          backgroundColor: "#CC0001",
+                          borderRadius: "6px",
+                          border: "1px solid #fff",
+                          display: "inline-block",
+                          cursor: "pointer",
+                          color: "#FFFFFF",
+                          fontSize: "12px",
+                          padding: "10px 18px",
+                          textDecoration: "none",
+                          position: "right",
+                        }}
+                      >
+                        Download Test Data
+                      </CsvDownload>
+                    ) : (
+                      "No test Data"
+                    )}
+
+                    {allDataForAttendance?.length > 0 ? (
+                      <CsvDownload
+                        className={``}
+                        data={dataCSVForAttendance}
+                        filename="Donations.csv"
+                        style={{
+                          backgroundColor: "#CC0001",
+                          borderRadius: "6px",
+                          border: "1px solid #fff",
+                          display: "inline-block",
+                          cursor: "pointer",
+                          color: "#FFFFFF",
+                          fontSize: "12px",
+                          padding: "10px 18px",
+                          textDecoration: "none",
+                          position: "right",
+                        }}
+                      >
+                        Download Attendance Data
+                      </CsvDownload>
+                    ) : (
+                      "No Attendance Data"
+                    )}
+                  </div>
+                  <DataTable
+                    columns={columnsUser}
+                    data={responseByBatch}
+                    customStyles={customStyles}
+                    style={{
+                      marginTop: "-3rem",
+                    }}
+                    progressPending={isLoaderVisible}
+                    progressComponent={
+                      <Loader
+                        type="Puff"
+                        color="#334D52"
+                        height={30}
+                        width={30}
+                      />
+                    }
+                    highlightOnHover
+                    pagination
+                    paginationServer
+                    paginationTotalRows={countForBatch}
+                    paginationPerPage={countPerPage}
+                    paginationRowsPerPageOptions={[10, 20, 25, 50, 100]}
+                    paginationDefaultPage={pageForBatch}
+                    onChangePage={(page) => {
+                      setPageForBatch(page);
+                    }}
+                    onChangeRowsPerPage={(rowPerPage) => {
+                      setCountPerPageForBatch(rowPerPage);
+                    }}
+                  />
                 </div>
               </div>
             ) : null}
@@ -2101,7 +2117,7 @@ const Batch = ({ getNewCount, title }) => {
               <div className="honda-container">
                 <div className="">
                   {console.log("questionData", paperSet?.ListofQA)}
-                  <div className="questionGrid">
+                  <div className="questionGridNew">
                     {paperSet?.ListofQA?.map((data, key) => (
                       <div className="questionGridItems">
                         <div className="flexs">
@@ -2109,25 +2125,32 @@ const Batch = ({ getNewCount, title }) => {
                             {" "}
                             {key + 1}
                           </div>
-
-                          {data?.Qname}
+                          <p>{data?.Qname}</p>
                         </div>
                         <div>
-  <img src={data?.image} alt="" />
-</div>
+                          <img src={data?.image} alt="" />
+                        </div>
                         <div className="">
                           Right / Wrong:{" "}
-                          <span>{data.isRight ? <div className="green">Right</div> : <div className="red">Wrong</div>}</span>
+                          <span>
+                            {data.isRight ? (
+                              <div className="green">Right</div>
+                            ) : (
+                              <div className="red">Wrong</div>
+                            )}
+                          </span>
                         </div>
                         <div>
                           {data?.Option.map((record, i) => (
                             <>
                               {record?.istrue}
-                  
+
                               {data?.Answer?.findIndex(
                                 (e) => e === record?.no
                               ) !== -1 ? (
-                                <div className=""><b>{record?.name}</b></div>
+                                <div className="">
+                                  <b>{record?.name}</b>
+                                </div>
                               ) : (
                                 <div className="">{record?.name}</div>
                               )}

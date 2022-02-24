@@ -842,16 +842,20 @@ const Clients = ({ getNewCount, title }) => {
           <List>
             {isViewMoreAnnouncement === true ? (
               <div className="honda-container">
-                <div className="honda-text-grid">
-
-                  <div className="honda-text-grid-items">
+                  <div className="other-information-child-text-style1">
+                  <h2>Clients Information</h2>
+                </div>
+                <div className="honda-text-grid1232">
+                  <div className="honda-text-grid1232-items">
                     <span>Image:</span>
+                    <div className="card-main-border-image">
                     <img
                       src={dataViewMore?.image}
                       alt=""
-                      height="90px"
-                      width="170px"
+                      height="250px"
+                      width="100%"
                     />
+                    </div>
                   </div>
                 </div>
               </div>

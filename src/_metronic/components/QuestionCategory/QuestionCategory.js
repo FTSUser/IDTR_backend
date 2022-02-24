@@ -615,7 +615,10 @@ const QuestionCategory = ({ getNewCount, title }) => {
                     <List>
                         {isViewMoreAboutus === true ? (
                             <div className="honda-container">
-                                <div className="honda-text-grid">
+                                <div className="other-information-child-text-style1">
+                                    <h2>Question Category</h2>
+                                </div>
+                                <div className="honda-text-grid honda-text-grid-border">
                                     <div className="honda-text-grid-items">
                                         <span>Question Category Name:</span>
                                         <p

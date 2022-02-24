@@ -195,7 +195,11 @@ body {
 	}
 }
 
-
+.honda-text-grid12 {
+	display: grid;
+	grid-template-columns: repeat(1 , 1fr);
+	gap: 20px 30px;
+}
 .honda-container {
 	max-width: 1280px;
 	padding: 0 20px;
@@ -209,11 +213,12 @@ body {
 		font-size: 16px;
 		color: #757575;
 		display: block;
-		padding-bottom: 5px;
+		padding-bottom: 2px;
 	}
 	p {
 		font-size: 14px;
 		color: #323232;
+		font-weight: 600;
 		margin-bottom: 0;
 		margin: 0;
 	}
@@ -248,5 +253,146 @@ body {
 	label {
 		padding-bottom: 0px !important;
 		margin-bottom: 0px !important;
+	}
+}
+
+button {
+	white-space: nowrap;
+}
+
+
+.take-test-box {
+	width: 500px;
+	background-color: #fff;
+	box-shadow: 0 0 40px 0 #0000001a;
+	border: 1px solid #d0d0d0;
+	padding: 30px;
+}
+
+.take-test-box-center-alignment {
+	display: flex;
+	justify-content: center;
+}
+
+.checkbox-design-change {
+	display: flex;
+	align-items: center;
+	padding: 0 0 10px 0;
+
+	input[type="checkbox"] {
+		width: 18px;
+		margin: 0;
+		padding: 0;
+		height:18px;
+	}
+	div {
+		display: flex;
+		align-items: center;
+	}
+	div:last-child {
+		padding-left: 8px;
+		span {
+			font-size: 16px;
+			color: #232323;
+			font-weight: 400;
+			display: block;
+		}
+	}
+}
+
+.other-information-child-text-style > {
+	h2 {
+		font-size: 30px;
+		color: #050505;
+		line-height: 40px;
+		text-align: center;
+	}
+}
+
+.other-information-child-text-style {
+	padding: 15px;
+	border-radius: 4px;
+	background-color: #f5f5f5;
+	margin: 60px 0;
+}
+
+.other-information-child-text-style1 > {
+	h2 {
+		font-size: 30px;
+		color: #050505;
+		line-height: 40px;
+		text-align: center;
+	}
+}
+
+.other-information-child-text-style1 {
+	padding: 15px;
+	border-radius: 4px;
+	background-color: #f5f5f5;
+	margin: 20px 0 40px 0;
+}
+
+.honda-text-grid-new {
+	display: grid;
+	grid-template-columns: repeat(4 , 1fr);
+	gap: 0 20px;
+	justify-content: space-between;
+	.honda-text-grid-new-items {
+		span {
+			font-size: 16px;
+			color: #757575;
+			display: block;
+			padding: 0 0 20px 0;
+		}
+		.card-main-border-image {
+			border: 1px solid #d0d0d0;
+			padding: 10px;
+			img {
+				width: 100%;
+				height: 250px;
+				object-fit: cover;
+			}
+
+		}
+	}
+}
+
+.honda-text-grid-border {
+	border: 1px solid #d0d0d0;
+	padding: 15px;
+	border-radius: 4px;
+}
+
+.honda-text-grid1232 {
+	display: grid;
+	grid-template-columns: repeat(2 , 1fr);
+	gap: 30px;
+	.honda-text-grid1232-items {
+		span {
+			font-size: 16px;
+			color: #757575;
+			display: block;
+			padding: 0 0 20px 0;
+		}
+		.card-main-border-image {
+			border: 1px solid #d0d0d0;
+			padding: 10px;
+			img {
+				width: 100%;
+				height: 250px;
+				object-fit: cover;
+			}
+
+		}
+	}
+}
+
+.take-test-height-qus {
+	height: calc(100vh - 139px);
+}
+
+.take-test-all-button-alignment {
+	button {
+		padding: 10px 20px;
 	}
 }
