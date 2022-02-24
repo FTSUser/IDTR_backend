@@ -2117,7 +2117,7 @@ const Batch = ({ getNewCount, title }) => {
               <div className="honda-container">
                 <div className="">
                   {console.log("questionData", paperSet?.ListofQA)}
-                  <div className="questionGridNew">
+                  <div className="questionGrid12121">
                     {paperSet?.ListofQA?.map((data, key) => (
                       <div className="questionGridItems">
                         <div className="flexs">

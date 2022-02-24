@@ -824,7 +824,7 @@ const CheckTest = ({ getNewCount, title }) => {
               <div className="honda-container">
                 <div className="">
                   {console.log("questionData", questionData?.questionsList)}
-                  <div className="questionGrid">
+                  <div className="questionGrid12121">
                     {questionData?.questionsList?.map((data, key) => (
                       <div className="questionGridItems">
                         <div className="flexs">
@@ -834,6 +834,9 @@ const CheckTest = ({ getNewCount, title }) => {
                           </div>
 
                           {data?.Qname}
+                        </div>
+                        <div>
+                          <img src={data?.image} alt="" />
                         </div>
                         <div>
                           {data?.Option.map((record, i) => (
@@ -933,6 +936,7 @@ const CheckTest = ({ getNewCount, title }) => {
 
                           {data?.Qname}
                         </div>
+                        <img src={data?.image} alt="" />
                         <div>
                           {data?.Option.map((record, i) => (
                             <>
