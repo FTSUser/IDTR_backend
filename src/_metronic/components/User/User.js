@@ -366,7 +366,7 @@ const User = ({ getNewCount, title }) => {
 
     
     await ApiGet(
-      `register/getRecordsByRange?startDate=${moment(dateForFilter[0]).format('MM/DD/YYYY')}&endDate=${moment(dateForFilter[1]).format('MM/DD/YYYY')}&page=${page}&limit=${countPerPage}`
+      `register/getRecordsByRange?sd=${moment(dateForFilter[0]).format('MM/DD/YYYY')}&ed=${moment(dateForFilter[1]).format('MM/DD/YYYY')}&page=${page}&limit=${countPerPage}`
     )
       .then((res) => {
         // setTableFilterData(tableFilterData);
