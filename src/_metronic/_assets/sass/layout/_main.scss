@@ -259,7 +259,9 @@ body {
 button {
 	white-space: nowrap;
 }
-
+.btn{
+	white-space: nowrap !important;
+}
 
 .take-test-box {
 	width: 500px;

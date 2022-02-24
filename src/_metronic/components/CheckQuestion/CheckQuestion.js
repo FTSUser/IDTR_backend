@@ -925,7 +925,7 @@ const CheckTest = ({ getNewCount, title }) => {
                 <div className="">
                   {console.log("peperset", paperSet)}
                   Score:{paperSet?.Score}
-                  <div className="questionGrid">
+                  <div className="questionGrid12121">
                     {paperSet?.ListofQA?.map((data, key) => (
                       <div className="questionGridItems">
                         <div className="flexs">

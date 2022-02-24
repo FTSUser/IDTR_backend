@@ -154,7 +154,7 @@ const Question = (props) => {
             errorsForAdd["type"] = "*Please Enter type!";
         }
 
-       
+
 
         if (inputValueForAdd && !inputValueForAdd.Category) {
             formIsValid = false;
@@ -264,18 +264,12 @@ const Question = (props) => {
     };
 
     const handleUpdateStatusProperty = (status) => {
-        ApiPut(`question/updateQuestion/${idForUpdateCourseStatus}`, {
-            Qname: inputValueForAdd.name,
-            type: inputValueForAdd.type,
-            Option: option,
-            language: inputValueForAdd.language,
-            // weight: inputValueForAdd.weight,
-            Category: inputValueForAdd.Category,
-            image: inputValueForAdd.image,
+        ApiPut(`question/updateStatus/${idForUpdateCourseStatus}`, {
+          
             isActive: status
 
         })
-            // ApiPut(`property/updateProperty/${idForUpdatePropertyStatus}`)
+           
             .then((res) => {
                 if (res?.status == 200) {
                     setShowStatus(false);
@@ -403,7 +397,7 @@ const Question = (props) => {
 
                                         name: row?.Qname,
                                         description: row?.description,
-                                        weight: row?.weight,
+                                        // weight: row?.weight,
                                         language: row?.language,
                                         type: row?.type,
                                         image: row?.image,
@@ -470,15 +464,6 @@ const Question = (props) => {
                                 setShowStatus(true);
                                 setIdForUpdateCourseStatus(row?._id);
                                 setStatusDisplay(row?.isActive);
-                                setInputValueForAdd({
-                                    name: row?.Qname,
-                                    description: row?.description,
-                                    weight: row?.weight,
-                                    language: row?.language,
-                                    type: row?.type,
-                                    image: row?.image,
-                                    Category: row?.Category?.name,
-                                });
                             }}
                         >
                             <Tooltip title="Status Property" arrow>
@@ -605,7 +590,7 @@ const Question = (props) => {
                     QuestionName: registerUser?.Qname,
                     language: registerUser?.language,
                     type: registerUser?.type,
-                    weight: registerUser?.weight,
+                    // weight: registerUser?.weight,
                     Category: registerUser?.Category,
                     image: registerUser?.image,
                 };
@@ -628,7 +613,7 @@ const Question = (props) => {
     const onBulkUpload = async (e) => {
         e.preventDefault();
         if (e.target.files[0]) {
-    
+
             let formData = new FormData();
             formData.append("csv", e.target.files[0]);
             await ApiPost("question/uploadcsv", formData)
@@ -636,7 +621,7 @@ const Question = (props) => {
                     if (res.data?.result === 0) {
                         getAllQuestionSet();
                         toast.success(res.data.message);
-                    }else{
+                    } else {
                         toast.error(res.data.message);
                     }
                     let img = document.getElementById("upload");
@@ -649,8 +634,8 @@ const Question = (props) => {
             toast.error("Please Select Excel File !");
         }
     };
-    
-    
+
+
 
 
 
@@ -1446,7 +1431,7 @@ const Question = (props) => {
                 </Modal.Header>
                 <Modal.Body>
                     Are You Sure To Want To{" "}
-                    {statusDisplay === true ? "De-active" : "Active"} this Question
+                    {statusDisplay === true ? "Deactive" : "Active"} this Question
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseShowStatus}>
@@ -1458,7 +1443,7 @@ const Question = (props) => {
                             handleUpdateStatusProperty(!statusDisplay);
                         }}
                     >
-                        {statusDisplay === true ? "De-active" : "Active"}
+                        {statusDisplay === true ? "Deactive" : "Active"}
                     </Button>
                 </Modal.Footer>
             </Modal>

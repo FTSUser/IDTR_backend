@@ -20,7 +20,7 @@ export const ExportCSV = () => {
         "Category": "category id",
         "Explaination": "Explaination",
         "image":"image url",
-        "weight":"weight",
+      
        
       },
     ];
