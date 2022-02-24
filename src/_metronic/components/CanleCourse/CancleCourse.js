@@ -682,8 +682,11 @@ const CancleCourse = ({ getNewCount, title }) => {
                     </Toolbar>
                     <List>
                         {isViewMoreAboutus === true ? (
-                             <div className="honda-container">
-                             <div className="honda-text-grid">
+                              <div className="honda-container">
+                              <div className="other-information-child-text-style1">
+                                 <h2>User Information</h2>
+                             </div>
+                             <div className="honda-text-grid honda-text-grid-border">
                              
                                <div className="honda-text-grid-items">
                                  <span>First Name:</span>
@@ -967,65 +970,69 @@ const CancleCourse = ({ getNewCount, title }) => {
                                  />
                                </div>
                              </div>
-                             <div className="honda-text-grid-items">
-                                 <span>Other Information:</span>
-                               </div>
-                               <div className="honda-text-grid">
-                               <div className="honda-text-grid-items">
+                             <div className="other-information-child-text-style">
+                                 <h2>Other Information</h2>
+                             </div>
+                               <div className="honda-text-grid-new">
+                               <div className="honda-text-grid-new-items">
                                  <span>Photo:</span>
-                                 {dataViewMore?.passportPhoto === null ||
-                                   dataViewMore?.passportPhoto === "" ||
-                                   !dataViewMore?.passportPhoto ? (
-                                   "No Data"
-                                 ) : (
-                                   <img
-                                     className="view"
-                                     src={dataViewMore?.passportPhoto}
-                                     alt="No Image"
-                                   />
-                                 )}
+                                 <div className="card-main-border-image">
+                                   {dataViewMore?.passportPhoto === null ||
+                                     dataViewMore?.passportPhoto === "" ||
+                                     !dataViewMore?.passportPhoto ? (
+                                     "No Data"
+                                   ) : (
+                                     <img
+                                       src={dataViewMore?.passportPhoto}
+                                       alt="No Image"
+                                     />
+                                   )}
+                                 </div>
                                </div>
-                               <div className="honda-text-grid-items">
+                               <div className="honda-text-grid-new-items">
                                  <span>Driving License Image:</span>
+                                 <div className="card-main-border-image">
                                  {dataViewMore?.drivingLicense === null ||
                                    dataViewMore?.drivingLicense === "" ||
                                    !dataViewMore?.drivingLicense ? (
                                    "No Data"
                                  ) : (
                                    <img
-                                     className="view"
                                      src={dataViewMore?.drivingLicense}
                                      alt="No Image"
                                    />
                                  )}
+                                 </div>
                                </div>
-                               <div className="honda-text-grid-items">
+                               <div className="honda-text-grid-new-items">
                                  <span>ID Proof:</span>
+                                 <div className="card-main-border-image">
                                  {dataViewMore?.IDproof === null ||
                                    dataViewMore?.IDproof === "" ||
                                    !dataViewMore?.IDproof ? (
                                    "No Data"
                                  ) : (
                                    <img
-                                     className="view"
                                      src={dataViewMore?.IDproof}
                                      alt="No Image"
                                    />
                                  )}
+                                 </div>
                                </div>
-                               <div className="honda-text-grid-items">
+                               <div className="honda-text-grid-new-items">
                                  <span>Medical Certificate:</span>
+                                 <div className="card-main-border-image">
                                  {dataViewMore?.medicalCertificate === null ||
                                    dataViewMore?.medicalCertificate === "" ||
                                    !dataViewMore?.medicalCertificate ? (
                                    "No Data"
                                  ) : (
                                    <img
-                                     className="view"
                                      src={dataViewMore?.medicalCertificate}
                                      alt="No Image"
                                    />
                                  )}
+                                 </div>
                                </div>
                                </div>
                              

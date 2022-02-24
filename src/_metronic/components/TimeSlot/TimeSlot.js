@@ -674,7 +674,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                 Add Time Slot
               </button>
             </div>
-            <div className="cus-medium-button-style button-height">
+            <div className="cus-medium-button-style button-height mr-2">
               <CsvDownload
                 className={``}
                 data={dataCSV}
@@ -696,8 +696,8 @@ const TimeSlot = ({ getNewCount, title }) => {
                 Export to Excel
               </CsvDownload>
             </div>
-            <div>
-                            <ExportCSV />{" "}
+            <div >
+                            <ExportCSV  />{" "}
                             <input
                                 type="file"
                                 id="upload"

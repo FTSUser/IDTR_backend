@@ -42,7 +42,7 @@ const data = [
     {
         "_id": "62106ded491bcd2a1683a487",
         "name": "User",
-        "endPoint": "register/getRecordsByRange"
+        "endPoint": "register/getAll"
     },
     {
         "_id": "620e42b6924864153489ea0a",

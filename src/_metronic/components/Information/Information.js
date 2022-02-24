@@ -725,29 +725,33 @@ const Information = ({ getNewCount, title }) => {
           </Toolbar>
           <List>
             {isViewMoreAnnouncement === true ? (
+
+
               <div className="honda-container">
-                <div className="honda-text-grid">
+                <div className="other-information-child-text-style1">
+                  <h2>Information</h2>
+                </div>
+                <div className="honda-text-grid12 honda-text-grid-border">
 
                   <div className="honda-text-grid-items">
-                    <span className="titles">Title:</span>
-                    <p
+                    <p>Title:</p>
+                    <span
                       dangerouslySetInnerHTML={{
                         __html: dataViewMore?.titleName,
                       }}
-                      className="cms-des"
+                      className=""
                     />
                   </div>
 
                   <div className="honda-text-grid-items">
                     <p>Description:</p>
-                    <p
+                    <span
                       dangerouslySetInnerHTML={{
                         __html: dataViewMore?.description,
                       }}
-                      className="cms-des"
+                      className=""
                     />
                   </div>
-
                 </div>
               </div>
             ) : null}

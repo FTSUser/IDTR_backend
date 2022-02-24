@@ -888,42 +888,41 @@ const Images = ({ getNewCount, title }) => {
           </Toolbar>
           <List>
             {isViewMoreHelpfulTips === true ? (
-              <div className="form ml-30 ">
-                <div className="form-group row mb-0">
-                  <p className="titles">Name:</p>
-                </div>
-                <div className="form-group row mr-20">
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.titleName,
-                    }}
-                    className="cms-des"
-                  />
-                </div>
-                <div className="form-group row mb-0">
-                  <p className="titles">Description:</p>
-                </div>
-                <div className="form-group row mr-20">
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.description,
-                    }}
-                    className="cms-des"
-                  />
-                </div>
-                <div className="form-group row mb-0">
-                  <p className="titles">Image:</p>
-                </div>
-                <div className="form-group row mr-20">
-                  <img
-                    src={dataViewMore?.image}
-                    alt=""
-                    className="cmsImage"
-                  />
-                </div>
-
-               
-              </div>
+                 <div className="honda-container">
+                 <div className="other-information-child-text-style1">
+                   <h2>Images</h2>
+                 </div>
+                 <div className="honda-text-grid12 honda-text-grid-border">
+ 
+                   <div className="honda-text-grid-items">
+                     <p>Title:</p>
+                     <span
+                       dangerouslySetInnerHTML={{
+                         __html: dataViewMore?.titleName,
+                       }}
+                       className=""
+                     />
+                   </div>
+ 
+                   <div className="honda-text-grid-items">
+                     <p>Description:</p>
+                     <span
+                       dangerouslySetInnerHTML={{
+                         __html: dataViewMore?.description,
+                       }}
+                       className=""
+                     />
+                   </div>
+ 
+                   
+                   <div className="honda-text-grid-items">
+                     <p>Image:</p>
+                     <img className="images" src={dataViewMore?.image} alt="" />
+                   </div>
+ 
+                 </div>
+               </div>
+             
             ) : null}
           </List>
         </Dialog>

@@ -443,10 +443,10 @@ const Announcement = ({ getNewCount, title }) => {
     {
       name: "Date",
       cell: (row) => {
-        return <span>{moment(row?.date).format("ll")}</span>;
+        return <span>{moment(row?.updatedAt).format("ll")}</span>;
       },
       sortable: true,
-      selector: (row) => row?.date,
+      selector: (row) => row?.updatedAt,
 
       // width: "65px",
     },
