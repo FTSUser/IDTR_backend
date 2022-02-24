@@ -1367,7 +1367,7 @@ const Batch = ({ getNewCount, title }) => {
                 Add Batch
               </button>
             </div>
-            <div>
+            {/* <div>
               <ExportCSV />{" "}
               <input
                 type="file"
@@ -1386,7 +1386,7 @@ const Batch = ({ getNewCount, title }) => {
               >
                 Upload Excel File
               </buttton>
-            </div>
+            </div> */}
           </div>
 
           {/* delete model */}

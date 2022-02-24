@@ -814,7 +814,10 @@ const Examiner = ({ getNewCount, title }) => {
                     <List>
                         {isViewMoreAboutus === true ? (
                             <div className="honda-container">
-                                <div className="honda-text-grid">
+                                 <div className="other-information-child-text-style1">
+                  <h2>Role</h2>
+                </div>
+                                <div className="honda-text-grid12 honda-text-grid-border">
                                     <div className="honda-text-grid-items">
                                         <span>Name:</span>
                                         <p

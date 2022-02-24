@@ -806,11 +806,14 @@ const Description = ({ getNewCount, title }) => {
           <List>
             {isViewMoreAnnouncement === true ? (
               <div className="honda-container">
-                <div className="honda-text-grid">
+                 <div className="other-information-child-text-style1">
+                                    <h2>Banner Description</h2>
+                                </div>
+                <div className="honda-text-grid12 honda-text-grid-border">
 
                   <div className="honda-text-grid-items">
-                    <span>Title:</span>
-                    <p
+                    <p>Title:</p>
+                    <span
                       dangerouslySetInnerHTML={{
                         __html: dataViewMore?.titleName,
                       }}
@@ -820,7 +823,7 @@ const Description = ({ getNewCount, title }) => {
 
                   <div className="honda-text-grid-items">
                     <p>Description:</p>
-                    <p
+                    <span
                       dangerouslySetInnerHTML={{
                         __html: dataViewMore?.description,
                       }}
