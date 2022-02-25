@@ -1365,7 +1365,7 @@ const Question = (props) => {
                                 <div className="other-information-child-text-style1">
                                     <h2>Question Information</h2>
                                 </div>
-                                <div className="honda-text-grid honda-text-grid-border">
+                                <div className="honda-text-grid12 honda-text-grid-border">
                                     <div className="honda-text-grid-items">
                                         <span>Name:</span>
                                         <p

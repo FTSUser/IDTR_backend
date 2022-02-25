@@ -1315,19 +1315,24 @@ const CourseName = ({ getNewCount, title }) => {
           <List>
             {isViewMoreAboutus === true ? (
               <div className="honda-container">
-                <div className="honda-text-grid">
+                <div className="other-information-child-text-style1">
+                  <h2>Course Name</h2>
+                </div>
+                <div className="honda-text-grid12 honda-text-grid-border">
+
                   <div className="honda-text-grid-items">
-                    <span>Title:</span>
-                    <p
+                    <p>Course Name:</p>
+                    <span
                       dangerouslySetInnerHTML={{
                         __html: dataViewMore?.courseName,
                       }}
                       className=""
                     />
                   </div>
+
                   <div className="honda-text-grid-items">
-                    <span>Description:</span>
-                    <p
+                    <p>Description:</p>
+                    <span
                       dangerouslySetInnerHTML={{
                         __html: dataViewMore?.description,
                       }}
@@ -1335,8 +1340,8 @@ const CourseName = ({ getNewCount, title }) => {
                     />
                   </div>
                   <div className="honda-text-grid-items">
-                    <span>Duration:</span>
-                    <p
+                    <p>Duration:</p>
+                    <span
                       dangerouslySetInnerHTML={{
                         __html: dataViewMore?.duration,
                       }}
@@ -1344,8 +1349,8 @@ const CourseName = ({ getNewCount, title }) => {
                     />
                   </div>
                   <div className="honda-text-grid-items">
-                    <span>Timing:</span>
-                    <p
+                    <p>Timing:</p>
+                    <span
                       dangerouslySetInnerHTML={{
                         __html: dataViewMore?.timing,
                       }}
@@ -1353,8 +1358,8 @@ const CourseName = ({ getNewCount, title }) => {
                     />
                   </div>
                   <div className="honda-text-grid-items">
-                    <span>Mode:</span>
-                    <p
+                    <p>Mode:</p>
+                    <span
                       dangerouslySetInnerHTML={{
                         __html: dataViewMore?.mode,
                       }}
@@ -1362,8 +1367,8 @@ const CourseName = ({ getNewCount, title }) => {
                     />
                   </div>
                   <div className="honda-text-grid-items">
-                    <span>Document Required:</span>
-                    <p
+                    <p>Document Required:</p>
+                    <span
                       dangerouslySetInnerHTML={{
                         __html: dataViewMore?.documentRequired,
                       }}
@@ -1371,8 +1376,8 @@ const CourseName = ({ getNewCount, title }) => {
                     />
                   </div>
                   <div className="honda-text-grid-items">
-                    <span>Validity:</span>
-                    <p
+                    <p>Validity:</p>
+                    <span
                       dangerouslySetInnerHTML={{
                         __html: dataViewMore?.validity,
                       }}
@@ -1380,8 +1385,8 @@ const CourseName = ({ getNewCount, title }) => {
                     />
                   </div>
                   <div className="honda-text-grid-items">
-                    <span>System Requirement:</span>
-                    <p
+                    <p>System Requirement:</p>
+                    <span
                       dangerouslySetInnerHTML={{
                         __html: dataViewMore?.systemRequirement,
                       }}
@@ -1389,8 +1394,8 @@ const CourseName = ({ getNewCount, title }) => {
                     />
                   </div>
                   <div className="honda-text-grid-items">
-                    <span>Price:</span>
-                    <p
+                    <p>Price:</p>
+                    <span
                       dangerouslySetInnerHTML={{
                         __html: dataViewMore?.price,
                       }}

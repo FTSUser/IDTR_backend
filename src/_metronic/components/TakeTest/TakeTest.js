@@ -128,6 +128,13 @@ const TakeTest = ({ getNewCount, title }) => {
         toast.error(err);
       });
   };
+  const showToast = async () => {
+   
+        
+      
+        toast.error("There is no user in this batch");
+      
+  };
 
   console.log("userInfo", userInfo);
   const getAllCourseName = async () => {
@@ -168,6 +175,7 @@ const TakeTest = ({ getNewCount, title }) => {
         });
     }
   };
+  
 
   let i = 0;
   const columns = [
@@ -244,6 +252,8 @@ const TakeTest = ({ getNewCount, title }) => {
                 <div
                   className="cursor-pointer pl-2"
                   onClick={() => {
+                    row?.User.length === 0 ? showToast() :  
+                    
                     setIsAddAttedence(true);
                     getAllUserIdWise(row?._id);
                   }}
@@ -380,17 +390,22 @@ const TakeTest = ({ getNewCount, title }) => {
       batch: attendenceId,
     };
     await ApiPut(`test/attendence`, data)
-      .then((res) => {
-        console.log("attdence", res?.data?.payload);
-        setSelectedTopSubjects([]);
-        setIsAddAttedence(false);
-        getAllCourseName();
+    
 
-        // setAllCourseNameExcel(res?.data?.payload?.Examiner);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+
+      .then((res) => {
+        if (res?.status == 200) {
+          setSelectedTopSubjects([]);
+          setIsAddAttedence(false);
+          getAllCourseName();
+        } else {
+            toast.error(res?.data?.message);
+        }
+    })
+    .catch((err) => {
+        toast.error(err?.response?.data?.message)
+    });
+
   };
 
   useEffect(() => {
@@ -907,7 +922,7 @@ const TakeTest = ({ getNewCount, title }) => {
                 <div className="other-information-child-text-style1">
                   <h2>Take Test</h2>
                 </div>
-                <div className="honda-text-grid honda-text-grid-border">
+                <div className="honda-text-grid12 honda-text-grid-border">
                   <div className="honda-text-grid-items">
                     <div className="honda-text-grid-items">
                       <span>CreatedAt:</span>

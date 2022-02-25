@@ -1264,7 +1264,7 @@ const Announcement = ({ getNewCount, title }) => {
                 <div className="other-information-child-text-style1">
                   <h2>Announcement</h2>
                 </div>
-                <div className="honda-text-grid ">
+                <div className="honda-text-grid12 honda-text-grid-border ">
                   <div className="honda-text-grid-items">
                     <span>Date:</span>
                     <p

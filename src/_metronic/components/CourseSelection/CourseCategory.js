@@ -837,38 +837,45 @@ const CourseCategory = ({ getNewCount, title }) => {
           </Toolbar>
           <List>
             {isViewMoreAboutus === true ? (
-              <div className="honda-container">
-                <div className="honda-text-grid">
-                  <div className="honda-text-grid-items">
-                    <div className="honda-text-grid-items">
-                      <span>Course Category</span>
-                      <p
-                        dangerouslySetInnerHTML={{
-                          __html: dataViewMore?.courseCategory,
-                        }}
-                        className=""
-                      />
-                    </div>
-                    <span>Course Type</span>
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.ctid?.courseType,
-                      }}
-                      className=""
-                    />
-                  </div>
-                  <div className="honda-text-grid-items">
-                    <span>Vehicle Category</span>
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html: dataViewMore?.vcid?.vehicleCategory,
-                      }}
-                      className=""
-                    />
-                  </div>
-
-                </div>
-              </div>
+                 <div className="honda-container">
+                 <div className="other-information-child-text-style1">
+                   <h2>Course Category</h2>
+                 </div>
+                 <div className="honda-text-grid12 honda-text-grid-border">
+ 
+                   <div className="honda-text-grid-items">
+                     <p>Course Category:</p>
+                     <span
+                       dangerouslySetInnerHTML={{
+                         __html: dataViewMore?.courseCategory,
+                       }}
+                       className=""
+                     />
+                   </div>
+ 
+                   <div className="honda-text-grid-items">
+                     <p>Course Type:</p>
+                     <span
+                       dangerouslySetInnerHTML={{
+                         __html: dataViewMore?.ctid?.courseType,
+                       }}
+                       className=""
+                     />
+                   </div>
+                   <div className="honda-text-grid-items">
+                     <p>Vehicle Category:</p>
+                     <span
+                       dangerouslySetInnerHTML={{
+                         __html: dataViewMore?.vcid?.vehicleCategory,
+                       }}
+                       className=""
+                     />
+                   </div>
+                  
+ 
+                 </div>
+               </div>
+            
             ) : null}
           </List>
         </Dialog>

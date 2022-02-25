@@ -845,15 +845,14 @@ const Clients = ({ getNewCount, title }) => {
                   <div className="other-information-child-text-style1">
                   <h2>Clients Information</h2>
                 </div>
-                <div className="honda-text-grid1232">
+                <div className="honda-text-grid12 honda-text-grid-border">
                   <div className="honda-text-grid1232-items">
                     <span>Image:</span>
                     <div className="card-main-border-image">
                     <img
                       src={dataViewMore?.image}
                       alt=""
-                      height="250px"
-                      width="100%"
+                     
                     />
                     </div>
                   </div>
