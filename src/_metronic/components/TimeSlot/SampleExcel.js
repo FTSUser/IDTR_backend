@@ -32,7 +32,7 @@ export const ExportCSV = () => {
   };
 
   return (
-    <button className="btn btn-success mr-2"
+    <button className="btn btn-success "
       label="Sample Excel Download"
       onClick={(e) => exportToCSV()}
     >Sample Excel Download</button>

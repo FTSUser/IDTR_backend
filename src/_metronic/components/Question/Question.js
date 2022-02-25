@@ -852,8 +852,11 @@ const Question = (props) => {
                                 Add Question
                             </button>
                         </div>
-                        <div>
+                       
+                        <div className="cus-medium-button-style button-height mr-2">
                             <ExportCSV />{" "}
+                            </div>
+                            <div className="cus-medium-button-style button-height ">
                             <input
                                 type="file"
                                 id="upload"
@@ -863,34 +866,25 @@ const Question = (props) => {
                                 onChange={(e) => onBulkUpload(e)}
 
                             />
+                            </div>
+                            <div className="cus-medium-button-style button-height mr-2">
                             <buttton
-                                className="btn btn-success mr-2"
+                                className="btn btn-success "
                                 onClick={(e) => {
                                     e.preventDefault();
                                     document.getElementById("upload").click();
                                 }}
 
                             >Upload Excel File</buttton>
+                            </div>
 
-                        </div>
+                        
                         <div className="cus-medium-button-style button-height">
                             <CsvDownload
-                                className={``}
+                                className={`btn btn-success`}
                                 data={dataCSV}
                                 filename="Donations.csv"
-                                style={{
-                                    //pass other props, like styles
-                                    backgroundColor: "#CC0001",
-                                    borderRadius: "6px",
-                                    border: "1px solid #fff",
-                                    display: "inline-block",
-                                    cursor: "pointer",
-                                    color: "#FFFFFF",
-                                    fontSize: "12px",
-                                    padding: "10px 18px",
-                                    textDecoration: "none",
-                                    position: "right",
-                                }}
+                             
                             >
                                 Export to Excel
                             </CsvDownload>
