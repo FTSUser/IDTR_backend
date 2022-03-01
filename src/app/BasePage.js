@@ -37,6 +37,7 @@ import QuestionCategory from "../_metronic/components/QuestionCategory/QuestionC
 import Images from "../_metronic/components/Images/Images";
 import Report from "../_metronic/components/Report/Report";
 import CancleCourse from "../_metronic/components/CanleCourse/CancleCourse";
+import Partial from "../_metronic/components/parsal/parsal";
 
 export default function BasePage() {
   let userInfo = getUserInfo()
@@ -69,6 +70,7 @@ export default function BasePage() {
           <ContentRoute exact path="/images" component={Images} />
           <ContentRoute exact path="/report" component={Report} />
           <ContentRoute exact path="/cancel-course" component={CancleCourse} />
+          <ContentRoute exact path="/partial-user" component={Partial} />
 
 
           <ContentRoute exact path="/announcement" component={Announcement} />

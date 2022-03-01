@@ -621,13 +621,13 @@ const User = ({ getNewCount, title }) => {
                           authoritydistrict: row?.authoritydistrict,
                           type: row?.type,
                           driverlicense:
-                            row?.license === "NA"
+                            row?.license === "N/A"
                               ? ""
                               : row?.drivingLicenseNumber,
                           issueDate:
-                            row?.license === "NA" ? "" : row?.issueDate,
+                            row?.license === "N/A" ? "" : row?.issueDate,
                           validDate:
-                            row?.license === "NA" ? "" : row?.validTill,
+                            row?.license === "N/A" ? "" : row?.validTill,
                         });
 
                         getTrainignDateEditData(row?.dateofCourse, row?.cnid);
@@ -1032,7 +1032,7 @@ const User = ({ getNewCount, title }) => {
     { name: "AB-" },
     { name: "O+" },
     { name: "O-" },
-    { name: "NA" },
+    { name: "N/A" },
   ];
   const gender = [
     { name: "Male" },
@@ -1043,7 +1043,7 @@ const User = ({ getNewCount, title }) => {
     { name: "Learner" },
     { name: "Permanent" },
     { name: "Renewal" },
-    { name: "NA" },
+    { name: "N/A" },
   ];
   const licenseAuthorityData = [{ name: "Haryana" }];
   const history = useHistory();
@@ -1057,7 +1057,7 @@ const User = ({ getNewCount, title }) => {
       lcid: formdata.license,
       dateofCourse: formdata.preferdate,
       drivingLicenseNumber:
-        formdata.license === "NA" ? "" : formdata.driverlicense,
+        formdata.license === "N/A" ? "" : formdata.driverlicense,
       fname: formdata.firstname,
       mname: formdata.middlename,
       lname: formdata.lastname,
@@ -1072,8 +1072,8 @@ const User = ({ getNewCount, title }) => {
       email: formdata.email,
       phone: formdata.phone,
       permanentDLnumber: formdata.driverlicense,
-      issueDate: formdata.license === "NA" ? "" : formdata.issueDate,
-      validTill: formdata.license === "NA" ? "" : formdata.validDate,
+      issueDate: formdata.license === "N/A" ? "" : formdata.issueDate,
+      validTill: formdata.license === "N/A" ? "" : formdata.validDate,
       Authority: "Haryana",
       passportPhoto: formdata.passport,
       drivingLicense: formdata.driviniglicencephoto,
@@ -1147,7 +1147,7 @@ const User = ({ getNewCount, title }) => {
       lcid: formdata.license,
       dateofCourse: formdata.preferdate,
       drivingLicenseNumber:
-        formdata.license === "NA" ? "" : formdata.driverlicense,
+        formdata.license === "N/A" ? "" : formdata.driverlicense,
       fname: formdata.firstname,
       mname: formdata.middlename,
       lname: formdata.lastname,
@@ -1162,8 +1162,8 @@ const User = ({ getNewCount, title }) => {
       email: formdata.email,
       phone: formdata.phone,
       permanentDLnumber: formdata.driverlicense,
-      issueDate: formdata.license === "NA" ? "" : formdata.issueDate,
-      validTill: formdata.license === "NA" ? "" : formdata.validDate,
+      issueDate: formdata.license === "N/A" ? "" : formdata.issueDate,
+      validTill: formdata.license === "N/A" ? "" : formdata.validDate,
       Authority: "Haryana",
       passportPhoto: formdata.passport,
       drivingLicense: formdata.driviniglicencephoto,
@@ -1284,15 +1284,15 @@ const User = ({ getNewCount, title }) => {
         toast.error(`Sorry! License Category must be specified`);
         seterrorShow("License Category ");
         settypeTrueFalseform(true);
-      } else if (formdata?.license != "NA" && formdata.driverlicense === "") {
+      } else if (formdata?.license != "N/A" && formdata.driverlicense === "") {
         toast.error(`Sorry! Driver's License Number must be specified`);
         seterrorShow(`Driver's License Number`);
         settypeTrueFalseform(true);
-      } else if (formdata?.license != "NA" && formdata.issueDate === "") {
+      } else if (formdata?.license != "N/A" && formdata.issueDate === "") {
         toast.error(`Sorry! Issue Date must be specified`);
         seterrorShow("Issue Date");
         settypeTrueFalseform(true);
-      } else if (formdata?.license != "NA" && formdata.validDate === "") {
+      } else if (formdata?.license != "N/A" && formdata.validDate === "") {
         toast.error(`Sorry! Valid Date must be specified`);
         seterrorShow("Valid Date");
         settypeTrueFalseform(true);
@@ -2113,7 +2113,7 @@ const User = ({ getNewCount, title }) => {
                           }}
                         />
                       </div>
-                      {formdata?.license != "NA" &&
+                      {formdata?.license != "N/A" &&
                         <>
                           <div className="register-grid-items ">
                             <label>
@@ -2695,7 +2695,7 @@ const User = ({ getNewCount, title }) => {
                       <p>
                         2. Driving License
                         <span className="star-color">*</span> (Not valid
-                        incase of NA)
+                        incase of N/A)
                       </p>
                       <input
                         type="file"
