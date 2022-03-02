@@ -48,6 +48,7 @@ const TimeSlot = ({ getNewCount, title }) => {
   const [getCourseType, setGetCourseType] = useState([]);
   const [filteredVehicleCategory, setFilteredVehicleCategory] = useState([]);
   const [date, setDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date(date));
   const [allTimeSlot, setAllTimeSlot] = useState([]);
   const [getCourseCategory, setGetCourseCategory] = useState([]);
   const [getCourseName, setGetCourseName] = useState([]);
@@ -178,17 +179,34 @@ const TimeSlot = ({ getNewCount, title }) => {
     setHour(moment(startTime).format("k"))
     let newArr = []
     let newArrForMin = []
-    for (var i = 0; i <= moment(startTime).format("k"); i++) {
+    for (var i = 0; i < moment(startTime).format("k"); i++) {
       newArr.push(i)
     }
     setFinalDisableEndTime(newArr)
-    console.log("newArrForMin", newArrForMin);
-
+    for (var i = 0; i <= moment(startTime).format("m"); i++) {
+      newArrForMin.push(i)
+    }
+    setFinalDisableEndTimeForMin(newArrForMin)
   }, [startTime])
 
   function disabledHoursEndTime() {
     return finalDisableEndTime;
   }
+  function disabledMinutesEndTime() {
+
+    return finalDisableEndTimeForMin;
+  }
+
+  useEffect(() => {
+    console.log("finalDisableEndTimeForMinute", finalDisableEndTimeForMin);
+  }, [finalDisableEndTimeForMin])
+  useEffect(() => {
+    console.log("finalDisableEndTimeForMinute", finalDisableEndTime);
+  }, [finalDisableEndTime])
+  useEffect(() => {
+    console.log("finalDisableEndTimeForMinuteEndTime", finalDisableEndTime?.length);
+  }, [finalDisableEndTime])
+
 
 
 
@@ -205,6 +223,10 @@ const TimeSlot = ({ getNewCount, title }) => {
       endTime: "",
     });
   }
+
+  useEffect(() => {
+    console.log("finalDisableEndTimeForMinuteEndTime...", moment(endTime).format("m"));
+  }, [endTime])
 
   const getAllCourseType = async () => {
     setIsLoaderVisible(true);
@@ -338,6 +360,7 @@ const TimeSlot = ({ getNewCount, title }) => {
     if (validateForm()) {
       let Data = {
         date: date,
+        endDate: endDate,
         seat: inputValueForAdd?.seat,
         endTime: end,
         startTime: start,
@@ -417,7 +440,11 @@ const TimeSlot = ({ getNewCount, title }) => {
 
     if (!date) {
       formIsValid = false;
-      errorsForAdd["date"] = "*Please Enter date!";
+      errorsForAdd["date"] = "*Please Enter Start Date!";
+    }
+    if (!endDate) {
+      formIsValid = false;
+      errorsForAdd["endDate"] = "*Please Enter End Date!";
     }
     if (!startTime) {
       formIsValid = false;
@@ -437,6 +464,7 @@ const TimeSlot = ({ getNewCount, title }) => {
     if (validateForm()) {
       let Data = {
         date: date,
+        endDate: endDate,
         seat: inputValueForAdd?.seat,
         endTime: endTime,
         startTime: startTime,
@@ -445,6 +473,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         vcid: inputValueForAdd?.VehicleCategory,
         ccid: inputValueForAdd?.CourseCategory
       };
+      console.log("datatdtad", Data);
       ApiPut(`trainingDate/updateDate/${idForUpdateCourseNameData}`, Data)
         .then((res) => {
           if (res?.status == 200) {
@@ -540,6 +569,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                   setStartTime(row?.startTime);
                   setEndTime(row?.endTime);
                   setDate(row?.date);
+                  setEndDate(row?.endDate)
                   setNow(moment(row?.startTime));
                   setNow1(moment(row?.endTime));
                   setIsEditPopUp(true);
@@ -663,6 +693,13 @@ const TimeSlot = ({ getNewCount, title }) => {
       toast.error("Please Select Excel File !");
     }
   };
+
+  useEffect(() => {
+    console.log("test007", moment(startTime).format("k"));
+  }, [startTime])
+  useEffect(() => {
+    console.log("test007777", moment(endTime).format("k"));
+  }, [endTime])
 
 
 
@@ -1002,7 +1039,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                           }
                           hidden
                         >
-                          Select course category
+                          Select course name
                         </option>
                         {getCourseName?.length > 0 &&
                           getCourseName?.map((item) => {
@@ -1066,7 +1103,7 @@ const TimeSlot = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-lg-3 col-form-label">
-                    Select Date
+                    Select Start Date
                   </label>
                   <div className="col-lg-6 cus-data-input-style">
                     <DatePicker
@@ -1087,6 +1124,47 @@ const TimeSlot = ({ getNewCount, title }) => {
                       }}
                     >
                       {errorsForAdd["date"]}
+                    </span>
+                  </div>
+                </div>
+                <div className="form-group row">
+                  <label className="col-lg-3 col-form-label">
+                    Select End Date
+                  </label>
+                  <div className="col-lg-6 cus-data-input-style">
+                    {endDate ?
+                      <DatePicker
+                        id="endDate"
+                        format="DD/MM/YYYY"
+                        selected={new Date(endDate)}
+                        onChange={(date) => {
+                          console.log("EndDate", date);
+                          setEndDate(date);
+                          setErrorsForAdd({ ...errorsForAdd, endDate: "" });
+                        }}
+                        minDate={new Date(date)}
+                      />
+                      :
+                      <DatePicker
+                        id="endDate"
+                        format="DD/MM/YYYY"
+                        selected={new Date(date)}
+                        onChange={(date) => {
+                          setEndDate(date);
+                          setErrorsForAdd({ ...errorsForAdd, endDate: "" });
+                        }}
+                        minDate={currentDate}
+                      />
+                    }
+
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["endDate"]}
                     </span>
                   </div>
                 </div>
@@ -1120,24 +1198,34 @@ const TimeSlot = ({ getNewCount, title }) => {
                     Enter End Time
                   </label>
                   <div className="col-lg-9 cus-data-input-style">
-                    {finalDisableEndTime && finalDisableEndTimeForMin ?
+                    {moment(startTime).format("k") === moment(endTime).format("k") ?
                       <TimePicker
                         showSecond={false}
                         defaultValue={now1}
                         onChange={onChange1}
                         format={format1}
                         disabledHours={disabledHoursEndTime}
-                        // disabledMinutes={disabledMinutesEndTime}
+                        disabledMinutes={disabledMinutesEndTime}
                         inputReadOnly
                       />
-                      :
-                      <TimePicker
-                        showSecond={false}
-                        defaultValue={now1}
-                        onChange={onChange1}
-                        format={format1}
-                        inputReadOnly
-                      />
+                      : moment(startTime).format("k") !== moment(endTime).format("k") ?
+                        <TimePicker
+                          showSecond={false}
+                          defaultValue={now1}
+                          onChange={onChange1}
+                          format={format1}
+                          disabledHours={disabledHoursEndTime}
+                          // disabledMinutes={disabledMinutesEndTime}
+                          inputReadOnly
+                        />
+                        :
+                        <TimePicker
+                          showSecond={false}
+                          defaultValue={now1}
+                          onChange={onChange1}
+                          format={format1}
+                          inputReadOnly
+                        />
                     }
 
                     <span
