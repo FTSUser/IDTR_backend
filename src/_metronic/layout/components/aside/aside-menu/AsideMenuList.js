@@ -156,16 +156,16 @@ export function AsideMenuList({ layoutProps }) {
                 </li>
               ) : <li
                 className={`menu-item menu-item-submenu ${getMenuItemActive(
-                  `/${data?.name.trim().toLowerCase().replace(' ', '-')}`,
+                  `/${data?.name.toLowerCase().replace('', '-')}`,
                   true
                 )}`}
                 aria-haspopup="true"
                 data-menu-toggle="hover"
               >
-                <NavLink className="menu-link" to={`/${data?.name.trim().toLowerCase().replace(' ', '-')}`}>
+                <NavLink className="menu-link" to={`/${data?.name === "Policy&Terms" ? data?.name.trim().toLowerCase().replace('&', '-').trim() : data?.name.trim().toLowerCase().replace(' ', '-')}`}>
                   <span className="svg-icon menu-icon">
 
-                    <img src={`media/allIconsForTable/${data?.name.trim().toLowerCase().replace(' ', '-')}.svg`} />
+                    <img src={`media/allIconsForTable/${data?.name === "Policy&Terms" ? data?.name.trim().toLowerCase().replace('&', '-').trim() : data?.name.trim().toLowerCase().replace(' ', '-')}.svg`} />
                   </span>
                   <span className="menu-text">{data?.name}</span>
                 </NavLink>

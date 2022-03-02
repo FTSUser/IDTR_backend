@@ -50,7 +50,7 @@ const FAQ = ({ getNewCount, title }) => {
   const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
-    document.title = "Honda | FAQ";
+    document.title = "Honda | FAQ Section";
   }, []);
 
   const handleOnChnageAdd = (e) => {
@@ -369,7 +369,7 @@ const FAQ = ({ getNewCount, title }) => {
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2">FAQ</h2>
+              <h2 className="pl-3 pt-2">FAQ Section</h2>
             </div>
             <div className="col">
               <div>

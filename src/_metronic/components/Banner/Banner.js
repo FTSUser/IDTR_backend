@@ -58,9 +58,11 @@ const Banner = ({ getNewCount, title }) => {
   const [count, setCount] = useState(0);
   const [countPerPage, setCountPerPage] = useState(10);
   const [search, setSearch] = useState("");
-
+  const [showStatus, setShowStatus] = useState(false);
+  const [idForUpdateCourseStatus, setIdForUpdateCourseStatus] = useState("");
+  const [statusDisplay, setStatusDisplay] = useState(false);
   useEffect(() => {
-    document.title = "Honda | Banner";
+    document.title = "Honda | Home Page Banner ";
   }, []);
 
   // S3 link for image start
@@ -374,7 +376,26 @@ const Banner = ({ getNewCount, title }) => {
         });
     }
   };
-
+  const handleCloseShowStatus = () => {
+    setShowStatus(false);
+  };
+  const handleUpdateStatusCourseName = (status) => {
+    ApiPut(`banner/updateStatus/${idForUpdateCourseStatus}`, {
+      isActive: status,
+    })
+      .then((res) => {
+        if (res?.status == 200) {
+          setShowStatus(false);
+          toast.success("Status updated Successfully");
+          getAllAnnouncement();
+        } else {
+          toast.error(res?.data?.message);
+        }
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message);
+      });
+  };
   let i = 0;
   const columns = [
     {
@@ -431,6 +452,22 @@ const Banner = ({ getNewCount, title }) => {
       cell: (row) => {
         return (
           <>
+           <div
+              className="cursor-pointer"
+              onClick={() => {
+                setShowStatus(true);
+                setIdForUpdateCourseStatus(row?._id);
+                setStatusDisplay(row?.isActive);
+              }}
+            >
+              <Tooltip title="Status Property" arrow>
+                <div className="cus-medium-button-style widthfixed">
+                  <button className="btn btn-success mr-2">
+                    {row?.isActive === true ? "Active" : "Deactive"}
+                  </button>
+                </div>
+              </Tooltip>
+            </div>
             <div className="d-flex justify-content-between">
               <div
                 className="cursor-pointer pl-2"
@@ -562,7 +599,7 @@ const Banner = ({ getNewCount, title }) => {
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2"> Banner</h2>
+              <h2 className="pl-3 pt-2"> Home Page Banner</h2>
             </div>
             <div className="col">
               <div>
@@ -587,7 +624,28 @@ const Banner = ({ getNewCount, title }) => {
               </button>
             </div>
           </div>
-
+          <Modal show={showStatus} onHide={handleCloseShowStatus}>
+            <Modal.Header closeButton>
+              <Modal.Title className="text-danger">Alert!</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are You Sure To Want To{" "}
+              {statusDisplay === true ? "De-active" : "Active"} this Bannner
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseShowStatus}>
+                Cancel
+              </Button>
+              <Button
+                variant="danger"
+                onClick={(e) => {
+                  handleUpdateStatusCourseName(!statusDisplay);
+                }}
+              >
+                {statusDisplay === true ? "De-active" : "Active"}
+              </Button>
+            </Modal.Footer>
+          </Modal>
           {/* delete model */}
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>

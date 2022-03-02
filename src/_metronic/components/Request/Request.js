@@ -23,6 +23,8 @@ import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import moment from "moment";
+import { DateRangePickerComponent } from "@syncfusion/ej2-react-calendars";
+import { addDays } from "date-fns";
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -133,6 +135,14 @@ const Request = ({ getNewCount, title }) => {
             selector: row => row?.fname,
         },
         {
+            name: "Date",
+            cell: (row) => {
+                return <span>{moment(row?.updatedAt).format("ll")}</span>;
+              },
+            sortable: true,
+           
+        },
+        {
             name: "Last Name",
 
             sortable: true,
@@ -142,7 +152,25 @@ const Request = ({ getNewCount, title }) => {
             name: "Email",
 
             sortable: true,
-            selector: row => row?.email ? row?.email : '-' ,
+            selector: row => row?.email ? row?.email : '-',
+        },
+        {
+            name: "Course Name",
+
+            sortable: true,
+            selector: row => row?.cnid?.courseName ? row?.cnid?.courseName : '-',
+        },
+        {
+            name: "Examiner Name",
+
+            sortable: true,
+            selector: row => row?.batchId?.Examiner?.name ? row?.batchId?.Examiner?.name : '-',
+        },
+        {
+            name: "Data Entery Name",
+
+            sortable: true,
+            selector: row => row?.batchId?.DataEntry?.name ? row?.batchId?.DataEntry?.name : '-',
         },
         {
             name: "Mobile Number",
@@ -214,6 +242,7 @@ const Request = ({ getNewCount, title }) => {
     };
 
     const debouncedSearchTerm = useDebounce(search, 500);
+    const [dateForFilter, setDateForFilter] = useState();
     function useDebounce(value, delay) {
         const [debouncedValue, setDebouncedValue] = useState(value);
         useEffect(
@@ -245,6 +274,48 @@ const Request = ({ getNewCount, title }) => {
         }
     }, [debouncedSearchTerm]);
 
+    const [tableFilterData, setTableFilterData] = useState({});
+    useEffect(() => {
+        if (dateForFilter) {
+            handleSetDateData(dateForFilter)
+        } else {
+
+            getAllFAQ();
+        }
+
+    }, [page, countPerPage]);
+
+    const handleSetDateData = async (dateForFilter) => {
+        console.log("date", dateForFilter);
+        if (dateForFilter) {
+
+
+            await ApiGet(
+                `response/getRequestResponseByStatus?status=pending&sd=${moment(dateForFilter[0]).format('MM/DD/YYYY')}&ed=${moment(dateForFilter[1]).format('MM/DD/YYYY')}&page=${page}&limit=${countPerPage}`
+               
+            )
+                .then((res) => {
+                    // setTableFilterData(tableFilterData);
+                    console.log("res", res);
+                    setCount(res?.data?.payload?.count)
+                    setFilteredFAQ(res?.data?.payload?.Response);
+                })
+                .catch((err) => {
+                    toast.error(err?.response?.data?.message);
+                });
+        } else {
+
+            getAllFAQ()
+        }
+
+    };
+    const [statesate, setState] = useState([
+        {
+          startDate: new Date(),
+          endDate: addDays(new Date(), 7),
+          key: 'selection'
+        }
+      ]);
     return (
         <>
             <div className="card p-1">
@@ -268,7 +339,20 @@ const Request = ({ getNewCount, title }) => {
                         </div>
 
                     </div>
+                    <div style={{ width: "30%", paddingLeft: "15px" }}>
 
+                        <DateRangePickerComponent
+                            onChange={(e) => {
+                                handleSetDateData(e.target.value);
+                                setDateForFilter(e.target.value)
+                            }}
+                            showSelectionPreview={true}
+                            moveRangeOnFirstSelection={false}
+                            months={2}
+                            ranges={statesate}
+                            direction="horizontal"
+                        />
+                    </div>
 
 
                     <DataTable

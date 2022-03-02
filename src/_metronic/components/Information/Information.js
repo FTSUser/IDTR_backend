@@ -60,7 +60,7 @@ const Information = ({ getNewCount, title }) => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    document.title = "Honda | Information";
+    document.title = "Honda | Policy & Terms";
   }, []);
 
   // S3 link for image start
@@ -404,7 +404,7 @@ const Information = ({ getNewCount, title }) => {
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2"> Information</h2>
+              <h2 className="pl-3 pt-2"> Policy & Terms</h2>
             </div>
             <div className="cus-medium-button-style button-height">
               <button

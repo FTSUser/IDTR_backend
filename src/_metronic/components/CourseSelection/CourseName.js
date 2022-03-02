@@ -261,10 +261,10 @@ const CourseName = ({ getNewCount, title }) => {
       errorsForAdd["DocumentRequired"] = "*Please Enter Document Required!";
     }
 
-    if (inputValueForAdd && !inputValueForAdd.Validity) {
-      formIsValid = false;
-      errorsForAdd["Validity"] = "*Please Enter Validity!";
-    }
+    // if (inputValueForAdd && !inputValueForAdd.Validity) {
+    //   formIsValid = false;
+    //   errorsForAdd["Validity"] = "*Please Enter Validity!";
+    // }
 
     if (inputValueForAdd && !inputValueForAdd.SystemRequirement) {
       formIsValid = false;
@@ -298,7 +298,7 @@ const CourseName = ({ getNewCount, title }) => {
         systemRequirement: inputValueForAdd.SystemRequirement,
         timing: inputValueForAdd.Timing,
         duration: inputValueForAdd.Duration,
-        validity: inputValueForAdd.Validity,
+        // validity: inputValueForAdd.Validity,
         price: inputValueForAdd.Price,
         ctid: inputValueForAdd.CourseType,
         ccid: inputValueForAdd.CourseCategory,
@@ -352,7 +352,7 @@ const CourseName = ({ getNewCount, title }) => {
         systemRequirement: inputValueForAdd?.SystemRequirement,
         timing: inputValueForAdd?.Timing,
         duration: inputValueForAdd?.Duration,
-        validity: inputValueForAdd?.Validity,
+        // validity: inputValueForAdd?.Validity,
         price: inputValueForAdd?.Price,
         ctid: inputValueForAdd?.CourseType,
         ccid: inputValueForAdd?.CourseCategory,
@@ -482,7 +482,7 @@ const CourseName = ({ getNewCount, title }) => {
                     SystemRequirement: row?.systemRequirement,
                     Timing: row?.timing,
                     Duration: row?.duration,
-                    Validity: row?.validity,
+                    // Validity: row?.validity,
                     Price: row?.price,
                     CourseType: row?.ctid?._id,
                     CourseCategory: row?.ccid?._id,
@@ -638,7 +638,7 @@ const CourseName = ({ getNewCount, title }) => {
           Duration: registerUser?.duration,
           Timing: registerUser?.timing,
           Certificate: registerUser?.certificate,
-          Validity: registerUser?.validity,
+          // Validity: registerUser?.validity,
           DocumentRequired: registerUser?.documentRequired,
           CourseName: registerUser?.courseName,
           CourseNameId: registerUser?._id,
@@ -705,7 +705,7 @@ const CourseName = ({ getNewCount, title }) => {
               <CsvDownload
                 className={``}
                 data={dataCSV}
-                filename="Donations.csv"
+                filename="Course Name.csv"
                 style={{
                   //pass other props, like styles
                   backgroundColor: "#CC0001",
@@ -1048,6 +1048,11 @@ const CourseName = ({ getNewCount, title }) => {
                     <div>
                       <input
                         type="text"
+                        onKeyPress={(event) => {
+                          if (!/[0-9]/.test(event.key)) {
+                            event.preventDefault();
+                          }
+                        }}
                         className={`form-control form-control-lg form-control-solid `}
                         id="Duration"
                         name="Duration"
@@ -1077,6 +1082,11 @@ const CourseName = ({ getNewCount, title }) => {
                     <div>
                       <input
                         type="text"
+                        onKeyPress={(event) => {
+                          if (!/[0-9]/.test(event.key)) {
+                            event.preventDefault();
+                          }
+                        }}
                         className={`form-control form-control-lg form-control-solid `}
                         id="Timing"
                         name="Timing"
@@ -1104,7 +1114,45 @@ const CourseName = ({ getNewCount, title }) => {
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
-                      <input
+                    <select
+                                                className={`form-control form-control-lg form-control-solid`}
+                                                name="Mode"
+                                                value={inputValueForAdd.Mode}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+
+
+                                            >
+                                                <option>Select Payment Mode
+                                                </option>
+                                                <option value="Offline" selected={
+                                                    inputValueForAdd?.Mode ===
+                                                        "Offline"
+                                                        ? true
+                                                        : false
+                                                }>Offline </option>
+                                                <option value="Online " selected={
+                                                    inputValueForAdd?.Mode ===
+                                                        "Online "
+                                                        ? true
+                                                        : false
+                                                }>Online </option>
+                                                <option value="Offline / Online " selected={
+                                                    inputValueForAdd?.Mode ===
+                                                        "Offline / Online "
+                                                        ? true
+                                                        : false
+                                                }>Offline / Online </option>
+                                                <option value="None of this " selected={
+                                                    inputValueForAdd?.Mode ===
+                                                        "None of this "
+                                                        ? true
+                                                        : false
+                                                }>None of this </option>
+
+                                            </select>
+                      {/* <input
                         type="text"
                         className={`form-control form-control-lg form-control-solid `}
                         id="Mode"
@@ -1113,7 +1161,7 @@ const CourseName = ({ getNewCount, title }) => {
                         onChange={(e) => {
                           handleOnChnageAdd(e);
                         }}
-                      />
+                      /> */}
                     </div>
                     <span
                       style={{
@@ -1156,7 +1204,7 @@ const CourseName = ({ getNewCount, title }) => {
                   </div>
                 </div>
 
-                <div className="form-group row">
+                {/* <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter validity
                   </label>
@@ -1183,7 +1231,7 @@ const CourseName = ({ getNewCount, title }) => {
                       {errorsForAdd["Validity"]}
                     </span>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -1375,7 +1423,7 @@ const CourseName = ({ getNewCount, title }) => {
                       className=""
                     />
                   </div>
-                  <div className="honda-text-grid-items">
+                  {/* <div className="honda-text-grid-items">
                     <p>Validity:</p>
                     <span
                       dangerouslySetInnerHTML={{
@@ -1383,7 +1431,7 @@ const CourseName = ({ getNewCount, title }) => {
                       }}
                       className=""
                     />
-                  </div>
+                  </div> */}
                   <div className="honda-text-grid-items">
                     <p>System Requirement:</p>
                     <span

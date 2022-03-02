@@ -454,7 +454,7 @@ const Description = ({ getNewCount, title }) => {
                 />
               </div>
             </div>
-            <div className="cus-medium-button-style button-height">
+            {/* <div className="cus-medium-button-style button-height">
               <button
                 onClick={() => {
                   setIsAddAnnouncement(true);
@@ -463,7 +463,7 @@ const Description = ({ getNewCount, title }) => {
               >
                 Add Banner Description
               </button>
-            </div>
+            </div> */}
           </div>
 
           {/* delete model */}

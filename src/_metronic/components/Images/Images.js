@@ -60,7 +60,7 @@ const Images = ({ getNewCount, title }) => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    document.title = "Honda | Images";
+    document.title = "Honda | Question Images";
   }, []);
 
   const handleOnChnage = (e) => {
@@ -531,7 +531,7 @@ const Images = ({ getNewCount, title }) => {
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2"> Images</h2>
+              <h2 className="pl-3 pt-2"> Question Images</h2>
             </div>
             <div className="col">
               <div>

@@ -291,9 +291,9 @@ const User = ({ getNewCount, title }) => {
 
   useEffect(() => { }, [tableFilterData]);
   useEffect(() => {
-    console.log("dateForFilter",dateForFilter);
+    console.log("dateForFilter", dateForFilter);
 
-   }, [dateForFilter]);
+  }, [dateForFilter]);
 
   useEffect(() => {
     console.log("formdata", formdata);
@@ -360,31 +360,31 @@ const User = ({ getNewCount, title }) => {
   const onChangeDiscloser = (e) => {
     setdicloser(e);
   };
-  const handleSetDateData =async  (dateForFilter) => {
-    console.log("date",dateForFilter);
-    if(dateForFilter){
+  const handleSetDateData = async (dateForFilter) => {
+    console.log("date", dateForFilter);
+    if (dateForFilter) {
 
-    
-    await ApiGet(
-      `register/getRecordsByRange?sd=${moment(dateForFilter[0]).format('MM/DD/YYYY')}&ed=${moment(dateForFilter[1]).format('MM/DD/YYYY')}&page=${page}&limit=${countPerPage}`
-    )
-      .then((res) => {
-        // setTableFilterData(tableFilterData);
-       console.log("res",res);
-       setCount(res?.data?.payload?.count)
-       setTableFilterData(res?.data?.payload?.Question);
-      })
-      .catch((err) => {
-        toast.error(err?.response?.data?.message);
-      });
-    }else{
-      
+
+      await ApiGet(
+        `register/getRecordsByRange?sd=${moment(dateForFilter[0]).format('MM/DD/YYYY')}&ed=${moment(dateForFilter[1]).format('MM/DD/YYYY')}&page=${page}&limit=${countPerPage}`
+      )
+        .then((res) => {
+          // setTableFilterData(tableFilterData);
+          console.log("res", res);
+          setCount(res?.data?.payload?.count)
+          setTableFilterData(res?.data?.payload?.Question);
+        })
+        .catch((err) => {
+          toast.error(err?.response?.data?.message);
+        });
+    } else {
+
       getAllUser()
     }
     // setTableFilterData([]);
     // if (!date) {
     //   setTableFilterData(tableFilterData);
-      
+
     // } else {
     //   let newData = tableFilterData.filter((data) => {
     //     if (
@@ -422,13 +422,13 @@ const User = ({ getNewCount, title }) => {
   //end test
 
   useEffect(() => {
-    if(dateForFilter){
+    if (dateForFilter) {
       handleSetDateData(dateForFilter)
-    }else{
-      
+    } else {
+
       getAllUser();
     }
-    
+
   }, [page, countPerPage]);
 
   const getAllUser = async () => {
@@ -546,7 +546,7 @@ const User = ({ getNewCount, title }) => {
               </div>
 
             </div>
-          
+
             <div className="cursor-pointer pl-2">
               {!row?.uid ? (
                 <>
@@ -663,7 +663,7 @@ const User = ({ getNewCount, title }) => {
               </div>
             </Tooltip>
           </>
-          
+
         );
       },
     },
@@ -707,7 +707,7 @@ const User = ({ getNewCount, title }) => {
       selector: "ip",
       sortable: true,
     },
-    
+
     {
       name: "User Phone",
       selector: row => row?.uid?.phone,
@@ -728,7 +728,7 @@ const User = ({ getNewCount, title }) => {
               <CsvDownload
                 className={``}
                 data={dataCSVLogs}
-                filename="Donations.csv"
+                filename="User.csv"
                 style={{
                   backgroundColor: "#CC0001",
                   borderRadius: "6px",
@@ -821,17 +821,17 @@ const User = ({ getNewCount, title }) => {
   useEffect(() => {
     if (allRegisterUserExcel) {
       allRegisterUserExcel.map((registerUser, key) => {
-        console.log("registerUser?.uid?.",registerUser?.Registrationtype);
+        console.log("registerUser?.uid?.", registerUser?.Registrationtype);
         let data = {
           Number: key + 1,
           UserID: registerUser?._id,
-          RegistrationTypes: registerUser?.Registrationtype ,
+          RegistrationTypes: registerUser?.Registrationtype,
           FirstName: registerUser?.fname,
           MiddleName: registerUser?.mname ? registerUser?.mname : "-",
           LastName: registerUser?.lname ? registerUser?.lname : "-",
           EmailAddress: registerUser?.email ? registerUser?.email : "-",
           MobileNumber: registerUser?.phone,
-         
+
           FatherName: registerUser?.fatherName ? registerUser?.fatherName : "-",
           DateOfBirth: moment(registerUser?.DoB).format("ll"),
           Qualification: registerUser?.qualification,
@@ -878,12 +878,12 @@ const User = ({ getNewCount, title }) => {
           IsPaymentDone:
             registerUser?.isPaymentDone === null ||
               registerUser?.isPaymentDone === false
-              ? "Payment Panding"
+              ? "Payment Pending"
               : registerUser?.isPaymentDone,
           PaymentMode: registerUser?.type,
           TransactionID:
             registerUser?.paymentId === null
-              ? "Payment Panding"
+              ? "Payment Pending"
               : registerUser?.paymentId,
           RegisterationDate: registerUser?.createdAt,
         };
@@ -1382,7 +1382,7 @@ const User = ({ getNewCount, title }) => {
         toast.error("Select passport photo");
         seterrorShow("Passport Photo");
         settypeTrueFalseform(true);
-      } else if (formdata.driviniglicencephoto === null) {
+      } else if (formdata.license !== "N/A" && formdata.driviniglicencephoto === null) {
         toast.error("Select driving license photo");
         seterrorShow("Driving license photo");
         settypeTrueFalseform(true);
@@ -1701,46 +1701,89 @@ const User = ({ getNewCount, title }) => {
   const uploadCertificate = async () => {
     let urls = {};
     let data = [];
-    if (formdata.passport && formdata.driviniglicencephoto) {
-      if (formdata.passport && typeof formdata.passport !== "string") {
-        data.push(formdata.passport);
-        let passport1 = await uploadS3bucket(formdata.passport);
-        urls = { passport: passport1, ...urls };
+    if(formdata?.license === 'N/A'){
+      if (formdata.passport ) {
+        if (formdata.passport && typeof formdata.passport !== "string") {
+          data.push(formdata.passport);
+          let passport1 = await uploadS3bucket(formdata.passport);
+          urls = { passport: passport1, ...urls };
+        }
+        else if (
+          formdata.driviniglicencephoto &&
+          typeof formdata.driviniglicencephoto !== "string"
+        ) {
+          data.push(formdata.driviniglicencephoto);
+          let driviniglicencephoto = await uploadS3bucket(
+            formdata.driviniglicencephoto
+          );
+          urls = { driviniglicencephoto: driviniglicencephoto, ...urls };
+        }
+        if (
+          formdata.mediacalCertificate &&
+          typeof formdata.mediacalCertificate !== "string"
+        ) {
+          data.push(formdata.mediacalCertificate);
+          let mediacalCertificate = await uploadS3bucket(
+            formdata.mediacalCertificate
+          );
+          urls = { mediacalCertificate: mediacalCertificate, ...urls };
+        }
+        if (formdata.idProof && typeof formdata.idProof !== "string") {
+          data.push(formdata.idProof);
+  
+          let idProof = await uploadS3bucket(formdata.idProof);
+          urls = { idProof: idProof, ...urls };
+        }
+        if (Object.keys(urls).length === data.length) {
+          toast.success("Document uploaded successfully ");
+        }
+        setFormData({ ...formdata, ...urls });
+      } else {
+        toast.error("Please Select file before Uploading");
       }
-      if (
-        formdata.driviniglicencephoto &&
-        typeof formdata.driviniglicencephoto !== "string"
-      ) {
-        data.push(formdata.driviniglicencephoto);
-        let driviniglicencephoto = await uploadS3bucket(
-          formdata.driviniglicencephoto
-        );
-        urls = { driviniglicencephoto: driviniglicencephoto, ...urls };
-      }
-      if (
-        formdata.mediacalCertificate &&
-        typeof formdata.mediacalCertificate !== "string"
-      ) {
-        data.push(formdata.mediacalCertificate);
-        let mediacalCertificate = await uploadS3bucket(
-          formdata.mediacalCertificate
-        );
-        urls = { mediacalCertificate: mediacalCertificate, ...urls };
-      }
-      if (formdata.idProof && typeof formdata.idProof !== "string") {
-        data.push(formdata.idProof);
-
-        let idProof = await uploadS3bucket(formdata.idProof);
-        urls = { idProof: idProof, ...urls };
-      }
-      if (Object.keys(urls).length === data.length) {
-        toast.success("Document uploaded successfully ");
-      }
-      setFormData({ ...formdata, ...urls });
-    } else {
-      toast.error("Please Select file before Uploading");
     }
-  };
+    else if (formdata.passport && formdata.driviniglicencephoto) {
+        if (formdata.passport && typeof formdata.passport !== "string") {
+          data.push(formdata.passport);
+          let passport1 = await uploadS3bucket(formdata.passport);
+          urls = { passport: passport1, ...urls };
+        }
+        if (
+          formdata.driviniglicencephoto &&
+          typeof formdata.driviniglicencephoto !== "string"
+        ) {
+          data.push(formdata.driviniglicencephoto);
+          let driviniglicencephoto = await uploadS3bucket(
+            formdata.driviniglicencephoto
+          );
+          urls = { driviniglicencephoto: driviniglicencephoto, ...urls };
+        }
+        if (
+          formdata.mediacalCertificate &&
+          typeof formdata.mediacalCertificate !== "string"
+        ) {
+          data.push(formdata.mediacalCertificate);
+          let mediacalCertificate = await uploadS3bucket(
+            formdata.mediacalCertificate
+          );
+          urls = { mediacalCertificate: mediacalCertificate, ...urls };
+        }
+        if (formdata.idProof && typeof formdata.idProof !== "string") {
+          data.push(formdata.idProof);
+  
+          let idProof = await uploadS3bucket(formdata.idProof);
+          urls = { idProof: idProof, ...urls };
+        }
+        if (Object.keys(urls).length === data.length) {
+          toast.success("Document uploaded successfully ");
+        }
+        setFormData({ ...formdata, ...urls });
+      } else  {
+        toast.error("Please Select file before Uploading");
+      }
+    }
+    
+  
 
   const uploadS3bucket = async (file) => {
     let config = AwsConfig;
@@ -1757,7 +1800,7 @@ const User = ({ getNewCount, title }) => {
     let data = await Reacts3Client.uploadFile(f, filename);
     try {
       if (data.status === 204) {
-       
+
         urls = data.location;
         return urls;
       } else {
@@ -1857,7 +1900,7 @@ const User = ({ getNewCount, title }) => {
               <CsvDownload
                 className={``}
                 data={dataCSV}
-                filename="Donations.csv"
+                filename="User.csv"
                 style={{
                   //pass other props, like styles
                   backgroundColor: "#CC0001",
@@ -1890,16 +1933,16 @@ const User = ({ getNewCount, title }) => {
             }}
           ></DateRangePickerComponent> */}
           <DateRangePickerComponent
-   onChange={(e) => {
-    handleSetDateData(e.target.value);
-  setDateForFilter(e.target.value)
-  }}
-  showSelectionPreview={true}
-  moveRangeOnFirstSelection={false}
-  months={2}
-  ranges={statesate}
-  direction="horizontal"
-/>
+            onChange={(e) => {
+              handleSetDateData(e.target.value);
+              setDateForFilter(e.target.value)
+            }}
+            showSelectionPreview={true}
+            moveRangeOnFirstSelection={false}
+            months={2}
+            ranges={statesate}
+            direction="horizontal"
+          />
         </div>
         <div className="p-2 mb-2">
           <DataTable
@@ -2460,7 +2503,8 @@ const User = ({ getNewCount, title }) => {
                             //   new Date(formdata.DateofBirth).getMonth() + 1
                             // }-${new Date(formdata.DateofBirth).getDate()}`}
                             value={formdata.DateofBirth}
-                            max={moment(new Date()).format("YYYY-MM-DD")}
+                            max={moment(new Date()).subtract(16, 'years').format("YYYY-MM-DD")}
+                            // max={moment(new Date()).format("YYYY-MM-DD")}
                             onChange={(e) => onChnageForm(e)}
                           />
                         </div>
@@ -2691,23 +2735,42 @@ const User = ({ getNewCount, title }) => {
                         }
                       />
                     </div>
-                    <div className="photo-upload-from">
-                      <p>
-                        2. Driving License
-                        <span className="star-color">*</span> (Not valid
-                        incase of N/A)
-                      </p>
-                      <input
-                        type="file"
-                        name="driviniglicencephoto"
-                        onChange={(e) =>
-                          onChangImage(
-                            e.target.files[0],
-                            "driviniglicencephoto"
-                          )
-                        }
-                      />
-                    </div>
+                    {
+                      formdata?.license === 'N/A' ? <div className="photo-upload-from">
+                        <p>
+                          2. Driving License
+                          (Not valid
+                          incase of N/A)
+                        </p>
+                        <input
+                          type="file"
+                          name="driviniglicencephoto"
+                          onChange={(e) =>
+                            onChangImage(
+                              e.target.files[0],
+                              "driviniglicencephoto"
+                            )
+                          }
+                        />
+                      </div> : <div className="photo-upload-from">
+                        <p>
+                          2. Driving License
+                          <span className="star-color">*</span> (Not valid
+                          incase of N/A)
+                        </p>
+                        <input
+                          type="file"
+                          name="driviniglicencephoto"
+                          onChange={(e) =>
+                            onChangImage(
+                              e.target.files[0],
+                              "driviniglicencephoto"
+                            )
+                          }
+                        />
+                      </div>
+                    }
+
                     <div className="photo-upload-from">
                       <p>
                         3. ID Proof: Acceptable formats - Utility Bills
@@ -2766,22 +2829,41 @@ const User = ({ getNewCount, title }) => {
                         </div>
                       </div>
                     )}
-                    {formdata.driviniglicencephoto && formdata.passport ? (
-                      <div className="next-step-alignment">
-                        <button
-                          className="fill-button"
-                          onClick={() => uploadCertificate()}
-                        >
-                          Upload
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="next-step-alignment">
-                        <button className="fill-button disabled">
-                          Upload
-                        </button>
-                      </div>
-                    )}
+                    {formdata?.license === 'N/A' ?
+                        formdata?.passport ? 
+                          <div className="next-step-alignment">
+                            <button
+                              className="fill-button"
+                              onClick={() => uploadCertificate()}
+                            >
+                              Upload
+                            </button>
+                          </div>
+                         : 
+                          <div className="next-step-alignment">
+                            <button className="fill-button disabled">
+                              Upload
+                            </button>
+                          </div>
+                        
+                      :
+                        formdata.driviniglicencephoto && formdata.passport ?
+                          <div className="next-step-alignment">
+                            <button
+                              className="fill-button"
+                              onClick={() => uploadCertificate()}
+                            >
+                              Upload
+                            </button>
+                          </div>
+                         : 
+                          <div className="next-step-alignment">
+                            <button className="fill-button disabled">
+                              Upload
+                            </button>
+                          </div>
+                    }
+
                     <div className="next-step-alignment">
                       <button
                         onClick={(e) => previousClick(e, "personal")}
@@ -3246,11 +3328,11 @@ const User = ({ getNewCount, title }) => {
           <List>
             {isViewMoreUser === true ? (
               <div className="honda-container">
-                 <div className="other-information-child-text-style1">
-                    <h2>User Information</h2>
+                <div className="other-information-child-text-style1">
+                  <h2>User Information</h2>
                 </div>
                 <div className="honda-text-grid honda-text-grid-border">
-                
+
                   <div className="honda-text-grid-items">
                     <span>First Name:</span>
                     <p
@@ -3503,7 +3585,7 @@ const User = ({ getNewCount, title }) => {
                       className=""
                     />
                   </div>
-                  
+
                   <div className="honda-text-grid-items">
                     <span>Authority City:</span>
                     <p
@@ -3534,9 +3616,9 @@ const User = ({ getNewCount, title }) => {
                   </div>
                 </div>
                 <div className="other-information-child-text-style">
-                    <h2>Other Information</h2>
+                  <h2>Other Information</h2>
                 </div>
-                  <div className="honda-text-grid-new">
+                <div className="honda-text-grid-new">
                   <div className="honda-text-grid-new-items">
                     <span>Photo:</span>
                     <div className="card-main-border-image">
@@ -3555,50 +3637,50 @@ const User = ({ getNewCount, title }) => {
                   <div className="honda-text-grid-new-items">
                     <span>Driving License Image:</span>
                     <div className="card-main-border-image">
-                    {dataViewMore?.drivingLicense === null ||
-                      dataViewMore?.drivingLicense === "" ||
-                      !dataViewMore?.drivingLicense ? (
-                      "No Data"
-                    ) : (
-                      <img
-                        src={dataViewMore?.drivingLicense}
-                        alt="No Image"
-                      />
-                    )}
+                      {dataViewMore?.drivingLicense === null ||
+                        dataViewMore?.drivingLicense === "" ||
+                        !dataViewMore?.drivingLicense ? (
+                        "No Data"
+                      ) : (
+                        <img
+                          src={dataViewMore?.drivingLicense}
+                          alt="No Image"
+                        />
+                      )}
                     </div>
                   </div>
                   <div className="honda-text-grid-new-items">
                     <span>ID Proof:</span>
                     <div className="card-main-border-image">
-                    {dataViewMore?.IDproof === null ||
-                      dataViewMore?.IDproof === "" ||
-                      !dataViewMore?.IDproof ? (
-                      "No Data"
-                    ) : (
-                      <img
-                        src={dataViewMore?.IDproof}
-                        alt="No Image"
-                      />
-                    )}
+                      {dataViewMore?.IDproof === null ||
+                        dataViewMore?.IDproof === "" ||
+                        !dataViewMore?.IDproof ? (
+                        "No Data"
+                      ) : (
+                        <img
+                          src={dataViewMore?.IDproof}
+                          alt="No Image"
+                        />
+                      )}
                     </div>
                   </div>
                   <div className="honda-text-grid-new-items">
                     <span>Medical Certificate:</span>
                     <div className="card-main-border-image">
-                    {dataViewMore?.medicalCertificate === null ||
-                      dataViewMore?.medicalCertificate === "" ||
-                      !dataViewMore?.medicalCertificate ? (
-                      "No Data"
-                    ) : (
-                      <img
-                        src={dataViewMore?.medicalCertificate}
-                        alt="No Image"
-                      />
-                    )}
+                      {dataViewMore?.medicalCertificate === null ||
+                        dataViewMore?.medicalCertificate === "" ||
+                        !dataViewMore?.medicalCertificate ? (
+                        "No Data"
+                      ) : (
+                        <img
+                          src={dataViewMore?.medicalCertificate}
+                          alt="No Image"
+                        />
+                      )}
                     </div>
                   </div>
-                  </div>
-                
+                </div>
+
               </div>
             ) : null}
           </List>

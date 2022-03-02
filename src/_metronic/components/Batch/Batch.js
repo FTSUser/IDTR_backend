@@ -453,7 +453,7 @@ const Batch = ({ getNewCount, title }) => {
   const [currentDate, setCurrentDate] = useState(new Date(date));
 
   useEffect(() => {
-    document.title = "Honda | Banner";
+    document.title = "Honda | Batch Creation";
     getDateAndApi(new Date());
   }, []);
 
@@ -681,7 +681,7 @@ const Batch = ({ getNewCount, title }) => {
 
     if (inputValueForAdd && !inputValueForAdd.name) {
       formIsValid = false;
-      errorsForAdd["name"] = "*Please Enter Name!";
+      errorsForAdd["name"] = "*Please Enter Batch Name!";
     }
 
     if (inputValueForAdd && !date) {
@@ -747,7 +747,7 @@ const Batch = ({ getNewCount, title }) => {
     let errors = {};
     if (inputValue && !inputValue.name) {
       formIsValid = false;
-      errorsForAdd["name"] = "*Please Enter Name!";
+      errorsForAdd["name"] = "*Please Enter Batch Name!";
     }
 
     if (inputValue && !date) {
@@ -1343,7 +1343,7 @@ const Batch = ({ getNewCount, title }) => {
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2"> Batch</h2>
+              <h2 className="pl-3 pt-2"> Batch Creation</h2>
             </div>
             <div className="col">
               <div>
@@ -1352,7 +1352,7 @@ const Batch = ({ getNewCount, title }) => {
                   className={`form-control form-control-lg form-control-solid `}
                   name="search"
                   value={search}
-                  placeholder="Search Batch"
+                  placeholder="Search Batch Creation"
                   onChange={(e) => handleSearch(e)}
                 />
               </div>
@@ -1364,7 +1364,7 @@ const Batch = ({ getNewCount, title }) => {
                 }}
                 className="btn btn-success mr-2"
               >
-                Add Batch
+                Add Batch 
               </button>
             </div>
             {/* <div>
@@ -1491,7 +1491,7 @@ const Batch = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Name
+                    Enter Batch Name
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -1703,7 +1703,7 @@ const Batch = ({ getNewCount, title }) => {
                     }}
                     className="btn btn-success mr-2"
                   >
-                    <span>Add Details</span>
+                    <span>Add Batch</span>
                     {loading && (
                       <span className="mx-3 spinner spinner-white"></span>
                     )}
@@ -1737,7 +1737,7 @@ const Batch = ({ getNewCount, title }) => {
               <div className="form ml-30 ">
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Name
+                    Enter Batch Name
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -1949,7 +1949,7 @@ const Batch = ({ getNewCount, title }) => {
                     }}
                     className="btn btn-success mr-2"
                   >
-                    <span>Update Details</span>
+                    <span>Update Batch</span>
                     {loading && (
                       <span className="mx-3 spinner spinner-white"></span>
                     )}
@@ -2015,7 +2015,7 @@ const Batch = ({ getNewCount, title }) => {
                       <CsvDownload
                         className={``}
                         data={dataCSVResults}
-                        filename="Donations.csv"
+                        filename="User Data.csv"
                         style={{
                           backgroundColor: "#CC0001",
                           borderRadius: "6px",
@@ -2039,7 +2039,7 @@ const Batch = ({ getNewCount, title }) => {
                       <CsvDownload
                         className={``}
                         data={dataCSVForAttendance}
-                        filename="Donations.csv"
+                        filename="Batch.csv"
                         style={{
                           backgroundColor: "#CC0001",
                           borderRadius: "6px",
