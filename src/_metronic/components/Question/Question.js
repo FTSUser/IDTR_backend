@@ -59,7 +59,7 @@ const Question = (props) => {
     const [isEditPopUp, setIsEditPopUp] = useState(false);
 
     useEffect(() => {
-        document.title = "Honda | Question";
+        document.title = "Honda | Question Addition";
     }, []);
 
     const handleViewMoreClose = () => {
@@ -265,11 +265,11 @@ const Question = (props) => {
 
     const handleUpdateStatusProperty = (status) => {
         ApiPut(`question/updateStatus/${idForUpdateCourseStatus}`, {
-          
+
             isActive: status
 
         })
-           
+
             .then((res) => {
                 if (res?.status == 200) {
                     setShowStatus(false);
@@ -804,7 +804,7 @@ const Question = (props) => {
                 <div className="p-2 mb-2">
                     <div className="row mb-4 pr-3">
                         <div className="col d-flex justify-content-between">
-                            <h2 className="pl-3 pt-2">Question </h2>
+                            <h2 className="pl-3 pt-2">Question Addition </h2>
                         </div>
                         <div className="col">
                             <div>
@@ -852,11 +852,11 @@ const Question = (props) => {
                                 Add Question
                             </button>
                         </div>
-                       
+
                         <div className="cus-medium-button-style button-height mr-2">
                             <ExportCSV />{" "}
-                            </div>
-                            <div className="cus-medium-button-style button-height ">
+                        </div>
+                        <div className="cus-medium-button-style button-height ">
                             <input
                                 type="file"
                                 id="upload"
@@ -866,8 +866,8 @@ const Question = (props) => {
                                 onChange={(e) => onBulkUpload(e)}
 
                             />
-                            </div>
-                            <div className="cus-medium-button-style button-height mr-2">
+                        </div>
+                        <div className="cus-medium-button-style button-height mr-2">
                             <buttton
                                 className="btn btn-success "
                                 onClick={(e) => {
@@ -876,15 +876,15 @@ const Question = (props) => {
                                 }}
 
                             >Upload Excel File</buttton>
-                            </div>
+                        </div>
 
-                        
+
                         <div className="cus-medium-button-style button-height">
                             <CsvDownload
                                 className={`btn btn-success`}
                                 data={dataCSV}
-                                filename="Donations.csv"
-                             
+                                filename="Question.csv"
+
                             >
                                 Export to Excel
                             </CsvDownload>
@@ -966,7 +966,7 @@ const Question = (props) => {
                                 {/* Name Amenintie */}
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Enter Name
+                                        Enter Question
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
@@ -1195,29 +1195,36 @@ const Question = (props) => {
                                 <div>
                                     {mcqCheck && (
                                         <>
+                                            <div className="alert alert-msg" style={{ margin: "auto", marginBottom: "20px" , width:"300px"}}>Note: Please select correct answer</div>
+
                                             {isAddCourseName
                                                 ? option.map((data, index) => {
                                                     return (
-                                                        <div className="col-lg-9 col-xl-6">
-                                                            <div
-                                                                className="form-group d-flex align-items-center"
-                                                                key={index}
-                                                            >
-                                                                <input
-                                                                    className="mr-3"
-                                                                    type="radio"
-                                                                    name="radio"
-                                                                    id="radio"
-                                                                    defaultChecked={data.istrue}
-                                                                    onChange={(e) => handleQuestion(e, index)}
-                                                                />
-                                                                <input
-                                                                    className="form-control"
-                                                                    type="text"
-                                                                    value={data.name}
-                                                                    onChange={(e) => handleQuestion(e, index)}
-                                                                    required
-                                                                />
+                                                        <div className="form-group row">
+                                                            <label className="col-xl-3 col-lg-3 col-form-label">
+
+                                                            </label>
+                                                            <div className="col-lg-9 col-xl-6">
+                                                                <div
+                                                                    className="form-group d-flex align-items-center"
+                                                                    key={index}
+                                                                >
+                                                                    <input
+                                                                        className="mr-3"
+                                                                        type="radio"
+                                                                        name="radio"
+                                                                        id="radio"
+                                                                        defaultChecked={data.istrue}
+                                                                        onChange={(e) => handleQuestion(e, index)}
+                                                                    />
+                                                                    <input
+                                                                        className="form-control"
+                                                                        type="text"
+                                                                        value={data.name}
+                                                                        onChange={(e) => handleQuestion(e, index)}
+                                                                        required
+                                                                    />
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     );
@@ -1252,31 +1259,39 @@ const Question = (props) => {
 
                                     {checkBoxCheck && (
                                         <>
+                                            <div className="alert alert-msg " style={{ margin: "auto", marginBottom: "20px",width:"300px" }}>Note: Please select atleast one correct answer</div>
+
                                             {isAddCourseName
                                                 ? option.map((data, index) => {
                                                     return (
-                                                        <div className="col-lg-9 col-xl-6">
-                                                            <div
-                                                                className="form-group d-flex align-items-center"
-                                                                key={index}
-                                                            >
-                                                                <input
-                                                                    className="mr-3"
-                                                                    type="checkbox"
-                                                                    defaultChecked={data.istrue}
-                                                                    onChange={(e) =>
-                                                                        handleQuestionCheckBox(e, index)
-                                                                    }
-                                                                />
-                                                                <input
-                                                                    className={`form-control form-control-lg form-control-solid`}
-                                                                    type="text"
-                                                                    value={data.name}
-                                                                    onChange={(e) =>
-                                                                        handleQuestionCheckBox(e, index)
-                                                                    }
-                                                                    required
-                                                                />
+                                                        <div className="form-group row">
+                                                            <label className="col-xl-3 col-lg-3 col-form-label">
+
+                                                            </label>
+                                                            <div className="col-lg-9 col-xl-6">
+
+                                                                <div
+                                                                    className="form-group d-flex align-items-center"
+                                                                    key={index}
+                                                                >
+                                                                    <input
+                                                                        className="mr-3"
+                                                                        type="checkbox"
+                                                                        defaultChecked={data.istrue}
+                                                                        onChange={(e) =>
+                                                                            handleQuestionCheckBox(e, index)
+                                                                        }
+                                                                    />
+                                                                    <input
+                                                                        className={`form-control form-control-lg form-control-solid`}
+                                                                        type="text"
+                                                                        value={data.name}
+                                                                        onChange={(e) =>
+                                                                            handleQuestionCheckBox(e, index)
+                                                                        }
+                                                                        required
+                                                                    />
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     );

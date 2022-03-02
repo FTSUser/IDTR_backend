@@ -52,7 +52,7 @@ const CancleCourse = ({ getNewCount, title }) => {
     const [allCourseTypeForUpdate, setAllCourseTypeForUpdate] = useState([]);
 
     useEffect(() => {
-        document.title = "Honda | Cancle Course";
+        document.title = "Honda | Cancel Course";
     }, []);
 
     const handleViewMoreClose = () => {
@@ -480,7 +480,7 @@ const CancleCourse = ({ getNewCount, title }) => {
                 <div className="p-2 mb-2">
                     <div className="row mb-4 pr-3">
                         <div className="col d-flex justify-content-between">
-                            <h2 className="pl-3 pt-2">Cancle Course</h2>
+                            <h2 className="pl-3 pt-2">Cancel Course</h2>
                         </div>
                         <div className="col">
                             <div>
@@ -489,7 +489,7 @@ const CancleCourse = ({ getNewCount, title }) => {
                                     className={`form-control form-control-lg form-control-solid `}
                                     name="search"
                                     value={search}
-                                    placeholder="Search Cancle Course"
+                                    placeholder="Search Cancel Course"
                                     onChange={(e) => handleSearch(e)}
                                 />
                             </div>

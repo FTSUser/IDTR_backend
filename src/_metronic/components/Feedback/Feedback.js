@@ -27,7 +27,7 @@ const Feedback = ({ getNewCount, title }) => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    document.title = "Honda | Feedback";
+    document.title = "Honda | Feedback Records";
   }, []);
 
   useEffect(() => {
@@ -203,13 +203,13 @@ const Feedback = ({ getNewCount, title }) => {
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2">Feedback</h2>
+              <h2 className="pl-3 pt-2">Feedback Records</h2>
             </div>
             <div className="cus-medium-button-style button-height">
               <CsvDownload
                 className={``}
                 data={dataCSV}
-                filename="Donations.csv"
+                filename="Feedback.csv"
                 style={{
                   //pass other props, like styles
                   backgroundColor: "#CC0001",

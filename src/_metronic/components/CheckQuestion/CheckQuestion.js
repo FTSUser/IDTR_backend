@@ -593,9 +593,7 @@ const CheckTest = ({ getNewCount, title }) => {
       } else {
       }
     });
-    if (ans1.length) {
-      toast.error("Please Select Answer");
-    } else {
+   
       const datas = {
         batch: data?.batchId,
         uid: userIds,
@@ -614,7 +612,7 @@ const CheckTest = ({ getNewCount, title }) => {
         .catch((err) => {
           toast.error(err?.response?.data?.message);
         });
-    }
+    
   };
   const updateUser = (data) => {
     console.log("data", data);
@@ -641,9 +639,7 @@ const CheckTest = ({ getNewCount, title }) => {
       } else {
       }
     });
-    if (ans1.length) {
-      toast.error("Please Select Answer");
-    } else {
+  
       const datas = {
         ListofQA: checkData,
       };
@@ -660,7 +656,7 @@ const CheckTest = ({ getNewCount, title }) => {
         .catch((err) => {
           toast.error(err?.response?.data?.message);
         });
-    }
+    
   };
 
   const handleCheckQuestion = (data, record, index) => {
@@ -755,7 +751,7 @@ const CheckTest = ({ getNewCount, title }) => {
                             <CsvDownload
                                 className={``}
                                 data={dataCSV}
-                                filename="Donations.csv"
+                                filename="Check Question.csv"
                                 style={{
                                     //pass other props, like styles
                                     backgroundColor: "#CC0001",

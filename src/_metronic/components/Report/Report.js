@@ -44,26 +44,26 @@ const data = [
         "name": "User",
         "endPoint": "register/getAll"
     },
-    {
-        "_id": "620e42b6924864153489ea0a",
-        "name": "Vehicle Category",
-        "endPoint": "vehicleCategory/getAll"
-    },
-    {
-        "_id": "620b94feef74e22a3f7554ef",
-        "name": "Course Type",
-        "endPoint": "courseType/getAll"
-    },
-    {
-        "_id": "6204f0790d11261d68edf5dd",
-        "name": "Course Category",
-        "endPoint": "courseCategory/getAll"
-    },
-    {
-        "_id": "6204f06b0d11261d68edf5d5",
-        "name": "Course Name",
-        "endPoint": "courseName/getAll"
-    },
+    // {
+    //     "_id": "620e42b6924864153489ea0a",
+    //     "name": "Vehicle Category",
+    //     "endPoint": "vehicleCategory/getAll"
+    // },
+    // {
+    //     "_id": "620b94feef74e22a3f7554ef",
+    //     "name": "Course Type",
+    //     "endPoint": "courseType/getAll"
+    // },
+    // {
+    //     "_id": "6204f0790d11261d68edf5dd",
+    //     "name": "Course Category",
+    //     "endPoint": "courseCategory/getAll"
+    // },
+    // {
+    //     "_id": "6204f06b0d11261d68edf5d5",
+    //     "name": "Course Name",
+    //     "endPoint": "courseName/getAll"
+    // },
     {
         "_id": "61fd0cd5df3e201fe081ff8c",
         "name": "Payment",
@@ -88,7 +88,7 @@ const data = [
 
 const Report = ({ getNewCount, title }) => {
     useEffect(() => {
-        document.title = "Honda | Report";
+        document.title = "Honda | Reports";
     }, []);
 
 
@@ -209,8 +209,9 @@ const Report = ({ getNewCount, title }) => {
                 <div className="p-2 mb-2">
                     <div className="row mb-4 pr-3">
                         <div className="col d-flex justify-content-between">
-                            <h2 className="pl-3 pt-2">Report</h2>
+                            <h2 className="pl-3 pt-2">Reports</h2>
                         </div>
+                        <div style={{ width: "30%", paddingLeft: "15px" }}>
                         <DateRangePickerComponent
                             onChange={(e) => {
                                 handleSetDateData(e.target.value);
@@ -221,6 +222,7 @@ const Report = ({ getNewCount, title }) => {
                             ranges={statesate}
                             direction="horizontal"
                         />
+                        </div>
                     </div>
 
                     <DataTable

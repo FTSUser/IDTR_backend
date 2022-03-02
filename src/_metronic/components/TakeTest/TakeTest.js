@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import DataTable, { defaultThemes } from "react-data-table-component";
 import {
   ApiGet,
@@ -12,6 +12,7 @@ import { Tooltip } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import List from "@material-ui/core/List";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
+import Logo from "./honda.png";
 
 import Toolbar from "@material-ui/core/Toolbar";
 import CreateIcon from "@material-ui/icons/Create";
@@ -28,12 +29,202 @@ import CsvDownload from "react-json-to-csv";
 import Multiselect from "multiselect-react-dropdown";
 import { getUserInfo } from "../../../utils/user.util";
 // import { getUserInfo } from "../../../../../utils/user.util";
-
+import ReactToPrint from "react-to-print";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+class ComponentToPrintsForUser extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = this.props;
+  }
 
+  componentDidMount() {
+    this.setState({ ...this.props });
+  }
+
+  render() {
+    return (
+      <>
+        <div class="invoice-box">
+          <table>
+            <tr class="top">
+              <td colspan="2">
+                <table>
+                  <tr>
+                    <td>
+                      <b>Institute of Driving and Traffic Research (IDTR)</b>
+                      <p>
+                        A joint venture of Transport Department, <br />{" "}
+                        Government of Haryana & Honda IDTR
+                      </p>
+                    </td>
+                    <td class="title">
+                      <img src={Logo} />
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr class="information">
+              <td colspan="2">
+                <table>
+                  <tr>
+                    <td>
+                      Created:{" "}
+                      {moment(this?.props?.data?.createdAt).format(
+                        "DD-MM-YYYY "
+                      )}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>First Name: {`${this?.props?.data?.fname} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Middle Name: {`${this?.props?.data?.mname} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Last Name: {`${this?.props?.data?.lname} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Email: {`${this?.props?.data?.email} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>
+                  Phone:{" "}
+                  {`${this?.props?.data?.phone
+                      ? this?.props?.data?.phone
+                      : "No Data"
+                    } `}{" "}
+                </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Gender: {`${this?.props?.data?.gender} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Address: {`${this?.props?.data?.address} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>City: {`${this?.props?.data?.city} `} </td>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Created: {moment(this?.props?.data?.DoB).format("DD-MM-YYYY ")}
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Address: {`${this?.props?.data?.address} `} </td>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Date of course:{" "}
+                {moment(this?.props?.data?.dateofCourse).format("DD-MM-YYYY ")}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Pass?:{" "}
+                {moment(this?.props?.data?.isPass ? "Pass" : "Fail").format(
+                  "DD-MM-YYYY "
+                )}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                LCID: {moment(this?.props?.data?.lcid).format("DD-MM-YYYY ")}
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Percentage: {`${this?.props?.data?.percentage} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>TotalScore: {`${this?.props?.data?.totalScore} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Status: {`${this?.props?.data?.status} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Type: {`${this?.props?.data?.type} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>
+                  Authoritydistrict:{" "}
+                  {`${this?.props?.data?.authoritydistrict} `}{" "}
+                </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>
+                  Authoritycity: {`${this?.props?.data?.authoritycity} `}{" "}
+                </td>
+              </td>
+            </tr>
+
+            {/* <tr className="">
+              <td>
+                <td>Examiner Phone: {`${this.props?.data?.Examiner?.phone} `} </td>
+              </td>
+            </tr> */}
+
+            {/* <tr class="heading">
+              <td>Payment Method</td>
+            </tr> */}
+
+            {/* <tr class="details">
+              <td>{this.props?.data?.type}</td>
+            </tr> */}
+
+            {/* <tr class="heading">
+              <td>Item</td>
+              <td>GST</td>
+              <td>COST</td>
+            </tr>
+
+            <tr class="item">
+              <td>{this.props?.data?.courseName[0]?.courseName}</td>
+              <td>12FC34343433</td>
+              <td>&#x20b9;{this.props?.data?.courseName[0]?.price}</td>
+            </tr> */}
+          </table>
+        </div>
+      </>
+    );
+  }
+}
 const TakeTest = ({ getNewCount, title }) => {
+  const itemsRefForUser = useRef([]);
   const [filteredCourseName, setFilteredCourseName] = useState({});
   const [isLoaderVisible, setIsLoaderVisible] = useState(false);
   const [show, setShow] = useState(false);
@@ -55,10 +246,22 @@ const TakeTest = ({ getNewCount, title }) => {
   const [selectedTopSubjects, setSelectedTopSubjects] = useState([]);
   const [questionData, setQuestionData] = useState([]);
   const [successBatchId, setSuucessBatchId] = useState("");
+  const [idForgetResponseByBatch, setIdForgetResponseByBatch] = useState();
+  const [isViewMoreAnnouncement, setIsViewMoreAnnouncement] = useState(false);
 
+  const [allDataForResultDownload, setAllDataForResultDownload] = useState([]);
+  const [allDataForAttendance, setAllDataForAttendance] = useState([]);
+  const [dataCSVResults, setDataCSVResults] = useState([]);
+  const [dataCSVForAttendance, setDataCSVForAttendance] = useState([]);
   const [attendenceId, setAttendenceId] = useState("");
   const [batchId, setBatchId] = useState("");
   const [tdId, setTdId] = useState([]);
+  const [countForBatch, setCountForBatch] = useState(0);
+  const [pageForBatch, setPageForBatch] = useState(1);
+  const [countPerPageForBatch, setCountPerPageForBatch] = useState(10);
+  const [isPaperViewModel, setIsPaperViewModel] = useState(false);
+  const [paperSet, setPaperSet] = useState([]);
+  const [responseByBatch, setResponseByBatch] = useState([]);
 
   useEffect(() => {
     console.log("attendenceId", attendenceId);
@@ -70,8 +273,56 @@ const TakeTest = ({ getNewCount, title }) => {
     document.title = "Honda | Take test";
   }, []);
 
+  const handleViewMorePaper = () => {
+    setIsPaperViewModel(false);
+  };
+  const getPapersetByUserId = async (id) => {
+    await ApiGet(`response/getResponseByUser/${id}`)
+      .then((res) => {
+        console.log("resrtrssdf", res?.data?.payload?.Response[0]);
+        setPaperSet(res?.data?.payload?.Response[0]);
+      })
+      .catch((err) => {
+        toast.error(err?.message);
+        console.log(err?.message);
+      });
+  };
+  useEffect(() => {
+    console.log("idForgetResponseByBatch", idForgetResponseByBatch);
+    getResponseByBatch(idForgetResponseByBatch);
+  }, [idForgetResponseByBatch]);
+
+  //getResponseByBatch
+
+
+  const getResponseByBatch = async (id) => {
+    await ApiGet(
+      `register/getRegisterByBatch/${id}?page=${pageForBatch}&limit=${countPerPageForBatch}`
+    )
+      .then((res) => {
+        console.log("resrtr", res?.data?.payload?.users);
+        setResponseByBatch(res?.data?.payload?.users);
+        setCountForBatch(res?.data?.payload?.count);
+      })
+      .catch((err) => {
+        // toast.error(err?.message);
+        console.log(err?.message);
+      });
+  };
+  const getAllResponseByBatch = async (id) => {
+    await ApiGet(`response/getResponseByUserWithoutPagination/${id}`)
+      .then((res) => {
+        console.log("resresres", res?.data?.payload);
+        setAllDataForResultDownload(res?.data?.payload?.findResponse);
+      })
+      .catch((err) => {
+        console.log(err?.message);
+      });
+  };
   const handleViewMoreClose = () => {
     setIsViewMoreAboutus(false);
+    setResponseByBatch([]);
+    setIsViewMoreAnnouncement(false);
     setDataViewMore({});
   };
 
@@ -103,11 +354,13 @@ const TakeTest = ({ getNewCount, title }) => {
     getAllRoleData();
   }, [page, countPerPage]);
 
+
   const getAllUserIdWise = async (id) => {
     await ApiGet(`register/getRegisterByBatch/${id}`)
       .then((res) => {
         console.log("res", res);
         setUserByAttendece(res?.data?.payload?.users);
+
         setAttendenceId(id);
       })
       .catch((err) => {
@@ -129,11 +382,11 @@ const TakeTest = ({ getNewCount, title }) => {
       });
   };
   const showToast = async () => {
-   
-        
-      
-        toast.error("There is no user in this batch");
-      
+
+
+
+    toast.error("There is no user in this batch");
+
   };
 
   console.log("userInfo", userInfo);
@@ -175,7 +428,7 @@ const TakeTest = ({ getNewCount, title }) => {
         });
     }
   };
-  
+
 
   let i = 0;
   const columns = [
@@ -206,7 +459,7 @@ const TakeTest = ({ getNewCount, title }) => {
     },
     {
       name: "User",
-      selector: (row) => row?.totalUser === "" || !row?.totalUser  ? "-" : row?.totalUser,
+      selector: (row) => row?.totalUser === "" || !row?.totalUser ? "-" : row?.totalUser,
       sortable: true,
     },
     {
@@ -252,9 +505,9 @@ const TakeTest = ({ getNewCount, title }) => {
                 <div
                   className="cursor-pointer pl-2"
                   onClick={() => {
-                    row?.User.length === 0 ? showToast() :  
-                    
-                    setIsAddAttedence(true);
+                    row?.User.length === 0 ? showToast() :
+
+                      setIsAddAttedence(true);
                     getAllUserIdWise(row?._id);
                   }}
                 >
@@ -268,7 +521,10 @@ const TakeTest = ({ getNewCount, title }) => {
                 className="cursor-pointer pl-2"
                 onClick={() => {
                   setIsViewMoreAboutus(true);
+                  setIdForgetResponseByBatch(row?._id);
                   setDataViewMore(row);
+                  getAllResponseByBatch(row?._id);
+                  getAllResponseByBatchForUser(row?._id);
                   console.log("rowShow", row);
                   console.log("isViewMoreAboutus", isViewMoreAboutus);
                 }}
@@ -278,6 +534,112 @@ const TakeTest = ({ getNewCount, title }) => {
                 </Tooltip>
               </div>
             </>
+          </>
+        );
+      },
+    },
+  ];
+  const columnsUser = [
+    {
+      name: "SNo",
+      cell: (row, index) =>
+        (pageForBatch - 1) * countPerPageForBatch + (index + 1),
+      width: "65px",
+    },
+    {
+      name: "Date",
+      cell: (row) => {
+        return <span>{moment(row?.createdAt).format("ll")}</span>;
+      },
+      selector: (row) => row?.createdAt,
+      sortable: true,
+      // width: "65px",
+    },
+    {
+      name: "Email",
+      selector: "email",
+      cell: (row) => {
+        return (
+          <>
+            <p>{row?.email ? row?.email : "-"}</p>
+          </>
+        );
+      },
+    },
+    {
+      name: "First Name",
+      selector: "fname",
+      cell: (row) => {
+        return (
+          <>
+            <p>{row?.fname ? row?.fname : "-"}</p>
+          </>
+        );
+      },
+    },
+    {
+      name: "Middle Name",
+      selector: "mname",
+      cell: (row) => {
+        return (
+          <>
+            <p>{row?.mname ? row?.mname : "-"}</p>
+          </>
+        );
+      },
+    },
+    {
+      name: "Last Name",
+      selector: "lname",
+      cell: (row) => {
+        return (
+          <>
+            <p>{row?.lname ? row?.lname : "-"}</p>
+          </>
+        );
+      },
+      width: "200px",
+    },
+    {
+      name: "Actions",
+      cell: (row) => {
+        return (
+          <>
+            <div className="d-flex justify-content-between">
+              {row?.isPaperDone && (
+                <div
+                  className="cursor-pointer pl-2"
+                  onClick={() => {
+                    setIsPaperViewModel(true);
+                    getPapersetByUserId(row?._id);
+                  }}
+                >
+                  <div className="cus-medium-button-style">
+                    <button className="btn btn-success mr-2">
+                      View Paperset
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="cursor-pointer pl-2">
+              <ReactToPrint
+                trigger={() => (
+                  <Tooltip title="Generate Pdf" arrow>
+                    <img src="media/allIconsForTable/invoice.png" />
+                  </Tooltip>
+                )}
+                content={() => itemsRefForUser.current[row._id]}
+              />
+              <div style={{ display: "none" }}>
+                <div
+                  ref={(el) => (itemsRefForUser.current[row._id] = el)}
+                  id={row?._id}
+                >
+                  <ComponentToPrintsForUser data={row} />
+                </div>
+              </div>
+            </div>
           </>
         );
       },
@@ -390,7 +752,7 @@ const TakeTest = ({ getNewCount, title }) => {
       batch: attendenceId,
     };
     await ApiPut(`test/attendence`, data)
-    
+
 
 
       .then((res) => {
@@ -399,12 +761,12 @@ const TakeTest = ({ getNewCount, title }) => {
           setIsAddAttedence(false);
           getAllCourseName();
         } else {
-            toast.error(res?.data?.message);
+          toast.error(res?.data?.message);
         }
-    })
-    .catch((err) => {
+      })
+      .catch((err) => {
         toast.error(err?.response?.data?.message)
-    });
+      });
 
   };
 
@@ -518,6 +880,86 @@ const TakeTest = ({ getNewCount, title }) => {
         toast.error(err?.response?.data?.message);
       });
   };
+  const getAllResponseByBatchForUser = async (id) => {
+    await ApiGet(`response/getResponseByBatch/${id}`)
+      .then((res) => {
+        console.log("resresresres", res?.data?.payload?.findResponse);
+        setAllDataForAttendance(res?.data?.payload?.findResponse);
+      })
+      .catch((err) => {
+        console.log(err?.message);
+      });
+  };
+  useEffect(() => {
+    if (allDataForAttendance) {
+      allDataForAttendance.map((registerUser, key) => {
+        let data = {
+          Number: key + 1,
+          UserID: registerUser?.uid?._id,
+          FirstName: registerUser?.uid?.fname,
+          LastName: registerUser?.uid?.lname,
+          EmailAddress: registerUser?.uid?.email,
+          MobileNumber: registerUser?.uid?.phone,
+          CourseType: registerUser?.uid?.cnid?.ccid?.ctid?.courseType,
+          VehicleCategory:
+            registerUser?.uid?.cnid?.ccid?.ctid?.vcid?.vehicleCategory,
+          CourseName: registerUser?.uid?.cnid?.courseName,
+          DateOfCourse: moment(registerUser?.uid?.dateofCourse).format("ll"),
+          LicenseCategory: registerUser?.uid?.lcid,
+          DriveringLicenseNo: registerUser?.uid?.drivingLicenseNumber
+            ? registerUser?.uid?.drivingLicenseNumber
+            : "-",
+          CalendarSlotSelected: moment(registerUser?.uid?.tdid?.date).format(
+            "ll"
+          ),
+          TestLanguage: registerUser?.Esid?.language,
+          TotalQuestions: registerUser?.Esid?.no,
+          QuestionsAnsweredCorrectly: registerUser?.uid?.totalScore,
+          QuestionsAnsweredIncorrectly:
+            registerUser?.Esid?.no - registerUser?.uid?.totalScore,
+          Status: "-",
+          DataEntryUser: registerUser?.batch?.DataEntry?.name,
+          DataEntryUserID: registerUser?.batch?.Examiner?.name,
+        };
+        setDataCSVForAttendance((currVal) => [...currVal, data]);
+      });
+    }
+  }, [allDataForAttendance]);
+  useEffect(() => {
+    if (allDataForResultDownload) {
+      allDataForResultDownload.map((registerUser, key) => {
+        let data = {
+          Number: key + 1,
+          UserID: registerUser?.uid?._id,
+          FirstName: registerUser?.uid?.fname,
+          LastName: registerUser?.uid?.lname,
+          EmailAddress: registerUser?.uid?.email,
+          MobileNumber: registerUser?.uid?.phone,
+          CourseType: registerUser?.uid?.cnid?.ccid?.ctid?.courseType,
+          VehicleCategory:
+            registerUser?.uid?.cnid?.ccid?.ctid?.vcid?.vehicleCategory,
+          CourseName: registerUser?.uid?.cnid?.courseName,
+          DateOfCourse: moment(registerUser?.uid?.dateofCourse).format("ll"),
+          LicenseCategory: registerUser?.uid?.lcid,
+          DriveringLicenseNo: registerUser?.uid?.drivingLicenseNumber
+            ? registerUser?.uid?.drivingLicenseNumber
+            : "-",
+          CalendarSlotSelected: moment(registerUser?.uid?.tdid?.date).format(
+            "ll"
+          ),
+          TestLanguage: registerUser?.Esid?.language,
+          TotalQuestions: registerUser?.Esid?.no,
+          QuestionsAnsweredCorrectly: registerUser?.uid?.totalScore,
+          QuestionsAnsweredIncorrectly:
+            registerUser?.Esid?.no - registerUser?.uid?.totalScore,
+          Status: "-",
+          DataEntryUser: registerUser?.batch?.DataEntry?.name,
+          DataEntryUserID: registerUser?.batch?.Examiner?.name,
+        };
+        setDataCSVResults((currVal) => [...currVal, data]);
+      });
+    }
+  }, [allDataForResultDownload]);
 
   return (
     <>
@@ -730,70 +1172,70 @@ const TakeTest = ({ getNewCount, title }) => {
             {isAddQuestion === true ? (
               <div>
                 <div className="container">
-                 <div className="centerAlign">
-                  <div className="take-test-height-qus">
-                  <div className="d-flex centeralign">
-                      <h4 className="mr-3" style={{ fontSize:"30px"}}>Question {questionKEY + 1}</h4>
-                      <h4  style={{ fontSize:"30px"}}>{questionData[questionKEY]?.Qname}</h4>
-                    </div>
-                    <div style={{ padding:"20px 0 0 0"}}>
-                    <img src={questionData[questionKEY]?.image ? questionData[questionKEY]?.image : ''} className="img-fluid" style={{height:"200px"}} alt="" />
-                  </div>
-                  <div>
-                    <div className="mb-4">
-                      {questionData[questionKEY]?.Option.map((data, key) => {
-                        return (
-                          <div className="d-flex centeralign mx-3 mb-4 ques-text-design-style" style={{ padding:"20px 0 0 0"}}>
-                            <div className="mr-2"  style={{ fontSize:"16px"}}>
-                              <b>({ABC[key]})</b>
-                            </div>
-                            <div style={{ fontSize:"16px"}}>{data?.name}</div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  </div>
-                  <div className="take-test-all-button-alignment">
-                    {questionKEY === 0 ? (
-                      ""
-                    ) : (
-                      <button
-                        className="btn btn-success m-1"
-                        onClick={() => {
-                          setQuestionKEY(questionKEY - 1);
-                        }}
-                      >
-                        Previous
-                      </button>
-                    )}
-                    {questionKEY === questionData?.length - 1 ? (
-                      ""
-                    ) : (
-                      <button
-                        className="btn btn-success"
-                        onClick={() => {
-                          setQuestionKEY(questionKEY + 1);
-                        }}
-                      >
-                        Next
-                      </button>
-                    )}
-                    {questionKEY === questionData?.length - 1 ? (
-                      <>
-                        <div
-                          className="success btn btn-success"
-                          onClick={() => CompleteBatchById()}
-                        >
-                          Success
+                  <div className="centerAlign">
+                    <div className="take-test-height-qus">
+                      <div className="d-flex centeralign">
+                        <h4 className="mr-3" style={{ fontSize: "30px" }}>Question {questionKEY + 1}</h4>
+                        <h4 style={{ fontSize: "30px" }}>{questionData[questionKEY]?.Qname}</h4>
+                      </div>
+                      <div style={{ padding: "20px 0 0 0" }}>
+                        <img src={questionData[questionKEY]?.image ? questionData[questionKEY]?.image : ''} className="img-fluid" style={{ height: "200px" }} alt="" />
+                      </div>
+                      <div>
+                        <div className="mb-4">
+                          {questionData[questionKEY]?.Option.map((data, key) => {
+                            return (
+                              <div className="d-flex centeralign mx-3 mb-4 ques-text-design-style" style={{ padding: "20px 0 0 0" }}>
+                                <div className="mr-2" style={{ fontSize: "16px" }}>
+                                  <b>({ABC[key]})</b>
+                                </div>
+                                <div style={{ fontSize: "16px" }}>{data?.name}</div>
+                              </div>
+                            );
+                          })}
                         </div>
-                      </>
-                    ) : (
-                      ""
-                    )}
+                      </div>
+
+                    </div>
+                    <div className="take-test-all-button-alignment">
+                      {questionKEY === 0 ? (
+                        ""
+                      ) : (
+                        <button
+                          className="btn btn-success m-1"
+                          onClick={() => {
+                            setQuestionKEY(questionKEY - 1);
+                          }}
+                        >
+                          Previous
+                        </button>
+                      )}
+                      {questionKEY === questionData?.length - 1 ? (
+                        ""
+                      ) : (
+                        <button
+                          className="btn btn-success"
+                          onClick={() => {
+                            setQuestionKEY(questionKEY + 1);
+                          }}
+                        >
+                          Next
+                        </button>
+                      )}
+                      {questionKEY === questionData?.length - 1 ? (
+                        <>
+                          <div
+                            className="success btn btn-success"
+                            onClick={() => CompleteBatchById()}
+                          >
+                            Success
+                          </div>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </div>
                   </div>
-                 </div>
                 </div>
               </div>
             ) : null}
@@ -823,73 +1265,81 @@ const TakeTest = ({ getNewCount, title }) => {
                 <div className="container">
                   <div className="take-test-box-center-alignment">
                     <div className="take-test-box">
-                      <div className="checkbox-design-change">
-                        <div className="">
-                          <input
-                            type="checkbox"
-                            name="selectall"
-                            onChange={(e) =>
-                              handleSubjectSelect(userByAttendece, "id", e)
-                            }
-                            checked={
-                              selectedTopSubjects?.length ===
-                              userByAttendece.length
-                                ? true
-                                : false
-                            }
-                          />
-                        </div>
-                        <div>
-                          <div>
-                            <span>Select All</span>
-                          </div>
-                        </div>
+                      <div className="other-information-child-text-style1">
+                        <h2>Take Test</h2>
                       </div>
-
                       {userByAttendece?.length > 0 &&
                         userByAttendece?.map((data, key) => {
                           return (
                             <>
-                              <div className="checkbox-design-change" key={key}>
-                                <div className="">
-                                  <input
-                                    type="checkbox"
-                                    checked={
-                                      selectedTopSubjects?.find(
-                                        (ss) => ss === data?._id
-                                      )
-                                        ? true
-                                        : false
-                                    }
-                                    // onChange={(e) => addAttendence(e)} />
-                                    onChange={() =>
-                                      handleSubjectSelect(data, data?._id, "e")
-                                    }
-                                  />
-                                </div>
-                                <div className="">
-                                  <div>
-                                    <span>
-                                      {data?.email ? data?.email : "-"} {data?.fname ? data?.fname : "-"} {data?.phone ? data?.phone : "-"}
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
+                              <table className="table table-bordered" key={key}>
+                                <thead>
+                                  <tr>
+                                    <th>
+                                      <input
+                                        type="checkbox"
+                                        name="selectall"
+                                        onChange={(e) =>
+                                          handleSubjectSelect(userByAttendece, "id", e)
+                                        }
+                                        checked={
+                                          selectedTopSubjects?.length ===
+                                            userByAttendece.length
+                                            ? true
+                                            : false
+                                        }
+                                      />
+                                    </th>
+                                    <th >Email</th>
+                                    <th >Name</th>
+                                    <th >Phone</th>
+                                    <th >Course Name</th>
+
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                      <input
+                                        type="checkbox"
+                                        checked={
+                                          selectedTopSubjects?.find(
+                                            (ss) => ss === data?._id
+                                          )
+                                            ? true
+                                            : false
+                                        }
+                                        // onChange={(e) => addAttendence(e)} />
+                                        onChange={() =>
+                                          handleSubjectSelect(data, data?._id, "e")
+                                        }
+                                      />
+                                    </td>
+                                    <td>{data?.email ? data?.email : '-'}</td>
+                                    <td>{data?.fname ? data?.fname : "-"}</td>
+                                    <td>{data?.phone ? data?.phone : '-'}</td>
+                                    <td>{data?.cnid?.courseName ? data?.cnid?.courseName : '-'}</td>
+
+                                  </tr>
+
+                                </tbody>
+                              </table>
+
                             </>
                           );
                         })}
-                    
 
-                    {selectedTopSubjects?.length > 0 && (
-                      <div className="text-center mb-3">
-                        <div
-                          className="btn btn-success"
-                          onClick={() => addUserAttedence()}
-                        >
-                          Add Attedence
+
+                      {selectedTopSubjects?.length > 0 && (
+                        <div className="text-center mb-3">
+                          <div
+                            className="btn btn-success"
+                            onClick={() => addUserAttedence()}
+                          >
+                            Add Attedence
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
                     </div>
                   </div>
                 </div>
@@ -947,6 +1397,196 @@ const TakeTest = ({ getNewCount, title }) => {
                   <div className="honda-text-grid-items">
                     <span>Available Seat</span>
                     {<div>{dataViewMore?.totalUser}</div>}
+                  </div>
+                </div>
+                <div className="other-information-child-text-style1">
+                  <h2>User Data</h2>
+                </div>
+                <div className="">
+                  <div className="cursor-pointer pl-2">
+                    {allDataForResultDownload?.length > 0 ? (
+                      <CsvDownload
+                        className={``}
+                        data={dataCSVResults}
+                        filename="User Data.csv"
+                        style={{
+                          backgroundColor: "#CC0001",
+                          borderRadius: "6px",
+                          border: "1px solid #fff",
+                          display: "inline-block",
+                          cursor: "pointer",
+                          color: "#FFFFFF",
+                          fontSize: "12px",
+                          padding: "10px 18px",
+                          textDecoration: "none",
+                          position: "right",
+                        }}
+                      >
+                        Download Test Data
+                      </CsvDownload>
+                    ) : (
+                      "No test Data"
+                    )}
+
+                    {allDataForAttendance?.length > 0 ? (
+                      <CsvDownload
+                        className={``}
+                        data={dataCSVForAttendance}
+                        filename="Batch.csv"
+                        style={{
+                          backgroundColor: "#CC0001",
+                          borderRadius: "6px",
+                          border: "1px solid #fff",
+                          display: "inline-block",
+                          cursor: "pointer",
+                          color: "#FFFFFF",
+                          fontSize: "12px",
+                          padding: "10px 18px",
+                          textDecoration: "none",
+                          position: "right",
+                        }}
+                      >
+                        Download Attendance Data
+                      </CsvDownload>
+                    ) : (
+                      "No Attendance Data"
+                    )}
+                  </div>
+                  <DataTable
+                    columns={columnsUser}
+                    data={responseByBatch}
+                    customStyles={customStyles}
+                    style={{
+                      marginTop: "-3rem",
+                    }}
+                    progressPending={isLoaderVisible}
+                    progressComponent={
+                      <Loader
+                        type="Puff"
+                        color="#334D52"
+                        height={30}
+                        width={30}
+                      />
+                    }
+                    highlightOnHover
+                    pagination
+                    paginationServer
+                    paginationTotalRows={countForBatch}
+                    paginationPerPage={countPerPage}
+                    paginationRowsPerPageOptions={[10, 20, 25, 50, 100]}
+                    paginationDefaultPage={pageForBatch}
+                    onChangePage={(page) => {
+                      setPageForBatch(page);
+                    }}
+                    onChangeRowsPerPage={(rowPerPage) => {
+                      setCountPerPageForBatch(rowPerPage);
+                    }}
+                  />
+                </div>
+              </div>
+            ) : null}
+          </List>
+        </Dialog>
+      ) : null}
+       {isPaperViewModel ? (
+        <Dialog
+          fullScreen
+          open={isPaperViewModel}
+          onClose={handleViewMorePaper}
+          TransitionComponent={Transition}
+        >
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleViewMorePaper}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </Toolbar>
+          <List>
+            {isViewMoreAnnouncement === true ? (
+              <div className="honda-container">
+                <div className="">
+                  {console.log("questionData", paperSet?.ListofQA)}
+                  <div className="questionGrid12121">
+                    {paperSet?.ListofQA?.map((data, key) => (
+                      <div className="questionGridItems">
+                        <div className="flexs">
+                          <div className="questionCircle mr-3" key={key}>
+                            {" "}
+                            {key + 1}
+                          </div>
+                          <p>{data?.Qname}</p>
+                        </div>
+                        <div>
+                          <img src={data?.image} alt="" />
+                        </div>
+                        <div className="">
+                          Right / Wrong:{" "}
+                          <span>
+                            {data.isRight ? (
+                              <div className="green">Right</div>
+                            ) : (
+                              <div className="red">Wrong</div>
+                            )}
+                          </span>
+                        </div>
+                        <div>
+                          {data?.Option.map((record, i) => (
+                            <>
+                              {record?.istrue}
+
+                              {data?.Answer?.findIndex(
+                                (e) => e === record?.no
+                              ) !== -1 ? (
+                                <div className="">
+                                  <b>{record?.name}</b>
+                                </div>
+                              ) : (
+                                <div className="">{record?.name}</div>
+                              )}
+
+                              {/* {data.type === "mcq" ? (
+                                <>
+                                  <div
+                                    className="d-flex align-items-baseline"
+                                    key={i}
+                                  >
+                                    <input
+                                      type="radio"
+                                      name={key}
+                                      id="radio"
+                                      defaultChecked={record?.istrue}
+                                      disabled
+                                    />
+                                    <span className="pl-2">
+                                      {" "}
+                                      {record?.name}
+                                    </span>
+                                  </div>
+                                </>
+                              ) : (
+                                <>
+                                  <div
+                                    className="d-flex align-items-baseline"
+                                    key={i}
+                                  >
+                                    <input type="checkbox" id={record?.name} />
+
+                                    <span className="pl-2">
+                                      {" "}
+                                      {record?.name}
+                                    </span>
+                                  </div>
+                                </>
+                              )} */}
+                            </>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

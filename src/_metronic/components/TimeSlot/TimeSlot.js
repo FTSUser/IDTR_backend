@@ -58,7 +58,7 @@ const TimeSlot = ({ getNewCount, title }) => {
   const [dataCSV, setDataCSV] = useState([]);
 
   useEffect(() => {
-    document.title = "Honda | TimeSlot";
+    document.title = "Honda | Timeslot Addition ";
   }, []);
 
   const handleOnChnageAdd = (e) => {
@@ -647,7 +647,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2">Time Slot</h2>
+              <h2 className="pl-3 pt-2">Timeslot Addition</h2>
             </div>
             <div className="col">
               <div>
@@ -678,7 +678,7 @@ const TimeSlot = ({ getNewCount, title }) => {
               <CsvDownload
                 className={`btn btn-success`}
                 data={dataCSV}
-                filename="Donations.csv"
+                filename="TimeSlot.csv"
                
               >
                 Export to Excel

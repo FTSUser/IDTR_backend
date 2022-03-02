@@ -53,8 +53,8 @@ export default function BasePage() {
           <ContentRoute exact path="/assign" component={Assign} />
 
 
-          <ContentRoute exact path="/cms" component={Cms} />
-          <ContentRoute exact path="/information" component={Information} />
+          <ContentRoute exact path="/about-us" component={Cms} />
+          <ContentRoute exact path="/policy-terms" component={Information} />
           <ContentRoute exact path="/coursename" component={CourseName} />
           <ContentRoute exact path="/coursecategory" component={CourseCategory} />
           <ContentRoute exact path="/coursetype" component={CourseType} />
@@ -67,24 +67,24 @@ export default function BasePage() {
           <ContentRoute exact path="/testomonial" component={Testomonial} />
           <ContentRoute exact path="/helpful-tips" component={HelpfulTips} />
           <ContentRoute exact path="/recheck-request" component={Request} />
-          <ContentRoute exact path="/images" component={Images} />
-          <ContentRoute exact path="/report" component={Report} />
+          <ContentRoute exact path="/question-images" component={Images} />
+          <ContentRoute exact path="/reports" component={Report} />
           <ContentRoute exact path="/cancel-course" component={CancleCourse} />
           <ContentRoute exact path="/partial-user" component={Partial} />
 
 
           <ContentRoute exact path="/announcement" component={Announcement} />
           {/* /////////////////////////////////////////////////////////////////////////*/}
-          <ContentRoute exact path="/banner" component={Banner} />
+          <ContentRoute exact path="/home-page banner" component={Banner} />
           <ContentRoute exact path="/banner-description" component={Description} />
           <ContentRoute exact path="/clients" component={Clients} />
 
-          <ContentRoute exact path="/timeslot" component={TimeSlot} />
-          <ContentRoute exact path="/feedback" component={Feedback} />
-          <ContentRoute exact path="/faq" component={FAQ} />
-          <ContentRoute exact path="/batch" component={Batch} />
+          <ContentRoute exact path="/timeslot-addition" component={TimeSlot} />
+          <ContentRoute exact path="/feedback-records" component={Feedback} />
+          <ContentRoute exact path="/faq-section" component={FAQ} />
+          <ContentRoute exact path="/batch-creation" component={Batch} />
           <ContentRoute exact path="/examiner" component={Examiner} />
-          <ContentRoute exact path="/question" component={Question} />
+          <ContentRoute exact path="/question-addition" component={Question} />
 
 
           {/* /////////////////////////////////////////////////////////////////////////*/}

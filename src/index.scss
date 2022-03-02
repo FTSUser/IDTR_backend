@@ -32,7 +32,9 @@
 .brand-light {
   @import "./_metronic/_assets/sass/themes/layout/brand/light.scss";
 }
-
+.alert-msg{
+  background-color: #EEF0F8;
+}
 // Aside themes
 // Dark
 //@import "./_metronic/_assets/sass/themes/layout/aside/dark.scss";

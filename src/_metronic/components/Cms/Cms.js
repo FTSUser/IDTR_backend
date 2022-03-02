@@ -58,7 +58,7 @@ const Cms = ({ getNewCount, title }) => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    document.title = "Honda | CMS";
+    document.title = "Honda | About Us";
   }, []);
 
   const handleOnChnage = (e) => {
@@ -515,7 +515,7 @@ const Cms = ({ getNewCount, title }) => {
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2"> CMS</h2>
+              <h2 className="pl-3 pt-2"> About Us</h2>
             </div>
             {/* <div className="col">
               <div>

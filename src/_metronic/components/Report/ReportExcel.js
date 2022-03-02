@@ -100,12 +100,12 @@ export const ReportExcel = (props) => {
                 IsPaymentDone:
                     registerUser?.isPaymentDone === null ||
                         registerUser?.isPaymentDone === false
-                        ? "Payment Panding"
+                        ? "Payment Pending"
                         : registerUser?.isPaymentDone,
                 PaymentMode: registerUser?.type,
                 TransactionID:
                     registerUser?.paymentId === null
-                        ? "Payment Panding"
+                        ? "Payment Pending"
                         : registerUser?.paymentId,
                 RegisterationDate: registerUser?.createdAt,
             };
