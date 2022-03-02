@@ -48,12 +48,16 @@ const TimeSlot = ({ getNewCount, title }) => {
   const [getCourseType, setGetCourseType] = useState([]);
   const [filteredVehicleCategory, setFilteredVehicleCategory] = useState([]);
   const [date, setDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date(date));
   const [allTimeSlot, setAllTimeSlot] = useState([]);
   const [getCourseCategory, setGetCourseCategory] = useState([]);
   const [getCourseName, setGetCourseName] = useState([]);
   const [isEditPopUp, setIsEditPopUp] = useState(false);
   const [allPaymentDetailsExcel, setAllPaymentDetailsExcel] = useState([]);
   const [currentDate, setCurrentDate] = useState(new Date(date));
+  const [hour, setHour] = useState();
+  const [finalDisableEndTime, setFinalDisableEndTime] = useState([]);
+  const [finalDisableEndTimeForMin, setFinalDisableEndTimeForMin] = useState([]);
 
   const [dataCSV, setDataCSV] = useState([]);
 
@@ -156,6 +160,8 @@ const TimeSlot = ({ getNewCount, title }) => {
     setShow(false);
   };
 
+
+
   //for start time selector
   const [startTime, setStartTime] = useState("");
   const [now, setNow] = useState(moment().hour(0).minute(0));
@@ -168,6 +174,44 @@ const TimeSlot = ({ getNewCount, title }) => {
     });
   }
 
+  useEffect(() => {
+    console.log("startTime", moment(startTime).format("k"));
+    setHour(moment(startTime).format("k"))
+    let newArr = []
+    let newArrForMin = []
+    for (var i = 0; i < moment(startTime).format("k"); i++) {
+      newArr.push(i)
+    }
+    setFinalDisableEndTime(newArr)
+    for (var i = 0; i <= moment(startTime).format("m"); i++) {
+      newArrForMin.push(i)
+    }
+    setFinalDisableEndTimeForMin(newArrForMin)
+  }, [startTime])
+
+  function disabledHoursEndTime() {
+    return finalDisableEndTime;
+  }
+  function disabledMinutesEndTime() {
+
+    return finalDisableEndTimeForMin;
+  }
+
+  useEffect(() => {
+    console.log("finalDisableEndTimeForMinute", finalDisableEndTimeForMin);
+  }, [finalDisableEndTimeForMin])
+  useEffect(() => {
+    console.log("finalDisableEndTimeForMinute", finalDisableEndTime);
+  }, [finalDisableEndTime])
+  useEffect(() => {
+    console.log("finalDisableEndTimeForMinuteEndTime", finalDisableEndTime?.length);
+  }, [finalDisableEndTime])
+
+
+
+
+
+
   //for end time selector
   const [endTime, setEndTime] = useState("");
   const [now1, setNow1] = useState(moment().hour(0).minute(0));
@@ -179,6 +223,10 @@ const TimeSlot = ({ getNewCount, title }) => {
       endTime: "",
     });
   }
+
+  useEffect(() => {
+    console.log("finalDisableEndTimeForMinuteEndTime...", moment(endTime).format("m"));
+  }, [endTime])
 
   const getAllCourseType = async () => {
     setIsLoaderVisible(true);
@@ -303,15 +351,16 @@ const TimeSlot = ({ getNewCount, title }) => {
     e.preventDefault();
     let sTimeHour = new Date(startTime).getHours();
     let sTimeMinute = new Date(startTime).getMinutes();
-    let start  = moment(date).set({hour:sTimeHour,minute:sTimeMinute})
+    let start = moment(date).set({ hour: sTimeHour, minute: sTimeMinute })
 
     let eTimeHour = new Date(endTime).getHours();
     let eTimeMinute = new Date(endTime).getMinutes();
-    let end  = moment(date).set({hour:eTimeHour,minute:eTimeMinute})
-  
+    let end = moment(date).set({ hour: eTimeHour, minute: eTimeMinute })
+
     if (validateForm()) {
       let Data = {
         date: date,
+        endDate: endDate,
         seat: inputValueForAdd?.seat,
         endTime: end,
         startTime: start,
@@ -320,7 +369,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         vcid: inputValueForAdd?.VehicleCategory,
         ccid: inputValueForAdd?.CourseCategory
       };
-      console.log("data",Data);
+      console.log("data", Data);
       ApiPost(`trainingDate/addDate`, Data)
         .then((res) => {
           if (res?.status == 200) {
@@ -391,7 +440,11 @@ const TimeSlot = ({ getNewCount, title }) => {
 
     if (!date) {
       formIsValid = false;
-      errorsForAdd["date"] = "*Please Enter date!";
+      errorsForAdd["date"] = "*Please Enter Start Date!";
+    }
+    if (!endDate) {
+      formIsValid = false;
+      errorsForAdd["endDate"] = "*Please Enter End Date!";
     }
     if (!startTime) {
       formIsValid = false;
@@ -411,6 +464,7 @@ const TimeSlot = ({ getNewCount, title }) => {
     if (validateForm()) {
       let Data = {
         date: date,
+        endDate: endDate,
         seat: inputValueForAdd?.seat,
         endTime: endTime,
         startTime: startTime,
@@ -419,6 +473,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         vcid: inputValueForAdd?.VehicleCategory,
         ccid: inputValueForAdd?.CourseCategory
       };
+      console.log("datatdtad", Data);
       ApiPut(`trainingDate/updateDate/${idForUpdateCourseNameData}`, Data)
         .then((res) => {
           if (res?.status == 200) {
@@ -514,6 +569,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                   setStartTime(row?.startTime);
                   setEndTime(row?.endTime);
                   setDate(row?.date);
+                  setEndDate(row?.endDate)
                   setNow(moment(row?.startTime));
                   setNow1(moment(row?.endTime));
                   setIsEditPopUp(true);
@@ -617,26 +673,33 @@ const TimeSlot = ({ getNewCount, title }) => {
     e.preventDefault();
     if (e.target.files[0]) {
 
-        let formData = new FormData();
-        formData.append("csv", e.target.files[0]);
-        await ApiPost("trainingDate/uploadcsv", formData)
-            .then((res) => {
-                if (res.data?.result === 0) {
-                  getAllTimeSlot();
-                    toast.success(res.data.message);
-                }else{
-                    toast.error(res.data.message);
-                }
-                let img = document.getElementById("upload");
-                img.value = null
-            })
-            .catch((err) => {
-                toast.error(err);
-            });
+      let formData = new FormData();
+      formData.append("csv", e.target.files[0]);
+      await ApiPost("trainingDate/uploadcsv", formData)
+        .then((res) => {
+          if (res.data?.result === 0) {
+            getAllTimeSlot();
+            toast.success(res.data.message);
+          } else {
+            toast.error(res.data.message);
+          }
+          let img = document.getElementById("upload");
+          img.value = null
+        })
+        .catch((err) => {
+          toast.error(err);
+        });
     } else {
-        toast.error("Please Select Excel File !");
+      toast.error("Please Select Excel File !");
     }
-};
+  };
+
+  useEffect(() => {
+    console.log("test007", moment(startTime).format("k"));
+  }, [startTime])
+  useEffect(() => {
+    console.log("test007777", moment(endTime).format("k"));
+  }, [endTime])
 
 
 
@@ -678,40 +741,40 @@ const TimeSlot = ({ getNewCount, title }) => {
               <CsvDownload
                 className={`btn btn-success`}
                 data={dataCSV}
-                filename="TimeSlot.csv"
-               
+                filename="Donations.csv"
+
               >
                 Export to Excel
               </CsvDownload>
             </div>
-            
+
             <div className="cus-medium-button-style button-height mr-2">
-                            <ExportCSV  />{" "}
-                            </div>
-                            <div className="cus-medium-button-style button-height">
-                            <input
-                                type="file"
-                                id="upload"
-                                style={{ display: "none" }}
-                                className="btn btn-success"
-                                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                                onChange={(e) => onBulkUpload(e)}
+              <ExportCSV />{" "}
+            </div>
+            <div className="cus-medium-button-style button-height">
+              <input
+                type="file"
+                id="upload"
+                style={{ display: "none" }}
+                className="btn btn-success"
+                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                onChange={(e) => onBulkUpload(e)}
 
-                            />
-                            </div>
-                            <div className="cus-medium-button-style button-height mr-2">
-                            <buttton
-                                className="btn btn-success "
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    document.getElementById("upload").click();
-                                }}
+              />
+            </div>
+            <div className="cus-medium-button-style button-height mr-2">
+              <buttton
+                className="btn btn-success "
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("upload").click();
+                }}
 
-                            >Upload Excel File</buttton>
-                            </div>
+              >Upload Excel File</buttton>
+            </div>
 
-                        </div>
-         
+          </div>
+
 
           {/* delete model */}
           <Modal show={show} onHide={handleClose}>
@@ -976,7 +1039,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                           }
                           hidden
                         >
-                          Select course category
+                          Select course name
                         </option>
                         {getCourseName?.length > 0 &&
                           getCourseName?.map((item) => {
@@ -1040,7 +1103,7 @@ const TimeSlot = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-lg-3 col-form-label">
-                    Select Date
+                    Select Start Date
                   </label>
                   <div className="col-lg-6 cus-data-input-style">
                     <DatePicker
@@ -1049,6 +1112,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                       selected={new Date(date)}
                       onChange={(date) => {
                         setDate(date);
+                        setEndDate(new Date(date))
                         setErrorsForAdd({ ...errorsForAdd, date: "" });
                       }}
                       minDate={currentDate}
@@ -1064,6 +1128,46 @@ const TimeSlot = ({ getNewCount, title }) => {
                     </span>
                   </div>
                 </div>
+                <div className="form-group row">
+                  <label className="col-lg-3 col-form-label">
+                    Select End Date
+                  </label>
+                  <div className="col-lg-6 cus-data-input-style">
+                    {endDate ?
+                      <DatePicker
+                        id="endDate"
+                        format="DD/MM/YYYY"
+                        selected={new Date(endDate)}
+                        onChange={(date) => {
+                          setEndDate(date);
+                          setErrorsForAdd({ ...errorsForAdd, endDate: "" });
+                        }}
+                        minDate={new Date(date)}
+                      />
+                      :
+                      <DatePicker
+                        id="endDate"
+                        format="DD/MM/YYYY"
+                        selected={new Date(date)}
+                        onChange={(date) => {
+                          setEndDate(date);
+                          setErrorsForAdd({ ...errorsForAdd, endDate: "" });
+                        }}
+                        minDate={currentDate}
+                      />
+                    }
+
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["endDate"]}
+                    </span>
+                  </div>
+                </div>
 
                 <div className="form-group row">
                   <label className="col-lg-3 col-form-label">
@@ -1075,7 +1179,6 @@ const TimeSlot = ({ getNewCount, title }) => {
                       defaultValue={now}
                       onChange={onChange}
                       format={format}
-                      use12Hours
                       inputReadOnly
                     />
                     <span
@@ -1095,14 +1198,36 @@ const TimeSlot = ({ getNewCount, title }) => {
                     Enter End Time
                   </label>
                   <div className="col-lg-9 cus-data-input-style">
-                    <TimePicker
-                      showSecond={false}
-                      defaultValue={now1}
-                      onChange={onChange1}
-                      format={format1}
-                      use12Hours
-                      inputReadOnly
-                    />
+                    {moment(startTime).format("k") === moment(endTime).format("k") ?
+                      <TimePicker
+                        showSecond={false}
+                        defaultValue={now1}
+                        onChange={onChange1}
+                        format={format1}
+                        disabledHours={disabledHoursEndTime}
+                        disabledMinutes={disabledMinutesEndTime}
+                        inputReadOnly
+                      />
+                      : moment(startTime).format("k") !== moment(endTime).format("k") ?
+                        <TimePicker
+                          showSecond={false}
+                          defaultValue={now1}
+                          onChange={onChange1}
+                          format={format1}
+                          disabledHours={disabledHoursEndTime}
+                          // disabledMinutes={disabledMinutesEndTime}
+                          inputReadOnly
+                        />
+                        :
+                        <TimePicker
+                          showSecond={false}
+                          defaultValue={now1}
+                          onChange={onChange1}
+                          format={format1}
+                          inputReadOnly
+                        />
+                    }
+
                     <span
                       style={{
                         color: "red",
