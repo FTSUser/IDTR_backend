@@ -54,6 +54,9 @@ const TimeSlot = ({ getNewCount, title }) => {
   const [isEditPopUp, setIsEditPopUp] = useState(false);
   const [allPaymentDetailsExcel, setAllPaymentDetailsExcel] = useState([]);
   const [currentDate, setCurrentDate] = useState(new Date(date));
+  const [hour, setHour] = useState();
+  const [finalDisableEndTime, setFinalDisableEndTime] = useState([]);
+  const [finalDisableEndTimeForMin, setFinalDisableEndTimeForMin] = useState([]);
 
   const [dataCSV, setDataCSV] = useState([]);
 
@@ -156,6 +159,8 @@ const TimeSlot = ({ getNewCount, title }) => {
     setShow(false);
   };
 
+
+
   //for start time selector
   const [startTime, setStartTime] = useState("");
   const [now, setNow] = useState(moment().hour(0).minute(0));
@@ -167,6 +172,27 @@ const TimeSlot = ({ getNewCount, title }) => {
       startTime: "",
     });
   }
+
+  useEffect(() => {
+    console.log("startTime", moment(startTime).format("k"));
+    setHour(moment(startTime).format("k"))
+    let newArr = []
+    let newArrForMin = []
+    for (var i = 0; i <= moment(startTime).format("k"); i++) {
+      newArr.push(i)
+    }
+    setFinalDisableEndTime(newArr)
+    console.log("newArrForMin", newArrForMin);
+
+  }, [startTime])
+
+  function disabledHoursEndTime() {
+    return finalDisableEndTime;
+  }
+
+
+
+
 
   //for end time selector
   const [endTime, setEndTime] = useState("");
@@ -303,12 +329,12 @@ const TimeSlot = ({ getNewCount, title }) => {
     e.preventDefault();
     let sTimeHour = new Date(startTime).getHours();
     let sTimeMinute = new Date(startTime).getMinutes();
-    let start  = moment(date).set({hour:sTimeHour,minute:sTimeMinute})
+    let start = moment(date).set({ hour: sTimeHour, minute: sTimeMinute })
 
     let eTimeHour = new Date(endTime).getHours();
     let eTimeMinute = new Date(endTime).getMinutes();
-    let end  = moment(date).set({hour:eTimeHour,minute:eTimeMinute})
-  
+    let end = moment(date).set({ hour: eTimeHour, minute: eTimeMinute })
+
     if (validateForm()) {
       let Data = {
         date: date,
@@ -320,7 +346,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         vcid: inputValueForAdd?.VehicleCategory,
         ccid: inputValueForAdd?.CourseCategory
       };
-      console.log("data",Data);
+      console.log("data", Data);
       ApiPost(`trainingDate/addDate`, Data)
         .then((res) => {
           if (res?.status == 200) {
@@ -617,26 +643,26 @@ const TimeSlot = ({ getNewCount, title }) => {
     e.preventDefault();
     if (e.target.files[0]) {
 
-        let formData = new FormData();
-        formData.append("csv", e.target.files[0]);
-        await ApiPost("trainingDate/uploadcsv", formData)
-            .then((res) => {
-                if (res.data?.result === 0) {
-                  getAllTimeSlot();
-                    toast.success(res.data.message);
-                }else{
-                    toast.error(res.data.message);
-                }
-                let img = document.getElementById("upload");
-                img.value = null
-            })
-            .catch((err) => {
-                toast.error(err);
-            });
+      let formData = new FormData();
+      formData.append("csv", e.target.files[0]);
+      await ApiPost("trainingDate/uploadcsv", formData)
+        .then((res) => {
+          if (res.data?.result === 0) {
+            getAllTimeSlot();
+            toast.success(res.data.message);
+          } else {
+            toast.error(res.data.message);
+          }
+          let img = document.getElementById("upload");
+          img.value = null
+        })
+        .catch((err) => {
+          toast.error(err);
+        });
     } else {
-        toast.error("Please Select Excel File !");
+      toast.error("Please Select Excel File !");
     }
-};
+  };
 
 
 
@@ -679,39 +705,39 @@ const TimeSlot = ({ getNewCount, title }) => {
                 className={`btn btn-success`}
                 data={dataCSV}
                 filename="Donations.csv"
-               
+
               >
                 Export to Excel
               </CsvDownload>
             </div>
-            
+
             <div className="cus-medium-button-style button-height mr-2">
-                            <ExportCSV  />{" "}
-                            </div>
-                            <div className="cus-medium-button-style button-height">
-                            <input
-                                type="file"
-                                id="upload"
-                                style={{ display: "none" }}
-                                className="btn btn-success"
-                                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                                onChange={(e) => onBulkUpload(e)}
+              <ExportCSV />{" "}
+            </div>
+            <div className="cus-medium-button-style button-height">
+              <input
+                type="file"
+                id="upload"
+                style={{ display: "none" }}
+                className="btn btn-success"
+                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                onChange={(e) => onBulkUpload(e)}
 
-                            />
-                            </div>
-                            <div className="cus-medium-button-style button-height mr-2">
-                            <buttton
-                                className="btn btn-success "
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    document.getElementById("upload").click();
-                                }}
+              />
+            </div>
+            <div className="cus-medium-button-style button-height mr-2">
+              <buttton
+                className="btn btn-success "
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("upload").click();
+                }}
 
-                            >Upload Excel File</buttton>
-                            </div>
+              >Upload Excel File</buttton>
+            </div>
 
-                        </div>
-         
+          </div>
+
 
           {/* delete model */}
           <Modal show={show} onHide={handleClose}>
@@ -1075,7 +1101,6 @@ const TimeSlot = ({ getNewCount, title }) => {
                       defaultValue={now}
                       onChange={onChange}
                       format={format}
-                      use12Hours
                       inputReadOnly
                     />
                     <span
@@ -1095,14 +1120,26 @@ const TimeSlot = ({ getNewCount, title }) => {
                     Enter End Time
                   </label>
                   <div className="col-lg-9 cus-data-input-style">
-                    <TimePicker
-                      showSecond={false}
-                      defaultValue={now1}
-                      onChange={onChange1}
-                      format={format1}
-                      use12Hours
-                      inputReadOnly
-                    />
+                    {finalDisableEndTime && finalDisableEndTimeForMin ?
+                      <TimePicker
+                        showSecond={false}
+                        defaultValue={now1}
+                        onChange={onChange1}
+                        format={format1}
+                        disabledHours={disabledHoursEndTime}
+                        // disabledMinutes={disabledMinutesEndTime}
+                        inputReadOnly
+                      />
+                      :
+                      <TimePicker
+                        showSecond={false}
+                        defaultValue={now1}
+                        onChange={onChange1}
+                        format={format1}
+                        inputReadOnly
+                      />
+                    }
+
                     <span
                       style={{
                         color: "red",
