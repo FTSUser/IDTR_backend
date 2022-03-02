@@ -1112,6 +1112,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                       selected={new Date(date)}
                       onChange={(date) => {
                         setDate(date);
+                        setEndDate(new Date(date))
                         setErrorsForAdd({ ...errorsForAdd, date: "" });
                       }}
                       minDate={currentDate}
@@ -1138,7 +1139,6 @@ const TimeSlot = ({ getNewCount, title }) => {
                         format="DD/MM/YYYY"
                         selected={new Date(endDate)}
                         onChange={(date) => {
-                          console.log("EndDate", date);
                           setEndDate(date);
                           setErrorsForAdd({ ...errorsForAdd, endDate: "" });
                         }}
