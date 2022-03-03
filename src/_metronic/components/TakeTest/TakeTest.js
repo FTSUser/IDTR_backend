@@ -287,15 +287,16 @@ const TakeTest = ({ getNewCount, title }) => {
         console.log(err?.message);
       });
   };
-  useEffect(() => {
-    console.log("idForgetResponseByBatch", idForgetResponseByBatch);
-    getResponseByBatch(idForgetResponseByBatch);
-  }, [idForgetResponseByBatch]);
+  // useEffect(() => {
+  //   console.log("idForgetResponseByBatch", idForgetResponseByBatch);
+  //   getResponseByBatch(idForgetResponseByBatch);
+  // }, [idForgetResponseByBatch]);
 
   //getResponseByBatch
 
 
-  const getResponseByBatch = async (id) => {
+  const getResponseByBatchs = async (id) => {
+    console.log("-----------",id);
     await ApiGet(
       `register/getRegisterByBatch/${id}?page=${pageForBatch}&limit=${countPerPageForBatch}`
     )
@@ -314,6 +315,7 @@ const TakeTest = ({ getNewCount, title }) => {
       .then((res) => {
         console.log("resresres", res?.data?.payload);
         setAllDataForResultDownload(res?.data?.payload?.findResponse);
+
       })
       .catch((err) => {
         console.log(err?.message);
@@ -475,6 +477,7 @@ const TakeTest = ({ getNewCount, title }) => {
                     setIsAddCourseName(true);
                     setBatchId(row?._id);
                     setTdId(row?.tdid);
+                  
                     // setDataViewMore(row);
                   }}
                 >
@@ -526,6 +529,7 @@ const TakeTest = ({ getNewCount, title }) => {
                   setDataViewMore(row);
                   getAllResponseByBatch(row?._id);
                   getAllResponseByBatchForUser(row?._id);
+                  getResponseByBatchs(row?._id)
                   console.log("rowShow", row);
                   console.log("isViewMoreAboutus", isViewMoreAboutus);
                 }}
@@ -614,6 +618,7 @@ const TakeTest = ({ getNewCount, title }) => {
                     setIsViewMoreAnnouncement(true)
                     setIsPaperViewModel(true);
                     getPapersetByUserId(row?._id);
+               
                   }}
                 >
                   <div className="cus-medium-button-style">
