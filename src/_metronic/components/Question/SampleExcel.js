@@ -18,6 +18,7 @@ export const ExportCSV = () => {
         "option": "option",
         "correctanswer": "0 or 1",
         "Category": "category id",
+        "Course Name": "cnid",
         // "Explaination": "Explaination",
         "image":"image url",
       

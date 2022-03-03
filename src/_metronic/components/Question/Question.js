@@ -53,6 +53,7 @@ const Question = (props) => {
     const [statusDisplay, setStatusDisplay] = useState(false);
     const [getCourseType, setGetCourseType] = useState([]);
     const [filteredVehicleCategory, setFilteredVehicleCategory] = useState([]);
+    const [courseName, setAllCourseName] = useState([]);
 
     const [dataViewMore, setDataViewMore] = useState({});
     const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
@@ -99,10 +100,21 @@ const Question = (props) => {
 
     useEffect(() => {
         getAllQuestionSet();
+        getAllCourseNameForExcel()
     }, [page, countPerPage]);
 
 
-
+    const getAllCourseNameForExcel = async () => {
+        // if (!search) {
+        await ApiGet(`courseName/getAll`)
+          .then((res) => {
+            setAllCourseName(res?.data?.payload?.Question);
+          })
+          .catch((err) => {
+            toast.error(err?.response?.data?.message);
+          });
+        // }
+      };
 
     const getAllQuestionSet = async () => {
         setIsLoaderVisible(true);
@@ -143,6 +155,10 @@ const Question = (props) => {
             formIsValid = false;
             errorsForAdd["name"] = "*Please Enter Name!";
         }
+        if (inputValueForAdd && !inputValueForAdd.cnid) {
+            formIsValid = false;
+            errorsForAdd["cnid"] = "*Please Enter Course Name!";
+        }
 
 
         if (inputValueForAdd && !inputValueForAdd.language) {
@@ -175,6 +191,7 @@ const Question = (props) => {
         if (validateFormForAddAdmin()) {
             let Data = {
                 Qname: inputValueForAdd.name,
+                cnid: inputValueForAdd.cnid,
                 type: inputValueForAdd.type,
                 Option: option,
                 language: inputValueForAdd.language,
@@ -232,6 +249,7 @@ const Question = (props) => {
         if (validateFormForAddAdmin()) {
             let Data = {
                 Qname: inputValueForAdd.name,
+                cnid: inputValueForAdd.cnid,
                 type: inputValueForAdd.type,
                 Option: option,
                 language: inputValueForAdd.language,
@@ -396,6 +414,7 @@ const Question = (props) => {
                                     setInputValueForAdd({
 
                                         name: row?.Qname,
+                                        cnid: row?.cnid,
                                         description: row?.description,
                                         // weight: row?.weight,
                                         language: row?.language,
@@ -1005,8 +1024,6 @@ const Question = (props) => {
                                                 onChange={(e) => {
                                                     handleOnChnageAdd(e);
                                                 }}
-
-
                                             >
                                                 <option>Select Language
                                                 </option>
@@ -1072,11 +1089,60 @@ const Question = (props) => {
 
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Course Name
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <select
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="cnid"
+                                                name="cnid"
+                                                value={inputValueForAdd?.cnid}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            >
+                                                <option value="" disabled selected hidden>
+                                                    Select Course Name
+                                                </option>
+
+                                                {courseName?.length > 0 &&
+                                                    courseName?.map((item) => {
+                                                        return (
+                                                            <option
+                                                                key={item._id}
+                                                                value={item?._id}
+                                                                selected={
+                                                                    inputValueForAdd?.cnid === item?._id
+                                                                        ? true
+                                                                        : false
+                                                                }
+                                                            >
+                                                                {" "}
+                                                                {item.courseName}{" "}
+                                                            </option>
+                                                        );
+                                                    })}
+                                            </select>
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["cnid"]}
+                                        </span>
+                                    </div>
+
+                                </div>
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
                                         Category
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
-
                                             <select
                                                 className={`form-control form-control-lg form-control-solid `}
                                                 id="Category"
