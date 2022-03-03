@@ -1201,7 +1201,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                     {moment(startTime).format("k") === moment(endTime).format("k") && moment(startTime).format("k") !== "24" ?
                       <TimePicker
                         showSecond={false}
-                        defaultValue={startTime ? moment(startTime) : now1}
+                        defaultValue={now1}
                         onChange={onChange1}
                         format={format1}
                         disabledHours={disabledHoursEndTime}
@@ -1211,7 +1211,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                       : moment(startTime).format("k") !== moment(endTime).format("k") && moment(startTime).format("k") !== "24" ?
                         <TimePicker
                           showSecond={false}
-                          defaultValue={startTime ? moment(startTime) : now1}
+                          defaultValue={now1}
                           onChange={onChange1}
                           format={format1}
                           disabledHours={disabledHoursEndTime}
@@ -1221,7 +1221,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                         : moment(startTime).format("k") === "24" ?
                           <TimePicker
                             showSecond={false}
-                            defaultValue={startTime ? moment(startTime) : now1}
+                            defaultValue={now1}
                             onChange={onChange1}
                             format={format1}
                             inputReadOnly
@@ -1229,7 +1229,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                           /> :
                           <TimePicker
                             showSecond={false}
-                            defaultValue={startTime ? moment(startTime) : now1}
+                            defaultValue={now1}
                             onChange={onChange1}
                             format={format1}
                             inputReadOnly
