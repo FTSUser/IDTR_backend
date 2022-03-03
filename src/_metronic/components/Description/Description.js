@@ -325,7 +325,7 @@ const Description = ({ getNewCount, title }) => {
                 </Tooltip>
               </div>
             </div>
-            <div
+            {/* <div
               className="cursor-pointer"
               onClick={() => {
                 setShow(true);
@@ -335,7 +335,7 @@ const Description = ({ getNewCount, title }) => {
               <Tooltip title="Delete Announcement" arrow>
                 <DeleteIcon />
               </Tooltip>
-            </div>
+            </div> */}
             <div
               className="cursor-pointer pl-2"
               onClick={() => {

@@ -162,10 +162,10 @@ export function AsideMenuList({ layoutProps }) {
                 aria-haspopup="true"
                 data-menu-toggle="hover"
               >
-                <NavLink className="menu-link" to={`/${data?.name === "Policy&Terms" ? data?.name.trim().toLowerCase().replace('&', '-').trim() : data?.name.trim().toLowerCase().replace(' ', '-')}`}>
+                <NavLink className="menu-link" to={`/${data?.name === "Policy-& Terms" ? data?.name.trim().toLowerCase().replace('&', '-').trim() : data?.name.trim().toLowerCase().replace(' ', '-')}`}>
                   <span className="svg-icon menu-icon">
 
-                    <img src={`media/allIconsForTable/${data?.name === "Policy&Terms" ? data?.name.trim().toLowerCase().replace('&', '-').trim() : data?.name.trim().toLowerCase().replace(' ', '-')}.svg`} />
+                    <img src={`media/allIconsForTable/${data?.name === "Policy-& Terms" ? data?.name.trim().toLowerCase().replace('&', '-').trim() : data?.name.trim().toLowerCase().replace(' ', '-')}.svg`} />
                   </span>
                   <span className="menu-text">{data?.name}</span>
                 </NavLink>

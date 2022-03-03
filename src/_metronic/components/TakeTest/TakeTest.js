@@ -488,6 +488,7 @@ const TakeTest = ({ getNewCount, title }) => {
                 <div
                   className="btn btn-success ml-2"
                   onClick={() => {
+                   
                     setIsAddQuestion(true);
                     viewPeperSet(row?._id);
                   }}
@@ -610,6 +611,7 @@ const TakeTest = ({ getNewCount, title }) => {
                 <div
                   className="cursor-pointer pl-2"
                   onClick={() => {
+                    setIsViewMoreAnnouncement(true)
                     setIsPaperViewModel(true);
                     getPapersetByUserId(row?._id);
                   }}
@@ -1509,7 +1511,7 @@ const TakeTest = ({ getNewCount, title }) => {
             {isViewMoreAnnouncement === true ? (
               <div className="honda-container">
                 <div className="">
-                  {console.log("questionData", paperSet?.ListofQA)}
+               
                   <div className="questionGrid12121">
                     {paperSet?.ListofQA?.map((data, key) => (
                       <div className="questionGridItems">
