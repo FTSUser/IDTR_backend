@@ -65,6 +65,8 @@ const TimeSlot = ({ getNewCount, title }) => {
     document.title = "Honda | Timeslot Addition ";
   }, []);
 
+
+
   const handleOnChnageAdd = (e) => {
     const { name, value } = e.target;
     if (e.target.name === "seat") {
@@ -168,6 +170,7 @@ const TimeSlot = ({ getNewCount, title }) => {
   const format = "h:mm a";
   function onChange(value) {
     setStartTime(value?.toDate());
+    setEndTime("")
     setErrorsForAdd({
       ...errorsForAdd,
       startTime: "",
@@ -175,8 +178,13 @@ const TimeSlot = ({ getNewCount, title }) => {
     setEndTime("")
   }
 
+
   useEffect(() => {
-    console.log("startTime", moment(startTime).format("k"));
+    console.log("startTime", startTime);
+  }, [startTime])
+
+
+  useEffect(() => {
     setHour(moment(startTime).format("k"))
     let newArr = []
     let newArrForMin = []
@@ -198,16 +206,6 @@ const TimeSlot = ({ getNewCount, title }) => {
     return finalDisableEndTimeForMin;
   }
 
-
-  useEffect(() => {
-    console.log("finalDisableEndTimeForMinute116111", finalDisableEndTimeForMin);
-  }, [finalDisableEndTimeForMin])
-  useEffect(() => {
-    console.log("finalDisableEndTimeForMinute", finalDisableEndTime);
-  }, [finalDisableEndTime])
-  useEffect(() => {
-    console.log("finalDisableEndTimeForMinuteEndTime", finalDisableEndTime?.length);
-  }, [finalDisableEndTime])
 
 
 
@@ -1203,7 +1201,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                     {moment(startTime).format("k") === moment(endTime).format("k") && moment(startTime).format("k") !== "24" ?
                       <TimePicker
                         showSecond={false}
-                        defaultValue={now1}
+                        defaultValue={startTime ? moment(startTime) : now1}
                         onChange={onChange1}
                         format={format1}
                         disabledHours={disabledHoursEndTime}
@@ -1213,7 +1211,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                       : moment(startTime).format("k") !== moment(endTime).format("k") && moment(startTime).format("k") !== "24" ?
                         <TimePicker
                           showSecond={false}
-                          defaultValue={now1}
+                          defaultValue={startTime ? moment(startTime) : now1}
                           onChange={onChange1}
                           format={format1}
                           disabledHours={disabledHoursEndTime}
@@ -1223,7 +1221,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                         : moment(startTime).format("k") === "24" ?
                           <TimePicker
                             showSecond={false}
-                            defaultValue={now1}
+                            defaultValue={startTime ? moment(startTime) : now1}
                             onChange={onChange1}
                             format={format1}
                             inputReadOnly
@@ -1231,7 +1229,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                           /> :
                           <TimePicker
                             showSecond={false}
-                            defaultValue={now1}
+                            defaultValue={startTime ? moment(startTime) : now1}
                             onChange={onChange1}
                             format={format1}
                             inputReadOnly
