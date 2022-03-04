@@ -106,8 +106,8 @@ class ComponentToPrintsForUser extends React.Component {
                 <td>
                   Phone:{" "}
                   {`${this?.props?.data?.phone
-                      ? this?.props?.data?.phone
-                      : "No Data"
+                    ? this?.props?.data?.phone
+                    : "No Data"
                     } `}{" "}
                 </td>
               </td>
@@ -296,7 +296,7 @@ const TakeTest = ({ getNewCount, title }) => {
 
 
   const getResponseByBatchs = async (id) => {
-    console.log("-----------",id);
+    console.log("-----------", id);
     await ApiGet(
       `register/getRegisterByBatch/${id}?page=${pageForBatch}&limit=${countPerPageForBatch}`
     )
@@ -477,7 +477,7 @@ const TakeTest = ({ getNewCount, title }) => {
                     setIsAddCourseName(true);
                     setBatchId(row?._id);
                     setTdId(row?.tdid);
-                  
+
                     // setDataViewMore(row);
                   }}
                 >
@@ -491,7 +491,7 @@ const TakeTest = ({ getNewCount, title }) => {
                 <div
                   className="btn btn-success ml-2"
                   onClick={() => {
-                   
+
                     setIsAddQuestion(true);
                     viewPeperSet(row?._id);
                   }}
@@ -618,7 +618,7 @@ const TakeTest = ({ getNewCount, title }) => {
                     setIsViewMoreAnnouncement(true)
                     setIsPaperViewModel(true);
                     getPapersetByUserId(row?._id);
-               
+
                   }}
                 >
                   <div className="cus-medium-button-style">
@@ -1495,7 +1495,7 @@ const TakeTest = ({ getNewCount, title }) => {
           </List>
         </Dialog>
       ) : null}
-       {isPaperViewModel ? (
+      {isPaperViewModel ? (
         <Dialog
           fullScreen
           open={isPaperViewModel}
@@ -1516,7 +1516,7 @@ const TakeTest = ({ getNewCount, title }) => {
             {isViewMoreAnnouncement === true ? (
               <div className="honda-container">
                 <div className="">
-               
+
                   <div className="questionGrid12121">
                     {paperSet?.ListofQA?.map((data, key) => (
                       <div className="questionGridItems">
@@ -1527,8 +1527,10 @@ const TakeTest = ({ getNewCount, title }) => {
                           </div>
                           <p>{data?.Qname}</p>
                         </div>
-                        <div>
-                          <img src={data?.image} alt="" />
+                        <div>{
+
+                          data?.image ? <img src={data?.image} alt="" /> : null}
+
                         </div>
                         <div className="">
                           Right / Wrong:{" "}

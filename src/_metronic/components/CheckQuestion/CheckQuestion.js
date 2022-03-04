@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import DataTable, { defaultThemes } from "react-data-table-component";
 import {
   ApiGet,
@@ -36,144 +36,144 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 class ComponentToPrints extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = this.props;
-      }
-    
-      componentDidMount() {
-        this.setState({ ...this.props });
-      }
-    
-      render() {
-        return (
-          <>
-            <div class="invoice-box">
-              <table>
-                <tr class="top">
-                  <td colspan="2">
-                    <table>
-                      <tr>
-                        <td>
-                          <b>Institute of Driving and Traffic Research (IDTR)</b>
-                          <p>
-                            A joint venture of Transport Department, <br />{" "}
-                            Government of Haryana & Honda IDTR
-                          </p>
-                        </td>
-                        <td class="title">
-                          <img src={Logo} />
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-    
-                <tr class="information">
-                  <td colspan="2">
-                    <table>
-                      <tr>
-                        <td>
-                          Created:{" "}
-                          {moment(this?.props?.data?.createdAt).format(
-                            "DD-MM-YYYY "
-                          )}
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-                <tr className="">
-                  <td>
-                    <td>First Name: {`${this?.props?.data?.User[0]?.fname} `} </td>
-                  </td>
-                </tr>
-                <tr className="">
-                  <td>
-                    <td>Middle Name: {`${this?.props?.data?.User[0]?.mname} `} </td>
-                  </td>
-                </tr>
-                <tr className="">
-                  <td>
-                    <td>Last Name: {`${this?.props?.data?.User[0]?.lname} `} </td>
-                  </td>
-                </tr>
-                <tr className="">
-                  <td>
-                    <td>Email: {`${this?.props?.data?.User[0]?.email} `} </td>
-                  </td>
-                </tr>
-                <tr className="">
-                  <td>
-                    <td>Phone: {`${this?.props?.data?.User[0]?.phone ? this?.props?.data?.User[0]?.phone : "No Data"} `} </td>
-                  </td>
-                </tr>
-                <tr className="">
-                  <td>
-                    <td>Gender: {`${this?.props?.data?.User[0]?.gender} `} </td>
-                  </td>
-                </tr>
-                <tr className="">
-                  <td>
-                    <td>Address: {`${this?.props?.data?.User[0]?.address} `} </td>
-                  </td>
-                </tr>
-                <tr className="">
-                  <td>
-                    <td>City: {`${this?.props?.data?.User[0]?.city} `} </td>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Created: {moment(this?.props?.data?.User[0]?.DoB).format("DD-MM-YYYY ")}
-                  </td>
-                </tr>
-                <tr className="">
-                  <td>
-                    <td>Address: {`${this?.props?.data?.User[0]?.address} `} </td>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Date of course: {moment(this?.props?.data?.User[0]?.dateofCourse).format("DD-MM-YYYY ")}
-                  </td>
-                </tr>
-                <tr className="">
-                  <td>
-                    <td>Status: {`${this?.props?.data?.User[0]?.status} `} </td>
-                  </td>
-                </tr>
-                <tr className="">
-                  <td>
-                    <td>Type: {`${this?.props?.data?.User[0]?.type} `} </td>
-                  </td>
-                </tr>
-                <tr className="">
-                  <td>
-                    <td>Authoritydistrict: {`${this?.props?.data?.User[0]?.authoritydistrict} `} </td>
-                  </td>
-                </tr>
-                <tr className="">
-                  <td>
-                    <td>Authoritycity: {`${this?.props?.data?.User[0]?.authoritycity} `} </td>
-                  </td>
-                </tr>
-                
-                {/* <tr className="">
+  constructor(props) {
+    super(props);
+    this.state = this.props;
+  }
+
+  componentDidMount() {
+    this.setState({ ...this.props });
+  }
+
+  render() {
+    return (
+      <>
+        <div class="invoice-box">
+          <table>
+            <tr class="top">
+              <td colspan="2">
+                <table>
+                  <tr>
+                    <td>
+                      <b>Institute of Driving and Traffic Research (IDTR)</b>
+                      <p>
+                        A joint venture of Transport Department, <br />{" "}
+                        Government of Haryana & Honda IDTR
+                      </p>
+                    </td>
+                    <td class="title">
+                      <img src={Logo} />
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr class="information">
+              <td colspan="2">
+                <table>
+                  <tr>
+                    <td>
+                      Created:{" "}
+                      {moment(this?.props?.data?.createdAt).format(
+                        "DD-MM-YYYY "
+                      )}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>First Name: {`${this?.props?.data?.User[0]?.fname} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Middle Name: {`${this?.props?.data?.User[0]?.mname} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Last Name: {`${this?.props?.data?.User[0]?.lname} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Email: {`${this?.props?.data?.User[0]?.email} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Phone: {`${this?.props?.data?.User[0]?.phone ? this?.props?.data?.User[0]?.phone : "No Data"} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Gender: {`${this?.props?.data?.User[0]?.gender} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Address: {`${this?.props?.data?.User[0]?.address} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>City: {`${this?.props?.data?.User[0]?.city} `} </td>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Created: {moment(this?.props?.data?.User[0]?.DoB).format("DD-MM-YYYY ")}
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Address: {`${this?.props?.data?.User[0]?.address} `} </td>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Date of course: {moment(this?.props?.data?.User[0]?.dateofCourse).format("DD-MM-YYYY ")}
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Status: {`${this?.props?.data?.User[0]?.status} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Type: {`${this?.props?.data?.User[0]?.type} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Authoritydistrict: {`${this?.props?.data?.User[0]?.authoritydistrict} `} </td>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Authoritycity: {`${this?.props?.data?.User[0]?.authoritycity} `} </td>
+              </td>
+            </tr>
+
+            {/* <tr className="">
                   <td>
                     <td>Examiner Phone: {`${this.props?.data?.Examiner?.phone} `} </td>
                   </td>
                 </tr> */}
-    
-                {/* <tr class="heading">
+
+            {/* <tr class="heading">
                   <td>Payment Method</td>
                 </tr> */}
-    
-                {/* <tr class="details">
+
+            {/* <tr class="details">
                   <td>{this.props?.data?.type}</td>
                 </tr> */}
-    
-                {/* <tr class="heading">
+
+            {/* <tr class="heading">
                   <td>Item</td>
                   <td>GST</td>
                   <td>COST</td>
@@ -184,11 +184,11 @@ class ComponentToPrints extends React.Component {
                   <td>12FC34343433</td>
                   <td>&#x20b9;{this.props?.data?.courseName[0]?.price}</td>
                 </tr> */}
-              </table>
-            </div>
-          </>
-        );
-      }
+          </table>
+        </div>
+      </>
+    );
+  }
 }
 
 const CheckTest = ({ getNewCount, title }) => {
@@ -578,7 +578,7 @@ const CheckTest = ({ getNewCount, title }) => {
       });
       let a = {
         Qname: e?.Qname,
-        image:e?.image,
+        image: e?.image,
         Option: e.Option,
         Answer: e.Answer,
         type: e.type,
@@ -593,26 +593,26 @@ const CheckTest = ({ getNewCount, title }) => {
       } else {
       }
     });
-   
-      const datas = {
-        batch: data?.batchId,
-        uid: userIds,
-        Esid: data?._id,
-        ListofQA: checkData,
-      };
-      ApiPost(`response/addResponse`, datas)
-        .then((res) => {
-          console.log("res", res);
-          toast.success(res?.data?.message);
-          getAllBatchIdWiseUser();
-          setTimeout(() => {
-            openExamPeperSet(false);
-          }, 100);
-        })
-        .catch((err) => {
-          toast.error(err?.response?.data?.message);
-        });
-    
+
+    const datas = {
+      batch: data?.batchId,
+      uid: userIds,
+      Esid: data?._id,
+      ListofQA: checkData,
+    };
+    ApiPost(`response/addResponse`, datas)
+      .then((res) => {
+        console.log("res", res);
+        toast.success(res?.data?.message);
+        getAllBatchIdWiseUser();
+        setTimeout(() => {
+          openExamPeperSet(false);
+        }, 100);
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message);
+      });
+
   };
   const updateUser = (data) => {
     console.log("data", data);
@@ -625,7 +625,7 @@ const CheckTest = ({ getNewCount, title }) => {
       let a = {
         Qname: e?.Qname,
         Option: e.Option,
-        image:e?.image,
+        image: e?.image,
         Answer: e.Answer,
         type: e.type,
       };
@@ -639,24 +639,24 @@ const CheckTest = ({ getNewCount, title }) => {
       } else {
       }
     });
-  
-      const datas = {
-        ListofQA: checkData,
-      };
-      console.log("datas", datas);
-      ApiPut(`response/updateResponse/${data?._id}`, datas)
-        .then((res) => {
-          console.log("res", res);
-          toast.success(res?.data?.message);
-          getAllBatchIdWiseUser();
-          setTimeout(() => {
-            openExamPeperSet(false);
-          }, 100);
-        })
-        .catch((err) => {
-          toast.error(err?.response?.data?.message);
-        });
-    
+
+    const datas = {
+      ListofQA: checkData,
+    };
+    console.log("datas", datas);
+    ApiPut(`response/updateResponse/${data?._id}`, datas)
+      .then((res) => {
+        console.log("res", res);
+        toast.success(res?.data?.message);
+        getAllBatchIdWiseUser();
+        setTimeout(() => {
+          openExamPeperSet(false);
+        }, 100);
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message);
+      });
+
   };
 
   const handleCheckQuestion = (data, record, index) => {
@@ -833,7 +833,10 @@ const CheckTest = ({ getNewCount, title }) => {
                           {data?.Qname}
                         </div>
                         <div>
-                          <img src={data?.image} alt="" />
+                          {
+                            data?.image ? <img src={data?.image} alt="" /> : null
+                          }
+
                         </div>
                         <div>
                           {data?.Option.map((record, i) => (
@@ -979,8 +982,8 @@ const CheckTest = ({ getNewCount, title }) => {
                                       defaultChecked={
                                         data.Answer?.length
                                           ? data.Answer.find(
-                                              (e) => e === Number(i) + 1
-                                            )
+                                            (e) => e === Number(i) + 1
+                                          )
                                             ? true
                                             : false
                                           : false
@@ -1140,7 +1143,7 @@ const CheckTest = ({ getNewCount, title }) => {
           <List>
             {isViewMoreAboutus === true ? (
               <div className="honda-container">
-                 <div className="other-information-child-text-style1">
+                <div className="other-information-child-text-style1">
                   <h2>Check Test</h2>
                 </div>
                 <div className="honda-text-grid12 honda-text-grid-border">
