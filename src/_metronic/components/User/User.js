@@ -728,7 +728,7 @@ const User = ({ getNewCount, title }) => {
               <CsvDownload
                 className={``}
                 data={dataCSVLogs}
-                filename="User.csv"
+                filename="User Report.csv"
                 style={{
                   backgroundColor: "#CC0001",
                   borderRadius: "6px",

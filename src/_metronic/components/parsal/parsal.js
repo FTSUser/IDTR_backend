@@ -196,7 +196,7 @@ const Partial = ({ getNewCount, title }) => {
               <CsvDownload
                 className={``}
                 data={dataCSV}
-                filename="Partial.csv"
+                filename="Partial Report.csv"
                 style={{
                   //pass other props, like styles
                   backgroundColor: "#CC0001",

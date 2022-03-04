@@ -28,7 +28,7 @@ export const ExportCSV = () => {
     XLSX.utils.book_append_sheet(wb, ws, "Data");
     let excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
     let BlobUrl = new Blob([excelBuffer], { type: fileType });
-    FileSaver(BlobUrl, Date.now() + fileExtension);
+    FileSaver(BlobUrl, "Sample Timeslot Addition"+ fileExtension);
   };
 
   return (

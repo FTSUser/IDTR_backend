@@ -503,7 +503,7 @@ const VehicleCategory = ({ getNewCount, title }) => {
               <CsvDownload
                 className={``}
                 data={dataCSV}
-                filename="Vehicle Category.csv"
+                filename="Vehicle Category Report.csv"
                 style={{
                   //pass other props, like styles
                   backgroundColor: "#CC0001",

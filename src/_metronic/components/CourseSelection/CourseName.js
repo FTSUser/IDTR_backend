@@ -705,7 +705,7 @@ const CourseName = ({ getNewCount, title }) => {
               <CsvDownload
                 className={``}
                 data={dataCSV}
-                filename="Course Name.csv"
+                filename="Course Name Report.csv"
                 style={{
                   //pass other props, like styles
                   backgroundColor: "#CC0001",

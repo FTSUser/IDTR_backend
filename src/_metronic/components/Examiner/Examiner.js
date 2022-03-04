@@ -498,7 +498,7 @@ const Examiner = ({ getNewCount, title }) => {
                             <CsvDownload
                                 className={``}
                                 data={dataCSV}
-                                filename="Examiner.csv"
+                                filename="Role Report.csv"
                                 style={{
                                     //pass other props, like styles
                                     backgroundColor: "#CC0001",

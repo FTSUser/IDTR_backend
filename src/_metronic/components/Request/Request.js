@@ -126,7 +126,7 @@ const Request = ({ getNewCount, title }) => {
         {
             name: "SNo",
             cell: (row, index) => (page - 1) * countPerPage + (index + 1),
-            width: "65px",
+            width: "50px",
         },
         {
             name: "First Name",
@@ -140,6 +140,7 @@ const Request = ({ getNewCount, title }) => {
                 return <span>{moment(row?.updatedAt).format("ll")}</span>;
               },
             sortable: true,
+            width: "120px",
            
         },
         {
@@ -147,6 +148,7 @@ const Request = ({ getNewCount, title }) => {
 
             sortable: true,
             selector: row => row?.lname,
+            width: "140px",
         },
         {
             name: "Email",
@@ -176,6 +178,7 @@ const Request = ({ getNewCount, title }) => {
             name: "Mobile Number",
             sortable: true,
             selector: row => row?.phone,
+           
         },
 
         {

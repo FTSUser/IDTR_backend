@@ -1415,7 +1415,7 @@ const TakeTest = ({ getNewCount, title }) => {
                       <CsvDownload
                         className={``}
                         data={dataCSVResults}
-                        filename="User Data.csv"
+                        filename="User Test Data Report.csv"
                         style={{
                           backgroundColor: "#CC0001",
                           borderRadius: "6px",
@@ -1439,7 +1439,7 @@ const TakeTest = ({ getNewCount, title }) => {
                       <CsvDownload
                         className={``}
                         data={dataCSVForAttendance}
-                        filename="Batch.csv"
+                        filename="User Attendance Data Report.csv"
                         style={{
                           backgroundColor: "#CC0001",
                           borderRadius: "6px",
