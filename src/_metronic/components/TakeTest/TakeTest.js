@@ -1275,7 +1275,67 @@ const TakeTest = ({ getNewCount, title }) => {
                       <div className="other-information-child-text-style1">
                         <h2>Take Test</h2>
                       </div>
-                      {userByAttendece?.length > 0 &&
+
+
+                      <table className="table table-bordered" >
+                        <thead>
+                          <tr>
+                            <th>
+                              <input
+                                type="checkbox"
+                                name="selectall"
+                                onChange={(e) =>
+                                  handleSubjectSelect(userByAttendece, "id", e)
+                                }
+                                checked={
+                                  selectedTopSubjects?.length ===
+                                    userByAttendece.length
+                                    ? true
+                                    : false
+                                }
+                              />
+                            </th>
+                            <th >Email</th>
+                            <th >Name</th>
+                            <th >Phone</th>
+                            <th >Course Name</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {userByAttendece?.length > 0 &&
+                            userByAttendece?.map((data, key) => {
+                              return (
+                                <tr key={key}>
+                                  <td>
+                                    <input
+                                      type="checkbox"
+                                      checked={
+                                        selectedTopSubjects?.find(
+                                          (ss) => ss === data?._id
+                                        )
+                                          ? true
+                                          : false
+                                      }
+                                      // onChange={(e) => addAttendence(e)} />
+                                      onChange={() =>
+                                        handleSubjectSelect(data, data?._id, "e")
+                                      }
+                                    />
+                                  </td>
+                                  <td>{data?.email ? data?.email : '-'}</td>
+                                  <td>{data?.fname ? data?.fname : "-"}</td>
+                                  <td>{data?.phone ? data?.phone : '-'}</td>
+                                  <td>{data?.cnid?.courseName ? data?.cnid?.courseName : '-'}</td>
+
+                                </tr>
+                              );
+                            })}
+                        </tbody>
+                      </table>
+
+
+                      {/* {userByAttendece?.length > 0 &&
                         userByAttendece?.map((data, key) => {
                           return (
                             <>
@@ -1334,7 +1394,7 @@ const TakeTest = ({ getNewCount, title }) => {
 
                             </>
                           );
-                        })}
+                        })} */}
 
 
                       {selectedTopSubjects?.length > 0 && (

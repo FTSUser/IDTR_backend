@@ -1701,8 +1701,8 @@ const User = ({ getNewCount, title }) => {
   const uploadCertificate = async () => {
     let urls = {};
     let data = [];
-    if(formdata?.license === 'N/A'){
-      if (formdata.passport ) {
+    if (formdata?.license === 'N/A') {
+      if (formdata.passport) {
         if (formdata.passport && typeof formdata.passport !== "string") {
           data.push(formdata.passport);
           let passport1 = await uploadS3bucket(formdata.passport);
@@ -1730,7 +1730,7 @@ const User = ({ getNewCount, title }) => {
         }
         if (formdata.idProof && typeof formdata.idProof !== "string") {
           data.push(formdata.idProof);
-  
+
           let idProof = await uploadS3bucket(formdata.idProof);
           urls = { idProof: idProof, ...urls };
         }
@@ -1743,47 +1743,47 @@ const User = ({ getNewCount, title }) => {
       }
     }
     else if (formdata.passport && formdata.driviniglicencephoto) {
-        if (formdata.passport && typeof formdata.passport !== "string") {
-          data.push(formdata.passport);
-          let passport1 = await uploadS3bucket(formdata.passport);
-          urls = { passport: passport1, ...urls };
-        }
-        if (
-          formdata.driviniglicencephoto &&
-          typeof formdata.driviniglicencephoto !== "string"
-        ) {
-          data.push(formdata.driviniglicencephoto);
-          let driviniglicencephoto = await uploadS3bucket(
-            formdata.driviniglicencephoto
-          );
-          urls = { driviniglicencephoto: driviniglicencephoto, ...urls };
-        }
-        if (
-          formdata.mediacalCertificate &&
-          typeof formdata.mediacalCertificate !== "string"
-        ) {
-          data.push(formdata.mediacalCertificate);
-          let mediacalCertificate = await uploadS3bucket(
-            formdata.mediacalCertificate
-          );
-          urls = { mediacalCertificate: mediacalCertificate, ...urls };
-        }
-        if (formdata.idProof && typeof formdata.idProof !== "string") {
-          data.push(formdata.idProof);
-  
-          let idProof = await uploadS3bucket(formdata.idProof);
-          urls = { idProof: idProof, ...urls };
-        }
-        if (Object.keys(urls).length === data.length) {
-          toast.success("Document uploaded successfully ");
-        }
-        setFormData({ ...formdata, ...urls });
-      } else  {
-        toast.error("Please Select file before Uploading");
+      if (formdata.passport && typeof formdata.passport !== "string") {
+        data.push(formdata.passport);
+        let passport1 = await uploadS3bucket(formdata.passport);
+        urls = { passport: passport1, ...urls };
       }
+      if (
+        formdata.driviniglicencephoto &&
+        typeof formdata.driviniglicencephoto !== "string"
+      ) {
+        data.push(formdata.driviniglicencephoto);
+        let driviniglicencephoto = await uploadS3bucket(
+          formdata.driviniglicencephoto
+        );
+        urls = { driviniglicencephoto: driviniglicencephoto, ...urls };
+      }
+      if (
+        formdata.mediacalCertificate &&
+        typeof formdata.mediacalCertificate !== "string"
+      ) {
+        data.push(formdata.mediacalCertificate);
+        let mediacalCertificate = await uploadS3bucket(
+          formdata.mediacalCertificate
+        );
+        urls = { mediacalCertificate: mediacalCertificate, ...urls };
+      }
+      if (formdata.idProof && typeof formdata.idProof !== "string") {
+        data.push(formdata.idProof);
+
+        let idProof = await uploadS3bucket(formdata.idProof);
+        urls = { idProof: idProof, ...urls };
+      }
+      if (Object.keys(urls).length === data.length) {
+        toast.success("Document uploaded successfully ");
+      }
+      setFormData({ ...formdata, ...urls });
+    } else {
+      toast.error("Please Select file before Uploading");
     }
-    
-  
+  }
+
+
 
   const uploadS3bucket = async (file) => {
     let config = AwsConfig;
@@ -2830,38 +2830,38 @@ const User = ({ getNewCount, title }) => {
                       </div>
                     )}
                     {formdata?.license === 'N/A' ?
-                        formdata?.passport ? 
-                          <div className="next-step-alignment">
-                            <button
-                              className="fill-button"
-                              onClick={() => uploadCertificate()}
-                            >
-                              Upload
-                            </button>
-                          </div>
-                         : 
-                          <div className="next-step-alignment">
-                            <button className="fill-button disabled">
-                              Upload
-                            </button>
-                          </div>
-                        
+                      formdata?.passport ?
+                        <div className="next-step-alignment">
+                          <button
+                            className="fill-button"
+                            onClick={() => uploadCertificate()}
+                          >
+                            Upload
+                          </button>
+                        </div>
+                        :
+                        <div className="next-step-alignment">
+                          <button className="fill-button disabled">
+                            Upload
+                          </button>
+                        </div>
+
                       :
-                        formdata.driviniglicencephoto && formdata.passport ?
-                          <div className="next-step-alignment">
-                            <button
-                              className="fill-button"
-                              onClick={() => uploadCertificate()}
-                            >
-                              Upload
-                            </button>
-                          </div>
-                         : 
-                          <div className="next-step-alignment">
-                            <button className="fill-button disabled">
-                              Upload
-                            </button>
-                          </div>
+                      formdata.driviniglicencephoto && formdata.passport ?
+                        <div className="next-step-alignment">
+                          <button
+                            className="fill-button"
+                            onClick={() => uploadCertificate()}
+                          >
+                            Upload
+                          </button>
+                        </div>
+                        :
+                        <div className="next-step-alignment">
+                          <button className="fill-button disabled">
+                            Upload
+                          </button>
+                        </div>
                     }
 
                     <div className="next-step-alignment">
@@ -2883,13 +2883,19 @@ const User = ({ getNewCount, title }) => {
                 {tab === "payment" && (
                   <div className="tab-details-alignment">
                     <div className="payment-title">Payment Type</div>
+
                     <div className="d-flex ">
                       <div className="d-flex aligncenetr">
-                        <input type="radio"
-
-                          placeholder="online" name='type' value="online" onChange={e => onChnageForm(e)} />
-                        <label htmlFor="online">online</label>
-
+                        <input
+                          type="radio"
+                          placeholder="online"
+                          name="type"
+                          value="online"
+                          onChange={(e) => onChnageForm(e)}
+                        />
+                        <label className="label" htmlFor="online">
+                          Online
+                        </label>
                       </div>
                       <div className="d-flex aligncenetr">
                         <input
@@ -2899,8 +2905,8 @@ const User = ({ getNewCount, title }) => {
                           value="offline"
                           onChange={(e) => onChnageForm(e)}
                         />
-                        <label className="s" htmlFor="offline">
-                          offline
+                        <label className="label" htmlFor="offline">
+                          Offline
                         </label>
                       </div>
                     </div>

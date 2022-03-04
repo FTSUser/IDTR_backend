@@ -936,7 +936,10 @@ const CheckTest = ({ getNewCount, title }) => {
 
                           {data?.Qname}
                         </div>
-                        <img src={data?.image} alt="" />
+                        {
+                          data?.image ? <img src={data?.image} alt="" /> : null
+                        }
+                        
                         <div>
                           {data?.Option.map((record, i) => (
                             <>
