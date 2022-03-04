@@ -651,6 +651,7 @@ const CheckTest = ({ getNewCount, title }) => {
         getAllBatchIdWiseUser();
         setTimeout(() => {
           openExamPeperSet(false);
+          handleCheckPeperSetClose()
         }, 100);
       })
       .catch((err) => {

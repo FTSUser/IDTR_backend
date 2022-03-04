@@ -12,7 +12,8 @@ export const ExportCSV = () => {
     let csvData = [
       {
         "id": "_id",
-        "date": "date ex:04/05/2022",
+        "date": "start date ex:04/05/2022",
+        "endDate": "end date ex:04/05/2022",
         "vcid": "Vechical Category id",
         "ctid": "course type id",
         "ccid": "course category id",

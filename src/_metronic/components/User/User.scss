@@ -10,14 +10,34 @@ $light-background: rgba(146, 146, 146, 0.2);
 $black-3: #333333;
 $background: rgba(204, 0, 1, 0.04);
 $icon-background: rgba(204, 0, 1, 0.18);
-
+.labes {
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: #3f4254;
+    font-weight: 400;
+    height: 20px;
+    width: auto;
+    font-size: 16px;
+  }
+  .margin-right-10 {
+    margin-right: 10px !important;
+  }
+  .margin-right-20 {
+    margin-right: 20px !important;
+  }
 :root {
     --normal-pixel: 5px;
     --medium-pixel: 10px;
     --large-pixel: 15px;
     --extra-large-pixel: 20px;
 }
-
+.curser{
+    cursor: pointer;
+}
 @mixin heading-4 {
     font-size: 22px;
     line-height: 25px;

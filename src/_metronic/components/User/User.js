@@ -2885,15 +2885,16 @@ const User = ({ getNewCount, title }) => {
                     <div className="payment-title">Payment Type</div>
 
                     <div className="d-flex ">
-                      <div className="d-flex aligncenetr">
+                      <div className="d-flex aligncenetr margin-right-20">
                         <input
                           type="radio"
                           placeholder="online"
                           name="type"
+                          className="margin-right-10"
                           value="online"
                           onChange={(e) => onChnageForm(e)}
                         />
-                        <label className="label" htmlFor="online">
+                        <label className="labes" htmlFor="online">
                           Online
                         </label>
                       </div>
@@ -2902,17 +2903,18 @@ const User = ({ getNewCount, title }) => {
                           type="radio"
                           placeholder="offline"
                           name="type"
+                          className="margin-right-10"
                           value="offline"
                           onChange={(e) => onChnageForm(e)}
                         />
-                        <label className="label" htmlFor="offline">
+                        <label className="labes" htmlFor="offline">
                           Offline
                         </label>
                       </div>
                     </div>
                     {formdata?.type === "online" ? (
                       <div className="mt-3">
-                        <div className="d-flex aligncenetr">
+                        <div className="d-flex aligncenetr curser">
                           <input
                             type="checkbox"
                             onChange={(e) =>
@@ -2924,7 +2926,7 @@ const User = ({ getNewCount, title }) => {
                             className="s"
                             onClick={() => setModalOpen(!modalOpen)}
                           >
-                            Disclooser
+                            Disclosure
                           </div>
                         </div>
                         {dicloser && (
@@ -2945,7 +2947,7 @@ const User = ({ getNewCount, title }) => {
                       </div>
                     ) : (
                       <div>
-                        <div className="d-flex aligncenetr">
+                        <div className="d-flex aligncenetr curser">
                           <input
                             type="checkbox"
                             onChange={(e) =>
@@ -2957,7 +2959,7 @@ const User = ({ getNewCount, title }) => {
                             className="s"
                             onClick={() => setModalOpen(!modalOpen)}
                           >
-                            Disclooser
+                            Disclosure
                           </div>
                         </div>
                       </div>
@@ -3000,7 +3002,7 @@ const User = ({ getNewCount, title }) => {
                   <div className="feedback-background-blur">
                     <div className="feedback-modal">
                       <div className="modal-header">
-                        <h1>Disclose</h1>
+                        <h1>Disclosure</h1>
                         <i
                           onClick={() => setModalOpen(false)}
                           class="fas fa-times"

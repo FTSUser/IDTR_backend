@@ -744,7 +744,7 @@ const Examiner = ({ getNewCount, title }) => {
                                         <div>
                                             {
                                                 isEditPopUp === false ? <input
-                                                    type="text"
+                                                    type="password"
                                                     className={`form-control form-control-lg form-control-solid `}
                                                     id="password"
                                                     name="password"
