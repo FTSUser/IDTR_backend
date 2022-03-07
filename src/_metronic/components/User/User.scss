@@ -635,6 +635,40 @@ $icon-background: rgba(204, 0, 1, 0.18);
         transition: transform 0.3s ease-out, opacity 0.3s ease-out;
     }
 }
+.tab-design {
+    padding-bottom: 2rem;
+
+    ul {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        border-bottom: 1px solid #b5b5b5;
+        list-style: none;
+        padding-bottom: 1rem;
+        align-items: center;
+
+        li {
+            margin-right: 40px;
+            font-size: 16px;
+            line-height: 21px;
+            font-family: "Helvetica";
+            font-weight: 400;
+            cursor: pointer;
+            color: #555555;
+            position: relative;
+        }
+    }
+}
+.tab-active::before {
+    content: "";
+    position: absolute;
+    height: 5px;
+    width: 100%;
+    bottom: -18px;
+    left: 0;
+    background-color: #cc0001;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
 .feedback-background-blur {
     background-color: rgba(0, 0, 0, 0.5);
     position: fixed;

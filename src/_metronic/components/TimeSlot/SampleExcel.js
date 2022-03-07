@@ -18,8 +18,8 @@ export const ExportCSV = () => {
         "ctid": "course type id",
         "ccid": "course category id",
         "cnid": "course name id",
-        "startTime": "2:00:00 PM",
-        "endTime": "2:00:00 PM",
+        "startTime": "12:00:00 ",
+        "endTime": "24:00:00 ",
         "seat":"seat",
         
        

@@ -54,35 +54,15 @@ export function StatsWidget11({ className, symbolShape, baseColor }) {
         <div className={`card card-custom ${className}`}>
             <div className="card-body p-0">
                 <div className="d-flex align-items-center justify-content-between card-spacer flex-grow-1">
-                    <span
-                        className={`symbol ${symbolShape} symbol-50 symbol-light-${baseColor} mr-2`}
-                    >
-                        <span className="symbol-label">
-                            <span
-                                className={`svg-icon svg-icon-xl svg-icon-${baseColor}`}
-                            >
-                                <SVG
-                                    src={toAbsoluteUrl(
-                                        "/media/svg/icons/Layout/Layout-4-blocks.svg"
-                                    )}
-                                ></SVG>
-                            </span>
-                        </span>
-                    </span>
-                    <div className="d-flex flex-column text-right">
+                  
+                    <div className="d-flex flex-column ">
                         <span className="text-dark-75 font-weight-bolder font-size-h3">
                             <CountUp end={1500} />
                         </span>
-                        <span className="text-muted font-weight-bold mt-2">
-                            Number Of People Engaged Over Time
-                        </span>
+                       
                     </div>
                 </div>
-                <div
-                    id="kt_stats_widget_11_chart"
-                    className="card-rounded-bottom"
-                    style={{ backgroundColor: "white", height: "150px" }}
-                ></div>
+              
             </div>
         </div>
     );

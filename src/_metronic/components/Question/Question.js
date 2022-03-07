@@ -52,8 +52,9 @@ const Question = (props) => {
     const [idForUpdateCourseStatus, setIdForUpdateCourseStatus] = useState("");
     const [statusDisplay, setStatusDisplay] = useState(false);
     const [getCourseType, setGetCourseType] = useState([]);
-    const [filteredVehicleCategory, setFilteredVehicleCategory] = useState([]);
+
     const [courseName, setAllCourseName] = useState([]);
+    const [filteredVehicleCategory, setFilteredVehicleCategory] = useState([]);
 
     const [dataViewMore, setDataViewMore] = useState({});
     const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
@@ -107,14 +108,14 @@ const Question = (props) => {
     const getAllCourseNameForExcel = async () => {
         // if (!search) {
         await ApiGet(`courseName/getAll`)
-          .then((res) => {
-            setAllCourseName(res?.data?.payload?.Question);
-          })
-          .catch((err) => {
-            toast.error(err?.response?.data?.message);
-          });
+            .then((res) => {
+                setAllCourseName(res?.data?.payload?.Question);
+            })
+            .catch((err) => {
+                toast.error(err?.response?.data?.message);
+            });
         // }
-      };
+    };
 
     const getAllQuestionSet = async () => {
         setIsLoaderVisible(true);
@@ -169,6 +170,10 @@ const Question = (props) => {
             formIsValid = false;
             errorsForAdd["type"] = "*Please Enter type!";
         }
+        if (inputValueForAdd && !inputValueForAdd.vcid) {
+            formIsValid = false;
+            errorsForAdd["vcid"] = "*Please Enter vcid!";
+        }
 
 
 
@@ -193,6 +198,7 @@ const Question = (props) => {
                 Qname: inputValueForAdd.name,
                 cnid: inputValueForAdd.cnid,
                 type: inputValueForAdd.type,
+                vcid: inputValueForAdd.vcid,
                 Option: option,
                 language: inputValueForAdd.language,
                 // weight: inputValueForAdd.weight,
@@ -251,6 +257,8 @@ const Question = (props) => {
                 Qname: inputValueForAdd.name,
                 cnid: inputValueForAdd.cnid,
                 type: inputValueForAdd.type,
+                vcid: inputValueForAdd.vcid,
+
                 Option: option,
                 language: inputValueForAdd.language,
                 // weight: inputValueForAdd.weight,
@@ -283,11 +291,9 @@ const Question = (props) => {
 
     const handleUpdateStatusProperty = (status) => {
         ApiPut(`question/updateStatus/${idForUpdateCourseStatus}`, {
-
             isActive: status
 
         })
-
             .then((res) => {
                 if (res?.status == 200) {
                     setShowStatus(false);
@@ -317,8 +323,22 @@ const Question = (props) => {
                 setAllCategory([])
             });
     }
+    const getAllVehicleCategory = async () => {
+
+
+        await ApiGet(`vehicleCategory/getAll`)
+            .then((res) => {
+
+                setFilteredVehicleCategory(res?.data?.payload?.Question);
+
+            })
+            .catch((err) => {
+                toast.error(err?.response?.data?.message)
+            });
+    };
 
     useEffect(() => {
+        getAllVehicleCategory()
         getAllCategory()
     }, []);
 
@@ -421,6 +441,8 @@ const Question = (props) => {
                                         type: row?.type,
                                         image: row?.image,
                                         Category: row?.Category?._id,
+                                        vcid: row?.vcid,
+
                                     });
                                     if (row?.type === "mcq") {
                                         setMcqCheck(true);
@@ -1013,6 +1035,55 @@ const Question = (props) => {
                                 </div>
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Select Vehicle Category
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <select
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="vcid"
+                                                name="vcid"
+                                                value={inputValueForAdd.vcid}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            >
+                                                <option value="" disabled selected hidden>
+                                                    Select Vehicle Category
+                                                </option>
+                                                {filteredVehicleCategory?.length > 0 &&
+                                                    filteredVehicleCategory?.map((item) => {
+                                                        return (
+                                                            <option
+                                                                key={item._id}
+                                                                value={item?._id}
+                                                                selected={
+                                                                    inputValueForAdd?.vcid ===
+                                                                        item?._id
+                                                                        ? true
+                                                                        : false
+                                                                }
+                                                            >
+                                                                {" "}
+                                                                {item.vehicleCategory}{" "}
+                                                            </option>
+                                                        );
+                                                    })}
+                                            </select>
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["vcid"]}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
                                         Select Language
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
@@ -1261,7 +1332,7 @@ const Question = (props) => {
                                 <div>
                                     {mcqCheck && (
                                         <>
-                                            <div className="alert alert-msg" style={{ margin: "auto", marginBottom: "20px" , width:"300px"}}>Note: Please select correct answer</div>
+                                            <div className="alert alert-msg" style={{ margin: "auto", marginBottom: "20px", width: "300px" }}>Note: Please select correct answer</div>
 
                                             {isAddCourseName
                                                 ? option.map((data, index) => {
@@ -1325,7 +1396,7 @@ const Question = (props) => {
 
                                     {checkBoxCheck && (
                                         <>
-                                            <div className="alert alert-msg " style={{ margin: "auto", marginBottom: "20px",width:"300px" }}>Note: Please select atleast one correct answer</div>
+                                            <div className="alert alert-msg " style={{ margin: "auto", marginBottom: "20px", width: "300px" }}>Note: Please select atleast one correct answer</div>
 
                                             {isAddCourseName
                                                 ? option.map((data, index) => {

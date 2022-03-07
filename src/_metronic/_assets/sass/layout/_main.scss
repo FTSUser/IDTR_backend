@@ -413,8 +413,12 @@ button {
 	display: grid;
 	grid-template-columns: repeat(1 , 1fr);
 	gap: 20px;
+	font-size: 18px;
 	justify-content: space-between;
 	.questionGridItems {
+		p{
+			font-size: 22px ;
+		}
 		border: 1px solid #d0d0d0;
 		padding: 15px;
 		border-radius: 4px;

@@ -825,7 +825,7 @@ const CheckTest = ({ getNewCount, title }) => {
                   <div className="questionGrid12121">
                     {questionData?.questionsList?.map((data, key) => (
                       <div className="questionGridItems">
-                        <div className="flexs">
+                        <div className="flexs mb-10">
                           <div className="questionCircle mr-3" key={key}>
                             {" "}
                             {key + 1}
@@ -940,7 +940,7 @@ const CheckTest = ({ getNewCount, title }) => {
                         {
                           data?.image ? <img src={data?.image} alt="" /> : null
                         }
-                        
+
                         <div>
                           {data?.Option.map((record, i) => (
                             <>

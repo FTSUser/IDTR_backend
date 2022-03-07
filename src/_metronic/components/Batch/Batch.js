@@ -2120,7 +2120,7 @@ const Batch = ({ getNewCount, title }) => {
                   <div className="questionGrid12121">
                     {paperSet?.ListofQA?.map((data, key) => (
                       <div className="questionGridItems">
-                        <div className="flexs">
+                        <div className="flexs mb-10">
                           <div className="questionCircle mr-3" key={key}>
                             {" "}
                             {key + 1}

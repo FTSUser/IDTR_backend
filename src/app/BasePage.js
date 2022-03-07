@@ -76,7 +76,7 @@ export default function BasePage() {
           <ContentRoute exact path="/announcement" component={Announcement} />
           {/* /////////////////////////////////////////////////////////////////////////*/}
           <ContentRoute exact path="/home-page banner" component={Banner} />
-          <ContentRoute exact path="/banner-description" component={Description} />
+          <ContentRoute exact path="/home-page content" component={Description} />
           <ContentRoute exact path="/clients" component={Clients} />
 
           <ContentRoute exact path="/timeslot-addition" component={TimeSlot} />

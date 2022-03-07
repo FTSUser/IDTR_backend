@@ -170,6 +170,7 @@ const User = ({ getNewCount, title }) => {
   const [allRegisterUserExcel, setAllRegisterUserExcel] = useState([]);
   const [dataCSV, setDataCSV] = useState([]);
   const [dataCSVLogs, setDataCSVLogs] = useState([]);
+  const [dataCSVPostLogs, setDataCSVPostLogs] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
 
   const [tableFilterData, setTableFilterData] = useState({});
@@ -185,6 +186,8 @@ const User = ({ getNewCount, title }) => {
   const [getAllCourceCategory, setgetAllCourceCategory] = useState({});
   const [logsData
     , setLogsData] = useState({});
+  const [logsPostData
+    , setLogsPostData] = useState({});
   const [modelForUserLogs, setModelForUserLogs] = useState(false);
   const [dataForUserLogCSV, setDataForUserLogCSV] = useState([]);
 
@@ -448,12 +451,35 @@ const User = ({ getNewCount, title }) => {
       });
     // }
   };
+  const [tabs, setTabs] = useState("pre");
+  const handleOnClicks = (e, key) => {
+    e.preventDefault();
+    if (key === "pre") {
+      setTabs(key)
+    }
+    else if (key === "post") {
+      setTabs(key)
+    }
+
+  };
+
 
   const getAdminLogs = async (id) => {
     await ApiGet(`admin/get-admin-login-log/${id?._id}`)
       .then((res) => {
         console.log("loglog", res?.data?.payload?.user);
         setLogsData(res?.data?.payload?.user);
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message);
+      });
+    // }
+  };
+  const getAdminPostLogs = async (id) => {
+    await ApiGet(`admin/get-logout-users`)
+      .then((res) => {
+        console.log("loglog", res?.data?.payload?.admin);
+        setLogsPostData(res?.data?.payload?.admin);
       })
       .catch((err) => {
         toast.error(err?.response?.data?.message);
@@ -678,6 +704,7 @@ const User = ({ getNewCount, title }) => {
                 className="cursor-pointer pl-2"
                 onClick={async () => {
                   await getAdminLogs(row?.uid);
+                  await getAdminPostLogs()
                   setModelForUserLogs(true);
                 }}
               >
@@ -694,6 +721,82 @@ const User = ({ getNewCount, title }) => {
       name: "Date",
       cell: (row) => {
         return <span>{moment(row?.createdAt).format("ll")}</span>;
+      },
+      sortable: true,
+    },
+    {
+      name: "Time",
+      cell: (row) => {
+        return <span>{moment(row?.createdAt).format("LT")}</span>;
+      },
+      sortable: true,
+    },
+    {
+      name: "Device",
+      selector: "device",
+      sortable: true,
+    },
+    {
+      name: "IP",
+      selector: "ip",
+      sortable: true,
+    },
+
+    {
+      name: "User Phone",
+      selector: row => row?.uid?.phone,
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.uid?.phone === "" ? "-" : row?.uid?.phone}</span>;
+      },
+    },
+  
+    // {
+    //   name: "Actions",
+    //   cell: (row) => {
+    //     console.log(" fsdfsdfsdfs", row);
+    //     return (
+    //       <>
+    //         <div
+    //           className="cursor-pointer pl-2"
+    //         >
+    //           <CsvDownload
+    //             className={``}
+    //             data={dataCSVLogs}
+    //             filename="User Report.csv"
+    //             style={{
+    //               backgroundColor: "#CC0001",
+    //               borderRadius: "6px",
+    //               border: "1px solid #fff",
+    //               display: "inline-block",
+    //               cursor: "pointer",
+    //               color: "#FFFFFF",
+    //               fontSize: "12px",
+    //               padding: "10px 18px",
+    //               textDecoration: "none",
+    //               position: "right",
+    //             }}
+    //           >
+    //             Export to Excel
+    //           </CsvDownload>
+    //         </div>
+    //       </>
+    //     );
+    //   },
+    // },
+  ];
+  const columnsForUserLogsPost = [
+    {
+      name: "Date",
+      cell: (row) => {
+        return <span>{moment(row?.createdAt).format("ll")}</span>;
+      },
+      sortable: true,
+    },
+    {
+      name: "Time",
+      cell: (row) => {
+        return <span>{moment(row?.createdAt).format("LT")}</span>;
       },
       sortable: true,
     },
@@ -717,36 +820,27 @@ const User = ({ getNewCount, title }) => {
       },
     },
     {
-      name: "Actions",
+      name: "Last Page",
       cell: (row) => {
-        console.log(" fsdfsdfsdfs", row);
-        return (
-          <>
-            <div
-              className="cursor-pointer pl-2"
-            >
-              <CsvDownload
-                className={``}
-                data={dataCSVLogs}
-                filename="User Report.csv"
-                style={{
-                  backgroundColor: "#CC0001",
-                  borderRadius: "6px",
-                  border: "1px solid #fff",
-                  display: "inline-block",
-                  cursor: "pointer",
-                  color: "#FFFFFF",
-                  fontSize: "12px",
-                  padding: "10px 18px",
-                  textDecoration: "none",
-                  position: "right",
-                }}
-              >
-                Export to Excel
-              </CsvDownload>
-            </div>
-          </>
-        );
+        return <span>{row?.lastPage === "" ? "-" : row?.lastPage.trim().replace('/', '').trim()}</span>;
+      },
+      // selector: "lastPage",
+      sortable: true,
+    },
+    {
+      name: "First Name",
+      selector: row => row?.uid?.firstName,
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.uid?.firstName === "" ? "-" : row?.uid?.firstName}</span>;
+      },
+    },
+    {
+      name: "Father Name",
+      selector: row => row?.uid?.fatherName,
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.uid?.fatherName === "" ? "-" : row?.uid?.fatherName}</span>;
       },
     },
   ];
@@ -817,6 +911,22 @@ const User = ({ getNewCount, title }) => {
       });
     }
   }, [logsData]);
+  useEffect(() => {
+    if (logsPostData?.length > 0) {
+      logsPostData.map((registerUser, key) => {
+        let data = {
+          Number: key + 1,
+          UserID: registerUser?.uid?._idF,
+          IP: registerUser?.ip,
+          Device: registerUser?.device,
+          MobileNumber: registerUser?.uid?.phone,
+          LastPage: registerUser?.lastPage,
+          RegistrationDate: moment(registerUser?.uid?.registrationDate).format("ll")
+        };
+        setDataCSVPostLogs((currVal) => [...currVal, data]);
+      });
+    }
+  }, [logsPostData]);
 
   useEffect(() => {
     if (allRegisterUserExcel) {
@@ -3788,33 +3898,141 @@ const User = ({ getNewCount, title }) => {
             </IconButton>
           </Toolbar>
           <List>
+
             {modelForUserLogs === true ? (
-              <div className="honda-container">
-                <div className="honda-container-height">
-                  <div className="honda-text-grid">
-                    <div className="honda-text-grid-items">
-                      <DataTable
-                        columns={columnsForUserLogs}
-                        data={logsData}
-                        customStyles={customStyles}
-                        style={{
-                          marginTop: "-3rem",
-                        }}
-                        progressPending={isLoaderVisible}
-                        progressComponent={
-                          <Loader
-                            type="Puff"
-                            color="#334D52"
-                            height={30}
-                            width={30}
-                          />
-                        }
-                        highlightOnHove
-                      />
-                    </div>
+              <>
+                <div className="honda-container">
+                  <div className="tab-design">
+                    <ul>
+                      <li
+                        className={tab === 'pre' && "tab-active"}
+                        onClick={(e) => handleOnClicks(e, "pre")}
+                      >
+                        Pre Login
+                      </li>
+                      <li
+                        className={tab === 'post' && "tab-active"}
+
+                        onClick={(e) => handleOnClicks(e, "post")} >
+                        Post Login
+                      </li>
+                    </ul>
                   </div>
+                  {tabs === 'pre' && (
+                    <div>
+
+
+                      <div className="other-information-child-text-style1">
+                        <h2>User Pre Login Log</h2>
+                      </div>
+                      <div className="honda-container-height">
+                        <div
+                          className="cursor-pointer pl-2"
+                        >
+                          <CsvDownload
+                            className={``}
+                            data={dataCSVLogs}
+                            filename="User Pre Login Report.csv"
+                            style={{
+                              backgroundColor: "#CC0001",
+                              borderRadius: "6px",
+                              border: "1px solid #fff",
+                              display: "inline-block",
+                              cursor: "pointer",
+                              color: "#FFFFFF",
+                              fontSize: "12px",
+                              padding: "10px 18px",
+                              textDecoration: "none",
+                              position: "right",
+                            }}
+                          >
+                            Export to Excel
+                          </CsvDownload>
+                        </div>
+                        <div className="honda-text-grid">
+
+                          <div className="honda-text-grid-items">
+                            <DataTable
+                              columns={columnsForUserLogs}
+                              data={logsData}
+                              customStyles={customStyles}
+                              style={{
+                                marginTop: "-3rem",
+                              }}
+                              progressPending={isLoaderVisible}
+                              progressComponent={
+                                <Loader
+                                  type="Puff"
+                                  color="#334D52"
+                                  height={30}
+                                  width={30}
+                                />
+                              }
+                              highlightOnHove
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {tabs === 'post' && (
+                    <div>
+                      <div className="other-information-child-text-style1">
+                        <h2>User Post Login Log</h2>
+                      </div>
+                      <div className="honda-container-height">
+                        <div
+                          className="cursor-pointer pl-2"
+                        >
+                          <CsvDownload
+                            className={``}
+                            data={dataCSVPostLogs}
+                            filename="User Post Login Report.csv"
+                            style={{
+                              backgroundColor: "#CC0001",
+                              borderRadius: "6px",
+                              border: "1px solid #fff",
+                              display: "inline-block",
+                              cursor: "pointer",
+                              color: "#FFFFFF",
+                              fontSize: "12px",
+                              padding: "10px 18px",
+                              textDecoration: "none",
+                              position: "right",
+                            }}
+                          >
+                            Export to Excel
+                          </CsvDownload>
+                        </div>
+                        <div className="honda-text-grid">
+
+                          <div className="honda-text-grid-items">
+                            <DataTable
+                              columns={columnsForUserLogsPost}
+                              data={logsPostData}
+                              customStyles={customStyles}
+                              style={{
+                                marginTop: "-3rem",
+                              }}
+                              progressPending={isLoaderVisible}
+                              progressComponent={
+                                <Loader
+                                  type="Puff"
+                                  color="#334D52"
+                                  height={30}
+                                  width={30}
+                                />
+                              }
+                              highlightOnHove
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
+
+              </>
             ) : null}
           </List>
         </Dialog>

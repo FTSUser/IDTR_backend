@@ -33,6 +33,61 @@ import ReactToPrint from "react-to-print";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+
+class ComponentToPrintss extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = this.props;
+  }
+
+  componentDidMount() {
+    if (this.props?.id) {
+      ApiGet(
+        `batch/getExamsetByBatch/${this.props?.id}`
+      )
+        .then((res) => {
+          console.log("data", res.data.payload);
+          this.setState(res?.data?.payload);
+        })
+        .catch((err) => { });
+      this.setState({ ...this.props });
+    }
+  }
+
+  render() {
+
+
+    return (
+      <>
+        <div class="invoice-box">
+          {
+            this.state?.Examset?.questionsList?.map((data, key) => (
+              <div key={key} style={{ padding: "10px 0 20px 0" }}>
+                <h2>Question{key + 1}:{data?.Qname}</h2>
+                <div style={{ padding: "10px 0 0px 0" }}>
+                  <img src={this.state.Examset[key]?.image ? this.state.Examset[key]?.image : ''} className="img-fluid" style={{ height: "200px" }} alt="" />
+                </div>
+                <div>
+                  {data?.Option.map((data, key) => {
+                    return (
+                      <div className="d-flex  mx-3 mb-4 ques-text-design-style" style={{ padding: "20px 0 0 0" }}>
+                        <div className="mr-2" style={{ fontSize: "20px" }}>
+                          <b>Option{[key + 1]}:</b>
+                        </div>
+                        <div style={{ fontSize: "20px" }}>{data?.name}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </>
+    );
+  }
+}
+
 class ComponentToPrintsForUser extends React.Component {
   constructor(props) {
     super(props);
@@ -224,6 +279,7 @@ class ComponentToPrintsForUser extends React.Component {
   }
 }
 const TakeTest = ({ getNewCount, title }) => {
+  const queRef = useRef([]);
   const itemsRefForUser = useRef([]);
   const [filteredCourseName, setFilteredCourseName] = useState({});
   const [isLoaderVisible, setIsLoaderVisible] = useState(false);
@@ -538,6 +594,24 @@ const TakeTest = ({ getNewCount, title }) => {
                   <InfoOutlinedIcon />
                 </Tooltip>
               </div>
+              <div className="cursor-pointer pl-2">
+                <ReactToPrint
+                  trigger={() => (
+                    <Tooltip title="Generate Question PDF" arrow>
+                      <img src="media/allIconsForTable/invoice.png" />
+                    </Tooltip>
+                  )}
+                  content={() => queRef.current[row._id]}
+                />
+                <div style={{ display: "none" }}>
+                  <div
+                    ref={(el) => (queRef.current[row._id] = el)}
+                    id={row?._id}
+                  >
+                    <ComponentToPrintss id={row?._id} />
+                  </div>
+                </div>
+              </div>
             </>
           </>
         );
@@ -735,7 +809,7 @@ const TakeTest = ({ getNewCount, title }) => {
   //for excel file
   const [allCourseNameExcel, setAllCourseNameExcel] = useState([]);
   const [dataCSV, setDataCSV] = useState([]);
-  const ABC = ["A", "B", "C", "D"];
+  const ABC = ["Option 1", "Option 2", "Option 3", "Option 4"];
   useEffect(() => {
     getAllCourseNameForExcel();
   }, []);
@@ -1181,7 +1255,7 @@ const TakeTest = ({ getNewCount, title }) => {
                 <div className="container">
                   <div className="centerAlign">
                     <div className="take-test-height-qus">
-                      <div className="d-flex centeralign">
+                      <div className="d-flex ">
                         <h4 className="mr-3" style={{ fontSize: "30px" }}>Question {questionKEY + 1}</h4>
                         <h4 style={{ fontSize: "30px" }}>{questionData[questionKEY]?.Qname}</h4>
                       </div>
@@ -1192,11 +1266,11 @@ const TakeTest = ({ getNewCount, title }) => {
                         <div className="mb-4">
                           {questionData[questionKEY]?.Option.map((data, key) => {
                             return (
-                              <div className="d-flex centeralign mx-3 mb-4 ques-text-design-style" style={{ padding: "20px 0 0 0" }}>
-                                <div className="mr-2" style={{ fontSize: "16px" }}>
-                                  <b>({ABC[key]})</b>
+                              <div className="d-flex  mx-3 mb-4 ques-text-design-style" style={{ padding: "20px 0 0 0" }}>
+                                <div className="mr-2" style={{ fontSize: "20px" }}>
+                                  <b>{ABC[key]}:</b>
                                 </div>
-                                <div style={{ fontSize: "16px" }}>{data?.name}</div>
+                                <div style={{ fontSize: "20px" }}>{data?.name}</div>
                               </div>
                             );
                           })}
@@ -1580,7 +1654,7 @@ const TakeTest = ({ getNewCount, title }) => {
                   <div className="questionGrid12121">
                     {paperSet?.ListofQA?.map((data, key) => (
                       <div className="questionGridItems">
-                        <div className="flexs">
+                        <div className="flexs mb-1">
                           <div className="questionCircle mr-3" key={key}>
                             {" "}
                             {key + 1}
