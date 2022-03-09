@@ -22,10 +22,10 @@ export default function Login() {
   const LoginSchema = Yup.object().shape({
     phone: Yup.string()
       // .phone("Wrong phone format")
-      .min(10, "Minimum 10 symbols")
-      .max(10, "Maximum 10 symbols")
-      .matches(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/, "Please enter valid number")
-      .required("Phone is Required"),
+      // .min(10, "Minimum 10 symbols")
+      // .max(10, "Maximum 10 symbols")
+      // .matches(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/, "Please enter valid number")
+      .required("Email or Phone is Required"),
     password: Yup.string()
       .min(3, "Minimum 3 symbols")
       .max(50, "Maximum 50 symbols")
@@ -121,8 +121,8 @@ export default function Login() {
 
         <div className="form-group fv-plugins-icon-container">
           <input
-            placeholder="Phone Number"
-            type="number"
+            placeholder="Email or Phone"
+            type="text"
             className={`form-control form-control-solid h-auto py-5 px-6 ${getInputClasses(
               "phone"
             )}`}
