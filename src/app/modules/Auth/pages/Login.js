@@ -50,7 +50,7 @@ export default function Login() {
     onSubmit: async (values, { setStatus, setSubmitting }) => {
       setLoading(true);
       const data = {
-        phone: values.phone,
+        phone: String(values.phone),
         password: values.password,
         // role:'61aa037f803e260c3821ad0f'
       };
