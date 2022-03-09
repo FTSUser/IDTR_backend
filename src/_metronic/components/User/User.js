@@ -727,6 +727,7 @@ const User = ({ getNewCount, title }) => {
     {
       name: "Time",
       cell: (row) => {
+        
         return <span>{moment(row?.createdAt).format("LT")}</span>;
       },
       sortable: true,
@@ -821,6 +822,7 @@ const User = ({ getNewCount, title }) => {
     },
     {
       name: "Last Page",
+      width:'200px',
       cell: (row) => {
         return <span>{row?.lastPage === "" ? "-" : row?.lastPage.trim().replace('/', '').trim()}</span>;
       },

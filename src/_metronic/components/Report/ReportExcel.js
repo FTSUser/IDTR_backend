@@ -11,10 +11,13 @@ import { toast } from "react-toastify";
 export const ReportExcel = (props) => {
     const [type, setType] = useState(props?.type);
     const [date, setDate] = useState(props?.date);
+    const [filter, setFilter] = useState(props?.filter);
     useEffect(() => {
         setType(props?.type);
     }, [props?.type])
-
+    useEffect(() => {
+        setFilter(props?.filter);
+    }, [props?.filter])
     useEffect(() => {
         setDate(props?.date);
     }, [props?.date])
@@ -257,15 +260,15 @@ export const ReportExcel = (props) => {
                 IDTRcenter: registerUser?.uid?.IDTRcenter,
                 email: registerUser?.uid?.email,
                 modificationData: moment(registerUser?.uid?.modificationData).format(
-                  "ll"
+                    "ll"
                 ),
                 phone: registerUser?.uid?.phone,
                 registrationDate: moment(registerUser?.tdid?.registrationDate).format(
-                  "ll"
+                    "ll"
                 ),
                 state: registerUser?.uid?.state,
                 modificationDate: moment(
-                  registerUser?.tdid?.status?.modificationDate
+                    registerUser?.tdid?.status?.modificationDate
                 ).format("ll"),
                 name: registerUser?.tdid?.status?.name,
                 createdAtVC: moment(registerUser?.vcid?.createdAt).format("ll"),
@@ -316,9 +319,9 @@ export const ReportExcel = (props) => {
                 createdAt: moment(registerUser?.createdAt).format("ll"),
                 createdBy: registerUser?.createdBy,
                 description:
-                  registerUser?.description === ""
-                    ? "No data"
-                    : registerUser?.description,
+                    registerUser?.description === ""
+                        ? "No data"
+                        : registerUser?.description,
                 email: registerUser?.email === "" ? "No data" : registerUser?.email,
                 feedbackCategory: registerUser?.feedbackCategory,
                 name: registerUser?.name,
@@ -333,58 +336,153 @@ export const ReportExcel = (props) => {
     }
 
     const exportToCSV = async () => {
+        console.log("filter",filter);
         if (type?.endPoint) {
             let API = type?.endPoint;
+             if (filter) {
+                API = `${type?.endPoint}/getMonthlyData`
+                let data = await ApiGet(API)
+                if (data?.data?.result === 0) {
+                    let wb = XLSX.utils.book_new();
+                    let csvData = [];
+                    if (type?.name === 'Timeslot') {
+                        csvData = await onQuestionModifyData(data?.data?.payload?.results[0][filter]);
+                    }
+                    if (type?.name === 'User') {
+                        csvData = await onUserModifyData(data?.data?.payload?.results[0][filter]);
+                    }
+                    if (type?.name === 'Vehicle Category') {
+                        csvData = await onVehicleCategoryModifyData(data?.data?.payload?.results[0][filter]);
+                    }
+                    if (type?.name === 'Course Type') {
+                        csvData = await onCourseTypeModifyData(data?.data?.payload?.results[0][filter]);
+                    }
+                    if (type?.name === 'Course Category') {
+                        csvData = await onCourseCategoryModifyData(data?.data?.payload?.results[0][filter]);
+                    }
+                    if (type?.name === 'Course Name') {
+                        csvData = await onCourseNameModifyData(data?.data?.payload?.results[0][filter]);
+                    }
+                    if (type?.name === 'Payment') {
+                        csvData = await onPaymentModifyData(data?.data?.payload?.results[0][filter]);
+                    }
+                    if (type?.name === 'Question Category') {
+                        csvData = await onQuestionCategoryModifyData(data?.data?.payload?.results[0][filter]);
+                    }
+                    if (type?.name === 'Question') {
+                        csvData = await onQuestionsModifyData(data?.data?.payload?.results[0][filter]);
+                    }
+                    if (type?.name === 'Feedback') {
+                        csvData = await onFeedbackModifyData(data?.data?.payload?.results[0][filter]);
+                    }
 
-            if (date && date?.length && date?.length === 2 && date[0] && date[1]) {
+                    let ws = XLSX.utils.json_to_sheet(csvData);
+                    XLSX.utils.book_append_sheet(wb, ws, "Data");
+                    let excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+                    let BlobUrl = new Blob([excelBuffer], { type: fileType });
+                    FileSaver(BlobUrl, type?.name + ' Report' + fileExtension);
+                } else {
+                    toast(data?.data?.message)
+                }
 
-                let startDate = moment(date[0]).format("YYYY-MM-DD");
-                let endDate = moment(date[1]).format("YYYY-MM-DD");
-                API = `${type?.endPoint}?sd=${startDate}&ed=${endDate}`
+
+            } else  if (date) {
+                if (date && date?.length && date?.length === 2 && date[0] && date[1]) {
+
+                    let startDate = moment(date[0]).format("YYYY-MM-DD");
+                    let endDate = moment(date[1]).format("YYYY-MM-DD");
+                    API = `${type?.endPoint}?sd=${startDate}&ed=${endDate}`
+                }
+                let data = await ApiGet(API)
+                if (data?.data?.result === 0) {
+                    let wb = XLSX.utils.book_new();
+                    let csvData = [];
+                    if (type?.name === 'Timeslot') {
+                        csvData = await onQuestionModifyData(data?.data?.payload?.Question);
+                    }
+                    if (type?.name === 'User') {
+                        csvData = await onUserModifyData(data?.data?.payload?.Question);
+                    }
+                    if (type?.name === 'Vehicle Category') {
+                        csvData = await onVehicleCategoryModifyData(data?.data?.payload?.Question);
+                    }
+                    if (type?.name === 'Course Type') {
+                        csvData = await onCourseTypeModifyData(data?.data?.payload?.Question);
+                    }
+                    if (type?.name === 'Course Category') {
+                        csvData = await onCourseCategoryModifyData(data?.data?.payload?.Question);
+                    }
+                    if (type?.name === 'Course Name') {
+                        csvData = await onCourseNameModifyData(data?.data?.payload?.Question);
+                    }
+                    if (type?.name === 'Payment') {
+                        csvData = await onPaymentModifyData(data?.data?.payload?.Question);
+                    }
+                    if (type?.name === 'Question Category') {
+                        csvData = await onQuestionCategoryModifyData(data?.data?.payload?.Menu);
+                    }
+                    if (type?.name === 'Question') {
+                        csvData = await onQuestionsModifyData(data?.data?.payload?.Question);
+                    }
+                    if (type?.name === 'Feedback') {
+                        csvData = await onFeedbackModifyData(data?.data?.payload?.Question);
+                    }
+
+                    let ws = XLSX.utils.json_to_sheet(csvData);
+                    XLSX.utils.book_append_sheet(wb, ws, "Data");
+                    let excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+                    let BlobUrl = new Blob([excelBuffer], { type: fileType });
+                    FileSaver(BlobUrl, type?.name + ' Report' + fileExtension);
+                } else {
+                    toast(data?.data?.message)
+                }
+            }else {
+                API = `${type?.endPoint}`
+                let data = await ApiGet(API)
+                if (data?.data?.result === 0) {
+                    let wb = XLSX.utils.book_new();
+                    let csvData = [];
+                    if (type?.name === 'Timeslot') {
+                        csvData = await onQuestionModifyData(data?.data?.payload?.Question);
+                    }
+                    if (type?.name === 'User') {
+                        csvData = await onUserModifyData(data?.data?.payload?.Question);
+                    }
+                    if (type?.name === 'Vehicle Category') {
+                        csvData = await onVehicleCategoryModifyData(data?.data?.payload?.Question);
+                    }
+                    if (type?.name === 'Course Type') {
+                        csvData = await onCourseTypeModifyData(data?.data?.payload?.Question);
+                    }
+                    if (type?.name === 'Course Category') {
+                        csvData = await onCourseCategoryModifyData(data?.data?.payload?.Question);
+                    }
+                    if (type?.name === 'Course Name') {
+                        csvData = await onCourseNameModifyData(data?.data?.payload?.Question);
+                    }
+                    if (type?.name === 'Payment') {
+                        csvData = await onPaymentModifyData(data?.data?.payload?.Question);
+                    }
+                    if (type?.name === 'Question Category') {
+                        csvData = await onQuestionCategoryModifyData(data?.data?.payload?.Menu);
+                    }
+                    if (type?.name === 'Question') {
+                        csvData = await onQuestionsModifyData(data?.data?.payload?.Question);
+                    }
+                    if (type?.name === 'Feedback') {
+                        csvData = await onFeedbackModifyData(data?.data?.payload?.Question);
+                    }
+
+                    let ws = XLSX.utils.json_to_sheet(csvData);
+                    XLSX.utils.book_append_sheet(wb, ws, "Data");
+                    let excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+                    let BlobUrl = new Blob([excelBuffer], { type: fileType });
+                    FileSaver(BlobUrl, type?.name + ' Report' + fileExtension);
+                } else {
+                    toast(data?.data?.message)
+                }
             }
-            let data = await ApiGet(API)
-            if (data?.data?.result === 0) {
-                let wb = XLSX.utils.book_new();
-                let csvData = [];
-                if (type?.name === 'Timeslot') {
-                    csvData = await onQuestionModifyData(data?.data?.payload?.Question);
-                }
-                if (type?.name === 'User') {
-                    csvData = await onUserModifyData(data?.data?.payload?.Question);
-                }
-                if (type?.name === 'Vehicle Category') {
-                    csvData = await onVehicleCategoryModifyData(data?.data?.payload?.Question);
-                }
-                if (type?.name === 'Course Type') {
-                    csvData = await onCourseTypeModifyData(data?.data?.payload?.Question);
-                }
-                if (type?.name === 'Course Category') {
-                    csvData = await onCourseCategoryModifyData(data?.data?.payload?.Question);
-                }
-                if (type?.name === 'Course Name') {
-                    csvData = await onCourseNameModifyData(data?.data?.payload?.Question);
-                }
-                if (type?.name === 'Payment') {
-                    csvData = await onPaymentModifyData(data?.data?.payload?.Question);
-                }
-                if (type?.name === 'Question Category') {
-                    csvData = await onQuestionCategoryModifyData(data?.data?.payload?.Menu);
-                }
-                if (type?.name === 'Question') {
-                    csvData = await onQuestionsModifyData(data?.data?.payload?.Question);
-                }
-                if (type?.name === 'Feedback') {
-                    csvData = await onFeedbackModifyData(data?.data?.payload?.Question);
-                }
 
-                let ws = XLSX.utils.json_to_sheet(csvData);
-                XLSX.utils.book_append_sheet(wb, ws, "Data");
-                let excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-                let BlobUrl = new Blob([excelBuffer], { type: fileType });
-                FileSaver(BlobUrl, type?.name + ' Report' + fileExtension);
-            } else {
-                toast(data?.data?.message)
-            }
         }
     };
 

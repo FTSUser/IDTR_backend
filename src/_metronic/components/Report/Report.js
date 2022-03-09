@@ -109,7 +109,7 @@ const Report = ({ getNewCount, title }) => {
             cell: (row) => {
                 return (
                     <>
-                        <ReportExcel type={row} date={statesate} />
+                        <ReportExcel type={row} date={statesate} filter={filterState} />
                     </>
                 );
             },
@@ -196,10 +196,16 @@ const Report = ({ getNewCount, title }) => {
         }
     ]);
 
+    const [filterState, setFilterData] = useState();
+
 
     const handleSetDateData = async (data) => {
         console.log("date", data);
         setState(data);
+    }
+    const handleDropdown = (data) => {
+        console.log("date", data);
+        setFilterData(data)
     }
 
     return (
@@ -212,16 +218,28 @@ const Report = ({ getNewCount, title }) => {
                             <h2 className="pl-3 pt-2">Reports</h2>
                         </div>
                         <div style={{ width: "30%", paddingLeft: "15px" }}>
-                        <DateRangePickerComponent
-                            onChange={(e) => {
-                                handleSetDateData(e.target.value);
-                            }}
-                            showSelectionPreview={true}
-                            moveRangeOnFirstSelection={false}
-                            months={2}
-                            ranges={statesate}
-                            direction="horizontal"
-                        />
+                            <DateRangePickerComponent
+                                onChange={(e) => {
+                                    handleSetDateData(e.target.value);
+                                }}
+                                showSelectionPreview={true}
+                                moveRangeOnFirstSelection={false}
+                                months={2}
+                                ranges={statesate}
+                                direction="horizontal"
+                            />
+                        </div>
+                        <div style={{ width: "30%", paddingLeft: "15px" }}>
+                            <div className="form-group">
+                                <select name="" id="" className="form-control" onChange={(e) => {
+                                    handleDropdown(e.target.value);
+                                }}>
+                                    <option value="" >Select</option>
+                                    <option value="monthly">Monthly</option>
+                                    <option value="yearly">Yearly</option>
+                                    <option value="quarterly">Quarterly</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
