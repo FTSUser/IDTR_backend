@@ -33,28 +33,28 @@ export function UserProfileDropdown() {
           <span className="text-muted font-weight-bold font-size-base d-md-inline mr-1">
             Hi,
           </span>{" "}
-          {userInfo?.admin?.role?.roleName === "superadmin" ? <>
+          {userInfo?.admin[0]?.role?.roleName === "superadmin" ? <>
             <span className="text-dark-50 font-weight-bolder font-size-base d-md-inline mr-3">
-              {userInfo?.admin?.role?.roleName?.toUpperCase() +
+              {userInfo?.admin[0]?.role?.roleName?.toUpperCase() +
                 ". "}
             </span>
             <span className="symbol symbol-35 symbol-light-success">
               <span className="symbol-label font-size-h5 font-weight-bold">
-                {userInfo?.admin?.role?.roleName[0]?.toUpperCase() +
+                {userInfo?.admin[0]?.role?.roleName[0]?.toUpperCase() +
                   ". "}
               </span>
             </span>
           </> : <>
             <span className="text-dark-50 font-weight-bolder font-size-base d-md-inline mr-3">
-              {userInfo?.admin?.role?.roleName?.toUpperCase() +
+              {userInfo?.admin[0]?.role?.roleName?.toUpperCase() +
                 " "
                 // +
-                // userInfo?.admin?.role?.roleName[0]?.toUpperCase()
+                // userInfo?.admin[0]?.role?.roleName[0]?.toUpperCase()
               }
             </span>
             <span className="symbol symbol-35 symbol-light-success">
               <span className="symbol-label font-size-h5 font-weight-bold">
-                {userInfo?.admin?.role?.roleName?.toUpperCase() +
+                {userInfo?.admin[0]?.role?.roleName?.toUpperCase() +
                   ". "}
               </span>
             </span> </>}

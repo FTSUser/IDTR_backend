@@ -29,7 +29,7 @@ export function Demo1Dashboard() {
 
   useEffect(() => {
     console.log("userInfo", userInfo);
-    if (userInfo?.admin?.role?.roleName === 'superadmin') {
+    if (userInfo?.admin[0]?.role?.roleName === 'superadmin') {
       getAll()
     }
   })
@@ -37,7 +37,7 @@ export function Demo1Dashboard() {
     <>
       {
 
-        userInfo?.admin?.role?.roleName != 'superadmin'  &&
+        userInfo?.admin[0]?.role?.roleName != 'superadmin'  &&
         <div className="row" >
           <div className="col-lg-12 col-xxl-12 p-0">
             <MixedWidget1 className="card-stretch gutter-b" />
@@ -47,7 +47,7 @@ export function Demo1Dashboard() {
 
 
       {
-        userInfo?.admin?.role?.roleName === 'superadmin' &&
+        userInfo?.admin[0]?.role?.roleName === 'superadmin' &&
 
         <div className="row align-items-center">
           <div className="col-lg-4 col-xxl-4 mb-5 ">

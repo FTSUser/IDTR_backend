@@ -452,9 +452,9 @@ const TakeTest = ({ getNewCount, title }) => {
     setIsLoaderVisible(true);
     if (!search) {
       const data = {
-        Examiner: userInfo?.admin?._id,
+        Examiner: userInfo?.admin[0]?._id,
       };
-      console.log("userInfo?._id", userInfo?.admin?._id);
+     
       await ApiGet(
         `batch/getBatchByExaminer/${data?.Examiner}?page=${page}&limit=${countPerPage}`
       )
@@ -470,7 +470,7 @@ const TakeTest = ({ getNewCount, title }) => {
         });
     } else {
       const data = {
-        Examiner: userInfo?.admin?._id,
+        Examiner: userInfo?.admin[0]?._id,
       };
       await ApiGet(
         `batch/getBatchByExaminer/${data?.Examiner}?page=${page}&limit=${countPerPage}&search=${search}`
