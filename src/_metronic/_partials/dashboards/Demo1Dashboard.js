@@ -30,7 +30,7 @@ export function Demo1Dashboard() {
   }
   const getAllDataEntry = async () => {
     const data = {
-      Examiner: userInfo?.admin[0]?._id,
+      Examiner: userInfo?.admin?._id,
     };
     await ApiGet(
       `batch/getBatchByDataEntry/${data?.Examiner}?page=1&limit=10`
@@ -45,7 +45,7 @@ export function Demo1Dashboard() {
   }
   const getAllExaminer = async () => {
     const data = {
-      Examiner: userInfo?.admin[0]?._id,
+      Examiner: userInfo?.admin?._id,
     };
     await ApiGet(
       `batch/getBatchByExaminer/${data?.Examiner}?page=1&limit=10`
@@ -63,13 +63,13 @@ export function Demo1Dashboard() {
 
   useEffect(() => {
     console.log("userInfo", userInfo);
-    if (userInfo?.admin[0]?.role?.roleName === 'superadmin' || userInfo?.admin[0]?.role?.roleName === 'admin') {
+    if (userInfo?.admin?.role?.roleName === 'superadmin' || userInfo?.admin?.role?.roleName === 'admin') {
       getAll()
     }
-    if (userInfo?.admin[0]?.role?.roleName === 'Data Entry') {
+    if (userInfo?.admin?.role?.roleName === 'Data Entry') {
       getAllDataEntry()
     }
-    if (userInfo?.admin[0]?.role?.roleName === 'Examiner') {
+    if (userInfo?.admin?.role?.roleName === 'Examiner') {
       getAllExaminer()
     }
   })
@@ -79,7 +79,7 @@ export function Demo1Dashboard() {
 
 
       {
-        userInfo?.admin[0]?.role?.roleName === 'superadmin' &&
+        userInfo?.admin?.role?.roleName === 'superadmin' &&
         <div className="row align-items-center">
           <div className="col-lg-4 col-xxl-4 mb-5 ">
             <div className="card card-custom py-5">
@@ -169,7 +169,7 @@ export function Demo1Dashboard() {
         </div>
       }
       {
-        userInfo?.admin[0]?.role?.roleName === 'admin' &&
+        userInfo?.admin?.role?.roleName === 'admin' &&
         <div className="row align-items-center">
           <div className="col-lg-4 col-xxl-4 mb-5 ">
             <div className="card card-custom py-5">
@@ -260,7 +260,7 @@ export function Demo1Dashboard() {
       }
 
       {
-        userInfo?.admin[0]?.role?.roleName === 'Data Entry' &&
+        userInfo?.admin?.role?.roleName === 'Data Entry' &&
         <div className="row align-items-center">
           <div className="col-lg-4 col-xxl-4 mb-5 ">
             <div className="card card-custom py-5">
@@ -277,7 +277,7 @@ export function Demo1Dashboard() {
         </div>
       }
       {
-        userInfo?.admin[0]?.role?.roleName === 'Examiner' &&
+        userInfo?.admin?.role?.roleName === 'Examiner' &&
         <div className="row align-items-center">
           <div className="col-lg-4 col-xxl-4 mb-5 ">
             <div className="card card-custom py-5">

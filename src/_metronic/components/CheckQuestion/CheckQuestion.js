@@ -277,9 +277,9 @@ const CheckTest = ({ getNewCount, title }) => {
     setIsLoaderVisible(true);
     if (!search) {
       const data = {
-        Examiner: userInfo?.admin[0]?._id,
+        Examiner: userInfo?.admin?._id,
       };
-      
+
       await ApiGet(
         `batch/getBatchByDataEntry/${data?.Examiner}?page=${page}&limit=${countPerPage}`
       )
@@ -295,7 +295,7 @@ const CheckTest = ({ getNewCount, title }) => {
         });
     } else {
       const data = {
-        Examiner: userInfo?.admin[0]?._id,
+        Examiner: userInfo?.admin?._id,
       };
       await ApiGet(
         `batch/getBatchByDataEntry/${data?.Examiner}?page=${page}&limit=${countPerPage}&search=${search}`

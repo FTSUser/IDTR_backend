@@ -85,7 +85,7 @@ export default function Login() {
     <div className="login-form login-signin" id="kt_login_signin_form">
       {/* begin::Head */}
       <div className="text-center mb-10 mb-lg-20">
-        <h2 className="" style={{fontSize:"30px"}}>
+        <h2 className="" style={{ fontSize: "30px" }}>
           {/* <FormattedMessage id="AUTH.LOGIN.TITLE" /> */}
           Login Account
         </h2>

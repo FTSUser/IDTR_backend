@@ -46,9 +46,9 @@ export function Topbar() {
                 {/*begin::Header Nav*/}
 
                 {/* <NavLink className="menu-link" to="/dashboard"> */}
-                <span className="menu-text">Honda | {userInfo?.admin[0]?.role?.roleName === "superadmin" && ("Admin")}
+                <span className="menu-text">Honda | {userInfo?.admin?.role?.roleName === "superadmin" && ("Admin")}
 
-                {/* {userInfo?.admin?.role?.roleName === "superadmin" && ("Admin")} */}
+                    {/* {userInfo?.admin?.role?.roleName === "superadmin" && ("Admin")} */}
                 </span>
                 {/* </NavLink> */}
 

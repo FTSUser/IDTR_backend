@@ -114,11 +114,10 @@ class ComponentToPrints extends React.Component {
               <td>
                 <td>
                   Attendance Done?:{" "}
-                  {`${
-                    this.props?.data?.Examiner?.isAttendence
+                  {`${this.props?.data?.Examiner?.isAttendence
                       ? "Done"
                       : "Not Yet"
-                  } `}{" "}
+                    } `}{" "}
                 </td>
               </td>
             </tr>
@@ -286,11 +285,10 @@ class ComponentToPrintsForUser extends React.Component {
               <td>
                 <td>
                   Phone:{" "}
-                  {`${
-                    this?.props?.data?.phone
+                  {`${this?.props?.data?.phone
                       ? this?.props?.data?.phone
                       : "No Data"
-                  } `}{" "}
+                    } `}{" "}
                 </td>
               </td>
             </tr>
@@ -540,7 +538,7 @@ const Batch = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.batch);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     } else {
       await ApiGet(
         `batch/getAllBatch?search=${search}&page=${page}&limit=${countPerPage}`
@@ -550,7 +548,7 @@ const Batch = ({ getNewCount, title }) => {
           setFilteredAnnouncement(res?.data?.payload?.batch);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
@@ -558,16 +556,15 @@ const Batch = ({ getNewCount, title }) => {
     selectdate = new Date(selectdate);
     setIsLoaderVisible(true);
     await ApiGet(
-      `trainingDate/getData?date=${
-        selectdate.getFullYear() +
-        "-" +
-        (selectdate.getMonth() < 9
-          ? "0" + (selectdate.getMonth() + 1)
-          : selectdate.getMonth() + 1) +
-        "-" +
-        (selectdate.getDate() < 9
-          ? "0" + selectdate.getDate()
-          : selectdate.getDate())
+      `trainingDate/getData?date=${selectdate.getFullYear() +
+      "-" +
+      (selectdate.getMonth() < 9
+        ? "0" + (selectdate.getMonth() + 1)
+        : selectdate.getMonth() + 1) +
+      "-" +
+      (selectdate.getDate() < 9
+        ? "0" + selectdate.getDate()
+        : selectdate.getDate())
       }`
     )
       .then((res) => {
@@ -806,7 +803,7 @@ const Batch = ({ getNewCount, title }) => {
   //   // }
   // };
 
-  useEffect(() => {}, [inputValue]);
+  useEffect(() => { }, [inputValue]);
 
   const handleUpdateAnnouncementDetails = (e) => {
     e.preventDefault();
@@ -1364,7 +1361,7 @@ const Batch = ({ getNewCount, title }) => {
                 }}
                 className="btn btn-success mr-2"
               >
-                Add Batch 
+                Add Batch
               </button>
             </div>
             {/* <div>
@@ -1984,8 +1981,8 @@ const Batch = ({ getNewCount, title }) => {
             {isViewMoreAnnouncement === true ? (
               <div className="honda-container">
                 <div className="other-information-child-text-style1">
-                    <h2>Batch Information</h2>
-                  </div>
+                  <h2>Batch Information</h2>
+                </div>
                 <div className="honda-text-grid honda-text-grid-border">
                   <div className="honda-text-grid-items">
                     <span>Batch Name:</span>
@@ -2007,8 +2004,8 @@ const Batch = ({ getNewCount, title }) => {
                   </div>
                 </div>
                 <div className="other-information-child-text-style1">
-                    <h2>User Data</h2>
-                  </div>
+                  <h2>User Data</h2>
+                </div>
                 <div className="">
                   <div className="cursor-pointer pl-2">
                     {allDataForResultDownload?.length > 0 ? (
@@ -2127,9 +2124,12 @@ const Batch = ({ getNewCount, title }) => {
                           </div>
                           <p>{data?.Qname}</p>
                         </div>
-                        <div>
-                          <img src={data?.image} alt="" />
-                        </div>
+                        {data?.image &&
+                          <div>
+                            <img src={data?.image} alt="" />
+                          </div>
+                        }
+
                         <div className="">
                           Right / Wrong:{" "}
                           <span>

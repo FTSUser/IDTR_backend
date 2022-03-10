@@ -255,6 +255,10 @@ const User = ({ getNewCount, title }) => {
 
   const [tab, setTab] = useState("course");
 
+  useEffect(() => {
+    console.log("tabsdggfdgdfgfd", tabs);
+  }, [tabs])
+
   const [formdata, setFormData] = useState({
     vehicleCategory: "",
     courseType: "",
@@ -722,24 +726,25 @@ const User = ({ getNewCount, title }) => {
       cell: (row) => {
         return <span>{moment(row?.createdAt).format("ll")}</span>;
       },
+      selector: row => row?.createdAt,
       sortable: true,
     },
     {
       name: "Time",
       cell: (row) => {
-        
         return <span>{moment(row?.createdAt).format("LT")}</span>;
       },
+      selector: row => row?.createdAt,
       sortable: true,
     },
     {
       name: "Device",
-      selector: "device",
+      selector: row => row?.device,
       sortable: true,
     },
     {
       name: "IP",
-      selector: "ip",
+      selector: row => row?.ip,
       sortable: true,
     },
 
@@ -751,7 +756,15 @@ const User = ({ getNewCount, title }) => {
         return <span>{row?.uid?.phone === "" ? "-" : row?.uid?.phone}</span>;
       },
     },
-  
+    {
+      name: "First Name",
+      selector: row => row?.uid?.firstName,
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.uid?.firstName === "" ? "-" : row?.uid?.firstName}</span>;
+      },
+    },
+
     // {
     //   name: "Actions",
     //   cell: (row) => {
@@ -792,6 +805,7 @@ const User = ({ getNewCount, title }) => {
       cell: (row) => {
         return <span>{moment(row?.createdAt).format("ll")}</span>;
       },
+      selector: row => row?.createdAt,
       sortable: true,
     },
     {
@@ -799,16 +813,17 @@ const User = ({ getNewCount, title }) => {
       cell: (row) => {
         return <span>{moment(row?.createdAt).format("LT")}</span>;
       },
+      selector: row => row?.createdAt,
       sortable: true,
     },
     {
       name: "Device",
-      selector: "device",
+      selector: row => row?.device,
       sortable: true,
     },
     {
       name: "IP",
-      selector: "ip",
+      selector: row => row?.ip,
       sortable: true,
     },
 
@@ -822,10 +837,11 @@ const User = ({ getNewCount, title }) => {
     },
     {
       name: "Last Page",
-      width:'200px',
+      width: '200px',
       cell: (row) => {
         return <span>{row?.lastPage === "" ? "-" : row?.lastPage.trim().replace('/', '').trim()}</span>;
       },
+      selector: row => row?.lastPage,
       // selector: "lastPage",
       sortable: true,
     },
@@ -3907,13 +3923,13 @@ const User = ({ getNewCount, title }) => {
                   <div className="tab-design">
                     <ul>
                       <li
-                        className={tab === 'pre' && "tab-active"}
+                        className={tabs === 'pre' ? "tab-active" : ""}
                         onClick={(e) => handleOnClicks(e, "pre")}
                       >
                         Pre Login
                       </li>
                       <li
-                        className={tab === 'post' && "tab-active"}
+                        className={tabs === 'post' ? "tab-active" : ""}
 
                         onClick={(e) => handleOnClicks(e, "post")} >
                         Post Login
