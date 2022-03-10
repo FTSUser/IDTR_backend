@@ -2632,7 +2632,7 @@ const User = ({ getNewCount, title }) => {
                             //   new Date(formdata.DateofBirth).getMonth() + 1
                             // }-${new Date(formdata.DateofBirth).getDate()}`}
                             value={formdata.DateofBirth}
-                            max={moment(new Date()).subtract(16, 'years').format("YYYY-MM-DD")}
+                            max={moment(new Date()).subtract(18, 'years').format("YYYY-MM-DD")}
                             // max={moment(new Date()).format("YYYY-MM-DD")}
                             onChange={(e) => onChnageForm(e)}
                           />
