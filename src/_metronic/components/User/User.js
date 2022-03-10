@@ -201,6 +201,7 @@ const User = ({ getNewCount, title }) => {
 
   const handleCloseForUserLogs = () => {
     setModelForUserLogs(false);
+    setTabs("pre")
   };
 
   useEffect(() => {
@@ -480,7 +481,7 @@ const User = ({ getNewCount, title }) => {
     // }
   };
   const getAdminPostLogs = async (id) => {
-    await ApiGet(`admin/get-logout-users`)
+    await ApiGet(`admin/get-logout-users/${id?._id}`)
       .then((res) => {
         console.log("loglog", res?.data?.payload?.admin);
         setLogsPostData(res?.data?.payload?.admin);
@@ -708,7 +709,7 @@ const User = ({ getNewCount, title }) => {
                 className="cursor-pointer pl-2"
                 onClick={async () => {
                   await getAdminLogs(row?.uid);
-                  await getAdminPostLogs()
+                  await getAdminPostLogs(row?.uid)
                   setModelForUserLogs(true);
                 }}
               >
