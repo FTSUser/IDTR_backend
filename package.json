@@ -103,6 +103,7 @@
         "react-json-to-csv": "^1.0.4",
         "react-loader-spinner": "^4.0.0",
         "react-multi-carousel": "^2.6.5",
+        "react-multi-select-component": "^4.2.3",
         "react-number-counter": "^1.0.8",
         "react-otp-input": "^2.4.0",
         "react-perfect-scrollbar": "1.5.8",

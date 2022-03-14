@@ -59,10 +59,16 @@ const Question = (props) => {
     const [dataViewMore, setDataViewMore] = useState({});
     const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
     const [isEditPopUp, setIsEditPopUp] = useState(false);
+    const [filteredVehicleSubCategory, setFilteredVehicleSubCategory] = useState();
 
     useEffect(() => {
         document.title = "Honda | Question Addition";
     }, []);
+
+
+    useEffect(() => {
+        console.log("inputValueForAdd", inputValueForAdd);
+    }, [inputValueForAdd]);
 
     const handleViewMoreClose = () => {
         setIsViewMoreAboutus(false);
@@ -174,9 +180,10 @@ const Question = (props) => {
             formIsValid = false;
             errorsForAdd["vcid"] = "*Please Enter vcid!";
         }
-
-
-
+        if (inputValueForAdd && !inputValueForAdd.vehicleSubCategory) {
+            formIsValid = false;
+            errorsForAdd["vehicleSubCategory"] = "*Please Select Vehicle Sub-Category!";
+        }
         if (inputValueForAdd && !inputValueForAdd.Category) {
             formIsValid = false;
             errorsForAdd["Category"] = "*Please Enter Category!";
@@ -203,7 +210,8 @@ const Question = (props) => {
                 language: inputValueForAdd.language,
                 // weight: inputValueForAdd.weight,
                 Category: inputValueForAdd.Category,
-                image: inputValueForAdd.image
+                image: inputValueForAdd.image,
+                vscid: inputValueForAdd?.vehicleSubCategory
 
             };
             let filter = option.filter((e) => e.istrue === true);
@@ -263,7 +271,9 @@ const Question = (props) => {
                 language: inputValueForAdd.language,
                 // weight: inputValueForAdd.weight,
                 Category: inputValueForAdd.Category,
-                image: inputValueForAdd.image
+                image: inputValueForAdd.image,
+                vscid: inputValueForAdd?.vehicleSubCategory
+
             };
             let filter = option.filter((e) => e.istrue === true);
             if (filter.length) {
@@ -331,6 +341,23 @@ const Question = (props) => {
 
                 setFilteredVehicleCategory(res?.data?.payload?.Question);
 
+            })
+            .catch((err) => {
+                toast.error(err?.response?.data?.message)
+            });
+    };
+
+    useEffect(() => {
+        if (inputValueForAdd.vcid) {
+            getVehicleSubCategoryByVehicleCategory()
+        }
+    }, [inputValueForAdd.vcid])
+
+    const getVehicleSubCategoryByVehicleCategory = async () => {
+        await ApiGet(`vehicleSubCategory/getVehicleSubCategoryByVcid/${inputValueForAdd.vcid}`)
+            .then((res) => {
+                console.log("skjjbsadjsk", res);
+                setFilteredVehicleSubCategory(res?.data?.payload?.vehicleSubCategory);
             })
             .catch((err) => {
                 toast.error(err?.response?.data?.message)
@@ -442,6 +469,7 @@ const Question = (props) => {
                                         image: row?.image,
                                         Category: row?.Category?._id,
                                         vcid: row?.vcid,
+                                        vehicleSubCategory: row?.vscid
 
                                     });
                                     if (row?.type === "mcq") {
@@ -1082,6 +1110,86 @@ const Question = (props) => {
                                         </span>
                                     </div>
                                 </div>
+                                {filteredVehicleSubCategory?.length > 0 ?
+                                    <div className="form-group row">
+                                        <label className="col-xl-3 col-lg-3 col-form-label">
+                                            Select Vehicle Sub-Category
+                                        </label>
+                                        <div className="col-lg-9 col-xl-6">
+                                            <div>
+                                                <select
+                                                    className={`form-control form-control-lg form-control-solid `}
+                                                    id="vehicleSubCategory"
+                                                    name="vehicleSubCategory"
+                                                    value={inputValueForAdd.vehicleSubCategory}
+                                                    onChange={(e) => {
+                                                        handleOnChnageAdd(e);
+                                                    }}
+                                                >
+                                                    <option value="" disabled selected hidden>
+                                                        Select Vehicle Sub-Category
+                                                    </option>
+                                                    {filteredVehicleSubCategory?.length > 0 &&
+                                                        filteredVehicleSubCategory?.map((item) => {
+                                                            return (
+                                                                <option
+                                                                    key={item._id}
+                                                                    value={item?._id}
+                                                                    selected={
+                                                                        inputValueForAdd?.vehicleSubCategory ===
+                                                                            item?._id
+                                                                            ? true
+                                                                            : false
+                                                                    }
+                                                                >
+                                                                    {" "}
+                                                                    {item.vehicleSubCategory}{" "}
+                                                                </option>
+                                                            );
+                                                        })}
+                                                </select>
+                                            </div>
+                                            <span
+                                                style={{
+                                                    color: "red",
+                                                    top: "5px",
+                                                    fontSize: "12px",
+                                                }}
+                                            >
+                                                {errorsForAdd["vehicleSubCategory"]}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    :
+                                    <div className="form-group row">
+                                        <label className="col-xl-3 col-lg-3 col-form-label">
+                                            Select Vehicle Sub-Category
+                                        </label>
+                                        <div className="col-lg-9 col-xl-6">
+                                            <div>
+                                                <input
+                                                    className={`form-control form-control-lg form-control-solid `}
+                                                    value="No Vehicle Sub-Category Found For thid Vehicle Category"
+                                                    disabled
+                                                />
+                                                {/* <option value="" disabled hidden>
+                                                        No Vehicle Sub-Category Found For thid Vehicle Category
+                                                    </option>
+                                                </select> */}
+                                            </div>
+                                            <span
+                                                style={{
+                                                    color: "red",
+                                                    top: "5px",
+                                                    fontSize: "12px",
+                                                }}
+                                            >
+                                                {errorsForAdd["vehicleSubCategory"]}
+                                            </span>
+                                        </div>
+                                    </div>
+                                }
+
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
                                         Select Language

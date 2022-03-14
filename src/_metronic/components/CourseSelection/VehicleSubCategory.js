@@ -6,12 +6,9 @@ import {
     ApiPut,
     ApiPost,
 } from "../../../helpers/API/ApiData";
-import Select from 'react-select';
 import { Tooltip } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import List from "@material-ui/core/List";
-import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
-
 import Toolbar from "@material-ui/core/Toolbar";
 import CreateIcon from "@material-ui/icons/Create";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -24,49 +21,47 @@ import Loader from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import moment from "moment";
 import CsvDownload from "react-json-to-csv";
-import { MultiSelect } from "react-multi-select-component";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const QuestionCategory = ({ getNewCount, title }) => {
-    const [filteredCourseName, setFilteredCourseName] = useState({});
+const CourseType = ({ getNewCount, title }) => {
+    const [filteredCourseType, setFilteredCourseType] = useState({});
     const [isLoaderVisible, setIsLoaderVisible] = useState(false);
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [isAddCourseName, setIsAddCourseName] = useState(false);
-    const [idForUpdateCourseNameData, setIdForUpdateCourseNameData] =
+
+    //new data
+    const [isUpdateCourseType, setIsUpdateCourseType] = useState(false);
+    const [isAddCourseType, setIsAddCourseType] = useState(false);
+    const [idForUpdateCourseTypeData, setIdForUpdateCourseTypeData] =
         useState("");
+    const [inputValue, setInputValue] = useState({});
     const [inputValueForAdd, setInputValueForAdd] = useState({});
+    const [errors, setErrors] = useState({});
     const [errorsForAdd, setErrorsForAdd] = useState({});
-    const [idForDeleteCourseName, setIdForDeleteCourseName] = useState("");
+    const [idForEditStatus, setIdForEditStatus] = useState("");
+    const [idForDeleteCourseType, setIdForDeleteCourseType] = useState("");
+    const [status, setStatus] = useState("");
     const [page, setPage] = useState(1);
     const [count, setCount] = useState(0);
     const [countPerPage, setCountPerPage] = useState(10);
     const [search, setSearch] = useState("");
-    const [dataViewMore, setDataViewMore] = useState({});
-    const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
-    const [isEditPopUp, setIsEditPopUp] = useState(false);
-    const [selectedCourseType, setSelectedCourseType] = useState([]);
-    const [allCourseTypeForUpdate, setAllCourseTypeForUpdate] = useState([]);
-    const [filteredVehicleCategory, setFilteredVehicleCategory] = useState([]);
-    const [filteredVehicleSubCategory, setFilteredVehicleSubCategory] = useState([]);
-    const [optionsForRecipe, setOptionsForRecipe] = useState([]);
-    const [selectedIngredientsFinal, setSelectedIngredientsFinal] = useState([]);
-
+    const [showStatus, setShowStatus] = useState(false);
+    const [idForUpdateCourseStatus, setIdForUpdateCourseStatus] = useState("");
+    const [statusDisplay, setStatusDisplay] = useState(false);
+    // const [getVehicleCategory, setGetVehicleCategory] = useState([]);
+    const [filteredVehicleCategory, setFilteredVehicleCategory] = useState({});
 
     useEffect(() => {
-        document.title = "Honda | Question Category";
+        document.title = "Honda | CourseType";
     }, []);
 
-    useEffect(() => {
-        console.log("inputValueForAdd", selectedIngredientsFinal);
-    }, [selectedIngredientsFinal]);
-
-    const handleViewMoreClose = () => {
-        setIsViewMoreAboutus(false);
-        setDataViewMore({});
+    const handleOnChnage = (e) => {
+        const { name, value } = e.target;
+        setInputValue({ ...inputValue, [name]: value });
+        setErrors({ ...errors, [name]: "" });
     };
 
     const handleOnChnageAdd = (e) => {
@@ -75,119 +70,65 @@ const QuestionCategory = ({ getNewCount, title }) => {
         setErrorsForAdd({ ...errorsForAdd, [name]: "" });
     };
 
+    useEffect(() => {
+    }, [inputValueForAdd]);
 
+    useEffect(() => {
+    }, [inputValue]);
+
+    useEffect(() => {
+    }, [filteredVehicleCategory]);
+
+
+    useEffect(() => {
+    }, [idForEditStatus]);
+
+    const handleAdminUpdateClose = () => {
+        setInputValue({});
+        setIsUpdateCourseType(false);
+    };
 
     const handleAddAdminClose = () => {
         setInputValueForAdd({});
-        setIsAddCourseName(false);
-        setErrorsForAdd({});
-        setSelectedCourseType([]);
-        setIsEditPopUp(false);
-        setAllCourseTypeForUpdate([]);
-        setSelectedIngredientsFinal([])
+        setIsAddCourseType(false);
+    };
 
-
+    const handleCloseShowStatus = () => {
+        setShowStatus(false);
     };
 
     const handleClose = () => {
         setShow(false);
     };
 
-
-
     useEffect(() => {
-        getAllCourseName();
-
+        getAllCourseType();
     }, [page, countPerPage]);
 
-
-
-
-    const getAllCourseName = async () => {
+    const getAllCourseType = async () => {
         setIsLoaderVisible(true);
         if (!search) {
-            await ApiGet(
-                `category/getAllCategory?page=${page}&limit=${countPerPage}`
-            )
+            await ApiGet(`vehicleSubCategory/getAllVehicleSubCategory?page=${page}&limit=${countPerPage}`)
                 .then((res) => {
                     setIsLoaderVisible(false);
-                    setFilteredCourseName(res?.data?.payload?.Menu);
+                    setFilteredCourseType(res?.data?.payload?.vehicleSubCategory);
                     setCount(res?.data?.payload?.count);
-
                 })
                 .catch((err) => {
                     toast.error(err?.response?.data?.message)
-                });
+                })
         } else {
-            await ApiGet(
-                `category/getAllCategory?search=${search}&page=${page}&limit=${countPerPage}`
-            )
+            await ApiGet(`vehicleSubCategory/getAllVehicleSubCategory?search=${search}&page=${page}&limit=${countPerPage}`)
                 .then((res) => {
                     setIsLoaderVisible(false);
-                    setFilteredCourseName(res?.data?.payload?.Menu);
+                    setFilteredCourseType(res?.data?.payload?.vehicleSubCategory);
                     setCount(res?.data?.payload?.count);
                 })
                 .catch((err) => {
                     toast.error(err?.response?.data?.message)
-                });
-        }
-    };
-
-
-
-    const validateFormForAddAdmin = () => {
-        let formIsValid = true;
-        let errorsForAdd = {};
-        if (inputValueForAdd && !inputValueForAdd.name) {
-            formIsValid = false;
-            errorsForAdd["name"] = "*Please Enter Name!";
-        }
-        if (inputValueForAdd && !inputValueForAdd?.VehicleCategory) {
-            formIsValid = false;
-            errorsForAdd["VehicleCategory"] = "*Please Enter VehicleCategory!";
-        }
-        if (selectedIngredientsFinal?.length === 0) {
-            formIsValid = false;
-            errorsForAdd["selectedIngredientsFinal"] = "*Please Select Sub Category!";
-        }
-
-        setErrorsForAdd(errorsForAdd);
-        return formIsValid;
-    };
-
-    const handelAddCourseNameDetails = (e) => {
-        e.preventDefault();
-        if (validateFormForAddAdmin()) {
-            let data = []
-            selectedCourseType.map(o => data.push(o._id))
-            let SubCategoryFinal = []
-            selectedIngredientsFinal?.length > 0 && selectedIngredientsFinal.map((item) => {
-                return SubCategoryFinal.push(item?.value)
-            })
-            let Data = {
-                name: inputValueForAdd.name,
-                vcid: inputValueForAdd.VehicleCategory,
-                vscid: SubCategoryFinal
-            };
-            ApiPost(`category/addCategory`, Data)
-                .then((res) => {
-                    if (res?.status == 200) {
-                        setIsAddCourseName(false);
-                        setSelectedCourseType([]);
-                        toast.success(res?.data?.message);
-                        setInputValueForAdd({});
-                        getAllCourseName();
-                        setOptionsForRecipe([])
-                    } else {
-                        toast.error(res?.data?.message);
-                    }
                 })
-                .catch((err) => {
-                    toast.error(err?.response?.data?.message)
-                });
         }
     };
-
 
     const getAllVehicleCategory = async () => {
         setIsLoaderVisible(true);
@@ -203,35 +144,80 @@ const QuestionCategory = ({ getNewCount, title }) => {
             });
     };
 
-
-    const getAllVehicleSubCategory = async () => {
-        setIsLoaderVisible(true);
-
-        await ApiGet(`vehicleSubCategory/getAllVehicleSubCategory`)
+    const handleUpdateStatusProperty = (status) => {
+        ApiPut(`courseType/updateStatus/${idForUpdateCourseStatus}`, {
+            isActive: status,
+        })
+            // ApiPut(`property/updateProperty/${idForUpdatePropertyStatus}`)
             .then((res) => {
-                setIsLoaderVisible(false);
-                console.log("tetsdgsds", res);
-                setFilteredVehicleSubCategory(res?.data?.payload?.vehicleSubCategory);
-                // setCount(res?.data?.payload?.count);
+                if (res?.status == 200) {
+                    setShowStatus(false);
+                    toast.success("Status updated Successfully");
+                    getAllCourseType();
+                } else {
+                    toast.error(res?.data?.message);
+                }
             })
             .catch((err) => {
                 toast.error(err?.response?.data?.message)
             });
     };
 
-    useEffect(() => {
-        setOptionsForRecipe(filteredVehicleSubCategory?.length > 0 && filteredVehicleSubCategory?.map((item, index) => {
-            return { label: item?.vehicleSubCategory, value: item?._id }
-        }))
-    }, [filteredVehicleSubCategory])
+    const validateFormForAddAdmin = () => {
+        let formIsValid = true;
+        let errorsForAdd = {};
+        if (inputValueForAdd && !inputValueForAdd.CourseType) {
+            formIsValid = false;
+            errorsForAdd["CourseType"] = "*Please Enter Course Type!";
+        }
 
-    const handleDeleteCourseName = () => {
-        ApiDelete(`category/deleteCategory/${idForDeleteCourseName}`)
+        if (inputValueForAdd && !inputValueForAdd.VehicleDescription) {
+            formIsValid = false;
+            errorsForAdd["VehicleDescription"] = "*Please Enter Description!";
+        }
+
+        if (inputValueForAdd && !inputValueForAdd.VehicleCategory) {
+            formIsValid = false;
+            errorsForAdd["VehicleCategory"] = "*Please Enter Vehicle Category!";
+        }
+        setErrorsForAdd(errorsForAdd);
+        return formIsValid;
+    };
+
+    const handelAddCourseTypeDetails = (e) => {
+        e.preventDefault();
+        if (validateFormForAddAdmin()) {
+            let Data = {
+                vehicleSubCategory: inputValueForAdd.CourseType,
+                description: inputValueForAdd.VehicleDescription,
+                isActive: true,
+                vcid: inputValueForAdd.VehicleCategory,
+
+            };
+            ApiPost(`vehicleSubCategory/addVehicleSubCategory`, Data)
+                .then((res) => {
+                    if (res?.status == 200) {
+                        setIsAddCourseType(false);
+                        toast.success(res?.data?.message);
+                        setInputValueForAdd({});
+                        getAllCourseType();
+                    } else {
+                        toast.error(res?.data?.message);
+                    }
+                })
+                .catch((err) => {
+                    toast.error(err?.response?.data?.message)
+                });
+        }
+    };
+
+    const handleDeleteCourseType = () => {
+        ApiDelete(`vehicleSubCategory/deleteVehicleSubCategory/${idForDeleteCourseType}`)
             .then((res) => {
                 if (res?.status == 200) {
                     setShow(false);
                     toast.success("Deleted Successfully");
-                    getAllCourseName();
+                    getAllCourseType();
                     setPage(1);
                     setCount(0);
                     setCountPerPage(countPerPage);
@@ -244,34 +230,48 @@ const QuestionCategory = ({ getNewCount, title }) => {
             });
     };
 
-    const handelUpdateCourseNameDetails = (e) => {
+    useEffect(() => {
+    }, [inputValue]);
+
+    const validateForm = () => {
+        let formIsValid = true;
+        let errors = {};
+        if (inputValue && !inputValue.CourseType) {
+            formIsValid = false;
+            errors["CourseType"] = "*Please Enter CourseType!";
+        }
+
+        if (inputValue && !inputValue.VehicleDescription) {
+            formIsValid = false;
+            errors["VehicleDescription"] = "*Please Enter Vehicle Description!";
+        }
+
+        // if (inputValue && !inputValue.VehicleCategory) {
+        //     formIsValid = false;
+        //     errors["VehicleCategory"] = "*Please Enter Vehicle Category!";
+        // }
+
+        setErrors(errors);
+        return formIsValid;
+    };
+
+    const handelUpdateCourseTypeDetails = (e) => {
         e.preventDefault();
-        if (validateFormForAddAdmin()) {
-            let data = []
-            selectedCourseType.map(o => data.push(o._id))
-            // let Data = {
-            //     name: inputValueForAdd?.name,
-            //     // assignTo: data
-            // };
-            let SubCategoryFinal = []
-            selectedIngredientsFinal?.length > 0 && selectedIngredientsFinal.map((item) => {
-                return SubCategoryFinal.push(item?.value)
-            })
+        if (validateForm()) {
             let Data = {
-                name: inputValueForAdd.name,
-                vcid: inputValueForAdd.VehicleCategory,
-                vscid: SubCategoryFinal
+                courseType: inputValue.CourseType,
+                description: inputValue.VehicleDescription,
+                vcid: inputValue.VehicleCategory,
+
+
             };
-            ApiPut(`category/updateCategory/${idForUpdateCourseNameData}`, Data)
+            ApiPut(`courseType/updateCourseType/${idForUpdateCourseTypeData}`, Data)
                 .then((res) => {
                     if (res?.status == 200) {
-                        setIsAddCourseName(false);
+                        setIsUpdateCourseType(false);
                         toast.success(res?.data?.message);
-                        setInputValueForAdd({});
-                        getAllCourseName();
-                        setSelectedCourseType([]);
-                        setIsEditPopUp(false);
-
+                        setInputValue({});
+                        getAllCourseType();
                     } else {
                         toast.error(res?.data?.message);
                     }
@@ -299,13 +299,43 @@ const QuestionCategory = ({ getNewCount, title }) => {
             // width: "65px",
         },
         {
-            name: "Name",
-            selector: "name",
+            name: "Vehicle Sub-Category",
+            selector: row => row?.vehicleSubCategory,
             sortable: true,
         },
 
+        {
+            name: "Vehicle Sub-Category Description",
+            selector: "description",
+            sortable: true,
+        },
 
-
+        // {
+        //     name: "Display?",
+        //     cell: (row) => {
+        //         return (
+        //             <>
+        //                 <div
+        //                     className="cursor-pointer"
+        //                     onClick={() => {
+        //                         setShowStatus(true);
+        //                         setIdForUpdateCourseStatus(row?._id);
+        //                         setStatusDisplay(row?.isActive);
+        //                     }}
+        //                 >
+        //                     <Tooltip title="Status Property" arrow>
+        //                         <div className="cus-medium-button-style widthfixed">
+        //                             <button className="btn btn-success mr-2">
+        //                                 {row?.isActive === true ? "Active" : "Deactive"}
+        //                             </button>
+        //                         </div>
+        //                     </Tooltip>
+        //                 </div>
+        //             </>
+        //         );
+        //     },
+        //     sortable: true,
+        // },
 
 
         {
@@ -313,61 +343,37 @@ const QuestionCategory = ({ getNewCount, title }) => {
             cell: (row) => {
                 return (
                     <>
-                        <div className="d-flex justify-content-between">
+                        {/* <div className="d-flex justify-content-between">
                             <div
                                 className="cursor-pointer pl-2"
                                 onClick={() => {
+                                    setIsUpdateCourseType(true);
+                                    setIdForUpdateCourseTypeData(row._id);
+                                    getAllVehicleCategory();
 
-                                    setIsAddCourseName(true);
-                                    setIdForUpdateCourseNameData(row._id);
-                                    // setSelectedCourseType(row?.assignTo);
-                                    // setAllCourseTypeForUpdate(row?.assignTo);
-
-
-                                    setInputValueForAdd({
-                                        name: row?.name,
-                                        VehicleCategory: row?.vcid
-
+                                    setInputValue({
+                                        VehicleCategory: row?.vcid?._id,
+                                        CourseType: row?.courseType,
+                                        VehicleDescription: row?.description,
                                     });
-                                    setIsEditPopUp(true);
-                                    getAllVehicleCategory()
-                                    getAllVehicleSubCategory()
-                                    setSelectedIngredientsFinal(row?.vscid?.map((item, index) => {
-                                        return { label: item?.vehicleSubCategory, value: item?._id }
-                                    }))
                                 }}
                             >
-                                <Tooltip title="Edit Question Category" arrow>
+                                <Tooltip title="Edit CourseType" arrow>
                                     <CreateIcon />
                                 </Tooltip>
                             </div>
-                        </div>
-
+                        </div> */}
                         <div
                             className="cursor-pointer"
                             onClick={() => {
                                 setShow(true);
-                                setIdForDeleteCourseName(row?._id);
+                                setIdForDeleteCourseType(row?._id);
                             }}
                         >
-                            <Tooltip title="Delete Question Category" arrow>
+                            <Tooltip title="Delete Course Type" arrow>
                                 <DeleteIcon />
                             </Tooltip>
                         </div>
-                        <>
-                            <div
-                                className="cursor-pointer pl-2"
-                                onClick={() => {
-                                    setIsViewMoreAboutus(true);
-                                    setDataViewMore(row);
-
-                                }}
-                            >
-                                <Tooltip title="Show More" arrow>
-                                    <InfoOutlinedIcon />
-                                </Tooltip>
-                            </div>
-                        </>
                     </>
                 );
             },
@@ -445,49 +451,49 @@ const QuestionCategory = ({ getNewCount, title }) => {
             setPage(1);
             setCount(0);
             setCountPerPage(countPerPage);
-            getAllCourseName();
+            getAllCourseType();
         } else {
             setPage(1);
             setCount(0);
             setCountPerPage(countPerPage);
-            getAllCourseName();
+            getAllCourseType();
         }
     }, [debouncedSearchTerm]);
 
+    //Download csv data
     //for excel file
-    const [allCourseNameExcel, setAllCourseNameExcel] = useState([]);
+    const [allCourseTypeExcel, setAllCourseTypeExcel] = useState([]);
     const [dataCSV, setDataCSV] = useState([]);
     useEffect(() => {
-        getAllCourseNameForExcel();
+        getAllCourseTypeForExcel();
     }, []);
 
-    const getAllCourseNameForExcel = async () => {
-        // if (!search) {
-        await ApiGet(`category/getAll`)
+    const getAllCourseTypeForExcel = async () => {
+        await ApiGet(`vehicleSubCategory/getAllVehicleSubCategory`)
             .then((res) => {
-                setAllCourseNameExcel(res?.data?.payload?.Menu);
+                setAllCourseTypeExcel(res?.data?.payload?.vehicleSubCategory);
             })
             .catch((err) => {
                 toast.error(err?.response?.data?.message)
             });
-        // }
     };
     useEffect(() => {
-        if (allCourseNameExcel) {
-            allCourseNameExcel.map((registerUser, key) => {
+        if (allCourseTypeExcel) {
+            allCourseTypeExcel.map((registerUser) => {
                 let data = {
-                    Number: key + 1,
-                    QuestionCategoryName: registerUser?.name,
-                    QuestionCategoryNameId: registerUser?._id,
                     CreatedAt: moment(registerUser?.createdAt).format("ll"),
-
+                    CreatedBy: registerUser?.createdBy,
+                    Description: registerUser?.description,
+                    IsActive: registerUser?.isDelete ? "True" : "False",
+                    UpdatedAt: moment(registerUser?.updatedAt).format("ll"),
+                    UpdatedBy: registerUser?.updatedBy,
+                    VehicleCategory: registerUser?.vcid,
+                    VehicleCategoryId: registerUser?.vehicleSubCategory,
                 };
                 setDataCSV((currVal) => [...currVal, data]);
             });
         }
-    }, [allCourseNameExcel]);
-
-
+    }, [allCourseTypeExcel]);
 
 
     return (
@@ -497,7 +503,7 @@ const QuestionCategory = ({ getNewCount, title }) => {
                 <div className="p-2 mb-2">
                     <div className="row mb-4 pr-3">
                         <div className="col d-flex justify-content-between">
-                            <h2 className="pl-3 pt-2">Question Category</h2>
+                            <h2 className="pl-3 pt-2">Vehicle Sub Category</h2>
                         </div>
                         <div className="col">
                             <div>
@@ -506,7 +512,7 @@ const QuestionCategory = ({ getNewCount, title }) => {
                                     className={`form-control form-control-lg form-control-solid `}
                                     name="search"
                                     value={search}
-                                    placeholder="Search Question Category"
+                                    placeholder="Search Vehicle Sub Category"
                                     onChange={(e) => handleSearch(e)}
                                 />
                             </div>
@@ -514,20 +520,19 @@ const QuestionCategory = ({ getNewCount, title }) => {
                         <div className="cus-medium-button-style button-height">
                             <button
                                 onClick={() => {
-                                    setIsAddCourseName(true);
-                                    getAllVehicleCategory()
-                                    getAllVehicleSubCategory()
+                                    setIsAddCourseType(true);
+                                    getAllVehicleCategory();
                                 }}
                                 className="btn btn-success mr-2"
                             >
-                                Add Question Category
+                                Add Vehicle Sub Category
                             </button>
                         </div>
                         <div className="cus-medium-button-style button-height">
                             <CsvDownload
                                 className={``}
                                 data={dataCSV}
-                                filename="Question Category Report.csv"
+                                filename="Vehicle Sub Category Report.csv"
                                 style={{
                                     //pass other props, like styles
                                     backgroundColor: "#CC0001",
@@ -547,13 +552,36 @@ const QuestionCategory = ({ getNewCount, title }) => {
                         </div>
                     </div>
 
+                    <Modal show={showStatus} onHide={handleCloseShowStatus}>
+                        <Modal.Header closeButton>
+                            <Modal.Title className="text-danger">Alert!</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            Are You Sure To Want To{" "}
+                            {statusDisplay === true ? "De-active" : "Active"} this Vehicle Sub Category
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleCloseShowStatus}>
+                                Cancel
+                            </Button>
+                            <Button
+                                variant="danger"
+                                onClick={(e) => {
+                                    handleUpdateStatusProperty(!statusDisplay);
+                                }}
+                            >
+                                {statusDisplay === true ? "De-active" : "Active"}
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+
                     {/* delete model */}
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
                             <Modal.Title className="text-danger">Alert!</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            Are You Sure To Want To delete this question category
+                            Are You Sure To Want To delete this Vehicle Sub Category
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
@@ -562,7 +590,7 @@ const QuestionCategory = ({ getNewCount, title }) => {
                             <Button
                                 variant="danger"
                                 onClick={() => {
-                                    handleDeleteCourseName();
+                                    handleDeleteCourseType();
                                 }}
                             >
                                 Delete
@@ -573,7 +601,7 @@ const QuestionCategory = ({ getNewCount, title }) => {
 
                     <DataTable
                         columns={columns}
-                        data={filteredCourseName}
+                        data={filteredCourseType}
                         customStyles={customStyles}
                         style={{
                             marginTop: "-3rem",
@@ -599,10 +627,10 @@ const QuestionCategory = ({ getNewCount, title }) => {
                 </div>
             </div>
 
-            {isAddCourseName ? (
+            {isAddCourseType ? (
                 <Dialog
                     fullScreen
-                    open={isAddCourseName}
+                    open={isAddCourseType}
                     onClose={handleAddAdminClose}
                     TransitionComponent={Transition}
                 >
@@ -617,10 +645,146 @@ const QuestionCategory = ({ getNewCount, title }) => {
                         </IconButton>
                     </Toolbar>
                     <List>
-                        {isAddCourseName === true ? (
+                        {isAddCourseType === true ? (
                             <div className="form ml-30 ">
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Select Vehicle Category
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <select
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="VehicleCategory"
+                                                name="VehicleCategory"
+                                                value={inputValueForAdd.VehicleCategory}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            >
+                                                <option value="" disabled selected hidden>
+                                                    Select Vehicle Category
+                                                </option>
+                                                {filteredVehicleCategory?.length > 0 &&
+                                                    filteredVehicleCategory?.map((item) => {
+                                                        return (
+                                                            <option key={item._id} value={item?._id}>
+                                                                {" "}
+                                                                {item.vehicleCategory}{" "}
+                                                            </option>
+                                                        );
+                                                    })}
+                                            </select>
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["VehicleCategory"]}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Enter Vehicle SubCategory
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="CourseType"
+                                                name="CourseType"
+                                                value={inputValueForAdd.CourseType}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["CourseType"]}
+                                        </span>
+                                    </div>
+                                </div>
 
-                                {/* select category */}
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Enter Description
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="VehicleDescription"
+                                                name="VehicleDescription"
+                                                value={inputValueForAdd.VehicleDescription}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["VehicleDescription"]}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="d-flex align-items-center justify-content-center">
+                                    <button
+                                        onClick={(e) => {
+                                            handelAddCourseTypeDetails(e);
+                                        }}
+                                        className="btn btn-success mr-2"
+                                    >
+                                        <span>Add Details</span>
+                                        {loading && (
+                                            <span className="mx-3 spinner spinner-white"></span>
+                                        )}
+                                    </button>
+                                </div>
+                            </div>
+                        ) : null}
+                    </List>
+                </Dialog>
+            ) : null}
+
+            {isUpdateCourseType ? (
+                <Dialog
+                    fullScreen
+                    open={isUpdateCourseType}
+                    onClose={handleAdminUpdateClose}
+                    TransitionComponent={Transition}
+                >
+                    <Toolbar>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            onClick={handleAdminUpdateClose}
+                            aria-label="close"
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                    </Toolbar>
+                    <List>
+                        {isUpdateCourseType === true ? (
+                            <div className="form ml-30 ">
+                                {/* Ameninties Name */}
+
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
                                         Select Vehicle Category
@@ -633,7 +797,7 @@ const QuestionCategory = ({ getNewCount, title }) => {
                                                 name="VehicleCategory"
                                                 // value={inputValue.VehicleCategory}
                                                 onChange={(e) => {
-                                                    handleOnChnageAdd(e);
+                                                    handleOnChnage(e);
                                                 }}
                                             >
                                                 <option value="" disabled selected hidden>
@@ -646,7 +810,7 @@ const QuestionCategory = ({ getNewCount, title }) => {
                                                                 key={item?._id}
                                                                 value={item?._id}
                                                                 selected={
-                                                                    inputValueForAdd?.VehicleCategory === item?._id
+                                                                    inputValue?.VehicleCategory === item?._id
                                                                         ? true
                                                                         : false
                                                                 }
@@ -670,52 +834,20 @@ const QuestionCategory = ({ getNewCount, title }) => {
                                     </div>
                                 </div>
 
-
-                                {/* select category */}
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Select Vehicle Sub-Category
-                                    </label>
-                                    <div className="col-lg-9 col-xl-6">
-                                        <div>
-                                            <MultiSelect
-                                                options={optionsForRecipe}
-                                                value={selectedIngredientsFinal}
-                                                onChange={(selectedIngredientsFinal) => {
-                                                    setSelectedIngredientsFinal(selectedIngredientsFinal)
-                                                    setErrorsForAdd({ ...errorsForAdd, selectedIngredientsFinal: "" });
-                                                }}
-                                                labelledBy="name"
-                                            // isLoading={loaderIsRunning}
-                                            />
-                                        </div>
-                                        <span
-                                            style={{
-                                                color: "red",
-                                                top: "5px",
-                                                fontSize: "12px",
-                                            }}
-                                        >
-                                            {errorsForAdd["selectedIngredientsFinal"]}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                {/* Name Amenintie */}
-                                <div className="form-group row">
-                                    <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Enter Name
+                                        Enter Course Type
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
                                             <input
                                                 type="text"
                                                 className={`form-control form-control-lg form-control-solid `}
-                                                id="name"
-                                                name="name"
-                                                value={inputValueForAdd.name}
+                                                id="CourseType"
+                                                name="CourseType"
+                                                value={inputValue.CourseType}
                                                 onChange={(e) => {
-                                                    handleOnChnageAdd(e);
+                                                    handleOnChnage(e);
                                                 }}
                                             />
                                         </div>
@@ -726,23 +858,47 @@ const QuestionCategory = ({ getNewCount, title }) => {
                                                 fontSize: "12px",
                                             }}
                                         >
-                                            {errorsForAdd["name"]}
+                                            {errors["CourseType"]}
                                         </span>
                                     </div>
                                 </div>
 
-
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Enter Description
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
+                                            <input
+                                                type="text"
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="VehicleDescription"
+                                                name="VehicleDescription"
+                                                value={inputValue.VehicleDescription}
+                                                onChange={(e) => {
+                                                    handleOnChnage(e);
+                                                }}
+                                            />
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errors["VehicleDescription"]}
+                                        </span>
+                                    </div>
+                                </div>
                                 <div className="d-flex align-items-center justify-content-center">
                                     <button
                                         onClick={(e) => {
-                                            isEditPopUp === false
-                                                ? handelAddCourseNameDetails(e)
-                                                : handelUpdateCourseNameDetails(e);
+                                            handelUpdateCourseTypeDetails(e);
                                         }}
                                         className="btn btn-success mr-2"
                                     >
-
-                                        <span> {isEditPopUp === false ? 'Add' : 'Update'}  Question Category</span>
+                                        <span>Update Details</span>
                                         {loading && (
                                             <span className="mx-3 spinner spinner-white"></span>
                                         )}
@@ -753,49 +909,8 @@ const QuestionCategory = ({ getNewCount, title }) => {
                     </List>
                 </Dialog>
             ) : null}
-
-            {isViewMoreAboutus ? (
-                <Dialog
-                    fullScreen
-                    open={isViewMoreAboutus}
-                    onClose={handleViewMoreClose}
-                    TransitionComponent={Transition}
-                >
-                    <Toolbar>
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            onClick={handleViewMoreClose}
-                            aria-label="close"
-                        >
-                            <CloseIcon />
-                        </IconButton>
-                    </Toolbar>
-                    <List>
-                        {isViewMoreAboutus === true ? (
-                            <div className="honda-container">
-                                <div className="other-information-child-text-style1">
-                                    <h2>Question Category</h2>
-                                </div>
-                                <div className="honda-text-grid honda-text-grid-border">
-                                    <div className="honda-text-grid-items">
-                                        <span>Question Category Name:</span>
-                                        <p
-                                            dangerouslySetInnerHTML={{
-                                                __html: dataViewMore?.name,
-                                            }}
-                                            className=""
-                                        />
-                                    </div>
-
-                                </div>
-                            </div>
-                        ) : null}
-                    </List>
-                </Dialog>
-            ) : null}
         </>
     );
 };
 
-export default QuestionCategory;
+export default CourseType;

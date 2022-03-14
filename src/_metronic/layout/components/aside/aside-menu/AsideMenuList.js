@@ -97,6 +97,24 @@ export function AsideMenuList({ layoutProps }) {
                         </NavLink>
                       </li>
                       <li
+                        className={`menu-item menu-item-submenu  ${getMenuItemActive(
+                          "/vehiclesubcategory",
+                          false
+                        )}`}
+                        aria-haspopup="true"
+                        data-menu-toggle="hover"
+                      >
+                        <NavLink
+                          className="menu-link"
+                          to="/vehiclesubcategory"
+                        >
+                          <i className="menu-bullet menu-bullet-dot">
+                            <span />
+                          </i>
+                          <span className="menu-text">Vehicle Sub Category</span>
+                        </NavLink>
+                      </li>
+                      <li
                         className={`menu-item menu-item-submenu ${getMenuItemActive(
                           "/coursetype",
                           false
