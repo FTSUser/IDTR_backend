@@ -81,6 +81,10 @@ const Question = (props) => {
             setErrorsForAdd({ ...errorsForAdd, [name]: "" });
             return setInputValueForAdd({ ...inputValueForAdd, [name]: parseInt(value) });
         }
+        if (name === 'vcid') {
+            setErrorsForAdd({ ...errorsForAdd, [name]: "" });
+            return setInputValueForAdd({ ...inputValueForAdd, [name]: value, vehicleSubCategory: "" })
+        }
         setInputValueForAdd({ ...inputValueForAdd, [name]: value });
         setErrorsForAdd({ ...errorsForAdd, [name]: "" });
     };
