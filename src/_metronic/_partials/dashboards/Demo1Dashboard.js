@@ -72,7 +72,7 @@ export function Demo1Dashboard() {
     if (userInfo?.admin?.role?.roleName === 'Examiner') {
       getAllExaminer()
     }
-  })
+  }, [])
   return (
     <>
 

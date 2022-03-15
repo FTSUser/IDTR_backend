@@ -71,6 +71,10 @@ const QuestionCategory = ({ getNewCount, title }) => {
 
     const handleOnChnageAdd = (e) => {
         const { name, value } = e.target;
+        if (name === 'VehicleCategory') {
+            setErrorsForAdd({ ...errorsForAdd, [name]: "" });
+            return setInputValueForAdd({ ...inputValueForAdd, [name]: value, VehicleSubCategory: "" })
+        }
         setInputValueForAdd({ ...inputValueForAdd, [name]: value });
         setErrorsForAdd({ ...errorsForAdd, [name]: "" });
     };
@@ -200,11 +204,17 @@ const QuestionCategory = ({ getNewCount, title }) => {
             });
     };
 
+    useEffect(() => {
+        if (inputValueForAdd.VehicleCategory) {
+            getAllVehicleSubCategory()
+        }
+    }, [inputValueForAdd.VehicleCategory])
+
 
     const getAllVehicleSubCategory = async () => {
         setIsLoaderVisible(true);
 
-        await ApiGet(`vehicleSubCategory/getAllVehicleSubCategory`)
+        await ApiGet(`vehicleSubCategory/getVehicleSubCategoryByVcid/${inputValueForAdd.VehicleCategory}`)
             .then((res) => {
                 setIsLoaderVisible(false);
                 console.log("tetsdgsds", res);
@@ -329,7 +339,7 @@ const QuestionCategory = ({ getNewCount, title }) => {
                                     });
                                     setIsEditPopUp(true);
                                     getAllVehicleCategory()
-                                    getAllVehicleSubCategory()
+                                    // getAllVehicleSubCategory()
                                     // setSelectedIngredientsFinal(row?.vscid?.map((item, index) => {
                                     //     return { label: item?.vehicleSubCategory, value: item?._id }
                                     // }))
@@ -514,7 +524,7 @@ const QuestionCategory = ({ getNewCount, title }) => {
                                 onClick={() => {
                                     setIsAddCourseName(true);
                                     getAllVehicleCategory()
-                                    getAllVehicleSubCategory()
+                                    // getAllVehicleSubCategory()
                                 }}
                                 className="btn btn-success mr-2"
                             >
@@ -629,13 +639,14 @@ const QuestionCategory = ({ getNewCount, title }) => {
                                                 className={`form-control form-control-lg form-control-solid `}
                                                 id="VehicleCategory"
                                                 name="VehicleCategory"
-                                                // value={inputValue.VehicleCategory}
+                                                value={inputValueForAdd.VehicleCategory}
                                                 onChange={(e) => {
                                                     handleOnChnageAdd(e);
                                                 }}
                                             >
                                                 <option value="" disabled selected hidden>
-                                                    Select Course Type
+                                                    Select Vehicle Category Type
+
                                                 </option>
                                                 {filteredVehicleCategory?.length > 0 &&
                                                     filteredVehicleCategory?.map((item) => {
@@ -675,38 +686,53 @@ const QuestionCategory = ({ getNewCount, title }) => {
                                         Select Vehicle Sub-Category
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
-                                        <div>
-                                            <select
-                                                className={`form-control form-control-lg form-control-solid `}
-                                                id="VehicleSubCategory"
-                                                name="VehicleSubCategory"
-                                                // value={inputValue.VehicleCategory}
-                                                onChange={(e) => {
-                                                    handleOnChnageAdd(e);
-                                                }}
-                                            >
-                                                <option value="" disabled selected hidden>
-                                                    Select Vehicle Sub-Category
-                                                </option>
-                                                {filteredVehicleSubCategory?.length > 0 &&
-                                                    filteredVehicleSubCategory?.map((item) => {
-                                                        return (
-                                                            <option
-                                                                key={item?._id}
-                                                                value={item?._id}
-                                                                selected={
-                                                                    inputValueForAdd?.VehicleSubCategory === item?._id
-                                                                        ? true
-                                                                        : false
-                                                                }
-                                                            >
-                                                                {" "}
-                                                                {item?.vehicleSubCategory}{" "}
-                                                            </option>
-                                                        );
-                                                    })}
-                                            </select>
-                                        </div>
+                                        {filteredVehicleSubCategory?.length > 0 ?
+
+                                            <div>
+                                                <select
+                                                    className={`form-control form-control-lg form-control-solid `}
+                                                    id="VehicleSubCategory"
+                                                    name="VehicleSubCategory"
+                                                    value={inputValueForAdd.VehicleSubCategory}
+                                                    onChange={(e) => {
+                                                        handleOnChnageAdd(e);
+                                                    }}
+                                                >
+                                                    <option value="" disabled selected hidden>
+                                                        Select Vehicle Sub-Category
+                                                    </option>
+                                                    {filteredVehicleSubCategory?.length > 0 &&
+                                                        filteredVehicleSubCategory?.map((item) => {
+                                                            return (
+                                                                <option
+                                                                    key={item?._id}
+                                                                    value={item?._id}
+                                                                    selected={
+                                                                        inputValueForAdd?.VehicleSubCategory === item?._id
+                                                                            ? true
+                                                                            : false
+                                                                    }
+                                                                >
+                                                                    {" "}
+                                                                    {item?.vehicleSubCategory}{" "}
+                                                                </option>
+                                                            );
+                                                        })}
+                                                </select>
+                                            </div>
+                                            :
+                                            <div>
+                                                <input
+                                                    type="text"
+                                                    className={`form-control form-control-lg form-control-solid `}
+                                                    id="VehicleSubCategory"
+                                                    name="VehicleSubCategory"
+                                                    value="No Vehicle Sub-Category Found For This Vehicle Category"
+                                                    disabled
+                                                />
+                                            </div>
+                                        }
+
                                         <span
                                             style={{
                                                 color: "red",
