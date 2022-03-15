@@ -305,16 +305,24 @@ const QuestionCategory = ({ getNewCount, title }) => {
             sortable: true,
             // width: "65px",
         },
+
         {
             name: "Name",
             selector: "name",
             sortable: true,
         },
-
-
-
-
-
+        {
+            name: "Vehicle Category",
+            selector: (row) => row?.vcid?.vehicleCategory,
+            sortable: true,
+            // width: "65px",
+        },
+        {
+            name: "Vehicle Sub Category",
+            selector: (row) => row?.vscid?.vehicleSubCategory,
+            sortable: true,
+            // width: "65px",
+        },
         {
             name: "Actions",
             cell: (row) => {
@@ -333,7 +341,7 @@ const QuestionCategory = ({ getNewCount, title }) => {
 
                                     setInputValueForAdd({
                                         name: row?.name,
-                                        VehicleCategory: row?.vcid,
+                                        VehicleCategory: row?.vcid?._id,
                                         VehicleSubCategory: row?.vscid?._id
 
                                     });
