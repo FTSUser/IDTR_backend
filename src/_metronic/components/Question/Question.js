@@ -60,6 +60,7 @@ const Question = (props) => {
     const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
     const [isEditPopUp, setIsEditPopUp] = useState(false);
     const [filteredVehicleSubCategory, setFilteredVehicleSubCategory] = useState();
+    const [filteredCategoryByVehicleSubCategory, setFilteredCategoryByVehicleSubCategory] = useState();
 
     useEffect(() => {
         document.title = "Honda | Question Addition";
@@ -83,7 +84,11 @@ const Question = (props) => {
         }
         if (name === 'vcid') {
             setErrorsForAdd({ ...errorsForAdd, [name]: "" });
-            return setInputValueForAdd({ ...inputValueForAdd, [name]: value, vehicleSubCategory: "" })
+            return setInputValueForAdd({ ...inputValueForAdd, [name]: value, vehicleSubCategory: "", Category: "" })
+        }
+        if (name === 'vehicleSubCategory') {
+            setErrorsForAdd({ ...errorsForAdd, [name]: "" });
+            return setInputValueForAdd({ ...inputValueForAdd, [name]: value, Category: "" })
         }
         setInputValueForAdd({ ...inputValueForAdd, [name]: value });
         setErrorsForAdd({ ...errorsForAdd, [name]: "" });
@@ -126,6 +131,9 @@ const Question = (props) => {
             });
         // }
     };
+
+
+
 
     const getAllQuestionSet = async () => {
         setIsLoaderVisible(true);
@@ -362,6 +370,28 @@ const Question = (props) => {
             .then((res) => {
                 console.log("skjjbsadjsk", res);
                 setFilteredVehicleSubCategory(res?.data?.payload?.vehicleSubCategory);
+            })
+            .catch((err) => {
+                toast.error(err?.response?.data?.message)
+            });
+    };
+
+    useEffect(() => {
+        if (inputValueForAdd?.vehicleSubCategory) {
+            getCategoryByVehicleSubCategory()
+        }
+    }, [inputValueForAdd?.vehicleSubCategory])
+
+
+    const getCategoryByVehicleSubCategory = async () => {
+        let Data = {
+            vcid: inputValueForAdd.vcid,
+            vscid: inputValueForAdd?.vehicleSubCategory
+        }
+        await ApiPost(`category/getCategoryByVscid`, Data)
+            .then((res) => {
+                console.log("skjjbsadjskdfsdfds", res);
+                setFilteredCategoryByVehicleSubCategory(res?.data?.payload?.category);
             })
             .catch((err) => {
                 toast.error(err?.response?.data?.message)
@@ -1325,39 +1355,53 @@ const Question = (props) => {
                                         Category
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
-                                        <div>
-                                            <select
-                                                className={`form-control form-control-lg form-control-solid `}
-                                                id="Category"
-                                                name="Category"
-                                                value={inputValueForAdd?.Category}
-                                                onChange={(e) => {
-                                                    handleOnChnageAdd(e);
-                                                }}
-                                            >
-                                                <option value="" disabled selected hidden>
-                                                    Select Question Category
-                                                </option>
+                                        {filteredCategoryByVehicleSubCategory?.length > 0 ?
+                                            <div>
+                                                <select
+                                                    className={`form-control form-control-lg form-control-solid `}
+                                                    id="Category"
+                                                    name="Category"
+                                                    value={inputValueForAdd?.Category}
+                                                    onChange={(e) => {
+                                                        handleOnChnageAdd(e);
+                                                    }}
+                                                >
+                                                    <option value="" disabled selected hidden>
+                                                        Select Question Category
+                                                    </option>
 
-                                                {AllCategory?.length > 0 &&
-                                                    AllCategory?.map((item) => {
-                                                        return (
-                                                            <option
-                                                                key={item._id}
-                                                                value={item?._id}
-                                                                selected={
-                                                                    inputValueForAdd?.Category === item?._id
-                                                                        ? true
-                                                                        : false
-                                                                }
-                                                            >
-                                                                {" "}
-                                                                {item.name}{" "}
-                                                            </option>
-                                                        );
-                                                    })}
-                                            </select>
-                                        </div>
+                                                    {filteredCategoryByVehicleSubCategory?.length > 0 &&
+                                                        filteredCategoryByVehicleSubCategory?.map((item) => {
+                                                            return (
+                                                                <option
+                                                                    key={item._id}
+                                                                    value={item?._id}
+                                                                    selected={
+                                                                        inputValueForAdd?.Category === item?._id
+                                                                            ? true
+                                                                            : false
+                                                                    }
+                                                                >
+                                                                    {" "}
+                                                                    {item.name}{" "}
+                                                                </option>
+                                                            );
+                                                        })
+                                                    }
+                                                </select>
+                                            </div>
+                                            :
+                                            <div>
+                                                <input
+                                                    type="text"
+                                                    className={`form-control form-control-lg form-control-solid `}
+                                                    name="Category"
+                                                    value="No Category Found For This sub-category"
+                                                    disabled
+                                                />
+                                            </div>
+                                        }
+
                                         <span
                                             style={{
                                                 color: "red",

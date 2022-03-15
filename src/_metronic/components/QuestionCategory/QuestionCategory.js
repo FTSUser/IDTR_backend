@@ -146,10 +146,11 @@ const QuestionCategory = ({ getNewCount, title }) => {
             formIsValid = false;
             errorsForAdd["VehicleCategory"] = "*Please Enter VehicleCategory!";
         }
-        if (selectedIngredientsFinal?.length === 0) {
+        if (inputValueForAdd && !inputValueForAdd?.VehicleSubCategory) {
             formIsValid = false;
-            errorsForAdd["selectedIngredientsFinal"] = "*Please Select Sub Category!";
+            errorsForAdd["VehicleSubCategory"] = "*Please Enter VehicleSubCategory!";
         }
+
 
         setErrorsForAdd(errorsForAdd);
         return formIsValid;
@@ -160,14 +161,10 @@ const QuestionCategory = ({ getNewCount, title }) => {
         if (validateFormForAddAdmin()) {
             let data = []
             selectedCourseType.map(o => data.push(o._id))
-            let SubCategoryFinal = []
-            selectedIngredientsFinal?.length > 0 && selectedIngredientsFinal.map((item) => {
-                return SubCategoryFinal.push(item?.value)
-            })
             let Data = {
                 name: inputValueForAdd.name,
                 vcid: inputValueForAdd.VehicleCategory,
-                vscid: SubCategoryFinal
+                vscid: inputValueForAdd.VehicleSubCategory
             };
             ApiPost(`category/addCategory`, Data)
                 .then((res) => {
@@ -260,7 +257,7 @@ const QuestionCategory = ({ getNewCount, title }) => {
             let Data = {
                 name: inputValueForAdd.name,
                 vcid: inputValueForAdd.VehicleCategory,
-                vscid: SubCategoryFinal
+                vscid: inputValueForAdd?.VehicleSubCategory
             };
             ApiPut(`category/updateCategory/${idForUpdateCourseNameData}`, Data)
                 .then((res) => {
@@ -326,15 +323,16 @@ const QuestionCategory = ({ getNewCount, title }) => {
 
                                     setInputValueForAdd({
                                         name: row?.name,
-                                        VehicleCategory: row?.vcid
+                                        VehicleCategory: row?.vcid,
+                                        VehicleSubCategory: row?.vscid?._id
 
                                     });
                                     setIsEditPopUp(true);
                                     getAllVehicleCategory()
                                     getAllVehicleSubCategory()
-                                    setSelectedIngredientsFinal(row?.vscid?.map((item, index) => {
-                                        return { label: item?.vehicleSubCategory, value: item?._id }
-                                    }))
+                                    // setSelectedIngredientsFinal(row?.vscid?.map((item, index) => {
+                                    //     return { label: item?.vehicleSubCategory, value: item?._id }
+                                    // }))
                                 }}
                             >
                                 <Tooltip title="Edit Question Category" arrow>
@@ -678,6 +676,57 @@ const QuestionCategory = ({ getNewCount, title }) => {
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
+                                            <select
+                                                className={`form-control form-control-lg form-control-solid `}
+                                                id="VehicleSubCategory"
+                                                name="VehicleSubCategory"
+                                                // value={inputValue.VehicleCategory}
+                                                onChange={(e) => {
+                                                    handleOnChnageAdd(e);
+                                                }}
+                                            >
+                                                <option value="" disabled selected hidden>
+                                                    Select Vehicle Sub-Category
+                                                </option>
+                                                {filteredVehicleSubCategory?.length > 0 &&
+                                                    filteredVehicleSubCategory?.map((item) => {
+                                                        return (
+                                                            <option
+                                                                key={item?._id}
+                                                                value={item?._id}
+                                                                selected={
+                                                                    inputValueForAdd?.VehicleSubCategory === item?._id
+                                                                        ? true
+                                                                        : false
+                                                                }
+                                                            >
+                                                                {" "}
+                                                                {item?.vehicleSubCategory}{" "}
+                                                            </option>
+                                                        );
+                                                    })}
+                                            </select>
+                                        </div>
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                top: "5px",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {errorsForAdd["VehicleSubCategory"]}
+                                        </span>
+                                    </div>
+                                </div>
+
+
+                                {/* select category
+                                <div className="form-group row">
+                                    <label className="col-xl-3 col-lg-3 col-form-label">
+                                        Select Vehicle Sub-Category
+                                    </label>
+                                    <div className="col-lg-9 col-xl-6">
+                                        <div>
                                             <MultiSelect
                                                 options={optionsForRecipe}
                                                 value={selectedIngredientsFinal}
@@ -699,7 +748,7 @@ const QuestionCategory = ({ getNewCount, title }) => {
                                             {errorsForAdd["selectedIngredientsFinal"]}
                                         </span>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 {/* Name Amenintie */}
                                 <div className="form-group row">
