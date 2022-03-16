@@ -49,7 +49,6 @@ class ComponentToPrintss extends React.Component {
         `batch/getExamsetByBatch/${this.props?.id}`
       )
         .then((res) => {
-          console.log("data", res.data.payload);
           this.setState(res?.data?.payload);
         })
         .catch((err) => { });
@@ -327,8 +326,10 @@ const TakeTest = ({ getNewCount, title }) => {
   const [optionsForRecipe, setOptionsForRecipe] = useState([]);
   const [selectedIngredientsFinal, setSelectedIngredientsFinal] = useState([]);
   const [datanumber, setData] = useState([]);
+  const [VSCID, setVscId] = useState();
+  const [CTID, setCTID] = useState();
+  const [CTIDDATA, setCtiddata] = useState();
   useEffect(() => {
-    console.log("filteredCategoryByVehicleSubCategory", filteredCategoryByVehicleSubCategory);
     if (filteredCategoryByVehicleSubCategory?.length > 0) {
       let storeData = filteredCategoryByVehicleSubCategory.map((item) => {
         return {
@@ -337,23 +338,37 @@ const TakeTest = ({ getNewCount, title }) => {
           name: item?.name
         }
       });
+      setCTID(
+        storeData.map((i) => {
+          return i?.id
+        })
+      );
+
       setData(storeData)
       console.log("storeData", storeData);
     } else {
       setData([])
     }
   }, [filteredCategoryByVehicleSubCategory]);
-
+  useEffect(() => {
+    if (datanumber) {
+      setCtiddata(
+        datanumber?.map((ids) => {
+          return {
+            id: ids?.id,
+            no: Number(ids?.no)
+          }
+        })
+      )
+    }
+  }, [datanumber])
   const [questionKEY, setQuestionKEY] = useState(0);
   let userInfo = getUserInfo();
   useEffect(() => {
     document.title = "Honda | Take test";
   }, []);
 
-  const setNumber = (e) => {
-    console.log("e", e);
-    console.log("datanumber", datanumber);
-  }
+
 
   const handleViewMorePaper = () => {
     setIsPaperViewModel(false);
@@ -373,19 +388,18 @@ const TakeTest = ({ getNewCount, title }) => {
   };
 
   useEffect(() => {
-    if (inputValueForAdd.VehicleCategory) {
+    if (inputValueForAdd.vcid) {
       getAllVehicleSubCategory()
     }
-  }, [inputValueForAdd.VehicleCategory])
+  }, [inputValueForAdd.vcid])
 
 
   const getAllVehicleSubCategory = async () => {
     setIsLoaderVisible(true);
 
-    await ApiGet(`vehicleSubCategory/getVehicleSubCategoryByVcid/${inputValueForAdd.VehicleCategory}`)
+    await ApiGet(`vehicleSubCategory/getVehicleSubCategoryByVcid/${inputValueForAdd.vcid}`)
       .then((res) => {
         setIsLoaderVisible(false);
-        console.log("tetsdgsds", res);
         setFilteredVehicleSubCategory(res?.data?.payload?.vehicleSubCategory);
         // setCount(res?.data?.payload?.count);
       })
@@ -407,18 +421,18 @@ const TakeTest = ({ getNewCount, title }) => {
     }
   }, [selectedIngredientsFinal])
 
+  let SubIds = []
   const getCategoryByVehicleSubCategory = async () => {
-    let SubIds = []
     selectedIngredientsFinal?.length > 0 && selectedIngredientsFinal.map((item, index) => {
       return SubIds.push(item?.value)
     })
     let Data = {
-      vcid: inputValueForAdd.VehicleCategory,
+      vcid: inputValueForAdd.vcid,
       vscid: SubIds
     }
+    setVscId(SubIds)
     await ApiPost(`category/getCategoryByVscid`, Data)
       .then((res) => {
-        console.log("skjjbsadjskdfsdfds", res);
         setFilteredCategoryByVehicleSubCategory(res?.data?.payload?.category);
       })
       .catch((err) => {
@@ -429,12 +443,10 @@ const TakeTest = ({ getNewCount, title }) => {
   const getPapersetByUserId = async (id) => {
     await ApiGet(`response/getResponseByUser/${id}`)
       .then((res) => {
-        console.log("resrtrssdf", res?.data?.payload?.Response[0]);
         setPaperSet(res?.data?.payload?.Response[0]);
       })
       .catch((err) => {
         toast.error(err?.message);
-        console.log(err?.message);
       });
   };
 
@@ -445,29 +457,24 @@ const TakeTest = ({ getNewCount, title }) => {
 
 
   const getResponseByBatchs = async (id) => {
-    console.log("-----------", id);
     await ApiGet(
       `register/getRegisterByBatch/${id}?page=${pageForBatch}&limit=${countPerPageForBatch}`
     )
       .then((res) => {
-        console.log("resrtr", res?.data?.payload?.users);
         setResponseByBatch(res?.data?.payload?.users);
         setCountForBatch(res?.data?.payload?.count);
       })
       .catch((err) => {
         // toast.error(err?.message);
-        console.log(err?.message);
       });
   };
   const getAllResponseByBatch = async (id) => {
     await ApiGet(`response/getResponseByUserWithoutPagination/${id}`)
       .then((res) => {
-        console.log("resresres", res?.data?.payload);
         setAllDataForResultDownload(res?.data?.payload?.findResponse);
 
       })
       .catch((err) => {
-        console.log(err?.message);
       });
   };
   const handleViewMoreClose = () => {
@@ -509,7 +516,6 @@ const TakeTest = ({ getNewCount, title }) => {
   const getAllUserIdWise = async (id) => {
     await ApiGet(`register/getRegisterByBatch/${id}`)
       .then((res) => {
-        console.log("res", res);
         setUserByAttendece(res?.data?.payload?.users);
 
         setAttendenceId(id);
@@ -523,12 +529,10 @@ const TakeTest = ({ getNewCount, title }) => {
   const viewPeperSet = async (id) => {
     await ApiGet(`batch/getExamsetByBatch/${id}`)
       .then((res) => {
-        console.log("res", res);
         setQuestionData(res?.data?.payload?.Examset?.questionsList);
         setSuucessBatchId(res?.data?.payload?.Examset?.batchId);
       })
       .catch((err) => {
-        console.log(err);
         toast.error(err);
       });
   };
@@ -540,7 +544,6 @@ const TakeTest = ({ getNewCount, title }) => {
 
   };
 
-  console.log("userInfo", userInfo);
   const getAllCourseName = async () => {
     setIsLoaderVisible(true);
     if (!search) {
@@ -552,9 +555,7 @@ const TakeTest = ({ getNewCount, title }) => {
         `batch/getBatchByExaminer/${data?.Examiner}?page=${page}&limit=${countPerPage}`
       )
         .then((res) => {
-          console.log("res", res);
           setIsLoaderVisible(false);
-          console.log("artistreport", res);
           setFilteredCourseName(res?.data?.payload?.Batch);
           setCount(res?.data?.payload?.count);
         })
@@ -570,7 +571,6 @@ const TakeTest = ({ getNewCount, title }) => {
       )
         .then((res) => {
           setIsLoaderVisible(false);
-          console.log("artistreport", res);
           setFilteredCourseName(res?.data?.payload?.Batch);
           setCount(res?.data?.payload?.count);
         })
@@ -679,8 +679,6 @@ const TakeTest = ({ getNewCount, title }) => {
                   getAllResponseByBatch(row?._id);
                   getAllResponseByBatchForUser(row?._id);
                   getResponseByBatchs(row?._id)
-                  console.log("rowShow", row);
-                  console.log("isViewMoreAboutus", isViewMoreAboutus);
                 }}
               >
                 <Tooltip title="Show More" arrow>
@@ -911,7 +909,6 @@ const TakeTest = ({ getNewCount, title }) => {
     // if (!search) {
     await ApiGet(`examiner/getAll`)
       .then((res) => {
-        console.log("regist", res?.data?.payload?.Examiner);
         setAllCourseNameExcel(res?.data?.payload?.Examiner);
       })
       .catch((err) => {
@@ -955,11 +952,9 @@ const TakeTest = ({ getNewCount, title }) => {
         setDataCSV((currVal) => [...currVal, data]);
       });
     }
-    console.log("UsertCsvReport", allCourseNameExcel);
   }, [allCourseNameExcel]);
 
   const handleSubjectSelect = (data, id, e) => {
-    console.log("eeeee", e?.target?.name);
     if (e?.target?.name === "selectall") {
       let newArr = [];
       if (selectedTopSubjects.length === data.length) {
@@ -990,9 +985,7 @@ const TakeTest = ({ getNewCount, title }) => {
     setInputValueForAdd({ ...inputValueForAdd, [name]: value });
     setErrorsForAdd({ ...errorsForAdd, [name]: "" });
   };
-  useEffect(() => {
-    console.log("inputValueForAdd", inputValueForAdd);
-  }, [inputValueForAdd]);
+
 
   const validateFormForAddAdmin = () => {
     let formIsValid = true;
@@ -1006,6 +999,10 @@ const TakeTest = ({ getNewCount, title }) => {
       formIsValid = false;
       errorsForAdd["no"] = "*Please Enter no!";
     }
+    if (inputValueForAdd && !inputValueForAdd.vcid) {
+      formIsValid = false;
+      errorsForAdd["vcid"] = "*Please Enter Vehical Category!";
+    }
 
     setErrorsForAdd(errorsForAdd);
     return formIsValid;
@@ -1017,15 +1014,25 @@ const TakeTest = ({ getNewCount, title }) => {
         batch: batchId,
         no: inputValueForAdd.no,
         type: inputValueForAdd.type,
+        vcid: inputValueForAdd.vcid,
+        vscid: VSCID,
+        ctid: CTID,
+        ctidData: CTIDDATA
+
       };
+     
       let tempNumber = datanumber.map((i) => {
         return Number(i.no)
       })
       const reducer = (accumulator, curr) => accumulator + curr;
-      if(inputValueForAdd?.no === tempNumber.reduce(reducer)){
+      if (inputValueForAdd?.no == tempNumber.reduce(reducer)) {
         alert("Okay")
-      }else{
+        
+      } else {
+        
+        setData([])
         alert("Please add more category")
+
       }
       console.log(tempNumber.reduce(reducer));
       console.log("temp", tempNumber);
@@ -1050,7 +1057,6 @@ const TakeTest = ({ getNewCount, title }) => {
   };
 
   const CompleteBatchById = async () => {
-    console.log("BatchId", successBatchId);
     await ApiPut(`batch/CompleteBatchById/${successBatchId}`)
       .then((res) => {
         if (res?.status == 200) {
@@ -1068,11 +1074,9 @@ const TakeTest = ({ getNewCount, title }) => {
   const getAllResponseByBatchForUser = async (id) => {
     await ApiGet(`response/getResponseByBatch/${id}`)
       .then((res) => {
-        console.log("resresresres", res?.data?.payload?.findResponse);
         setAllDataForAttendance(res?.data?.payload?.findResponse);
       })
       .catch((err) => {
-        console.log(err?.message);
       });
   };
   useEffect(() => {
@@ -1329,9 +1333,9 @@ const TakeTest = ({ getNewCount, title }) => {
                       <div>
                         <select
                           className={`form-control form-control-lg form-control-solid `}
-                          id="VehicleCategory"
-                          name="VehicleCategory"
-                          value={inputValueForAdd.VehicleCategory}
+                          id="vcid"
+                          name="vcid"
+                          value={inputValueForAdd.vcid}
                           onChange={(e) => {
                             handleOnChnageAdd(e);
                           }}
@@ -1347,7 +1351,7 @@ const TakeTest = ({ getNewCount, title }) => {
                                   key={item?._id}
                                   value={item?._id}
                                   selected={
-                                    inputValueForAdd?.VehicleCategory === item?._id
+                                    inputValueForAdd?.vcid === item?._id
                                       ? true
                                       : false
                                   }
@@ -1366,7 +1370,7 @@ const TakeTest = ({ getNewCount, title }) => {
                           fontSize: "12px",
                         }}
                       >
-                        {errorsForAdd["VehicleCategory"]}
+                        {errorsForAdd["vcid"]}
                       </span>
                     </div>
                   </div>
