@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-expressions */
 import React, { useEffect, useRef, useState } from "react";
 import DataTable, { defaultThemes } from "react-data-table-component";
+import produce from "immer";
+
 import {
   ApiGet,
   ApiDelete,
@@ -324,15 +326,34 @@ const TakeTest = ({ getNewCount, title }) => {
   const [filteredCategoryByVehicleSubCategory, setFilteredCategoryByVehicleSubCategory] = useState();
   const [optionsForRecipe, setOptionsForRecipe] = useState([]);
   const [selectedIngredientsFinal, setSelectedIngredientsFinal] = useState([]);
+  const [datanumber, setData] = useState([]);
   useEffect(() => {
-    console.log("attendenceId", selectedIngredientsFinal);
-  }, [selectedIngredientsFinal]);
+    console.log("filteredCategoryByVehicleSubCategory", filteredCategoryByVehicleSubCategory);
+    if (filteredCategoryByVehicleSubCategory?.length > 0) {
+      let storeData = filteredCategoryByVehicleSubCategory.map((item) => {
+        return {
+          id: item?._id,
+          no: null,
+          name: item?.name
+        }
+      });
+      setData(storeData)
+      console.log("storeData", storeData);
+    } else {
+      setData([])
+    }
+  }, [filteredCategoryByVehicleSubCategory]);
 
   const [questionKEY, setQuestionKEY] = useState(0);
   let userInfo = getUserInfo();
   useEffect(() => {
     document.title = "Honda | Take test";
   }, []);
+
+  const setNumber = (e) => {
+    console.log("e", e);
+    console.log("datanumber", datanumber);
+  }
 
   const handleViewMorePaper = () => {
     setIsPaperViewModel(false);
@@ -997,6 +1018,17 @@ const TakeTest = ({ getNewCount, title }) => {
         no: inputValueForAdd.no,
         type: inputValueForAdd.type,
       };
+      let tempNumber = datanumber.map((i) => {
+        return Number(i.no)
+      })
+      const reducer = (accumulator, curr) => accumulator + curr;
+      if(inputValueForAdd?.no === tempNumber.reduce(reducer)){
+        alert("Okay")
+      }else{
+        alert("Please add more category")
+      }
+      console.log(tempNumber.reduce(reducer));
+      console.log("temp", tempNumber);
       // await ApiPost(`question/getgenerateQuestion`, data)
       //   .then((res) => {
       //     if (res?.status == 200) {
@@ -1218,7 +1250,7 @@ const TakeTest = ({ getNewCount, title }) => {
             {isAddCourseName === true ? (
               <div>
                 <div className="container">
-                  <h2>Hello</h2>
+
                   <div className="form-group">
                     <select
                       className={`form-control form-control-lg form-control-solid`}
@@ -1395,32 +1427,42 @@ const TakeTest = ({ getNewCount, title }) => {
                       }
                     </div>)
                   } */}
-                  {filteredCategoryByVehicleSubCategory?.length > 0 &&
-                    filteredCategoryByVehicleSubCategory?.map((item) => {
+                  {datanumber?.length > 0 &&
+                    datanumber?.map((item, key) => {
                       return (
-                       <>
-                      <div className="d-flex">
-                      <div>{item?.name}</div>
-                        <input type="text"  maxLength={1}  onKeyPress={(event) => {
-                              if (!/[1-5]/.test(event.key)) {
-                                event.preventDefault();
-                              }
-                            }} />
-                      </div>
-                       </>
+                        <>
+                          <div className="d-flex" key={key}>
+                            <div>{item?.name}</div>
+                            <input value={item?.no}
+                              onChange={(e) => {
+                                setData((curVal) => {
+                                  return produce(curVal, (data) => {
+
+                                    data[key].no =
+                                      e.target?.value || null;
+                                  });
+                                });
+                              }}
+                              type="text" maxLength={1} onKeyPress={(event) => {
+                                if (!/[1-5]/.test(event.key)) {
+                                  event.preventDefault();
+                                }
+                              }} />
+                          </div>
+                        </>
                       )
-                    }) 
+                    })
                   }
 
 
-                        <div>
-                          <div
-                            className="btn btn-success"
-                            onClick={() => generatePeperSet()}
-                          >
-                            Generate Question{" "}
-                          </div>
-                        </div>
+                  <div>
+                    <div
+                      className="btn btn-success"
+                      onClick={() => generatePeperSet()}
+                    >
+                      Generate Question{" "}
+                    </div>
+                  </div>
                 </div>
               </div>
             ) : null}
