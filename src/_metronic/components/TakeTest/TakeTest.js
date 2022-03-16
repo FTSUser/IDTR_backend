@@ -30,6 +30,7 @@ import Multiselect from "multiselect-react-dropdown";
 import { getUserInfo } from "../../../utils/user.util";
 // import { getUserInfo } from "../../../../../utils/user.util";
 import ReactToPrint from "react-to-print";
+import { MultiSelect } from "react-multi-select-component";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -290,6 +291,7 @@ const TakeTest = ({ getNewCount, title }) => {
 
   const [isAddAttedence, setIsAddAttedence] = useState(false);
   const [isAddQuestion, setIsAddQuestion] = useState(false);
+  const [filteredVehicleCategory, setFilteredVehicleCategory] = useState([]);
 
   const [inputValueForAdd, setInputValueForAdd] = useState({});
   const [errorsForAdd, setErrorsForAdd] = useState({});
@@ -318,10 +320,13 @@ const TakeTest = ({ getNewCount, title }) => {
   const [isPaperViewModel, setIsPaperViewModel] = useState(false);
   const [paperSet, setPaperSet] = useState([]);
   const [responseByBatch, setResponseByBatch] = useState([]);
-
+  const [filteredVehicleSubCategory, setFilteredVehicleSubCategory] = useState();
+  const [filteredCategoryByVehicleSubCategory, setFilteredCategoryByVehicleSubCategory] = useState();
+  const [optionsForRecipe, setOptionsForRecipe] = useState([]);
+  const [selectedIngredientsFinal, setSelectedIngredientsFinal] = useState([]);
   useEffect(() => {
-    console.log("attendenceId", attendenceId);
-  }, [attendenceId]);
+    console.log("attendenceId", selectedIngredientsFinal);
+  }, [selectedIngredientsFinal]);
 
   const [questionKEY, setQuestionKEY] = useState(0);
   let userInfo = getUserInfo();
@@ -332,6 +337,74 @@ const TakeTest = ({ getNewCount, title }) => {
   const handleViewMorePaper = () => {
     setIsPaperViewModel(false);
   };
+  const getAllVehicleCategory = async () => {
+    setIsLoaderVisible(true);
+
+    await ApiGet(`vehicleCategory/getAll`)
+      .then((res) => {
+        setIsLoaderVisible(false);
+        setFilteredVehicleCategory(res?.data?.payload?.Question);
+        setCount(res?.data?.payload?.count);
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message)
+      });
+  };
+
+  useEffect(() => {
+    if (inputValueForAdd.VehicleCategory) {
+      getAllVehicleSubCategory()
+    }
+  }, [inputValueForAdd.VehicleCategory])
+
+
+  const getAllVehicleSubCategory = async () => {
+    setIsLoaderVisible(true);
+
+    await ApiGet(`vehicleSubCategory/getVehicleSubCategoryByVcid/${inputValueForAdd.VehicleCategory}`)
+      .then((res) => {
+        setIsLoaderVisible(false);
+        console.log("tetsdgsds", res);
+        setFilteredVehicleSubCategory(res?.data?.payload?.vehicleSubCategory);
+        // setCount(res?.data?.payload?.count);
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message)
+      });
+  };
+
+  useEffect(() => {
+    setOptionsForRecipe(filteredVehicleSubCategory?.length > 0 && filteredVehicleSubCategory?.map((item, index) => {
+      return { label: item?.vehicleSubCategory, value: item?._id }
+    }))
+  }, [filteredVehicleSubCategory])
+
+  useEffect(() => {
+    if (selectedIngredientsFinal) {
+      getCategoryByVehicleSubCategory()
+
+    }
+  }, [selectedIngredientsFinal])
+
+  const getCategoryByVehicleSubCategory = async () => {
+    let SubIds = []
+    selectedIngredientsFinal?.length > 0 && selectedIngredientsFinal.map((item, index) => {
+      return SubIds.push(item?.value)
+    })
+    let Data = {
+      vcid: inputValueForAdd.VehicleCategory,
+      vscid: SubIds
+    }
+    await ApiPost(`category/getCategoryByVscid`, Data)
+      .then((res) => {
+        console.log("skjjbsadjskdfsdfds", res);
+        setFilteredCategoryByVehicleSubCategory(res?.data?.payload?.category);
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message)
+      });
+  };
+
   const getPapersetByUserId = async (id) => {
     await ApiGet(`response/getResponseByUser/${id}`)
       .then((res) => {
@@ -343,10 +416,9 @@ const TakeTest = ({ getNewCount, title }) => {
         console.log(err?.message);
       });
   };
-  // useEffect(() => {
-  //   console.log("idForgetResponseByBatch", idForgetResponseByBatch);
-  //   getResponseByBatch(idForgetResponseByBatch);
-  // }, [idForgetResponseByBatch]);
+
+
+
 
   //getResponseByBatch
 
@@ -533,7 +605,7 @@ const TakeTest = ({ getNewCount, title }) => {
                     setIsAddCourseName(true);
                     setBatchId(row?._id);
                     setTdId(row?.tdid);
-
+                    getAllVehicleCategory()
                     // setDataViewMore(row);
                   }}
                 >
@@ -925,23 +997,23 @@ const TakeTest = ({ getNewCount, title }) => {
         no: inputValueForAdd.no,
         type: inputValueForAdd.type,
       };
-      await ApiPost(`question/getgenerateQuestion`, data)
-        .then((res) => {
-          if (res?.status == 200) {
-            console.log("attdence", res?.data?.payload);
-            setSelectedTopSubjects([]);
-            setIsAddAttedence(false);
-            setInputValueForAdd({});
-            setIsAddCourseName(false);
-            setErrorsForAdd({});
-            getAllCourseName();
-          } else {
-            toast.error(res?.message);
-          }
-        })
-        .catch((err) => {
-          toast.error(err?.response?.data?.message);
-        });
+      // await ApiPost(`question/getgenerateQuestion`, data)
+      //   .then((res) => {
+      //     if (res?.status == 200) {
+      //       console.log("attdence", res?.data?.payload);
+      //       setSelectedTopSubjects([]);
+      //       setIsAddAttedence(false);
+      //       setInputValueForAdd({});
+      //       setIsAddCourseName(false);
+      //       setErrorsForAdd({});
+      //       getAllCourseName();
+      //     } else {
+      //       toast.error(res?.message);
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     toast.error(err?.response?.data?.message);
+      //   });
     }
   };
 
@@ -1217,15 +1289,138 @@ const TakeTest = ({ getNewCount, title }) => {
                       {errorsForAdd["no"]}
                     </span>
                   </div>
+                  <div className="form-group row">
+                    <label className="col-xl-3 col-lg-3 col-form-label">
+                      Select Vehicle Category
+                    </label>
+                    <div className="col-lg-9 col-xl-6">
+                      <div>
+                        <select
+                          className={`form-control form-control-lg form-control-solid `}
+                          id="VehicleCategory"
+                          name="VehicleCategory"
+                          value={inputValueForAdd.VehicleCategory}
+                          onChange={(e) => {
+                            handleOnChnageAdd(e);
+                          }}
+                        >
+                          <option value="" disabled selected hidden>
+                            Select Vehicle Category Type
 
-                  <div>
-                    <div
-                      className="btn btn-success"
-                      onClick={() => generatePeperSet()}
-                    >
-                      Generate Question{" "}
+                          </option>
+                          {filteredVehicleCategory?.length > 0 &&
+                            filteredVehicleCategory?.map((item) => {
+                              return (
+                                <option
+                                  key={item?._id}
+                                  value={item?._id}
+                                  selected={
+                                    inputValueForAdd?.VehicleCategory === item?._id
+                                      ? true
+                                      : false
+                                  }
+                                >
+                                  {" "}
+                                  {item?.vehicleCategory}{" "}
+                                </option>
+                              );
+                            })}
+                        </select>
+                      </div>
+                      <span
+                        style={{
+                          color: "red",
+                          top: "5px",
+                          fontSize: "12px",
+                        }}
+                      >
+                        {errorsForAdd["VehicleCategory"]}
+                      </span>
                     </div>
                   </div>
+
+
+
+                  <div className="form-group row">
+                    <label className="col-xl-3 col-lg-3 col-form-label">
+                      Select Vehicle Sub-Category
+                    </label>
+                    <div className="col-lg-9 col-xl-6">
+                      {filteredVehicleSubCategory?.length > 0 ?
+                        <div>
+                          <MultiSelect
+                            options={optionsForRecipe}
+                            value={selectedIngredientsFinal}
+                            onChange={(selectedIngredientsFinal) => {
+                              setSelectedIngredientsFinal(selectedIngredientsFinal)
+                              setErrorsForAdd({ ...errorsForAdd, selectedIngredientsFinal: "" });
+                            }}
+                            labelledBy="name"
+                          // isLoading={loaderIsRunning}
+                          />
+                        </div>
+                        :
+                        <div>
+                          <input
+                            value="no vehicle sub-category found"
+                            disabled
+                          />
+
+                        </div>
+                      }
+
+                      <span
+                        style={{
+                          color: "red",
+                          top: "5px",
+                          fontSize: "12px",
+                        }}
+                      >
+                        {errorsForAdd["selectedIngredientsFinal"]}
+                      </span>
+                    </div>
+                  </div>
+                  {/* {
+                    selectedIngredientsFinal.length > 0 && (
+                      <div>
+                      {
+                        filteredCategoryByVehicleSubCategory.length > 0 && filteredCategoryByVehicleSubCategory.map((data,key)=>{
+                          return(
+  
+                            <>
+                            <div>{data?.name}</div>
+                              </>
+                          )
+                        }) 
+                      }
+                    </div>)
+                  } */}
+                  {filteredCategoryByVehicleSubCategory?.length > 0 &&
+                    filteredCategoryByVehicleSubCategory?.map((item) => {
+                      return (
+                       <>
+                      <div className="d-flex">
+                      <div>{item?.name}</div>
+                        <input type="text"  maxLength={1}  onKeyPress={(event) => {
+                              if (!/[1-5]/.test(event.key)) {
+                                event.preventDefault();
+                              }
+                            }} />
+                      </div>
+                       </>
+                      )
+                    }) 
+                  }
+
+
+                        <div>
+                          <div
+                            className="btn btn-success"
+                            onClick={() => generatePeperSet()}
+                          >
+                            Generate Question{" "}
+                          </div>
+                        </div>
                 </div>
               </div>
             ) : null}

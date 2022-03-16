@@ -1759,10 +1759,13 @@ const User = ({ getNewCount, title }) => {
   const getTrainignDate = () => {
     const data = {
       date: formdata.preferdate,
-      coursenameid: formdata.courseName,
+      cnid: formdata.courseName,
+      ccid: formdata.courseCategory,
+      ctid: formdata.courseType,
+      vcid:formdata.vehicleCategory
     };
     ApiGet(
-      `trainingDate/getDatePrevious?date=${data.date}`
+      `trainingDate/getDatePrevious??date=${data.date}&vcid=${formdata.vehicleCategory}&ctid=${formdata.courseType}&ccid=${formdata.courseCategory}&cnid=${formdata.courseName}`
     ).then((res) => {
       if (res.data.payload) {
         // setTimeout(() => {
