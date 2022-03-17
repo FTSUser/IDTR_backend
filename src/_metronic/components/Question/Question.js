@@ -174,10 +174,10 @@ const Question = (props) => {
             formIsValid = false;
             errorsForAdd["name"] = "*Please Enter Name!";
         }
-        if (inputValueForAdd && !inputValueForAdd.cnid) {
-            formIsValid = false;
-            errorsForAdd["cnid"] = "*Please Enter Course Name!";
-        }
+        // if (inputValueForAdd && !inputValueForAdd.cnid) {
+        //     formIsValid = false;
+        //     errorsForAdd["cnid"] = "*Please Enter Course Name!";
+        // }
 
 
         if (inputValueForAdd && !inputValueForAdd.language) {
@@ -215,7 +215,7 @@ const Question = (props) => {
         if (validateFormForAddAdmin()) {
             let Data = {
                 Qname: inputValueForAdd.name,
-                cnid: inputValueForAdd.cnid,
+                // cnid: inputValueForAdd.cnid,
                 type: inputValueForAdd.type,
                 vcid: inputValueForAdd.vcid,
                 Option: option,
@@ -275,7 +275,7 @@ const Question = (props) => {
         if (validateFormForAddAdmin()) {
             let Data = {
                 Qname: inputValueForAdd.name,
-                cnid: inputValueForAdd.cnid,
+                // cnid: inputValueForAdd.cnid,
                 type: inputValueForAdd.type,
                 vcid: inputValueForAdd.vcid,
 
@@ -495,7 +495,7 @@ const Question = (props) => {
                                     setInputValueForAdd({
 
                                         name: row?.Qname,
-                                        cnid: row?.cnid,
+                                        // cnid: row?.cnid,
                                         description: row?.description,
                                         // weight: row?.weight,
                                         language: row?.language,
@@ -1300,7 +1300,7 @@ const Question = (props) => {
 
 
 
-                                <div className="form-group row">
+                                {/* <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
                                         Course Name
                                     </label>
@@ -1349,7 +1349,7 @@ const Question = (props) => {
                                         </span>
                                     </div>
 
-                                </div>
+                                </div> */}
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
                                         Category

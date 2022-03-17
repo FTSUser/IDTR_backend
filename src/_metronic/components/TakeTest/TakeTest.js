@@ -1020,48 +1020,48 @@ const TakeTest = ({ getNewCount, title }) => {
         ctidData: CTIDDATA
 
       };
-     console.log("data",data);
+      console.log("data", data);
       let tempNumber = datanumber.map((i) => {
         return Number(i.no)
       })
       const reducer = (accumulator, curr) => accumulator + curr;
       if (inputValueForAdd?.no == tempNumber.reduce(reducer)) {
-       
-         await ApiPost(`question/getgenerateQuestion`, data)
-        .then((res) => {
-          if (res?.status == 200) {
-            console.log("attdence", res?.data?.payload);
-            setSelectedTopSubjects([]);
-            setIsAddAttedence(false);
-            setInputValueForAdd({});
-            setIsAddCourseName(false);
-            setErrorsForAdd({});
-            getAllCourseName();
-          } else {
-            toast.error(res?.message);
-          }
-        })
-        .catch((err) => {
-          toast.error(err?.response?.data?.message);
-        });
+
+        await ApiPost(`question/getgenerateQuestion`, data)
+          .then((res) => {
+            if (res?.status == 200) {
+              console.log("attdence", res?.data?.payload);
+              setSelectedTopSubjects([]);
+              setIsAddAttedence(false);
+              setInputValueForAdd({});
+              setIsAddCourseName(false);
+              setErrorsForAdd({});
+              getAllCourseName();
+            } else {
+              toast.error(res?.message);
+            }
+          })
+          .catch((err) => {
+            toast.error(err?.response?.data?.message);
+          });
       } else {
-       
+
         setData(
           datanumber?.map((ids) => {
             return {
               id: ids?.id,
-              name:ids?.name,
+              name: ids?.name,
               no: ''
             }
           })
         )
         toast.error(`Please Select Total ${inputValueForAdd?.no} Question `);
-     
+
 
       }
       console.log(tempNumber.reduce(reducer));
       console.log("temp", tempNumber);
-     
+
     }
   };
 
@@ -1263,79 +1263,8 @@ const TakeTest = ({ getNewCount, title }) => {
             {isAddCourseName === true ? (
               <div>
                 <div className="container">
-
-                  <div className="form-group">
-                    <select
-                      className={`form-control form-control-lg form-control-solid`}
-                      name="type"
-                      value={inputValueForAdd.type}
-                      onChange={(e) => {
-                        handleOnChnageAdd(e);
-                      }}
-                    >
-                      <option>Select Languagae...</option>
-                      <option
-                        value="english"
-                        selected={
-                          inputValueForAdd?.type === "english" ? true : false
-                        }
-                      >
-                        English{" "}
-                      </option>
-                      <option
-                        value="hindi"
-                        selected={
-                          inputValueForAdd?.type === "hindi" ? true : false
-                        }
-                      >
-                        Hindi
-                      </option>
-                    </select>
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errorsForAdd["type"]}
-                    </span>
-                  </div>
-                  <div className="form-group">
-                    <select
-                      className={`form-control form-control-lg form-control-solid`}
-                      name="no"
-                      value={inputValueForAdd.no}
-                      onChange={(e) => {
-                        handleOnChnageAdd(e);
-                      }}
-                    >
-                      <option>Select Number Of Question...</option>
-                      <option
-                        value="20"
-                        selected={inputValueForAdd?.no === "20" ? true : false}
-                      >
-                        20{" "}
-                      </option>
-                      <option
-                        value="40"
-                        selected={inputValueForAdd?.no === "40" ? true : false}
-                      >
-                        40
-                      </option>
-                    </select>
-                    <span
-                      style={{
-                        color: "red",
-                        top: "5px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {errorsForAdd["no"]}
-                    </span>
-                  </div>
                   <div className="form-group row">
-                    <label className="col-xl-3 col-lg-3 col-form-label">
+                    <label className="col-xl-2 col-lg-2 col-form-label">
                       Select Vehicle Category
                     </label>
                     <div className="col-lg-9 col-xl-6">
@@ -1387,7 +1316,7 @@ const TakeTest = ({ getNewCount, title }) => {
 
 
                   <div className="form-group row">
-                    <label className="col-xl-3 col-lg-3 col-form-label">
+                    <label className="col-xl-2 col-lg-2 col-form-label">
                       Select Vehicle Sub-Category
                     </label>
                     <div className="col-lg-9 col-xl-6">
@@ -1407,6 +1336,7 @@ const TakeTest = ({ getNewCount, title }) => {
                         :
                         <div>
                           <input
+                           className={`form-control form-control-lg form-control-solid `}
                             value="no vehicle sub-category found"
                             disabled
                           />
@@ -1440,33 +1370,119 @@ const TakeTest = ({ getNewCount, title }) => {
                       }
                     </div>)
                   } */}
-                  {datanumber?.length > 0 &&
-                    datanumber?.map((item, key) => {
-                      return (
-                        <>
-                          <div className="d-flex" key={key}>
-                            <div>{item?.name}</div>
-                            <input value={item?.no}
-                              onChange={(e) => {
-                                setData((curVal) => {
-                                  return produce(curVal, (data) => {
+                  <div className="form-group row">
+                    <label className="col-xl-2 col-lg-2 col-form-label">
+                      Select Number Of Question
+                    </label>
+                    <div className="col-lg-9 col-xl-6">
+                      <select
+                        className={`form-control form-control-lg form-control-solid`}
+                        name="no"
+                        value={inputValueForAdd.no}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
+                      >
+                        <option>Select Number Of Question...</option>
+                        <option
+                          value="20"
+                          selected={inputValueForAdd?.no === "20" ? true : false}
+                        >
+                          20{" "}
+                        </option>
+                        <option
+                          value="40"
+                          selected={inputValueForAdd?.no === "40" ? true : false}
+                        >
+                          40
+                        </option>
+                      </select>
+                      <span
+                        style={{
+                          color: "red",
+                          top: "5px",
+                          fontSize: "12px",
+                        }}
+                      >
+                        {errorsForAdd["no"]}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <label className="col-xl-2 col-lg-2 col-form-label">
+                      Select Language
+                    </label>
+                    <div className="col-lg-9 col-xl-6">
+                      <select
+                        className={`form-control form-control-lg form-control-solid`}
+                        name="type"
+                        value={inputValueForAdd.type}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
+                      >
+                        <option>Select Languagae...</option>
+                        <option
+                          value="english"
+                          selected={
+                            inputValueForAdd?.type === "english" ? true : false
+                          }
+                        >
+                          English{" "}
+                        </option>
+                        <option
+                          value="hindi"
+                          selected={
+                            inputValueForAdd?.type === "hindi" ? true : false
+                          }
+                        >
+                          Hindi
+                        </option>
+                      </select>
+                      <span
+                        style={{
+                          color: "red",
+                          top: "5px",
+                          fontSize: "12px",
+                        }}
+                      >
+                        {errorsForAdd["type"]}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <label className="col-xl-2 col-lg-2 col-form-label">
 
-                                    data[key].no =
-                                      e.target?.value || null;
-                                  });
-                                });
-                              }}
-                              type="text" maxLength={1} onKeyPress={(event) => {
-                                if (!/[1-5]/.test(event.key)) {
-                                  event.preventDefault();
-                                }
-                              }} />
-                          </div>
-                        </>
-                      )
-                    })
-                  }
+                    </label>
+                    <div className="col-lg-9 col-xl-6">
+                      {datanumber?.length > 0 &&
+                        datanumber?.map((item, key) => {
+                          return (
+                            <>
+                              <div className="d-flex" style={{justifyContent:"space-between"}} key={key}>
+                                <div>{item?.name}</div>
+                                <input value={item?.no} className="inputboxes"
+                                  onChange={(e) => {
+                                    setData((curVal) => {
+                                      return produce(curVal, (data) => {
 
+                                        data[key].no =
+                                          e.target?.value || null;
+                                      });
+                                    });
+                                  }}
+                                  type="text" maxLength={1} onKeyPress={(event) => {
+                                    if (!/[1-5]/.test(event.key)) {
+                                      event.preventDefault();
+                                    }
+                                  }} />
+                              </div>
+                            </>
+                          )
+                        })
+                      }
+                    </div>
+                  </div>
 
                   <div>
                     <div
