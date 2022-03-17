@@ -1020,39 +1020,48 @@ const TakeTest = ({ getNewCount, title }) => {
         ctidData: CTIDDATA
 
       };
-     
+     console.log("data",data);
       let tempNumber = datanumber.map((i) => {
         return Number(i.no)
       })
       const reducer = (accumulator, curr) => accumulator + curr;
       if (inputValueForAdd?.no == tempNumber.reduce(reducer)) {
-        alert("Okay")
-        
+       
+         await ApiPost(`question/getgenerateQuestion`, data)
+        .then((res) => {
+          if (res?.status == 200) {
+            console.log("attdence", res?.data?.payload);
+            setSelectedTopSubjects([]);
+            setIsAddAttedence(false);
+            setInputValueForAdd({});
+            setIsAddCourseName(false);
+            setErrorsForAdd({});
+            getAllCourseName();
+          } else {
+            toast.error(res?.message);
+          }
+        })
+        .catch((err) => {
+          toast.error(err?.response?.data?.message);
+        });
       } else {
-        
-        setData([])
-        alert("Please add more category")
+       
+        setData(
+          datanumber?.map((ids) => {
+            return {
+              id: ids?.id,
+              name:ids?.name,
+              no: ''
+            }
+          })
+        )
+        toast.error(`Please Select Total ${inputValueForAdd?.no} Question `);
+     
 
       }
       console.log(tempNumber.reduce(reducer));
       console.log("temp", tempNumber);
-      // await ApiPost(`question/getgenerateQuestion`, data)
-      //   .then((res) => {
-      //     if (res?.status == 200) {
-      //       console.log("attdence", res?.data?.payload);
-      //       setSelectedTopSubjects([]);
-      //       setIsAddAttedence(false);
-      //       setInputValueForAdd({});
-      //       setIsAddCourseName(false);
-      //       setErrorsForAdd({});
-      //       getAllCourseName();
-      //     } else {
-      //       toast.error(res?.message);
-      //     }
-      //   })
-      //   .catch((err) => {
-      //     toast.error(err?.response?.data?.message);
-      //   });
+     
     }
   };
 
