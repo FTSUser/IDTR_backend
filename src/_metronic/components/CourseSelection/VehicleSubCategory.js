@@ -489,6 +489,7 @@ const CourseType = ({ getNewCount, title }) => {
                     UpdatedBy: registerUser?.updatedBy,
                     VehicleCategory: registerUser?.vcid,
                     VehicleCategoryId: registerUser?.vehicleSubCategory,
+                    VehicleSubCategory:registerUser?._id
                 };
                 setDataCSV((currVal) => [...currVal, data]);
             });

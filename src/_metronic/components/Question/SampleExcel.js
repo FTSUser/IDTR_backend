@@ -17,12 +17,13 @@ export const ExportCSV = () => {
         "question": "question name",
         "option": "option",
         "correctanswer": "0 or 1",
-        "Category": "category id",
-        "Course Name": "cnid",
+        "QuestionCategory": "QuestionCategory id",
+        "vehicleCategory": "vehicleCategory id",
+        "vehicleSubCategory": "vehicleSubCategory id",
         // "Explaination": "Explaination",
-        "image":"image url",
-      
-       
+        "image": "image url",
+
+
       },
     ];
     let ws = XLSX.utils.json_to_sheet(csvData);
