@@ -62,7 +62,7 @@ const Course = ({ getNewCount, title }) => {
 
 
     useEffect(() => {
-        document.title = "Honda | HelpfulTips";
+        document.title = "Honda | How to start a course";
     }, []);
 
     const handleOnChnage = (e) => {
@@ -106,12 +106,12 @@ const Course = ({ getNewCount, title }) => {
 
     useEffect(() => {
         getAllHelpfulTips();
-    }, [page, countPerPage]);
+    }, []);
 
     const getAllHelpfulTips = async () => {
         setIsLoaderVisible(true);
         if (!search) {
-            await ApiGet(`startCourse/getAllstartCourse?page=${page}&limit=${countPerPage}`)
+            await ApiGet(`startCourse/getAllstartCourse`)
                 .then((res) => {
                     console.log("dataaaa", res)
                     setIsLoaderVisible(false);
@@ -496,7 +496,7 @@ const Course = ({ getNewCount, title }) => {
                     <>
                         <div className="d-flex justify-content-between">
                             <div
-                                className="cursor-pointer pl-2"
+                                className="cursor-pointer pr-2"
                                 onClick={() => {
                                     setIsUpdateHelpfulTips(true);
                                     setIdForUpdateHelpfulTipsData(row._id);
@@ -645,7 +645,7 @@ const Course = ({ getNewCount, title }) => {
                 <div className="p-2 mb-2">
                     <div className="row mb-4 pr-3">
                         <div className="col d-flex justify-content-between">
-                            <h2 className="pl-3 pt-2"> HelpfulTips</h2>
+                            <h2 className="pl-3 pt-2"> How to start a course</h2>
                         </div>
                         <div className="col">
                             <div>
@@ -653,12 +653,12 @@ const Course = ({ getNewCount, title }) => {
                                     type="text"
                                     className={`form-control form-control-lg form-control-solid `}
                                     name="title"
-                                    placeholder="Search HelpfulTips"
+                                    placeholder="Search How to start a course"
                                     onChange={(e) => handleSearch(e)}
                                 />
                             </div>
                         </div>
-                        <div className="cus-medium-button-style button-height">
+                        {/* <div className="cus-medium-button-style button-height">
                             <button
                                 onClick={() => {
                                     setIsAddHelpfulTips(true);
@@ -667,7 +667,7 @@ const Course = ({ getNewCount, title }) => {
                             >
                                 Add HelpfulTips
                             </button>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* delete model */}
@@ -675,7 +675,7 @@ const Course = ({ getNewCount, title }) => {
                         <Modal.Header closeButton>
                             <Modal.Title className="text-danger">Alert!</Modal.Title>
                         </Modal.Header>
-                        <Modal.Body>Are You Sure To Want To delete this HelpfulTips</Modal.Body>
+                        <Modal.Body>Are You Sure To Want To delete this Course</Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
                                 cancel
@@ -699,7 +699,7 @@ const Course = ({ getNewCount, title }) => {
                         </Modal.Header>
                         <Modal.Body>
                             Are You Sure To Want To{" "}
-                            {displayModal === true ? "Deactive" : "Active"} this Combo
+                            {displayModal === true ? "Deactive" : "Active"} this Course
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleCloseShowStatus}>
@@ -730,19 +730,19 @@ const Course = ({ getNewCount, title }) => {
                         progressComponent={
                             <Loader type="Puff" color="#334D52" height={30} width={30} />
                         }
-                        highlightOnHover
-                        pagination
-                        paginationServer
-                        paginationTotalRows={count}
-                        paginationPerPage={countPerPage}
-                        paginationRowsPerPageOptions={[10, 20, 25, 50, 100]}
-                        paginationDefaultPage={page}
-                        onChangePage={(page) => {
-                            setPage(page);
-                        }}
-                        onChangeRowsPerPage={(rowPerPage) => {
-                            setCountPerPage(rowPerPage);
-                        }}
+                        // highlightOnHover
+                        // pagination
+                        // paginationServer
+                        // paginationTotalRows={count}
+                        // paginationPerPage={countPerPage}
+                        // paginationRowsPerPageOptions={[10, 20, 25, 50, 100]}
+                        // paginationDefaultPage={page}
+                        // onChangePage={(page) => {
+                        //     setPage(page);
+                        // }}
+                        // onChangeRowsPerPage={(rowPerPage) => {
+                        //     setCountPerPage(rowPerPage);
+                        // }}
                     />
                 </div>
             </div>
@@ -767,7 +767,7 @@ const Course = ({ getNewCount, title }) => {
                     <List>
                         {isAddHelpfulTips === true ? (
                             <div className="form ml-30 ">
-                                {/* Name Amenintie */}
+                               
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
                                         Enter Title
@@ -835,7 +835,7 @@ const Course = ({ getNewCount, title }) => {
                                                 type="file"
                                                 className={`form-control form-control-lg form-control-solid `}
                                                 name="image"
-                                                // value={productValues.image || null}
+                                              
                                                 onChange={(e) => {
                                                     getImageArrayFromUpload(e);
                                                 }}
