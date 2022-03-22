@@ -348,10 +348,10 @@ const Question = (props) => {
     const getAllVehicleCategory = async () => {
 
 
-        await ApiGet(`vehicleCategory/getAll`)
+        await ApiGet(`vehicleCategory/getSpecificVehicleCategory`)
             .then((res) => {
 
-                setFilteredVehicleCategory(res?.data?.payload?.Question);
+                setFilteredVehicleCategory(res?.data?.payload?.vehicleCategory);
 
             })
             .catch((err) => {
@@ -1203,11 +1203,11 @@ const Question = (props) => {
                                             <div>
                                                 <input
                                                     className={`form-control form-control-lg form-control-solid `}
-                                                    value="No Vehicle Sub-Category Found For thid Vehicle Category"
+                                                    value="No Vehicle Sub-Category Found For this Vehicle Category"
                                                     disabled
                                                 />
                                                 {/* <option value="" disabled hidden>
-                                                        No Vehicle Sub-Category Found For thid Vehicle Category
+                                                        No Vehicle Sub-Category Found For this Vehicle Category
                                                     </option>
                                                 </select> */}
                                             </div>
