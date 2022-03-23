@@ -169,7 +169,7 @@ const Request = ({ getNewCount, title }) => {
             selector: row => row?.batchId?.Examiner?.name ? row?.batchId?.Examiner?.name : '-',
         },
         {
-            name: "Data Entery Name",
+            name: "Data Entry Name",
 
             sortable: true,
             selector: row => row?.batchId?.DataEntry?.name ? row?.batchId?.DataEntry?.name : '-',
