@@ -145,7 +145,7 @@ export function Demo1Dashboard() {
             <div className="card card-custom py-5">
               <div className="card-body p-0 text-center">
                 <div className="">
-                  <div className="mb-3"><h1>Data Entery</h1></div>
+                  <div className="mb-3"><h1>Data Entry</h1></div>
                   <div>
                     <h3>{count?.dataEntrys}</h3>
                   </div>
@@ -235,7 +235,7 @@ export function Demo1Dashboard() {
             <div className="card card-custom py-5">
               <div className="card-body p-0 text-center">
                 <div className="">
-                  <div className="mb-3"><h1>Data Entery</h1></div>
+                  <div className="mb-3"><h1>Data Entry</h1></div>
                   <div>
                     <h3>{count?.dataEntrys}</h3>
                   </div>

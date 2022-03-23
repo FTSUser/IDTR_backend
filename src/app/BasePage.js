@@ -39,6 +39,7 @@ import Images from "../_metronic/components/Images/Images";
 import Report from "../_metronic/components/Report/Report";
 import CancleCourse from "../_metronic/components/CanleCourse/CancleCourse";
 import Partial from "../_metronic/components/parsal/parsal";
+import Course from "../_metronic/components/Course/Course";
 
 export default function BasePage() {
   let userInfo = getUserInfo()
@@ -87,6 +88,7 @@ export default function BasePage() {
           <ContentRoute exact path="/batch-creation" component={Batch} />
           <ContentRoute exact path="/examiner" component={Examiner} />
           <ContentRoute exact path="/question-addition" component={Question} />
+          <ContentRoute exact path="/how-to start a course" component={Course} />
 
 
           {/* /////////////////////////////////////////////////////////////////////////*/}

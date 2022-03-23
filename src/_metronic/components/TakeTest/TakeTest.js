@@ -376,10 +376,10 @@ const TakeTest = ({ getNewCount, title }) => {
   const getAllVehicleCategory = async () => {
     setIsLoaderVisible(true);
 
-    await ApiGet(`vehicleCategory/getAll`)
+    await ApiGet(`vehicleCategory/getSpecificVehicleCategory`)
       .then((res) => {
         setIsLoaderVisible(false);
-        setFilteredVehicleCategory(res?.data?.payload?.Question);
+        setFilteredVehicleCategory(res?.data?.payload?.vehicleCategory);
         setCount(res?.data?.payload?.count);
       })
       .catch((err) => {
@@ -1336,7 +1336,7 @@ const TakeTest = ({ getNewCount, title }) => {
                         :
                         <div>
                           <input
-                           className={`form-control form-control-lg form-control-solid `}
+                            className={`form-control form-control-lg form-control-solid `}
                             value="no vehicle sub-category found"
                             disabled
                           />
@@ -1459,7 +1459,7 @@ const TakeTest = ({ getNewCount, title }) => {
                         datanumber?.map((item, key) => {
                           return (
                             <>
-                              <div className="d-flex" style={{justifyContent:"space-between"}} key={key}>
+                              <div className="d-flex" style={{ justifyContent: "space-between" }} key={key}>
                                 <div>{item?.name}</div>
                                 <input value={item?.no} className="inputboxes"
                                   onChange={(e) => {
@@ -1472,7 +1472,7 @@ const TakeTest = ({ getNewCount, title }) => {
                                     });
                                   }}
                                   type="text" maxLength={1} onKeyPress={(event) => {
-                                    if (!/[1-5]/.test(event.key)) {
+                                    if (!/[0-5]/.test(event.key)) {
                                       event.preventDefault();
                                     }
                                   }} />
