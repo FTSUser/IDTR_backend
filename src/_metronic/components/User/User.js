@@ -1413,15 +1413,15 @@ const User = ({ getNewCount, title }) => {
         toast.error(`Sorry! License Category must be specified`);
         seterrorShow("License Category ");
         settypeTrueFalseform(true);
-      } else if (formdata?.license != "N/A" && formdata.driverlicense === "") {
+      } else if (formdata?.license != "N/A" && formdata?.license != 'Learner' && formdata.driverlicense === "") {
         toast.error(`Sorry! Driver's License Number must be specified`);
         seterrorShow(`Driver's License Number`);
         settypeTrueFalseform(true);
-      } else if (formdata?.license != "N/A" && formdata.issueDate === "") {
+      } else if (formdata?.license != "N/A" && formdata?.license != 'Learner'&&  formdata.issueDate === "") {
         toast.error(`Sorry! Issue Date must be specified`);
         seterrorShow("Issue Date");
         settypeTrueFalseform(true);
-      } else if (formdata?.license != "N/A" && formdata.validDate === "") {
+      } else if (formdata?.license != "N/A" && formdata?.license != 'Learner' && formdata.validDate === "") {
         toast.error(`Sorry! Valid Date must be specified`);
         seterrorShow("Valid Date");
         settypeTrueFalseform(true);
@@ -1511,7 +1511,7 @@ const User = ({ getNewCount, title }) => {
         toast.error("Select passport photo");
         seterrorShow("Passport Photo");
         settypeTrueFalseform(true);
-      } else if (formdata.license !== "N/A" && formdata.driviniglicencephoto === null) {
+      } else if (formdata.license !== "N/A" && formdata.license !== "Learner" && formdata.driviniglicencephoto === null) {
         toast.error("Select driving license photo");
         seterrorShow("Driving license photo");
         settypeTrueFalseform(true);
@@ -1833,7 +1833,7 @@ const User = ({ getNewCount, title }) => {
   const uploadCertificate = async () => {
     let urls = {};
     let data = [];
-    if (formdata?.license === 'N/A') {
+    if (formdata?.license === 'N/A' ||  formdata?.license === 'Learner') {
       if (formdata.passport) {
         if (formdata.passport && typeof formdata.passport !== "string") {
           data.push(formdata.passport);
@@ -2288,7 +2288,7 @@ const User = ({ getNewCount, title }) => {
                           }}
                         />
                       </div>
-                      {formdata?.license != "N/A" &&
+                      {formdata?.license != "N/A" && formdata?.license != 'Learner' &&
                         <>
                           <div className="register-grid-items ">
                             <label>
@@ -2868,11 +2868,11 @@ const User = ({ getNewCount, title }) => {
                       />
                     </div>
                     {
-                      formdata?.license === 'N/A' ? <div className="photo-upload-from">
+                      formdata?.license === 'N/A' || formdata?.license === 'Learner' ? <div className="photo-upload-from">
                         <p>
                           2. Driving License
                           (Not valid
-                          incase of N/A)
+                          incase of N/A and Learner)
                         </p>
                         <input
                           type="file"
@@ -2888,7 +2888,7 @@ const User = ({ getNewCount, title }) => {
                         <p>
                           2. Driving License
                           <span className="star-color">*</span> (Not valid
-                          incase of N/A)
+                          incase of N/A and Learner)
                         </p>
                         <input
                           type="file"
@@ -2961,7 +2961,7 @@ const User = ({ getNewCount, title }) => {
                         </div>
                       </div>
                     )}
-                    {formdata?.license === 'N/A' ?
+                    {formdata?.license === 'N/A' || formdata?.license === 'Learner' ?
                       formdata?.passport ?
                         <div className="next-step-alignment">
                           <button
