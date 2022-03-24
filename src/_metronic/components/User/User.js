@@ -1836,6 +1836,10 @@ const User = ({ getNewCount, title }) => {
     if (formdata?.license === 'N/A' ||  formdata?.license === 'Learner') {
       if (formdata.passport) {
         if (formdata.passport && typeof formdata.passport !== "string") {
+          if (!formdata.passport.name.match(/\.(jpg|jpeg|png)$/)) {
+            toast.error(`*${formdata.passport.name} file is not valid.`);
+            return
+          }
           if ((formdata.passport.size / 1048576).toFixed(2) > 1) {
             toast.error(`*Please Upload less than 1 MB Passport File.`);
             return
@@ -1848,6 +1852,10 @@ const User = ({ getNewCount, title }) => {
           formdata.driviniglicencephoto &&
           typeof formdata.driviniglicencephoto !== "string"
         ) {
+          if (!formdata.driviniglicencephoto.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
+            toast.error(`*${formdata.driviniglicencephoto.name} file is not valid.`);
+            return
+          }
           if ((formdata.driviniglicencephoto.size / 1048576).toFixed(2) > 5) {
             toast.error(`*Please Upload less than 5 MB Drivinig Licence Photo File.`)
             return
@@ -1862,6 +1870,10 @@ const User = ({ getNewCount, title }) => {
           formdata.mediacalCertificate &&
           typeof formdata.mediacalCertificate !== "string"
         ) {
+          if (!formdata.mediacalCertificate.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
+            toast.error(`*${formdata.mediacalCertificate.name} file is not valid.`);
+            return
+          }
           if ((formdata.mediacalCertificate.size / 1048576).toFixed(2) > 5) {
             toast.error(`*Please Upload less than 5 MB Mediacal Certificate File.`)
             return
@@ -1873,6 +1885,10 @@ const User = ({ getNewCount, title }) => {
           urls = { mediacalCertificate: mediacalCertificate, ...urls };
         }
         if (formdata.idProof && typeof formdata.idProof !== "string") {
+          if (!formdata.idProof.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
+            toast.error(`*${formdata.idProof.name} file is not valid.`);
+            return
+          }
           if ((formdata.idProof.size / 1048576).toFixed(2) > 5) {
             toast.error(`*Please Upload less than 5 MB Id Proof File.`)
             return
@@ -1892,6 +1908,10 @@ const User = ({ getNewCount, title }) => {
     }
     else if (formdata.passport && formdata.driviniglicencephoto) {
       if (formdata.passport && typeof formdata.passport !== "string") {
+        if (!formdata.passport.name.match(/\.(jpg|jpeg|png)$/)) {
+          toast.error(`*${formdata.passport.name} file is not valid.`);
+          return
+        }
         if ((formdata.passport.size / 1048576).toFixed(2) > 1) {
           toast.error(`*Please Upload less than 1 MB Passport File.`);
           return
@@ -1904,6 +1924,10 @@ const User = ({ getNewCount, title }) => {
         formdata.driviniglicencephoto &&
         typeof formdata.driviniglicencephoto !== "string"
       ) {
+        if (!formdata.driviniglicencephoto.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
+          toast.error(`*${formdata.driviniglicencephoto.name} file is not valid.`);
+          return
+        }
         if ((formdata.driviniglicencephoto.size / 1048576).toFixed(2) > 5) {
           toast.error(`*Please Upload less than 5 MB Drivinig Licence Photo File.`)
           return
@@ -1918,6 +1942,10 @@ const User = ({ getNewCount, title }) => {
         formdata.mediacalCertificate &&
         typeof formdata.mediacalCertificate !== "string"
       ) {
+        if (!formdata.mediacalCertificate.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
+          toast.error(`*${formdata.mediacalCertificate.name} file is not valid.`);
+          return
+        }
         if ((formdata.mediacalCertificate.size / 1048576).toFixed(2) > 5) {
           toast.error(`*Please Upload less than 5 MB Mediacal Certificate File.`)
           return
@@ -1929,6 +1957,10 @@ const User = ({ getNewCount, title }) => {
         urls = { mediacalCertificate: mediacalCertificate, ...urls };
       }
       if (formdata.idProof && typeof formdata.idProof !== "string") {
+        if (!formdata.idProof.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
+          toast.error(`*${formdata.idProof.name} file is not valid.`);
+          return
+        }
         if ((formdata.idProof.size / 1048576).toFixed(2) > 5) {
           toast.error(`*Please Upload less than 5 MB Id Proof File.`)
           return
