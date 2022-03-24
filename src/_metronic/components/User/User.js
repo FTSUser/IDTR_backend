@@ -1836,6 +1836,10 @@ const User = ({ getNewCount, title }) => {
     if (formdata?.license === 'N/A' ||  formdata?.license === 'Learner') {
       if (formdata.passport) {
         if (formdata.passport && typeof formdata.passport !== "string") {
+          if ((formdata.passport.size / 1048576).toFixed(2) > 1) {
+            toast.error(`*Please Upload less than 1 MB Passport File.`);
+            return
+          } 
           data.push(formdata.passport);
           let passport1 = await uploadS3bucket(formdata.passport);
           urls = { passport: passport1, ...urls };
@@ -1844,6 +1848,10 @@ const User = ({ getNewCount, title }) => {
           formdata.driviniglicencephoto &&
           typeof formdata.driviniglicencephoto !== "string"
         ) {
+          if ((formdata.driviniglicencephoto.size / 1048576).toFixed(2) > 5) {
+            toast.error(`*Please Upload less than 5 MB Drivinig Licence Photo File.`)
+            return
+          } 
           data.push(formdata.driviniglicencephoto);
           let driviniglicencephoto = await uploadS3bucket(
             formdata.driviniglicencephoto
@@ -1854,6 +1862,10 @@ const User = ({ getNewCount, title }) => {
           formdata.mediacalCertificate &&
           typeof formdata.mediacalCertificate !== "string"
         ) {
+          if ((formdata.mediacalCertificate.size / 1048576).toFixed(2) > 5) {
+            toast.error(`*Please Upload less than 5 MB Mediacal Certificate File.`)
+            return
+          } 
           data.push(formdata.mediacalCertificate);
           let mediacalCertificate = await uploadS3bucket(
             formdata.mediacalCertificate
@@ -1861,6 +1873,10 @@ const User = ({ getNewCount, title }) => {
           urls = { mediacalCertificate: mediacalCertificate, ...urls };
         }
         if (formdata.idProof && typeof formdata.idProof !== "string") {
+          if ((formdata.idProof.size / 1048576).toFixed(2) > 5) {
+            toast.error(`*Please Upload less than 5 MB Id Proof File.`)
+            return
+          } 
           data.push(formdata.idProof);
 
           let idProof = await uploadS3bucket(formdata.idProof);
@@ -1876,6 +1892,10 @@ const User = ({ getNewCount, title }) => {
     }
     else if (formdata.passport && formdata.driviniglicencephoto) {
       if (formdata.passport && typeof formdata.passport !== "string") {
+        if ((formdata.passport.size / 1048576).toFixed(2) > 1) {
+          toast.error(`*Please Upload less than 1 MB Passport File.`);
+          return
+        } 
         data.push(formdata.passport);
         let passport1 = await uploadS3bucket(formdata.passport);
         urls = { passport: passport1, ...urls };
@@ -1884,6 +1904,10 @@ const User = ({ getNewCount, title }) => {
         formdata.driviniglicencephoto &&
         typeof formdata.driviniglicencephoto !== "string"
       ) {
+        if ((formdata.driviniglicencephoto.size / 1048576).toFixed(2) > 5) {
+          toast.error(`*Please Upload less than 5 MB Drivinig Licence Photo File.`)
+          return
+        } 
         data.push(formdata.driviniglicencephoto);
         let driviniglicencephoto = await uploadS3bucket(
           formdata.driviniglicencephoto
@@ -1894,6 +1918,10 @@ const User = ({ getNewCount, title }) => {
         formdata.mediacalCertificate &&
         typeof formdata.mediacalCertificate !== "string"
       ) {
+        if ((formdata.mediacalCertificate.size / 1048576).toFixed(2) > 5) {
+          toast.error(`*Please Upload less than 5 MB Mediacal Certificate File.`)
+          return
+        } 
         data.push(formdata.mediacalCertificate);
         let mediacalCertificate = await uploadS3bucket(
           formdata.mediacalCertificate
@@ -1901,6 +1929,10 @@ const User = ({ getNewCount, title }) => {
         urls = { mediacalCertificate: mediacalCertificate, ...urls };
       }
       if (formdata.idProof && typeof formdata.idProof !== "string") {
+        if ((formdata.idProof.size / 1048576).toFixed(2) > 5) {
+          toast.error(`*Please Upload less than 5 MB Id Proof File.`)
+          return
+        } 
         data.push(formdata.idProof);
 
         let idProof = await uploadS3bucket(formdata.idProof);
@@ -2862,9 +2894,8 @@ const User = ({ getNewCount, title }) => {
                       <input
                         type="file"
                         name="passport"
-                        onChange={(e) =>
-                          onChangImage(e.target.files[0], "passport")
-                        }
+                        accept="image/png,image/jpeg,image/jpg"
+                        onChange={(e) => onChangImage(e.target.files[0], "passport")}
                       />
                     </div>
                     {
@@ -2877,6 +2908,7 @@ const User = ({ getNewCount, title }) => {
                         <input
                           type="file"
                           name="driviniglicencephoto"
+                          accept="image/png,image/jpeg,image/jpg,application/pdf"
                           onChange={(e) =>
                             onChangImage(
                               e.target.files[0],
@@ -2892,6 +2924,7 @@ const User = ({ getNewCount, title }) => {
                         </p>
                         <input
                           type="file"
+                          accept="image/png,image/jpeg,image/jpg,application/pdf"
                           name="driviniglicencephoto"
                           onChange={(e) =>
                             onChangImage(
@@ -2913,6 +2946,7 @@ const User = ({ getNewCount, title }) => {
                       <input
                         type="file"
                         name="idProof"
+                        accept="image/png,image/jpeg,image/jpg,application/pdf"
                         onChange={(e) =>
                           onChangImage(e.target.files[0], "idProof")
                         }
@@ -2926,6 +2960,7 @@ const User = ({ getNewCount, title }) => {
                       <input
                         type="file"
                         name="mediacalCertificate"
+                        accept="image/png,image/jpeg,image/jpg,application/pdf"
                         onChange={(e) =>
                           onChangImage(
                             e.target.files[0],
