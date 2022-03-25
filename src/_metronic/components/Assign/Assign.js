@@ -327,7 +327,7 @@ const Assign = ({ getNewCount, title }) => {
                                     setIsEditPopUp(true);
                                 }}
                             >
-                                <Tooltip title="Edit Examiner" arrow>
+                                <Tooltip title="Edit " arrow>
                                     <CreateIcon />
                                 </Tooltip>
                             </div>
@@ -340,7 +340,7 @@ const Assign = ({ getNewCount, title }) => {
                                 setIdForDeleteCourseName(row?._id);
                             }}
                         >
-                            <Tooltip title="Delete Examiner" arrow>
+                            <Tooltip title="Delete " arrow>
                                 <DeleteIcon />
                             </Tooltip>
                         </div>
@@ -523,7 +523,7 @@ const Assign = ({ getNewCount, title }) => {
                                     fontSize: "12px",
                                     padding: "10px 18px",
                                     textDecoration: "none",
-                                    position: "right",
+                                    positi  on: "right",
                                 }}
                             >
                                 Export to Excel

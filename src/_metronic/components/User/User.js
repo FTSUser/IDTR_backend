@@ -3125,7 +3125,7 @@ const User = ({ getNewCount, title }) => {
                             className="s"
                             onClick={() => setModalOpen(!modalOpen)}
                           >
-                            Disclosure
+                            Disclaimer Notice
                           </div>
                         </div>
                         {dicloser && (
@@ -3158,7 +3158,7 @@ const User = ({ getNewCount, title }) => {
                             className="s"
                             onClick={() => setModalOpen(!modalOpen)}
                           >
-                            Disclosure
+                            Disclaimer Notice
                           </div>
                         </div>
                       </div>
@@ -3201,7 +3201,7 @@ const User = ({ getNewCount, title }) => {
                   <div className="feedback-background-blur">
                     <div className="feedback-modal">
                       <div className="modal-header">
-                        <h1>Disclosure</h1>
+                        <h1>Disclaimer Notice</h1>
                         <i
                           onClick={() => setModalOpen(false)}
                           class="fas fa-times"

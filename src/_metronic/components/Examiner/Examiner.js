@@ -312,7 +312,7 @@ const Examiner = ({ getNewCount, title }) => {
                                     setIsEditPopUp(true);
                                 }}
                             >
-                                <Tooltip title="Edit Examiner" arrow>
+                                <Tooltip title="Edit Role" arrow>
                                     <CreateIcon />
                                 </Tooltip>
                             </div>
@@ -325,7 +325,7 @@ const Examiner = ({ getNewCount, title }) => {
                                 setIdForDeleteCourseName(row?._id);
                             }}
                         >
-                            <Tooltip title="Delete Examiner" arrow>
+                            <Tooltip title="Delete Role" arrow>
                                 <DeleteIcon />
                             </Tooltip>
                         </div>
@@ -524,7 +524,7 @@ const Examiner = ({ getNewCount, title }) => {
                             <Modal.Title className="text-danger">Alert!</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            Are You Sure To Want To delete this Examiner
+                            Are You Sure To Want To delete this Role
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
@@ -782,7 +782,7 @@ const Examiner = ({ getNewCount, title }) => {
                                         className="btn btn-success mr-2"
                                     >
 
-                                        <span> {isEditPopUp === false ? 'Add' : 'Edit'}  Examiner</span>
+                                        <span> {isEditPopUp === false ? 'Add' : 'Edit'}  Role</span>
                                         {loading && (
                                             <span className="mx-3 spinner spinner-white"></span>
                                         )}

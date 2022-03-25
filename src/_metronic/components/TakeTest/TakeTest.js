@@ -645,7 +645,7 @@ const TakeTest = ({ getNewCount, title }) => {
                     viewPeperSet(row?._id);
                   }}
                 >
-                  View Peper Set
+                  View Paper Set
                 </div>
               </div>
             ) : (

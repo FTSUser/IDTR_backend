@@ -969,7 +969,7 @@ const Batch = ({ getNewCount, title }) => {
                 setIdForDeleteAnnouncement(row?._id);
               }}
             >
-              <Tooltip title="Delete Announcement" arrow>
+              <Tooltip title="Delete Batch" arrow>
                 <DeleteIcon />
               </Tooltip>
             </div>
@@ -1391,7 +1391,7 @@ const Batch = ({ getNewCount, title }) => {
             <Modal.Header closeButton>
               <Modal.Title className="text-danger">Alert!</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Are You Sure To Want To delete this Banner</Modal.Body>
+            <Modal.Body>Are You Sure To Want To delete this Batch?</Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
                 cancel
@@ -2007,7 +2007,7 @@ const Batch = ({ getNewCount, title }) => {
                   <h2>User Data</h2>
                 </div>
                 <div className="">
-                  <div className="cursor-pointer pl-2">
+                  <div className="cursor-pointer pl-2 d-flex">
                     {allDataForResultDownload?.length > 0 ? (
                       <CsvDownload
                         className={``}
@@ -2024,12 +2024,13 @@ const Batch = ({ getNewCount, title }) => {
                           padding: "10px 18px",
                           textDecoration: "none",
                           position: "right",
+                          marginRight:"30px"
                         }}
                       >
                         Download Test Data
                       </CsvDownload>
                     ) : (
-                      "No test Data"
+                      <span className="mr-3">No test Data</span>
                     )}
 
                     {allDataForAttendance?.length > 0 ? (
@@ -2053,7 +2054,7 @@ const Batch = ({ getNewCount, title }) => {
                         Download Attendance Data
                       </CsvDownload>
                     ) : (
-                      "No Attendance Data"
+                      <span>No Attendance Data</span>
                     )}
                   </div>
                   <DataTable
