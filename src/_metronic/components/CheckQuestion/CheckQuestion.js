@@ -1079,7 +1079,7 @@ const CheckTest = ({ getNewCount, title }) => {
                       </div>
                       <div className="flelxcenter">
                         <span className="bolds">Final Result Status:</span>{" "}
-                        {data?.isPass ? "Pass" : "Fail"}
+                        {data?.isPass }
                       </div>
                       {data?.totalScore ? (
                         ""
