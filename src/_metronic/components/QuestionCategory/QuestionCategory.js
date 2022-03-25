@@ -148,11 +148,11 @@ const QuestionCategory = ({ getNewCount, title }) => {
         }
         if (inputValueForAdd && !inputValueForAdd?.VehicleCategory) {
             formIsValid = false;
-            errorsForAdd["VehicleCategory"] = "*Please Enter VehicleCategory!";
+            errorsForAdd["VehicleCategory"] = "*Please enter vehicle category!";
         }
         if (inputValueForAdd && !inputValueForAdd?.VehicleSubCategory) {
             formIsValid = false;
-            errorsForAdd["VehicleSubCategory"] = "*Please Enter VehicleSubCategory!";
+            errorsForAdd["VehicleSubCategory"] = "*Please enter vehicle sub-category!";
         }
 
 
@@ -639,7 +639,7 @@ const QuestionCategory = ({ getNewCount, title }) => {
                                 {/* select category */}
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Select Vehicle Category
+                                        Select vehicle category
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
@@ -653,7 +653,7 @@ const QuestionCategory = ({ getNewCount, title }) => {
                                                 }}
                                             >
                                                 <option value="" disabled selected hidden>
-                                                    Select Vehicle Category Type
+                                                    Select vehicle category type
 
                                                 </option>
                                                 {filteredVehicleCategory?.length > 0 &&
@@ -691,7 +691,7 @@ const QuestionCategory = ({ getNewCount, title }) => {
                                 {/* select category */}
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Select Vehicle Sub-Category
+                                        Select vehicle sub-category
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         {filteredVehicleSubCategory?.length > 0 ?
@@ -707,7 +707,7 @@ const QuestionCategory = ({ getNewCount, title }) => {
                                                     }}
                                                 >
                                                     <option value="" disabled selected hidden>
-                                                        Select Vehicle Sub-Category
+                                                        Select vehicle sub-category
                                                     </option>
                                                     {filteredVehicleSubCategory?.length > 0 &&
                                                         filteredVehicleSubCategory?.map((item) => {
@@ -787,7 +787,7 @@ const QuestionCategory = ({ getNewCount, title }) => {
                                 {/* Name Amenintie */}
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Enter Name
+                                        Enter name
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>

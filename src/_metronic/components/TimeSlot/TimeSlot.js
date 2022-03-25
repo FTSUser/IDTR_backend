@@ -414,45 +414,45 @@ const TimeSlot = ({ getNewCount, title }) => {
     let errorsForAdd = {};
     if (inputValueForAdd && !inputValueForAdd.VehicleCategory) {
       formIsValid = false;
-      errorsForAdd["VehicleCategory"] = "*Please Enter Vehicle Category!";
+      errorsForAdd["VehicleCategory"] = "*Please enter vehicle category!";
     }
 
     if (inputValueForAdd && !inputValueForAdd.CourseType) {
       formIsValid = false;
-      errorsForAdd["CourseType"] = "*Please Enter CourseType!";
+      errorsForAdd["CourseType"] = "*Please enter courseType!";
     }
     if (inputValueForAdd && !inputValueForAdd.CourseCategory) {
       formIsValid = false;
-      errorsForAdd["CourseCategory"] = "*Please Enter CourseCategory!";
+      errorsForAdd["CourseCategory"] = "*Please enter course category!";
     }
     if (inputValueForAdd && !inputValueForAdd.CourseName) {
       formIsValid = false;
-      errorsForAdd["CourseName"] = "*Please Enter CourseName!";
+      errorsForAdd["CourseName"] = "*Please enter course name!";
     }
 
     if (inputValueForAdd && !inputValueForAdd.seat) {
       formIsValid = false;
-      errorsForAdd["seat"] = "*Please Enter seat Number!";
+      errorsForAdd["seat"] = "*Please enter seat number!";
     } else if (inputValueForAdd.seat < 0) {
       formIsValid = false;
-      errorsForAdd["seat"] = "*Please Enter vaild seat number!";
+      errorsForAdd["seat"] = "*Please enter vaild seat number!";
     }
 
     if (!date) {
       formIsValid = false;
-      errorsForAdd["date"] = "*Please Enter Start Date!";
+      errorsForAdd["date"] = "*Please enter start date!";
     }
     if (!endDate) {
       formIsValid = false;
-      errorsForAdd["endDate"] = "*Please Enter End Date!";
+      errorsForAdd["endDate"] = "*Please enter end date!";
     }
     if (!startTime) {
       formIsValid = false;
-      errorsForAdd["startTime"] = "*Please Enter startTime!";
+      errorsForAdd["startTime"] = "*Please enter start time!";
     }
     if (!endTime) {
       formIsValid = false;
-      errorsForAdd["endTime"] = "*Please Enter endTime!";
+      errorsForAdd["endTime"] = "*Please e  nter end time!";
     }
 
     setErrorsForAdd(errorsForAdd);
@@ -575,7 +575,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                   setIsEditPopUp(true);
                 }}
               >
-                <Tooltip title="Edit CourseName" arrow>
+                <Tooltip title="Edit Timeslot" arrow>
                   <CreateIcon />
                 </Tooltip>
               </div>
@@ -588,7 +588,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                 setIdForDeleteCourseName(row?._id);
               }}
             >
-              <Tooltip title="Delete Course Name" arrow>
+              <Tooltip title="Delete Timeslot" arrow>
                 <DeleteIcon />
               </Tooltip>
             </div>
@@ -1074,7 +1074,7 @@ const TimeSlot = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Total Seat
+                    Enter total seat
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -1103,7 +1103,7 @@ const TimeSlot = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-lg-3 col-form-label">
-                    Select Start Date
+                    Select start date
                   </label>
                   <div className="col-lg-6 cus-data-input-style">
                     <DatePicker
@@ -1130,7 +1130,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                 </div>
                 <div className="form-group row">
                   <label className="col-lg-3 col-form-label">
-                    Select End Date
+                    Select end date
                   </label>
                   <div className="col-lg-6 cus-data-input-style">
                     {endDate ?
@@ -1171,7 +1171,7 @@ const TimeSlot = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-lg-3 col-form-label">
-                    Enter Start Time
+                    Enter start time
                   </label>
                   <div className="col-lg-9 cus-data-input-style">
                     <TimePicker
@@ -1195,7 +1195,7 @@ const TimeSlot = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-lg-3 col-form-label">
-                    Enter End Time
+                    Enter end time
                   </label>
                   <div className="col-lg-9 cus-data-input-style">
                     {moment(startTime).format("k") === moment(endTime).format("k") && moment(startTime).format("k") !== "24" ?

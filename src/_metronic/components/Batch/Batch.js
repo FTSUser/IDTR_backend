@@ -678,26 +678,26 @@ const Batch = ({ getNewCount, title }) => {
 
     if (inputValueForAdd && !inputValueForAdd.name) {
       formIsValid = false;
-      errorsForAdd["name"] = "*Please Enter Batch Name!";
+      errorsForAdd["name"] = "*Please enter batch name!";
     }
 
     if (inputValueForAdd && !date) {
       formIsValid = false;
-      errorsForAdd["date"] = "*Please Upload Date!";
+      errorsForAdd["date"] = "*Please upload date!";
     }
     if (batchInfo?.length === 0) {
       formIsValid = false;
-      errorsForAdd["batchInfo"] = "*Please Select Batch!";
+      errorsForAdd["batchInfo"] = "*Please select batch!";
     }
 
     if (inputValueForAdd && !inputValueForAdd.DataEntry) {
       formIsValid = false;
-      errorsForAdd["DataEntry"] = "*Please Upload DataEntry!";
+      errorsForAdd["DataEntry"] = "*Please upload dataentry!";
     }
 
     if (inputValueForAdd && !inputValueForAdd.Examiner) {
       formIsValid = false;
-      errorsForAdd["Examiner"] = "*Please Upload Examiner!";
+      errorsForAdd["Examiner"] = "*Please upload examiner!";
     }
 
     setErrorsForAdd(errorsForAdd);
@@ -1391,7 +1391,7 @@ const Batch = ({ getNewCount, title }) => {
             <Modal.Header closeButton>
               <Modal.Title className="text-danger">Alert!</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Are You Sure To Want To delete this Batch?</Modal.Body>
+            <Modal.Body>Are you sure to want To delete this batch?</Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
                 cancel

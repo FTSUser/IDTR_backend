@@ -172,7 +172,7 @@ const Question = (props) => {
         let errorsForAdd = {};
         if (inputValueForAdd && !inputValueForAdd.name) {
             formIsValid = false;
-            errorsForAdd["name"] = "*Please Enter Name!";
+            errorsForAdd["name"] = "*Please enter name!";
         }
         // if (inputValueForAdd && !inputValueForAdd.cnid) {
         //     formIsValid = false;
@@ -182,27 +182,27 @@ const Question = (props) => {
 
         if (inputValueForAdd && !inputValueForAdd.language) {
             formIsValid = false;
-            errorsForAdd["language"] = "*Please Enter language!";
+            errorsForAdd["language"] = "*Please enter language!";
         }
         if (inputValueForAdd && !inputValueForAdd.type) {
             formIsValid = false;
-            errorsForAdd["type"] = "*Please Enter type!";
+            errorsForAdd["type"] = "*Please enter type!";
         }
         if (inputValueForAdd && !inputValueForAdd.vcid) {
             formIsValid = false;
-            errorsForAdd["vcid"] = "*Please Enter vcid!";
+            errorsForAdd["vcid"] = "*Please enter vehicle category!";
         }
         if (inputValueForAdd && !inputValueForAdd.vehicleSubCategory) {
             formIsValid = false;
-            errorsForAdd["vehicleSubCategory"] = "*Please Select Vehicle Sub-Category!";
+            errorsForAdd["vehicleSubCategory"] = "*Please select vehicle sub-category!";
         }
         if (inputValueForAdd && !inputValueForAdd.Category) {
             formIsValid = false;
-            errorsForAdd["Category"] = "*Please Enter Category!";
+            errorsForAdd["Category"] = "*Please enter category!";
         }
         option.map((data) => {
             if (data.name === '') {
-                return toast.error('Enter Question')
+                return toast.error('Enter question')
             }
         })
 
@@ -518,7 +518,7 @@ const Question = (props) => {
                                     setIsEditPopUp(true);
                                 }}
                             >
-                                <Tooltip title="Edit Examiner" arrow>
+                                <Tooltip title="Edit Question" arrow>
                                     <CreateIcon />
                                 </Tooltip>
                             </div>
@@ -531,7 +531,7 @@ const Question = (props) => {
                                 setIdForDeleteCourseName(row?._id);
                             }}
                         >
-                            <Tooltip title="Delete Examiner" arrow>
+                            <Tooltip title="Delete Question" arrow>
                                 <DeleteIcon />
                             </Tooltip>
                         </div>
@@ -1097,7 +1097,7 @@ const Question = (props) => {
                                 </div>
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Select Vehicle Category
+                                        Select vehicle category
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
@@ -1111,7 +1111,7 @@ const Question = (props) => {
                                                 }}
                                             >
                                                 <option value="" disabled selected hidden>
-                                                    Select Vehicle Category
+                                                    Select vehicle category
                                                 </option>
                                                 {filteredVehicleCategory?.length > 0 &&
                                                     filteredVehicleCategory?.map((item) => {
@@ -1147,7 +1147,7 @@ const Question = (props) => {
                                 {filteredVehicleSubCategory?.length > 0 ?
                                     <div className="form-group row">
                                         <label className="col-xl-3 col-lg-3 col-form-label">
-                                            Select Vehicle Sub-Category
+                                            Select vehicle sub-category
                                         </label>
                                         <div className="col-lg-9 col-xl-6">
                                             <div>
@@ -1161,7 +1161,7 @@ const Question = (props) => {
                                                     }}
                                                 >
                                                     <option value="" disabled selected hidden>
-                                                        Select Vehicle Sub-Category
+                                                        Select vehicle sub-category
                                                     </option>
                                                     {filteredVehicleSubCategory?.length > 0 &&
                                                         filteredVehicleSubCategory?.map((item) => {
@@ -1197,13 +1197,13 @@ const Question = (props) => {
                                     :
                                     <div className="form-group row">
                                         <label className="col-xl-3 col-lg-3 col-form-label">
-                                            Select Vehicle Sub-Category
+                                            Select vehicle sub-category
                                         </label>
                                         <div className="col-lg-9 col-xl-6">
                                             <div>
                                                 <input
                                                     className={`form-control form-control-lg form-control-solid `}
-                                                    value="No Vehicle Sub-Category Found For this Vehicle Category"
+                                                    value="No vehicle sub-category found for this vehicle category"
                                                     disabled
                                                 />
                                                 {/* <option value="" disabled hidden>
@@ -1226,7 +1226,7 @@ const Question = (props) => {
 
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Select Language
+                                        Select language
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
@@ -1238,7 +1238,7 @@ const Question = (props) => {
                                                     handleOnChnageAdd(e);
                                                 }}
                                             >
-                                                <option>Select Language
+                                                <option>Select language
                                                 </option>
                                                 <option value="english" selected={
                                                     inputValueForAdd?.language ===
@@ -1367,7 +1367,7 @@ const Question = (props) => {
                                                     }}
                                                 >
                                                     <option value="" disabled selected hidden>
-                                                        Select Question Category
+                                                        Select question category
                                                     </option>
 
                                                     {filteredCategoryByVehicleSubCategory?.length > 0 &&
@@ -1396,7 +1396,7 @@ const Question = (props) => {
                                                     type="text"
                                                     className={`form-control form-control-lg form-control-solid `}
                                                     name="Category"
-                                                    value="No Category Found For This sub-category"
+                                                    value="No category found for this sub-category"
                                                     disabled
                                                 />
                                             </div>
@@ -1449,7 +1449,7 @@ const Question = (props) => {
 
                                 <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Select Type
+                                        Select type
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
@@ -1468,7 +1468,7 @@ const Question = (props) => {
                                                     Type
                                                 </option>
                                                 <option value="mcq" >MCQ</option>
-                                                <option value="checkbox" >Check Box</option>
+                                                <option value="checkbox" >Check box</option>
                                             </select>
                                         </div>
                                         <span

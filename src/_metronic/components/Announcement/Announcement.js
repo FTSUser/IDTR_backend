@@ -169,17 +169,17 @@ const Announcement = ({ getNewCount, title }) => {
     }
     if (inputValueForAdd && !inputValueForAdd.name) {
       formIsValid = false;
-      errorsForAdd["name"] = "*Please Enter Name!";
+      errorsForAdd["name"] = "*Please enter name!";
     }
 
     if (inputValueForAdd && !inputValueForAdd.type) {
       formIsValid = false;
-      errorsForAdd["type"] = "*Please Enter Type!";
+      errorsForAdd["type"] = "*Please enter type!";
     }
 
     if (!description) {
       formIsValid = false;
-      errorsForAdd["description"] = "*Please Enter Description!";
+      errorsForAdd["description"] = "*Please enter description!";
     }
     // if (inputValueForAdd && !inputValueForAdd.image) {
     //   formIsValid = false;
@@ -831,7 +831,7 @@ const Announcement = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Announcement Date
+                    Enter announcement date
                   </label>
                   <div className="col-lg-9 col-xl-6 cus-data-input-style">
                     <div>
@@ -858,7 +858,7 @@ const Announcement = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Announcement Name
+                    Enter announcement name
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -887,7 +887,7 @@ const Announcement = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Announcement Type
+                    Enter announcement type
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -923,7 +923,7 @@ const Announcement = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Enter Announcement Description
+                    Enter announcement description
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
@@ -952,7 +952,7 @@ const Announcement = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                  Announcement Image
+                  Announcement image
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
