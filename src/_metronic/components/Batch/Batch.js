@@ -1339,8 +1339,10 @@ const Batch = ({ getNewCount, title }) => {
         <ToastContainer />
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
-            <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2"> Batch Creation</h2>
+            <div className="col ">
+              <h2 className=" pt-2"> Batch Creation</h2>
+             
+              <div>(Note : Batch should be create at a time of exam only.)</div>
             </div>
             <div className="col">
               <div>

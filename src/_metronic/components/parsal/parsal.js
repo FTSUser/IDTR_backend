@@ -27,7 +27,7 @@ const Partial = ({ getNewCount, title }) => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    document.title = "Honda | Partial User";
+    document.title = "Honda | Enrolled User";
   }, []);
 
   useEffect(() => {
@@ -190,13 +190,13 @@ const Partial = ({ getNewCount, title }) => {
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2">Partial User</h2>
+              <h2 className="pl-3 pt-2">Enrolled User</h2>
             </div>
             <div className="cus-medium-button-style button-height">
               <CsvDownload
                 className={``}
                 data={dataCSV}
-                filename="Partial Report.csv"
+                filename="Enrolled User Report.csv"
                 style={{
                   //pass other props, like styles
                   backgroundColor: "#CC0001",

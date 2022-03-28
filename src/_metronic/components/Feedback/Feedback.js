@@ -176,20 +176,21 @@ const Feedback = ({ getNewCount, title }) => {
     if (allFeedbackExcel) {
       allFeedbackExcel.map((registerUser, key) => {
         let data = {
-          Number: key + 1,
-          createdAt: moment(registerUser?.createdAt).format("ll"),
-          createdBy: registerUser?.createdBy,
-          description:
+          SrNo: key + 1,
+          Date: moment(registerUser?.createdAt).format("ll"),
+          // createdBy: registerUser?.createdBy,
+          "Full Name": registerUser?.name,
+          Email: registerUser?.email === "" ? "No data" : registerUser?.email,
+          "Mobile Number": registerUser?.phone,
+          "Feedback Category": registerUser?.feedbackCategory,
+          Details: registerUser?.subCategory,
+          "Rating/5": registerUser?.rating,
+          Description:
             registerUser?.description === ""
               ? "No data"
               : registerUser?.description,
-          email: registerUser?.email === "" ? "No data" : registerUser?.email,
-          feedbackCategory: registerUser?.feedbackCategory,
-          name: registerUser?.name,
-          phone: registerUser?.phone,
-          rating: registerUser?.rating,
-          updatedAt: moment(registerUser?.updatedAt).format("ll"),
-          updatedBy: registerUser?.updatedBy,
+          // updatedAt: moment(registerUser?.updatedAt).format("ll"),
+          // updatedBy: registerUser?.updatedBy,
         };
         setDataCSV((currVal) => [...currVal, data]);
       });

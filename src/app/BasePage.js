@@ -73,7 +73,7 @@ export default function BasePage() {
           <ContentRoute exact path="/question-images" component={Images} />
           <ContentRoute exact path="/reports" component={Report} />
           <ContentRoute exact path="/cancel-course" component={CancleCourse} />
-          <ContentRoute exact path="/partial-user" component={Partial} />
+          <ContentRoute exact path="/enrolled-user" component={Partial} />
 
 
           <ContentRoute exact path="/announcement" component={Announcement} />

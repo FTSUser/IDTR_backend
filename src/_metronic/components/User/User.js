@@ -537,6 +537,22 @@ const User = ({ getNewCount, title }) => {
       },
     },
     {
+      name: "Registration Type",
+      selector: "Registrationtype",
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.Registrationtype === "" ? "-" : row?.Registrationtype}</span>;
+      },
+    },
+    {
+      name: "Payment Status",
+      selector: "isPaymentDone",
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.isPaymentDone === true ? 'Done' : 'Pending'}</span>;
+      },
+    },
+    {
       name: "Gender",
       selector: "gender",
       sortable: true,
@@ -1417,7 +1433,7 @@ const User = ({ getNewCount, title }) => {
         toast.error(`Sorry! Driver's License Number must be specified`);
         seterrorShow(`Driver's License Number`);
         settypeTrueFalseform(true);
-      } else if (formdata?.license != "N/A" && formdata?.license != 'Learner'&&  formdata.issueDate === "") {
+      } else if (formdata?.license != "N/A" && formdata?.license != 'Learner' && formdata.issueDate === "") {
         toast.error(`Sorry! Issue Date must be specified`);
         seterrorShow("Issue Date");
         settypeTrueFalseform(true);
@@ -1459,7 +1475,13 @@ const User = ({ getNewCount, title }) => {
         toast.error(`Sorry! First name must be specified`);
         seterrorShow("First name");
         settypeTrueFalseform(true);
-      } else if (formdata.DateofBirth === "") {
+      }
+      else if (formdata.lastname === "") {
+        toast.error(`Sorry! Last name must be specified`);
+        seterrorShow("Last name");
+        settypeTrueFalseform(true);
+      }
+      else if (formdata.DateofBirth === "") {
         toast.error(`Sorry! Date of Birth must be specified`);
         seterrorShow("Date of Birth");
         settypeTrueFalseform(true);
@@ -1762,7 +1784,7 @@ const User = ({ getNewCount, title }) => {
       cnid: formdata.courseName,
       ccid: formdata.courseCategory,
       ctid: formdata.courseType,
-      vcid:formdata.vehicleCategory
+      vcid: formdata.vehicleCategory
     };
     ApiGet(
       `trainingDate/getDatePrevious??date=${data.date}&vcid=${formdata.vehicleCategory}&ctid=${formdata.courseType}&ccid=${formdata.courseCategory}&cnid=${formdata.courseName}`
@@ -1833,7 +1855,7 @@ const User = ({ getNewCount, title }) => {
   const uploadCertificate = async () => {
     let urls = {};
     let data = [];
-    if (formdata?.license === 'N/A' ||  formdata?.license === 'Learner') {
+    if (formdata?.license === 'N/A' || formdata?.license === 'Learner') {
       if (formdata.passport) {
         if (formdata.passport && typeof formdata.passport !== "string") {
           if (!formdata.passport.name.match(/\.(jpg|jpeg|png)$/)) {
@@ -1843,7 +1865,7 @@ const User = ({ getNewCount, title }) => {
           if ((formdata.passport.size / 1048576).toFixed(2) > 1) {
             toast.error(`*Please Upload less than 1 MB Passport File.`);
             return
-          } 
+          }
           data.push(formdata.passport);
           let passport1 = await uploadS3bucket(formdata.passport);
           urls = { passport: passport1, ...urls };
@@ -1859,7 +1881,7 @@ const User = ({ getNewCount, title }) => {
           if ((formdata.driviniglicencephoto.size / 1048576).toFixed(2) > 5) {
             toast.error(`*Please Upload less than 5 MB Drivinig Licence Photo File.`)
             return
-          } 
+          }
           data.push(formdata.driviniglicencephoto);
           let driviniglicencephoto = await uploadS3bucket(
             formdata.driviniglicencephoto
@@ -1877,7 +1899,7 @@ const User = ({ getNewCount, title }) => {
           if ((formdata.mediacalCertificate.size / 1048576).toFixed(2) > 5) {
             toast.error(`*Please Upload less than 5 MB Mediacal Certificate File.`)
             return
-          } 
+          }
           data.push(formdata.mediacalCertificate);
           let mediacalCertificate = await uploadS3bucket(
             formdata.mediacalCertificate
@@ -1892,7 +1914,7 @@ const User = ({ getNewCount, title }) => {
           if ((formdata.idProof.size / 1048576).toFixed(2) > 5) {
             toast.error(`*Please Upload less than 5 MB Id Proof File.`)
             return
-          } 
+          }
           data.push(formdata.idProof);
 
           let idProof = await uploadS3bucket(formdata.idProof);
@@ -1915,7 +1937,7 @@ const User = ({ getNewCount, title }) => {
         if ((formdata.passport.size / 1048576).toFixed(2) > 1) {
           toast.error(`*Please Upload less than 1 MB Passport File.`);
           return
-        } 
+        }
         data.push(formdata.passport);
         let passport1 = await uploadS3bucket(formdata.passport);
         urls = { passport: passport1, ...urls };
@@ -1931,7 +1953,7 @@ const User = ({ getNewCount, title }) => {
         if ((formdata.driviniglicencephoto.size / 1048576).toFixed(2) > 5) {
           toast.error(`*Please Upload less than 5 MB Drivinig Licence Photo File.`)
           return
-        } 
+        }
         data.push(formdata.driviniglicencephoto);
         let driviniglicencephoto = await uploadS3bucket(
           formdata.driviniglicencephoto
@@ -1949,7 +1971,7 @@ const User = ({ getNewCount, title }) => {
         if ((formdata.mediacalCertificate.size / 1048576).toFixed(2) > 5) {
           toast.error(`*Please Upload less than 5 MB Mediacal Certificate File.`)
           return
-        } 
+        }
         data.push(formdata.mediacalCertificate);
         let mediacalCertificate = await uploadS3bucket(
           formdata.mediacalCertificate
@@ -1964,7 +1986,7 @@ const User = ({ getNewCount, title }) => {
         if ((formdata.idProof.size / 1048576).toFixed(2) > 5) {
           toast.error(`*Please Upload less than 5 MB Id Proof File.`)
           return
-        } 
+        }
         data.push(formdata.idProof);
 
         let idProof = await uploadS3bucket(formdata.idProof);

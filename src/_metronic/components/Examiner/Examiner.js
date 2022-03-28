@@ -452,11 +452,11 @@ const Examiner = ({ getNewCount, title }) => {
             allCourseNameExcel.map((registerUser, key) => {
                 let data = {
                     Number: key + 1,
+                    RoleId: registerUser?._id,
                     CreatedAt: moment(registerUser?.createdAt).format("ll"),
                     ExaminerName: registerUser?.name,
                     ExaminerEmail: registerUser?.email,
                     ExaminerPhone: registerUser?.phone,
-                    RoleId: registerUser?._id
                 };
                 setDataCSV((currVal) => [...currVal, data]);
             });

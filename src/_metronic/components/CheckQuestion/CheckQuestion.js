@@ -362,6 +362,18 @@ const CheckTest = ({ getNewCount, title }) => {
                   View Users
                 </div>
               </div>
+
+            </>
+          </>
+        );
+      },
+    },
+    {
+      name: "Generate Certificate",
+      cell: (row) => {
+        return (
+          <>
+            <>
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
@@ -393,6 +405,7 @@ const CheckTest = ({ getNewCount, title }) => {
                   </div>
                 </div>
               </div>
+
             </>
           </>
         );
@@ -1079,7 +1092,7 @@ const CheckTest = ({ getNewCount, title }) => {
                       </div>
                       <div className="flelxcenter">
                         <span className="bolds">Final Result Status:</span>{" "}
-                        {data?.isPass }
+                        {data?.isPass}
                       </div>
                       {data?.totalScore ? (
                         ""

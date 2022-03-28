@@ -102,6 +102,16 @@ const Payment = ({ getNewCount, title }) => {
       width: "65px",
     },
     {
+      name: "User Name",
+      cell: (row) => {
+        return (
+          <span>{row?.uid === null || !row?.uid ? "-" : row?.uid?.firstName}</span>
+        );
+      },
+      selector: (row) => row?.uid?.email,
+      sortable: true,
+    },
+    {
       name: "User Email",
       cell: (row) => {
         return (
@@ -285,6 +295,9 @@ const Payment = ({ getNewCount, title }) => {
       allPaymentDetailsExcel.map((registerUser, key) => {
         let data = {
           Number: key + 1,
+          email: registerUser?.uid?.email,
+          name: registerUser?.uid?.firstName,
+          UserID: registerUser?.uid?._id,
           certificate: registerUser?.cnid?.certificate,
           courseName: registerUser?.cnid?.courseName,
           createdAt: moment(registerUser?.cnid?.createdAt).format("ll"),
@@ -317,7 +330,6 @@ const Payment = ({ getNewCount, title }) => {
           updatedAtTD: moment(registerUser?.tdid?.updatedAt).format("ll"),
           updatedByTD: registerUser?.tdid?.updatedBy,
           IDTRcenter: registerUser?.uid?.IDTRcenter,
-          email: registerUser?.uid?.email,
           modificationData: moment(registerUser?.uid?.modificationData).format(
             "ll"
           ),
@@ -329,7 +341,6 @@ const Payment = ({ getNewCount, title }) => {
           modificationDate: moment(
             registerUser?.tdid?.status?.modificationDate
           ).format("ll"),
-          name: registerUser?.tdid?.status?.name,
           createdAtVC: moment(registerUser?.vcid?.createdAt).format("ll"),
           createdByVC: registerUser?.vcid?.createdBy,
           descriptionVC: registerUser?.vcid?.description,

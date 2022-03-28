@@ -788,7 +788,7 @@ const TakeTest = ({ getNewCount, title }) => {
                 >
                   <div className="cus-medium-button-style">
                     <button className="btn btn-success mr-2">
-                      View Paperset
+                      View Paper Set
                     </button>
                   </div>
                 </div>
@@ -1452,7 +1452,7 @@ const TakeTest = ({ getNewCount, title }) => {
                   </div>
                   <div className="form-group row">
                     <label className="col-xl-2 col-lg-2 col-form-label">
-
+                      <b>Note: Please Enter Value Between 0-5</b>
                     </label>
                     <div className="col-lg-9 col-xl-6">
                       {datanumber?.length > 0 &&
