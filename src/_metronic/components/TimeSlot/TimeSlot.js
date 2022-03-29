@@ -26,6 +26,7 @@ import TimePicker from "rc-time-picker";
 import DatePicker from "react-datepicker";
 import CsvDownload from "react-json-to-csv";
 import { ExportCSV } from "./SampleExcel";
+import { setHours, setMinutes } from "date-fns";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -205,6 +206,8 @@ const TimeSlot = ({ getNewCount, title }) => {
 
     return finalDisableEndTimeForMin;
   }
+
+
 
 
 
@@ -1174,13 +1177,21 @@ const TimeSlot = ({ getNewCount, title }) => {
                     Enter start time
                   </label>
                   <div className="col-lg-9 cus-data-input-style">
-                    <TimePicker
-                      showSecond={false}
-                      defaultValue={now}
-                      onChange={onChange}
-                      format={format}
-                      inputReadOnly
-                    />
+                      <TimePicker
+                        showSecond={false}
+                         defaultValue={now}
+                        onChange={onChange}
+                        format={format}
+                        disabledHours={()=>{
+                          let newArr = [];
+                          for (var i = 0; i < moment(new Date()).format("k"); i++) {
+                            newArr.push(i)
+                          }
+                          return newArr
+                        }}
+                        // disabledMinutes={()=>{return [Number(new Date().getHours())]}}
+                        inputReadOnly
+                      />
                     <span
                       style={{
                         color: "red",
