@@ -227,6 +227,10 @@ const CourseName = ({ getNewCount, title }) => {
       formIsValid = false;
       errorsForAdd["Description"] = "*Please Enter Description!";
     }
+    if (inputValueForAdd && !inputValueForAdd.displayName) {
+      formIsValid = false;
+      errorsForAdd["displayName"] = "*Please Enter displayName!";
+    }
     if (inputValueForAdd && !inputValueForAdd.VehicleCategory) {
       formIsValid = false;
       errorsForAdd["VehicleCategory"] = "*Please Enter VehicleCategory!";
@@ -290,6 +294,7 @@ const CourseName = ({ getNewCount, title }) => {
     if (validateFormForAddAdmin()) {
       let Data = {
         courseName: inputValueForAdd.CourseName,
+        displayName: inputValueForAdd.displayName,
         description: inputValueForAdd.Description,
         isActive: true,
         certificate: inputValueForAdd.Certificate,
@@ -346,6 +351,7 @@ const CourseName = ({ getNewCount, title }) => {
       let Data = {
         courseName: inputValueForAdd?.CourseName,
         description: inputValueForAdd?.Description,
+        displayName: inputValueForAdd?.displayName,
         certificate: inputValueForAdd?.Certificate,
         documentRequired: inputValueForAdd?.DocumentRequired,
         mode: inputValueForAdd?.Mode,
@@ -396,6 +402,11 @@ const CourseName = ({ getNewCount, title }) => {
     {
       name: "Course Name",
       selector: "courseName",
+      sortable: true,
+    },
+    {
+      name: "Display Name",
+      selector: "displayName",
       sortable: true,
     },
 
@@ -478,6 +489,7 @@ const CourseName = ({ getNewCount, title }) => {
                     Description: row?.description,
                     Certificate: row?.certificate,
                     DocumentRequired: row?.documentRequired,
+                    displayName: row?.displayName,
                     Mode: row?.mode,
                     SystemRequirement: row?.systemRequirement,
                     Timing: row?.timing,
@@ -636,6 +648,7 @@ const CourseName = ({ getNewCount, title }) => {
           Price: registerUser?.price,
           Mode: registerUser?.mode,
           Duration: registerUser?.duration,
+          displayName: registerUser?.displayName,
           Timing: registerUser?.timing,
           Certificate: registerUser?.certificate,
           // Validity: registerUser?.validity,
@@ -821,7 +834,34 @@ const CourseName = ({ getNewCount, title }) => {
             {isAddCourseName === true ? (
               <div className="form ml-30 ">
                 {/* Name Amenintie */}
-
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Enter Display Name
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <div>
+                      <input
+                        type="text"
+                        className={`form-control form-control-lg form-control-solid `}
+                        id="displayName"
+                        name="displayName"
+                        value={inputValueForAdd.displayName}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
+                      />
+                    </div>
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["displayName"]}
+                    </span>
+                  </div>
+                </div>
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Select vehicle category
@@ -1114,44 +1154,44 @@ const CourseName = ({ getNewCount, title }) => {
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
-                    <select
-                                                className={`form-control form-control-lg form-control-solid`}
-                                                name="Mode"
-                                                value={inputValueForAdd.Mode}
-                                                onChange={(e) => {
-                                                    handleOnChnageAdd(e);
-                                                }}
+                      <select
+                        className={`form-control form-control-lg form-control-solid`}
+                        name="Mode"
+                        value={inputValueForAdd.Mode}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
 
 
-                                            >
-                                                <option>Select Payment Mode
-                                                </option>
-                                                <option value="Offline" selected={
-                                                    inputValueForAdd?.Mode ===
-                                                        "Offline"
-                                                        ? true
-                                                        : false
-                                                }>Offline </option>
-                                                <option value="Online " selected={
-                                                    inputValueForAdd?.Mode ===
-                                                        "Online "
-                                                        ? true
-                                                        : false
-                                                }>Online </option>
-                                                <option value="Offline / Online " selected={
-                                                    inputValueForAdd?.Mode ===
-                                                        "Offline / Online "
-                                                        ? true
-                                                        : false
-                                                }>Offline / Online </option>
-                                                <option value="None of this " selected={
-                                                    inputValueForAdd?.Mode ===
-                                                        "None of this "
-                                                        ? true
-                                                        : false
-                                                }>None of this </option>
+                      >
+                        <option>Select Payment Mode
+                        </option>
+                        <option value="Offline" selected={
+                          inputValueForAdd?.Mode ===
+                            "Offline"
+                            ? true
+                            : false
+                        }>Offline </option>
+                        <option value="Online " selected={
+                          inputValueForAdd?.Mode ===
+                            "Online "
+                            ? true
+                            : false
+                        }>Online </option>
+                        <option value="Offline / Online " selected={
+                          inputValueForAdd?.Mode ===
+                            "Offline / Online "
+                            ? true
+                            : false
+                        }>Offline / Online </option>
+                        <option value="None of this " selected={
+                          inputValueForAdd?.Mode ===
+                            "None of this "
+                            ? true
+                            : false
+                        }>None of this </option>
 
-                                            </select>
+                      </select>
                       {/* <input
                         type="text"
                         className={`form-control form-control-lg form-control-solid `}

@@ -1350,6 +1350,12 @@ const User = ({ getNewCount, title }) => {
     });
     settypeTrueFalseform(false);
     seterrorShow("");
+    if (e.target.name === "issueDate") {
+      setFormData((formdataAll) => {
+        return { ...formdataAll, "validDate": moment(e?.target?.value).add(6, 'M').format('YYYY-MM-DD') };
+      });
+
+    }
   };
 
   const onChnagSelectField = (e, name) => {
@@ -1429,15 +1435,15 @@ const User = ({ getNewCount, title }) => {
         toast.error(`Sorry! License Category must be specified`);
         seterrorShow("License Category ");
         settypeTrueFalseform(true);
-      } else if (formdata?.license != "N/A" && formdata?.license != 'Learner' && formdata.driverlicense === "") {
+      } else if (formdata?.license != "N/A" && formdata.driverlicense === "") {
         toast.error(`Sorry! Driver's License Number must be specified`);
         seterrorShow(`Driver's License Number`);
         settypeTrueFalseform(true);
-      } else if (formdata?.license != "N/A" && formdata?.license != 'Learner' && formdata.issueDate === "") {
+      } else if (formdata?.license != "N/A" && formdata.issueDate === "") {
         toast.error(`Sorry! Issue Date must be specified`);
         seterrorShow("Issue Date");
         settypeTrueFalseform(true);
-      } else if (formdata?.license != "N/A" && formdata?.license != 'Learner' && formdata.validDate === "") {
+      } else if (formdata?.license != "N/A" && formdata.validDate === "") {
         toast.error(`Sorry! Valid Date must be specified`);
         seterrorShow("Valid Date");
         settypeTrueFalseform(true);
@@ -1855,7 +1861,7 @@ const User = ({ getNewCount, title }) => {
   const uploadCertificate = async () => {
     let urls = {};
     let data = [];
-    if (formdata?.license === 'N/A' || formdata?.license === 'Learner') {
+    if (formdata?.license === 'N/A') {
       if (formdata.passport) {
         if (formdata.passport && typeof formdata.passport !== "string") {
           if (!formdata.passport.name.match(/\.(jpg|jpeg|png)$/)) {
@@ -2374,6 +2380,49 @@ const User = ({ getNewCount, title }) => {
                           }}
                         />
                       </div>
+                      {
+                        formdata?.license === 'Learner' && <>
+                          <div className="register-grid-items ">
+                            <label>
+                              Learner's License No.<span>*</span>
+                            </label>
+                            <input
+                              type="text"
+                              name="driverlicense"
+                              value={formdata.driverlicense}
+                              onChange={(e) => onChnageForm(e)}
+                            />
+                          </div>
+                          <div className="register-grid-items">
+                            <label>
+                              Issue Date<span>*</span>
+                            </label>
+                            <input
+                              type="date"
+                              placeholder=""
+                              name="issueDate"
+                              max={moment(new Date()).format("YYYY-MM-DD")}
+                              value={formdata.issueDate ? formdata.issueDate.slice(0, 10) : formdata.issueDate}
+                              onChange={(e) => onChnageForm(e)}
+                            />
+                          </div>
+                          {console.log("formdata.issueDate", moment(formdata?.issueDate).add(6, 'M').format('DD-MM-YYYY'))}
+                          <div className="register-grid-items">
+                            <label>
+                              Valid Till<span>*</span>
+                            </label>
+                            <input
+                              type="date"
+                              placeholder=""
+                              name="validDate"
+                              min={moment(new Date()).format("YYYY-MM-DD")}
+                              value={formdata?.issueDate ? moment(formdata?.issueDate).add(6, 'M').format('YYYY-MM-DD') : ''}
+                              onChange={(e) => onChnageForm(e)}
+                              disabled="true"
+                            />
+                          </div>
+                        </>
+                      }
                       {formdata?.license != "N/A" && formdata?.license != 'Learner' &&
                         <>
                           <div className="register-grid-items ">
@@ -2953,7 +3002,7 @@ const User = ({ getNewCount, title }) => {
                       />
                     </div>
                     {
-                      formdata?.license === 'N/A' || formdata?.license === 'Learner' ? <div className="photo-upload-from">
+                      formdata?.license === 'N/A' ? <div className="photo-upload-from">
                         <p>
                           2. Driving License
                           (Not valid
@@ -3050,7 +3099,7 @@ const User = ({ getNewCount, title }) => {
                         </div>
                       </div>
                     )}
-                    {formdata?.license === 'N/A' || formdata?.license === 'Learner' ?
+                    {formdata?.license === 'N/A' ?
                       formdata?.passport ?
                         <div className="next-step-alignment">
                           <button
