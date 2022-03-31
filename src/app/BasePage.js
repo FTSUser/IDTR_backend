@@ -40,6 +40,7 @@ import Report from "../_metronic/components/Report/Report";
 import CancleCourse from "../_metronic/components/CanleCourse/CancleCourse";
 import Partial from "../_metronic/components/parsal/parsal";
 import Course from "../_metronic/components/Course/Course";
+import FAQCategory from "../_metronic/components/FAQCategory/FAQCategory";
 
 export default function BasePage() {
   let userInfo = getUserInfo()
@@ -85,6 +86,7 @@ export default function BasePage() {
           <ContentRoute exact path="/timeslot-addition" component={TimeSlot} />
           <ContentRoute exact path="/feedback-records" component={Feedback} />
           <ContentRoute exact path="/faq-section" component={FAQ} />
+          <ContentRoute exact path="/faq-category" component={FAQCategory} />
           <ContentRoute exact path="/batch-creation" component={Batch} />
           <ContentRoute exact path="/examiner" component={Examiner} />
           <ContentRoute exact path="/question-addition" component={Question} />

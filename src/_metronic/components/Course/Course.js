@@ -538,10 +538,10 @@ const Course = ({ getNewCount, title }) => {
             </div> */}
 
                         <div className="cus-medium-button-style button-height">
-                            <Tooltip title={row?.isActive ? "Deactivated Combo" : "Activated Combo"}>
+                            <Tooltip title={row?.isActive ? "Deactivated Course Name" : "Activated Course Name"}>
                                 <button
                                     // className="btn btn-success mr-2"
-                                    className={row?.isActive ? "btn btn-primary mr-2" : "btn btn-success mr-2"}
+                                    className={row?.isActive ? "btn btn-success mr-2" : "btn btn-success mr-2"}
                                     onClick={() => {
                                         setDisplayModal(row.isActive)
                                         setShow(true);

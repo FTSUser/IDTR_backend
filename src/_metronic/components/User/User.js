@@ -558,6 +558,14 @@ const User = ({ getNewCount, title }) => {
       sortable: true,
     },
     {
+      name: "Course Name",
+      selector: "courseName",
+      cell: (row) => {
+        return <span>{row?.courseName[0]?.courseName === "" ? '-' : row?.courseName[0]?.courseName}</span>;
+      },
+      sortable: true,
+    },
+    {
       name: "Actions",
       cell: (row) => {
         console.log(" fsdfsdfsdfs", row);

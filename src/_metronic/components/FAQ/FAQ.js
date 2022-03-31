@@ -48,6 +48,7 @@ const FAQ = ({ getNewCount, title }) => {
   const [countPerPage, setCountPerPage] = useState(10);
   const [search, setSearch] = useState("");
   const [isEdit, setIsEdit] = useState(false);
+  const [filteredVehicleCategory, setFilteredVehicleCategory] = useState({});
 
   useEffect(() => {
     document.title = "Honda | FAQ Section";
@@ -65,9 +66,10 @@ const FAQ = ({ getNewCount, title }) => {
   };
 
   const handleAddAdminClose = () => {
-    setAnswer([]);
-    setInputValueForAdd({})
     setIsAddFAQ(false);
+    setAnswer([]);
+    setIsEdit(false)
+    setInputValueForAdd({})
   };
 
   const handleClose = () => {
@@ -77,7 +79,19 @@ const FAQ = ({ getNewCount, title }) => {
   useEffect(() => {
     getAllFAQ();
   }, [page, countPerPage]);
+  const getAllVehicleCategory = async () => {
+    setIsLoaderVisible(true);
 
+    await ApiGet(`faqCategory/getAllfaqCategory?isActive=true`)
+      .then((res) => {
+        setIsLoaderVisible(false);
+        setFilteredVehicleCategory(res?.data?.payload?.faqCategory);
+        setCount(res?.data?.payload?.count);
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message)
+      });
+  };
   const getAllFAQ = async () => {
     setIsLoaderVisible(true);
     if (!search) {
@@ -110,6 +124,10 @@ const FAQ = ({ getNewCount, title }) => {
       formIsValid = false;
       errorsForAdd["question"] = "*Please Enter Question!";
     }
+    if (inputValueForAdd && !inputValueForAdd.fcid) {
+      formIsValid = false;
+      errorsForAdd["fcid"] = "*Please Enter FAQ Category!";
+    }
     if (!answer) {
       formIsValid = false;
       errorsForAdd["answer"] = "*Please Enter Answer!";
@@ -124,6 +142,7 @@ const FAQ = ({ getNewCount, title }) => {
       let Data = {
         question: inputValueForAdd.question,
         answer: answer,
+        fcid: inputValueForAdd.fcid
       };
       ApiPost(`faq/addFAQ`, Data)
         .then((res) => {
@@ -174,16 +193,18 @@ const FAQ = ({ getNewCount, title }) => {
       let Data = {
         question: inputValueForAdd.question,
         answer: answer,
+        fcid: inputValueForAdd.fcid
       };
       ApiPut(`faq/updateFAQ/${idForUpdateFAQData}`, Data)
         .then((res) => {
           if (res?.status == 200) {
-            setIsAddFAQ(false);
             toast.success(res?.data?.message);
             setInputValueForAdd({});
+            setIsAddFAQ(false);
             setAnswer("");
             getAllFAQ();
             setIsEdit(false)
+            
           } else {
             toast.error(res?.data?.message);
           }
@@ -193,6 +214,8 @@ const FAQ = ({ getNewCount, title }) => {
         });
     }
   };
+
+  useEffect(() => { console.log("inputvalueforadd", isAddFAQ) }, [isAddFAQ])
 
   let i = 0;
   const columns = [
@@ -251,7 +274,8 @@ const FAQ = ({ getNewCount, title }) => {
                   setAnswer(row?.answer);
                   setInputValueForAdd({
                     question: row?.question,
-                    answer: row?.answer
+                    answer: row?.answer,
+                    fcid: row?.fcid
                   });
 
                 }}
@@ -386,6 +410,7 @@ const FAQ = ({ getNewCount, title }) => {
             <div className="cus-medium-button-style button-height">
               <button
                 onClick={() => {
+                  getAllVehicleCategory();
                   setIsAddFAQ(true);
                 }}
                 className="btn btn-success mr-2"
@@ -469,6 +494,52 @@ const FAQ = ({ getNewCount, title }) => {
               <div className="form ml-30 ">
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
+                    Select FAQ Category
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <select
+                      className={`form-control form-control-lg form-control-solid `}
+                      id="fcid"
+                      name="fcid"
+                      value={inputValueForAdd.fcid}
+                      // defaultValue={inputValueForAdd.fcid}
+                      onChange={(e) => {
+                        handleOnChnageAdd(e);
+                      }}
+                    >
+                      <option value="" disabled selected hidden>
+                        Select FAQ Category
+                      </option>
+                      {filteredVehicleCategory?.length > 0 &&
+                        filteredVehicleCategory?.map((item) => {
+                          return (
+                            <option key={item._id}
+                              selected={
+                                inputValueForAdd?.fcid === item?._id
+                                  ? true
+                                  : false
+                              }
+                              value={item?._id}>
+                              {" "}
+                              {item.name}{" "}
+                            </option>
+                          );
+                        })}
+                    </select>
+
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["fcid"]}
+                    </span>
+                  </div>
+                </div>
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter Question
                   </label>
                   <div className="col-lg-9 col-xl-6">
@@ -541,64 +612,67 @@ const FAQ = ({ getNewCount, title }) => {
             ) : null}
           </List>
         </Dialog>
-      ) : null}
+      ) : null
+      }
 
-      {isViewMoreFAQ ? (
-        <Dialog
-          fullScreen
-          open={isViewMoreFAQ}
-          onClose={handleViewMoreClose}
-          TransitionComponent={Transition}
-        >
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleViewMoreClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-          </Toolbar>
-          <List>
-            {isViewMoreFAQ === true ? (
-              <div className="honda-container">
-                <div className="other-information-child-text-style1">
-                  <h2>FAQ</h2>
-                </div>
-                <div className="honda-text-grid12 honda-text-grid-border">
-                  <div className="honda-text-grid-items">
-                    <p>Question:</p>
-                    <span>{dataViewMore?.question}</span>
+      {
+        isViewMoreFAQ ? (
+          <Dialog
+            fullScreen
+            open={isViewMoreFAQ}
+            onClose={handleViewMoreClose}
+            TransitionComponent={Transition}
+          >
+            <Toolbar>
+              <IconButton
+                edge="start"
+                color="inherit"
+                onClick={handleViewMoreClose}
+                aria-label="close"
+              >
+                <CloseIcon />
+              </IconButton>
+            </Toolbar>
+            <List>
+              {isViewMoreFAQ === true ? (
+                <div className="honda-container">
+                  <div className="other-information-child-text-style1">
+                    <h2>FAQ</h2>
                   </div>
-                  <div className="honda-text-grid-items">
-                  <p>Answer:</p>
-                  <span
-                  style={{ fontSize:"16px" , color:"#757575" }}
-                    dangerouslySetInnerHTML={{
-                      __html: dataViewMore?.answer,
-                    }}
-                    className=""
-                  />
+                  <div className="honda-text-grid12 honda-text-grid-border">
+                    <div className="honda-text-grid-items">
+                      <p>Question:</p>
+                      <span>{dataViewMore?.question}</span>
+                    </div>
+                    <div className="honda-text-grid-items">
+                      <p>Answer:</p>
+                      <span
+                        style={{ fontSize: "16px", color: "#757575" }}
+                        dangerouslySetInnerHTML={{
+                          __html: dataViewMore?.answer,
+                        }}
+                        className=""
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="form-group row mb-0">
+                  <div className="form-group row mb-0">
 
+                  </div>
+                  <div className="form-group row mr-20">
+                    <p></p>
+                  </div>
+                  <div className="form-group row mb-0">
+
+                  </div>
+                  <div className="form-group row mr-20">
+
+                  </div>
                 </div>
-                <div className="form-group row mr-20">
-                  <p></p>
-                </div>
-                <div className="form-group row mb-0">
-                
-                </div>
-                <div className="form-group row mr-20">
-                  
-                </div>
-              </div>
-            ) : null}
-          </List>
-        </Dialog>
-      ) : null}
+              ) : null}
+            </List>
+          </Dialog>
+        ) : null
+      }
     </>
   );
 };
