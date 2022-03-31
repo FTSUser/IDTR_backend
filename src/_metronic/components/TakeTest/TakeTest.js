@@ -1802,7 +1802,7 @@ const TakeTest = ({ getNewCount, title }) => {
                     {<div>{dataViewMore?.total}</div>}
                   </div>
                   <div className="honda-text-grid-items">
-                    <span>Available Seat</span>
+                    <span>Total User</span>
                     {<div>{dataViewMore?.totalUser}</div>}
                   </div>
                 </div>
