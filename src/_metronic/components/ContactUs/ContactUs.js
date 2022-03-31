@@ -164,7 +164,11 @@ const ContactUs = ({ getNewCount, title }) => {
       <div className="card p-1">
         <ToastContainer />
         <div className="p-2 mb-2">
-
+        <div className="col d-flex justify-content-between">
+                            <h2 className="pl-3 pt-2">Contact Us</h2>
+                        </div>
+                      
+                       
           <DataTable
             columns={columns}
             data={filteredContactUs}

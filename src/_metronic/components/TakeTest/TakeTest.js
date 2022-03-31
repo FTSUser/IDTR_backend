@@ -64,8 +64,8 @@ class ComponentToPrintss extends React.Component {
         <div class="invoice-box">
           {
             this.state?.Examset?.questionsList?.map((data, key) => (
-              <div key={key} style={{ padding: "10px 0 20px 0" }}>
-                <h2>Question{key + 1}:{data?.Qname}</h2>
+              <div key={key} style={{ padding: "10px 0 80px 0" }}>
+                <h2 style={{ fontSize: "35px",lineHeight:"50px" }}> <b>Question{key + 1}</b> :{data?.Qname}</h2>
                 <div style={{ padding: "10px 0 0px 0" }}>
                   <img src={this.state.Examset[key]?.image ? this.state.Examset[key]?.image : ''} className="img-fluid" style={{ height: "200px" }} alt="" />
                 </div>
@@ -73,10 +73,10 @@ class ComponentToPrintss extends React.Component {
                   {data?.Option.map((data, key) => {
                     return (
                       <div className="d-flex  mx-3 mb-4 ques-text-design-style" style={{ padding: "20px 0 0 0" }}>
-                        <div className="mr-2" style={{ fontSize: "20px" }}>
-                          <b>Option{[key + 1]}:</b>
+                        <div className="mr-2" >
+                          <b  style={{ fontSize: "30px",lineHeight:"30px" }}>Option{[key + 1]}:</b>
                         </div>
-                        <div style={{ fontSize: "20px" }}>{data?.name}</div>
+                        <div style={{ fontSize: "30px",lineHeight:"30px" }}>{data?.name}</div>
                       </div>
                     );
                   })}

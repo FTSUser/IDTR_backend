@@ -278,6 +278,14 @@ const CancleCourse = ({ getNewCount, title }) => {
               return <span>{row?.type === "" ? "-" : row?.type}</span>;
             },
           },
+        {
+            name: "Course Name",
+            selector: "courseName",
+            sortable: true,
+            cell: (row) => {
+              return <span>{row?.cnid?.courseName === "" ? "-" : row?.cnid?.courseName}</span>;
+            },
+          },
         // {
         //     name: "Assign To",
         //     cell: (row) => {

@@ -14,13 +14,14 @@ export function BreadCrumbs({ items }) {
                     <i className="flaticon2-shelter text-muted icon-1x" />
                 </Link>
             </li>
+            {console.log("items",items)}
             {items.map((item, index) => (
                 <li key={`bc${index}`} className="breadcrumb-item">
                     <Link
                         className="text-muted"
-                        to={{ pathname: item.pathname }}
+                        to={{ pathname:  item?.pathname}}
                     >
-                        {item.title}
+                        {item.title === 'Policy &amp; Terms' ? "Policy & Terms" : item?.title}
                     </Link>
                 </li>
             ))}
