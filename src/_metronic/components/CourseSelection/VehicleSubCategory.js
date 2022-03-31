@@ -370,7 +370,7 @@ const CourseType = ({ getNewCount, title }) => {
                                 setIdForDeleteCourseType(row?._id);
                             }}
                         >
-                            <Tooltip title="Delete Course Type" arrow>
+                            <Tooltip title="Delete Vehicle Sub Category" arrow>
                                 <DeleteIcon />
                             </Tooltip>
                         </div>

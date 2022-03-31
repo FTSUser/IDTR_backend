@@ -256,7 +256,7 @@ const FAQ = ({ getNewCount, title }) => {
 
                 }}
               >
-                <Tooltip title="Edit Announcement" arrow>
+                <Tooltip title="Edit FAQ" arrow>
                   <CreateIcon />
                 </Tooltip>
               </div>
@@ -268,7 +268,7 @@ const FAQ = ({ getNewCount, title }) => {
                 setIdForDeleteFAQ(row?._id);
               }}
             >
-              <Tooltip title="Delete Announcement" arrow>
+              <Tooltip title="Delete FAQ" arrow>
                 <DeleteIcon />
               </Tooltip>
             </div>

@@ -509,7 +509,7 @@ const Course = ({ getNewCount, title }) => {
                                     setDescription(row?.description);
                                 }}
                             >
-                                <Tooltip title="Edit HelpfulTips" arrow>
+                                <Tooltip title="Edit" arrow>
                                     <CreateIcon />
                                 </Tooltip>
                             </div>

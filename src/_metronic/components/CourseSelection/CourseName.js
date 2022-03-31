@@ -504,7 +504,7 @@ const CourseName = ({ getNewCount, title }) => {
                   setIsEditPopUp(true);
                 }}
               >
-                <Tooltip title="Edit CourseCategory" arrow>
+                <Tooltip title="Edit Course Name" arrow>
                   <CreateIcon />
                 </Tooltip>
               </div>
@@ -517,7 +517,7 @@ const CourseName = ({ getNewCount, title }) => {
                 setIdForDeleteCourseName(row?._id);
               }}
             >
-              <Tooltip title="Delete CourseCategory" arrow>
+              <Tooltip title="Delete Course Name" arrow>
                 <DeleteIcon />
               </Tooltip>
             </div>

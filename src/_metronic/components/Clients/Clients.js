@@ -418,7 +418,7 @@ const Clients = ({ getNewCount, title }) => {
                   });
                 }}
               >
-                <Tooltip title="Edit Announcement" arrow>
+                <Tooltip title="Edit Clients" arrow>
                   <CreateIcon />
                 </Tooltip>
               </div>
@@ -430,7 +430,7 @@ const Clients = ({ getNewCount, title }) => {
                 setIdForDeleteAnnouncement(row?._id);
               }}
             >
-              <Tooltip title="Delete Announcement" arrow>
+              <Tooltip title="Delete Clients" arrow>
                 <DeleteIcon />
               </Tooltip>
             </div>
