@@ -397,7 +397,7 @@ const Cms = ({ getNewCount, title }) => {
                   setDescription(row?.description);
                 }}
               >
-                <Tooltip title="Edit Cms" arrow>
+                <Tooltip title="Edit About Us" arrow>
                   <CreateIcon />
                 </Tooltip>
               </div>
@@ -409,7 +409,7 @@ const Cms = ({ getNewCount, title }) => {
                 setIdForDeleteCms(row?._id);
               }}
             >
-              <Tooltip title="Delete CMS" arrow>
+              <Tooltip title="Delete About Us" arrow>
                 <DeleteIcon />
               </Tooltip>
             </div> */}

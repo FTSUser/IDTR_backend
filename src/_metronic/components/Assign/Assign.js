@@ -327,7 +327,7 @@ const Assign = ({ getNewCount, title }) => {
                                     setIsEditPopUp(true);
                                 }}
                             >
-                                <Tooltip title="Edit " arrow>
+                                <Tooltip title="Edit Assign " arrow>
                                     <CreateIcon />
                                 </Tooltip>
                             </div>
@@ -340,7 +340,7 @@ const Assign = ({ getNewCount, title }) => {
                                 setIdForDeleteCourseName(row?._id);
                             }}
                         >
-                            <Tooltip title="Delete " arrow>
+                            <Tooltip title="Delete Assign" arrow>
                                 <DeleteIcon />
                             </Tooltip>
                         </div>

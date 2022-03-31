@@ -597,7 +597,7 @@ const User = ({ getNewCount, title }) => {
             <div className="cursor-pointer pl-2">
               {!row?.uid ? (
                 <>
-                  <Tooltip title="Edit" arrow>
+                  <Tooltip title="Edit User" arrow>
                     <CreateIcon
                       onClick={() => {
                         setTab("course");
@@ -681,7 +681,7 @@ const User = ({ getNewCount, title }) => {
                       }}
                     />
                   </Tooltip>
-                  <Tooltip title="Delete" arrow>
+                  <Tooltip title="Delete User" arrow>
                     <DeleteIcon
                       onClick={() => {
                         setShow(true);
