@@ -1189,7 +1189,13 @@ const TimeSlot = ({ getNewCount, title }) => {
                           }
                           return newArr
                         }}
-                        // disabledMinutes={()=>{return [Number(new Date().getHours())]}}
+                        disabledMinutes={()=>{
+                          let newArr = [];
+                          for (var i = 0; i < moment(new Date()).format("m"); i++) {
+                            newArr.push(i)
+                          }
+                          return newArr
+                        }}
                         inputReadOnly
                       />
                     <span

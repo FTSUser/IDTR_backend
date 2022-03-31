@@ -828,14 +828,14 @@ const CheckTest = ({ getNewCount, title }) => {
               aria-label="close"
             >
               <CloseIcon />
-            </IconButton>
+            </IconButton>    
           </Toolbar>
           <List>
             {exampPeperSet === true ? (
               <div className="honda-container">
                 <div className="">
                   {console.log("questionData", questionData?.questionsList)}
-                  <div className="questionGrid12121">
+                  <div className="grid3">
                     {questionData?.questionsList?.map((data, key) => (
                       <div className="questionGridItems">
                         <div className="flexs mb-10">
@@ -844,7 +844,7 @@ const CheckTest = ({ getNewCount, title }) => {
                             {key + 1}
                           </div>
 
-                          {data?.Qname}
+                          {/* {data?.Qname} */}Question
                         </div>
                         <div>
                           {
@@ -872,7 +872,8 @@ const CheckTest = ({ getNewCount, title }) => {
                                     />
                                     <span className="pl-2">
                                       {" "}
-                                      {record?.name}
+                                      Option  {i + 1}
+                                      {/* {record?.name} */}
                                     </span>
                                   </div>
                                 </>
@@ -892,7 +893,8 @@ const CheckTest = ({ getNewCount, title }) => {
 
                                     <span className="pl-2">
                                       {" "}
-                                      {record?.name}
+                                      {/* {record?.name} */}
+                                      Option  {i + 1}
                                     </span>
                                   </div>
                                 </>

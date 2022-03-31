@@ -2742,7 +2742,7 @@ const User = ({ getNewCount, title }) => {
                           />
                         </div>
                         <div className="register-grid-items">
-                          <label>Last Name</label>
+                          <label>Last Name <span>*</span></label>
                           <input
                             type="text"
                             placeholder="Last Name"

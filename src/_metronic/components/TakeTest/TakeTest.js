@@ -1810,7 +1810,7 @@ const TakeTest = ({ getNewCount, title }) => {
                   <h2>User Data</h2>
                 </div>
                 <div className="">
-                  <div className="cursor-pointer pl-2">
+                  <div className="cursor-pointer pl-2 d-flex">
                     {allDataForResultDownload?.length > 0 ? (
                       <CsvDownload
                         className={``}
@@ -1832,7 +1832,7 @@ const TakeTest = ({ getNewCount, title }) => {
                         Download Test Data
                       </CsvDownload>
                     ) : (
-                      "No test Data"
+                      <span className="mr-3">No test Data</span>
                     )}
 
                     {allDataForAttendance?.length > 0 ? (
@@ -1856,7 +1856,9 @@ const TakeTest = ({ getNewCount, title }) => {
                         Download Attendance Data
                       </CsvDownload>
                     ) : (
-                      "No Attendance Data"
+                      
+                      <span className="mr-3">No Attendance Data</span>
+
                     )}
                   </div>
                   <DataTable

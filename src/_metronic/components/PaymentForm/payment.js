@@ -23,37 +23,39 @@ function PaymentData(props) {
         });
     }
 
-    async function displayRazorpay() {
-        if (props.uid) {
+     function displayRazorpay() {
+
+        if (props.cnid) {
             const data = {
                 cnid: props.cnid,
                 ctid: props.ctid,
                 vcid: props.vcid,
-                uid: props.uid,
+
                 tdid: props.tdid,
             }
-            ApiPost('payment/checkPayment', data).then((res) => {
-                console.log("ress", res);
-                if (res?.data?.result === 0) {
-                    const res =  loadScript(
+            ApiPost('payment/checkPayment', data).then(async (res) => {
+                console.log("ress", res.data.result);
+                if (res.data.result === 0) {
+                    
+                    const ress = await loadScript(
                         'https://checkout.razorpay.com/v1/checkout.js'
                     );
 
-                    if (!res) {
+                    if (!ress) {
                         alert('Razorpay SDK failed to load. Are you online?');
                         return;
                     }
 
                     // const result = await axios.post('/payment/orders');
-                    const result = "data";
+                    const results = "data";
 
 
-                    if (!result) {
+                    if (!results) {
                         alert('Server error. Are you online?');
                         return;
                     }
 
-                    const { amt, id: order_id, } = result;
+                    const { amt, id: order_id, } = results;
                     const options = {
                         key: 'rzp_test_HvMIzOImOtzrzA', // Enter the Key ID generated from the Dashboard
 
@@ -108,16 +110,16 @@ function PaymentData(props) {
             })
 
         }
-      
+
 
     }
     return (
-                <>
-                    <button className='payment-button ' onClick={displayRazorpay}>
-                        Pay ₹{price}
-                    </button>
-                </>
-            )
-        }
+        <>
+            <button className='payment-button ' onClick={displayRazorpay}>
+                Pay ₹{price}
+            </button>
+        </>
+    )
+}
 
-        export default PaymentData
+export default PaymentData
