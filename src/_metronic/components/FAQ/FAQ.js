@@ -66,9 +66,10 @@ const FAQ = ({ getNewCount, title }) => {
   };
 
   const handleAddAdminClose = () => {
-    setAnswer([]);
-    setInputValueForAdd({})
     setIsAddFAQ(false);
+    setAnswer([]);
+    setIsEdit(false)
+    setInputValueForAdd({})
   };
 
   const handleClose = () => {
@@ -82,15 +83,15 @@ const FAQ = ({ getNewCount, title }) => {
     setIsLoaderVisible(true);
 
     await ApiGet(`faqCategory/getAllfaqCategory?isActive=true`)
-        .then((res) => {
-            setIsLoaderVisible(false);
-            setFilteredVehicleCategory(res?.data?.payload?.faqCategory);
-            setCount(res?.data?.payload?.count);
-        })
-        .catch((err) => {
-            toast.error(err?.response?.data?.message)
-        });
-};
+      .then((res) => {
+        setIsLoaderVisible(false);
+        setFilteredVehicleCategory(res?.data?.payload?.faqCategory);
+        setCount(res?.data?.payload?.count);
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message)
+      });
+  };
   const getAllFAQ = async () => {
     setIsLoaderVisible(true);
     if (!search) {
@@ -197,12 +198,13 @@ const FAQ = ({ getNewCount, title }) => {
       ApiPut(`faq/updateFAQ/${idForUpdateFAQData}`, Data)
         .then((res) => {
           if (res?.status == 200) {
-            setIsAddFAQ(false);
             toast.success(res?.data?.message);
             setInputValueForAdd({});
+            setIsAddFAQ(false);
             setAnswer("");
             getAllFAQ();
             setIsEdit(false)
+            
           } else {
             toast.error(res?.data?.message);
           }
@@ -212,6 +214,8 @@ const FAQ = ({ getNewCount, title }) => {
         });
     }
   };
+
+  useEffect(() => { console.log("inputvalueforadd", isAddFAQ) }, [isAddFAQ])
 
   let i = 0;
   const columns = [
@@ -270,7 +274,8 @@ const FAQ = ({ getNewCount, title }) => {
                   setAnswer(row?.answer);
                   setInputValueForAdd({
                     question: row?.question,
-                    answer: row?.answer
+                    answer: row?.answer,
+                    fcid: row?.fcid
                   });
 
                 }}
@@ -497,6 +502,7 @@ const FAQ = ({ getNewCount, title }) => {
                       id="fcid"
                       name="fcid"
                       value={inputValueForAdd.fcid}
+                      // defaultValue={inputValueForAdd.fcid}
                       onChange={(e) => {
                         handleOnChnageAdd(e);
                       }}
@@ -507,7 +513,13 @@ const FAQ = ({ getNewCount, title }) => {
                       {filteredVehicleCategory?.length > 0 &&
                         filteredVehicleCategory?.map((item) => {
                           return (
-                            <option key={item._id} value={item?._id}>
+                            <option key={item._id}
+                              selected={
+                                inputValueForAdd?.fcid === item?._id
+                                  ? true
+                                  : false
+                              }
+                              value={item?._id}>
                               {" "}
                               {item.name}{" "}
                             </option>
