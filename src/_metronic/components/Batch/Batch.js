@@ -338,7 +338,7 @@ class ComponentToPrintsForUser extends React.Component {
             </tr>
             <tr className="">
               <td>
-                <td>Percentage: {`${this?.props?.data?.percentage} `} </td>
+                <td>Percentage: {`${this?.props?.data?.percentage}% `} </td>
               </td>
             </tr>
             <tr className="">
@@ -927,27 +927,27 @@ const Batch = ({ getNewCount, title }) => {
       },
       sortable: true,
     },
-    {
-      name: "Course Name",
-      selector: "courseName",
-      cell: (row) => {
-        return (
-          <>
-            {row?.totalUser ? (
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: row?.tdid[0].cnid?.courseName,
-                }}
-                className=""
-              />
-            ) : (
-              <p>{"-"}</p>
-            )}
-          </>
-        );
-      },
-      sortable: true,
-    },
+    // {
+    //   name: "Course Name",
+    //   selector: "courseName",
+    //   cell: (row) => {
+    //     return (
+    //       <>
+    //         {row?.totalUser ? (
+    //           <p
+    //             dangerouslySetInnerHTML={{
+    //               __html: row?.tdid[0].cnid?.courseName,
+    //             }}
+    //             className=""
+    //           />
+    //         ) : (
+    //           <p>{"-"}</p>
+    //         )}
+    //       </>
+    //     );
+    //   },
+    //   sortable: true,
+    // },
     {
       name: "Actions",
       cell: (row) => {
@@ -1269,7 +1269,7 @@ const Batch = ({ getNewCount, title }) => {
           EmailAddress: registerUser?.uid?.email,
           MobileNumber: registerUser?.uid?.phone,
           CourseType: registerUser?.uid?.cnid?.ccid?.ctid?.courseType,
-          CourseName: registerUser?.tdid[0].cnid?.courseName,
+          // CourseName: registerUser?.tdid[0].cnid?.courseName,
           VehicleCategory:
             registerUser?.uid?.cnid?.ccid?.ctid?.vcid?.vehicleCategory,
           CourseName: registerUser?.uid?.cnid?.courseName,
