@@ -2014,7 +2014,7 @@ const Batch = ({ getNewCount, title }) => {
                       <CsvDownload
                         className={``}
                         data={dataCSVResults}
-                        filename="User Data.csv"
+                        filename="Test Data Report.csv"
                         style={{
                           backgroundColor: "#CC0001",
                           borderRadius: "6px",
@@ -2039,7 +2039,7 @@ const Batch = ({ getNewCount, title }) => {
                       <CsvDownload
                         className={``}
                         data={dataCSVForAttendance}
-                        filename="Batch.csv"
+                        filename="Attendance Data.csv"
                         style={{
                           backgroundColor: "#CC0001",
                           borderRadius: "6px",
