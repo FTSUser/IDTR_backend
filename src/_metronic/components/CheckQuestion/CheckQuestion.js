@@ -1127,6 +1127,14 @@ const CheckTest = ({ getNewCount, title }) => {
                         {data?.isAttendence ? "Yes" : "-"}
                       </div>
                       <div className="flelxcenter">
+                        <span className="bolds">Theoratical  Score:</span>{" "}
+                        {data?.totalScore ? data?.totalScore + `%` : "N/A"}
+                      </div>
+                      <div className="flelxcenter">
+                        <span className="bolds">Practical Score:</span>{" "}
+                        {data?.practicalScore ? data?.practicalScore + `%` : "N/A"}
+                      </div>
+                      <div className="flelxcenter">
                         <span className="bolds">Passing Score:</span>{" "}
                         {data?.percentage ? data?.percentage + `%` : "N/A"}
                       </div>
