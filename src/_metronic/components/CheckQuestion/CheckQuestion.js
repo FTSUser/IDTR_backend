@@ -206,19 +206,23 @@ const CheckTest = ({ getNewCount, title }) => {
   const [viewUserDataBatchId, setViewUserDataBatchId] = useState("");
   const [userIds, setUserId] = useState("");
   const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
+  const [isModel, setIsModel] = useState(false);
   const [exampPeperSet, openExamPeperSet] = useState(false);
   const [checkPeperSet, openCheckExamPeperSet] = useState(false);
   const [status, setStatus] = useState("");
   const [questionData, setQuestionData] = useState({});
   const [paperSet, setPaperSet] = useState([]);
-
+  const [percantageData, SetpercantageData] = useState()
   const [isViewUsers, setViewUsers] = useState(false);
+  const [inputShow, setInput] = useState(false);
+  const [inputData, setInputData] = useState(false);
+  const [paperData, setPeperData] = useState();
 
   const [attendenceId, setAttendenceId] = useState("");
 
   useEffect(() => {
-    console.log("attendenceId", attendenceId);
-  }, [attendenceId]);
+    console.log("SetpercantageData", SetpercantageData);
+  }, [SetpercantageData]);
 
   let userInfo = getUserInfo();
   useEffect(() => {
@@ -228,6 +232,11 @@ const CheckTest = ({ getNewCount, title }) => {
   const handleViewMoreClose = () => {
     setIsViewMoreAboutus(false);
     setDataViewMore({});
+  };
+  const handleModelClose = () => {
+    setIsModel(false);
+    setInputData(false)
+    setInput(false)
   };
   const handleViewUserClose = () => {
     setViewUsers(false);
@@ -476,7 +485,18 @@ const CheckTest = ({ getNewCount, title }) => {
     );
     return debouncedValue;
   }
-
+  const setYes = (e) => {
+    console.log("eee", e.target.value);
+   
+    if (e.target.value == 'yes') {
+      setInput(true)
+      setInputData(true)
+    } else {
+      setInput(true)
+      setInputData(false)
+    }
+    console.log("eee1", e);
+  }
   useEffect(() => {
     if (debouncedSearchTerm) {
       setIsLoaderVisible(true);
@@ -580,9 +600,11 @@ const CheckTest = ({ getNewCount, title }) => {
     }
     console.log("UsertCsvReport", allCourseNameExcel);
   }, [allCourseNameExcel]);
+  const addPercnatage = () => {
+    console.log("percantageData", percantageData);
 
-  const createUser = (data) => {
-    console.log("data", data);
+    console.log("Percntage", percantageData);
+    console.log("paperData", paperData);
     let checkData = [];
     questionData?.questionsList.map((e) => {
       e.Option.map((o) => {
@@ -608,11 +630,13 @@ const CheckTest = ({ getNewCount, title }) => {
     });
 
     const datas = {
-      batch: data?.batchId,
+      batch: paperData?.batchId,
       uid: userIds,
-      Esid: data?._id,
+      Esid: paperData?._id,
       ListofQA: checkData,
+      practicalScore: Number(percantageData) ? Number(percantageData) : 0
     };
+    console.log("datass", datas);
     ApiPost(`response/addResponse`, datas)
       .then((res) => {
         console.log("res", res);
@@ -626,6 +650,20 @@ const CheckTest = ({ getNewCount, title }) => {
         toast.error(err?.response?.data?.message);
       });
 
+    setIsModel(false)
+
+
+  }
+  const createUser = (data) => {
+    setPeperData(data)
+    setIsModel(true);
+    if (data) {
+      console.log("A");
+    }
+    else {
+      console.log("data", data);
+
+    }
   };
   const updateUser = (data) => {
     console.log("data", data);
@@ -828,7 +866,7 @@ const CheckTest = ({ getNewCount, title }) => {
               aria-label="close"
             >
               <CloseIcon />
-            </IconButton>    
+            </IconButton>
           </Toolbar>
           <List>
             {exampPeperSet === true ? (
@@ -1094,9 +1132,9 @@ const CheckTest = ({ getNewCount, title }) => {
                       </div>
                       <div className="flelxcenter">
                         <span className="bolds">Final Result Status:</span>{" "}
-                        {data?.isPass == 'false' ? 'Fail' : 'Pass'}
+                        {data?.isPass == 'Pending' ? 'Pending' : 'Fail'}
                       </div>
-                      {data?.totalScore ? (
+                      {data?.totalScore === 0 || data?.totalScore ? (
                         ""
                       ) : (
                         <div
@@ -1191,6 +1229,75 @@ const CheckTest = ({ getNewCount, title }) => {
                     <span>Total User:</span>
                     {<div>{dataViewMore?.totalUser}</div>}
                   </div>
+                </div>
+              </div>
+            ) : null}
+          </List>
+        </Dialog>
+      ) : null}
+      {isModel ? (
+        <Dialog
+          fullScreen
+          open={isModel}
+          onClose={handleModelClose}
+          TransitionComponent={Transition}
+        >
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleModelClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </Toolbar>
+          <List>
+            {isModel === true ? (
+              <div className="honda-container">
+                <div className="other-information-child-text-style1">
+                  <h2>Practical Exam</h2>
+                </div>
+                <div className="honda-text-grid12 honda-text-grid-border">
+                  <div className="honda-text-grid-items">
+                    <div className="honda-text-grid-items">
+                      <span>Is practical exam given by the student?</span>
+                      <div className="d-flex ">
+                        <div className="d-flex align-items-center mr-3">
+                          <input className="mr-1" onChange={(e) => setYes(e)} type="radio" name="name" id="yes" value="yes" />
+                          <label className="m-0" htmlFor="">Yes</label>
+                        </div>
+                        <div className="d-flex align-items-center mr-3">
+                          <input className="mr-1" onChange={(e) => setYes(e)} type="radio" name="name" id="yes" value="no" />
+                          <label className="m-0" htmlFor="">No</label>
+                        </div>
+                      </div>
+                      <div className="form-group">
+                        {
+                           inputData &&  <>
+                            <input className="form-control" onKeyPress={(event) => {
+                              if (!/[0-9]/.test(event.key)) {
+                                event.preventDefault();
+                              }
+                            }}
+                              onChange={(e) => SetpercantageData(e.target.value)}
+
+                              type="text" />
+                           
+                          </>
+                        }
+                        {console.log("inputData",inputData)}
+                        {console.log("inputShow",inputShow)}
+                       { 
+                       inputShow && 
+                            <button className="btn btn-success" onClick={() => addPercnatage()}>Add Percantage</button>
+                       } 
+                        
+                      </div>
+                    </div>
+
+                  </div>
+
                 </div>
               </div>
             ) : null}

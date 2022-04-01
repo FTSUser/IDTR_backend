@@ -1177,27 +1177,27 @@ const TimeSlot = ({ getNewCount, title }) => {
                     Enter start time
                   </label>
                   <div className="col-lg-9 cus-data-input-style">
-                      <TimePicker
-                        showSecond={false}
-                         defaultValue={now}
-                        onChange={onChange}
-                        format={format}
-                        disabledHours={()=>{
-                          let newArr = [];
-                          for (var i = 0; i < moment(new Date()).format("k"); i++) {
-                            newArr.push(i)
-                          }
-                          return newArr
-                        }}
-                        disabledMinutes={()=>{
-                          let newArr = [];
-                          for (var i = 0; i < moment(new Date()).format("m"); i++) {
-                            newArr.push(i)
-                          }
-                          return newArr
-                        }}
-                        inputReadOnly
-                      />
+                    <TimePicker
+                      showSecond={false}
+                      defaultValue={now}
+                      onChange={onChange}
+                      format={format}
+                      disabledHours={() => {
+                        let newArr = [];
+                        for (var i = 0; i < moment(isEditPopUp === true ? new Date(startTime) : new Date()).format("k"); i++) {
+                          newArr.push(i)
+                        }
+                        return newArr
+                      }}
+                      disabledMinutes={() => {
+                        let newArr = [];
+                        for (var i = 0; i < moment(isEditPopUp === true ? new Date(startTime) :new Date()).format("m"); i++) {
+                          newArr.push(i)
+                        }
+                        return newArr
+                      }}
+                      inputReadOnly
+                    />
                     <span
                       style={{
                         color: "red",

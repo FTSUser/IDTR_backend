@@ -65,7 +65,7 @@ class ComponentToPrintss extends React.Component {
           {
             this.state?.Examset?.questionsList?.map((data, key) => (
               <div key={key} style={{ padding: "10px 0 80px 0" }}>
-                <h2 style={{ fontSize: "35px",lineHeight:"50px" }}> <b>Question{key + 1}</b> :{data?.Qname}</h2>
+                <h2 style={{ fontSize: "35px", lineHeight: "50px" }}> <b>Question{key + 1}</b> :{data?.Qname}</h2>
                 <div style={{ padding: "10px 0 0px 0" }}>
                   <img src={this.state.Examset[key]?.image ? this.state.Examset[key]?.image : ''} className="img-fluid" style={{ height: "200px" }} alt="" />
                 </div>
@@ -74,9 +74,9 @@ class ComponentToPrintss extends React.Component {
                     return (
                       <div className="d-flex  mx-3 mb-4 ques-text-design-style" style={{ padding: "20px 0 0 0" }}>
                         <div className="mr-2" >
-                          <b  style={{ fontSize: "30px",lineHeight:"30px" }}>Option{[key + 1]}:</b>
+                          <b style={{ fontSize: "30px", lineHeight: "30px" }}>Option{[key + 1]}:</b>
                         </div>
-                        <div style={{ fontSize: "30px",lineHeight:"30px" }}>{data?.name}</div>
+                        <div style={{ fontSize: "30px", lineHeight: "30px" }}>{data?.name}</div>
                       </div>
                     );
                   })}
@@ -1451,36 +1451,41 @@ const TakeTest = ({ getNewCount, title }) => {
                     </div>
                   </div>
                   <div className="form-group row">
-                    <label className="col-xl-2 col-lg-2 col-form-label">
-                      <b>Note: Please Enter Value Between 0-5</b>
-                    </label>
+                    <div className="col-xl-2 col-lg-2 col-form-label"></div>
                     <div className="col-lg-9 col-xl-6">
-                      {datanumber?.length > 0 &&
-                        datanumber?.map((item, key) => {
-                          return (
-                            <>
-                              <div className="d-flex" style={{ justifyContent: "space-between" }} key={key}>
-                                <div>{item?.name}</div>
-                                <input value={item?.no} className="inputboxes"
-                                  onChange={(e) => {
-                                    setData((curVal) => {
-                                      return produce(curVal, (data) => {
+                      <div className=" row">
+                        <label className="col-xl-12 col-lg-12 col-form-label">
+                          <b>Note: Please Enter Value Between 0-5</b>
+                        </label>
+                        <div className="col-lg-12 col-xl-12">
+                          {datanumber?.length > 0 &&
+                            datanumber?.map((item, key) => {
+                              return (
+                                <>
+                                  <div className="d-flex" style={{ justifyContent: "space-between" }} key={key}>
+                                    <div>{item?.name}</div>
+                                    <input value={item?.no} className="inputboxes"
+                                      onChange={(e) => {
+                                        setData((curVal) => {
+                                          return produce(curVal, (data) => {
 
-                                        data[key].no =
-                                          e.target?.value || null;
-                                      });
-                                    });
-                                  }}
-                                  type="text" maxLength={1} onKeyPress={(event) => {
-                                    if (!/[0-5]/.test(event.key)) {
-                                      event.preventDefault();
-                                    }
-                                  }} />
-                              </div>
-                            </>
-                          )
-                        })
-                      }
+                                            data[key].no =
+                                              e.target?.value || null;
+                                          });
+                                        });
+                                      }}
+                                      type="text" maxLength={1} onKeyPress={(event) => {
+                                        if (!/[0-5]/.test(event.key)) {
+                                          event.preventDefault();
+                                        }
+                                      }} />
+                                  </div>
+                                </>
+                              )
+                            })
+                          }
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -1781,14 +1786,18 @@ const TakeTest = ({ getNewCount, title }) => {
                 </div>
                 <div className="honda-text-grid12 honda-text-grid-border">
                   <div className="honda-text-grid-items">
-                    <div className="honda-text-grid-items">
-                      <span>CreatedAt:</span>
-                      {
-                        <div>
-                          {moment(dataViewMore?.createdAt).format("ll")}
-                        </div>
-                      }
-                    </div>
+
+
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Date:</span>
+                    {
+                      <div>
+                        {moment(dataViewMore?.createdAt).format("ll")}
+                      </div>
+                    }
+                  </div>
+                  <div className="honda-text-grid-items">
                     <span>Batch Name:</span>
                     <p
                       dangerouslySetInnerHTML={{
@@ -1856,7 +1865,7 @@ const TakeTest = ({ getNewCount, title }) => {
                         Download Attendance Data
                       </CsvDownload>
                     ) : (
-                      
+
                       <span className="mr-3">No Attendance Data</span>
 
                     )}
