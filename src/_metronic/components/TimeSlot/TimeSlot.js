@@ -54,6 +54,7 @@ const TimeSlot = ({ getNewCount, title }) => {
   const [getCourseCategory, setGetCourseCategory] = useState([]);
   const [getCourseName, setGetCourseName] = useState([]);
   const [isEditPopUp, setIsEditPopUp] = useState(false);
+  const [isDisable, setIsDisable] = useState(false);
   const [allPaymentDetailsExcel, setAllPaymentDetailsExcel] = useState([]);
   const [currentDate, setCurrentDate] = useState(new Date(date));
   const [hour, setHour] = useState();
@@ -1117,6 +1118,7 @@ const TimeSlot = ({ getNewCount, title }) => {
                         setDate(date);
                         setEndDate(new Date(date))
                         setErrorsForAdd({ ...errorsForAdd, date: "" });
+                        setIsDisable(true)
                       }}
                       minDate={currentDate}
                     />
@@ -1177,27 +1179,37 @@ const TimeSlot = ({ getNewCount, title }) => {
                     Enter start time
                   </label>
                   <div className="col-lg-9 cus-data-input-style">
-                    <TimePicker
-                      showSecond={false}
-                      defaultValue={now}
-                      onChange={onChange}
-                      format={format}
-                      disabledHours={() => {
-                        let newArr = [];
-                        for (var i = 0; i < moment(isEditPopUp === true ? new Date(startTime) : new Date()).format("k"); i++) {
-                          newArr.push(i)
-                        }
-                        return newArr
-                      }}
-                      disabledMinutes={() => {
-                        let newArr = [];
-                        for (var i = 0; i < moment(isEditPopUp === true ? new Date(startTime) :new Date()).format("m"); i++) {
-                          newArr.push(i)
-                        }
-                        return newArr
-                      }}
-                      inputReadOnly
-                    />
+                    {isDisable ?
+                  <TimePicker
+                  showSecond={false}
+                  defaultValue={now}
+                  onChange={onChange}
+                  format={format}
+                  inputReadOnly
+                /> :
+                <TimePicker
+                showSecond={false}
+                defaultValue={now}
+                onChange={onChange}
+                format={format}
+                disabledHours={() => {
+                  let newArr = [];
+                  for (var i = 0; i < moment(isEditPopUp === true ? new Date(startTime) : new Date()).format("k"); i++) {
+                    newArr.push(i)
+                  }
+                  return newArr
+                }}
+                disabledMinutes={() => {
+                  let newArr = [];
+                  for (var i = 0; i < moment(isEditPopUp === true ? new Date(startTime) :new Date()).format("m"); i++) {
+                    newArr.push(i)
+                  }
+                  return newArr
+                }}
+                inputReadOnly
+              /> 
+                  }
+                    
                     <span
                       style={{
                         color: "red",
