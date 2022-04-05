@@ -111,16 +111,16 @@ const Payment = ({ getNewCount, title }) => {
       selector: (row) => row?.uid?.email,
       sortable: true,
     },
-    {
-      name: "User Email",
-      cell: (row) => {
-        return (
-          <span>{row?.uid === null || !row?.uid ? "-" : row?.uid?.email}</span>
-        );
-      },
-      selector: (row) => row?.uid?.email,
-      sortable: true,
-    },
+    // {
+    //   name: "User Email",
+    //   cell: (row) => {
+    //     return (
+    //       <span>{row?.uid === null || !row?.uid ? "-" : row?.uid?.email}</span>
+    //     );
+    //   },
+    //   selector: (row) => row?.uid?.email,
+    //   sortable: true,
+    // },
     {
       name: "Mobile Number",
       cell: (row) => {
