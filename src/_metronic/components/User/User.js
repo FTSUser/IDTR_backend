@@ -1461,11 +1461,11 @@ const User = ({ getNewCount, title }) => {
       //   seterrorShow('License Authority')
       //   settypeTrueFalseform(true)
       // }
-      else if (formdata.authoritycity === "") {
+      else if (formdata?.license != "N/A" && formdata.authoritycity === "" ) {
         toast.error(`Sorry! License Authority City must be specified`);
         seterrorShow("License Authority City");
         settypeTrueFalseform(true);
-      } else if (formdata.authoritydistrict === "") {
+      } else if (formdata?.license != "N/A" && formdata.authoritydistrict === "") {
         toast.error(`Sorry! License Authority District must be specified`);
         seterrorShow("License Authority Disctrict");
         settypeTrueFalseform(true);
@@ -2474,8 +2474,9 @@ const User = ({ getNewCount, title }) => {
                       }
 
                       <div className="register-grid-items"></div>
-
-                      <div className="register-grid-items12">
+                      {formdata?.license != "N/A" && 
+                      <>
+                       <div className="register-grid-items12">
                         <label>
                           License Authority<span>*</span>
                         </label>
@@ -2533,6 +2534,9 @@ const User = ({ getNewCount, title }) => {
                           }}
                         />
                       </div>
+                      </>
+                    }
+                     
                     </div>
                     <div className="full-fill-information">
                       {CourceType ? (
