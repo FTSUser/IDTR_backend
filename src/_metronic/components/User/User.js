@@ -1224,7 +1224,7 @@ const User = ({ getNewCount, title }) => {
       pincode: formdata.pin,
       email: formdata.email,
       phone: formdata.phone,
-      permanentDLnumber: formdata.driverlicense,
+      // permanentDLnumber: formdata.driverlicense,
       issueDate: formdata.license === "N/A" ? "" : formdata.issueDate,
       validTill: formdata.license === "N/A" ? "" : formdata.validDate,
       Authority: "Haryana",
@@ -1243,22 +1243,54 @@ const User = ({ getNewCount, title }) => {
     };
 
     console.log("datadata", data);
+   
+    if (formdata.type == 'offline') {
+      const datas = {
+        cnid: formdata?.courseName,
+        ctid: formdata?.courseType,
+        vcid: formdata?.vehicleCategory,
+        phone: formdata?.phone,
+        tdid: formdata?.sloatId,
+    }
+      ApiPost('payment/checkPayment', datas).then( (res) => {
+        console.log("ress", res.data.result);
+        if (res.data.result === 0) {
+          ApiPost("register/addRegister", data)
+            .then((res) => {
+              if (res?.status == 200) {
+                toast.success(res?.data?.message);
+                handleAddAdminClose()
 
-    ApiPost("register/addRegister", data)
-      .then((res) => {
-        if (res?.status == 200) {
-          toast.success(res?.data?.message);
-          handleAddAdminClose()
-          // setIsAddAnnouncement(false);
-          // setInputValueForAdd({});
-          getAllUser();
-        } else {
-          toast.error(res?.data?.message);
+                getAllUser();
+              } else {
+                toast.error(res?.data?.message);
+              }
+            })
+            .catch((err) => {
+              toast.error(err?.response?.data?.message);
+            });
+        }
+        else {
+          toast.error(res?.data?.message, { theme: "colored" });
         }
       })
-      .catch((err) => {
-        toast.error(err?.response?.data?.message);
-      });
+    } else {
+      ApiPost("register/addRegister", data)
+        .then((res) => {
+          if (res?.status == 200) {
+            toast.success(res?.data?.message);
+            handleAddAdminClose()
+
+            getAllUser();
+          } else {
+            toast.error(res?.data?.message);
+          }
+        })
+        .catch((err) => {
+          toast.error(err?.response?.data?.message);
+        });
+    }
+
   };
 
   const handleOfflinePayment = () => {
@@ -1461,7 +1493,7 @@ const User = ({ getNewCount, title }) => {
       //   seterrorShow('License Authority')
       //   settypeTrueFalseform(true)
       // }
-      else if (formdata?.license != "N/A" && formdata.authoritycity === "" ) {
+      else if (formdata?.license != "N/A" && formdata.authoritycity === "") {
         toast.error(`Sorry! License Authority City must be specified`);
         seterrorShow("License Authority City");
         settypeTrueFalseform(true);
@@ -1801,7 +1833,7 @@ const User = ({ getNewCount, title }) => {
       vcid: formdata.vehicleCategory
     };
     ApiGet(
-      `trainingDate/getDatePrevious??date=${data.date}&vcid=${formdata.vehicleCategory}&ctid=${formdata.courseType}&ccid=${formdata.courseCategory}&cnid=${formdata.courseName}`
+      `trainingDate/getDatePrevious?date=${data.date}&vcid=${formdata.vehicleCategory}&ctid=${formdata.courseType}&ccid=${formdata.courseCategory}&cnid=${formdata.courseName}`
     ).then((res) => {
       if (res.data.payload) {
         // setTimeout(() => {
@@ -2474,69 +2506,69 @@ const User = ({ getNewCount, title }) => {
                       }
 
                       <div className="register-grid-items"></div>
-                      {formdata?.license != "N/A" && 
-                      <>
-                       <div className="register-grid-items12">
-                        <label>
-                          License Authority<span>*</span>
-                        </label>
+                      {formdata?.license != "N/A" &&
+                        <>
+                          <div className="register-grid-items12">
+                            <label>
+                              License Authority<span>*</span>
+                            </label>
 
-                        <Select
-                          options={state.map((e) => ({
-                            label: e.name,
-                            value: e.name,
-                          }))}
-                          name="authority"
-                          onChange={(e) => onChnagSelectField(e, "authority")}
-                          defaultValue={{
-                            label: "Haryana",
-                            value: "Haryana",
-                          }}
-                        />
-                      </div>
-                      <div className="register-grid-items12">
-                        <label>
-                          License Authority (District)<span>*</span>
-                        </label>
+                            <Select
+                              options={state.map((e) => ({
+                                label: e.name,
+                                value: e.name,
+                              }))}
+                              name="authority"
+                              onChange={(e) => onChnagSelectField(e, "authority")}
+                              defaultValue={{
+                                label: "Haryana",
+                                value: "Haryana",
+                              }}
+                            />
+                          </div>
+                          <div className="register-grid-items12">
+                            <label>
+                              License Authority (District)<span>*</span>
+                            </label>
 
-                        <Select
-                          options={districts.map((e) => ({
-                            label: e.name,
-                            value: e.name,
-                          }))}
-                          name="authoritydistrict"
-                          onChange={(e) =>
-                            onChnagSelectField(e, "authoritydistrict")
-                          }
-                          defaultValue={{
-                            label: formdata.authoritydistrict,
-                            value: formdata.authoritydistrict,
-                          }}
-                        />
-                      </div>
-                      <div className="register-grid-items12">
-                        <label>
-                          License Authority (Town / city)<span>*</span>
-                        </label>
+                            <Select
+                              options={districts.map((e) => ({
+                                label: e.name,
+                                value: e.name,
+                              }))}
+                              name="authoritydistrict"
+                              onChange={(e) =>
+                                onChnagSelectField(e, "authoritydistrict")
+                              }
+                              defaultValue={{
+                                label: formdata.authoritydistrict,
+                                value: formdata.authoritydistrict,
+                              }}
+                            />
+                          </div>
+                          <div className="register-grid-items12">
+                            <label>
+                              License Authority (Town / city)<span>*</span>
+                            </label>
 
-                        <Select
-                          options={city.map((e) => ({
-                            label: e.name,
-                            value: e.name,
-                          }))}
-                          name="authoritycity"
-                          onChange={(e) =>
-                            onChnagSelectField(e, "authoritycity")
-                          }
-                          defaultValue={{
-                            label: formdata.authoritycity,
-                            value: formdata.authoritycity,
-                          }}
-                        />
-                      </div>
-                      </>
-                    }
-                     
+                            <Select
+                              options={city.map((e) => ({
+                                label: e.name,
+                                value: e.name,
+                              }))}
+                              name="authoritycity"
+                              onChange={(e) =>
+                                onChnagSelectField(e, "authoritycity")
+                              }
+                              defaultValue={{
+                                label: formdata.authoritycity,
+                                value: formdata.authoritycity,
+                              }}
+                            />
+                          </div>
+                        </>
+                      }
+
                     </div>
                     <div className="full-fill-information">
                       {CourceType ? (
@@ -3218,6 +3250,7 @@ const User = ({ getNewCount, title }) => {
                             vcid={formdata.vehicleCategory}
                             ctid={formdata.courseType}
                             tdid={formdata.sloatId}
+                            phone={formdata.phone}
                             hhhhh={(data) => {
                               setSubmitPayment(data);
                             }}

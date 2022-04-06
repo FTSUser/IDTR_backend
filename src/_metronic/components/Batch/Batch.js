@@ -1395,7 +1395,7 @@ const Batch = ({ getNewCount, title }) => {
             <div className="col ">
               <h2 className=" pt-2"> Batch Creation</h2>
 
-              <div>(Note : Batch should be create at a time of exam only.)</div>
+              <div>(Note : Please create batch only before starting the examination.)</div>
             </div>
             <div className="col">
               <div>

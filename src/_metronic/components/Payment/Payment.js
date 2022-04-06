@@ -154,7 +154,7 @@ const Payment = ({ getNewCount, title }) => {
       // width: "65px",
     },
     {
-      name: "Payment",
+      name: "Payment Amount",
       cell: (row) => {
         return <span>{row?.cnid === null ? "-" : row?.cnid?.price}</span>;
       },

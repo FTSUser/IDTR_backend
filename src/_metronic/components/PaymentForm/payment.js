@@ -24,13 +24,13 @@ function PaymentData(props) {
     }
 
     function displayRazorpay() {
-
+console.log("propss",props);
         if (props.cnid) {
             const data = {
                 cnid: props.cnid,
                 ctid: props.ctid,
                 vcid: props.vcid,
-                phone: props?.phone,
+                phone: props.phone,
                 tdid: props.tdid,
             }
             ApiPost('payment/checkPayment', data).then(async (res) => {

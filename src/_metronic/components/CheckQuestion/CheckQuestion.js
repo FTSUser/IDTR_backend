@@ -216,7 +216,9 @@ const CheckTest = ({ getNewCount, title }) => {
   const [isViewUsers, setViewUsers] = useState(false);
   const [inputShow, setInput] = useState(false);
   const [inputData, setInputData] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   const [paperData, setPeperData] = useState();
+  const [paperDatas, setPeperDatas] = useState();
 
   const [attendenceId, setAttendenceId] = useState("");
 
@@ -487,7 +489,7 @@ const CheckTest = ({ getNewCount, title }) => {
   }
   const setYes = (e) => {
     console.log("eee", e.target.value);
-   
+
     if (e.target.value == 'yes') {
       setInput(true)
       setInputData(true)
@@ -651,6 +653,7 @@ const CheckTest = ({ getNewCount, title }) => {
       });
 
     setIsModel(false)
+    setIsModel(false)
 
 
   }
@@ -665,8 +668,21 @@ const CheckTest = ({ getNewCount, title }) => {
 
     }
   };
-  const updateUser = (data) => {
-    console.log("data", data);
+  const createUsers = (data) => {
+    console.log("dataa", data);
+    setPeperDatas(data)
+    setIsModel(true);
+    setIsEdit(true)
+    if (data) {
+      console.log("A");
+    }
+    else {
+      console.log("data", data);
+
+    }
+  };
+  const updatePerentage = () => {
+
     let checkData = [];
     paperSet?.ListofQA.map((e) => {
       e.Option.map((o) => {
@@ -690,18 +706,24 @@ const CheckTest = ({ getNewCount, title }) => {
       } else {
       }
     });
-
+    console.log("paperDatas", paperDatas);
     const datas = {
+
+
+
+
       ListofQA: checkData,
+      practicalScore: Number(percantageData) ? Number(percantageData) : 0
     };
-    console.log("datas", datas);
-    ApiPut(`response/updateResponse/${data?._id}`, datas)
+    ApiPut(`response/updateResponse/${paperDatas?._id}`, datas)
       .then((res) => {
         console.log("res", res);
         toast.success(res?.data?.message);
         getAllBatchIdWiseUser();
         setTimeout(() => {
           openExamPeperSet(false);
+          setIsModel(false);
+          setIsEdit(false)
           handleCheckPeperSetClose()
         }, 100);
       })
@@ -979,7 +1001,7 @@ const CheckTest = ({ getNewCount, title }) => {
                 <div className="">
                   {console.log("peperset", paperSet)}
                   Score:{paperSet?.Score}
-                  <div className="questionGrid12121">
+                  <div className="grid3">
                     {paperSet?.ListofQA?.map((data, key) => (
                       <div className="questionGridItems">
                         <div className="flexs">
@@ -987,8 +1009,8 @@ const CheckTest = ({ getNewCount, title }) => {
                             {" "}
                             {key + 1}
                           </div>
-
-                          {data?.Qname}
+                          Question
+                          {/* {data?.Qname} */}
                         </div>
                         {
                           data?.image ? <img src={data?.image} alt="" /> : null
@@ -1020,7 +1042,8 @@ const CheckTest = ({ getNewCount, title }) => {
                                     />
                                     <span className="pl-2">
                                       {" "}
-                                      {record?.name}
+                                      Option
+                                      {/* {record?.name} */}
                                     </span>
                                   </div>
                                 </>
@@ -1049,7 +1072,8 @@ const CheckTest = ({ getNewCount, title }) => {
 
                                     <span className="pl-2">
                                       {" "}
-                                      {record?.name}
+                                      Option
+                                      {/* {record?.name} */}
                                     </span>
                                   </div>
                                 </>
@@ -1062,7 +1086,7 @@ const CheckTest = ({ getNewCount, title }) => {
                   </div>
                   <button
                     className="btn btn-success mt-5"
-                    onClick={() => updateUser(paperSet)}
+                    onClick={() => createUsers(paperSet)}
                   >
                     Update Paper
                   </button>
@@ -1128,14 +1152,14 @@ const CheckTest = ({ getNewCount, title }) => {
                       </div>
                       <div className="flelxcenter">
                         <span className="bolds">Theoratical  Score:</span>{" "}
-                        {data?.totalScore ? data?.totalScore + `%` : "N/A"}
+                        {data?.totalScore ? data?.totalScore + `%` : 0}
                       </div>
                       <div className="flelxcenter">
                         <span className="bolds">Practical Score:</span>{" "}
                         {data?.practicalScore ? data?.practicalScore + `%` : "N/A"}
                       </div>
                       <div className="flelxcenter">
-                        <span className="bolds">Passing Score:</span>{" "}
+                        <span className="bolds">Final Score:</span>{" "}
                         {data?.percentage ? data?.percentage + `%` : "N/A"}
                       </div>
                       <div className="flelxcenter">
@@ -1282,7 +1306,7 @@ const CheckTest = ({ getNewCount, title }) => {
                       </div>
                       <div className="form-group">
                         {
-                           inputData &&  <>
+                          inputData && <>
                             <input className="form-control" onKeyPress={(event) => {
                               if (!/[0-9]/.test(event.key)) {
                                 event.preventDefault();
@@ -1291,16 +1315,16 @@ const CheckTest = ({ getNewCount, title }) => {
                               onChange={(e) => SetpercantageData(e.target.value)}
 
                               type="text" />
-                           
+
                           </>
                         }
-                        {console.log("inputData",inputData)}
-                        {console.log("inputShow",inputShow)}
-                       { 
-                       inputShow && 
-                            <button className="btn btn-success" onClick={() => addPercnatage()}>Add Percantage</button>
-                       } 
-                        
+                        {console.log("inputData", inputData)}
+                        {console.log("inputShow", inputShow)}
+                        {
+                          inputShow &&
+                          <button className="btn btn-success" onClick={() => isEdit ? updatePerentage() : addPercnatage()}>Add Percantage</button>
+                        }
+
                       </div>
                     </div>
 
