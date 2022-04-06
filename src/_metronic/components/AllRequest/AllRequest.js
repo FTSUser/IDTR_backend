@@ -181,26 +181,55 @@ const AllRequest = ({ getNewCount, title }) => {
     };
 
     const handleDeleteCourseName = () => {
-        const data = {
-            id: idForDeleteCourseName,
-            isAccept: acceptStatus
+        console.log("acceptStatus", acceptStatus);
+        if (acceptStatus == false) {
+            const data = {
+                id: idForDeleteCourseName,
+                isAccept: acceptStatus,
+                isReject: true
+            }
+            ApiPut(`request/update-Request`, data)
+                .then((res) => {
+                    if (res?.status == 200) {
+                        setShow(false);
+                        setRejectShow(false)
+                        toast.success(res?.data?.message);
+                        getAllCourseName();
+                        setPage(1);
+                        setCount(0);
+                        setCountPerPage(countPerPage);
+                    } else {
+                        toast.error(res?.data?.message);
+                    }
+                })
+                .catch((err) => {
+                    toast.error(err?.response?.data?.message)
+                });
+        } else {
+            const data = {
+                id: idForDeleteCourseName,
+                isAccept: acceptStatus,
+                isReject: false
+            }
+            ApiPut(`request/update-Request`, data)
+                .then((res) => {
+                    if (res?.status == 200) {
+                        setShow(false);
+                        setRejectShow(false)
+                        toast.success(res?.data?.message);
+                        getAllCourseName();
+                        setPage(1);
+                        setCount(0);
+                        setCountPerPage(countPerPage);
+                    } else {
+                        toast.error(res?.data?.message);
+                    }
+                })
+                .catch((err) => {
+                    toast.error(err?.response?.data?.message)
+                });
         }
-        ApiPut(`request/update-Request`, data)
-            .then((res) => {
-                if (res?.status == 200) {
-                    setShow(false);
-                    toast.success(res?.data?.message);
-                    getAllCourseName();
-                    setPage(1);
-                    setCount(0);
-                    setCountPerPage(countPerPage);
-                } else {
-                    toast.error(res?.data?.message);
-                }
-            })
-            .catch((err) => {
-                toast.error(err?.response?.data?.message)
-            });
+
     };
 
     const handelUpdateCourseNameDetails = (e) => {
@@ -329,6 +358,7 @@ const AllRequest = ({ getNewCount, title }) => {
                                 setRejectShow(true);
                                 setIdForDeleteCourseName(row?._id);
                                 setAccept(false)
+
                             }}
                         >
                             <Tooltip title="Reject Request" arrow>
@@ -528,7 +558,9 @@ const AllRequest = ({ getNewCount, title }) => {
                             <Button
                                 variant="danger"
                                 onClick={() => {
+
                                     handleDeleteCourseName();
+
                                 }}
                             >
                                 Reject
@@ -1126,7 +1158,7 @@ const AllRequest = ({ getNewCount, title }) => {
                                                         className=""
                                                     />
                                                 </div>
-                                               
+
                                                 <div className="honda-text-grid-items">
                                                     <span>Image:</span>
                                                     <img src={dataViewMore?.image} alt="" />
