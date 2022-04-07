@@ -23,7 +23,7 @@ export function Demo1Dashboard() {
       `admin/count`
     )
       .then((res) => {
-        console.log("data", res.data.payload);
+      
         setCount(res?.data?.payload);
       })
       .catch((err) => { });
@@ -40,7 +40,7 @@ export function Demo1Dashboard() {
         setDataEnteryCount(res?.data?.payload?.count);
       })
       .catch((err) => {
-        console.log(err);
+      
       });
   }
   const getAllExaminer = async () => {
@@ -55,14 +55,14 @@ export function Demo1Dashboard() {
         setExaminerCount(res?.data?.payload?.count);
       })
       .catch((err) => {
-        console.log(err);
+      
       });
   }
 
 
 
   useEffect(() => {
-    console.log("userInfo", userInfo);
+  
     if (userInfo?.admin?.role?.roleName === 'superadmin' || userInfo?.admin?.role?.roleName === 'admin') {
       getAll()
     }

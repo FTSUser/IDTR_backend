@@ -208,9 +208,6 @@ const User = ({ getNewCount, title }) => {
     document.title = "Honda | User";
   }, []);
 
-  useEffect(() => {
-    console.log("dataForUserLogCSV", logsData);
-  }, [logsData]);
 
   // const startValue = new Date(
   //   new Date().getFullYear(),
@@ -256,9 +253,7 @@ const User = ({ getNewCount, title }) => {
 
   const [tab, setTab] = useState("course");
 
-  useEffect(() => {
-    console.log("tabsdggfdgdfgfd", tabs);
-  }, [tabs])
+
 
   const [formdata, setFormData] = useState({
     vehicleCategory: "",
@@ -298,14 +293,7 @@ const User = ({ getNewCount, title }) => {
   });
 
   useEffect(() => { }, [tableFilterData]);
-  useEffect(() => {
-    console.log("dateForFilter", dateForFilter);
 
-  }, [dateForFilter]);
-
-  useEffect(() => {
-    console.log("formdata", formdata);
-  }, [formdata]);
 
   const handlePaymentClose = () => {
     setIsPaymentPopUp(false);
@@ -369,7 +357,7 @@ const User = ({ getNewCount, title }) => {
     setdicloser(e);
   };
   const handleSetDateData = async (dateForFilter) => {
-    console.log("date", dateForFilter);
+   
     if (dateForFilter) {
 
 
@@ -378,7 +366,7 @@ const User = ({ getNewCount, title }) => {
       )
         .then((res) => {
           // setTableFilterData(tableFilterData);
-          console.log("res", res);
+       
           setCount(res?.data?.payload?.count)
           setTableFilterData(res?.data?.payload?.Question);
         })
@@ -472,7 +460,7 @@ const User = ({ getNewCount, title }) => {
   const getAdminLogs = async (id) => {
     await ApiGet(`admin/get-admin-login-log/${id?._id}`)
       .then((res) => {
-        console.log("loglog", res?.data?.payload?.user);
+      
         setLogsData(res?.data?.payload?.user);
       })
       .catch((err) => {
@@ -483,7 +471,7 @@ const User = ({ getNewCount, title }) => {
   const getAdminPostLogs = async (id) => {
     await ApiGet(`admin/get-logout-users/${id?._id}`)
       .then((res) => {
-        console.log("loglog", res?.data?.payload?.admin);
+     
         setLogsPostData(res?.data?.payload?.admin);
       })
       .catch((err) => {
@@ -726,7 +714,7 @@ const User = ({ getNewCount, title }) => {
     {
       name: "Actions",
       cell: (row) => {
-        console.log(" fsdfsdfsdfs", row);
+     
         return (
           <>
             {row?.uid && (
@@ -975,7 +963,7 @@ const User = ({ getNewCount, title }) => {
   useEffect(() => {
     if (allRegisterUserExcel) {
       allRegisterUserExcel.map((registerUser, key) => {
-        console.log("registerUser?.uid?.", registerUser?.Registrationtype);
+    
         let data = {
           Number: key + 1,
           UserID: registerUser?._id,
@@ -1243,7 +1231,6 @@ const User = ({ getNewCount, title }) => {
       Registrationtype: "counter",
     };
 
-    console.log("datadata", data);
    
     if (formdata.type == 'offline') {
       const datas = {
@@ -1254,7 +1241,7 @@ const User = ({ getNewCount, title }) => {
         tdid: formdata?.sloatId,
     }
       ApiPost('payment/checkPayment', datas).then( (res) => {
-        console.log("ress", res.data.result);
+       
         if (res.data.result === 0) {
           ApiPost("register/addRegister", data)
             .then((res) => {
@@ -1295,7 +1282,7 @@ const User = ({ getNewCount, title }) => {
   };
 
   const handleOfflinePayment = () => {
-    console.log("dataForPayment", dataForPayment);
+    
     const data = {
       receiptDate: new Date(),
       receiptNumber: dataForPayment?._id,
@@ -1365,7 +1352,7 @@ const User = ({ getNewCount, title }) => {
       Registrationtype: "counter",
     };
 
-    console.log("dataForEdit", data);
+   
 
     ApiPut(`register/updateRegister/${formdata._id}`, data)
       .then((res) => {
@@ -1647,7 +1634,7 @@ const User = ({ getNewCount, title }) => {
     let courseCategoryId = formdata.courseCategory;
 
     let vehical;
-    console.log("row=======>", formdata?.vehicleCategory);
+   
     if (index !== -1) {
       vehical = {
         label: getAllVehicalData?.Question[index].vehicleCategory,
@@ -1800,7 +1787,7 @@ const User = ({ getNewCount, title }) => {
       const setDataMAin = res?.data?.payload?.courseCategory?.filter(
         (dataMain) => dataMain._id === cId
       );
-      console.log("setDataMAin", setDataMAin);
+     
       setdefaultValue((dataasd) => ({
         ...dataasd,
         courseCategory: {
@@ -2238,7 +2225,7 @@ const User = ({ getNewCount, title }) => {
         </div>
       </div>
       {/* view more */}
-      {console.log("isAddAnnouncement", isAddAnnouncement)}
+     
       {isAddAnnouncement ? (
 
         <List className="modelFixed">
@@ -2447,7 +2434,7 @@ const User = ({ getNewCount, title }) => {
                               onChange={(e) => onChnageForm(e)}
                             />
                           </div>
-                          {console.log("formdata.issueDate", moment(formdata?.issueDate).add(6, 'M').format('DD-MM-YYYY'))}
+                         
                           <div className="register-grid-items">
                             <label>
                               Valid Till<span>*</span>

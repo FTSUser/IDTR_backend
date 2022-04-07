@@ -122,7 +122,7 @@ const Report = ({ getNewCount, title }) => {
             cell: (row) => {
                 return (
                     <>
-                        {console.log("row", row)}
+                     
                         <button className="btn btn-success" onClick={() => history.push(row?.pathname)}>Export To Excel</button>
                         {/* <ReportExcel type={row} date={statesate} filter={filterState} /> */}
                     </>
@@ -215,11 +215,11 @@ const Report = ({ getNewCount, title }) => {
 
 
     const handleSetDateData = async (data) => {
-        console.log("date", data);
+      
         setState(data);
     }
     const handleDropdown = (data) => {
-        console.log("date", data);
+       
         setFilterData(data)
     }
 

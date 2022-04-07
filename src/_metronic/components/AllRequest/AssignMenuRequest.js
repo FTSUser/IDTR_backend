@@ -30,7 +30,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AllRequest = ({ getNewCount, title }) => {
+const AssignMenuRequest = ({ getNewCount, title }) => {
     const [filteredCourseName, setFilteredCourseName] = useState({});
     const [isLoaderVisible, setIsLoaderVisible] = useState(false);
     const [show, setShow] = useState(false);
@@ -106,7 +106,7 @@ const AllRequest = ({ getNewCount, title }) => {
         setIsLoaderVisible(true);
         if (!search) {
             await ApiGet(
-                `request/getAllRequest?page=${page}&limit=${countPerPage}`
+                `request/getRequestMenu?page=${page}&limit=${countPerPage}`
             )
                 .then((res) => {
                     setIsLoaderVisible(false);
@@ -119,7 +119,7 @@ const AllRequest = ({ getNewCount, title }) => {
                 });
         } else {
             await ApiGet(
-                `request/getAllRequest?search=${search}&page=${page}&limit=${countPerPage}`
+                `request/getRequestMenu?search=${search}&page=${page}&limit=${countPerPage}`
             )
                 .then((res) => {
                     setIsLoaderVisible(false);
@@ -181,7 +181,7 @@ const AllRequest = ({ getNewCount, title }) => {
     };
 
     const handleDeleteCourseName = () => {
-       
+      
         if (acceptStatus == false) {
             const data = {
                 id: idForDeleteCourseName,
@@ -729,7 +729,7 @@ const AllRequest = ({ getNewCount, title }) => {
                         </IconButton>
                     </Toolbar>
                     <List>
-                       
+                     
                         {isViewMoreAboutus === true ? (
                             <>
 
@@ -1337,4 +1337,4 @@ const AllRequest = ({ getNewCount, title }) => {
     );
 };
 
-export default AllRequest;
+export default AssignMenuRequest;

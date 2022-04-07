@@ -59,8 +59,7 @@ const defaultHeaders = {
 
 export const ApiPostNoAuth = (type, userData) => {
     // const [loading] = useAxiosLoader();
-    console.log("In api post without auth", API);
-    console.log(BaseURL);
+  
     return (
         // loading ? Loader()  :
 
@@ -72,7 +71,7 @@ export const ApiPostNoAuth = (type, userData) => {
                     getHttpOptions({ ...defaultHeaders, isAuth: false })
                 )
                 .then((responseJson) => {
-                    console.log("call no auth api");
+                 
                     resolve(responseJson);
                 })
                 .catch((error) => {
@@ -95,8 +94,7 @@ export const ApiPostNoAuth = (type, userData) => {
 };
 
 export const ApiPutNoAuth = (type, userData) => {
-    console.log("In api put without auth", API);
-    console.log(BaseURL);
+  
     // debugger
     return new Promise((resolve, reject) => {
         axios
@@ -106,7 +104,7 @@ export const ApiPutNoAuth = (type, userData) => {
                 getHttpOptions({ ...defaultHeaders, isAuth: false })
             )
             .then((responseJson) => {
-                console.log("call no auth api");
+               
                 resolve(responseJson);
             })
             .catch((error) => {
@@ -223,7 +221,7 @@ export const ApiPost = (type, userData, AdditionalHeader) => {
                 resolve(responseJson);
             })
             .catch((error) => {
-                console.log("error1121561", error);
+              
 
                 if (
                     error &&

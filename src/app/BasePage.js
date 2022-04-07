@@ -42,6 +42,8 @@ import Partial from "../_metronic/components/parsal/parsal";
 import Course from "../_metronic/components/Course/Course";
 import FAQCategory from "../_metronic/components/FAQCategory/FAQCategory";
 import AllRequest from "../_metronic/components/AllRequest/AllRequest";
+import RoleRequest from "../_metronic/components/AllRequest/RoleRequest";
+import AssignMenuRequest from "../_metronic/components/AllRequest/AssignMenuRequest";
 
 export default function BasePage() {
   let userInfo = getUserInfo()
@@ -93,6 +95,8 @@ export default function BasePage() {
           <ContentRoute exact path="/question-addition" component={Question} />
           <ContentRoute exact path="/how-to start a course" component={Course} />
           <ContentRoute exact path="/all-request" component={AllRequest} />
+          <ContentRoute exact path="/role-request" component={RoleRequest} />
+          <ContentRoute exact path="/assign-menu request" component={AssignMenuRequest} />
 
 
           {/* /////////////////////////////////////////////////////////////////////////*/}

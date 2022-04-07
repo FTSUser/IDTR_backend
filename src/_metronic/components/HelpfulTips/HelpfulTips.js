@@ -156,13 +156,7 @@ const HelpfulTips = ({ getNewCount, title }) => {
   };
 
 
-  useEffect(() => {
-    console.log("inputValueForAdd", inputValueForAdd);
-  }, [inputValueForAdd])
-
-  useEffect(() => {
-    console.log("inputValue", inputValue);
-  }, [inputValue])
+ 
 
 
 

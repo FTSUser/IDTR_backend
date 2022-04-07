@@ -113,7 +113,7 @@ const Course = ({ getNewCount, title }) => {
         if (!search) {
             await ApiGet(`startCourse/getAllstartCourse`)
                 .then((res) => {
-                    console.log("dataaaa", res)
+                
                     setIsLoaderVisible(false);
                     setFilteredHelpfulTips(res?.data?.payload?.startCourse);
                     setCount(res?.data?.payload?.count);
@@ -161,13 +161,7 @@ const Course = ({ getNewCount, title }) => {
         setShow(false);
     };
 
-    useEffect(() => {
-        console.log("inputValueForAdd", inputValueForAdd);
-    }, [inputValueForAdd])
-
-    useEffect(() => {
-        console.log("inputValue", inputValue);
-    }, [inputValue])
+   
 
 
 

@@ -222,9 +222,7 @@ const CheckTest = ({ getNewCount, title }) => {
 
   const [attendenceId, setAttendenceId] = useState("");
 
-  useEffect(() => {
-    console.log("SetpercantageData", SetpercantageData);
-  }, [SetpercantageData]);
+ 
 
   let userInfo = getUserInfo();
   useEffect(() => {
@@ -264,7 +262,7 @@ const CheckTest = ({ getNewCount, title }) => {
       `register/getRegisterByBatch/${viewUserDataBatchId}?isAttendence=true`
     )
       .then((res) => {
-        console.log("res", res);
+       
         setUserList(res?.data?.payload);
       })
       .catch((err) => {
@@ -273,7 +271,7 @@ const CheckTest = ({ getNewCount, title }) => {
   };
 
   useEffect(() => {
-    console.log("viewUserDataBatchId", viewUserDataBatchId);
+  
     if (viewUserDataBatchId) {
       getAllBatchIdWiseUser();
     }
@@ -283,7 +281,7 @@ const CheckTest = ({ getNewCount, title }) => {
     getAllRoleData();
   }, [page, countPerPage]);
 
-  console.log("userInfo", userInfo);
+ 
   const getAllCourseName = async () => {
     setIsLoaderVisible(true);
     if (!search) {
@@ -295,9 +293,9 @@ const CheckTest = ({ getNewCount, title }) => {
         `batch/getBatchByDataEntry/${data?.Examiner}?page=${page}&limit=${countPerPage}`
       )
         .then((res) => {
-          console.log("res", res);
+         
           setIsLoaderVisible(false);
-          console.log("artistreport", res);
+      
           setFilteredCourseName(res?.data?.payload?.Batch);
           setCount(res?.data?.payload?.count);
         })
@@ -313,7 +311,7 @@ const CheckTest = ({ getNewCount, title }) => {
       )
         .then((res) => {
           setIsLoaderVisible(false);
-          console.log("artistreport", res);
+        
           setFilteredCourseName(res?.data?.payload?.Batch);
           setCount(res?.data?.payload?.count);
         })
@@ -390,8 +388,7 @@ const CheckTest = ({ getNewCount, title }) => {
                 onClick={() => {
                   setIsViewMoreAboutus(true);
                   setDataViewMore(row);
-                  console.log("rowShow", row);
-                  console.log("isViewMoreAboutus", isViewMoreAboutus);
+              
                 }}
               >
                 <Tooltip title="Show More" arrow>
@@ -488,8 +485,7 @@ const CheckTest = ({ getNewCount, title }) => {
     return debouncedValue;
   }
   const setYes = (e) => {
-    console.log("eee", e.target.value);
-
+   
     if (e.target.value == 'yes') {
       setInput(true)
       setInputData(true)
@@ -497,7 +493,7 @@ const CheckTest = ({ getNewCount, title }) => {
       setInput(true)
       setInputData(false)
     }
-    console.log("eee1", e);
+  
   }
   useEffect(() => {
     if (debouncedSearchTerm) {
@@ -526,7 +522,7 @@ const CheckTest = ({ getNewCount, title }) => {
     // if (!search) {
     await ApiGet(`examiner/getAll`)
       .then((res) => {
-        console.log("regist", res?.data?.payload?.Examiner);
+      
         setAllCourseNameExcel(res?.data?.payload?.Examiner);
       })
       .catch((err) => {
@@ -538,10 +534,10 @@ const CheckTest = ({ getNewCount, title }) => {
   const viewPeperSet = async (id, userId) => {
     openExamPeperSet(true);
     setUserId(userId);
-    console.log("_id", userId);
+ 
     await ApiGet(`batch/getExamsetByBatch/${id?._id}`)
       .then((res) => {
-        console.log("res", res);
+      
         res?.data?.payload?.Examset?.questionsList?.map((e, index) => {
           e.Answer = [];
           return e;
@@ -555,7 +551,7 @@ const CheckTest = ({ getNewCount, title }) => {
   };
 
   const viewCheckPeperSet = (id) => {
-    console.log("iddd", id);
+  
     openCheckExamPeperSet(true);
     openExamPeperSet(false);
     getPapersetByUserId(id?._id);
@@ -564,7 +560,7 @@ const CheckTest = ({ getNewCount, title }) => {
   const getPapersetByUserId = async (id) => {
     await ApiGet(`response/getResponseByUser/${id}`)
       .then((res) => {
-        console.log("resrtrssdf", res?.data?.payload?.Response[0]);
+     
         setPaperSet(res?.data?.payload?.Response[0]);
       })
       .catch((err) => {
@@ -579,12 +575,12 @@ const CheckTest = ({ getNewCount, title }) => {
     };
     await ApiPut(`response/editRequestResponseById/${id}`, data)
       .then((res) => {
-        console.log("res", res);
+     
         setStatus(res?.data?.payload?.Response?.status);
         getAllBatchIdWiseUser();
       })
       .catch((err) => {
-        console.log(err);
+      
         toast.error(err);
       });
   };
@@ -600,13 +596,10 @@ const CheckTest = ({ getNewCount, title }) => {
         setDataCSV((currVal) => [...currVal, data]);
       });
     }
-    console.log("UsertCsvReport", allCourseNameExcel);
+   
   }, [allCourseNameExcel]);
   const addPercnatage = () => {
-    console.log("percantageData", percantageData);
-
-    console.log("Percntage", percantageData);
-    console.log("paperData", paperData);
+  
     let checkData = [];
     questionData?.questionsList.map((e) => {
       e.Option.map((o) => {
@@ -624,7 +617,7 @@ const CheckTest = ({ getNewCount, title }) => {
     });
     let ans1 = [];
     questionData?.questionsList?.map((ans) => {
-      console.log("ans", ans);
+  
       if (!ans.Answer.length) {
         ans1.push(ans.Answer);
       } else {
@@ -638,10 +631,10 @@ const CheckTest = ({ getNewCount, title }) => {
       ListofQA: checkData,
       practicalScore: Number(percantageData) ? Number(percantageData) : 0
     };
-    console.log("datass", datas);
+ 
     ApiPost(`response/addResponse`, datas)
       .then((res) => {
-        console.log("res", res);
+   
         toast.success(res?.data?.message);
         getAllBatchIdWiseUser();
         setTimeout(() => {
@@ -660,26 +653,14 @@ const CheckTest = ({ getNewCount, title }) => {
   const createUser = (data) => {
     setPeperData(data)
     setIsModel(true);
-    if (data) {
-      console.log("A");
-    }
-    else {
-      console.log("data", data);
-
-    }
+   
   };
   const createUsers = (data) => {
-    console.log("dataa", data);
+ 
     setPeperDatas(data)
     setIsModel(true);
     setIsEdit(true)
-    if (data) {
-      console.log("A");
-    }
-    else {
-      console.log("data", data);
-
-    }
+ 
   };
   const updatePerentage = () => {
 
@@ -700,24 +681,20 @@ const CheckTest = ({ getNewCount, title }) => {
     });
     let ans1 = [];
     paperSet?.ListofQA?.map((ans) => {
-      console.log("ans", ans);
+    
       if (!ans.Answer.length) {
         ans1.push(ans.Answer);
       } else {
       }
     });
-    console.log("paperDatas", paperDatas);
+  
     const datas = {
-
-
-
-
       ListofQA: checkData,
       practicalScore: Number(percantageData) ? Number(percantageData) : 0
     };
     ApiPut(`response/updateResponse/${paperDatas?._id}`, datas)
       .then((res) => {
-        console.log("res", res);
+     
         toast.success(res?.data?.message);
         getAllBatchIdWiseUser();
         setTimeout(() => {
@@ -734,7 +711,7 @@ const CheckTest = ({ getNewCount, title }) => {
   };
 
   const handleCheckQuestion = (data, record, index) => {
-    console.log("datasss", data, record, index);
+ 
     if (record.type === "mcq") {
       let index1 = record.Answer.findIndex((e) => e === index + 1);
       if (index1 === -1) {
@@ -752,7 +729,7 @@ const CheckTest = ({ getNewCount, title }) => {
     }
 
     let index2 = paperSet?.ListofQA.findIndex((e) => e._id === record._id);
-    console.log("===================", index, index2, paperSet.ListofQA);
+  
     if (index2 != -1) {
       paperSet.ListofQA[index2] = record;
     }
@@ -778,12 +755,7 @@ const CheckTest = ({ getNewCount, title }) => {
     let index2 = questionData?.questionsList.findIndex(
       (e) => e._id === record._id
     );
-    console.log(
-      "===================",
-      index,
-      index2,
-      questionData.questionsList
-    );
+  
     if (index2 != -1) {
       questionData.questionsList[index2] = record;
     }
@@ -894,11 +866,11 @@ const CheckTest = ({ getNewCount, title }) => {
             {exampPeperSet === true ? (
               <div className="honda-container">
                 <div className="">
-                  {console.log("questionData", questionData?.questionsList)}
+              
                   <div className="grid3">
                     {questionData?.questionsList?.map((data, key) => (
                       <div className="questionGridItems">
-                        <div className="flexs mb-10">
+                        <div className="flexs ">
                           <div className="questionCircle mr-3" key={key}>
                             {" "}
                             {key + 1}
@@ -912,7 +884,7 @@ const CheckTest = ({ getNewCount, title }) => {
                           }
 
                         </div>
-                        <div>
+                        <div className="paddingautos">
                           {data?.Option.map((record, i) => (
                             <>
                               {data.type === "mcq" ? (
@@ -999,7 +971,7 @@ const CheckTest = ({ getNewCount, title }) => {
             {checkPeperSet === true ? (
               <div className="honda-container">
                 <div className="">
-                  {console.log("peperset", paperSet)}
+                
                   Score:{paperSet?.Score}
                   <div className="grid3">
                     {paperSet?.ListofQA?.map((data, key) => (
@@ -1016,7 +988,7 @@ const CheckTest = ({ getNewCount, title }) => {
                           data?.image ? <img src={data?.image} alt="" /> : null
                         }
 
-                        <div>
+                        <div className="paddingautos">
                           {data?.Option.map((record, i) => (
                             <>
                               {data.type === "mcq" ? (
@@ -1042,7 +1014,7 @@ const CheckTest = ({ getNewCount, title }) => {
                                     />
                                     <span className="pl-2">
                                       {" "}
-                                      Option
+                                      Option {i + 1}
                                       {/* {record?.name} */}
                                     </span>
                                   </div>
@@ -1072,7 +1044,7 @@ const CheckTest = ({ getNewCount, title }) => {
 
                                     <span className="pl-2">
                                       {" "}
-                                      Option
+                                      Option {i + 1}
                                       {/* {record?.name} */}
                                     </span>
                                   </div>
@@ -1318,8 +1290,7 @@ const CheckTest = ({ getNewCount, title }) => {
 
                           </>
                         }
-                        {console.log("inputData", inputData)}
-                        {console.log("inputShow", inputShow)}
+                  
                         {
                           inputShow &&
                           <button className="btn btn-success" onClick={() => isEdit ? updatePerentage() : addPercnatage()}>Add Percantage</button>

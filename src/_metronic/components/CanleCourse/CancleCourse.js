@@ -283,7 +283,7 @@ const CancleCourse = ({ getNewCount, title }) => {
             selector: "courseName",
             sortable: true,
             cell: (row) => {
-              return <span>{row?.cnid?.courseName === "" ? "-" : row?.cnid?.courseName}</span>;
+              return <span>{row?.cnid?.courseName === "" ? "-" : row?.cnid?.courseName  }</span>;
             },
           },
         // {

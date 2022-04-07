@@ -24,7 +24,7 @@ function PaymentData(props) {
     }
 
     function displayRazorpay() {
-console.log("propss",props);
+
         if (props.cnid) {
             const data = {
                 cnid: props.cnid,
@@ -34,7 +34,7 @@ console.log("propss",props);
                 tdid: props.tdid,
             }
             ApiPost('payment/checkPayment', data).then(async (res) => {
-                console.log("ress", res.data.result);
+             
                 if (res.data.result === 0) {
 
                     const ress = await loadScript(

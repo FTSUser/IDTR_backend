@@ -60,9 +60,7 @@ const FAQCategory = ({ getNewCount, title }) => {
         document.title = "Honda | FAQ Category";
     }, []);
 
-    useEffect(() => {
-        console.log("inputValueForAdd", selectedIngredientsFinal);
-    }, [selectedIngredientsFinal]);
+   
 
     const handleViewMoreClose = () => {
         setIsViewMoreAboutus(false);

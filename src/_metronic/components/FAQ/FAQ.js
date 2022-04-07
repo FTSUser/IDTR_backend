@@ -215,7 +215,6 @@ const FAQ = ({ getNewCount, title }) => {
     }
   };
 
-  useEffect(() => { console.log("inputvalueforadd", isAddFAQ) }, [isAddFAQ])
 
   let i = 0;
   const columns = [

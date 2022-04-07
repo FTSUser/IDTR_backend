@@ -57,9 +57,6 @@ const CourseCategory = ({ getNewCount, title }) => {
     document.title = "Honda | CourseCategory";
   }, []);
 
-  useEffect(() => {
-    console.log("inputValueForAdd", inputValueForAdd);
-  }, [inputValueForAdd]);
 
   const handleViewMoreClose = () => {
     setIsViewMoreAboutus(false);

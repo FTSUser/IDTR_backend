@@ -482,9 +482,7 @@ const Batch = ({ getNewCount, title }) => {
     setCountForBatch(0);
   };
 
-  useEffect(() => {
-    console.log("allDataForResultDownload", allDataForResultDownload);
-  }, [allDataForResultDownload]);
+
 
   // useEffect(() => { }, [idForEditStatus]);
 
@@ -615,7 +613,7 @@ const Batch = ({ getNewCount, title }) => {
     setIsLoaderVisible(true);
     await ApiGet(`generatepdf/generate-pdf/${data}`)
       .then((res) => {
-        console.log("data", res);
+     
         
         saveFile(res.data?.payload?.ZipLink, res.data?.payload?.batch?.name)
         setIsLoaderVisible(false);
@@ -628,9 +626,7 @@ const Batch = ({ getNewCount, title }) => {
       });
   }
 
-  useEffect(() => {
-    console.log("idForgetResponseByBatch", idForgetResponseByBatch);
-  }, [idForgetResponseByBatch]);
+ 
 
   //getResponseByBatch
 
@@ -645,7 +641,7 @@ const Batch = ({ getNewCount, title }) => {
       `register/getRegisterByBatch/${id}?page=${pageForBatch}&limit=${countPerPageForBatch}`
     )
       .then((res) => {
-        console.log("resrtr", res?.data?.payload?.users);
+      
         setResponseByBatch(res?.data?.payload?.users);
         setCountForBatch(res?.data?.payload?.count);
       })
@@ -658,7 +654,7 @@ const Batch = ({ getNewCount, title }) => {
   const getAllResponseByBatch = async (id) => {
     await ApiGet(`response/getResponseByUserWithoutPagination/${id}`)
       .then((res) => {
-        console.log("resresres", res?.data?.payload);
+       
         setAllDataForResultDownload(res?.data?.payload?.findResponse);
       })
       .catch((err) => {
@@ -669,7 +665,7 @@ const Batch = ({ getNewCount, title }) => {
   const getAllResponseByBatchForUser = async (id) => {
     await ApiGet(`response/getResponseByBatch/${id}`)
       .then((res) => {
-        console.log("resresresres", res?.data?.payload?.findResponse);
+      
         setAllDataForAttendance(res?.data?.payload?.findResponse);
       })
       .catch((err) => {
@@ -680,12 +676,12 @@ const Batch = ({ getNewCount, title }) => {
   const getPapersetByUserId = async (id) => {
     await ApiGet(`response/getResponseByUser/${id}`)
       .then((res) => {
-        console.log("resrtrssdf", res?.data?.payload?.Response[0]);
+     
         setPaperSet(res?.data?.payload?.Response[0]);
       })
       .catch((err) => {
         toast.error(err?.message);
-        console.log(err?.message);
+      
       });
   };
 
@@ -694,9 +690,7 @@ const Batch = ({ getNewCount, title }) => {
     getDataenterAndApi();
   }, []);
 
-  useEffect(() => {
-    console.log("batchInfo", batchInfo);
-  }, [batchInfo]);
+  
 
   const validateFormForAddAdmin = () => {
     let formIsValid = true;
@@ -2169,7 +2163,7 @@ const Batch = ({ getNewCount, title }) => {
             {isViewMoreAnnouncement === true ? (
               <div className="honda-container">
                 <div className="">
-                  {console.log("questionData", paperSet?.ListofQA)}
+               
                   <div className="questionGrid12121">
                     {paperSet?.ListofQA?.map((data, key) => (
                       <div className="questionGridItems">

@@ -181,9 +181,6 @@ const TimeSlot = ({ getNewCount, title }) => {
   }
 
 
-  useEffect(() => {
-    console.log("startTime", startTime);
-  }, [startTime])
 
 
   useEffect(() => {
@@ -228,9 +225,7 @@ const TimeSlot = ({ getNewCount, title }) => {
     });
   }
 
-  useEffect(() => {
-    console.log("finalDisableEndTimeForMinuteEndTime...", moment(endTime).format("m"));
-  }, [endTime])
+
 
   const getAllCourseType = async () => {
     setIsLoaderVisible(true);
@@ -373,7 +368,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         vcid: inputValueForAdd?.VehicleCategory,
         ccid: inputValueForAdd?.CourseCategory
       };
-      console.log("data", Data);
+    
       ApiPost(`trainingDate/addDate`, Data)
         .then((res) => {
           if (res?.status == 200) {
@@ -477,7 +472,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         vcid: inputValueForAdd?.VehicleCategory,
         ccid: inputValueForAdd?.CourseCategory
       };
-      console.log("datatdtad", Data);
+ 
       ApiPut(`trainingDate/updateDate/${idForUpdateCourseNameData}`, Data)
         .then((res) => {
           if (res?.status == 200) {
@@ -698,12 +693,7 @@ const TimeSlot = ({ getNewCount, title }) => {
     }
   };
 
-  useEffect(() => {
-    console.log("test007", moment(startTime).format("k"));
-  }, [startTime])
-  useEffect(() => {
-    console.log("test007777", moment(endTime).format("k"));
-  }, [endTime])
+ 
 
 
 

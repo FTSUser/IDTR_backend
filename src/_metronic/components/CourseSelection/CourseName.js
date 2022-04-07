@@ -63,9 +63,6 @@ const CourseName = ({ getNewCount, title }) => {
     setDataViewMore({});
   };
 
-  useEffect(() => {
-    console.log("inputValueForAdd", inputValueForAdd);
-  }, [inputValueForAdd]);
 
   const handleOnChnageAdd = (e) => {
     const { name, value } = e.target;
@@ -500,7 +497,7 @@ const CourseName = ({ getNewCount, title }) => {
                     CourseCategory: row?.ccid?._id,
                     VehicleCategory: row?.vcid?._id,
                   });
-                  console.log("row", row);
+              
                   setIsEditPopUp(true);
                 }}
               >
