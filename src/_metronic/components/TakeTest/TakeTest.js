@@ -345,7 +345,7 @@ const TakeTest = ({ getNewCount, title }) => {
       );
 
       setData(storeData)
-      console.log("storeData", storeData);
+     
     } else {
       setData([])
     }
@@ -960,7 +960,7 @@ const TakeTest = ({ getNewCount, title }) => {
       if (selectedTopSubjects.length === data.length) {
         setSelectedTopSubjects([]);
       } else {
-        console.log("in else");
+       
 
         let newArr = [];
         data &&
@@ -1020,7 +1020,7 @@ const TakeTest = ({ getNewCount, title }) => {
         ctidData: CTIDDATA
 
       };
-      console.log("data", data);
+    
       let tempNumber = datanumber.map((i) => {
         return Number(i.no)
       })
@@ -1030,7 +1030,7 @@ const TakeTest = ({ getNewCount, title }) => {
         await ApiPost(`question/getgenerateQuestion`, data)
           .then((res) => {
             if (res?.status == 200) {
-              console.log("attdence", res?.data?.payload);
+            
               setSelectedTopSubjects([]);
               setIsAddAttedence(false);
               setInputValueForAdd({});
@@ -1059,8 +1059,7 @@ const TakeTest = ({ getNewCount, title }) => {
 
 
       }
-      console.log(tempNumber.reduce(reducer));
-      console.log("temp", tempNumber);
+     
 
     }
   };

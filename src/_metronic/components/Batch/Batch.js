@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
+import { saveAs } from "file-saver";
+
 import DataTable, { defaultThemes } from "react-data-table-component";
 import {
   ApiGet,
@@ -115,8 +117,8 @@ class ComponentToPrints extends React.Component {
                 <td>
                   Attendance Done?:{" "}
                   {`${this.props?.data?.Examiner?.isAttendence
-                      ? "Done"
-                      : "Not Yet"
+                    ? "Done"
+                    : "Not Yet"
                     } `}{" "}
                 </td>
               </td>
@@ -286,8 +288,8 @@ class ComponentToPrintsForUser extends React.Component {
                 <td>
                   Phone:{" "}
                   {`${this?.props?.data?.phone
-                      ? this?.props?.data?.phone
-                      : "No Data"
+                    ? this?.props?.data?.phone
+                    : "No Data"
                     } `}{" "}
                 </td>
               </td>
@@ -410,6 +412,7 @@ const Batch = ({ getNewCount, title }) => {
   const itemsRefForUser = useRef([]);
   const [filteredAnnouncement, setFilteredAnnouncement] = useState({});
   const [isLoaderVisible, setIsLoaderVisible] = useState(false);
+  const [linkData, setLinkData] = useState(false);
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [dateTimezon, setdateTimezon] = useState([]);
@@ -479,9 +482,7 @@ const Batch = ({ getNewCount, title }) => {
     setCountForBatch(0);
   };
 
-  useEffect(() => {
-    console.log("allDataForResultDownload", allDataForResultDownload);
-  }, [allDataForResultDownload]);
+
 
   // useEffect(() => { }, [idForEditStatus]);
 
@@ -601,10 +602,31 @@ const Batch = ({ getNewCount, title }) => {
         setgetDataenter([]);
       });
   };
+  const saveFile = (data, name) => {
+   
+    saveAs(
+      data, name+'.zip'
+    );
+  };
+  const genereateAllPDF = async (data) => {
+  
+    setIsLoaderVisible(true);
+    await ApiGet(`generatepdf/generate-pdf/${data}`)
+      .then((res) => {
+     
+        
+        saveFile(res.data?.payload?.ZipLink, res.data?.payload?.batch?.name)
+        setIsLoaderVisible(false);
 
-  useEffect(() => {
-    console.log("idForgetResponseByBatch", idForgetResponseByBatch);
-  }, [idForgetResponseByBatch]);
+      })
+      .catch((err) => {
+        setIsLoaderVisible(false);
+
+        console.log("err", err);
+      });
+  }
+
+ 
 
   //getResponseByBatch
 
@@ -619,7 +641,7 @@ const Batch = ({ getNewCount, title }) => {
       `register/getRegisterByBatch/${id}?page=${pageForBatch}&limit=${countPerPageForBatch}`
     )
       .then((res) => {
-        console.log("resrtr", res?.data?.payload?.users);
+      
         setResponseByBatch(res?.data?.payload?.users);
         setCountForBatch(res?.data?.payload?.count);
       })
@@ -632,7 +654,7 @@ const Batch = ({ getNewCount, title }) => {
   const getAllResponseByBatch = async (id) => {
     await ApiGet(`response/getResponseByUserWithoutPagination/${id}`)
       .then((res) => {
-        console.log("resresres", res?.data?.payload);
+       
         setAllDataForResultDownload(res?.data?.payload?.findResponse);
       })
       .catch((err) => {
@@ -643,7 +665,7 @@ const Batch = ({ getNewCount, title }) => {
   const getAllResponseByBatchForUser = async (id) => {
     await ApiGet(`response/getResponseByBatch/${id}`)
       .then((res) => {
-        console.log("resresresres", res?.data?.payload?.findResponse);
+      
         setAllDataForAttendance(res?.data?.payload?.findResponse);
       })
       .catch((err) => {
@@ -654,12 +676,12 @@ const Batch = ({ getNewCount, title }) => {
   const getPapersetByUserId = async (id) => {
     await ApiGet(`response/getResponseByUser/${id}`)
       .then((res) => {
-        console.log("resrtrssdf", res?.data?.payload?.Response[0]);
+     
         setPaperSet(res?.data?.payload?.Response[0]);
       })
       .catch((err) => {
         toast.error(err?.message);
-        console.log(err?.message);
+      
       });
   };
 
@@ -668,9 +690,7 @@ const Batch = ({ getNewCount, title }) => {
     getDataenterAndApi();
   }, []);
 
-  useEffect(() => {
-    console.log("batchInfo", batchInfo);
-  }, [batchInfo]);
+  
 
   const validateFormForAddAdmin = () => {
     let formIsValid = true;
@@ -1010,7 +1030,7 @@ const Batch = ({ getNewCount, title }) => {
                 <InfoOutlinedIcon />
               </Tooltip>
             </div>
-            <div className="cursor-pointer pl-2">
+            {/* <div className="cursor-pointer pl-2">
               <ReactToPrint
                 trigger={() => (
                   <Tooltip title="Generate Pdf" arrow>
@@ -1027,6 +1047,11 @@ const Batch = ({ getNewCount, title }) => {
                   <ComponentToPrints data={row} />
                 </div>
               </div>
+            </div> */}
+            <div className="cursor-pointer pl-2">
+              <Tooltip title="Generate Pdf" arrow >
+                <img src="media/allIconsForTable/invoice.png" onClick={(e) => genereateAllPDF(row?._id)} />
+              </Tooltip>
             </div>
           </>
         );
@@ -1363,8 +1388,8 @@ const Batch = ({ getNewCount, title }) => {
           <div className="row mb-4 pr-3">
             <div className="col ">
               <h2 className=" pt-2"> Batch Creation</h2>
-             
-              <div>(Note : Batch should be create at a time of exam only.)</div>
+
+              <div>(Note : Please create batch only before starting the examination.)</div>
             </div>
             <div className="col">
               <div>
@@ -2048,7 +2073,7 @@ const Batch = ({ getNewCount, title }) => {
                           padding: "10px 18px",
                           textDecoration: "none",
                           position: "right",
-                          marginRight:"30px"
+                          marginRight: "30px"
                         }}
                       >
                         Download Test Data
@@ -2138,7 +2163,7 @@ const Batch = ({ getNewCount, title }) => {
             {isViewMoreAnnouncement === true ? (
               <div className="honda-container">
                 <div className="">
-                  {console.log("questionData", paperSet?.ListofQA)}
+               
                   <div className="questionGrid12121">
                     {paperSet?.ListofQA?.map((data, key) => (
                       <div className="questionGridItems">

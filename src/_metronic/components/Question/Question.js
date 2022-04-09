@@ -67,10 +67,7 @@ const Question = (props) => {
     }, []);
 
 
-    useEffect(() => {
-        console.log("inputValueForAdd", inputValueForAdd);
-    }, [inputValueForAdd]);
-
+ 
     const handleViewMoreClose = () => {
         setIsViewMoreAboutus(false);
         setDataViewMore({});
@@ -368,7 +365,7 @@ const Question = (props) => {
     const getVehicleSubCategoryByVehicleCategory = async () => {
         await ApiGet(`vehicleSubCategory/getVehicleSubCategoryByVcid/${inputValueForAdd.vcid}`)
             .then((res) => {
-                console.log("skjjbsadjsk", res);
+              
                 setFilteredVehicleSubCategory(res?.data?.payload?.vehicleSubCategory);
             })
             .catch((err) => {
@@ -390,7 +387,7 @@ const Question = (props) => {
         }
         await ApiPost(`category/getCategoryByVscid`, Data)
             .then((res) => {
-                console.log("skjjbsadjskdfsdfds", res);
+            
                 setFilteredCategoryByVehicleSubCategory(res?.data?.payload?.category);
             })
             .catch((err) => {
@@ -514,7 +511,7 @@ const Question = (props) => {
                                         setMcqCheck(false);
                                         setCheckBoxCheck(true);
                                     }
-                                    console.log("row", row?.Category?.name);
+                               
                                     setIsEditPopUp(true);
                                 }}
                             >

@@ -208,9 +208,6 @@ const User = ({ getNewCount, title }) => {
     document.title = "Honda | User";
   }, []);
 
-  useEffect(() => {
-    console.log("dataForUserLogCSV", logsData);
-  }, [logsData]);
 
   // const startValue = new Date(
   //   new Date().getFullYear(),
@@ -256,9 +253,7 @@ const User = ({ getNewCount, title }) => {
 
   const [tab, setTab] = useState("course");
 
-  useEffect(() => {
-    console.log("tabsdggfdgdfgfd", tabs);
-  }, [tabs])
+
 
   const [formdata, setFormData] = useState({
     vehicleCategory: "",
@@ -298,14 +293,7 @@ const User = ({ getNewCount, title }) => {
   });
 
   useEffect(() => { }, [tableFilterData]);
-  useEffect(() => {
-    console.log("dateForFilter", dateForFilter);
 
-  }, [dateForFilter]);
-
-  useEffect(() => {
-    console.log("formdata", formdata);
-  }, [formdata]);
 
   const handlePaymentClose = () => {
     setIsPaymentPopUp(false);
@@ -369,7 +357,7 @@ const User = ({ getNewCount, title }) => {
     setdicloser(e);
   };
   const handleSetDateData = async (dateForFilter) => {
-    console.log("date", dateForFilter);
+   
     if (dateForFilter) {
 
 
@@ -378,7 +366,7 @@ const User = ({ getNewCount, title }) => {
       )
         .then((res) => {
           // setTableFilterData(tableFilterData);
-          console.log("res", res);
+       
           setCount(res?.data?.payload?.count)
           setTableFilterData(res?.data?.payload?.Question);
         })
@@ -472,7 +460,7 @@ const User = ({ getNewCount, title }) => {
   const getAdminLogs = async (id) => {
     await ApiGet(`admin/get-admin-login-log/${id?._id}`)
       .then((res) => {
-        console.log("loglog", res?.data?.payload?.user);
+      
         setLogsData(res?.data?.payload?.user);
       })
       .catch((err) => {
@@ -483,7 +471,7 @@ const User = ({ getNewCount, title }) => {
   const getAdminPostLogs = async (id) => {
     await ApiGet(`admin/get-logout-users/${id?._id}`)
       .then((res) => {
-        console.log("loglog", res?.data?.payload?.admin);
+     
         setLogsPostData(res?.data?.payload?.admin);
       })
       .catch((err) => {
@@ -567,8 +555,9 @@ const User = ({ getNewCount, title }) => {
     },
     {
       name: "Actions",
+      width: "145px",
       cell: (row) => {
-        console.log(" fsdfsdfsdfs", row);
+       
         return (
           <>
             <div
@@ -725,7 +714,7 @@ const User = ({ getNewCount, title }) => {
     {
       name: "Actions",
       cell: (row) => {
-        console.log(" fsdfsdfsdfs", row);
+     
         return (
           <>
             {row?.uid && (
@@ -974,7 +963,7 @@ const User = ({ getNewCount, title }) => {
   useEffect(() => {
     if (allRegisterUserExcel) {
       allRegisterUserExcel.map((registerUser, key) => {
-        console.log("registerUser?.uid?.", registerUser?.Registrationtype);
+    
         let data = {
           Number: key + 1,
           UserID: registerUser?._id,
@@ -1224,7 +1213,7 @@ const User = ({ getNewCount, title }) => {
       pincode: formdata.pin,
       email: formdata.email,
       phone: formdata.phone,
-      permanentDLnumber: formdata.driverlicense,
+      // permanentDLnumber: formdata.driverlicense,
       issueDate: formdata.license === "N/A" ? "" : formdata.issueDate,
       validTill: formdata.license === "N/A" ? "" : formdata.validDate,
       Authority: "Haryana",
@@ -1242,27 +1231,58 @@ const User = ({ getNewCount, title }) => {
       Registrationtype: "counter",
     };
 
-    console.log("datadata", data);
+   
+    if (formdata.type == 'offline') {
+      const datas = {
+        cnid: formdata?.courseName,
+        ctid: formdata?.courseType,
+        vcid: formdata?.vehicleCategory,
+        phone: formdata?.phone,
+        tdid: formdata?.sloatId,
+    }
+      ApiPost('payment/checkPayment', datas).then( (res) => {
+       
+        if (res.data.result === 0) {
+          ApiPost("register/addRegister", data)
+            .then((res) => {
+              if (res?.status == 200) {
+                toast.success(res?.data?.message);
+                handleAddAdminClose()
 
-    ApiPost("register/addRegister", data)
-      .then((res) => {
-        if (res?.status == 200) {
-          toast.success(res?.data?.message);
-          handleAddAdminClose()
-          // setIsAddAnnouncement(false);
-          // setInputValueForAdd({});
-          getAllUser();
-        } else {
-          toast.error(res?.data?.message);
+                getAllUser();
+              } else {
+                toast.error(res?.data?.message);
+              }
+            })
+            .catch((err) => {
+              toast.error(err?.response?.data?.message);
+            });
+        }
+        else {
+          toast.error(res?.data?.message, { theme: "colored" });
         }
       })
-      .catch((err) => {
-        toast.error(err?.response?.data?.message);
-      });
+    } else {
+      ApiPost("register/addRegister", data)
+        .then((res) => {
+          if (res?.status == 200) {
+            toast.success(res?.data?.message);
+            handleAddAdminClose()
+
+            getAllUser();
+          } else {
+            toast.error(res?.data?.message);
+          }
+        })
+        .catch((err) => {
+          toast.error(err?.response?.data?.message);
+        });
+    }
+
   };
 
   const handleOfflinePayment = () => {
-    console.log("dataForPayment", dataForPayment);
+    
     const data = {
       receiptDate: new Date(),
       receiptNumber: dataForPayment?._id,
@@ -1332,7 +1352,7 @@ const User = ({ getNewCount, title }) => {
       Registrationtype: "counter",
     };
 
-    console.log("dataForEdit", data);
+   
 
     ApiPut(`register/updateRegister/${formdata._id}`, data)
       .then((res) => {
@@ -1461,11 +1481,11 @@ const User = ({ getNewCount, title }) => {
       //   seterrorShow('License Authority')
       //   settypeTrueFalseform(true)
       // }
-      else if (formdata.authoritycity === "") {
+      else if (formdata?.license != "N/A" && formdata.authoritycity === "") {
         toast.error(`Sorry! License Authority City must be specified`);
         seterrorShow("License Authority City");
         settypeTrueFalseform(true);
-      } else if (formdata.authoritydistrict === "") {
+      } else if (formdata?.license != "N/A" && formdata.authoritydistrict === "") {
         toast.error(`Sorry! License Authority District must be specified`);
         seterrorShow("License Authority Disctrict");
         settypeTrueFalseform(true);
@@ -1614,7 +1634,7 @@ const User = ({ getNewCount, title }) => {
     let courseCategoryId = formdata.courseCategory;
 
     let vehical;
-    console.log("row=======>", formdata?.vehicleCategory);
+   
     if (index !== -1) {
       vehical = {
         label: getAllVehicalData?.Question[index].vehicleCategory,
@@ -1767,7 +1787,7 @@ const User = ({ getNewCount, title }) => {
       const setDataMAin = res?.data?.payload?.courseCategory?.filter(
         (dataMain) => dataMain._id === cId
       );
-      console.log("setDataMAin", setDataMAin);
+     
       setdefaultValue((dataasd) => ({
         ...dataasd,
         courseCategory: {
@@ -1801,7 +1821,7 @@ const User = ({ getNewCount, title }) => {
       vcid: formdata.vehicleCategory
     };
     ApiGet(
-      `trainingDate/getDatePrevious??date=${data.date}&vcid=${formdata.vehicleCategory}&ctid=${formdata.courseType}&ccid=${formdata.courseCategory}&cnid=${formdata.courseName}`
+      `trainingDate/getDatePrevious?date=${data.date}&vcid=${formdata.vehicleCategory}&ctid=${formdata.courseType}&ccid=${formdata.courseCategory}&cnid=${formdata.courseName}`
     ).then((res) => {
       if (res.data.payload) {
         // setTimeout(() => {
@@ -2205,7 +2225,7 @@ const User = ({ getNewCount, title }) => {
         </div>
       </div>
       {/* view more */}
-      {console.log("isAddAnnouncement", isAddAnnouncement)}
+     
       {isAddAnnouncement ? (
 
         <List className="modelFixed">
@@ -2414,7 +2434,7 @@ const User = ({ getNewCount, title }) => {
                               onChange={(e) => onChnageForm(e)}
                             />
                           </div>
-                          {console.log("formdata.issueDate", moment(formdata?.issueDate).add(6, 'M').format('DD-MM-YYYY'))}
+                         
                           <div className="register-grid-items">
                             <label>
                               Valid Till<span>*</span>
@@ -2474,65 +2494,69 @@ const User = ({ getNewCount, title }) => {
                       }
 
                       <div className="register-grid-items"></div>
+                      {formdata?.license != "N/A" &&
+                        <>
+                          <div className="register-grid-items12">
+                            <label>
+                              License Authority<span>*</span>
+                            </label>
 
-                      <div className="register-grid-items12">
-                        <label>
-                          License Authority<span>*</span>
-                        </label>
+                            <Select
+                              options={state.map((e) => ({
+                                label: e.name,
+                                value: e.name,
+                              }))}
+                              name="authority"
+                              onChange={(e) => onChnagSelectField(e, "authority")}
+                              defaultValue={{
+                                label: "Haryana",
+                                value: "Haryana",
+                              }}
+                            />
+                          </div>
+                          <div className="register-grid-items12">
+                            <label>
+                              License Authority (District)<span>*</span>
+                            </label>
 
-                        <Select
-                          options={state.map((e) => ({
-                            label: e.name,
-                            value: e.name,
-                          }))}
-                          name="authority"
-                          onChange={(e) => onChnagSelectField(e, "authority")}
-                          defaultValue={{
-                            label: "Haryana",
-                            value: "Haryana",
-                          }}
-                        />
-                      </div>
-                      <div className="register-grid-items12">
-                        <label>
-                          License Authority (District)<span>*</span>
-                        </label>
+                            <Select
+                              options={districts.map((e) => ({
+                                label: e.name,
+                                value: e.name,
+                              }))}
+                              name="authoritydistrict"
+                              onChange={(e) =>
+                                onChnagSelectField(e, "authoritydistrict")
+                              }
+                              defaultValue={{
+                                label: formdata.authoritydistrict,
+                                value: formdata.authoritydistrict,
+                              }}
+                            />
+                          </div>
+                          <div className="register-grid-items12">
+                            <label>
+                              License Authority (Town / city)<span>*</span>
+                            </label>
 
-                        <Select
-                          options={districts.map((e) => ({
-                            label: e.name,
-                            value: e.name,
-                          }))}
-                          name="authoritydistrict"
-                          onChange={(e) =>
-                            onChnagSelectField(e, "authoritydistrict")
-                          }
-                          defaultValue={{
-                            label: formdata.authoritydistrict,
-                            value: formdata.authoritydistrict,
-                          }}
-                        />
-                      </div>
-                      <div className="register-grid-items12">
-                        <label>
-                          License Authority (Town / city)<span>*</span>
-                        </label>
+                            <Select
+                              options={city.map((e) => ({
+                                label: e.name,
+                                value: e.name,
+                              }))}
+                              name="authoritycity"
+                              onChange={(e) =>
+                                onChnagSelectField(e, "authoritycity")
+                              }
+                              defaultValue={{
+                                label: formdata.authoritycity,
+                                value: formdata.authoritycity,
+                              }}
+                            />
+                          </div>
+                        </>
+                      }
 
-                        <Select
-                          options={city.map((e) => ({
-                            label: e.name,
-                            value: e.name,
-                          }))}
-                          name="authoritycity"
-                          onChange={(e) =>
-                            onChnagSelectField(e, "authoritycity")
-                          }
-                          defaultValue={{
-                            label: formdata.authoritycity,
-                            value: formdata.authoritycity,
-                          }}
-                        />
-                      </div>
                     </div>
                     <div className="full-fill-information">
                       {CourceType ? (
@@ -3214,6 +3238,7 @@ const User = ({ getNewCount, title }) => {
                             vcid={formdata.vehicleCategory}
                             ctid={formdata.courseType}
                             tdid={formdata.sloatId}
+                            phone={formdata.phone}
                             hhhhh={(data) => {
                               setSubmitPayment(data);
                             }}

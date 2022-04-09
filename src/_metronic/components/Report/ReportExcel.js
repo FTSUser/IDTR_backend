@@ -336,7 +336,7 @@ export const ReportExcel = (props) => {
     }
 
     const exportToCSV = async () => {
-        console.log("filter",filter);
+      
         if (type?.endPoint) {
             let API = type?.endPoint;
              if (filter) {

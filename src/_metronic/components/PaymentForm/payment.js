@@ -23,20 +23,20 @@ function PaymentData(props) {
         });
     }
 
-     function displayRazorpay() {
+    function displayRazorpay() {
 
         if (props.cnid) {
             const data = {
                 cnid: props.cnid,
                 ctid: props.ctid,
                 vcid: props.vcid,
-
+                phone: props.phone,
                 tdid: props.tdid,
             }
             ApiPost('payment/checkPayment', data).then(async (res) => {
-                console.log("ress", res.data.result);
+             
                 if (res.data.result === 0) {
-                    
+
                     const ress = await loadScript(
                         'https://checkout.razorpay.com/v1/checkout.js'
                     );
@@ -72,9 +72,9 @@ function PaymentData(props) {
                                 ctid: props.ctid,
                                 vcid: props.vcid,
                                 tdid: props.tdid,
-                                email:props?.email,
-                                phone:props?.phone,
-                                name:props?.fname,
+                                email: props?.email,
+                                phone: props?.phone,
+                                name: props?.fname,
                                 paymentId: response.razorpay_payment_id,
                                 razorpayOrderId: response.razorpay_order_id,
                                 razorpaySignature: response.razorpay_signature,

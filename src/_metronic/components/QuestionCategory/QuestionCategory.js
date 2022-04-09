@@ -60,9 +60,7 @@ const QuestionCategory = ({ getNewCount, title }) => {
         document.title = "Honda | Question Category";
     }, []);
 
-    useEffect(() => {
-        console.log("inputValueForAdd", selectedIngredientsFinal);
-    }, [selectedIngredientsFinal]);
+   
 
     const handleViewMoreClose = () => {
         setIsViewMoreAboutus(false);
@@ -217,7 +215,7 @@ const QuestionCategory = ({ getNewCount, title }) => {
         await ApiGet(`vehicleSubCategory/getVehicleSubCategoryByVcid/${inputValueForAdd.VehicleCategory}`)
             .then((res) => {
                 setIsLoaderVisible(false);
-                console.log("tetsdgsds", res);
+            
                 setFilteredVehicleSubCategory(res?.data?.payload?.vehicleSubCategory);
                 // setCount(res?.data?.payload?.count);
             })

@@ -28,6 +28,7 @@ import Multiselect from "multiselect-react-dropdown";
 import { ReportExcel } from "./ReportExcel";
 import { DateRangePickerComponent } from "@syncfusion/ej2-react-calendars";
 import { addDays } from "date-fns/esm";
+import { NavLink, useHistory } from "react-router-dom";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -37,12 +38,15 @@ const data = [
     {
         "_id": "6214a53e5413504c352f8dc6",
         "name": "Timeslot",
-        "endPoint": "trainingDate/getAllDateWithoutPagination"
+        "endPoint": "trainingDate/getAllDateWithoutPagination",
+        "pathname": "/timeslot-addition"
+
     },
     {
         "_id": "62106ded491bcd2a1683a487",
         "name": "User",
-        "endPoint": "register/getAll"
+        "endPoint": "register/getAll",
+        "pathname": "/user"
     },
     // {
     //     "_id": "620e42b6924864153489ea0a",
@@ -67,26 +71,35 @@ const data = [
     {
         "_id": "61fd0cd5df3e201fe081ff8c",
         "name": "Payment",
-        "endPoint": "payment/getAll"
+        "endPoint": "payment/getAll",
+        "pathname": "/payment-history"
     },
     {
         "_id": "61fce992a6682147b4c29b19",
         "name": "Question Category",
-        "endPoint": "category/getAll"
+        "endPoint": "category/getAll",
+        "pathname": "/question-category"
+
     },
     {
         "_id": "61fce98ba6682147b4c29b11",
         "name": "Question",
-        "endPoint": "question/getAll"
+        "endPoint": "question/getAll",
+        "pathname": "/question-addition"
+
     },
     {
         "_id": "61fccb27eb9ffd140891e6e0",
         "name": "Feedback",
-        "endPoint": "feedback/getAll"
+        "endPoint": "feedback/getAll",
+        "pathname": "/feedback-records"
+
     }
 ]
 
 const Report = ({ getNewCount, title }) => {
+    const history = useHistory();
+
     useEffect(() => {
         document.title = "Honda | Reports";
     }, []);
@@ -109,7 +122,9 @@ const Report = ({ getNewCount, title }) => {
             cell: (row) => {
                 return (
                     <>
-                        <ReportExcel type={row} date={statesate} filter={filterState} />
+                     
+                        <button className="btn btn-success" onClick={() => history.push(row?.pathname)}>Export To Excel</button>
+                        {/* <ReportExcel type={row} date={statesate} filter={filterState} /> */}
                     </>
                 );
             },
@@ -200,11 +215,11 @@ const Report = ({ getNewCount, title }) => {
 
 
     const handleSetDateData = async (data) => {
-        console.log("date", data);
+      
         setState(data);
     }
     const handleDropdown = (data) => {
-        console.log("date", data);
+       
         setFilterData(data)
     }
 

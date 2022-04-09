@@ -289,7 +289,7 @@ const Request = ({ getNewCount, title }) => {
     }, [page, countPerPage]);
 
     const handleSetDateData = async (dateForFilter) => {
-        console.log("date", dateForFilter);
+      
         if (dateForFilter) {
 
 
@@ -299,7 +299,7 @@ const Request = ({ getNewCount, title }) => {
             )
                 .then((res) => {
                     // setTableFilterData(tableFilterData);
-                    console.log("res", res);
+                
                     setCount(res?.data?.payload?.count)
                     setFilteredFAQ(res?.data?.payload?.Response);
                 })
