@@ -539,7 +539,7 @@ const Images = ({ getNewCount, title }) => {
                   type="text"
                   className={`form-control form-control-lg form-control-solid `}
                   name="title"
-                  placeholder="Search HelpfulTips"
+                  placeholder="Search Question Images"
                   onChange={(e) => handleSearch(e)}
                 />
               </div>
@@ -724,7 +724,7 @@ const Images = ({ getNewCount, title }) => {
                     }}
                     className="btn btn-success mr-2"
                   >
-                    <span>Add Details</span>
+                    <span>Add Image</span>
                     {loading && (
                       <span className="mx-3 spinner spinner-white"></span>
                     )}
@@ -855,7 +855,7 @@ const Images = ({ getNewCount, title }) => {
                     }}
                     className="btn btn-success mr-2"
                   >
-                    <span>Update Details</span>
+                    <span>Update Images</span>
                     {loading && (
                       <span className="mx-3 spinner spinner-white"></span>
                     )}

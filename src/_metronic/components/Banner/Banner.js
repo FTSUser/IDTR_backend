@@ -820,7 +820,7 @@ const Banner = ({ getNewCount, title }) => {
                     }}
                     className="btn btn-success mr-2"
                   >
-                    <span>Add Details</span>
+                    <span>Add Banner</span>
                     {loading && (
                       <span className="mx-3 spinner spinner-white"></span>
                     )}
@@ -952,7 +952,7 @@ const Banner = ({ getNewCount, title }) => {
                     }}
                     className="btn btn-success mr-2"
                   >
-                    <span>Update Details</span>
+                    <span>Update Banner</span>
                     {loading && (
                       <span className="mx-3 spinner spinner-white"></span>
                     )}
