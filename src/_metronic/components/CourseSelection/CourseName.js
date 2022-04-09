@@ -402,7 +402,7 @@ const CourseName = ({ getNewCount, title }) => {
       sortable: true,
     },
     {
-      name: "Display Name",
+      name: "Course Display Name",
       selector: "displayName",
       sortable: true,
     },

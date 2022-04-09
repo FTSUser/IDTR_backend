@@ -248,7 +248,7 @@ export function AsideMenuList({ layoutProps }) {
                         <span className="menu-text">Payment</span>
                       </NavLink>
                     </li>
-                    <li
+                    {/* <li
                       className={`menu-item menu-item-submenu ${getMenuItemActive(
                         "/question-category",
                         false
@@ -265,9 +265,9 @@ export function AsideMenuList({ layoutProps }) {
                         </i>
                         <span className="menu-text">Question Catgory</span>
                       </NavLink>
-                    </li>
+                    </li> */}
 
-                    <li
+                    {/* <li
                       className={`menu-item menu-item-submenu ${getMenuItemActive(
                         "/question-addition",
                         false
@@ -284,7 +284,7 @@ export function AsideMenuList({ layoutProps }) {
                         </i>
                         <span className="menu-text">Question</span>
                       </NavLink>
-                    </li>
+                    </li> */}
                     <li
                       className={`menu-item menu-item-submenu ${getMenuItemActive(
                         "/feedback-records",

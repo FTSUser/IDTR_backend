@@ -305,9 +305,9 @@ const Payment = ({ getNewCount, title }) => {
           description: registerUser?.cnid?.description,
           documentRequired: registerUser?.cnid?.documentRequired,
           duration: registerUser?.cnid?.duration,
-          isActive: registerUser?.cnid?.isActive,
-          mode: registerUser?.cnid?.mode,
-          price: registerUser?.cnid?.price,
+          isPaymentDone: registerUser?.cnid?.isActive,
+          PaymentMode: registerUser?.cnid?.mode,
+          PaymentAmount: registerUser?.cnid?.price,
           systemRequirement: registerUser?.cnid?.systemRequirement,
           timing: registerUser?.cnid?.timing,
           updatedBy: registerUser?.cnid?.updatedBy,
@@ -334,7 +334,7 @@ const Payment = ({ getNewCount, title }) => {
             "ll"
           ),
           phone: registerUser?.uid?.phone,
-          registrationDate: moment(registerUser?.tdid?.registrationDate).format(
+          RegistrationDate: moment(registerUser?.tdid?.registrationDate).format(
             "ll"
           ),
           state: registerUser?.uid?.state,
