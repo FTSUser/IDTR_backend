@@ -695,7 +695,7 @@ const Testomonial = ({ getNewCount, title }) => {
                     }}
                     className="btn btn-success mr-2"
                   >
-                    <span>Add Details</span>
+                    <span>Add Testomonial</span>
                     {loading && (
                       <span className="mx-3 spinner spinner-white"></span>
                     )}
@@ -824,7 +824,7 @@ const Testomonial = ({ getNewCount, title }) => {
                     }}
                     className="btn btn-success mr-2"
                   >
-                    <span>Update Details</span>
+                    <span>Update Testomonial</span>
                     {loading && (
                       <span className="mx-3 spinner spinner-white"></span>
                     )}

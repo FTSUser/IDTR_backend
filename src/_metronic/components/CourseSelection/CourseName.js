@@ -645,7 +645,7 @@ const CourseName = ({ getNewCount, title }) => {
           Price: registerUser?.price,
           Mode: registerUser?.mode,
           Duration: registerUser?.duration,
-          displayName: registerUser?.displayName,
+          CourseDisplayName: registerUser?.displayName,
           Timing: registerUser?.timing,
           Certificate: registerUser?.certificate,
           // Validity: registerUser?.validity,

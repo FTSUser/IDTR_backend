@@ -483,7 +483,7 @@ const CourseType = ({ getNewCount, title }) => {
                 let data = {
                     CreatedAt: moment(registerUser?.createdAt).format("ll"),
                     CreatedBy: registerUser?.createdBy,
-                    Description: registerUser?.description,
+                    VehicleSubCategoryDescription: registerUser?.description,
                     IsActive: registerUser?.isDelete ? "True" : "False",
                     UpdatedAt: moment(registerUser?.updatedAt).format("ll"),
                     UpdatedBy: registerUser?.updatedBy,
