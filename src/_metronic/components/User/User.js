@@ -966,7 +966,7 @@ const User = ({ getNewCount, title }) => {
     
         let data = {
           Number: key + 1,
-          UserID: registerUser?._id,
+          UserID: registerUser?.uid?._id,
           RegistrationTypes: registerUser?.Registrationtype,
           FirstName: registerUser?.fname,
           MiddleName: registerUser?.mname ? registerUser?.mname : "-",
