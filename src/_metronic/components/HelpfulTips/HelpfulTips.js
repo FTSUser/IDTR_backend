@@ -156,7 +156,7 @@ const HelpfulTips = ({ getNewCount, title }) => {
   };
 
 
- 
+
 
 
 
@@ -1029,8 +1029,8 @@ const HelpfulTips = ({ getNewCount, title }) => {
                 <div className="honda-text-grid12 honda-text-grid-border">
 
                   <div className="honda-text-grid-items">
-                    <p>Title:</p>
-                    <span
+                    <span>Title:</span>
+                    <p
                       dangerouslySetInnerHTML={{
                         __html: dataViewMore?.titleName,
                       }}
@@ -1039,8 +1039,8 @@ const HelpfulTips = ({ getNewCount, title }) => {
                   </div>
 
                   <div className="honda-text-grid-items">
-                    <p>Description:</p>
-                    <span
+                    <span>Description:</span>
+                    <p
                       dangerouslySetInnerHTML={{
                         __html: dataViewMore?.description,
                       }}
@@ -1048,11 +1048,11 @@ const HelpfulTips = ({ getNewCount, title }) => {
                     />
                   </div>
                   <div className="honda-text-grid-items">
-                    <p>Image:</p>
+                    <span>Image:</span>
                     <img className="images" src={dataViewMore?.image} alt="" />
                   </div>
                   <div className="honda-text-grid-items">
-                    <p>Video:</p>
+                    <span>Video:</span>
                     <Video src={dataViewMore?.video}>
                       {(video, state, actions) => (
                         <div>

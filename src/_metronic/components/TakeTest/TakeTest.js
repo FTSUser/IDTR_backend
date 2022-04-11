@@ -41,6 +41,7 @@ class ComponentToPrintss extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.props;
+    console.log("this.state", this.state);
   }
 
   componentDidMount() {
@@ -61,27 +62,37 @@ class ComponentToPrintss extends React.Component {
 
     return (
       <>
+
         <div class="invoice-box">
           {
+            <div>
+
+              <h2 style={{ fontSize: "30px", lineHeight: "40px" }}>Batch Name: {this.state?.Examset?.batchId?.name}</h2>
+              <h2 style={{ fontSize: "30px", lineHeight: "40px" }}>Date: {moment(this.state?.Examset?.batchId?.createdAt).format("ll")}</h2>
+            </div>
+          }
+          {
             this.state?.Examset?.questionsList?.map((data, key) => (
-              <div key={key} style={{ padding: "10px 0 80px 0" }}>
-                <h2 style={{ fontSize: "35px", lineHeight: "50px" }}> <b>Question{key + 1}</b> :{data?.Qname}</h2>
-                <div style={{ padding: "10px 0 0px 0" }}>
-                  <img src={this.state.Examset[key]?.image ? this.state.Examset[key]?.image : ''} className="img-fluid" style={{ height: "200px" }} alt="" />
-                </div>
-                <div>
-                  {data?.Option.map((data, key) => {
-                    return (
-                      <div className="d-flex  mx-3 mb-4 ques-text-design-style" style={{ padding: "20px 0 0 0" }}>
-                        <div className="mr-2" >
-                          <b style={{ fontSize: "30px", lineHeight: "30px" }}>Option{[key + 1]}:</b>
+              <>
+                <div key={key} style={{ padding: "10px 0 40px 0" }}>
+                  <h2 style={{ fontSize: "30px", lineHeight: "40px" }}> <b>Question{key + 1}</b> :{data?.Qname}</h2>
+                  <div style={{ padding: "10px 0 0px 0" }}>
+                    <img src={this.state.Examset[key]?.image ? this.state.Examset[key]?.image : ''} className="img-fluid" style={{ height: "200px" }} alt="" />
+                  </div>
+                  <div>
+                    {data?.Option.map((data, key) => {
+                      return (
+                        <div className="d-flex  mx-3 mb-4 ques-text-design-style" style={{ padding: "20px 0 0 0" }}>
+                          <div className="mr-2" >
+                            <b style={{ fontSize: "25px", lineHeight: "30px" }}>Option{[key + 1]}:</b>
+                          </div>
+                          <div style={{ fontSize: "25px", lineHeight: "30px" }}>{data?.name}</div>
                         </div>
-                        <div style={{ fontSize: "30px", lineHeight: "30px" }}>{data?.name}</div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
+              </>
             ))
           }
         </div>
@@ -215,7 +226,7 @@ class ComponentToPrintsForUser extends React.Component {
             </tr>
             <tr className="">
               <td>
-                <td>Percentage: {`${this?.props?.data?.percentage} `} </td>
+                <td>Percentage: {`${this?.props?.data?.percentage} `}% </td>
               </td>
             </tr>
             <tr className="">
@@ -345,7 +356,7 @@ const TakeTest = ({ getNewCount, title }) => {
       );
 
       setData(storeData)
-     
+
     } else {
       setData([])
     }
@@ -960,7 +971,7 @@ const TakeTest = ({ getNewCount, title }) => {
       if (selectedTopSubjects.length === data.length) {
         setSelectedTopSubjects([]);
       } else {
-       
+
 
         let newArr = [];
         data &&
@@ -1020,7 +1031,7 @@ const TakeTest = ({ getNewCount, title }) => {
         ctidData: CTIDDATA
 
       };
-    
+
       let tempNumber = datanumber.map((i) => {
         return Number(i.no)
       })
@@ -1030,7 +1041,7 @@ const TakeTest = ({ getNewCount, title }) => {
         await ApiPost(`question/getgenerateQuestion`, data)
           .then((res) => {
             if (res?.status == 200) {
-            
+
               setSelectedTopSubjects([]);
               setIsAddAttedence(false);
               setInputValueForAdd({});
@@ -1059,7 +1070,7 @@ const TakeTest = ({ getNewCount, title }) => {
 
 
       }
-     
+
 
     }
   };
@@ -1090,6 +1101,7 @@ const TakeTest = ({ getNewCount, title }) => {
   useEffect(() => {
     if (allDataForAttendance) {
       allDataForAttendance.map((registerUser, key) => {
+        console.log("registerUser?.batchId?.DataEntry?.email", registerUser);
         let data = {
           Number: key + 1,
           UserID: registerUser?.uid?._id,
@@ -1115,8 +1127,8 @@ const TakeTest = ({ getNewCount, title }) => {
           QuestionsAnsweredIncorrectly:
             registerUser?.Esid?.no - registerUser?.uid?.totalScore,
           Status: "-",
-          DataEntryUser: registerUser?.batch?.DataEntry?.name,
-          DataEntryUserID: registerUser?.batch?.Examiner?.name,
+          DataEntryUser: registerUser?.batch?.DataEntry?.email,
+          DataEntryUserID: registerUser?.batch?.DataEntry?._id,
         };
         setDataCSVForAttendance((currVal) => [...currVal, data]);
       });
@@ -1150,8 +1162,8 @@ const TakeTest = ({ getNewCount, title }) => {
           QuestionsAnsweredIncorrectly:
             registerUser?.Esid?.no - registerUser?.uid?.totalScore,
           Status: "-",
-          DataEntryUser: registerUser?.batch?.DataEntry?.name,
-          DataEntryUserID: registerUser?.batch?.Examiner?.name,
+          DataEntryUser: registerUser?.batch?.DataEntry?.email,
+          DataEntryUserID: registerUser?.batch?.DataEntry?._id,
         };
         setDataCSVResults((currVal) => [...currVal, data]);
       });
@@ -1843,7 +1855,7 @@ const TakeTest = ({ getNewCount, title }) => {
                       <span className="mr-3">No test Data</span>
                     )}
 
-                    {allDataForAttendance?.length > 0 ? (
+                    {isAddAttedence ? (
                       <CsvDownload
                         className={``}
                         data={dataCSVForAttendance}

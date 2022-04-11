@@ -34,18 +34,41 @@ const Partial = ({ getNewCount, title }) => {
     getAllFeedback();
   }, [page, countPerPage]);
 
+
+
   const getAllFeedback = async () => {
     setIsLoaderVisible(true);
-    await ApiGet(`admin/get-partial-records?page=${page}&limit=${countPerPage}&isPage=true`)
-      .then((res) => {
-        setIsLoaderVisible(false);
-        setFilteredFeedback(res?.data?.payload?.admin);
-        setCount(res?.data?.payload?.count);
-      })
-      .catch((err) => {
-        toast.error(err?.response?.data?.message)
-      });
+    if (!search) {
+      await ApiGet(
+        `admin/get-partial-records?page=${page}&limit=${countPerPage}&isPage=true`
+      )
+        .then((res) => {
+          setIsLoaderVisible(false);
+          setFilteredFeedback(res?.data?.payload?.admin);
+          setCount(res?.data?.payload?.count);
+
+        })
+        .catch((err) => {
+          toast.error(err?.response?.data?.message)
+        });
+    } else {
+      await ApiGet(
+        `admin/get-partial-records?search=${search}&page=${page}&limit=${countPerPage}`
+      )
+        .then((res) => {
+          setIsLoaderVisible(false);
+          setFilteredFeedback(res?.data?.payload?.admin);
+          setCount(res?.data?.payload?.count);
+        })
+        .catch((err) => {
+          toast.error(err?.response?.data?.message)
+        });
+    }
   };
+
+
+
+
 
   useEffect(() => {
   }, [inputValue]);
@@ -109,7 +132,7 @@ const Partial = ({ getNewCount, title }) => {
       },
       sortable: true,
     },
-   
+
   ];
   // * Table Style
   const customStyles = {
@@ -144,6 +167,52 @@ const Partial = ({ getNewCount, title }) => {
       },
     },
   };
+
+
+  const handleSearch = (e) => {
+    let val = e.target.value.replace(/[^\w\s]/gi, "");
+    setSearch(val);
+  };
+
+  const debouncedSearchTerm = useDebounce(search, 500);
+
+  // Hook
+  function useDebounce(value, delay) {
+    // State and setters for debounced value
+    const [debouncedValue, setDebouncedValue] = useState(value);
+    useEffect(
+      () => {
+        // Update debounced value after delay
+        const handler = setTimeout(() => {
+          setDebouncedValue(value);
+        }, delay);
+        // Cancel the timeout if value changes (also on delay change or unmount)
+        // This is how we prevent debounced value from updating if value is changed ...
+        // .. within the delay period. Timeout gets cleared and restarted.
+        return () => {
+          clearTimeout(handler);
+        };
+      },
+      [value, delay] // Only re-call effect if value or delay changes
+    );
+    return debouncedValue;
+  }
+
+
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      setIsLoaderVisible(true);
+      setPage(1);
+      setCount(0);
+      setCountPerPage(countPerPage);
+      getAllFeedback();
+    } else {
+      setPage(1);
+      setCount(0);
+      setCountPerPage(countPerPage);
+      getAllFeedback();
+    }
+  }, [debouncedSearchTerm]);
 
   //for excel file
   const [allFeedbackExcel, setAllFeedbackExcel] = useState([]);
@@ -191,6 +260,18 @@ const Partial = ({ getNewCount, title }) => {
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
               <h2 className="pl-3 pt-2">Enrolled User</h2>
+            </div>
+            <div className="col">
+              <div>
+                <input
+                  type="text"
+                  className={`form-control form-control-lg form-control-solid `}
+                  name="search"
+                  value={search}
+                  placeholder="Search Menu"
+                  onChange={(e) => handleSearch(e)}
+                />
+              </div>
             </div>
             <div className="cus-medium-button-style button-height">
               <CsvDownload

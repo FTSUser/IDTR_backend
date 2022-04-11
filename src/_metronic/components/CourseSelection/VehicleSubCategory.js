@@ -487,8 +487,8 @@ const CourseType = ({ getNewCount, title }) => {
                     IsActive: registerUser?.isDelete ? "True" : "False",
                     UpdatedAt: moment(registerUser?.updatedAt).format("ll"),
                     UpdatedBy: registerUser?.updatedBy,
-                    VehicleCategory: registerUser?.vcid,
-                    VehicleCategoryId: registerUser?.vehicleSubCategory,
+                    VehicleCategory:registerUser?.vehicleSubCategory ,
+                    VehicleCategoryId: registerUser?.vcid,
                     VehicleSubCategory:registerUser?._id
                 };
                 setDataCSV((currVal) => [...currVal, data]);

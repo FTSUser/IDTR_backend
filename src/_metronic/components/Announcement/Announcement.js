@@ -1293,7 +1293,7 @@ const Announcement = ({ getNewCount, title }) => {
                     />
                   </div>
                   <div className="honda-text-grid-items">
-                    <p>Description:</p>
+                    <span>Description:</span>
                     <p
                       dangerouslySetInnerHTML={{
                         __html: dataViewMore?.description,

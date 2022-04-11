@@ -889,8 +889,8 @@ const Images = ({ getNewCount, title }) => {
                  <div className="honda-text-grid12 honda-text-grid-border">
  
                    <div className="honda-text-grid-items">
-                     <p>Title:</p>
-                     <span
+                     <span>Title:</span>
+                     <p
                        dangerouslySetInnerHTML={{
                          __html: dataViewMore?.titleName,
                        }}
@@ -899,8 +899,8 @@ const Images = ({ getNewCount, title }) => {
                    </div>
  
                    <div className="honda-text-grid-items">
-                     <p>Description:</p>
-                     <span
+                     <span>Description:</span>
+                     <p
                        dangerouslySetInnerHTML={{
                          __html: dataViewMore?.description,
                        }}
@@ -910,7 +910,7 @@ const Images = ({ getNewCount, title }) => {
  
                    
                    <div className="honda-text-grid-items">
-                     <p>Image:</p>
+                     <span>Image:</span>
                      <img className="images" src={dataViewMore?.image} alt="" />
                    </div>
  

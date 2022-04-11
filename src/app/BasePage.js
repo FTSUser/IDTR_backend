@@ -67,7 +67,7 @@ export default function BasePage() {
           <ContentRoute exact path="/vehiclecategory" component={VehicleCategory} />
           <ContentRoute exact path="/vehiclesubcategory" component={VehicleSubCategory} />
           <ContentRoute exact path="/question-category" component={QuestionCategory} />
-          <ContentRoute exact path="/user" component={User} />
+          <ContentRoute exact path="/registered-user" component={User} />
           <ContentRoute exact path="/payment-history" component={Payment} />
           <ContentRoute exact path="/take-test" component={TakeTest} />
           <ContentRoute exact path="/check-question" component={CheckTest} />

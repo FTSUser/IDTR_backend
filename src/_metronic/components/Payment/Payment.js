@@ -314,7 +314,7 @@ const Payment = ({ getNewCount, title }) => {
           validity: registerUser?.cnid?.validity,
           created: moment(registerUser?.cnid?.created).format("ll"),
           courseType: registerUser?.ctid?.courseType,
-          createdAtCT: moment(registerUser?.ctid?.createdAtCT).format("ll"),
+          createdAtCT: moment(registerUser?.ctid?.createdAt).format("ll"),
           createdByCT: registerUser?.ctid?.createdBy,
           descriptionCT: registerUser?.ctid?.description,
           isActiveCT: registerUser?.ctid?.isActive,
@@ -334,7 +334,7 @@ const Payment = ({ getNewCount, title }) => {
             "ll"
           ),
           phone: registerUser?.uid?.phone,
-          RegistrationDate: moment(registerUser?.tdid?.registrationDate).format(
+          RegistrationDate: moment(registerUser?.uid?.registrationDate).format(
             "ll"
           ),
           state: registerUser?.uid?.state,

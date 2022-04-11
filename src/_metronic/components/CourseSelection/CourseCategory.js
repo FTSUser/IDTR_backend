@@ -496,7 +496,7 @@ const CourseCategory = ({ getNewCount, title }) => {
           CourseTypeId: registerUser?.ctid?._id,
           VehicleCategory: registerUser?.vcid?.vehicleCategory,
           VehicleCategoryId: registerUser?.vcid?._id,
-          Description: registerUser?.description,
+         
           CreatedAt: moment(registerUser?.createdAt).format("ll"),
           CreatedBy: registerUser?.createdBy,
           UpdatedAt: moment(registerUser?.updatedAt).format("ll"),

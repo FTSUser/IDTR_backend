@@ -967,13 +967,13 @@ const User = ({ getNewCount, title }) => {
         let data = {
           Number: key + 1,
           UserID: registerUser?.uid?._id,
-          RegistrationTypes: registerUser?.Registrationtype,
+       
           FirstName: registerUser?.fname,
           MiddleName: registerUser?.mname ? registerUser?.mname : "-",
           LastName: registerUser?.lname ? registerUser?.lname : "-",
           EmailAddress: registerUser?.email ? registerUser?.email : "-",
           MobileNumber: registerUser?.phone,
-
+          RegistrationTypes: registerUser?.Registrationtype,
           FatherName: registerUser?.fatherName ? registerUser?.fatherName : "-",
           DateOfBirth: moment(registerUser?.DoB).format("ll"),
           Qualification: registerUser?.qualification,
@@ -1024,6 +1024,10 @@ const User = ({ getNewCount, title }) => {
               : registerUser?.isPaymentDone,
           PaymentMode: registerUser?.type,
           TransactionID:
+            registerUser?.paymentId === null
+              ? "Payment Pending"
+              : registerUser?.paymentId,
+          PaymentID:
             registerUser?.paymentId === null
               ? "Payment Pending"
               : registerUser?.paymentId,
@@ -2101,7 +2105,7 @@ const User = ({ getNewCount, title }) => {
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2">User</h2>
+              <h2 className="pl-3 pt-2">Registered User</h2>
             </div>
             <div className="col">
               <div>
@@ -2110,7 +2114,7 @@ const User = ({ getNewCount, title }) => {
                   className={`form-control form-control-lg form-control-solid `}
                   name="search"
                   value={search}
-                  placeholder="Search User"
+                  placeholder="Search Registered User"
                   onChange={(e) => handleSearch(e)}
                 />
               </div>
@@ -2131,7 +2135,7 @@ const User = ({ getNewCount, title }) => {
               <Modal.Header closeButton>
                 <Modal.Title className="text-danger">Alert!</Modal.Title>
               </Modal.Header>
-              <Modal.Body>Are You Sure To Want To delete this User</Modal.Body>
+              <Modal.Body>Are You Sure To Want To delete this registered user</Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                   cancel
@@ -2152,7 +2156,7 @@ const User = ({ getNewCount, title }) => {
               <CsvDownload
                 className={``}
                 data={dataCSV}
-                filename="User.csv"
+                filename="Registered User.csv"
                 style={{
                   //pass other props, like styles
                   backgroundColor: "#CC0001",
@@ -3640,7 +3644,7 @@ const User = ({ getNewCount, title }) => {
             {isViewMoreUser === true ? (
               <div className="honda-container">
                 <div className="other-information-child-text-style1">
-                  <h2>User Information</h2>
+                  <h2>Registered User Information</h2>
                 </div>
                 <div className="honda-text-grid honda-text-grid-border">
 

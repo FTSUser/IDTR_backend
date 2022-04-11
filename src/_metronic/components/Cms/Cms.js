@@ -874,8 +874,8 @@ const Cms = ({ getNewCount, title }) => {
                 <div className="honda-text-grid12 honda-text-grid-border">
 
                   <div className="honda-text-grid-items">
-                    <p>Title:</p>
-                    <span
+                    <span>Title:</span>
+                    <p
                       dangerouslySetInnerHTML={{
                         __html: dataViewMore?.titleName,
                       }}
@@ -884,8 +884,8 @@ const Cms = ({ getNewCount, title }) => {
                   </div>
 
                   <div className="honda-text-grid-items">
-                    <p>Description:</p>
-                    <span
+                    <span>Description:</span>
+                    <p
                       dangerouslySetInnerHTML={{
                         __html: dataViewMore?.description,
                       }}
@@ -901,7 +901,7 @@ const Cms = ({ getNewCount, title }) => {
               </div>
 
 
-        
+
             ) : null}
           </List>
         </Dialog>

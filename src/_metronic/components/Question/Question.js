@@ -691,7 +691,7 @@ const Question = (props) => {
                     language: registerUser?.language,
                     type: registerUser?.type,
                     // weight: registerUser?.weight,
-                    Category: registerUser?.Category,
+                    Category: registerUser?.Category?.name,
                     image: registerUser?.image,
                 };
                 setDataCSV((currVal) => [...currVal, data]);

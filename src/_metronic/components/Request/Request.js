@@ -74,7 +74,7 @@ const Request = ({ getNewCount, title }) => {
                     toast.error(err?.response?.data?.message)
                 });
         } else {
-            await ApiGet(`response/getRequestResponseByStatus?status=pending`)
+            await ApiGet(`response/getRequestResponseByStatus?status=pending&search=${search}&page=${page}&limit=${countPerPage}`)
                 .then((res) => {
                     setIsLoaderVisible(false);
                     setFilteredFAQ(res?.data?.payload?.Response);
@@ -245,23 +245,29 @@ const Request = ({ getNewCount, title }) => {
     };
 
     const debouncedSearchTerm = useDebounce(search, 500);
-    const [dateForFilter, setDateForFilter] = useState();
+
+    // Hook
     function useDebounce(value, delay) {
+        // State and setters for debounced value
         const [debouncedValue, setDebouncedValue] = useState(value);
         useEffect(
             () => {
+                // Update debounced value after delay
                 const handler = setTimeout(() => {
                     setDebouncedValue(value);
                 }, delay);
+                // Cancel the timeout if value changes (also on delay change or unmount)
+                // This is how we prevent debounced value from updating if value is changed ...
+                // .. within the delay period. Timeout gets cleared and restarted.
                 return () => {
                     clearTimeout(handler);
                 };
             },
-            [value, delay]
+            [value, delay] // Only re-call effect if value or delay changes
         );
         return debouncedValue;
     }
-
+    const [dateForFilter, setDateForFilter] = useState();
     useEffect(() => {
         if (debouncedSearchTerm) {
             setIsLoaderVisible(true);
