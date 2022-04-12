@@ -341,6 +341,9 @@ const TakeTest = ({ getNewCount, title }) => {
   const [CTID, setCTID] = useState();
   const [CTIDDATA, setCtiddata] = useState();
   useEffect(() => {
+    console.log("successBatchId", successBatchId);
+  }, [successBatchId])
+  useEffect(() => {
     if (filteredCategoryByVehicleSubCategory?.length > 0) {
       let storeData = filteredCategoryByVehicleSubCategory.map((item) => {
         return {
@@ -540,8 +543,9 @@ const TakeTest = ({ getNewCount, title }) => {
   const viewPeperSet = async (id) => {
     await ApiGet(`batch/getExamsetByBatch/${id}`)
       .then((res) => {
+       
         setQuestionData(res?.data?.payload?.Examset?.questionsList);
-        setSuucessBatchId(res?.data?.payload?.Examset?.batchId);
+        setSuucessBatchId(res?.data?.payload?.Examset?.batchId?._id);
       })
       .catch((err) => {
         toast.error(err);
@@ -1855,7 +1859,7 @@ const TakeTest = ({ getNewCount, title }) => {
                       <span className="mr-3">No test Data</span>
                     )}
 
-                    {allDataForAttendance?.length > 0  ? (
+                    {allDataForAttendance?.length > 0 ? (
                       <CsvDownload
                         className={``}
                         data={dataCSVForAttendance}

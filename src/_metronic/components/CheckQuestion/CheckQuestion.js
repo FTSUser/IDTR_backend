@@ -655,7 +655,7 @@ const CheckTest = ({ getNewCount, title }) => {
     });
 
     const datas = {
-      batch: paperData?.batchId,
+      batch: paperData?.batchId?._id,
       uid: userIds,
       Esid: paperData?._id,
       ListofQA: checkData,
