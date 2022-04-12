@@ -237,6 +237,7 @@ const Partial = ({ getNewCount, title }) => {
       allFeedbackExcel.map((registerUser, key) => {
         let data = {
           Number: key + 1,
+          UserId:registerUser?.uid?._id ? registerUser?.uid?._id : registerUser?._id,
           createdAt: moment(registerUser?.createdAt).format("ll"),
           createdBy: registerUser?.createdBy,
           name: registerUser?.firstName,

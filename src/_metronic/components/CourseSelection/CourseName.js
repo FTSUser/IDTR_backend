@@ -394,11 +394,16 @@ const CourseName = ({ getNewCount, title }) => {
       },
       selector: (row) => row?.createdAt,
       sortable: true,
-      // width: "65px",
+      width: "195px",
     },
     {
       name: "Course Name",
       selector: "courseName",
+      sortable: true,
+    },
+    {
+      name: "Course Category",
+      selector: (row) => row?.ccid?.courseCategory,
       sortable: true,
     },
     {
@@ -423,6 +428,7 @@ const CourseName = ({ getNewCount, title }) => {
       selector: (row) => row?.ctid?.courseType,
       sortable: true,
     },
+   
     {
       name: "VehicleCategory",
       selector: (row) => row?.vcid?.vehicleCategory,
@@ -497,7 +503,7 @@ const CourseName = ({ getNewCount, title }) => {
                     CourseCategory: row?.ccid?._id,
                     VehicleCategory: row?.vcid?._id,
                   });
-              
+
                   setIsEditPopUp(true);
                 }}
               >
@@ -651,6 +657,7 @@ const CourseName = ({ getNewCount, title }) => {
           // Validity: registerUser?.validity,
           DocumentRequired: registerUser?.documentRequired,
           CourseName: registerUser?.courseName,
+          CourseCategory: registerUser?.ccid?.courseCategory,
           CourseNameId: registerUser?._id,
           Description: registerUser?.description,
           IsActive: registerUser?.isActive,

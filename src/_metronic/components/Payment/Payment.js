@@ -102,6 +102,28 @@ const Payment = ({ getNewCount, title }) => {
       width: "65px",
     },
     {
+      name: "User ID",
+      cell: (row) => {
+        return (
+          <span>{row?.uid?._id ? row?.uid?._id : row?._id}</span>
+        );
+      },
+      selector: (row) => row?.createdAt,
+      sortable: true,
+      width: "200px",
+
+    },
+    {
+      name: "Transaction ID",
+      cell: (row) => {
+        return <span>{row?.paymentId === null ? "-" : row?.paymentId}</span>;
+      },
+      selector: (row) => row?.paymentId,
+      sortable: true,
+
+      // width: "65px",
+    },
+    {
       name: "User Name",
       cell: (row) => {
         return (
@@ -163,6 +185,7 @@ const Payment = ({ getNewCount, title }) => {
 
       // width: "65px",
     },
+   
     {
       name: "Payment Type",
       cell: (row) => {
@@ -173,8 +196,10 @@ const Payment = ({ getNewCount, title }) => {
       selector: (row) => row?.createdAt,
       sortable: true,
 
-     
+
     },
+   
+  
 
     {
       name: "Course Name",
@@ -184,6 +209,14 @@ const Payment = ({ getNewCount, title }) => {
       selector: (row) => row?.cnid?.courseName,
       sortable: true,
     },
+    // {
+    //   name: "Course Category",
+    //   cell: (row) => {
+    //     return <span>{row?.ccid === null ? "-" : row?.ccid?.courseCategory}</span>;
+    //   },
+    //   selector: (row) => row?.ccid?.courseCategory,
+    //   sortable: true,
+    // },
     {
       name: "Course Type",
       cell: (row) => {
@@ -300,13 +333,14 @@ const Payment = ({ getNewCount, title }) => {
           UserID: registerUser?.uid?._id,
           certificate: registerUser?.cnid?.certificate,
           courseName: registerUser?.cnid?.courseName,
+          CourseCategory: registerUser?.ccid?.CourseCategory,
           createdAt: moment(registerUser?.cnid?.createdAt).format("ll"),
           createdBy: registerUser?.cnid?.createdBy,
           description: registerUser?.cnid?.description,
           documentRequired: registerUser?.cnid?.documentRequired,
           duration: registerUser?.cnid?.duration,
           isPaymentDone: registerUser?.paymentId ? 'True' : 'False',
-          PaymentMode: registerUser?.type ? registerUser?.type :'-',
+          PaymentMode: registerUser?.type ? registerUser?.type : '-',
           PaymentAmount: registerUser?.cnid?.price,
           systemRequirement: registerUser?.cnid?.systemRequirement,
           timing: registerUser?.cnid?.timing,

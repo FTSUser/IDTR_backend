@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import DataTable, { defaultThemes } from "react-data-table-component";
 import {
-    ApiGet,
-    ApiDelete,
-    ApiPut,
-    ApiPost,
+  ApiGet,
+  ApiDelete,
+  ApiPut,
+  ApiPost,
 } from "../../../helpers/API/ApiData";
 import Select from 'react-select';
 import { Tooltip } from "@material-ui/core";
@@ -27,294 +27,302 @@ import CsvDownload from "react-json-to-csv";
 import Multiselect from "multiselect-react-dropdown";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const CancleCourse = ({ getNewCount, title }) => {
-    const [filteredCourseName, setFilteredCourseName] = useState({});
-    const [isLoaderVisible, setIsLoaderVisible] = useState(false);
-    const [show, setShow] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [isAddCourseName, setIsAddCourseName] = useState(false);
-    const [idForUpdateCourseNameData, setIdForUpdateCourseNameData] =
-        useState("");
-    const [inputValueForAdd, setInputValueForAdd] = useState({});
-    const [errorsForAdd, setErrorsForAdd] = useState({});
-    const [idForDeleteCourseName, setIdForDeleteCourseName] = useState("");
-    const [page, setPage] = useState(1);
-    const [count, setCount] = useState(0);
-    const [countPerPage, setCountPerPage] = useState(10);
-    const [search, setSearch] = useState("");
-    const [dataViewMore, setDataViewMore] = useState({});
-    const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
-    const [isEditPopUp, setIsEditPopUp] = useState(false);
-    const [selectedCourseType, setSelectedCourseType] = useState([]);
-    const [allCourseTypeForUpdate, setAllCourseTypeForUpdate] = useState([]);
+  const [filteredCourseName, setFilteredCourseName] = useState({});
+  const [isLoaderVisible, setIsLoaderVisible] = useState(false);
+  const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isAddCourseName, setIsAddCourseName] = useState(false);
+  const [idForUpdateCourseNameData, setIdForUpdateCourseNameData] =
+    useState("");
+  const [inputValueForAdd, setInputValueForAdd] = useState({});
+  const [errorsForAdd, setErrorsForAdd] = useState({});
+  const [idForDeleteCourseName, setIdForDeleteCourseName] = useState("");
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
+  const [countPerPage, setCountPerPage] = useState(10);
+  const [search, setSearch] = useState("");
+  const [dataViewMore, setDataViewMore] = useState({});
+  const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
+  const [isEditPopUp, setIsEditPopUp] = useState(false);
+  const [selectedCourseType, setSelectedCourseType] = useState([]);
+  const [allCourseTypeForUpdate, setAllCourseTypeForUpdate] = useState([]);
 
-    useEffect(() => {
-        document.title = "Honda | Cancel Course";
-    }, []);
+  useEffect(() => {
+    document.title = "Honda | Cancel Course";
+  }, []);
 
-    const handleViewMoreClose = () => {
-        setIsViewMoreAboutus(false);
-        setDataViewMore({});
-    };
+  const handleViewMoreClose = () => {
+    setIsViewMoreAboutus(false);
+    setDataViewMore({});
+  };
 
-    const handleOnChnageAdd = (e) => {
-        const { name, value } = e.target;
-        setInputValueForAdd({ ...inputValueForAdd, [name]: value });
-        setErrorsForAdd({ ...errorsForAdd, [name]: "" });
-    };
+  const handleOnChnageAdd = (e) => {
+    const { name, value } = e.target;
+    setInputValueForAdd({ ...inputValueForAdd, [name]: value });
+    setErrorsForAdd({ ...errorsForAdd, [name]: "" });
+  };
 
-    const [getAllRole, setgetAllRole] = useState({});
-    const getAllRoleData = () => {
-        ApiGet('role').then((res) => {
-            setgetAllRole(res.data.payload.allRole);
+  const [getAllRole, setgetAllRole] = useState({});
+  const getAllRoleData = () => {
+    ApiGet('role').then((res) => {
+      setgetAllRole(res.data.payload.allRole);
+    })
+  }
+  const handleAddAdminClose = () => {
+    setInputValueForAdd({});
+    setIsAddCourseName(false);
+    setErrorsForAdd({});
+    setSelectedCourseType([]);
+    setIsEditPopUp(false);
+    setAllCourseTypeForUpdate([]);
+
+
+  };
+
+  const handleClose = () => {
+    setShow(false);
+  };
+
+
+
+  useEffect(() => {
+    getAllCourseName();
+    getAllRoleData()
+  }, [page, countPerPage]);
+
+
+
+
+  const getAllCourseName = async () => {
+    setIsLoaderVisible(true);
+    if (!search) {
+      await ApiGet(
+        `register/getCancleRecord?page=${page}&limit=${countPerPage}`
+      )
+        .then((res) => {
+          setIsLoaderVisible(false);
+          setFilteredCourseName(res?.data?.payload?.Question);
+          setCount(res?.data?.payload?.count);
+
         })
+        .catch((err) => {
+          toast.error(err?.response?.data?.message)
+        });
+    } else {
+      await ApiGet(
+        `register/getCancleRecord?search=${search}&page=${page}&limit=${countPerPage}`
+      )
+        .then((res) => {
+          setIsLoaderVisible(false);
+          setFilteredCourseName(res?.data?.payload?.Question);
+          setCount(res?.data?.payload?.count);
+        })
+        .catch((err) => {
+          toast.error(err?.response?.data?.message)
+        });
     }
-    const handleAddAdminClose = () => {
-        setInputValueForAdd({});
-        setIsAddCourseName(false);
-        setErrorsForAdd({});
-        setSelectedCourseType([]);
-        setIsEditPopUp(false);
-        setAllCourseTypeForUpdate([]);
-
-
-    };
-
-    const handleClose = () => {
-        setShow(false);
-    };
+  };
 
 
 
-    useEffect(() => {
-        getAllCourseName();
-        getAllRoleData()
-    }, [page, countPerPage]);
+  const validateFormForAddAdmin = () => {
+    let formIsValid = true;
+    let errorsForAdd = {};
+    if (inputValueForAdd && !inputValueForAdd.name) {
+      formIsValid = false;
+      errorsForAdd["name"] = "*Please Enter Name!";
+    }
+    // if (selectedCourseType?.length === 0) {
+    //     formIsValid = false;
+    //     errorsForAdd["role"] = "*Please Enter role!";
+    // }
 
 
 
+    setErrorsForAdd(errorsForAdd);
+    return formIsValid;
+  };
 
-    const getAllCourseName = async () => {
-        setIsLoaderVisible(true);
-        if (!search) {
-            await ApiGet(
-                `register/getCancleRecord?page=${page}&limit=${countPerPage}`
-            )
-                .then((res) => {
-                    setIsLoaderVisible(false);
-                    setFilteredCourseName(res?.data?.payload?.Question);
-                    setCount(res?.data?.payload?.count);
+  const handelAddCourseNameDetails = (e) => {
+    e.preventDefault();
+    if (validateFormForAddAdmin()) {
+      let data = []
+      selectedCourseType.map(o => data.push(o._id))
+      let Data = {
+        name: inputValueForAdd.name,
+        // assignTo: data
 
-                })
-                .catch((err) => {
-                    toast.error(err?.response?.data?.message)
-                });
+      };
+      ApiPost(`menu/addMenu`, Data)
+        .then((res) => {
+          if (res?.status == 200) {
+            setIsAddCourseName(false);
+            setSelectedCourseType([]);
+            toast.success(res?.data?.message);
+            setInputValueForAdd({});
+            getAllCourseName();
+          } else {
+            toast.error(res?.data?.message);
+          }
+        })
+        .catch((err) => {
+          toast.error(err?.response?.data?.message)
+        });
+    }
+  };
+
+  const handleDeleteCourseName = () => {
+    ApiDelete(`menu/deleteMenu/${idForDeleteCourseName}`)
+      .then((res) => {
+        if (res?.status == 200) {
+          setShow(false);
+          toast.success("Deleted Successfully");
+          getAllCourseName();
+          setPage(1);
+          setCount(0);
+          setCountPerPage(countPerPage);
         } else {
-            await ApiGet(
-                `register/getCancleRecord?search=${search}&page=${page}&limit=${countPerPage}`
-            )
-                .then((res) => {
-                    setIsLoaderVisible(false);
-                    setFilteredCourseName(res?.data?.payload?.Question);
-                    setCount(res?.data?.payload?.count);
-                })
-                .catch((err) => {
-                    toast.error(err?.response?.data?.message)
-                });
+          toast.error(res?.data?.message);
         }
-    };
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message)
+      });
+  };
+
+  const handelUpdateCourseNameDetails = (e) => {
+    e.preventDefault();
+    if (validateFormForAddAdmin()) {
+      let data = []
+      selectedCourseType.map(o => data.push(o._id))
+      let Data = {
+        name: inputValueForAdd?.name,
+        // assignTo: data
+      };
+      ApiPut(`menu/updateMenu/${idForUpdateCourseNameData}`, Data)
+        .then((res) => {
+          if (res?.status == 200) {
+            setIsAddCourseName(false);
+            toast.success(res?.data?.message);
+            setInputValueForAdd({});
+            getAllCourseName();
+            setSelectedCourseType([]);
+            setIsEditPopUp(false);
+
+          } else {
+            toast.error(res?.data?.message);
+          }
+        })
+        .catch((err) => {
+          toast.error(err?.response?.data?.message)
+        });
+    }
+  };
+
+  let i = 0;
+  const columns = [
+    {
+      name: "SNo",
+      cell: (row, index) => (page - 1) * countPerPage + (index + 1),
+      width: "65px",
+    },
+    {
+      name: "Date",
+      cell: (row) => {
+        return <span>{moment(row?.createdAt).format("ll")}</span>;
+      },
+      selector: (row) => row?.createdAt,
+      sortable: true,
+      // width: "65px",
+    },
+    {
+      name: "Email",
+      selector: "email",
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.email === "" ? "-" : row?.email}</span>;
+      },
+    },
+    {
+      name: "First Name",
+      selector: "fname",
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.fname === "" ? "-" : row?.fname}</span>;
+      },
+    },
+
+    {
+      name: "Last Name",
+      selector: "lname",
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.lname === "" ? "-" : row?.lname}</span>;
+      },
+    },
+    {
+      name: "Gender",
+      selector: "gender",
+      sortable: true,
+    },
+
+    {
+      name: "Payment Type",
+      selector: "type",
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.type === "" ? "-" : row?.type}</span>;
+      },
+    },
+    {
+      name: "Course Name",
+      selector: "courseName",
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.cnid?.courseName === "" ? "-" : row?.cnid?.courseName}</span>;
+      },
+    },
+    {
+      name: "Course Category",
+      selector: "courseCategory",
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.ccid?.courseCategory === "" ? "-" : row?.ccid?.courseCategory}</span>;
+      },
+    },
+    // {
+    //     name: "Assign To",
+    //     cell: (row) => {
+    //         return (
+    //             <>
+    //                 {
+    //                     row?.assignTo?.map((data, key) => {
+    //                         return (
+    //                             <>
+    //                                 <div >
+    //                                     <div >{data?.roleName},</div>
+    //                                 </div>
+    //                             </>
+    //                         )
+    //                     }
+    //                     )}
+    //             </>
+    //         );
+    //     },
+    // },
 
 
 
-    const validateFormForAddAdmin = () => {
-        let formIsValid = true;
-        let errorsForAdd = {};
-        if (inputValueForAdd && !inputValueForAdd.name) {
-            formIsValid = false;
-            errorsForAdd["name"] = "*Please Enter Name!";
-        }
-        // if (selectedCourseType?.length === 0) {
-        //     formIsValid = false;
-        //     errorsForAdd["role"] = "*Please Enter role!";
-        // }
-
-
-
-        setErrorsForAdd(errorsForAdd);
-        return formIsValid;
-    };
-
-    const handelAddCourseNameDetails = (e) => {
-        e.preventDefault();
-        if (validateFormForAddAdmin()) {
-            let data = []
-            selectedCourseType.map(o => data.push(o._id))
-            let Data = {
-                name: inputValueForAdd.name,
-                // assignTo: data
-
-            };
-            ApiPost(`menu/addMenu`, Data)
-                .then((res) => {
-                    if (res?.status == 200) {
-                        setIsAddCourseName(false);
-                        setSelectedCourseType([]);
-                        toast.success(res?.data?.message);
-                        setInputValueForAdd({});
-                        getAllCourseName();
-                    } else {
-                        toast.error(res?.data?.message);
-                    }
-                })
-                .catch((err) => {
-                    toast.error(err?.response?.data?.message)
-                });
-        }
-    };
-
-    const handleDeleteCourseName = () => {
-        ApiDelete(`menu/deleteMenu/${idForDeleteCourseName}`)
-            .then((res) => {
-                if (res?.status == 200) {
-                    setShow(false);
-                    toast.success("Deleted Successfully");
-                    getAllCourseName();
-                    setPage(1);
-                    setCount(0);
-                    setCountPerPage(countPerPage);
-                } else {
-                    toast.error(res?.data?.message);
-                }
-            })
-            .catch((err) => {
-                toast.error(err?.response?.data?.message)
-            });
-    };
-
-    const handelUpdateCourseNameDetails = (e) => {
-        e.preventDefault();
-        if (validateFormForAddAdmin()) {
-            let data = []
-            selectedCourseType.map(o => data.push(o._id))
-            let Data = {
-                name: inputValueForAdd?.name,
-                // assignTo: data
-            };
-            ApiPut(`menu/updateMenu/${idForUpdateCourseNameData}`, Data)
-                .then((res) => {
-                    if (res?.status == 200) {
-                        setIsAddCourseName(false);
-                        toast.success(res?.data?.message);
-                        setInputValueForAdd({});
-                        getAllCourseName();
-                        setSelectedCourseType([]);
-                        setIsEditPopUp(false);
-
-                    } else {
-                        toast.error(res?.data?.message);
-                    }
-                })
-                .catch((err) => {
-                    toast.error(err?.response?.data?.message)
-                });
-        }
-    };
-
-    let i = 0;
-    const columns = [
-        {
-            name: "SNo",
-            cell: (row, index) => (page - 1) * countPerPage + (index + 1),
-            width: "65px",
-        },
-        {
-            name: "Date",
-            cell: (row) => {
-                return <span>{moment(row?.createdAt).format("ll")}</span>;
-            },
-            selector: (row) => row?.createdAt,
-            sortable: true,
-            // width: "65px",
-        },
-        {
-            name: "Email",
-            selector: "email",
-            sortable: true,
-            cell: (row) => {
-              return <span>{row?.email === "" ? "-" : row?.email}</span>;
-            },
-          },
-          {
-            name: "First Name",
-            selector: "fname",
-            sortable: true,
-            cell: (row) => {
-              return <span>{row?.fname === "" ? "-" : row?.fname}</span>;
-            },
-          },
-      
-          {
-            name: "Last Name",
-            selector: "lname",
-            sortable: true,
-            cell: (row) => {
-              return <span>{row?.lname === "" ? "-" : row?.lname}</span>;
-            },
-          },
-          {
-            name: "Gender",
-            selector: "gender",
-            sortable: true,
-          },
-      
-        {
-            name: "Payment Type",
-            selector: "type",
-            sortable: true,
-            cell: (row) => {
-              return <span>{row?.type === "" ? "-" : row?.type}</span>;
-            },
-          },
-        {
-            name: "Course Name",
-            selector: "courseName",
-            sortable: true,
-            cell: (row) => {
-              return <span>{row?.cnid?.courseName === "" ? "-" : row?.cnid?.courseName  }</span>;
-            },
-          },
-        // {
-        //     name: "Assign To",
-        //     cell: (row) => {
-        //         return (
-        //             <>
-        //                 {
-        //                     row?.assignTo?.map((data, key) => {
-        //                         return (
-        //                             <>
-        //                                 <div >
-        //                                     <div >{data?.roleName},</div>
-        //                                 </div>
-        //                             </>
-        //                         )
-        //                     }
-        //                     )}
-        //             </>
-        //         );
-        //     },
-        // },
-
-
-
-        {
-            name: "Actions",
-            cell: (row) => {
-                return (
-                    <>
-                        {/* <div className="d-flex justify-content-between">
+    {
+      name: "Actions",
+      cell: (row) => {
+        return (
+          <>
+            {/* <div className="d-flex justify-content-between">
                             <div
                                 className="cursor-pointer pl-2"
                                 onClick={() => {
@@ -338,7 +346,7 @@ const CancleCourse = ({ getNewCount, title }) => {
                             </div>
                         </div> */}
 
-                        {/* <div
+            {/* <div
                             className="cursor-pointer"
                             onClick={() => {
                                 setShow(true);
@@ -349,264 +357,264 @@ const CancleCourse = ({ getNewCount, title }) => {
                                 <DeleteIcon />
                             </Tooltip>
                         </div> */}
-                        <>
-                            <div
-                                className="cursor-pointer pl-2"
-                                onClick={() => {
-                                    setIsViewMoreAboutus(true);
-                                    setDataViewMore(row);
+            <>
+              <div
+                className="cursor-pointer pl-2"
+                onClick={() => {
+                  setIsViewMoreAboutus(true);
+                  setDataViewMore(row);
 
-                                }}
-                            >
-                                <Tooltip title="Show More" arrow>
-                                    <InfoOutlinedIcon />
-                                </Tooltip>
-                            </div>
-                        </>
-                    </>
-                );
-            },
-        },
-    ];
-    // * Table Style
-    const customStyles = {
-        header: {
-            style: {
-                minHeight: "56px",
-            },
-        },
-        headRow: {
-            style: {
-                borderTopStyle: "solid",
-                borderTopWidth: "1px",
-                borderTopColor: defaultThemes.default.divider.default,
-            },
-        },
-        headCells: {
-            style: {
-                "&:not(:last-of-type)": {
-                    borderRightStyle: "solid",
-                    borderRightWidth: "1px",
-                    borderRightColor: defaultThemes.default.divider.default,
-                },
-            },
-        },
-        cells: {
-            style: {
-                "&:not(:last-of-type)": {
-                    borderRightStyle: "solid",
-                    borderRightWidth: "1px",
-                    borderRightColor: defaultThemes.default.divider.default,
-                },
-            },
-        },
-    };
-
-    //for search data
-
-
-    const handleSearch = (e) => {
-        let val = e.target.value.replace(/[^\w\s]/gi, "");
-        setSearch(val);
-    };
-
-    const debouncedSearchTerm = useDebounce(search, 500);
-
-    // Hook
-    function useDebounce(value, delay) {
-        // State and setters for debounced value
-        const [debouncedValue, setDebouncedValue] = useState(value);
-        useEffect(
-            () => {
-                // Update debounced value after delay
-                const handler = setTimeout(() => {
-                    setDebouncedValue(value);
-                }, delay);
-                // Cancel the timeout if value changes (also on delay change or unmount)
-                // This is how we prevent debounced value from updating if value is changed ...
-                // .. within the delay period. Timeout gets cleared and restarted.
-                return () => {
-                    clearTimeout(handler);
-                };
-            },
-            [value, delay] // Only re-call effect if value or delay changes
+                }}
+              >
+                <Tooltip title="Show More" arrow>
+                  <InfoOutlinedIcon />
+                </Tooltip>
+              </div>
+            </>
+          </>
         );
-        return debouncedValue;
+      },
+    },
+  ];
+  // * Table Style
+  const customStyles = {
+    header: {
+      style: {
+        minHeight: "56px",
+      },
+    },
+    headRow: {
+      style: {
+        borderTopStyle: "solid",
+        borderTopWidth: "1px",
+        borderTopColor: defaultThemes.default.divider.default,
+      },
+    },
+    headCells: {
+      style: {
+        "&:not(:last-of-type)": {
+          borderRightStyle: "solid",
+          borderRightWidth: "1px",
+          borderRightColor: defaultThemes.default.divider.default,
+        },
+      },
+    },
+    cells: {
+      style: {
+        "&:not(:last-of-type)": {
+          borderRightStyle: "solid",
+          borderRightWidth: "1px",
+          borderRightColor: defaultThemes.default.divider.default,
+        },
+      },
+    },
+  };
+
+  //for search data
+
+
+  const handleSearch = (e) => {
+    let val = e.target.value.replace(/[^\w\s]/gi, "");
+    setSearch(val);
+  };
+
+  const debouncedSearchTerm = useDebounce(search, 500);
+
+  // Hook
+  function useDebounce(value, delay) {
+    // State and setters for debounced value
+    const [debouncedValue, setDebouncedValue] = useState(value);
+    useEffect(
+      () => {
+        // Update debounced value after delay
+        const handler = setTimeout(() => {
+          setDebouncedValue(value);
+        }, delay);
+        // Cancel the timeout if value changes (also on delay change or unmount)
+        // This is how we prevent debounced value from updating if value is changed ...
+        // .. within the delay period. Timeout gets cleared and restarted.
+        return () => {
+          clearTimeout(handler);
+        };
+      },
+      [value, delay] // Only re-call effect if value or delay changes
+    );
+    return debouncedValue;
+  }
+
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      setIsLoaderVisible(true);
+      setPage(1);
+      setCount(0);
+      setCountPerPage(countPerPage);
+      getAllCourseName();
+    } else {
+      setPage(1);
+      setCount(0);
+      setCountPerPage(countPerPage);
+      getAllCourseName();
     }
+  }, [debouncedSearchTerm]);
 
-    useEffect(() => {
-        if (debouncedSearchTerm) {
-            setIsLoaderVisible(true);
-            setPage(1);
-            setCount(0);
-            setCountPerPage(countPerPage);
-            getAllCourseName();
-        } else {
-            setPage(1);
-            setCount(0);
-            setCountPerPage(countPerPage);
-            getAllCourseName();
-        }
-    }, [debouncedSearchTerm]);
+  //for excel file
+  const [allCourseNameExcel, setAllCourseNameExcel] = useState([]);
+  const [dataCSV, setDataCSV] = useState([]);
+  useEffect(() => {
+    getAllCourseNameForExcel();
+  }, []);
 
-    //for excel file
-    const [allCourseNameExcel, setAllCourseNameExcel] = useState([]);
-    const [dataCSV, setDataCSV] = useState([]);
-    useEffect(() => {
-        getAllCourseNameForExcel();
-    }, []);
+  const getAllCourseNameForExcel = async () => {
+    // if (!search) {
+    await ApiGet(`examiner/getAll`)
+      .then((res) => {
+        setAllCourseNameExcel(res?.data?.payload?.Examiner);
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message)
+      });
+    // }
+  };
+  useEffect(() => {
+    if (allCourseNameExcel) {
+      allCourseNameExcel.map((registerUser, key) => {
+        let data = {
+          Number: key + 1,
+          CreatedAt: moment(registerUser?.createdAt).format("ll"),
+          MenuName: registerUser?.name,
 
-    const getAllCourseNameForExcel = async () => {
-        // if (!search) {
-        await ApiGet(`examiner/getAll`)
-            .then((res) => {
-                setAllCourseNameExcel(res?.data?.payload?.Examiner);
-            })
-            .catch((err) => {
-                toast.error(err?.response?.data?.message)
-            });
-        // }
-    };
-    useEffect(() => {
-        if (allCourseNameExcel) {
-            allCourseNameExcel.map((registerUser, key) => {
-                let data = {
-                    Number: key + 1,
-                    CreatedAt: moment(registerUser?.createdAt).format("ll"),
-                    MenuName: registerUser?.name,
+        };
+        setDataCSV((currVal) => [...currVal, data]);
+      });
+    }
+  }, [allCourseNameExcel]);
 
-                };
-                setDataCSV((currVal) => [...currVal, data]);
-            });
-        }
-    }, [allCourseNameExcel]);
-
-    return (
-        <>
-            <div className="card p-1">
-                <ToastContainer />
-                <div className="p-2 mb-2">
-                    <div className="row mb-4 pr-3">
-                        <div className="col d-flex justify-content-between">
-                            <h2 className="pl-3 pt-2">Cancel Course</h2>
-                        </div>
-                        <div className="col">
-                            <div>
-                                <input
-                                    type="text"
-                                    className={`form-control form-control-lg form-control-solid `}
-                                    name="search"
-                                    value={search}
-                                    placeholder="Search Cancel Course"
-                                    onChange={(e) => handleSearch(e)}
-                                />
-                            </div>
-                        </div>
-                     
-                    </div>
-
-                    {/* delete model */}
-                    <Modal show={show} onHide={handleClose}>
-                        <Modal.Header closeButton>
-                            <Modal.Title className="text-danger">Alert!</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            Are You Sure To Want To delete this Menu
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClose}>
-                                cancel
-                            </Button>
-                            <Button
-                                variant="danger"
-                                onClick={() => {
-                                    handleDeleteCourseName();
-                                }}
-                            >
-                                Delete
-                            </Button>
-                        </Modal.Footer>
-                    </Modal>
-                    {/* end delete model */}
-
-                    <DataTable
-                        columns={columns}
-                        data={filteredCourseName}
-                        customStyles={customStyles}
-                        style={{
-                            marginTop: "-3rem",
-                        }}
-                        progressPending={isLoaderVisible}
-                        progressComponent={
-                            <Loader type="Puff" color="#334D52" height={30} width={30} />
-                        }
-                        highlightOnHover
-                        pagination
-                        paginationServer
-                        paginationTotalRows={count}
-                        paginationPerPage={countPerPage}
-                        paginationRowsPerPageOptions={[10, 20, 25, 50, 100]}
-                        paginationDefaultPage={page}
-                        onChangePage={(page) => {
-                            setPage(page);
-                        }}
-                        onChangeRowsPerPage={(rowPerPage) => {
-                            setCountPerPage(rowPerPage);
-                        }}
-                    />
-                </div>
+  return (
+    <>
+      <div className="card p-1">
+        <ToastContainer />
+        <div className="p-2 mb-2">
+          <div className="row mb-4 pr-3">
+            <div className="col d-flex justify-content-between">
+              <h2 className="pl-3 pt-2">Cancel Course</h2>
+            </div>
+            <div className="col">
+              <div>
+                <input
+                  type="text"
+                  className={`form-control form-control-lg form-control-solid `}
+                  name="search"
+                  value={search}
+                  placeholder="Search Cancel Course"
+                  onChange={(e) => handleSearch(e)}
+                />
+              </div>
             </div>
 
-            {isAddCourseName ? (
-                <Dialog
-                    fullScreen
-                    open={isAddCourseName}
-                    onClose={handleAddAdminClose}
-                    TransitionComponent={Transition}
-                >
-                    <Toolbar>
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            onClick={handleAddAdminClose}
-                            aria-label="close"
-                        >
-                            <CloseIcon />
-                        </IconButton>
-                    </Toolbar>
-                    <List>
-                        {isAddCourseName === true ? (
-                            <div className="form ml-30 ">
-                                {/* Name Amenintie */}
-                                <div className="form-group row">
-                                    <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Enter Name
-                                    </label>
-                                    <div className="col-lg-9 col-xl-6">
-                                        <div>
-                                            <input
-                                                type="text"
-                                                className={`form-control form-control-lg form-control-solid `}
-                                                id="name"
-                                                name="name"
-                                                value={inputValueForAdd.name}
-                                                onChange={(e) => {
-                                                    handleOnChnageAdd(e);
-                                                }}
-                                            />
-                                        </div>
-                                        <span
-                                            style={{
-                                                color: "red",
-                                                top: "5px",
-                                                fontSize: "12px",
-                                            }}
-                                        >
-                                            {errorsForAdd["name"]}
-                                        </span>
-                                    </div>
-                                </div>
-                                {/* <div className="form-group row">
+          </div>
+
+          {/* delete model */}
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title className="text-danger">Alert!</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are You Sure To Want To delete this Menu
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                cancel
+              </Button>
+              <Button
+                variant="danger"
+                onClick={() => {
+                  handleDeleteCourseName();
+                }}
+              >
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
+          {/* end delete model */}
+
+          <DataTable
+            columns={columns}
+            data={filteredCourseName}
+            customStyles={customStyles}
+            style={{
+              marginTop: "-3rem",
+            }}
+            progressPending={isLoaderVisible}
+            progressComponent={
+              <Loader type="Puff" color="#334D52" height={30} width={30} />
+            }
+            highlightOnHover
+            pagination
+            paginationServer
+            paginationTotalRows={count}
+            paginationPerPage={countPerPage}
+            paginationRowsPerPageOptions={[10, 20, 25, 50, 100]}
+            paginationDefaultPage={page}
+            onChangePage={(page) => {
+              setPage(page);
+            }}
+            onChangeRowsPerPage={(rowPerPage) => {
+              setCountPerPage(rowPerPage);
+            }}
+          />
+        </div>
+      </div>
+
+      {isAddCourseName ? (
+        <Dialog
+          fullScreen
+          open={isAddCourseName}
+          onClose={handleAddAdminClose}
+          TransitionComponent={Transition}
+        >
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleAddAdminClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </Toolbar>
+          <List>
+            {isAddCourseName === true ? (
+              <div className="form ml-30 ">
+                {/* Name Amenintie */}
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Enter Name
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <div>
+                      <input
+                        type="text"
+                        className={`form-control form-control-lg form-control-solid `}
+                        id="name"
+                        name="name"
+                        value={inputValueForAdd.name}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
+                      />
+                    </div>
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["name"]}
+                    </span>
+                  </div>
+                </div>
+                {/* <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
                                         Assign To
                                     </label>
@@ -649,408 +657,408 @@ const CancleCourse = ({ getNewCount, title }) => {
                                 </div> */}
 
 
-                                <div className="d-flex align-items-center justify-content-center">
-                                    <button
-                                        onClick={(e) => {
-                                            isEditPopUp === false
-                                                ? handelAddCourseNameDetails(e)
-                                                : handelUpdateCourseNameDetails(e);
-                                        }}
-                                        className="btn btn-success mr-2"
-                                    >
+                <div className="d-flex align-items-center justify-content-center">
+                  <button
+                    onClick={(e) => {
+                      isEditPopUp === false
+                        ? handelAddCourseNameDetails(e)
+                        : handelUpdateCourseNameDetails(e);
+                    }}
+                    className="btn btn-success mr-2"
+                  >
 
-                                        <span> {isEditPopUp === false ? 'Add' : 'Edit'}  Menu</span>
-                                        {loading && (
-                                            <span className="mx-3 spinner spinner-white"></span>
-                                        )}
-                                    </button>
-                                </div>
-                            </div>
-                        ) : null}
-                    </List>
-                </Dialog>
+                    <span> {isEditPopUp === false ? 'Add' : 'Edit'}  Menu</span>
+                    {loading && (
+                      <span className="mx-3 spinner spinner-white"></span>
+                    )}
+                  </button>
+                </div>
+              </div>
             ) : null}
+          </List>
+        </Dialog>
+      ) : null}
 
-            {isViewMoreAboutus ? (
-                <Dialog
-                    fullScreen
-                    open={isViewMoreAboutus}
-                    onClose={handleViewMoreClose}
-                    TransitionComponent={Transition}
-                >
-                    <Toolbar>
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            onClick={handleViewMoreClose}
-                            aria-label="close"
-                        >
-                            <CloseIcon />
-                        </IconButton>
-                    </Toolbar>
-                    <List>
-                        {isViewMoreAboutus === true ? (
-                              <div className="honda-container">
-                              <div className="other-information-child-text-style1">
-                                 <h2>User Information</h2>
-                             </div>
-                             <div className="honda-text-grid honda-text-grid-border">
-                             
-                               <div className="honda-text-grid-items">
-                                 <span>First Name:</span>
-                                 <p
-                                   dangerouslySetInnerHTML={{
-                                     __html:
-                                       dataViewMore?.fname === null ||
-                                         dataViewMore?.fname === "" ||
-                                         !dataViewMore?.fname
-                                         ? "No data"
-                                         : dataViewMore?.fname,
-                                   }}
-                                   className=""
-                                 />
-                               </div>
-                               <div className="honda-text-grid-items">
-                                 <span>Middle Name:</span>
-                                 <p
-                                   dangerouslySetInnerHTML={{
-                                     __html:
-                                       dataViewMore?.mname === null ||
-                                         dataViewMore?.mname === "" ||
-                                         !dataViewMore?.mname
-                                         ? "No data"
-                                         : dataViewMore?.mname,
-                                   }}
-                                   className=""
-                                 />
-                               </div>
-                               <div className="honda-text-grid-items">
-                                 <span>Last Name:</span>
-                                 <p
-                                   dangerouslySetInnerHTML={{
-                                     __html:
-                                       dataViewMore?.lname === null ||
-                                         dataViewMore?.lname === "" ||
-                                         !dataViewMore?.lname
-                                         ? "No data"
-                                         : dataViewMore?.lname,
-                                   }}
-                                   className=""
-                                 />
-                               </div>
-                               <div className="honda-text-grid-items">
-                                 <span>Date of Birth:</span>
-                                 <p
-                                   dangerouslySetInnerHTML={{
-                                     __html:
-                                       dataViewMore?.DoB === null ||
-                                         dataViewMore?.DoB === "" ||
-                                         !dataViewMore?.DoB
-                                         ? "No data"
-                                         : moment(dataViewMore?.DoB).format("ll"),
-                                   }}
-                                   className=""
-                                 />
-                               </div>
-                               <div className="honda-text-grid-items">
-                                 <span>Qualification:</span>
-                                 <p
-                                   dangerouslySetInnerHTML={{
-                                     __html:
-                                       dataViewMore?.qualification === null ||
-                                         dataViewMore?.qualification === "" ||
-                                         !dataViewMore?.qualification
-                                         ? "No data"
-                                         : dataViewMore?.qualification,
-                                   }}
-                                   className=""
-                                 />
-                               </div>
-                               <div className="honda-text-grid-items">
-                                 <span>Gender:</span>
-                                 <p
-                                   dangerouslySetInnerHTML={{
-                                     __html:
-                                       dataViewMore?.gender === null ||
-                                         dataViewMore?.gender === "" ||
-                                         !dataViewMore?.gender
-                                         ? "No data"
-                                         : dataViewMore?.gender,
-                                   }}
-                                   className=""
-                                 />
-                               </div>
-                               <div className="honda-text-grid-items">
-                                 <span>Address:</span>
-                                 <p
-                                   dangerouslySetInnerHTML={{
-                                     __html:
-                                       dataViewMore?.address === null ||
-                                         dataViewMore?.address === "" ||
-                                         !dataViewMore?.address
-                                         ? "No data"
-                                         : dataViewMore?.address,
-                                   }}
-                                   className=""
-                                 />
-                               </div>
-                               <div className="honda-text-grid-items">
-                                 <span>State:</span>
-                                 <p
-                                   dangerouslySetInnerHTML={{
-                                     __html:
-                                       dataViewMore?.state === null ||
-                                         dataViewMore?.state === "" ||
-                                         !dataViewMore?.state
-                                         ? "No data"
-                                         : dataViewMore?.state,
-                                   }}
-                                   className=""
-                                 />
-                               </div>
-                               <div className="honda-text-grid-items">
-                                 <span>City:</span>
-                                 <p
-                                   dangerouslySetInnerHTML={{
-                                     __html:
-                                       dataViewMore?.city === null ||
-                                         dataViewMore?.city === "" ||
-                                         !dataViewMore?.city
-                                         ? "No data"
-                                         : dataViewMore?.city,
-                                   }}
-                                   className=""
-                                 />
-                               </div>
-                               <div className="honda-text-grid-items">
-                                 <span>District:</span>
-                                 <p
-                                   dangerouslySetInnerHTML={{
-                                     __html:
-                                       dataViewMore?.district === null ||
-                                         dataViewMore?.district === "" ||
-                                         !dataViewMore?.district
-                                         ? "No data"
-                                         : dataViewMore?.district,
-                                   }}
-                                   className=""
-                                 />
-                               </div>
-                               <div className="honda-text-grid-items">
-                                 <span>Email:</span>
-                                 <p
-                                   dangerouslySetInnerHTML={{
-                                     __html:
-                                       dataViewMore?.email === null ||
-                                         dataViewMore?.email === "" ||
-                                         !dataViewMore?.email
-                                         ? "No data"
-                                         : dataViewMore?.email,
-                                   }}
-                                   className=""
-                                 />
-                               </div>
-                               <div className="honda-text-grid-items">
-                                 <span>Phone:</span>
-                                 <p
-                                   dangerouslySetInnerHTML={{
-                                     __html:
-                                       dataViewMore?.phone === null ||
-                                         dataViewMore?.phone === "" ||
-                                         !dataViewMore?.phone
-                                         ? "No data"
-                                         : dataViewMore?.phone,
-                                   }}
-                                   className=""
-                                 />
-                               </div>
-                               <div className="honda-text-grid-items">
-                                 <span>Pincode:</span>
-                                 <p
-                                   dangerouslySetInnerHTML={{
-                                     __html:
-                                       dataViewMore?.pincode === null ||
-                                         dataViewMore?.pincode === "" ||
-                                         !dataViewMore?.pincode
-                                         ? "No data"
-                                         : dataViewMore?.pincode,
-                                   }}
-                                   className=""
-                                 />
-                               </div>
-                               <div className="honda-text-grid-items">
-                                 <span>Permanent DLnumber:</span>
-                                 <p
-                                   dangerouslySetInnerHTML={{
-                                     __html:
-                                       dataViewMore?.permanentDLnumber === null ||
-                                         dataViewMore?.permanentDLnumber === "" ||
-                                         !dataViewMore?.permanentDLnumber
-                                         ? "No data"
-                                         : dataViewMore?.permanentDLnumber,
-                                   }}
-                                   className=""
-                                 />
-                               </div>
-                               <div className="honda-text-grid-items">
-                                 <span>Issue Date:</span>
-                                 <p
-                                   dangerouslySetInnerHTML={{
-                                     __html:
-                                       dataViewMore?.issueDate === null ||
-                                         dataViewMore?.issueDate === "" ||
-                                         !dataViewMore?.issueDate
-                                         ? "No data"
-                                         : dataViewMore?.issueDate,
-                                   }}
-                                   className=""
-                                 />
-                               </div>
-                               <div className="honda-text-grid-items">
-                                 <span>Valid Till:</span>
-                                 <p
-                                   dangerouslySetInnerHTML={{
-                                     __html:
-                                       dataViewMore?.validTill === null ||
-                                         dataViewMore?.validTill === "" ||
-                                         !dataViewMore?.validTill
-                                         ? "No data"
-                                         : dataViewMore?.validTill,
-                                   }}
-                                   className=""
-                                 />
-                               </div>
-                               <div className="honda-text-grid-items">
-                                 <span>Authority:</span>
-                                 <p
-                                   dangerouslySetInnerHTML={{
-                                     __html:
-                                       dataViewMore?.Authority === null ||
-                                         dataViewMore?.Authority === "" ||
-                                         !dataViewMore?.Authority
-                                         ? "No data"
-                                         : dataViewMore?.Authority,
-                                   }}
-                                   className=""
-                                 />
-                               </div>
-                               <div className="honda-text-grid-items">
-                                 <span>Blood Group:</span>
-                                 <p
-                                   dangerouslySetInnerHTML={{
-                                     __html:
-                                       dataViewMore?.bloodGroup === null ||
-                                         dataViewMore?.bloodGroup === "" ||
-                                         !dataViewMore?.bloodGroup
-                                         ? "No data"
-                                         : dataViewMore?.bloodGroup,
-                                   }}
-                                   className=""
-                                 />
-                               </div>
-                               
-                               <div className="honda-text-grid-items">
-                                 <span>Authority City:</span>
-                                 <p
-                                   dangerouslySetInnerHTML={{
-                                     __html:
-                                       dataViewMore?.authoritycity === null ||
-                                         dataViewMore?.authoritycity === "" ||
-                                         !dataViewMore?.authoritycity
-                                         ? "No data"
-                                         : dataViewMore?.authoritycity,
-                                   }}
-                                   className=""
-                                 />
-                               </div>
-                               <div className="honda-text-grid-items">
-                                 <span>Authority District:</span>
-                                 <p
-                                   dangerouslySetInnerHTML={{
-                                     __html:
-                                       dataViewMore?.authoritydistrict === null ||
-                                         dataViewMore?.authoritydistrict === "" ||
-                                         !dataViewMore?.authoritydistrict
-                                         ? "No data"
-                                         : dataViewMore?.authoritydistrict,
-                                   }}
-                                   className=""
-                                 />
-                               </div>
-                             </div>
-                             <div className="other-information-child-text-style">
-                                 <h2>Other Information</h2>
-                             </div>
-                               <div className="honda-text-grid-new">
-                               <div className="honda-text-grid-new-items">
-                                 <span>Photo:</span>
-                                 <div className="card-main-border-image">
-                                   {dataViewMore?.passportPhoto === null ||
-                                     dataViewMore?.passportPhoto === "" ||
-                                     !dataViewMore?.passportPhoto ? (
-                                     "No Data"
-                                   ) : (
-                                     <img
-                                       src={dataViewMore?.passportPhoto}
-                                       alt="No Image"
-                                     />
-                                   )}
-                                 </div>
-                               </div>
-                               <div className="honda-text-grid-new-items">
-                                 <span>Driving License Image:</span>
-                                 <div className="card-main-border-image">
-                                 {dataViewMore?.drivingLicense === null ||
-                                   dataViewMore?.drivingLicense === "" ||
-                                   !dataViewMore?.drivingLicense ? (
-                                   "No Data"
-                                 ) : (
-                                   <img
-                                     src={dataViewMore?.drivingLicense}
-                                     alt="No Image"
-                                   />
-                                 )}
-                                 </div>
-                               </div>
-                               <div className="honda-text-grid-new-items">
-                                 <span>ID Proof:</span>
-                                 <div className="card-main-border-image">
-                                 {dataViewMore?.IDproof === null ||
-                                   dataViewMore?.IDproof === "" ||
-                                   !dataViewMore?.IDproof ? (
-                                   "No Data"
-                                 ) : (
-                                   <img
-                                     src={dataViewMore?.IDproof}
-                                     alt="No Image"
-                                   />
-                                 )}
-                                 </div>
-                               </div>
-                               <div className="honda-text-grid-new-items">
-                                 <span>Medical Certificate:</span>
-                                 <div className="card-main-border-image">
-                                 {dataViewMore?.medicalCertificate === null ||
-                                   dataViewMore?.medicalCertificate === "" ||
-                                   !dataViewMore?.medicalCertificate ? (
-                                   "No Data"
-                                 ) : (
-                                   <img
-                                     src={dataViewMore?.medicalCertificate}
-                                     alt="No Image"
-                                   />
-                                 )}
-                                 </div>
-                               </div>
-                               </div>
-                             
-                           </div>
-                        ) : null}
-                    </List>
-                </Dialog>
+      {isViewMoreAboutus ? (
+        <Dialog
+          fullScreen
+          open={isViewMoreAboutus}
+          onClose={handleViewMoreClose}
+          TransitionComponent={Transition}
+        >
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleViewMoreClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </Toolbar>
+          <List>
+            {isViewMoreAboutus === true ? (
+              <div className="honda-container">
+                <div className="other-information-child-text-style1">
+                  <h2>User Information</h2>
+                </div>
+                <div className="honda-text-grid honda-text-grid-border">
+
+                  <div className="honda-text-grid-items">
+                    <span>First Name:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          dataViewMore?.fname === null ||
+                            dataViewMore?.fname === "" ||
+                            !dataViewMore?.fname
+                            ? "No data"
+                            : dataViewMore?.fname,
+                      }}
+                      className=""
+                    />
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Middle Name:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          dataViewMore?.mname === null ||
+                            dataViewMore?.mname === "" ||
+                            !dataViewMore?.mname
+                            ? "No data"
+                            : dataViewMore?.mname,
+                      }}
+                      className=""
+                    />
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Last Name:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          dataViewMore?.lname === null ||
+                            dataViewMore?.lname === "" ||
+                            !dataViewMore?.lname
+                            ? "No data"
+                            : dataViewMore?.lname,
+                      }}
+                      className=""
+                    />
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Date of Birth:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          dataViewMore?.DoB === null ||
+                            dataViewMore?.DoB === "" ||
+                            !dataViewMore?.DoB
+                            ? "No data"
+                            : moment(dataViewMore?.DoB).format("ll"),
+                      }}
+                      className=""
+                    />
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Qualification:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          dataViewMore?.qualification === null ||
+                            dataViewMore?.qualification === "" ||
+                            !dataViewMore?.qualification
+                            ? "No data"
+                            : dataViewMore?.qualification,
+                      }}
+                      className=""
+                    />
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Gender:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          dataViewMore?.gender === null ||
+                            dataViewMore?.gender === "" ||
+                            !dataViewMore?.gender
+                            ? "No data"
+                            : dataViewMore?.gender,
+                      }}
+                      className=""
+                    />
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Address:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          dataViewMore?.address === null ||
+                            dataViewMore?.address === "" ||
+                            !dataViewMore?.address
+                            ? "No data"
+                            : dataViewMore?.address,
+                      }}
+                      className=""
+                    />
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>State:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          dataViewMore?.state === null ||
+                            dataViewMore?.state === "" ||
+                            !dataViewMore?.state
+                            ? "No data"
+                            : dataViewMore?.state,
+                      }}
+                      className=""
+                    />
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>City:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          dataViewMore?.city === null ||
+                            dataViewMore?.city === "" ||
+                            !dataViewMore?.city
+                            ? "No data"
+                            : dataViewMore?.city,
+                      }}
+                      className=""
+                    />
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>District:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          dataViewMore?.district === null ||
+                            dataViewMore?.district === "" ||
+                            !dataViewMore?.district
+                            ? "No data"
+                            : dataViewMore?.district,
+                      }}
+                      className=""
+                    />
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Email:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          dataViewMore?.email === null ||
+                            dataViewMore?.email === "" ||
+                            !dataViewMore?.email
+                            ? "No data"
+                            : dataViewMore?.email,
+                      }}
+                      className=""
+                    />
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Phone:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          dataViewMore?.phone === null ||
+                            dataViewMore?.phone === "" ||
+                            !dataViewMore?.phone
+                            ? "No data"
+                            : dataViewMore?.phone,
+                      }}
+                      className=""
+                    />
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Pincode:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          dataViewMore?.pincode === null ||
+                            dataViewMore?.pincode === "" ||
+                            !dataViewMore?.pincode
+                            ? "No data"
+                            : dataViewMore?.pincode,
+                      }}
+                      className=""
+                    />
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Permanent DLnumber:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          dataViewMore?.permanentDLnumber === null ||
+                            dataViewMore?.permanentDLnumber === "" ||
+                            !dataViewMore?.permanentDLnumber
+                            ? "No data"
+                            : dataViewMore?.permanentDLnumber,
+                      }}
+                      className=""
+                    />
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Issue Date:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          dataViewMore?.issueDate === null ||
+                            dataViewMore?.issueDate === "" ||
+                            !dataViewMore?.issueDate
+                            ? "No data"
+                            : dataViewMore?.issueDate,
+                      }}
+                      className=""
+                    />
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Valid Till:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          dataViewMore?.validTill === null ||
+                            dataViewMore?.validTill === "" ||
+                            !dataViewMore?.validTill
+                            ? "No data"
+                            : dataViewMore?.validTill,
+                      }}
+                      className=""
+                    />
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Authority:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          dataViewMore?.Authority === null ||
+                            dataViewMore?.Authority === "" ||
+                            !dataViewMore?.Authority
+                            ? "No data"
+                            : dataViewMore?.Authority,
+                      }}
+                      className=""
+                    />
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Blood Group:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          dataViewMore?.bloodGroup === null ||
+                            dataViewMore?.bloodGroup === "" ||
+                            !dataViewMore?.bloodGroup
+                            ? "No data"
+                            : dataViewMore?.bloodGroup,
+                      }}
+                      className=""
+                    />
+                  </div>
+
+                  <div className="honda-text-grid-items">
+                    <span>Authority City:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          dataViewMore?.authoritycity === null ||
+                            dataViewMore?.authoritycity === "" ||
+                            !dataViewMore?.authoritycity
+                            ? "No data"
+                            : dataViewMore?.authoritycity,
+                      }}
+                      className=""
+                    />
+                  </div>
+                  <div className="honda-text-grid-items">
+                    <span>Authority District:</span>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          dataViewMore?.authoritydistrict === null ||
+                            dataViewMore?.authoritydistrict === "" ||
+                            !dataViewMore?.authoritydistrict
+                            ? "No data"
+                            : dataViewMore?.authoritydistrict,
+                      }}
+                      className=""
+                    />
+                  </div>
+                </div>
+                <div className="other-information-child-text-style">
+                  <h2>Other Information</h2>
+                </div>
+                <div className="honda-text-grid-new">
+                  <div className="honda-text-grid-new-items">
+                    <span>Photo:</span>
+                    <div className="card-main-border-image">
+                      {dataViewMore?.passportPhoto === null ||
+                        dataViewMore?.passportPhoto === "" ||
+                        !dataViewMore?.passportPhoto ? (
+                        "No Data"
+                      ) : (
+                        <img
+                          src={dataViewMore?.passportPhoto}
+                          alt="No Image"
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <div className="honda-text-grid-new-items">
+                    <span>Driving License Image:</span>
+                    <div className="card-main-border-image">
+                      {dataViewMore?.drivingLicense === null ||
+                        dataViewMore?.drivingLicense === "" ||
+                        !dataViewMore?.drivingLicense ? (
+                        "No Data"
+                      ) : (
+                        <img
+                          src={dataViewMore?.drivingLicense}
+                          alt="No Image"
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <div className="honda-text-grid-new-items">
+                    <span>ID Proof:</span>
+                    <div className="card-main-border-image">
+                      {dataViewMore?.IDproof === null ||
+                        dataViewMore?.IDproof === "" ||
+                        !dataViewMore?.IDproof ? (
+                        "No Data"
+                      ) : (
+                        <img
+                          src={dataViewMore?.IDproof}
+                          alt="No Image"
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <div className="honda-text-grid-new-items">
+                    <span>Medical Certificate:</span>
+                    <div className="card-main-border-image">
+                      {dataViewMore?.medicalCertificate === null ||
+                        dataViewMore?.medicalCertificate === "" ||
+                        !dataViewMore?.medicalCertificate ? (
+                        "No Data"
+                      ) : (
+                        <img
+                          src={dataViewMore?.medicalCertificate}
+                          alt="No Image"
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+              </div>
             ) : null}
-        </>
-    );
+          </List>
+        </Dialog>
+      ) : null}
+    </>
+  );
 };
 
 export default CancleCourse;

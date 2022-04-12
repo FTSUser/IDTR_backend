@@ -163,6 +163,12 @@ const Request = ({ getNewCount, title }) => {
             selector: row => row?.cnid?.courseName ? row?.cnid?.courseName : '-',
         },
         {
+            name: "Course Category",
+
+            sortable: true,
+            selector: row => row?.ccid?.courseCategory ? row?.ccid?.courseCategory : '-',
+        },
+        {
             name: "Examiner Name",
 
             sortable: true,

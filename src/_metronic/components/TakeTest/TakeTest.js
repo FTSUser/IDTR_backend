@@ -1855,7 +1855,7 @@ const TakeTest = ({ getNewCount, title }) => {
                       <span className="mr-3">No test Data</span>
                     )}
 
-                    {isAddAttedence ? (
+                    {allDataForAttendance?.length > 0  ? (
                       <CsvDownload
                         className={``}
                         data={dataCSVForAttendance}

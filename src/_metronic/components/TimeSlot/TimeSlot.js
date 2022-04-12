@@ -133,6 +133,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         let data = {
           Number: key + 1,
           courseName: registerUser?.courseName[0]?.courseName,
+          CourseCategory: registerUser?.courseCategory[0].courseCategory,
           courseType: registerUser?.courseType[0]?.courseType,
           vehicleCategory: registerUser?.vehicleCategory[0]?.vehicleCategory,
           createdBy: registerUser?.cnid?.createdBy,
@@ -368,7 +369,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         vcid: inputValueForAdd?.VehicleCategory,
         ccid: inputValueForAdd?.CourseCategory
       };
-    
+
       ApiPost(`trainingDate/addDate`, Data)
         .then((res) => {
           if (res?.status == 200) {
@@ -472,7 +473,7 @@ const TimeSlot = ({ getNewCount, title }) => {
         vcid: inputValueForAdd?.VehicleCategory,
         ccid: inputValueForAdd?.CourseCategory
       };
- 
+
       ApiPut(`trainingDate/updateDate/${idForUpdateCourseNameData}`, Data)
         .then((res) => {
           if (res?.status == 200) {
@@ -521,6 +522,11 @@ const TimeSlot = ({ getNewCount, title }) => {
     {
       name: "Course Name",
       selector: (row) => row?.courseName[0]?.courseName,
+      sortable: true,
+    },
+    {
+      name: "Course Category",
+      selector: (row) => row?.courseCategory[0]?.courseCategory,
       sortable: true,
     },
     {
@@ -693,7 +699,7 @@ const TimeSlot = ({ getNewCount, title }) => {
     }
   };
 
- 
+
 
 
 
@@ -1170,36 +1176,36 @@ const TimeSlot = ({ getNewCount, title }) => {
                   </label>
                   <div className="col-lg-9 cus-data-input-style">
                     {isDisable ?
-                  <TimePicker
-                  showSecond={false}
-                  defaultValue={now}
-                  onChange={onChange}
-                  format={format}
-                  inputReadOnly
-                /> :
-                <TimePicker
-                showSecond={false}
-                defaultValue={now}
-                onChange={onChange}
-                format={format}
-                disabledHours={() => {
-                  let newArr = [];
-                  for (var i = 0; i < moment(isEditPopUp === true ? new Date(startTime) : new Date()).format("k"); i++) {
-                    newArr.push(i)
-                  }
-                  return newArr
-                }}
-                disabledMinutes={() => {
-                  let newArr = [];
-                  for (var i = 0; i < moment(isEditPopUp === true ? new Date(startTime) :new Date()).format("m"); i++) {
-                    newArr.push(i)
-                  }
-                  return newArr
-                }}
-                inputReadOnly
-              /> 
-                  }
-                    
+                      <TimePicker
+                        showSecond={false}
+                        defaultValue={now}
+                        onChange={onChange}
+                        format={format}
+                        inputReadOnly
+                      /> :
+                      <TimePicker
+                        showSecond={false}
+                        defaultValue={now}
+                        onChange={onChange}
+                        format={format}
+                        disabledHours={() => {
+                          let newArr = [];
+                          for (var i = 0; i < moment(isEditPopUp === true ? new Date(startTime) : new Date()).format("k"); i++) {
+                            newArr.push(i)
+                          }
+                          return newArr
+                        }}
+                        disabledMinutes={() => {
+                          let newArr = [];
+                          for (var i = 0; i < moment(isEditPopUp === true ? new Date(startTime) : new Date()).format("m"); i++) {
+                            newArr.push(i)
+                          }
+                          return newArr
+                        }}
+                        inputReadOnly
+                      />
+                    }
+
                     <span
                       style={{
                         color: "red",

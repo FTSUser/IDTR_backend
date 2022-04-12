@@ -51,10 +51,6 @@ export function AsideMenuList({ layoutProps }) {
         {
           userInfo?.menu[0]?.menu?.map((data, key) => {
             return (
-
-
-
-
               data?.name === 'Course Selection' ? (
                 <li
                   className={`menu-item menu-item-submenu ${getMenuItemActive(

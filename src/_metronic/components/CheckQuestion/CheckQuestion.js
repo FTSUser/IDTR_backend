@@ -7,6 +7,8 @@ import {
   ApiPut,
   ApiPost,
 } from "../../../helpers/API/ApiData";
+import { saveAs } from "file-saver";
+
 import Select from "react-select";
 import { Tooltip } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
@@ -320,7 +322,29 @@ const CheckTest = ({ getNewCount, title }) => {
         });
     }
   };
+  const saveFile = (data, name) => {
+   
+    saveAs(
+      data, name+'.zip'
+    );
+  };
+  const genereateAllPDF = async (data) => {
+  
+    setIsLoaderVisible(true);
+    await ApiGet(`generatepdf/generate-pdf/${data}`)
+      .then((res) => {
+     
+        
+        saveFile(res.data?.payload?.ZipLink, res.data?.payload?.batch?.name)
+        setIsLoaderVisible(false);
 
+      })
+      .catch((err) => {
+        setIsLoaderVisible(false);
+
+        console.log("err", err);
+      });
+  }
   let i = 0;
   const columns = [
     {
@@ -382,19 +406,8 @@ const CheckTest = ({ getNewCount, title }) => {
       cell: (row) => {
         return (
           <>
-            <>
-              <div
-                className="cursor-pointer pl-2"
-                onClick={() => {
-                  setIsViewMoreAboutus(true);
-                  setDataViewMore(row);
-              
-                }}
-              >
-                <Tooltip title="Show More" arrow>
-                  <InfoOutlinedIcon />
-                </Tooltip>
-              </div>
+            {/* <>
+             
               <div className="cursor-pointer pl-2">
                 <ReactToPrint
                   trigger={() => (
@@ -414,7 +427,24 @@ const CheckTest = ({ getNewCount, title }) => {
                 </div>
               </div>
 
-            </>
+            </> */}
+            <div
+                className="cursor-pointer pl-2"
+                onClick={() => {
+                  setIsViewMoreAboutus(true);
+                  setDataViewMore(row);
+              
+                }}
+              >
+                <Tooltip title="Show More" arrow>
+                  <InfoOutlinedIcon />
+                </Tooltip>
+              </div>
+           <div className="cursor-pointer pl-2">
+              <Tooltip title="Generate Pdf" arrow >
+                <img src="media/allIconsForTable/invoice.png" onClick={(e) => genereateAllPDF(row?._id)} />
+              </Tooltip>
+            </div>
           </>
         );
       },

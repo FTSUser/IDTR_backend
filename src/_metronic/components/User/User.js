@@ -357,7 +357,7 @@ const User = ({ getNewCount, title }) => {
     setdicloser(e);
   };
   const handleSetDateData = async (dateForFilter) => {
-   
+
     if (dateForFilter) {
 
 
@@ -366,7 +366,7 @@ const User = ({ getNewCount, title }) => {
       )
         .then((res) => {
           // setTableFilterData(tableFilterData);
-       
+
           setCount(res?.data?.payload?.count)
           setTableFilterData(res?.data?.payload?.Question);
         })
@@ -460,7 +460,7 @@ const User = ({ getNewCount, title }) => {
   const getAdminLogs = async (id) => {
     await ApiGet(`admin/get-admin-login-log/${id?._id}`)
       .then((res) => {
-      
+
         setLogsData(res?.data?.payload?.user);
       })
       .catch((err) => {
@@ -471,7 +471,7 @@ const User = ({ getNewCount, title }) => {
   const getAdminPostLogs = async (id) => {
     await ApiGet(`admin/get-logout-users/${id?._id}`)
       .then((res) => {
-     
+
         setLogsPostData(res?.data?.payload?.admin);
       })
       .catch((err) => {
@@ -490,26 +490,19 @@ const User = ({ getNewCount, title }) => {
       width: "65px",
     },
     {
-      name: "Date",
-      cell: (row) => {
-        return <span>{moment(row?.createdAt).format("ll")}</span>;
-      },
-      sortable: true,
-      // selector: (row) => row?.createdAt,
-
-      // width: "65px",
-    },
-    {
-      name: "Email",
-      selector: "email",
+      name: "User ID",
+      selector: "uid",
+      width: "220px",
       sortable: true,
       cell: (row) => {
-        return <span>{row?.email === "" ? "-" : row?.email}</span>;
+        return <span>{row?.uid?._id ? row?.uid?._id : row?._id}</span>;
       },
     },
     {
       name: "First Name",
       selector: "fname",
+      width: "130px",
+
       sortable: true,
       cell: (row) => {
         return <span>{row?.fname === "" ? "-" : row?.fname}</span>;
@@ -519,45 +512,289 @@ const User = ({ getNewCount, title }) => {
     {
       name: "Last Name",
       selector: "lname",
+      width: "130px",
+
       sortable: true,
       cell: (row) => {
         return <span>{row?.lname === "" ? "-" : row?.lname}</span>;
       },
     },
+
+    {
+      name: "Email",
+      selector: "email",
+      width: "160px",
+
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.email === "" ? "-" : row?.email}</span>;
+      },
+    },
+    {
+      name: "Mobile Number",
+      width: "170px",
+
+      cell: (row) => {
+        return <span>{row?.phone === "" ? "-" : row?.phone}</span>;
+      },
+      sortable: true,
+
+    },
+
     {
       name: "Registration Type",
       selector: "Registrationtype",
+      width: "180px",
+
       sortable: true,
       cell: (row) => {
         return <span>{row?.Registrationtype === "" ? "-" : row?.Registrationtype}</span>;
       },
     },
     {
-      name: "Payment Status",
-      selector: "isPaymentDone",
+      name: "Father Name",
+      selector: "firstName",
+      width: "130px",
+
       sortable: true,
       cell: (row) => {
-        return <span>{row?.isPaymentDone === true ? 'Done' : 'Pending'}</span>;
+        return <span>{row?.uid?.firstName === "" ? "-" : row?.uid?.firstName}</span>;
       },
     },
     {
-      name: "Gender",
-      selector: "gender",
+      name: "Date of Birth",
+
+      cell: (row) => {
+        return <span>{moment(row?.DoB).format("ll")}</span>;
+      },
       sortable: true,
+
+      width: "135px",
+    },
+    {
+      name: "Qualification",
+      cell: (row) => {
+        return <span>{row?.qualification === "" ? "-" : row?.qualification}</span>;
+      },
+      sortable: true,
+      width: "195px",
+    },
+    {
+      name: "Gender",
+      cell: (row) => {
+        return <span>{row?.gender === "" ? "-" : row?.gender}</span>;
+      },
+      sortable: true,
+      width: "135px",
+    },
+    {
+      name: "Address",
+      cell: (row) => {
+        return <span>{row?.address === "" ? "-" : row?.address}</span>;
+      },
+      sortable: true,
+      width: "135px",
+    },
+    {
+      name: "State",
+      cell: (row) => {
+        return <span>{row?.state === "" ? "-" : row?.state}</span>;
+      },
+      sortable: true,
+      width: "135px",
+    },
+    {
+      name: "District",
+      cell: (row) => {
+        return <span>{row?.district === "" ? "-" : row?.district}</span>;
+      },
+      sortable: true,
+      width: "135px",
+    },
+    {
+      name: "Town / City",
+      cell: (row) => {
+        return <span>{row?.city === "" ? "-" : row?.city}</span>;
+      },
+      sortable: true,
+      width: "135px",
+    },
+    {
+      name: "Select IDTR Center",
+      cell: (row) => {
+        return <span>{row?.uid?.IDTRcenter === "" ? "-" : row?.uid?.IDTRcenter}</span>;
+      },
+      sortable: true,
+      width: "185px",
+    },
+    {
+      name: "Course Type",
+      cell: (row) => {
+        return <span>{row?.courseType[0]?.courseType === "" ? "-" : row?.courseType[0]?.courseType}</span>;
+      },
+      sortable: true,
+      width: "185px",
+    },
+    {
+      name: "Vehical Category",
+      cell: (row) => {
+        return <span>{row?.vehicleCategory[0]?.vehicleCategory === "" ? "-" : row?.vehicleCategory[0]?.vehicleCategory}</span>;
+      },
+      sortable: true,
+      width: "185px",
     },
     {
       name: "Course Name",
       selector: "courseName",
+      width: "600px",
       cell: (row) => {
         return <span>{row?.courseName[0]?.courseName === "" ? '-' : row?.courseName[0]?.courseName}</span>;
       },
       sortable: true,
     },
     {
+      name: "Date of Course",
+      cell: (row) => {
+        return <span>{moment(row?.trainingDate[0]?.createdAt).format("ll")}</span>;
+      },
+      sortable: true,
+      width: "185px",
+    },
+    {
+      name: "License Category",
+      selector: "lcid",
+      width: "160px",
+      cell: (row) => {
+        return <span>{row?.lcid === "" ? '-' : row?.lcid}</span>;
+      },
+      sortable: true,
+    },
+    {
+      name: "Driver's License. No",
+      selector: "drivingLicenseNumber",
+      width: "160px",
+      cell: (row) => {
+        return <span>{row?.drivingLicenseNumber === "" ? '-' : row?.drivingLicenseNumber}</span>;
+      },
+      sortable: true,
+    },
+    {
+      name: "Issue Date",
+      selector: "issueDate",
+      width: "160px",
+      cell: (row) => {
+        return <span>{moment(row?.issueDate).format("ll")}</span>;
+      },
+
+      sortable: true,
+    },
+    {
+      name: "Valid Till",
+      selector: "validTill",
+      width: "160px",
+      cell: (row) => {
+        return <span>{moment(row?.validTill).format("ll")}</span>;
+      },
+
+      sortable: true,
+    },
+    {
+      name: "License Authority: State",
+      selector: "Authority",
+      width: "160px",
+      cell: (row) => {
+        return <span>{row?.Authority === "" ? '-' : row?.Authority}</span>;
+      },
+
+      sortable: true,
+    },
+    {
+      name: "License Authority: City",
+      selector: "authoritycity",
+      width: "160px",
+      cell: (row) => {
+        return <span>{row?.authoritycity === "" ? '-' : row?.authoritycity}</span>;
+      },
+
+      sortable: true,
+    },
+    {
+      name: "License Authority: District",
+      selector: "authoritydistrict",
+      width: "160px",
+      cell: (row) => {
+        return <span>{row?.authoritydistrict === "" ? '-' : row?.authoritydistrict}</span>;
+      },
+
+      sortable: true,
+    },
+    {
+      name: "Blood Group",
+      selector: "bloodGroup",
+      width: "160px",
+      cell: (row) => {
+        return <span>{row?.bloodGroup === "" ? '-' : row?.bloodGroup}</span>;
+      },
+
+      sortable: true,
+    },
+    {
+      name: "Payment Rcvd",
+      selector: "isPaymentDone",
+      width: "180px",
+
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.isPaymentDone === true ? 'Done' : 'Pending'}</span>;
+      },
+    },
+    {
+      name: "Payment Mode",
+      selector: "type",
+      width: "180px",
+
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.type === "" ? '-' : row?.type}</span>;
+      },
+    },
+    {
+      name: "Transaction ID",
+      selector: "paymentId",
+      width: "180px",
+
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.paymentId === "" ? '-' : row?.paymentId}</span>;
+      },
+    },
+    {
+      name: "Payment ID",
+      selector: "paymentId",
+      width: "180px",
+
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.paymentId === "" ? '-' : row?.paymentId}</span>;
+      },
+    },
+    {
+      name: "Registeration Date",
+      selector: "registrationDate",
+      width: "180px",
+
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.uid?.registrationDate === "" ? '-' : row?.uid?.registrationDate}</span>;
+      },
+    },
+
+
+    {
       name: "Actions",
       width: "145px",
       cell: (row) => {
-       
+
         return (
           <>
             <div
@@ -714,7 +951,7 @@ const User = ({ getNewCount, title }) => {
     {
       name: "Actions",
       cell: (row) => {
-     
+
         return (
           <>
             {row?.uid && (
@@ -963,11 +1200,10 @@ const User = ({ getNewCount, title }) => {
   useEffect(() => {
     if (allRegisterUserExcel) {
       allRegisterUserExcel.map((registerUser, key) => {
-    
+
         let data = {
           Number: key + 1,
-          UserID: registerUser?.uid?._id,
-       
+          UserID: registerUser?.uid?._id ? registerUser?.uid?._id : registerUser?._id,
           FirstName: registerUser?.fname,
           MiddleName: registerUser?.mname ? registerUser?.mname : "-",
           LastName: registerUser?.lname ? registerUser?.lname : "-",
@@ -991,7 +1227,7 @@ const User = ({ getNewCount, title }) => {
           CourseName: registerUser?.cnid?.courseName,
           DateOfCourse: moment(registerUser?.dateofCourse).format("ll"),
           LicenseCategory: registerUser?.lcid,
-          DrivingLicence: registerUser?.drivingLicense,
+          DrivingLicenceNumber: registerUser?.drivingLicense,
           IssueDate: registerUser?.issueDate
             ? moment(registerUser?.issueDate).format("ll")
             : "-",
@@ -1017,11 +1253,10 @@ const User = ({ getNewCount, title }) => {
             registerUser?.bloodGroup === "" || registerUser?.bloodGroup === null
               ? "-"
               : registerUser?.bloodGroup,
-          IsPaymentDone:
-            registerUser?.isPaymentDone === null ||
-              registerUser?.isPaymentDone === false
-              ? "Payment Pending"
-              : registerUser?.isPaymentDone,
+          PaymentRcvd: registerUser?.isPaymentDone === null ||
+            registerUser?.isPaymentDone === false
+            ? "Payment Pending"
+            : registerUser?.isPaymentDone,
           PaymentMode: registerUser?.type,
           TransactionID:
             registerUser?.paymentId === null
@@ -1031,7 +1266,7 @@ const User = ({ getNewCount, title }) => {
             registerUser?.paymentId === null
               ? "Payment Pending"
               : registerUser?.paymentId,
-          RegisterationDate: registerUser?.createdAt,
+          RegisterationDate: registerUser?.uid?.registrationDate,
         };
         setDataCSV((currVal) => [...currVal, data]);
       });
@@ -1235,7 +1470,7 @@ const User = ({ getNewCount, title }) => {
       Registrationtype: "counter",
     };
 
-   
+
     if (formdata.type == 'offline') {
       const datas = {
         cnid: formdata?.courseName,
@@ -1243,9 +1478,9 @@ const User = ({ getNewCount, title }) => {
         vcid: formdata?.vehicleCategory,
         phone: formdata?.phone,
         tdid: formdata?.sloatId,
-    }
-      ApiPost('payment/checkPayment', datas).then( (res) => {
-       
+      }
+      ApiPost('payment/checkPayment', datas).then((res) => {
+
         if (res.data.result === 0) {
           ApiPost("register/addRegister", data)
             .then((res) => {
@@ -1286,7 +1521,7 @@ const User = ({ getNewCount, title }) => {
   };
 
   const handleOfflinePayment = () => {
-    
+
     const data = {
       receiptDate: new Date(),
       receiptNumber: dataForPayment?._id,
@@ -1356,7 +1591,7 @@ const User = ({ getNewCount, title }) => {
       Registrationtype: "counter",
     };
 
-   
+
 
     ApiPut(`register/updateRegister/${formdata._id}`, data)
       .then((res) => {
@@ -1638,7 +1873,7 @@ const User = ({ getNewCount, title }) => {
     let courseCategoryId = formdata.courseCategory;
 
     let vehical;
-   
+
     if (index !== -1) {
       vehical = {
         label: getAllVehicalData?.Question[index].vehicleCategory,
@@ -1791,7 +2026,7 @@ const User = ({ getNewCount, title }) => {
       const setDataMAin = res?.data?.payload?.courseCategory?.filter(
         (dataMain) => dataMain._id === cId
       );
-     
+
       setdefaultValue((dataasd) => ({
         ...dataasd,
         courseCategory: {
@@ -2229,7 +2464,7 @@ const User = ({ getNewCount, title }) => {
         </div>
       </div>
       {/* view more */}
-     
+
       {isAddAnnouncement ? (
 
         <List className="modelFixed">
@@ -2438,7 +2673,7 @@ const User = ({ getNewCount, title }) => {
                               onChange={(e) => onChnageForm(e)}
                             />
                           </div>
-                         
+
                           <div className="register-grid-items">
                             <label>
                               Valid Till<span>*</span>
