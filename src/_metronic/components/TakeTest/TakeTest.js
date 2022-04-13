@@ -654,9 +654,11 @@ const TakeTest = ({ getNewCount, title }) => {
       name: "User",
       selector: (row) => row?.totalUser === "" || !row?.totalUser ? "-" : row?.totalUser,
       sortable: true,
+   
     },
     {
       name: "Actions",
+      width: "265px",
       cell: (row) => {
         return (
           <>
