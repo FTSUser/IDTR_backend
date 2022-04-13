@@ -832,11 +832,11 @@ const Facilities = ({ getNewCount, title }) => {
                                             <input
                                                 type="text"
                                                 className={`form-control form-control-lg form-control-solid `}
-                                                id="content"
+                                               
                                                 name="content"
-                                                value={inputValue.content}
+                                                value={inputValue?.content}
                                                 onChange={(e) => {
-                                                    handleOnChnageAdd(e);
+                                                    handleOnChnage(e);
                                                 }}
                                             />
                                         </div>
