@@ -44,6 +44,7 @@ import FAQCategory from "../_metronic/components/FAQCategory/FAQCategory";
 import AllRequest from "../_metronic/components/AllRequest/AllRequest";
 import RoleRequest from "../_metronic/components/AllRequest/RoleRequest";
 import AssignMenuRequest from "../_metronic/components/AllRequest/AssignMenuRequest";
+import Facilities from "../_metronic/components/Facilities/Facilities";
 
 export default function BasePage() {
   let userInfo = getUserInfo()
@@ -97,6 +98,7 @@ export default function BasePage() {
           <ContentRoute exact path="/all-request" component={AllRequest} />
           <ContentRoute exact path="/role-request" component={RoleRequest} />
           <ContentRoute exact path="/assign-menu request" component={AssignMenuRequest} />
+          <ContentRoute exact path="/facility" component={Facilities} />
 
 
           {/* /////////////////////////////////////////////////////////////////////////*/}

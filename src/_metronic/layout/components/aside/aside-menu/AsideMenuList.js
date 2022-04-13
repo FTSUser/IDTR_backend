@@ -210,7 +210,7 @@ export function AsideMenuList({ layoutProps }) {
                     </li>
                     <li
                       className={`menu-item menu-item-submenu  ${getMenuItemActive(
-                        "/user",
+                        "/registered-user",
                         false
                       )}`}
                       aria-haspopup="true"
@@ -218,12 +218,12 @@ export function AsideMenuList({ layoutProps }) {
                     >
                       <NavLink
                         className="menu-link"
-                        to="/user"
+                        to="/registered-user"
                       >
                         <i className="menu-bullet menu-bullet-dot">
                           <span />
                         </i>
-                        <span className="menu-text">User</span>
+                        <span className="menu-text">Registered User</span>
                       </NavLink>
                     </li>
                     <li

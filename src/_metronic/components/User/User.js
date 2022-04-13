@@ -499,6 +499,15 @@ const User = ({ getNewCount, title }) => {
       },
     },
     {
+      name: "Booking ID",
+      selector: "id",
+      width: "220px",
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?._id ? row?._id : row?._id}</span>;
+      },
+    },
+    {
       name: "First Name",
       selector: "fname",
       width: "130px",
@@ -1204,6 +1213,7 @@ const User = ({ getNewCount, title }) => {
         let data = {
           Number: key + 1,
           UserID: registerUser?.uid?._id ? registerUser?.uid?._id : registerUser?._id,
+          BookingID: registerUser?._id,
           FirstName: registerUser?.fname,
           MiddleName: registerUser?.mname ? registerUser?.mname : "-",
           LastName: registerUser?.lname ? registerUser?.lname : "-",

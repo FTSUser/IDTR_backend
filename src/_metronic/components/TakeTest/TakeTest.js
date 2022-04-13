@@ -9,6 +9,8 @@ import {
   ApiPut,
   ApiPost,
 } from "../../../helpers/API/ApiData";
+import { saveAs } from "file-saver";
+
 import Select from "react-select";
 import { Tooltip } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
@@ -543,7 +545,7 @@ const TakeTest = ({ getNewCount, title }) => {
   const viewPeperSet = async (id) => {
     await ApiGet(`batch/getExamsetByBatch/${id}`)
       .then((res) => {
-       
+
         setQuestionData(res?.data?.payload?.Examset?.questionsList);
         setSuucessBatchId(res?.data?.payload?.Examset?.batchId?._id);
       })
@@ -551,6 +553,31 @@ const TakeTest = ({ getNewCount, title }) => {
         toast.error(err);
       });
   };
+  const saveFile = (data, name) => {
+   
+    saveAs(
+      data, name+'.zip'
+    );
+  };
+
+  const genereateAllPDF = async (data) => {
+
+    setIsLoaderVisible(true);
+    await ApiGet(`generatepdf/generate-pdf/${data}`)
+      .then((res) => {
+
+
+        saveFile(res.data?.payload?.ZipLink, res.data?.payload?.batch?.name)
+        setIsLoaderVisible(false);
+
+      })
+      .catch((err) => {
+        setIsLoaderVisible(false);
+
+        console.log("err", err);
+      });
+  }
+
   const showToast = async () => {
 
 
@@ -719,6 +746,20 @@ const TakeTest = ({ getNewCount, title }) => {
                 </div>
               </div>
             </>
+          </>
+        );
+      },
+    },
+    {
+      name: "Result Download",
+      cell: (row) => {
+        return (
+          <>
+            <div className="cursor-pointer pl-2">
+              <Tooltip title="Generate Pdf" arrow >
+                <img src="media/allIconsForTable/invoice.png" onClick={(e) => genereateAllPDF(row?._id)} />
+              </Tooltip>
+            </div>
           </>
         );
       },
