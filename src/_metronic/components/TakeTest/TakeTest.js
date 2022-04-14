@@ -1174,8 +1174,8 @@ const TakeTest = ({ getNewCount, title }) => {
           QuestionsAnsweredIncorrectly:
             registerUser?.Esid?.no - registerUser?.uid?.totalScore,
           Status: "-",
-          DataEntryUser: registerUser?.batch?.DataEntry?.email,
-          DataEntryUserID: registerUser?.batch?.DataEntry?._id,
+          ExaminerUser: registerUser?.batch?.Examiner?.email,
+          ExaminerUserID: registerUser?.batch?.Examiner?._id,
         };
         setDataCSVForAttendance((currVal) => [...currVal, data]);
       });
