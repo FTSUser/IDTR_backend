@@ -299,6 +299,24 @@ export function AsideMenuList({ layoutProps }) {
                         <span className="menu-text">Feedback</span>
                       </NavLink>
                     </li>
+                    <li
+                      className={`menu-item menu-item-submenu  ${getMenuItemActive(
+                        "/pre-login",
+                        false
+                      )}`}
+                      aria-haspopup="true"
+                      data-menu-toggle="hover"
+                    >
+                      <NavLink
+                        className="menu-link"
+                        to="/pre-login"
+                      >
+                        <i className="menu-bullet menu-bullet-dot">
+                          <span />
+                        </i>
+                        <span className="menu-text">Pre Login</span>
+                      </NavLink>
+                    </li>
                   </ul>
                 </div>
               </li> : <li

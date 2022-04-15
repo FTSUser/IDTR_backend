@@ -201,7 +201,7 @@ const User = ({ getNewCount, title }) => {
 
   const handleCloseForUserLogs = () => {
     setModelForUserLogs(false);
-    setTabs("pre")
+    setTabs("post")
   };
 
   useEffect(() => {
@@ -444,7 +444,7 @@ const User = ({ getNewCount, title }) => {
       });
     // }
   };
-  const [tabs, setTabs] = useState("pre");
+  const [tabs, setTabs] = useState("post");
   const handleOnClicks = (e, key) => {
     e.preventDefault();
     if (key === "pre") {
@@ -4346,12 +4346,12 @@ const User = ({ getNewCount, title }) => {
                 <div className="honda-container">
                   <div className="tab-design">
                     <ul>
-                      <li
+                      {/* <li
                         className={tabs === 'pre' ? "tab-active" : ""}
                         onClick={(e) => handleOnClicks(e, "pre")}
                       >
                         Pre Login
-                      </li>
+                      </li> */}
                       <li
                         className={tabs === 'post' ? "tab-active" : ""}
 
@@ -4360,7 +4360,7 @@ const User = ({ getNewCount, title }) => {
                       </li>
                     </ul>
                   </div>
-                  {tabs === 'pre' && (
+                  {/* {tabs === 'pre' && (
                     <div>
 
 
@@ -4416,7 +4416,7 @@ const User = ({ getNewCount, title }) => {
                         </div>
                       </div>
                     </div>
-                  )}
+                  )} */}
                   {tabs === 'post' && (
                     <div>
                       <div className="other-information-child-text-style1">
