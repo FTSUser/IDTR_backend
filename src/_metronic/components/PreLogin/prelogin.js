@@ -230,7 +230,23 @@ const PreLogin = ({ getNewCount, title }) => {
             cell: (row, index) => (page - 1) * countPerPage + (index + 1),
             width: "65px",
         },
-        {
+      
+          {
+            name: "Source/OS",
+            selector: row => row?.device,
+            sortable: true,
+          },
+          {
+            name: "IP Address",
+            selector: row => row?.ip,
+            sortable: true,
+          },
+          {
+            name: "Page",
+            selector: row => row?.lastPage,
+            sortable: true,
+          },
+          {
             name: "Date",
             cell: (row) => {
               return <span>{moment(row?.createdAt).format("ll")}</span>;
@@ -246,22 +262,6 @@ const PreLogin = ({ getNewCount, title }) => {
             selector: row => row?.createdAt,
             sortable: true,
           },
-          {
-            name: "Device",
-            selector: row => row?.device,
-            sortable: true,
-          },
-          {
-            name: "IP",
-            selector: row => row?.ip,
-            sortable: true,
-          },
-          {
-            name: "Last Page",
-            selector: row => row?.lastPage,
-            sortable: true,
-          },
-      
 
         // {
         //     name: "Assign To",

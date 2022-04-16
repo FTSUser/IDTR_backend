@@ -265,31 +265,99 @@ const Examiner = ({ getNewCount, title }) => {
             width: "65px",
         },
         {
-            name: "Date",
+            name: "User ID",
+            cell: (row) => {
+                return <span>{row?._id === "" ? "-" : row?._id}</span>;
+            },
+            sortable: true,
+            width: "199px",
+        },
+
+        {
+            name: "Full Name",
+            cell: (row) => {
+                return <span>{row?.name === "" ? "-" : row?.name}</span>;
+            },
+            sortable: true,
+            width: "225px",
+        },
+
+
+        {
+            name: "Email",
+            cell: (row) => {
+                return <span>{row?.email === "" ? "-" : row?.email}</span>;
+            },
+            sortable: true,
+            width: "195px",
+        },
+        {
+            name: "Mobile Number",
+            cell: (row) => {
+                return <span>{row?.phone === "" ? "-" : row?.phone}</span>;
+            },
+            sortable: true,
+            width: "165px",
+        },
+        {
+            name: "Employee ID/Code",
+            cell: (row) => {
+                return <span>{row?._id === "" ? "-" : row?._id}</span>;
+            },
+            sortable: true,
+            width: "225px",
+        },
+
+        {
+            name: "User Type",
+            cell: (row) => {
+                return <span>{"-"}</span>;
+            },
+            sortable: true,
+            width: "165px",
+        },
+        {
+            name: "Created at",
             cell: (row) => {
                 return <span>{moment(row?.createdAt).format("ll")}</span>;
             },
             selector: (row) => row?.createdAt,
             sortable: true,
-            // width: "65px",
-        },
-        {
-            name: "Name",
-            selector: "name",
-            sortable: true,
+            width: "165px",
         },
 
-        {
-            name: "Email",
-            selector: "email",
-            sortable: true,
-        },
-
-        {
-            name: "Phone",
-            selector: "phone",
-            sortable: true,
-        },
+        // {
+        //     name: "Account Status",
+        //     cell: (row) => {
+        //         return <span>{row?._id === "" ? "-" : row?._id}</span>;
+        //     },
+        //     sortable: true,
+        //     width: "165px",
+        // },
+        // {
+        //     name: "Designation",
+        //     cell: (row) => {
+        //         return <span>{"-"}</span>;
+        //     },
+        //     sortable: true,
+        //     width: "165px",
+        // },
+        // {
+        //     name: "Department",
+        //     cell: (row) => {
+        //         return <span>{"-"}</span>;
+        //     },
+        //     sortable: true,
+        //     width: "165px",
+        // },
+        // {
+        //     name: "Reporting Manager",
+        //     cell: (row) => {
+        //         return <span>{"-"}</span>;
+        //     },
+        //     sortable: true,
+        //     width: "205px",
+        // },
 
         {
             name: "Actions",
@@ -452,7 +520,8 @@ const Examiner = ({ getNewCount, title }) => {
             allCourseNameExcel.map((registerUser, key) => {
                 let data = {
                     Number: key + 1,
-                    RoleId: registerUser?._id,
+                    UserId: registerUser?._id,
+                    EmployeeID: registerUser?._id,
                     CreatedAt: moment(registerUser?.createdAt).format("ll"),
                     RoleName: registerUser?.name,
                     RoleEmail: registerUser?.email,
@@ -814,9 +883,9 @@ const Examiner = ({ getNewCount, title }) => {
                     <List>
                         {isViewMoreAboutus === true ? (
                             <div className="honda-container">
-                                 <div className="other-information-child-text-style1">
-                  <h2>Role</h2>
-                </div>
+                                <div className="other-information-child-text-style1">
+                                    <h2>Role</h2>
+                                </div>
                                 <div className="honda-text-grid12 honda-text-grid-border">
                                     <div className="honda-text-grid-items">
                                         <span>Name:</span>

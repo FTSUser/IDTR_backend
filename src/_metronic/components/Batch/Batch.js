@@ -603,18 +603,18 @@ const Batch = ({ getNewCount, title }) => {
       });
   };
   const saveFile = (data, name) => {
-   
+
     saveAs(
-      data, name+'.zip'
+      data, name + '.zip'
     );
   };
   const genereateAllPDF = async (data) => {
-  
+
     setIsLoaderVisible(true);
     await ApiGet(`generatepdf/generate-pdf/${data}`)
       .then((res) => {
-     
-        
+
+
         saveFile(res.data?.payload?.ZipLink, res.data?.payload?.batch?.name)
         setIsLoaderVisible(false);
 
@@ -626,7 +626,7 @@ const Batch = ({ getNewCount, title }) => {
       });
   }
 
- 
+
 
   //getResponseByBatch
 
@@ -641,7 +641,7 @@ const Batch = ({ getNewCount, title }) => {
       `register/getRegisterByBatch/${id}?page=${pageForBatch}&limit=${countPerPageForBatch}`
     )
       .then((res) => {
-      
+
         setResponseByBatch(res?.data?.payload?.users);
         setCountForBatch(res?.data?.payload?.count);
       })
@@ -654,7 +654,7 @@ const Batch = ({ getNewCount, title }) => {
   const getAllResponseByBatch = async (id) => {
     await ApiGet(`response/getResponseByUserWithoutPagination/${id}`)
       .then((res) => {
-       
+
         setAllDataForResultDownload(res?.data?.payload?.findResponse);
       })
       .catch((err) => {
@@ -665,7 +665,7 @@ const Batch = ({ getNewCount, title }) => {
   const getAllResponseByBatchForUser = async (id) => {
     await ApiGet(`response/getResponseByBatch/${id}`)
       .then((res) => {
-      
+
         setAllDataForAttendance(res?.data?.payload?.findResponse);
       })
       .catch((err) => {
@@ -676,12 +676,12 @@ const Batch = ({ getNewCount, title }) => {
   const getPapersetByUserId = async (id) => {
     await ApiGet(`response/getResponseByUser/${id}`)
       .then((res) => {
-     
+
         setPaperSet(res?.data?.payload?.Response[0]);
       })
       .catch((err) => {
         toast.error(err?.message);
-      
+
       });
   };
 
@@ -690,7 +690,7 @@ const Batch = ({ getNewCount, title }) => {
     getDataenterAndApi();
   }, []);
 
-  
+
 
   const validateFormForAddAdmin = () => {
     let formIsValid = true;
@@ -1294,7 +1294,6 @@ const Batch = ({ getNewCount, title }) => {
           EmailAddress: registerUser?.uid?.email,
           MobileNumber: registerUser?.uid?.phone,
           CourseType: registerUser?.uid?.cnid?.ccid?.ctid?.courseType,
-          // CourseName: registerUser?.tdid[0].cnid?.courseName,
           VehicleCategory:
             registerUser?.uid?.cnid?.ccid?.ctid?.vcid?.vehicleCategory,
           CourseName: registerUser?.uid?.cnid?.courseName,
@@ -1311,9 +1310,11 @@ const Batch = ({ getNewCount, title }) => {
           QuestionsAnsweredCorrectly: registerUser?.uid?.totalScore,
           QuestionsAnsweredIncorrectly:
             registerUser?.Esid?.no - registerUser?.uid?.totalScore,
-          Status: "-",
-          DataEntryUser: registerUser?.batch?.DataEntry?.name,
-          DataEntryUserID: registerUser?.batch?.Examiner?.name,
+          "%": registerUser?.uid?.percentage,
+          Status: registerUser?.uid?.isPass,
+          NoofAttempts: "-",
+          DataEntryUser: registerUser?.batch?.DataEntry?.email,
+          DataEntryUserID: registerUser?.batch?.DataEntry?._id,
         };
         setDataCSVResults((currVal) => [...currVal, data]);
       });
@@ -1331,6 +1332,7 @@ const Batch = ({ getNewCount, title }) => {
           EmailAddress: registerUser?.uid?.email,
           MobileNumber: registerUser?.uid?.phone,
           CourseType: registerUser?.uid?.cnid?.ccid?.ctid?.courseType,
+
           VehicleCategory:
             registerUser?.uid?.cnid?.ccid?.ctid?.vcid?.vehicleCategory,
           CourseName: registerUser?.uid?.cnid?.courseName,
@@ -1342,14 +1344,11 @@ const Batch = ({ getNewCount, title }) => {
           CalendarSlotSelected: moment(registerUser?.uid?.tdid?.date).format(
             "ll"
           ),
+          ExaminerName: registerUser?.batch?.Examiner?.name,
+          ExaminerUserID: registerUser?.batch?.Examiner?._id,
+          TestAttendanceStatus: registerUser?.uid?.isAttendence,
           TestLanguage: registerUser?.Esid?.language,
           TotalQuestions: registerUser?.Esid?.no,
-          QuestionsAnsweredCorrectly: registerUser?.uid?.totalScore,
-          QuestionsAnsweredIncorrectly:
-            registerUser?.Esid?.no - registerUser?.uid?.totalScore,
-          Status: "-",
-          DataEntryUser: registerUser?.batch?.DataEntry?.name,
-          DataEntryUserID: registerUser?.batch?.Examiner?.name,
         };
         setDataCSVForAttendance((currVal) => [...currVal, data]);
       });
@@ -2163,7 +2162,7 @@ const Batch = ({ getNewCount, title }) => {
             {isViewMoreAnnouncement === true ? (
               <div className="honda-container">
                 <div className="">
-               
+
                   <div className="questionGrid12121">
                     {paperSet?.ListofQA?.map((data, key) => (
                       <div className="questionGridItems">
