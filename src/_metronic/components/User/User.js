@@ -207,7 +207,17 @@ const User = ({ getNewCount, title }) => {
   useEffect(() => {
     document.title = "Honda | User";
   }, []);
+  const [seconds, setSeconds] = useState();
 
+
+  useEffect(() => {
+    if (seconds > 0) {
+      setTimeout(() => setSeconds(seconds - 1), 1000);
+
+    } else {
+      setTab('course')
+    }
+  }, [seconds]);
 
   // const startValue = new Date(
   //   new Date().getFullYear(),
@@ -292,7 +302,12 @@ const User = ({ getNewCount, title }) => {
     type: "",
   });
 
-  useEffect(() => { }, [tableFilterData]);
+  useEffect(() => {
+    if (submitpayment) {
+      register()
+    }
+
+  }, [submitpayment]);
 
 
   const handlePaymentClose = () => {
@@ -683,7 +698,7 @@ const User = ({ getNewCount, title }) => {
       selector: "drivingLicenseNumber",
       width: "160px",
       cell: (row) => {
-        return <span>{row?.drivingLicenseNumber === "" ? '-' : row?.drivingLicenseNumber}</span>;
+        return <span>{row?.drivingLicenseNumber === null ? '-' : row?.drivingLicenseNumber}</span>;
       },
       sortable: true,
     },
@@ -845,6 +860,7 @@ const User = ({ getNewCount, title }) => {
                       onClick={() => {
                         setTab("course");
                         setIsAddAnnouncement(true);
+                        setSeconds(5)
                         setEditMode(true);
                         let index = getAllVehicalData?.Question?.findIndex(
                           (e) => e._id === row?.vcid
@@ -912,7 +928,7 @@ const User = ({ getNewCount, title }) => {
                           type: row?.type,
                           driverlicense:
                             row?.license === "N/A"
-                              ? ""
+                              ? null
                               : row?.drivingLicenseNumber,
                           issueDate:
                             row?.license === "N/A" ? "" : row?.issueDate,
@@ -1448,7 +1464,7 @@ const User = ({ getNewCount, title }) => {
       lcid: formdata.license,
       dateofCourse: formdata.preferdate,
       drivingLicenseNumber:
-        formdata.license === "N/A" ? "" : formdata.driverlicense,
+        formdata.license === "N/A" ? null : formdata.driverlicense,
       fname: formdata.firstname,
       mname: formdata.middlename,
       lname: formdata.lastname,
@@ -1569,7 +1585,7 @@ const User = ({ getNewCount, title }) => {
       lcid: formdata.license,
       dateofCourse: formdata.preferdate,
       drivingLicenseNumber:
-        formdata.license === "N/A" ? "" : formdata.driverlicense,
+        formdata.license === "N/A" ? null : formdata.driverlicense,
       fname: formdata.firstname,
       mname: formdata.middlename,
       lname: formdata.lastname,
@@ -1688,10 +1704,27 @@ const User = ({ getNewCount, title }) => {
     },
   };
 
+
+
+  const checkSlot = async () => {
+
+    await ApiGet(
+      `trainingDate/checkSlot/${formdata.sloatId}`
+    )
+      .then((res) => {
+        return true
+
+      })
+      .catch((err) => {
+        return false
+      });
+  }
+
   const handleOnClick = (e, key) => {
     e.preventDefault();
 
     if (key === "personal") {
+      if (!checkSlot()) return
       if (formdata.vehicleCategory == "") {
         seterrorShow("Vehicle Category");
         toast.error(`Sorry! Vehicle Category must be specified`);
@@ -1754,6 +1787,7 @@ const User = ({ getNewCount, title }) => {
         setTab(key);
       }
     } else if (key === "document") {
+      if (!checkSlot()) return
       if (formdata.firstname === "") {
         toast.error(`Sorry! First name must be specified`);
         seterrorShow("First name");
@@ -1812,6 +1846,7 @@ const User = ({ getNewCount, title }) => {
         setTab(key);
       }
     } else if (key === "payment") {
+      if (!checkSlot()) return
       if (formdata.passport === null) {
         toast.error("Select passport photo");
         seterrorShow("Passport Photo");
@@ -1903,6 +1938,7 @@ const User = ({ getNewCount, title }) => {
     if (key === "course") {
       setTimeout(() => {
         setTab(key);
+
       }, 1500);
     } else if (key === "personal") {
       setTab(key);
@@ -2369,6 +2405,7 @@ const User = ({ getNewCount, title }) => {
               <button
                 onClick={() => {
                   setIsAddAnnouncement(true);
+                  setSeconds(30)
                 }}
                 className="btn btn-success mr-2"
               >
@@ -2494,7 +2531,9 @@ const User = ({ getNewCount, title }) => {
                 <div className="breadcrumbs-alignment"></div>
                 <div className="page-title-alignment">
                   <h1>Driver Training Course Registration Portal</h1>
-
+                  <div>
+                    {seconds}
+                  </div>
                 </div>
                 <div className="tab-design">
                   <ul>
@@ -3526,9 +3565,8 @@ const User = ({ getNewCount, title }) => {
 
                       {!editMode
                         ? dicloser &&
-                        (formdata.type === "online"
-                          ? submitpayment
-                          : true) && (
+                        (formdata.type === "offline"
+                        ) && (
                           <button
                             className="fill-button"
                             onClick={() => register()}
@@ -3537,9 +3575,8 @@ const User = ({ getNewCount, title }) => {
                           </button>
                         )
                         : dicloser &&
-                        (formdata.type === "online"
-                          ? submitpayment
-                          : true) && (
+                        (formdata.type === "offline"
+                        ) && (
                           <button
                             className="fill-button"
                             onClick={() => updateData()}
