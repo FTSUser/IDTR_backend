@@ -860,7 +860,7 @@ const User = ({ getNewCount, title }) => {
                       onClick={() => {
                         setTab("course");
                         setIsAddAnnouncement(true);
-                        setSeconds(5)
+                        setSeconds(300)
                         setEditMode(true);
                         let index = getAllVehicalData?.Question?.findIndex(
                           (e) => e._id === row?.vcid
@@ -2405,7 +2405,7 @@ const User = ({ getNewCount, title }) => {
               <button
                 onClick={() => {
                   setIsAddAnnouncement(true);
-                  setSeconds(30)
+                  setSeconds(300)
                 }}
                 className="btn btn-success mr-2"
               >
