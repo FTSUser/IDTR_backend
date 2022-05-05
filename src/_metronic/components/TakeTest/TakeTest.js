@@ -554,9 +554,9 @@ const TakeTest = ({ getNewCount, title }) => {
       });
   };
   const saveFile = (data, name) => {
-   
+
     saveAs(
-      data, name+'.zip'
+      data, name + '.zip'
     );
   };
 
@@ -654,7 +654,7 @@ const TakeTest = ({ getNewCount, title }) => {
       name: "User",
       selector: (row) => row?.totalUser === "" || !row?.totalUser ? "-" : row?.totalUser,
       sortable: true,
-   
+
     },
     {
       name: "Actions",
@@ -1157,6 +1157,7 @@ const TakeTest = ({ getNewCount, title }) => {
           EmailAddress: registerUser?.uid?.email,
           MobileNumber: registerUser?.uid?.phone,
           CourseType: registerUser?.uid?.cnid?.ccid?.ctid?.courseType,
+
           VehicleCategory:
             registerUser?.uid?.cnid?.ccid?.ctid?.vcid?.vehicleCategory,
           CourseName: registerUser?.uid?.cnid?.courseName,
@@ -1168,14 +1169,11 @@ const TakeTest = ({ getNewCount, title }) => {
           CalendarSlotSelected: moment(registerUser?.uid?.tdid?.date).format(
             "ll"
           ),
+          ExaminerName: registerUser?.batch?.Examiner?.name,
+          ExaminerUserID: registerUser?.batch?.Examiner?._id,
+          TestAttendanceStatus: registerUser?.uid?.isAttendence,
           TestLanguage: registerUser?.Esid?.language,
           TotalQuestions: registerUser?.Esid?.no,
-          QuestionsAnsweredCorrectly: registerUser?.uid?.totalScore,
-          QuestionsAnsweredIncorrectly:
-            registerUser?.Esid?.no - registerUser?.uid?.totalScore,
-          Status: "-",
-          ExaminerUser: registerUser?.batch?.Examiner?.email,
-          ExaminerUserID: registerUser?.batch?.Examiner?._id,
         };
         setDataCSVForAttendance((currVal) => [...currVal, data]);
       });
@@ -1208,7 +1206,8 @@ const TakeTest = ({ getNewCount, title }) => {
           QuestionsAnsweredCorrectly: registerUser?.uid?.totalScore,
           QuestionsAnsweredIncorrectly:
             registerUser?.Esid?.no - registerUser?.uid?.totalScore,
-          Status: "-",
+          "%": registerUser?.uid?.percentage,
+          Status: registerUser?.uid?.isPass,
           DataEntryUser: registerUser?.batch?.DataEntry?.email,
           DataEntryUserID: registerUser?.batch?.DataEntry?._id,
         };

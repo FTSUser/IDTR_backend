@@ -507,7 +507,7 @@ const CourseName = ({ getNewCount, title }) => {
                   setIsEditPopUp(true);
                 }}
               >
-                <Tooltip title="Edit Course Name" arrow>
+                <Tooltip title="Edit Course List" arrow>
                   <CreateIcon />
                 </Tooltip>
               </div>
@@ -520,7 +520,7 @@ const CourseName = ({ getNewCount, title }) => {
                 setIdForDeleteCourseName(row?._id);
               }}
             >
-              <Tooltip title="Delete Course Name" arrow>
+              <Tooltip title="Delete Course List" arrow>
                 <DeleteIcon />
               </Tooltip>
             </div>
@@ -692,7 +692,7 @@ const CourseName = ({ getNewCount, title }) => {
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2">Course Name</h2>
+              <h2 className="pl-3 pt-2">Course List</h2>
             </div>
             <div className="col">
               <div>
@@ -701,7 +701,7 @@ const CourseName = ({ getNewCount, title }) => {
                   className={`form-control form-control-lg form-control-solid `}
                   name="search"
                   value={search}
-                  placeholder="Search Course Name"
+                  placeholder="Search Course List"
                   onChange={(e) => handleSearch(e)}
                 />
               </div>
@@ -1408,7 +1408,7 @@ const CourseName = ({ getNewCount, title }) => {
             {isViewMoreAboutus === true ? (
               <div className="honda-container">
                 <div className="other-information-child-text-style1">
-                  <h2>Course Name</h2>
+                  <h2>Course List</h2>
                 </div>
                 <div className="honda-text-grid12 honda-text-grid-border">
 

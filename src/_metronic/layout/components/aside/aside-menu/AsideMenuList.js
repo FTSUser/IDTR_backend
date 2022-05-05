@@ -67,7 +67,7 @@ export function AsideMenuList({ layoutProps }) {
                     <span className="svg-icon menu-icon">
                       <img src="media/allIconsForTable/course.svg" />
                     </span>
-                    <span className="menu-text">Course Selection</span>
+                    <span className="menu-text">Course Section</span>
                     <i className="menu-arrow" />
                   </NavLink>
                   <div className="menu-submenu ">
@@ -162,7 +162,7 @@ export function AsideMenuList({ layoutProps }) {
                           <i className="menu-bullet menu-bullet-dot">
                             <span />
                           </i>
-                          <span className="menu-text">Course Name</span>
+                          <span className="menu-text">Course List</span>
                         </NavLink>
                       </li>
                     </ul>
@@ -297,6 +297,24 @@ export function AsideMenuList({ layoutProps }) {
                           <span />
                         </i>
                         <span className="menu-text">Feedback</span>
+                      </NavLink>
+                    </li>
+                    <li
+                      className={`menu-item menu-item-submenu  ${getMenuItemActive(
+                        "/pre-login",
+                        false
+                      )}`}
+                      aria-haspopup="true"
+                      data-menu-toggle="hover"
+                    >
+                      <NavLink
+                        className="menu-link"
+                        to="/pre-login"
+                      >
+                        <i className="menu-bullet menu-bullet-dot">
+                          <span />
+                        </i>
+                        <span className="menu-text">Pre Login</span>
                       </NavLink>
                     </li>
                   </ul>

@@ -6,11 +6,11 @@ import {
     ApiPut,
     ApiPost,
 } from "../../../helpers/API/ApiData";
+import Select from 'react-select';
 import { Tooltip } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import List from "@material-ui/core/List";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
-import Select from 'react-select';
 
 import Toolbar from "@material-ui/core/Toolbar";
 import CreateIcon from "@material-ui/icons/Create";
@@ -24,12 +24,13 @@ import Loader from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import moment from "moment";
 import CsvDownload from "react-json-to-csv";
+import Multiselect from "multiselect-react-dropdown";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const Examiner = ({ getNewCount, title }) => {
+const PreLogin = ({ getNewCount, title }) => {
     const [filteredCourseName, setFilteredCourseName] = useState({});
     const [isLoaderVisible, setIsLoaderVisible] = useState(false);
     const [show, setShow] = useState(false);
@@ -44,18 +45,14 @@ const Examiner = ({ getNewCount, title }) => {
     const [count, setCount] = useState(0);
     const [countPerPage, setCountPerPage] = useState(10);
     const [search, setSearch] = useState("");
-    const [showStatus, setShowStatus] = useState(false);
-    const [idForUpdateCourseStatus, setIdForUpdateCourseStatus] = useState("");
-    const [statusDisplay, setStatusDisplay] = useState(false);
-    const [getCourseType, setGetCourseType] = useState([]);
-    const [filteredVehicleCategory, setFilteredVehicleCategory] = useState([]);
-
     const [dataViewMore, setDataViewMore] = useState({});
     const [isViewMoreAboutus, setIsViewMoreAboutus] = useState(false);
     const [isEditPopUp, setIsEditPopUp] = useState(false);
+    const [selectedCourseType, setSelectedCourseType] = useState([]);
+    const [allCourseTypeForUpdate, setAllCourseTypeForUpdate] = useState([]);
 
     useEffect(() => {
-        document.title = "Honda | Examiner";
+        document.title = "Honda | Pre Login";
     }, []);
 
     const handleViewMoreClose = () => {
@@ -69,27 +66,29 @@ const Examiner = ({ getNewCount, title }) => {
         setErrorsForAdd({ ...errorsForAdd, [name]: "" });
     };
 
+    const [getAllRole, setgetAllRole] = useState({});
+    const getAllRoleData = () => {
+        ApiGet('role').then((res) => {
+            setgetAllRole(res.data.payload.allRole);
+        })
+    }
     const handleAddAdminClose = () => {
         setInputValueForAdd({});
         setIsAddCourseName(false);
         setErrorsForAdd({});
+        setSelectedCourseType([]);
         setIsEditPopUp(false);
-        setGetCourseType([]);
+        setAllCourseTypeForUpdate([]);
+
+
     };
 
     const handleClose = () => {
         setShow(false);
     };
 
-    const handleCloseShowStatus = () => {
-        setShowStatus(false);
-    };
-    const [getAllRole, setgetAllRole] = useState({});
-    const getAllRoleData = () => {
-        ApiGet('role/getSpecificRole').then((res) => {
-            setgetAllRole(res.data.payload.Role);
-        })
-    }
+
+
     useEffect(() => {
         getAllCourseName();
         getAllRoleData()
@@ -102,24 +101,24 @@ const Examiner = ({ getNewCount, title }) => {
         setIsLoaderVisible(true);
         if (!search) {
             await ApiGet(
-                `examiner/getAllExaminer?page=${page}&limit=${countPerPage}`
+                `admin/get-pre-post-login?page=${page}&limit=${countPerPage}`
             )
                 .then((res) => {
                     setIsLoaderVisible(false);
-                    setFilteredCourseName(res?.data?.payload?.Examiner);
+                    setFilteredCourseName(res?.data?.payload?.preLogin);
                     setCount(res?.data?.payload?.count);
-                    setGetCourseType([]);
+
                 })
                 .catch((err) => {
                     toast.error(err?.response?.data?.message)
                 });
         } else {
             await ApiGet(
-                `examiner/getAllExaminer?search=${search}&page=${page}&limit=${countPerPage}`
+                `admin/get-pre-post-login?search=${search}&page=${page}&limit=${countPerPage}`
             )
                 .then((res) => {
                     setIsLoaderVisible(false);
-                    setFilteredCourseName(res?.data?.payload?.Examiner);
+                    setFilteredCourseName(res?.data?.payload?.preLogin);
                     setCount(res?.data?.payload?.count);
                 })
                 .catch((err) => {
@@ -128,23 +127,7 @@ const Examiner = ({ getNewCount, title }) => {
         }
     };
 
-    const handleUpdateStatusCourseName = (status) => {
-        ApiPut(`courseName/updateStatus/${idForUpdateCourseStatus}`, {
-            isActive: status,
-        })
-            .then((res) => {
-                if (res?.status == 200) {
-                    setShowStatus(false);
-                    toast.success("Status updated Successfully");
-                    getAllCourseName();
-                } else {
-                    toast.error(res?.data?.message);
-                }
-            })
-            .catch((err) => {
-                toast.error(err?.response?.data?.message)
-            });
-    };
+
 
     const validateFormForAddAdmin = () => {
         let formIsValid = true;
@@ -153,30 +136,12 @@ const Examiner = ({ getNewCount, title }) => {
             formIsValid = false;
             errorsForAdd["name"] = "*Please Enter Name!";
         }
-        if (inputValueForAdd && !inputValueForAdd.email) {
-            formIsValid = false;
-            errorsForAdd["email"] = "*Please Enter Email!";
-        } else if (
-            inputValueForAdd.email &&
-            !inputValueForAdd.email.match(
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            )
-        ) {
-            formIsValid = false;
-            errorsForAdd["email"] = "*Please Enter vaild Email!";
-        }
-        if (inputValueForAdd && !inputValueForAdd.phone) {
-            formIsValid = false;
-            errorsForAdd["phone"] = "*Please Enter Phone!";
-        }
-        if (inputValueForAdd && !inputValueForAdd.password) {
-            formIsValid = false;
-            errorsForAdd["password"] = "*Please Enter password!";
-        }
-        if (inputValueForAdd && !inputValueForAdd.role) {
-            formIsValid = false;
-            errorsForAdd["role"] = "*Please Enter role!";
-        }
+        // if (selectedCourseType?.length === 0) {
+        //     formIsValid = false;
+        //     errorsForAdd["role"] = "*Please Enter role!";
+        // }
+
+
 
         setErrorsForAdd(errorsForAdd);
         return formIsValid;
@@ -185,17 +150,18 @@ const Examiner = ({ getNewCount, title }) => {
     const handelAddCourseNameDetails = (e) => {
         e.preventDefault();
         if (validateFormForAddAdmin()) {
+            let data = []
+            selectedCourseType.map(o => data.push(o._id))
             let Data = {
                 name: inputValueForAdd.name,
-                phone: inputValueForAdd.phone,
-                email: inputValueForAdd.email,
-                password: inputValueForAdd?.password,
-                role: inputValueForAdd?.role
+                // assignTo: data
+
             };
-            ApiPost(`examiner/addExaminer`, Data)
+            ApiPost(`menu/addMenu`, Data)
                 .then((res) => {
                     if (res?.status == 200) {
                         setIsAddCourseName(false);
+                        setSelectedCourseType([]);
                         toast.success(res?.data?.message);
                         setInputValueForAdd({});
                         getAllCourseName();
@@ -210,7 +176,7 @@ const Examiner = ({ getNewCount, title }) => {
     };
 
     const handleDeleteCourseName = () => {
-        ApiDelete(`examiner/deleteExaminer/${idForDeleteCourseName}`)
+        ApiDelete(`menu/deleteMenu/${idForDeleteCourseName}`)
             .then((res) => {
                 if (res?.status == 200) {
                     setShow(false);
@@ -231,22 +197,22 @@ const Examiner = ({ getNewCount, title }) => {
     const handelUpdateCourseNameDetails = (e) => {
         e.preventDefault();
         if (validateFormForAddAdmin()) {
+            let data = []
+            selectedCourseType.map(o => data.push(o._id))
             let Data = {
                 name: inputValueForAdd?.name,
-                email: inputValueForAdd?.email,
-                phone: inputValueForAdd?.phone,
-                // password: inputValueForAdd?.password,
-                role: inputValueForAdd?.role
+                // assignTo: data
             };
-            ApiPut(`examiner/updateExaminer/${idForUpdateCourseNameData}`, Data)
+            ApiPut(`menu/updateMenu/${idForUpdateCourseNameData}`, Data)
                 .then((res) => {
                     if (res?.status == 200) {
                         setIsAddCourseName(false);
                         toast.success(res?.data?.message);
                         setInputValueForAdd({});
                         getAllCourseName();
+                        setSelectedCourseType([]);
                         setIsEditPopUp(false);
-                        setGetCourseType([]);
+
                     } else {
                         toast.error(res?.data?.message);
                     }
@@ -264,157 +230,120 @@ const Examiner = ({ getNewCount, title }) => {
             cell: (row, index) => (page - 1) * countPerPage + (index + 1),
             width: "65px",
         },
-        {
-            name: "User ID",
-            cell: (row) => {
-                return <span>{row?._id === "" ? "-" : row?._id}</span>;
-            },
+      
+          {
+            name: "Source/OS",
+            selector: row => row?.device,
             sortable: true,
-            width: "199px",
-        },
-
-        {
-            name: "Full Name",
-            cell: (row) => {
-                return <span>{row?.name === "" ? "-" : row?.name}</span>;
-            },
+          },
+          {
+            name: "IP Address",
+            selector: row => row?.ip,
             sortable: true,
-            width: "225px",
-        },
-
-
-        {
-            name: "Email",
-            cell: (row) => {
-                return <span>{row?.email === "" ? "-" : row?.email}</span>;
-            },
+          },
+          {
+            name: "Page",
+            selector: row => row?.lastPage,
             sortable: true,
-            width: "195px",
-        },
-        {
-            name: "Mobile Number",
+          },
+          {
+            name: "Date",
             cell: (row) => {
-                return <span>{row?.phone === "" ? "-" : row?.phone}</span>;
+              return <span>{moment(row?.createdAt).format("ll")}</span>;
             },
+            selector: row => row?.createdAt,
             sortable: true,
-            width: "165px",
-        },
-        {
-            name: "Employee ID/Code",
+          },
+          {
+            name: "Time",
             cell: (row) => {
-                return <span>{row?._id === "" ? "-" : row?._id}</span>;
+              return <span>{moment(row?.createdAt).format("LT")}</span>;
             },
+            selector: row => row?.createdAt,
             sortable: true,
-            width: "225px",
-        },
-
-        {
-            name: "User Type",
-            cell: (row) => {
-                return <span>{"-"}</span>;
-            },
-            sortable: true,
-            width: "165px",
-        },
-        {
-            name: "Created at",
-            cell: (row) => {
-                return <span>{moment(row?.createdAt).format("ll")}</span>;
-            },
-            selector: (row) => row?.createdAt,
-            sortable: true,
-            width: "165px",
-        },
+          },
 
         // {
-        //     name: "Account Status",
+        //     name: "Assign To",
         //     cell: (row) => {
-        //         return <span>{row?._id === "" ? "-" : row?._id}</span>;
+        //         return (
+        //             <>
+        //                 {
+        //                     row?.assignTo?.map((data, key) => {
+        //                         return (
+        //                             <>
+        //                                 <div >
+        //                                     <div >{data?.roleName},</div>
+        //                                 </div>
+        //                             </>
+        //                         )
+        //                     }
+        //                     )}
+        //             </>
+        //         );
         //     },
-        //     sortable: true,
-        //     width: "165px",
-        // },
-        // {
-        //     name: "Designation",
-        //     cell: (row) => {
-        //         return <span>{"-"}</span>;
-        //     },
-        //     sortable: true,
-        //     width: "165px",
-        // },
-        // {
-        //     name: "Department",
-        //     cell: (row) => {
-        //         return <span>{"-"}</span>;
-        //     },
-        //     sortable: true,
-        //     width: "165px",
-        // },
-        // {
-        //     name: "Reporting Manager",
-        //     cell: (row) => {
-        //         return <span>{"-"}</span>;
-        //     },
-        //     sortable: true,
-        //     width: "205px",
         // },
 
-        {
-            name: "Actions",
-            cell: (row) => {
-                return (
-                    <>
-                        <div className="d-flex justify-content-between">
-                            <div
-                                className="cursor-pointer pl-2"
-                                onClick={() => {
-                                    setIsAddCourseName(true);
-                                    setIdForUpdateCourseNameData(row._id);
-                                    setInputValueForAdd({
-                                        name: row?.name,
-                                        email: row?.email,
-                                        phone: row?.phone,
-                                        password: row?.password,
-                                        role: row?.role
-                                    });
-                                    setIsEditPopUp(true);
-                                }}
-                            >
-                                <Tooltip title="Edit Role" arrow>
-                                    <CreateIcon />
-                                </Tooltip>
-                            </div>
-                        </div>
 
-                        <div
-                            className="cursor-pointer"
-                            onClick={() => {
-                                setShow(true);
-                                setIdForDeleteCourseName(row?._id);
-                            }}
-                        >
-                            <Tooltip title="Delete Role" arrow>
-                                <DeleteIcon />
-                            </Tooltip>
-                        </div>
-                        <>
-                            <div
-                                className="cursor-pointer pl-2"
-                                onClick={() => {
-                                    setIsViewMoreAboutus(true);
-                                    setDataViewMore(row);
 
-                                }}
-                            >
-                                <Tooltip title="Show More" arrow>
-                                    <InfoOutlinedIcon />
-                                </Tooltip>
-                            </div>
-                        </>
-                    </>
-                );
-            },
-        },
+        // {
+        //     name: "Actions",
+        //     cell: (row) => {
+        //         return (
+        //             <>
+        //                 <div className="d-flex justify-content-between">
+        //                     <div
+        //                         className="cursor-pointer pl-2"
+        //                         onClick={() => {
+                          
+        //                             setIsAddCourseName(true);
+        //                             setIdForUpdateCourseNameData(row._id);
+        //                             // setSelectedCourseType(row?.assignTo);
+        //                             // setAllCourseTypeForUpdate(row?.assignTo);
+
+
+        //                             setInputValueForAdd({
+        //                                 name: row?.name,
+
+        //                             });
+        //                             setIsEditPopUp(true);
+        //                         }}
+        //                     >
+        //                         <Tooltip title="Edit Examiner" arrow>
+        //                             <CreateIcon />
+        //                         </Tooltip>
+        //                     </div>
+        //                 </div>
+
+        //                 <div
+        //                     className="cursor-pointer"
+        //                     onClick={() => {
+        //                         setShow(true);
+        //                         setIdForDeleteCourseName(row?._id);
+        //                     }}
+        //                 >
+        //                     <Tooltip title="Delete Examiner" arrow>
+        //                         <DeleteIcon />
+        //                     </Tooltip>
+        //                 </div>
+        //                 <>
+        //                     <div
+        //                         className="cursor-pointer pl-2"
+        //                         onClick={() => {
+        //                             setIsViewMoreAboutus(true);
+        //                             setDataViewMore(row);
+
+        //                         }}
+        //                     >
+        //                         <Tooltip title="Show More" arrow>
+        //                             <InfoOutlinedIcon />
+        //                         </Tooltip>
+        //                     </div>
+        //                 </>
+        //             </>
+        //         );
+        //     },
+        // },
     ];
     // * Table Style
     const customStyles = {
@@ -520,12 +449,9 @@ const Examiner = ({ getNewCount, title }) => {
             allCourseNameExcel.map((registerUser, key) => {
                 let data = {
                     Number: key + 1,
-                    UserId: registerUser?._id,
-                    EmployeeID: registerUser?._id,
                     CreatedAt: moment(registerUser?.createdAt).format("ll"),
-                    RoleName: registerUser?.name,
-                    RoleEmail: registerUser?.email,
-                    RolePhone: registerUser?.phone,
+                    MenuName: registerUser?.name,
+
                 };
                 setDataCSV((currVal) => [...currVal, data]);
             });
@@ -539,16 +465,16 @@ const Examiner = ({ getNewCount, title }) => {
                 <div className="p-2 mb-2">
                     <div className="row mb-4 pr-3">
                         <div className="col d-flex justify-content-between">
-                            <h2 className="pl-3 pt-2">Assign Role</h2>
+                            <h2 className="pl-3 pt-2">Pre Login</h2>
                         </div>
-                        <div className="col">
+                        {/* <div className="col">
                             <div>
                                 <input
                                     type="text"
                                     className={`form-control form-control-lg form-control-solid `}
                                     name="search"
                                     value={search}
-                                    placeholder="Search Role"
+                                    placeholder="Search Menu"
                                     onChange={(e) => handleSearch(e)}
                                 />
                             </div>
@@ -560,14 +486,14 @@ const Examiner = ({ getNewCount, title }) => {
                                 }}
                                 className="btn btn-success mr-2"
                             >
-                                Add Role
+                                Add Menu
                             </button>
-                        </div>
-                        <div className="cus-medium-button-style button-height">
+                        </div> */}
+                        {/* <div className="cus-medium-button-style button-height">
                             <CsvDownload
                                 className={``}
                                 data={dataCSV}
-                                filename="Role Report.csv"
+                                filename="Menu.csv"
                                 style={{
                                     //pass other props, like styles
                                     backgroundColor: "#CC0001",
@@ -584,7 +510,7 @@ const Examiner = ({ getNewCount, title }) => {
                             >
                                 Export to Excel
                             </CsvDownload>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* delete model */}
@@ -593,7 +519,7 @@ const Examiner = ({ getNewCount, title }) => {
                             <Modal.Title className="text-danger">Alert!</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            Are You Sure To Want To delete this Role
+                            Are You Sure To Want To delete this Menu
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
@@ -688,158 +614,48 @@ const Examiner = ({ getNewCount, title }) => {
                                         </span>
                                     </div>
                                 </div>
-                                <div className="form-group row">
+                                {/* <div className="form-group row">
                                     <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Enter Email
+                                        Assign To
                                     </label>
                                     <div className="col-lg-9 col-xl-6">
                                         <div>
-                                            <input
-                                                type="text"
-                                                className={`form-control form-control-lg form-control-solid `}
-                                                id="email"
-                                                name="email"
-                                                value={inputValueForAdd.email}
-                                                onChange={(e) => {
-                                                    handleOnChnageAdd(e);
+
+
+                                            <Multiselect
+
+                                                options={getAllRole}
+                                                onSelect={(selectedList, selectedItem) => {
+                                                    setSelectedCourseType(selectedList);
+                                                    setErrorsForAdd({
+                                                        ...errorsForAdd,
+                                                        role: "",
+                                                    });
                                                 }}
+
+                                                onRemove={(selectedList, removedItem) => {
+                                                    setSelectedCourseType(selectedList);
+                                                }}
+                                                displayValue="roleName"
+                                                selectedValues={allCourseTypeForUpdate}
+
                                             />
-                                        </div>
-                                        <span
-                                            style={{
-                                                color: "red",
-                                                top: "5px",
-                                                fontSize: "12px",
-                                            }}
-                                        >
-                                            {errorsForAdd["email"]}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="form-group row">
-                                    <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Enter Phone
-                                    </label>
-                                    <div className="col-lg-9 col-xl-6">
-                                        <div>
-                                            <input
-                                                type="text"
-                                                className={`form-control form-control-lg form-control-solid `}
-                                                id="phone"
-                                                name="phone"
-                                                minLength={10}
-                                                maxLength={10}
-                                                onKeyPress={(event) => {
-                                                    if (!/[0-9]/.test(event.key)) {
-                                                        event.preventDefault();
-                                                    }
+                                            <span
+                                                style={{
+                                                    color: "red",
+                                                    top: "5px",
+                                                    fontSize: "12px",
                                                 }}
-                                                value={inputValueForAdd.phone}
-                                                onChange={(e) => {
-                                                    handleOnChnageAdd(e);
-                                                }}
-                                            />
-                                        </div>
-                                        <span
-                                            style={{
-                                                color: "red",
-                                                top: "5px",
-                                                fontSize: "12px",
-                                            }}
-                                        >
-                                            {errorsForAdd["phone"]}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="form-group  row">
-                                    <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Select Role
-                                    </label>
-                                    <div className="col-lg-9 col-xl-6">
-                                        {/* <Select
-                                            options={getAllRole?.allRole?.map(e => ({ label: e.roleName, value: e._id }))}
-                                            value={inputValueForAdd.role}
-                                            onChange={(e) => {
-                                                handleOnChnageAdd(e);
-                                            }}
-                                        /> */}
-                                        <select
-                                            className={`form-control form-control-lg form-control-solid `}
-                                            id="role"
-                                            name="role"
-                                            value={inputValueForAdd.role}
-                                            onChange={(e) => {
-                                                handleOnChnageAdd(e);
-                                            }}
-                                        >
-                                            <option value="" disabled selected hidden>
-                                                Select Role
-                                            </option>
-                                            {getAllRole?.length > 0 &&
-                                                getAllRole?.map((item) => {
-                                                    return (
-                                                        <option
-                                                            key={item._id}
-                                                            value={item?._id}
-                                                            selected={
-                                                                inputValueForAdd?.role ===
-                                                                    item?._id
-                                                                    ? true
-                                                                    : false
-                                                            }
-                                                        >
-                                                            {" "}
-                                                            {item.roleName}{" "}
-                                                        </option>
-                                                    );
-                                                })}
-                                        </select>
-                                        <span
-                                            style={{
-                                                color: "red",
-                                                top: "5px",
-                                                fontSize: "12px",
-                                            }}
-                                        >
-                                            {errorsForAdd["role"]}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="form-group row">
-                                    <label className="col-xl-3 col-lg-3 col-form-label">
-                                        Enter Password
-                                    </label>
-                                    <div className="col-lg-9 col-xl-6">
-                                        <div>
-                                            {
-                                                isEditPopUp === false ? <input
-                                                    type="password"
-                                                    className={`form-control form-control-lg form-control-solid `}
-                                                    id="password"
-                                                    name="password"
+                                            >
+                                                {errorsForAdd["role"]}
+                                            </span>
 
-                                                    value={inputValueForAdd.password}
-                                                    onChange={(e) => {
-                                                        handleOnChnageAdd(e);
-                                                    }}
-                                                /> : <input
-                                                    className={`form-control form-control-lg form-control-solid `}
-
-                                                    type="password" placeholder="*****" disabled />
-                                            }
 
                                         </div>
-                                        <span
-                                            style={{
-                                                color: "red",
-                                                top: "5px",
-                                                fontSize: "12px",
-                                            }}
-                                        >
-                                            {errorsForAdd["password"]}
-                                        </span>
+
                                     </div>
-                                </div>
+                                </div> */}
+
 
                                 <div className="d-flex align-items-center justify-content-center">
                                     <button
@@ -851,7 +667,7 @@ const Examiner = ({ getNewCount, title }) => {
                                         className="btn btn-success mr-2"
                                     >
 
-                                        <span> {isEditPopUp === false ? 'Add' : 'Edit'}  Role</span>
+                                        <span> {isEditPopUp === false ? 'Add' : 'Edit'}  Menu</span>
                                         {loading && (
                                             <span className="mx-3 spinner spinner-white"></span>
                                         )}
@@ -883,12 +699,9 @@ const Examiner = ({ getNewCount, title }) => {
                     <List>
                         {isViewMoreAboutus === true ? (
                             <div className="honda-container">
-                                <div className="other-information-child-text-style1">
-                                    <h2>Role</h2>
-                                </div>
-                                <div className="honda-text-grid12 honda-text-grid-border">
+                                <div className="honda-text-grid">
                                     <div className="honda-text-grid-items">
-                                        <span>Name:</span>
+                                        <span>Menu Name:</span>
                                         <p
                                             dangerouslySetInnerHTML={{
                                                 __html: dataViewMore?.name,
@@ -896,24 +709,16 @@ const Examiner = ({ getNewCount, title }) => {
                                             className=""
                                         />
                                     </div>
-                                    <div className="honda-text-grid-items">
-                                        <span>Email:</span>
-                                        <p
-                                            dangerouslySetInnerHTML={{
-                                                __html: dataViewMore?.email,
-                                            }}
-                                            className=""
-                                        />
-                                    </div>
-                                    <div className="honda-text-grid-items">
-                                        <span>Phone:</span>
-                                        <p
-                                            dangerouslySetInnerHTML={{
-                                                __html: dataViewMore?.phone,
-                                            }}
-                                            className=""
-                                        />
-                                    </div>
+                                    {/* <div className="honda-text-grid-items">
+                                        <span>Assign To:</span>
+                                        {
+                                            dataViewMore?.assignTo?.map((data, key) => {
+                                                return (
+                                                    <div>{data?.roleName}</div>
+                                                )
+                                            })
+                                        }
+                                    </div> */}
                                 </div>
                             </div>
                         ) : null}
@@ -924,4 +729,4 @@ const Examiner = ({ getNewCount, title }) => {
     );
 };
 
-export default Examiner;
+export default PreLogin;
