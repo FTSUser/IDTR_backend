@@ -57,7 +57,7 @@ const Testomonial = ({ getNewCount, title }) => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    document.title = "Honda | Testomonial";
+    document.title = "Honda | Testimonials";
   }, []);
 
   const handleOnChnage = (e) => {
@@ -387,7 +387,7 @@ const Testomonial = ({ getNewCount, title }) => {
                   setDescription(row?.description);
                 }}
               >
-                <Tooltip title="Edit Testomonial" arrow>
+                <Tooltip title="Edit Testimonials" arrow>
                   <CreateIcon />
                 </Tooltip>
               </div>
@@ -399,7 +399,7 @@ const Testomonial = ({ getNewCount, title }) => {
                 setIdForDeleteTestomonial(row?._id);
               }}
             >
-              <Tooltip title="Delete Testomonial" arrow>
+              <Tooltip title="Delete Testimonials" arrow>
                 <DeleteIcon />
               </Tooltip>
             </div>
@@ -505,7 +505,7 @@ const Testomonial = ({ getNewCount, title }) => {
         <div className="p-2 mb-2">
           <div className="row mb-4 pr-3">
             <div className="col d-flex justify-content-between">
-              <h2 className="pl-3 pt-2"> Testomonial</h2>
+              <h2 className="pl-3 pt-2"> Testimonials</h2>
             </div>
             <div className="col">
               <div>
@@ -513,7 +513,7 @@ const Testomonial = ({ getNewCount, title }) => {
                   type="text"
                   className={`form-control form-control-lg form-control-solid `}
                   name="title"
-                  placeholder="Search Testomonial"
+                  placeholder="Search Testimonials"
                   onChange={(e) => handleSearch(e)}
                 />
               </div>
