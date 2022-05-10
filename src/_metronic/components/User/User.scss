@@ -892,6 +892,11 @@ input[type="date"]::-webkit-datetime-edit-year-field {
     color: #555555 !important;
     display: block;
     padding: 0 10px !important;
+    // text-decoration: underline !important;
+}
+.s:hover{
+    text-decoration: underline !important;
+    color: blue !important;
 }
 .payment-title {
     font-size: 20px;

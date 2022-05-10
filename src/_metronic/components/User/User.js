@@ -1847,11 +1847,11 @@ const User = ({ getNewCount, title }) => {
       }
     } else if (key === "payment") {
       if (!checkSlot()) return
-      if (formdata.passport === null) {
+      if (formdata.license !== 'Permanent' && formdata.passport === null) {
         toast.error("Select passport photo");
         seterrorShow("Passport Photo");
         settypeTrueFalseform(true);
-      } else if (formdata.license !== "N/A" && formdata.license !== "Learner" && formdata.driviniglicencephoto === null) {
+      } else if (formdata.license !== "N/A" && formdata.license !== "Learner" && formdata.license !== 'Permanent' && formdata.driviniglicencephoto === null) {
         toast.error("Select driving license photo");
         seterrorShow("Driving license photo");
         settypeTrueFalseform(true);
@@ -2747,6 +2747,7 @@ const User = ({ getNewCount, title }) => {
                             </label>
                             <input
                               type="text"
+                              
                               name="driverlicense"
                               value={formdata.driverlicense}
                               onChange={(e) => onChnageForm(e)}
@@ -3219,6 +3220,7 @@ const User = ({ getNewCount, title }) => {
                                 event.preventDefault();
                               }
                             }}
+                            maxLength={6}
                             placeholder="Pin"
                             name="pin"
                             value={formdata.pin}
@@ -3307,22 +3309,42 @@ const User = ({ getNewCount, title }) => {
                         </li>
                       </ul>
                     </div>
-                    <div className="photo-upload-from">
-                      <p>
-                        {" "}
-                        1. Passport Photo<span className="star-color">*</span>
-                        : less than 1 mb.(jpg, jpeg, PNG)/ Rest all documents
-                        less than 5 mb (jpg, jpeg, PNG, pdf)
-                      </p>
-                      <input
-                        type="file"
-                        name="passport"
-                        accept="image/png,image/jpeg,image/jpg"
-                        onChange={(e) => onChangImage(e.target.files[0], "passport")}
-                      />
-                    </div>
                     {
-                      formdata?.license === 'N/A' ? <div className="photo-upload-from">
+                        formdata?.license === 'Permanent' ? 
+                        <div className="photo-upload-from">
+                     
+                        <p>
+                          {" "}
+                          1. Passport Photo
+                          : less than 1 mb.(jpg, jpeg, PNG)/ Rest all documents
+                          less than 5 mb (jpg, jpeg, PNG, pdf)
+                        </p>
+                        <input
+                          type="file"
+                          name="passport"
+                          accept="image/png,image/jpeg,image/jpg"
+                          onChange={(e) => onChangImage(e.target.files[0], "passport")}
+                        />
+                      </div> : 
+                        <div className="photo-upload-from">
+                     
+                        <p>
+                          {" "}
+                          1. Passport Photo<span className="star-color">*</span>
+                          : less than 1 mb.(jpg, jpeg, PNG)/ Rest all documents
+                          less than 5 mb (jpg, jpeg, PNG, pdf)
+                        </p>
+                        <input
+                          type="file"
+                          name="passport"
+                          accept="image/png,image/jpeg,image/jpg"
+                          onChange={(e) => onChangImage(e.target.files[0], "passport")}
+                        />
+                      </div>
+                      }
+                  
+                    {
+                      formdata?.license === 'N/A' || formdata?.license === 'Permanent' ? <div className="photo-upload-from">
                         <p>
                           2. Driving License
                           (Not valid
@@ -3419,7 +3441,7 @@ const User = ({ getNewCount, title }) => {
                         </div>
                       </div>
                     )}
-                    {formdata?.license === 'N/A' ?
+                    {formdata?.license === 'N/A'  ?
                       formdata?.passport ?
                         <div className="next-step-alignment">
                           <button
@@ -3512,12 +3534,12 @@ const User = ({ getNewCount, title }) => {
                             }
                             checked={dicloser}
                           />
-                          <div
+                          <a
                             className="s"
                             onClick={() => setModalOpen(!modalOpen)}
                           >
                             Disclaimer Notice
-                          </div>
+                          </a>
                         </div>
                         {dicloser && (
                           <PaymentData
@@ -3546,12 +3568,12 @@ const User = ({ getNewCount, title }) => {
                             }
                             checked={dicloser}
                           />
-                          <div
+                          <a
                             className="s"
                             onClick={() => setModalOpen(!modalOpen)}
                           >
                             Disclaimer Notice
-                          </div>
+                          </a>
                         </div>
                       </div>
                     )}

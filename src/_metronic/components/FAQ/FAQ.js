@@ -236,6 +236,11 @@ const FAQ = ({ getNewCount, title }) => {
       selector: row => row?.createdAt,
     },
     {
+      name: "Cateory",
+      sortable: true,
+      selector: row => row?.fcid?.name ? row?.fcid?.name : '-',
+    },
+    {
       name: "Question",
       sortable: true,
       selector: row => row?.question,
