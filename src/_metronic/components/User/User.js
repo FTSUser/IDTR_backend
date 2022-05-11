@@ -1832,7 +1832,14 @@ const User = ({ getNewCount, title }) => {
         toast.error(`Sorry! PIN must be specified`);
         seterrorShow("PIN");
         settypeTrueFalseform(true);
-      } else if (formdata.phone === "") {
+
+      }
+      else if (formdata.pin.length !== 6) {
+        toast.error(`Sorry! PIN Not Valid must be specified`);
+        seterrorShow("PIN Not Valid");
+        settypeTrueFalseform(true);
+      }
+      else if (formdata.phone === "") {
         toast.error(`Sorry! Phone must be specified`);
         seterrorShow("Phone");
         settypeTrueFalseform(true);
@@ -2531,9 +2538,9 @@ const User = ({ getNewCount, title }) => {
                 <div className="breadcrumbs-alignment"></div>
                 <div className="page-title-alignment">
                   <h1>Driver Training Course Registration Portal</h1>
-                  <div>
+                  {/* <div>
                     {seconds}
-                  </div>
+                  </div> */}
                 </div>
                 <div className="tab-design">
                   <ul>

@@ -276,10 +276,12 @@ const FAQ = ({ getNewCount, title }) => {
                   setIsEdit(true);
                   setIdForUpdateFAQData(row._id);
                   setAnswer(row?.answer);
+                  getAllVehicleCategory();
+
                   setInputValueForAdd({
                     question: row?.question,
                     answer: row?.answer,
-                    fcid: row?.fcid
+                    fcid: row?.fcid?._id
                   });
 
                 }}

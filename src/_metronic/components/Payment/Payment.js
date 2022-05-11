@@ -124,6 +124,16 @@ const Payment = ({ getNewCount, title }) => {
       // width: "65px",
     },
     {
+      name: "Booking ID",
+      cell: (row) => {
+        return <span>{row?.paymentId === null ? "-" : row?.paymentId}</span>;
+      },
+      selector: (row) => row?.paymentId,
+      sortable: true,
+
+      // width: "65px",
+    },
+    {
       name: "User Name",
       cell: (row) => {
         return (

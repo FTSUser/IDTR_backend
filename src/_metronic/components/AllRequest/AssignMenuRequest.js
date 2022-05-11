@@ -181,7 +181,7 @@ const AssignMenuRequest = ({ getNewCount, title }) => {
     };
 
     const handleDeleteCourseName = () => {
-      
+
         if (acceptStatus == false) {
             const data = {
                 id: idForDeleteCourseName,
@@ -366,7 +366,7 @@ const AssignMenuRequest = ({ getNewCount, title }) => {
                             </Tooltip>
                         </div>
                         <>
-                            <div
+                            {/* <div
                                 className="cursor-pointer pl-2"
                                 onClick={() => {
                                     setIsViewMoreAboutus(true);
@@ -377,7 +377,7 @@ const AssignMenuRequest = ({ getNewCount, title }) => {
                                 <Tooltip title="Show More" arrow>
                                     <InfoOutlinedIcon />
                                 </Tooltip>
-                            </div>
+                            </div> */}
                         </>
                     </>
                 );
@@ -729,60 +729,74 @@ const AssignMenuRequest = ({ getNewCount, title }) => {
                         </IconButton>
                     </Toolbar>
                     <List>
-                     
+
                         {isViewMoreAboutus === true ? (
                             <>
 
                                 {
-                                    dataViewMore?.part == "startCourse" &&
+                                    dataViewMore?.part == "AssignMenu" &&
                                     <>
                                         <div className="honda-container">
                                             <div className="other-information-child-text-style1">
                                                 <h2>All Request Information</h2>
                                             </div>
-                                            <div className="honda-text-grid12 honda-text-grid-border">
-                                                <div className="honda-text-grid-items">
-                                                    <span>Part:</span>
-                                                    <p
-                                                        dangerouslySetInnerHTML={{
-                                                            __html: dataViewMore?.part,
-                                                        }}
-                                                        className=""
-                                                    />
+                                            <div>
+                                                <div className="other-information-child-text-style1">
+                                                    <h2>Content pending for approval </h2>
                                                 </div>
-                                                <div className="honda-text-grid-items">
-                                                    <span>Purpose:</span>
-                                                    <p
-                                                        dangerouslySetInnerHTML={{
-                                                            __html: dataViewMore?.purpose,
-                                                        }}
-                                                        className=""
-                                                    />
+                                                <div className="honda-text-grid12 honda-text-grid-border">
+                                                    <div className="honda-text-grid-items">
+                                                        <span>Part:</span>
+                                                        <p
+                                                            dangerouslySetInnerHTML={{
+                                                                __html: dataViewMore?.part,
+                                                            }}
+                                                            className=""
+                                                        />
+                                                    </div>
+                                                    <div className="honda-text-grid-items">
+                                                        <span>Purpose:</span>
+                                                        <p
+                                                            dangerouslySetInnerHTML={{
+                                                                __html: dataViewMore?.purpose,
+                                                            }}
+                                                            className=""
+                                                        />
+                                                    </div>
+                                                    <div className="honda-text-grid-items">
+                                                        <span>menu:</span>
+                                                        <p
+                                                            dangerouslySetInnerHTML={{
+                                                                __html: dataViewMore?.menu,
+                                                            }}
+                                                            className=""
+                                                        />
+                                                    </div>
+
                                                 </div>
-                                                <div className="honda-text-grid-items">
-                                                    <span>TitleName:</span>
-                                                    <p
-                                                        dangerouslySetInnerHTML={{
-                                                            __html: dataViewMore?.titleName,
-                                                        }}
-                                                        className=""
-                                                    />
+                                            </div>
+
+                                            <div>
+                                                <div className="other-information-child-text-style1">
+                                                    <h2>Existing content  </h2>
                                                 </div>
-                                                <div className="honda-text-grid-items">
-                                                    <span>Description:</span>
-                                                    <p
-                                                        dangerouslySetInnerHTML={{
-                                                            __html: dataViewMore?.description,
-                                                        }}
-                                                        className=""
-                                                    />
-                                                </div>
-                                                <div className="honda-text-grid-items">
-                                                    <span>Image:</span>
-                                                    <img src={dataViewMore?.image} alt="" />
+                                                <div className="honda-text-grid12 honda-text-grid-border">
+                                                  
+                                                    <div className="honda-text-grid-items">
+                                                        <span>menu:</span>
+                                                        <p
+                                                            dangerouslySetInnerHTML={{
+                                                                __html: dataViewMore?.oldData?.menu,
+                                                            }}
+                                                            className=""
+                                                        />
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
+
+
 
 
                                     </>
