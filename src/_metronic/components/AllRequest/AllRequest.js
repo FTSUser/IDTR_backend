@@ -271,7 +271,16 @@ const AllRequest = ({ getNewCount, title }) => {
         {
             name: "Date",
             cell: (row) => {
-                return <span>{moment(row?.createdAt).format("LLL")}</span>;
+                return <span>{moment(row?.createdAt).format("ll")}</span>;
+            },
+            selector: (row) => row?.createdAt,
+            sortable: true,
+            // width: "65px",
+        },
+        {
+            name: "Time",
+            cell: (row) => {
+                return <span>{moment(row?.createdAt).format("LT")}</span>;
             },
             selector: (row) => row?.createdAt,
             sortable: true,

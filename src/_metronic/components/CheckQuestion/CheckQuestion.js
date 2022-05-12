@@ -917,6 +917,7 @@ const CheckTest = ({ getNewCount, title }) => {
                         <div className="paddingautos">
                           {data?.Option.map((record, i) => (
                             <>
+                            {console.log("data-----",data)}
                               {data.type === "mcq" ? (
                                 <>
                                   <div

@@ -278,6 +278,15 @@ const AssignMenuRequest = ({ getNewCount, title }) => {
             // width: "65px",
         },
         {
+            name: "Time",
+            cell: (row) => {
+                return <span>{moment(row?.createdAt).format("LT")}</span>;
+            },
+            selector: (row) => row?.createdAt,
+            sortable: true,
+            // width: "65px",
+        },
+        {
             name: "Part",
             selector: "part",
             sortable: true,
