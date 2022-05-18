@@ -1172,6 +1172,8 @@ const TakeTest = ({ getNewCount, title }) => {
           ExaminerName: registerUser?.batch?.Examiner?.name,
           ExaminerUserID: registerUser?.batch?.Examiner?._id,
           TestAttendanceStatus: registerUser?.uid?.isAttendence,
+          TestAttendanceStatus: registerUser?.uid?.isAttendence,
+          TestAttendanceTimeStamp: moment(registerUser?.uid?.updatedAt).format("ll"),
           TestLanguage: registerUser?.Esid?.language,
           TotalQuestions: registerUser?.Esid?.no,
         };

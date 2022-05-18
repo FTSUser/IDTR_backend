@@ -51,7 +51,7 @@ const FAQ = ({ getNewCount, title }) => {
   const [filteredVehicleCategory, setFilteredVehicleCategory] = useState({});
 
   useEffect(() => {
-    document.title = "Honda | FAQ Section";
+    document.title = "Honda | ";
   }, []);
 
   const handleOnChnageAdd = (e) => {
@@ -236,7 +236,7 @@ const FAQ = ({ getNewCount, title }) => {
       selector: row => row?.createdAt,
     },
     {
-      name: "Cateory",
+      name: "Category",
       sortable: true,
       selector: row => row?.fcid?.name ? row?.fcid?.name : '-',
     },
