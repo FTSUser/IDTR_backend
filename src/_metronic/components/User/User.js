@@ -1483,7 +1483,7 @@ const User = ({ getNewCount, title }) => {
       validTill: formdata.license === "N/A" ? "" : formdata.validDate,
       Authority: "Haryana",
       passportPhoto: formdata.passport,
-      drivingLicense: formdata.driviniglicencephoto,
+      drivingLicense: formdata.driviniglicencephoto ? formdata.driviniglicencephoto : null,
       IDproof: formdata.idProof,
       medicalCertificate: formdata.mediacalCertificate,
       bloodGroup: formdata.bloodgroup,

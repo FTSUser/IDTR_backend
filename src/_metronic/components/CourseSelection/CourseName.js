@@ -267,10 +267,10 @@ const CourseName = ({ getNewCount, title }) => {
     //   errorsForAdd["Validity"] = "*Please Enter Validity!";
     // }
 
-    if (inputValueForAdd && !inputValueForAdd.SystemRequirement) {
-      formIsValid = false;
-      errorsForAdd["SystemRequirement"] = "*Please Enter System Requirement!";
-    }
+    // if (inputValueForAdd && !inputValueForAdd.SystemRequirement) {
+    //   formIsValid = false;
+    //   errorsForAdd["SystemRequirement"] = "*Please Enter System Requirement!";
+    // }
 
     if (inputValueForAdd && !inputValueForAdd.Certificate) {
       formIsValid = false;
@@ -297,7 +297,7 @@ const CourseName = ({ getNewCount, title }) => {
         certificate: inputValueForAdd.Certificate,
         documentRequired: inputValueForAdd.DocumentRequired,
         mode: inputValueForAdd.Mode,
-        systemRequirement: inputValueForAdd.SystemRequirement,
+        // systemRequirement: inputValueForAdd.SystemRequirement,
         timing: inputValueForAdd.Timing,
         duration: inputValueForAdd.Duration,
         // validity: inputValueForAdd.Validity,
@@ -352,7 +352,7 @@ const CourseName = ({ getNewCount, title }) => {
         certificate: inputValueForAdd?.Certificate,
         documentRequired: inputValueForAdd?.DocumentRequired,
         mode: inputValueForAdd?.Mode,
-        systemRequirement: inputValueForAdd?.SystemRequirement,
+        // systemRequirement: inputValueForAdd?.SystemRequirement,
         timing: inputValueForAdd?.Timing,
         duration: inputValueForAdd?.Duration,
         // validity: inputValueForAdd?.Validity,
@@ -494,7 +494,7 @@ const CourseName = ({ getNewCount, title }) => {
                     DocumentRequired: row?.documentRequired,
                     displayName: row?.displayName,
                     Mode: row?.mode,
-                    SystemRequirement: row?.systemRequirement,
+                    // SystemRequirement: row?.systemRequirement,
                     Timing: row?.timing,
                     Duration: row?.duration,
                     // Validity: row?.validity,
@@ -647,7 +647,7 @@ const CourseName = ({ getNewCount, title }) => {
           Number: key + 1,
           CreatedAt: moment(registerUser?.createdAt).format("ll"),
           CreatedBy: registerUser?.createdBy,
-          SystemRequirement: registerUser?.systemRequirement,
+          // SystemRequirement: registerUser?.systemRequirement,
           Price: registerUser?.price,
           Mode: registerUser?.mode,
           Duration: registerUser?.duration,
@@ -1277,7 +1277,7 @@ const CourseName = ({ getNewCount, title }) => {
                   </div>
                 </div> */}
 
-                <div className="form-group row">
+                {/* <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter system requirement
                   </label>
@@ -1304,7 +1304,7 @@ const CourseName = ({ getNewCount, title }) => {
                       {errorsForAdd["SystemRequirement"]}
                     </span>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -1476,7 +1476,7 @@ const CourseName = ({ getNewCount, title }) => {
                       className=""
                     />
                   </div> */}
-                  <div className="honda-text-grid-items">
+                  {/* <div className="honda-text-grid-items">
                     <p>System Requirement:</p>
                     <span
                       dangerouslySetInnerHTML={{
@@ -1484,7 +1484,7 @@ const CourseName = ({ getNewCount, title }) => {
                       }}
                       className=""
                     />
-                  </div>
+                  </div> */}
                   <div className="honda-text-grid-items">
                     <p>Price:</p>
                     <span

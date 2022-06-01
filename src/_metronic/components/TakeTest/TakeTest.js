@@ -1173,7 +1173,7 @@ const TakeTest = ({ getNewCount, title }) => {
           ExaminerUserID: registerUser?.batch?.Examiner?._id,
           TestAttendanceStatus: registerUser?.uid?.isAttendence,
           TestAttendanceStatus: registerUser?.uid?.isAttendence,
-          TestAttendanceTimeStamp: moment(registerUser?.uid?.updatedAt).format("ll"),
+          TestAttendanceTimeStamp: moment(registerUser?.uid?.updatedAt).format("lll"),
           TestLanguage: registerUser?.Esid?.language,
           TotalQuestions: registerUser?.Esid?.no,
         };
@@ -1692,7 +1692,7 @@ const TakeTest = ({ getNewCount, title }) => {
                                   handleSubjectSelect(userByAttendece, "id", e)
                                 }
                                 checked={
-                                  selectedTopSubjects?.length ===
+                                  selectedTopSubjects?.length ==
                                     userByAttendece.length
                                     ? true
                                     : false
