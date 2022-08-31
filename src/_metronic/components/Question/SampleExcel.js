@@ -14,7 +14,7 @@ export const ExportCSV = () => {
         "id": "_id",
         "questiontype": "checkbox or mcq",
         "language": "hindi or english",
-        "question": "question name",
+        "questionName": "question name",
         "option": "option",
         "correctanswer": "0 or 1",
         "QuestionCategory": "QuestionCategory id",
