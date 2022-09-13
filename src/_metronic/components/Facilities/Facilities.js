@@ -251,7 +251,7 @@ const Facilities = ({ getNewCount, title }) => {
     };
 
     const getImageArrayFromUpload = async (e) => {
-        console.log("e.target.files", e.target.files);
+      
         uploadS3bucketForUpdate(e.target.files[0]);
     };
 
@@ -965,9 +965,7 @@ const Facilities = ({ getNewCount, title }) => {
                         {isViewMoreHelpfulTips === true ? (
 
                             <div className="honda-container">
-                                {
-                                    console.log("dataViewMore", dataViewMore)
-                                }
+                             
                                 <div className="other-information-child-text-style1">
                                     <h2>Images</h2>
                                 </div>

@@ -98,7 +98,7 @@ const Request = ({ getNewCount, title }) => {
                 getAllFAQ()
             })
             .catch((err) => {
-                console.log(err);
+               
                 toast.error(err);
             });
     };
@@ -112,7 +112,7 @@ const Request = ({ getNewCount, title }) => {
                 getAllFAQ()
             })
             .catch((err) => {
-                console.log(err);
+               
                 toast.error(err);
             });
     };

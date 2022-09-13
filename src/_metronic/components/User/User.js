@@ -1044,7 +1044,7 @@ const User = ({ getNewCount, title }) => {
     // {
     //   name: "Actions",
     //   cell: (row) => {
-    //     console.log(" fsdfsdfsdfs", row);
+    
     //     return (
     //       <>
     //         <div

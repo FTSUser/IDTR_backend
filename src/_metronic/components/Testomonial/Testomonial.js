@@ -143,6 +143,10 @@ const Testomonial = ({ getNewCount, title }) => {
       formIsValid = false;
       errorsForAdd["image"] = "*Please Upload Image!";
     }
+    if (inputValueForAdd && !inputValueForAdd.language) {
+      formIsValid = false;
+      errorsForAdd["language"] = "*Please select language!";
+    }
 
     setErrorsForAdd(errorsForAdd);
     return formIsValid;
@@ -154,6 +158,7 @@ const Testomonial = ({ getNewCount, title }) => {
       let Data = {
         titleName: inputValueForAdd.titleName,
         description: description,
+        language :inputValueForAdd.language,
         image: inputValueForAdd.image,
       };
       ApiPost(`testomonial/addTestominial`, Data)
@@ -265,6 +270,7 @@ const Testomonial = ({ getNewCount, title }) => {
       formIsValid = false;
       errors["image"] = "*Please Upload Image!";
     }
+   
     setErrors(errors);
     return formIsValid;
   };
@@ -376,13 +382,14 @@ const Testomonial = ({ getNewCount, title }) => {
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
-                  setIsUpdateTestomonial(true);
-                  setIdForUpdateTestomonialData(row._id);
+                  
                   setInputValue({
                     titleName: row?.titleName,
                     image: row?.image,
                     titleName: row?.titleName
                   });
+                  setIsUpdateTestomonial(true);
+                  setIdForUpdateTestomonialData(row._id);
 
                   setDescription(row?.description);
                 }}
@@ -687,6 +694,38 @@ const Testomonial = ({ getNewCount, title }) => {
                     </span>
                   </div>
                 </div>
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Language
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <div>
+                      <select
+                        className={`form-control form-control-lg form-control-solid`}
+                        name="language"
+                        value={inputValueForAdd.language}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
+                      >
+                        <option>Select Language Type</option>
+                        <option value="Hindi">Hindi </option>
+                        <option value="English">English</option>
+                      </select>
+                    </div>
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["language"]}
+                    </span>
+                  </div>
+
+               
+                </div>
 
                 <div className="d-flex align-items-center justify-content-center">
                   <button
@@ -788,10 +827,17 @@ const Testomonial = ({ getNewCount, title }) => {
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
-                    Image
+                   UPDATE Image
                   </label>
                   <div className="col-lg-9 col-xl-6">
                     <div>
+                    </div>
+                  
+                    <img
+                    src={inputValue?.image}
+                    alt=""
+                    className="cmsImage"
+                  />
                       <input
                         type="file"
                         className={`form-control form-control-lg form-control-solid `}
@@ -804,7 +850,7 @@ const Testomonial = ({ getNewCount, title }) => {
                         accept="image/*"
                         required
                       />
-                    </div>
+                   
                     <span
                       style={{
                         color: "red",

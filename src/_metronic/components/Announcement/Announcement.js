@@ -176,7 +176,10 @@ const Announcement = ({ getNewCount, title }) => {
       formIsValid = false;
       errorsForAdd["type"] = "*Please enter type!";
     }
-
+    if (inputValueForAdd && !inputValueForAdd.language) {
+      formIsValid = false;
+      errorsForAdd["language"] = "*Please select language!";
+    }
     if (!description) {
       formIsValid = false;
       errorsForAdd["description"] = "*Please enter description!";
@@ -199,6 +202,7 @@ const Announcement = ({ getNewCount, title }) => {
         type: inputValueForAdd.type,
         description: description,
         image: inputValueForAdd.image,
+        language :inputValueForAdd.language
       };
       ApiPost(`Announcement/addAnnouncement`, Data)
         .then((res) => {
@@ -553,6 +557,7 @@ const Announcement = ({ getNewCount, title }) => {
                     name: row?.name,
                     type: row?.type,
                     image: row?.image,
+                    language :row?.language
                   });
                 }}
               >
@@ -979,7 +984,38 @@ const Announcement = ({ getNewCount, title }) => {
                     </span> */}
                   </div>
                 </div>
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Language
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <div>
+                      <select
+                        className={`form-control form-control-lg form-control-solid`}
+                        name="language"
+                        value={inputValueForAdd.language}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
+                      >
+                        <option>Select Language Type</option>
+                        <option value="Hindi">Hindi </option>
+                        <option value="English">English</option>
+                      </select>
+                    </div>
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["language"]}
+                    </span>
+                  </div>
 
+               
+                </div>
                 <div className="d-flex align-items-center justify-content-center">
                   <button
                     onClick={(e) => {

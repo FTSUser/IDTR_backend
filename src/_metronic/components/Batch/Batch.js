@@ -622,7 +622,6 @@ const Batch = ({ getNewCount, title }) => {
       .catch((err) => {
         setIsLoaderVisible(false);
 
-        console.log("err", err);
       });
   }
 
@@ -647,7 +646,7 @@ const Batch = ({ getNewCount, title }) => {
       })
       .catch((err) => {
         // toast.error(err?.message);
-        console.log(err?.message);
+     
       });
   };
 
@@ -658,7 +657,7 @@ const Batch = ({ getNewCount, title }) => {
         setAllDataForResultDownload(res?.data?.payload?.findResponse);
       })
       .catch((err) => {
-        console.log(err?.message);
+
       });
   };
 
@@ -669,7 +668,7 @@ const Batch = ({ getNewCount, title }) => {
         setAllDataForAttendance(res?.data?.payload?.findResponse);
       })
       .catch((err) => {
-        console.log(err?.message);
+    
       });
   };
 
@@ -814,7 +813,7 @@ const Batch = ({ getNewCount, title }) => {
   // const getResultData = async (id) => {
   //   await ApiGet(`response/getResponseByUser/${id}`)
   //     .then((res) => {
-  //       console.log("loglog", res?.data?.payload);
+  
   //       // setResultData(res?.data?.payload?.user);
   //     })
   //     .catch((err) => {
@@ -1060,7 +1059,7 @@ const Batch = ({ getNewCount, title }) => {
     // {
     //   name: "Test Data",
     //   cell: (row) => {
-    //     console.log(" fsdfsdfsdfs", row);
+    
     //     return (
     //       <>
     //         {row?.completeResponse && (

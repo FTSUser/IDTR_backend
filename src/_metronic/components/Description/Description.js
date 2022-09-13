@@ -144,6 +144,10 @@ const Description = ({ getNewCount, title }) => {
       formIsValid = false;
       errorsForAdd["description"] = "*Please Enter Description!";
     }
+    if (inputValueForAdd && !inputValueForAdd.language) {
+      formIsValid = false;
+      errorsForAdd["language"] = "*Please Select language!";
+    }
 
     setErrorsForAdd(errorsForAdd);
     return formIsValid;
@@ -155,6 +159,7 @@ const Description = ({ getNewCount, title }) => {
       let Data = {
         titleName: inputValueForAdd.titleName,
         description: description,
+        language:inputValueForAdd.language
       };
       ApiPost(`content/addContent`, Data)
         .then((res) => {
@@ -187,6 +192,10 @@ const Description = ({ getNewCount, title }) => {
     if (!description) {
       formIsValid = false;
       errors["description"] = "*Please Enter Description!";
+    }
+    if (inputValue && !inputValue.language) {
+      formIsValid = false;
+      errorsForAdd["language"] = "*Please Select language!";
     }
 
     setErrors(errors);
@@ -224,6 +233,7 @@ const Description = ({ getNewCount, title }) => {
       let Data = {
         titleName: inputValue.titleName,
         description: description,
+        language:inputValue.language
       };
       ApiPut(
         `content/updateContent/${idForUpdateAnnouncementData}`,
@@ -454,7 +464,7 @@ const Description = ({ getNewCount, title }) => {
                 />
               </div>
             </div>
-            {/* <div className="cus-medium-button-style button-height">
+            <div className="cus-medium-button-style button-height">
               <button
                 onClick={() => {
                   setIsAddAnnouncement(true);
@@ -463,7 +473,7 @@ const Description = ({ getNewCount, title }) => {
               >
                 Add Banner Description
               </button>
-            </div> */}
+            </div>
           </div>
 
           {/* delete model */}
@@ -628,6 +638,39 @@ const Description = ({ getNewCount, title }) => {
                       {errorsForAdd["description"]}
                     </span>
                   </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Language
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <div>
+                      <select
+                        className={`form-control form-control-lg form-control-solid`}
+                        name="language"
+                        value={inputValueForAdd.language}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
+                      >
+                        <option>Select Language Type</option>
+                        <option value="Hindi">Hindi </option>
+                        <option value="English">English</option>
+                      </select>
+                    </div>
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["language"]}
+                    </span>
+                  </div>
+
+               
                 </div>
 
 

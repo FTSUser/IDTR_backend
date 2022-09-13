@@ -210,14 +210,14 @@ export const ApiGet = (type) => {
 
 export const ApiPost = (type, userData, AdditionalHeader) => {
     return new Promise((resolve, reject) => {
-        // console.log("dataBody", userData);
+       
         axios
             .post(BaseURL + type, userData, {
                 ...getHttpOptions(),
                 ...AdditionalHeader,
             })
             .then((responseJson) => {
-                // console.log("responseJson",responseJson);
+              
                 resolve(responseJson);
             })
             .catch((error) => {
@@ -232,11 +232,10 @@ export const ApiPost = (type, userData, AdditionalHeader) => {
                     error.response.data.hasOwnProperty("error") &&
                     error.response.data.error
                 ) {
-                    console.log("reject");
+                  
                     reject(error.response.data.error);
                 } else {
-                    console.log("reject", error);
-
+                   
                     reject(error);
                 }
             });
@@ -360,8 +359,7 @@ export const ApiGetBuffer = (url) => {
         })
             .then((response) => {
                 if (response.ok) {
-                    console.log(response.headers.get("content-type"));
-                    console.log(response);
+                  
                     return response.buffer();
                 } else {
                     resolve(null);

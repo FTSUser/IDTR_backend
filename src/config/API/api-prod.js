@@ -1,5 +1,6 @@
 // const protocol = "http";
-// const host = "192.168.29.128:8001/api/v1";
+// const host = "localhost:8001/api/v1";
+
 const protocol = "https";
 const host = "api.honda.rejoicehub.com/api/v1";
 

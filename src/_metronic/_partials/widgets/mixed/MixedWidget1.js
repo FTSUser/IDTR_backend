@@ -32,12 +32,12 @@ export function MixedWidget1({ className }) {
   //   // if (userInfo?.admin?.role === "superadmin") {
   //   await ApiGet(`user/count`)
   //     .then((res) => {
-  //       console.log("getcountAdmin", res);
+ 
   //       setCountData(res?.data?.payload);
   //       // setMonthData(res?.data?.payload?.countProperty);
   //     })
   //     .catch((err) => {
-  //       console.log(err);
+ 
   //     });
   //   // }
   // };

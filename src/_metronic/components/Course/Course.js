@@ -149,6 +149,10 @@ const Course = ({ getNewCount, title }) => {
             formIsValid = false;
             errorsForAdd["image"] = "*Please Upload Image!";
         }
+        if (inputValueForAdd && !inputValueForAdd.language) {
+            formIsValid = false;
+            errorsForAdd["language"] = "*Please Select Language!";
+        }
 
 
 
@@ -172,6 +176,7 @@ const Course = ({ getNewCount, title }) => {
                 titleName: inputValueForAdd.titleName,
                 description: description,
                 image: inputValueForAdd.image,
+                language:inputValueForAdd.language
             };
             ApiPost(`startCourse/addstartCourse`, Data)
                 .then((res) => {
@@ -342,6 +347,7 @@ const Course = ({ getNewCount, title }) => {
             formIsValid = false;
             errors["image"] = "*Please Upload Image!";
         }
+     
 
         setErrors(errors);
         return formIsValid;
@@ -380,6 +386,7 @@ const Course = ({ getNewCount, title }) => {
                 titleName: inputValue.titleName,
                 description: description,
                 image: inputValue.image,
+             
 
             };
             ApiPut(`startCourse/updatestartCourse/${idForUpdateHelpfulTipsData}`, Data)
@@ -652,7 +659,7 @@ const Course = ({ getNewCount, title }) => {
                                 />
                             </div>
                         </div>
-                        {/* <div className="cus-medium-button-style button-height">
+                        <div className="cus-medium-button-style button-height">
                             <button
                                 onClick={() => {
                                     setIsAddHelpfulTips(true);
@@ -661,7 +668,7 @@ const Course = ({ getNewCount, title }) => {
                             >
                                 Add HelpfulTips
                             </button>
-                        </div> */}
+                        </div>
                     </div>
 
                     {/* delete model */}
@@ -849,6 +856,39 @@ const Course = ({ getNewCount, title }) => {
                                     </div>
                                 </div>
 
+                                 <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Language
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <div>
+                      <select
+                        className={`form-control form-control-lg form-control-solid`}
+                        name="language"
+                        value={inputValueForAdd.language}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
+                      >
+                        <option>Select Language Type</option>
+                        <option value="Hindi">Hindi </option>
+                        <option value="English">English</option>
+                      </select>
+                    </div>
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["language"]}
+                    </span>
+                  </div>
+
+               
+                </div>
+
 
 
                                 <div className="d-flex align-items-center justify-content-center">
@@ -979,7 +1019,7 @@ const Course = ({ getNewCount, title }) => {
                                         </span>
                                     </div>
                                 </div>
-
+                      
 
 
                                 <div className="d-flex align-items-center justify-content-center">

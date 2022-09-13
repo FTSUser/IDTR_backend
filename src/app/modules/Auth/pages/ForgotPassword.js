@@ -109,7 +109,7 @@ function ForgotPassword() {
   //         } else {
   //           //    M.toast({html:data.message,classes:"#43a047 green darken-1"})
 
-  //           console.log("newemail",data.message)
+
   //           toast.success(data.message);
 
   //           history.push("/email");
@@ -117,7 +117,7 @@ function ForgotPassword() {
   //         }
   //       })
   //       .catch((err) => {
-  //         console.log(err);
+  
   //       });
   //   }
   // };

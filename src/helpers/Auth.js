@@ -49,7 +49,7 @@ class Auth {
   static getAdminDetail() {
     // return sessionStorage.getItem(STORAGEKEY.token);\
     const localdata=localstorageUtil.get_data("Admininfo");
-    // console.log("Localdata ",localdata)
+   
     if(localdata === (null || undefined))
       return "";
     return localdata;
@@ -57,7 +57,7 @@ class Auth {
   static getUserDetail() {
     // return sessionStorage.getItem(STORAGEKEY.token);\
     const localdata=localstorageUtil.get_data("userinfo");
-    // console.log("Localdata ",localdata)
+    
     if(localdata === (null || undefined))
       return "";
     return localdata;
@@ -65,7 +65,7 @@ class Auth {
   static getWorkshopDetail() {
     // return sessionStorage.getItem(STORAGEKEY.token);\
     const localdata=localstorageUtil.get_data("workshopinfo");
-    // console.log("Localdata ",localdata)
+  
     if(localdata === (null || undefined))
       return "";
     return localdata;
@@ -73,7 +73,7 @@ class Auth {
   static getVendorDetail() {
     // return sessionStorage.getItem(STORAGEKEY.token);\
     const localdata=localstorageUtil.get_data("vendorinfo");
-    // console.log("Localdata ",localdata)
+   
     if(localdata === (null || undefined))
       return "";
     return localdata;

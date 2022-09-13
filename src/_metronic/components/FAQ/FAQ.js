@@ -128,6 +128,10 @@ const FAQ = ({ getNewCount, title }) => {
       formIsValid = false;
       errorsForAdd["fcid"] = "*Please Enter FAQ Category!";
     }
+    if (inputValueForAdd && !inputValueForAdd.language) {
+      formIsValid = false;
+      errorsForAdd["language"] = "*Please select language!";
+    }
     if (!answer) {
       formIsValid = false;
       errorsForAdd["answer"] = "*Please Enter Answer!";
@@ -142,7 +146,8 @@ const FAQ = ({ getNewCount, title }) => {
       let Data = {
         question: inputValueForAdd.question,
         answer: answer,
-        fcid: inputValueForAdd.fcid
+        fcid: inputValueForAdd.fcid,
+        language :inputValueForAdd.language
       };
       ApiPost(`faq/addFAQ`, Data)
         .then((res) => {
@@ -184,7 +189,6 @@ const FAQ = ({ getNewCount, title }) => {
         toast.error(err?.response?.data?.message)
       });
   };
-
 
   const handleUpdateFAQDetails = (e) => {
     e.preventDefault();
@@ -272,17 +276,19 @@ const FAQ = ({ getNewCount, title }) => {
               <div
                 className="cursor-pointer pl-2"
                 onClick={() => {
+                
+
+                  setInputValueForAdd({
+                    question: row?.question,
+                    language:row?.language,
+                    answer: row?.answer,
+                    fcid: row?.fcid?._id,
+                  });
                   setIsAddFAQ(true);
                   setIsEdit(true);
                   setIdForUpdateFAQData(row._id);
                   setAnswer(row?.answer);
                   getAllVehicleCategory();
-
-                  setInputValueForAdd({
-                    question: row?.question,
-                    answer: row?.answer,
-                    fcid: row?.fcid?._id
-                  });
 
                 }}
               >
@@ -600,6 +606,39 @@ const FAQ = ({ getNewCount, title }) => {
                     </span>
                   </div>
                 </div>
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Language
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <div>
+                      <select
+                        className={`form-control form-control-lg form-control-solid`}
+                        name="language"
+                        value={inputValueForAdd.language}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
+                      >
+                        <option>Select Language Type</option>
+                        <option value="Hindi">Hindi </option>
+                        <option value="English">English</option>
+                      </select>
+                    </div>
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["language"]}
+                    </span>
+                  </div>
+
+               
+                </div>
+
                 <div className="d-flex align-items-center justify-content-center">
                   <button
                     onClick={(e) => {

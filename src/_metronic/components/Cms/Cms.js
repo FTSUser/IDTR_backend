@@ -78,11 +78,9 @@ const Cms = ({ getNewCount, title }) => {
     setDataViewMore({});
   };
 
-  useEffect(() => {
-  }, [inputValueForAdd]);
+  useEffect(() => {}, [inputValueForAdd]);
 
-  useEffect(() => {
-  }, [idForEditStatus]);
+  useEffect(() => {}, [idForEditStatus]);
 
   const handleAdminUpdateClose = () => {
     setInputValue({});
@@ -113,8 +111,7 @@ const Cms = ({ getNewCount, title }) => {
           setFilteredCms(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     } else {
       await ApiGet(
         `cms/getAllCMS?search=${search}&page=${page}&limit=${countPerPage}`
@@ -124,8 +121,7 @@ const Cms = ({ getNewCount, title }) => {
           setFilteredCms(res?.data?.payload?.Question);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     }
   };
 
@@ -136,6 +132,7 @@ const Cms = ({ getNewCount, title }) => {
       formIsValid = false;
       errorsForAdd["titleName"] = "*Please Enter Title!";
     }
+   
     if (!description) {
       formIsValid = false;
       errorsForAdd["description"] = "*Please Enter Description!";
@@ -143,6 +140,10 @@ const Cms = ({ getNewCount, title }) => {
     if (inputValueForAdd && !inputValueForAdd.image) {
       formIsValid = false;
       errorsForAdd["image"] = "*Please Upload Image!";
+    }
+    if (inputValueForAdd && !inputValueForAdd.language) {
+      formIsValid = false;
+      errorsForAdd["language"] = "*Please select language!";
     }
 
     setErrorsForAdd(errorsForAdd);
@@ -156,6 +157,7 @@ const Cms = ({ getNewCount, title }) => {
         titleName: inputValueForAdd.titleName,
         description: description,
         image: inputValueForAdd.image,
+        language :inputValueForAdd.language
       };
       ApiPost(`cms/addCMS`, Data)
         .then((res) => {
@@ -169,8 +171,7 @@ const Cms = ({ getNewCount, title }) => {
             toast.error(res?.data?.message);
           }
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     }
   };
 
@@ -292,8 +293,7 @@ const Cms = ({ getNewCount, title }) => {
       });
   };
 
-  useEffect(() => {
-  }, [inputValue]);
+  useEffect(() => {}, [inputValue]);
 
   const handleUpdateCmsDetails = (e) => {
     e.preventDefault();
@@ -316,8 +316,7 @@ const Cms = ({ getNewCount, title }) => {
             toast.error(res?.data?.message);
           }
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     }
   };
 
@@ -391,7 +390,7 @@ const Cms = ({ getNewCount, title }) => {
                   setInputValue({
                     titleName: row?.titleName,
                     image: row?.image,
-                    titleName: row?.titleName
+                    titleName: row?.titleName,
                   });
 
                   setDescription(row?.description);
@@ -697,6 +696,38 @@ const Cms = ({ getNewCount, title }) => {
                     </span>
                   </div>
                 </div>
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Language
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <div>
+                      <select
+                        className={`form-control form-control-lg form-control-solid`}
+                        name="language"
+                        value={inputValueForAdd.language}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
+                      >
+                        <option>Select Language Type</option>
+                        <option value="Hindi">Hindi </option>
+                        <option value="English">English</option>
+                      </select>
+                    </div>
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["language"]}
+                    </span>
+                  </div>
+
+               
+                </div>
 
                 <div className="d-flex align-items-center justify-content-center">
                   <button
@@ -826,19 +857,49 @@ const Cms = ({ getNewCount, title }) => {
                     </span>
                   </div>
                 </div>
+                <div className="form-group row">
+                  {/* <label className="col-xl-3 col-lg-3 col-form-label">
+                    Language
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <div>
+                      <select
+                        className={`form-control form-control-lg form-control-solid`}
+                        name="type"
+                        value={inputValueForAdd.language}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
+                      >
+                        <option>Select Language Type</option>
+                        <option value="Hindi">Hindi </option>
+                        <option value="English">English</option>
+                      </select>
+                    </div>
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errors["language"]}
+                    </span>
+                  </div> */}
 
-                <div className="d-flex align-items-center justify-content-center">
-                  <button
-                    onClick={(e) => {
-                      handleUpdateCmsDetails(e);
-                    }}
-                    className="btn btn-success mr-2"
-                  >
-                    <span>Update About Us</span>
-                    {loading && (
-                      <span className="mx-3 spinner spinner-white"></span>
-                    )}
-                  </button>
+                  <div className="d-flex align-items-center justify-content-center">
+                    <button
+                      onClick={(e) => {
+                        handleUpdateCmsDetails(e);
+                      }}
+                      className="btn btn-success mr-2"
+                    >
+                      <span>Update About Us</span>
+                      {loading && (
+                        <span className="mx-3 spinner spinner-white"></span>
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
             ) : null}
@@ -872,7 +933,6 @@ const Cms = ({ getNewCount, title }) => {
                   <h2>CMS</h2>
                 </div>
                 <div className="honda-text-grid12 honda-text-grid-border">
-
                   <div className="honda-text-grid-items">
                     <span>Title:</span>
                     <p
@@ -896,12 +956,8 @@ const Cms = ({ getNewCount, title }) => {
                     <p>Image:</p>
                     <img src={dataViewMore?.image} alt="" />
                   </div>
-
                 </div>
               </div>
-
-
-
             ) : null}
           </List>
         </Dialog>

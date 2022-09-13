@@ -149,7 +149,10 @@ const HelpfulTips = ({ getNewCount, title }) => {
       formIsValid = false;
       errorsForAdd["video"] = "*Please Upload video!";
     }
-
+    if (inputValueForAdd && !inputValueForAdd.language) {
+      formIsValid = false;
+      errorsForAdd["language"] = "*Please select language!";
+    }
 
     setErrorsForAdd(errorsForAdd);
     return formIsValid;
@@ -167,7 +170,8 @@ const HelpfulTips = ({ getNewCount, title }) => {
         titleName: inputValueForAdd.titleName,
         description: description,
         image: inputValueForAdd.image,
-        video: inputValueForAdd.video
+        video: inputValueForAdd.video,
+        language :inputValueForAdd.language
       };
       ApiPost(`helpfultips/addTips`, Data)
         .then((res) => {
@@ -483,7 +487,8 @@ const HelpfulTips = ({ getNewCount, title }) => {
                   setInputValue({
                     titleName: row?.titleName,
                     image: row?.image,
-                    video: row?.video
+                    video: row?.video,
+                    language :row?.language
                   });
 
                   setDescription(row?.description);
@@ -820,7 +825,38 @@ const HelpfulTips = ({ getNewCount, title }) => {
                   </div>
                 </div>
 
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Language
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <div>
+                      <select
+                        className={`form-control form-control-lg form-control-solid`}
+                        name="language"
+                        value={inputValueForAdd.language}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
+                      >
+                        <option>Select Language Type</option>
+                        <option value="Hindi">Hindi </option>
+                        <option value="English">English</option>
+                      </select>
+                    </div>
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["language"]}
+                    </span>
+                  </div>
 
+               
+                </div>
                 <div className="d-flex align-items-center justify-content-center">
                   <button
                     onClick={(e) => {

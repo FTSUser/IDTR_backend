@@ -43,7 +43,7 @@ class ComponentToPrintss extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.props;
-    console.log("this.state", this.state);
+  
   }
 
   componentDidMount() {
@@ -342,9 +342,7 @@ const TakeTest = ({ getNewCount, title }) => {
   const [VSCID, setVscId] = useState();
   const [CTID, setCTID] = useState();
   const [CTIDDATA, setCtiddata] = useState();
-  useEffect(() => {
-    console.log("successBatchId", successBatchId);
-  }, [successBatchId])
+
   useEffect(() => {
     if (filteredCategoryByVehicleSubCategory?.length > 0) {
       let storeData = filteredCategoryByVehicleSubCategory.map((item) => {
@@ -537,7 +535,7 @@ const TakeTest = ({ getNewCount, title }) => {
         setAttendenceId(id);
       })
       .catch((err) => {
-        console.log(err);
+       
         toast.error(err);
       });
   };
@@ -574,7 +572,7 @@ const TakeTest = ({ getNewCount, title }) => {
       .catch((err) => {
         setIsLoaderVisible(false);
 
-        console.log("err", err);
+      
       });
   }
 
@@ -602,7 +600,7 @@ const TakeTest = ({ getNewCount, title }) => {
           setCount(res?.data?.payload?.count);
         })
         .catch((err) => {
-          console.log(err);
+         
         });
     } else {
       const data = {
@@ -617,7 +615,7 @@ const TakeTest = ({ getNewCount, title }) => {
           setCount(res?.data?.payload?.count);
         })
         .catch((err) => {
-          console.log(err);
+         
         });
     }
   };
@@ -970,7 +968,7 @@ const TakeTest = ({ getNewCount, title }) => {
         setAllCourseNameExcel(res?.data?.payload?.Examiner);
       })
       .catch((err) => {
-        console.log(err);
+       
       });
     // }
   };
@@ -1148,7 +1146,7 @@ const TakeTest = ({ getNewCount, title }) => {
   useEffect(() => {
     if (allDataForAttendance) {
       allDataForAttendance.map((registerUser, key) => {
-        console.log("registerUser?.batchId?.DataEntry?.email", registerUser);
+      
         let data = {
           Number: key + 1,
           UserID: registerUser?.uid?._id,

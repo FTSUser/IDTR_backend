@@ -268,7 +268,7 @@ const CheckTest = ({ getNewCount, title }) => {
         setUserList(res?.data?.payload);
       })
       .catch((err) => {
-        console.log(err);
+       
       });
   };
 
@@ -302,7 +302,7 @@ const CheckTest = ({ getNewCount, title }) => {
           setCount(res?.data?.payload?.count);
         })
         .catch((err) => {
-          console.log(err);
+         
         });
     } else {
       const data = {
@@ -318,7 +318,7 @@ const CheckTest = ({ getNewCount, title }) => {
           setCount(res?.data?.payload?.count);
         })
         .catch((err) => {
-          console.log(err);
+         
         });
     }
   };
@@ -342,7 +342,7 @@ const CheckTest = ({ getNewCount, title }) => {
       .catch((err) => {
         setIsLoaderVisible(false);
 
-        console.log("err", err);
+       
       });
   }
   let i = 0;
@@ -556,7 +556,7 @@ const CheckTest = ({ getNewCount, title }) => {
         setAllCourseNameExcel(res?.data?.payload?.Examiner);
       })
       .catch((err) => {
-        console.log(err);
+       
       });
     // }
   };
@@ -575,7 +575,7 @@ const CheckTest = ({ getNewCount, title }) => {
         setQuestionData(res?.data?.payload?.Examset);
       })
       .catch((err) => {
-        console.log(err);
+       
         toast.error(err);
       });
   };
@@ -595,7 +595,7 @@ const CheckTest = ({ getNewCount, title }) => {
       })
       .catch((err) => {
         toast.error(err?.message);
-        console.log(err?.message);
+      
       });
   };
 
@@ -917,7 +917,7 @@ const CheckTest = ({ getNewCount, title }) => {
                         <div className="paddingautos">
                           {data?.Option.map((record, i) => (
                             <>
-                            {console.log("data-----",data)}
+                           
                               {data.type === "mcq" ? (
                                 <>
                                   <div

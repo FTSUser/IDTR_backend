@@ -144,6 +144,10 @@ const Information = ({ getNewCount, title }) => {
       formIsValid = false;
       errorsForAdd["name"] = "*Please Enter Name!";
     }
+    if (inputValueForAdd && !inputValueForAdd.language) {
+      formIsValid = false;
+      errorsForAdd["language"] = "*Please Select Language!";
+    }
 
     if (!description) {
       formIsValid = false;
@@ -160,6 +164,7 @@ const Information = ({ getNewCount, title }) => {
       let Data = {
         titleName: inputValueForAdd.titleName,
         description: description,
+        language:inputValueForAdd.language
       };
       ApiPost(`information/addInformation`, Data)
         .then((res) => {
@@ -549,7 +554,38 @@ const Information = ({ getNewCount, title }) => {
                     </span>
                   </div>
                 </div>
+                <div className="form-group row">
+                  <label className="col-xl-3 col-lg-3 col-form-label">
+                    Language
+                  </label>
+                  <div className="col-lg-9 col-xl-6">
+                    <div>
+                      <select
+                        className={`form-control form-control-lg form-control-solid`}
+                        name="language"
+                        value={inputValueForAdd.language}
+                        onChange={(e) => {
+                          handleOnChnageAdd(e);
+                        }}
+                      >
+                        <option>Select Language Type</option>
+                        <option value="Hindi">Hindi </option>
+                        <option value="English">English</option>
+                      </select>
+                    </div>
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["language"]}
+                    </span>
+                  </div>
 
+               
+                </div>
 
                 <div className="d-flex align-items-center justify-content-center">
                   <button

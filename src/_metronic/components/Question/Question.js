@@ -979,7 +979,7 @@ const Question = (props) => {
                         </div>
 
 
-                        <div className="cus-medium-button-style button-height">
+                        {/* <div className="cus-medium-button-style button-height">
                             <CsvDownload
                                 className={`btn btn-success`}
                                 data={dataCSV}
@@ -988,7 +988,7 @@ const Question = (props) => {
                             >
                                 Export to Excel
                             </CsvDownload>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* delete model */}
