@@ -186,11 +186,32 @@ const Payment = ({ getNewCount, title }) => {
       // width: "65px",
     },
     {
-      name: "Payment Amount",
+      name: "Final Total Amount ",
       cell: (row) => {
-        return <span>{row?.cnid === null ? "-" : row?.cnid?.price}</span>;
+        return <span>{row?.price === null ? "-" : row?.price}</span>;
       },
       selector: (row) => row?.createdAt,
+      sortable: true,
+
+      // width: "65px",
+    },
+    {
+      name: "CGST",
+      cell: (row) => {
+        return <span>{row?.cgst === null ? "-" : row?.cgst}</span>;
+      },
+     
+      sortable: true,
+
+      // width: "65px",
+    },
+   
+    {
+      name: "SGST",
+      cell: (row) => {
+        return <span>{row?.sgst === null ? "-" : row?.sgst}</span>;
+      },
+     
       sortable: true,
 
       // width: "65px",

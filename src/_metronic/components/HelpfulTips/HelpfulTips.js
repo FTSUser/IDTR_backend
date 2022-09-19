@@ -642,7 +642,7 @@ const HelpfulTips = ({ getNewCount, title }) => {
             <Modal.Header closeButton>
               <Modal.Title className="text-danger">Alert!</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Are You Sure To Want To delete this HelpfulTips</Modal.Body>
+            <Modal.Body>Are you sure you want to delete this Helpful Tips ?</Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
                 cancel

@@ -39,7 +39,73 @@ import Logo from "./honda.png";
 import { useReactToPrint } from "react-to-print";
 import ReactToPrint from "react-to-print";
 import { addDays } from "date-fns";
+var a = [
+  "",
+  "one ",
+  "two ",
+  "three ",
+  "four ",
+  "five ",
+  "six ",
+  "seven ",
+  "eight ",
+  "nine ",
+  "ten ",
+  "eleven ",
+  "twelve ",
+  "thirteen ",
+  "fourteen ",
+  "fifteen ",
+  "sixteen ",
+  "seventeen ",
+  "eighteen ",
+  "nineteen ",
+];
+var b = [
+  "",
+  "",
+  "twenty",
+  "thirty",
+  "forty",
+  "fifty",
+  "sixty",
+  "seventy",
+  "eighty",
+  "ninety",
+];
 
+function inWords(num) {
+  if (!num) return;
+  if ((num?.toString()).length > 9) return;
+  let n = ("000000000" + num)
+    .substr(-9)
+    .match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+  if (!n) return;
+  var str = "";
+  str +=
+    n[1] != 0
+      ? (a[Number(n[1])] || b[n[1][0]] + " " + a[n[1][1]]) + "crore "
+      : "";
+  str +=
+    n[2] != 0
+      ? (a[Number(n[2])] || b[n[2][0]] + " " + a[n[2][1]]) + "lakh "
+      : "";
+  str +=
+    n[3] != 0
+      ? (a[Number(n[3])] || b[n[3][0]] + " " + a[n[3][1]]) + "thousand "
+      : "";
+  str +=
+    n[4] != 0
+      ? (a[Number(n[4])] || b[n[4][0]] + " " + a[n[4][1]]) + "hundred "
+      : "";
+  str +=
+    n[5] != 0
+      ? (str != "" ? "and " : "") +
+        (a[Number(n[5])] || b[n[5][0]] + " " + a[n[5][1]]) +
+        "only "
+      : "";
+  return str;
+}
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -59,7 +125,458 @@ class ComponentToPrints extends React.Component {
   render() {
     return (
       <>
-        <div class="invoice-box">
+        <table
+          cellpadding="0"
+          cellspacing="0"
+          width="100%"
+          style={{ padding: "30px" }}
+        >
+          <tr>
+            <td style={{ padding: "0px 0 0px 0" }}>
+              <table align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignContent: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <img
+                        style={{ maxWidth: "100px" }}
+                        src="https://i.ibb.co/87cN78k/aa.png"
+                      />
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <img
+                        style={{ maxWidth: "50px" }}
+                        src="https://i.ibb.co/XLg1jLn/rre.png"
+                      />
+                    </div>
+                  </div>
+                </tr>
+                <tr>
+                  <td>
+                    <div style={{ padding: "20px 0 20px 0" }}>
+                      <p
+                        style={{
+                          fontSize: "13px",
+                          lineHeight: "14px",
+                          fontWeight: "600",
+                          color: "#000",
+                          margin: "0 0 5px 0",
+                        }}
+                      >
+                        Institute of Driving Training & Research
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "13px",
+                          lineHeight: "14px",
+                          fontWeight: "600",
+                          color: "#000",
+                          margin: "0 0 5px 0",
+                          maxWidth: "330px",
+                        }}
+                      >
+                        Uchani Village, Baldhi part, Near New Bus Stand Teshil
+                        and District Karnal, Haryana-122001
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "13px",
+                          lineHeight: "14px",
+                          fontWeight: "600",
+                          color: "#000",
+                          margin: "0 0 5px 0",
+                        }}
+                      >
+                        Phone No:
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="first-grid">
+                      <div class="first-grid-items">
+                        <span
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          GST No
+                        </span>
+                      </div>
+                      <div class="first-grid-items">
+                        <span
+                          style={{
+                            fontSize: "14px",
+                            lineHeight: "16px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          SAC Code
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <p
+                        style={{
+                          fontSize: "18px",
+                          lineHeight: "14px",
+                          fontWeight: "600",
+                          color: "#000",
+                          margin: "0 0 5px 0",
+                        }}
+                      >
+                        CANCELLATION RECEIPT
+                      </p>
+                    </div>
+                    <div class="sec-grid">
+                      <div class="sec-grid-items">
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Receipt No. <span>text here..</span>
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Receipt No. <span>text here..</span>
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Trainee Name:{" "}
+                          <span>{`${this.props?.data?.fname} `}</span>
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Address:{" "}
+                          <span>{`${this.props?.data?.address} `}</span>
+                        </p>
+                      </div>
+                      <div class="sec-grid-items">
+                        <div class="three-grid">
+                          <div>
+                            <p>Cancellation Receipt Date:</p>
+                            <p
+                              style={{
+                                fontSize: "13px",
+                                lineHeight: "14px",
+                                fontWeight: "600",
+                                color: "#000",
+                                margin: "0 0 5px 0",
+                              }}
+                            >
+                              S/o
+                            </p>
+                            <p
+                              style={{
+                                fontSize: "13px",
+                                lineHeight: "14px",
+                                fontWeight: "600",
+                                color: "#000",
+                                margin: "0 0 5px 0",
+                              }}
+                            >
+                              Mobile No:{" "}
+                              <span>{`${this.props?.data?.phone} `}</span>
+                            </p>
+                          </div>
+                          <div
+                            style={{
+                              height: "120px",
+                              width: "100%",
+                              backgroundColor: "#000",
+                            }}
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style={{ padding: "30px 0 0px 0" }}></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <table class="new-table-design new-table-design-style">
+                      <thead style={{ border: "1px solid red" }}>
+                        <tr>
+                          <th align="center" width="8%">
+                            Regn No
+                          </th>
+                          <th align="center" width="30%">
+                            Regn Date
+                          </th>
+                          <th align="center" width="20.66">
+                            Course Description/ Name
+                          </th>
+                          <th align="center" width="20.66">
+                            Theory Date <br /> (Time- 8:45 AM)
+                          </th>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td align="center">1</td>
+                        <td>
+                          {moment(this?.props?.data?.createdAt).format(
+                            "DD-MM-YYYY "
+                          )}
+                        </td>
+                        <td align="center">
+                          <span>
+                            {this.props?.data?.courseName[0]?.courseName}
+                          </span>
+                        </td>
+                        <td align="center">
+                          {this?.props?.data?.courseName[0]?.duration}
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style={{ padding: "30px 0 0px 0" }}></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="thee-col-alignment">
+                      <div>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Amount (RS):
+                          <span>{this.props?.data?.paymentHistory?.price}</span>
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Taxable Amount:
+                          <span>{this.props?.data?.paymentHistory?.price}</span>
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Rounded Off:
+                          <span>{this.props?.data?.paymentHistory?.price}</span>
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Amount in Words:
+                          <span>
+                            {inWords(this.props?.data?.paymentHistory?.price)}
+                          </span>
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Discount (Rs):<span>-</span>
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          CGST 9% ( Rs) :
+                          <span>{this.props?.data?.paymentHistory?.cgst}</span>
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Payable Amount :
+                          <span>{this.props?.data?.paymentHistory?.price}</span>
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          SGST 9% ( Rs) :
+                          <span>{this.props?.data?.paymentHistory?.sgst}</span>
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Pay Mode:
+                          <span>{this.props?.data?.paymentType}</span>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style={{ padding: "40px 0 0px 0" }}>
+                      <p>Fot IDTR Karnal:</p>
+                      <span>Note:</span>
+                      <p
+                        style={{
+                          fontSize: "13px",
+                          lineHeight: "14px",
+                          fontWeight: "600",
+                          color: "#000",
+                          margin: "0 0 5px 0",
+                        }}
+                      >
+                        1. 100% refund if cancellation is made 3 days prior to
+                        course commencement
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "13px",
+                          lineHeight: "14px",
+                          fontWeight: "600",
+                          color: "#000",
+                          margin: "0 0 5px 0",
+                        }}
+                      >
+                        2. offline cancellation is not allowed for online
+                        bookings
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "13px",
+                          lineHeight: "14px",
+                          fontWeight: "600",
+                          color: "#000",
+                          margin: "0 0 5px 0",
+                        }}
+                      >
+                        3. Refunds will be processed to customer with in 10-15
+                        days
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "13px",
+                          lineHeight: "14px",
+                          fontWeight: "600",
+                          color: "#000",
+                          margin: "0 0 5px 0",
+                        }}
+                      >
+                        4. No Change/modification is allowed for allocared
+                        training slot.
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style={{ padding: "30px 0 0px 0" }}>
+                      <p
+                        style={{
+                          fontSize: "14px",
+                          lineHeight: "18px",
+                          fontWeight: "600",
+                          color: "#000",
+                          textAlign: "center",
+                        }}
+                      >
+                        ***** This is a computer-generated Invoice and signature
+                        not required *****
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        {/* <div class="invoice-box">
           <table>
             <tr class="top">
               <td colspan="2">
@@ -141,7 +658,7 @@ class ComponentToPrints extends React.Component {
               </td>
             </tr>
           </table>
-        </div>
+        </div> */}
       </>
     );
   }
@@ -184,10 +701,8 @@ const User = ({ getNewCount, title }) => {
   const [idForDeleteAnnouncement, setIdForDeleteAnnouncement] = useState("");
   const [search, setSearch] = useState("");
   const [getAllCourceCategory, setgetAllCourceCategory] = useState({});
-  const [logsData
-    , setLogsData] = useState({});
-  const [logsPostData
-    , setLogsPostData] = useState({});
+  const [logsData, setLogsData] = useState({});
+  const [logsPostData, setLogsPostData] = useState({});
   const [modelForUserLogs, setModelForUserLogs] = useState(false);
   const [dataForUserLogCSV, setDataForUserLogCSV] = useState([]);
 
@@ -201,7 +716,7 @@ const User = ({ getNewCount, title }) => {
 
   const handleCloseForUserLogs = () => {
     setModelForUserLogs(false);
-    setTabs("post")
+    setTabs("post");
   };
 
   useEffect(() => {
@@ -209,13 +724,11 @@ const User = ({ getNewCount, title }) => {
   }, []);
   const [seconds, setSeconds] = useState();
 
-
   useEffect(() => {
     if (seconds > 0) {
       setTimeout(() => setSeconds(seconds - 1), 1000);
-
     } else {
-      setTab('course')
+      setTab("course");
     }
   }, [seconds]);
 
@@ -263,7 +776,8 @@ const User = ({ getNewCount, title }) => {
 
   const [tab, setTab] = useState("course");
 
-
+  const [inputValueForAdd, setInputValueForAdd] = useState({});
+  const [errorsForAdd, setErrorsForAdd] = useState({});
 
   const [formdata, setFormData] = useState({
     vehicleCategory: "",
@@ -304,12 +818,15 @@ const User = ({ getNewCount, title }) => {
 
   useEffect(() => {
     if (submitpayment) {
-      register()
+      register();
     }
-
   }, [submitpayment]);
 
-
+  const handleOnChnageAdd = (e) => {
+    const { name, value } = e.target;
+    setInputValueForAdd({ ...inputValueForAdd, [name]: value });
+    setErrorsForAdd({ ...errorsForAdd, [name]: "" });
+  };
   const handlePaymentClose = () => {
     setIsPaymentPopUp(false);
     setDataForPayment([]);
@@ -372,25 +889,25 @@ const User = ({ getNewCount, title }) => {
     setdicloser(e);
   };
   const handleSetDateData = async (dateForFilter) => {
-
     if (dateForFilter) {
-
-
       await ApiGet(
-        `register/getRecordsByRange?sd=${moment(dateForFilter[0]).format('MM/DD/YYYY')}&ed=${moment(dateForFilter[1]).format('MM/DD/YYYY')}&page=${page}&limit=${countPerPage}`
+        `register/getRecordsByRange?sd=${moment(dateForFilter[0]).format(
+          "MM/DD/YYYY"
+        )}&ed=${moment(dateForFilter[1]).format(
+          "MM/DD/YYYY"
+        )}&page=${page}&limit=${countPerPage}`
       )
         .then((res) => {
           // setTableFilterData(tableFilterData);
 
-          setCount(res?.data?.payload?.count)
+          setCount(res?.data?.payload?.count);
           setTableFilterData(res?.data?.payload?.Question);
         })
         .catch((err) => {
           toast.error(err?.response?.data?.message);
         });
     } else {
-
-      getAllUser()
+      getAllUser();
     }
     // setTableFilterData([]);
     // if (!date) {
@@ -434,12 +951,10 @@ const User = ({ getNewCount, title }) => {
 
   useEffect(() => {
     if (dateForFilter) {
-      handleSetDateData(dateForFilter)
+      handleSetDateData(dateForFilter);
     } else {
-
       getAllUser();
     }
-
   }, [page, countPerPage]);
 
   const getAllUser = async () => {
@@ -463,19 +978,15 @@ const User = ({ getNewCount, title }) => {
   const handleOnClicks = (e, key) => {
     e.preventDefault();
     if (key === "pre") {
-      setTabs(key)
+      setTabs(key);
+    } else if (key === "post") {
+      setTabs(key);
     }
-    else if (key === "post") {
-      setTabs(key)
-    }
-
   };
-
 
   const getAdminLogs = async (id) => {
     await ApiGet(`admin/get-admin-login-log/${id?._id}`)
       .then((res) => {
-
         setLogsData(res?.data?.payload?.user);
       })
       .catch((err) => {
@@ -486,7 +997,6 @@ const User = ({ getNewCount, title }) => {
   const getAdminPostLogs = async (id) => {
     await ApiGet(`admin/get-logout-users/${id?._id}`)
       .then((res) => {
-
         setLogsPostData(res?.data?.payload?.admin);
       })
       .catch((err) => {
@@ -495,7 +1005,7 @@ const User = ({ getNewCount, title }) => {
     // }
   };
 
-  useEffect(() => { }, [inputValue]);
+  useEffect(() => {}, [inputValue]);
 
   let i = 0;
   const columns = [
@@ -562,7 +1072,6 @@ const User = ({ getNewCount, title }) => {
         return <span>{row?.phone === "" ? "-" : row?.phone}</span>;
       },
       sortable: true,
-
     },
 
     {
@@ -572,7 +1081,11 @@ const User = ({ getNewCount, title }) => {
 
       sortable: true,
       cell: (row) => {
-        return <span>{row?.Registrationtype === "" ? "-" : row?.Registrationtype}</span>;
+        return (
+          <span>
+            {row?.Registrationtype === "" ? "-" : row?.Registrationtype}
+          </span>
+        );
       },
     },
     {
@@ -582,7 +1095,9 @@ const User = ({ getNewCount, title }) => {
 
       sortable: true,
       cell: (row) => {
-        return <span>{row?.uid?.firstName === "" ? "-" : row?.uid?.firstName}</span>;
+        return (
+          <span>{row?.uid?.firstName === "" ? "-" : row?.uid?.firstName}</span>
+        );
       },
     },
     {
@@ -598,7 +1113,9 @@ const User = ({ getNewCount, title }) => {
     {
       name: "Qualification",
       cell: (row) => {
-        return <span>{row?.qualification === "" ? "-" : row?.qualification}</span>;
+        return (
+          <span>{row?.qualification === "" ? "-" : row?.qualification}</span>
+        );
       },
       sortable: true,
       width: "195px",
@@ -646,7 +1163,11 @@ const User = ({ getNewCount, title }) => {
     {
       name: "Select IDTR Center",
       cell: (row) => {
-        return <span>{row?.uid?.IDTRcenter === "" ? "-" : row?.uid?.IDTRcenter}</span>;
+        return (
+          <span>
+            {row?.uid?.IDTRcenter === "" ? "-" : row?.uid?.IDTRcenter}
+          </span>
+        );
       },
       sortable: true,
       width: "185px",
@@ -654,7 +1175,13 @@ const User = ({ getNewCount, title }) => {
     {
       name: "Course Type",
       cell: (row) => {
-        return <span>{row?.courseType[0]?.courseType === "" ? "-" : row?.courseType[0]?.courseType}</span>;
+        return (
+          <span>
+            {row?.courseType[0]?.courseType === ""
+              ? "-"
+              : row?.courseType[0]?.courseType}
+          </span>
+        );
       },
       sortable: true,
       width: "185px",
@@ -662,7 +1189,13 @@ const User = ({ getNewCount, title }) => {
     {
       name: "Vehical Category",
       cell: (row) => {
-        return <span>{row?.vehicleCategory[0]?.vehicleCategory === "" ? "-" : row?.vehicleCategory[0]?.vehicleCategory}</span>;
+        return (
+          <span>
+            {row?.vehicleCategory[0]?.vehicleCategory === ""
+              ? "-"
+              : row?.vehicleCategory[0]?.vehicleCategory}
+          </span>
+        );
       },
       sortable: true,
       width: "185px",
@@ -672,14 +1205,22 @@ const User = ({ getNewCount, title }) => {
       selector: "courseName",
       width: "600px",
       cell: (row) => {
-        return <span>{row?.courseName[0]?.courseName === "" ? '-' : row?.courseName[0]?.courseName}</span>;
+        return (
+          <span>
+            {row?.courseName[0]?.courseName === ""
+              ? "-"
+              : row?.courseName[0]?.courseName}
+          </span>
+        );
       },
       sortable: true,
     },
     {
       name: "Date of Course",
       cell: (row) => {
-        return <span>{moment(row?.trainingDate[0]?.createdAt).format("ll")}</span>;
+        return (
+          <span>{moment(row?.trainingDate[0]?.createdAt).format("ll")}</span>
+        );
       },
       sortable: true,
       width: "185px",
@@ -689,7 +1230,7 @@ const User = ({ getNewCount, title }) => {
       selector: "lcid",
       width: "160px",
       cell: (row) => {
-        return <span>{row?.lcid === "" ? '-' : row?.lcid}</span>;
+        return <span>{row?.lcid === "" ? "-" : row?.lcid}</span>;
       },
       sortable: true,
     },
@@ -698,7 +1239,13 @@ const User = ({ getNewCount, title }) => {
       selector: "drivingLicenseNumber",
       width: "160px",
       cell: (row) => {
-        return <span>{row?.drivingLicenseNumber === null ? '-' : row?.drivingLicenseNumber}</span>;
+        return (
+          <span>
+            {row?.drivingLicenseNumber === null
+              ? "-"
+              : row?.drivingLicenseNumber}
+          </span>
+        );
       },
       sortable: true,
     },
@@ -727,7 +1274,7 @@ const User = ({ getNewCount, title }) => {
       selector: "Authority",
       width: "160px",
       cell: (row) => {
-        return <span>{row?.Authority === "" ? '-' : row?.Authority}</span>;
+        return <span>{row?.Authority === "" ? "-" : row?.Authority}</span>;
       },
 
       sortable: true,
@@ -737,7 +1284,9 @@ const User = ({ getNewCount, title }) => {
       selector: "authoritycity",
       width: "160px",
       cell: (row) => {
-        return <span>{row?.authoritycity === "" ? '-' : row?.authoritycity}</span>;
+        return (
+          <span>{row?.authoritycity === "" ? "-" : row?.authoritycity}</span>
+        );
       },
 
       sortable: true,
@@ -747,7 +1296,11 @@ const User = ({ getNewCount, title }) => {
       selector: "authoritydistrict",
       width: "160px",
       cell: (row) => {
-        return <span>{row?.authoritydistrict === "" ? '-' : row?.authoritydistrict}</span>;
+        return (
+          <span>
+            {row?.authoritydistrict === "" ? "-" : row?.authoritydistrict}
+          </span>
+        );
       },
 
       sortable: true,
@@ -757,7 +1310,7 @@ const User = ({ getNewCount, title }) => {
       selector: "bloodGroup",
       width: "160px",
       cell: (row) => {
-        return <span>{row?.bloodGroup === "" ? '-' : row?.bloodGroup}</span>;
+        return <span>{row?.bloodGroup === "" ? "-" : row?.bloodGroup}</span>;
       },
 
       sortable: true,
@@ -769,7 +1322,7 @@ const User = ({ getNewCount, title }) => {
 
       sortable: true,
       cell: (row) => {
-        return <span>{row?.isPaymentDone === true ? 'Done' : 'Pending'}</span>;
+        return <span>{row?.isPaymentDone === true ? "Done" : "Pending"}</span>;
       },
     },
     {
@@ -779,7 +1332,7 @@ const User = ({ getNewCount, title }) => {
 
       sortable: true,
       cell: (row) => {
-        return <span>{row?.type === "" ? '-' : row?.type}</span>;
+        return <span>{row?.type === "" ? "-" : row?.type}</span>;
       },
     },
     {
@@ -789,7 +1342,7 @@ const User = ({ getNewCount, title }) => {
 
       sortable: true,
       cell: (row) => {
-        return <span>{row?.paymentId === "" ? '-' : row?.paymentId}</span>;
+        return <span>{row?.paymentId === "" ? "-" : row?.paymentId}</span>;
       },
     },
     {
@@ -799,7 +1352,17 @@ const User = ({ getNewCount, title }) => {
 
       sortable: true,
       cell: (row) => {
-        return <span>{row?.paymentId === "" ? '-' : row?.paymentId}</span>;
+        return <span>{row?.paymentId === "" ? "-" : row?.paymentId}</span>;
+      },
+    },
+    {
+      name: "Payment Type",
+      selector: "paymentType",
+      width: "180px",
+
+      sortable: true,
+      cell: (row) => {
+        return <span>{row?.paymentType === "" ? "-" : row?.paymentType}</span>;
       },
     },
     {
@@ -809,16 +1372,20 @@ const User = ({ getNewCount, title }) => {
 
       sortable: true,
       cell: (row) => {
-        return <span>{row?.uid?.registrationDate === "" ? '-' : row?.uid?.registrationDate}</span>;
+        return (
+          <span>
+            {row?.uid?.registrationDate === ""
+              ? "-"
+              : row?.uid?.registrationDate}
+          </span>
+        );
       },
     },
-
 
     {
       name: "Actions",
       width: "145px",
       cell: (row) => {
-
         return (
           <>
             <div
@@ -849,7 +1416,6 @@ const User = ({ getNewCount, title }) => {
                   <ComponentToPrints data={row} />
                 </div>
               </div>
-
             </div>
 
             <div className="cursor-pointer pl-2">
@@ -860,7 +1426,7 @@ const User = ({ getNewCount, title }) => {
                       onClick={() => {
                         setTab("course");
                         setIsAddAnnouncement(true);
-                        setSeconds(300)
+                        setSeconds(300);
                         setEditMode(true);
                         let index = getAllVehicalData?.Question?.findIndex(
                           (e) => e._id === row?.vcid
@@ -969,14 +1535,12 @@ const User = ({ getNewCount, title }) => {
               </div>
             </Tooltip>
           </>
-
         );
       },
     },
     {
       name: "Actions",
       cell: (row) => {
-
         return (
           <>
             {row?.uid && (
@@ -984,7 +1548,7 @@ const User = ({ getNewCount, title }) => {
                 className="cursor-pointer pl-2"
                 onClick={async () => {
                   await getAdminLogs(row?.uid);
-                  await getAdminPostLogs(row?.uid)
+                  await getAdminPostLogs(row?.uid);
                   setModelForUserLogs(true);
                 }}
               >
@@ -1002,7 +1566,7 @@ const User = ({ getNewCount, title }) => {
       cell: (row) => {
         return <span>{moment(row?.createdAt).format("ll")}</span>;
       },
-      selector: row => row?.createdAt,
+      selector: (row) => row?.createdAt,
       sortable: true,
     },
     {
@@ -1010,23 +1574,23 @@ const User = ({ getNewCount, title }) => {
       cell: (row) => {
         return <span>{moment(row?.createdAt).format("LT")}</span>;
       },
-      selector: row => row?.createdAt,
+      selector: (row) => row?.createdAt,
       sortable: true,
     },
     {
       name: "Device",
-      selector: row => row?.device,
+      selector: (row) => row?.device,
       sortable: true,
     },
     {
       name: "IP",
-      selector: row => row?.ip,
+      selector: (row) => row?.ip,
       sortable: true,
     },
 
     {
       name: "User Phone",
-      selector: row => row?.uid?.phone,
+      selector: (row) => row?.uid?.phone,
       sortable: true,
       cell: (row) => {
         return <span>{row?.uid?.phone === "" ? "-" : row?.uid?.phone}</span>;
@@ -1034,17 +1598,19 @@ const User = ({ getNewCount, title }) => {
     },
     {
       name: "First Name",
-      selector: row => row?.uid?.firstName,
+      selector: (row) => row?.uid?.firstName,
       sortable: true,
       cell: (row) => {
-        return <span>{row?.uid?.firstName === "" ? "-" : row?.uid?.firstName}</span>;
+        return (
+          <span>{row?.uid?.firstName === "" ? "-" : row?.uid?.firstName}</span>
+        );
       },
     },
 
     // {
     //   name: "Actions",
     //   cell: (row) => {
-    
+
     //     return (
     //       <>
     //         <div
@@ -1081,7 +1647,7 @@ const User = ({ getNewCount, title }) => {
       cell: (row) => {
         return <span>{moment(row?.createdAt).format("ll")}</span>;
       },
-      selector: row => row?.createdAt,
+      selector: (row) => row?.createdAt,
       sortable: true,
     },
     {
@@ -1089,23 +1655,23 @@ const User = ({ getNewCount, title }) => {
       cell: (row) => {
         return <span>{moment(row?.createdAt).format("LT")}</span>;
       },
-      selector: row => row?.createdAt,
+      selector: (row) => row?.createdAt,
       sortable: true,
     },
     {
       name: "Device",
-      selector: row => row?.device,
+      selector: (row) => row?.device,
       sortable: true,
     },
     {
       name: "IP",
-      selector: row => row?.ip,
+      selector: (row) => row?.ip,
       sortable: true,
     },
 
     {
       name: "User Phone",
-      selector: row => row?.uid?.phone,
+      selector: (row) => row?.uid?.phone,
       sortable: true,
       cell: (row) => {
         return <span>{row?.uid?.phone === "" ? "-" : row?.uid?.phone}</span>;
@@ -1113,28 +1679,40 @@ const User = ({ getNewCount, title }) => {
     },
     {
       name: "Last Page",
-      width: '200px',
+      width: "200px",
       cell: (row) => {
-        return <span>{row?.lastPage === "" ? "-" : row?.lastPage.trim().replace('/', '').trim()}</span>;
+        return (
+          <span>
+            {row?.lastPage === ""
+              ? "-"
+              : row?.lastPage.trim().replace("/", "").trim()}
+          </span>
+        );
       },
-      selector: row => row?.lastPage,
+      selector: (row) => row?.lastPage,
       // selector: "lastPage",
       sortable: true,
     },
     {
       name: "First Name",
-      selector: row => row?.uid?.firstName,
+      selector: (row) => row?.uid?.firstName,
       sortable: true,
       cell: (row) => {
-        return <span>{row?.uid?.firstName === "" ? "-" : row?.uid?.firstName}</span>;
+        return (
+          <span>{row?.uid?.firstName === "" ? "-" : row?.uid?.firstName}</span>
+        );
       },
     },
     {
       name: "Father Name",
-      selector: row => row?.uid?.fatherName,
+      selector: (row) => row?.uid?.fatherName,
       sortable: true,
       cell: (row) => {
-        return <span>{row?.uid?.fatherName === "" ? "-" : row?.uid?.fatherName}</span>;
+        return (
+          <span>
+            {row?.uid?.fatherName === "" ? "-" : row?.uid?.fatherName}
+          </span>
+        );
       },
     },
   ];
@@ -1199,7 +1777,9 @@ const User = ({ getNewCount, title }) => {
           IP: registerUser?.ip,
           Device: registerUser?.device,
           MobileNumber: registerUser?.uid?.phone,
-          RegistrationDate: moment(registerUser?.uid?.registrationDate).format("ll")
+          RegistrationDate: moment(registerUser?.uid?.registrationDate).format(
+            "ll"
+          ),
         };
         setDataCSVLogs((currVal) => [...currVal, data]);
       });
@@ -1215,7 +1795,9 @@ const User = ({ getNewCount, title }) => {
           Device: registerUser?.device,
           MobileNumber: registerUser?.uid?.phone,
           LastPage: registerUser?.lastPage,
-          RegistrationDate: moment(registerUser?.uid?.registrationDate).format("ll")
+          RegistrationDate: moment(registerUser?.uid?.registrationDate).format(
+            "ll"
+          ),
         };
         setDataCSVPostLogs((currVal) => [...currVal, data]);
       });
@@ -1225,10 +1807,11 @@ const User = ({ getNewCount, title }) => {
   useEffect(() => {
     if (allRegisterUserExcel) {
       allRegisterUserExcel.map((registerUser, key) => {
-
         let data = {
           Number: key + 1,
-          UserID: registerUser?.uid?._id ? registerUser?.uid?._id : registerUser?._id,
+          UserID: registerUser?.uid?._id
+            ? registerUser?.uid?._id
+            : registerUser?._id,
           BookingID: registerUser?._id,
           FirstName: registerUser?.fname,
           MiddleName: registerUser?.mname ? registerUser?.mname : "-",
@@ -1279,10 +1862,11 @@ const User = ({ getNewCount, title }) => {
             registerUser?.bloodGroup === "" || registerUser?.bloodGroup === null
               ? "-"
               : registerUser?.bloodGroup,
-          PaymentRcvd: registerUser?.isPaymentDone === null ||
+          PaymentRcvd:
+            registerUser?.isPaymentDone === null ||
             registerUser?.isPaymentDone === false
-            ? "Payment Pending"
-            : registerUser?.isPaymentDone,
+              ? "Payment Pending"
+              : registerUser?.isPaymentDone,
           PaymentMode: registerUser?.type,
           TransactionID:
             registerUser?.paymentId === null
@@ -1298,9 +1882,6 @@ const User = ({ getNewCount, title }) => {
       });
     }
   }, [allRegisterUserExcel]);
-
-
-
 
   const districts = [
     {
@@ -1483,7 +2064,9 @@ const User = ({ getNewCount, title }) => {
       validTill: formdata.license === "N/A" ? "" : formdata.validDate,
       Authority: "Haryana",
       passportPhoto: formdata.passport,
-      drivingLicense: formdata.driviniglicencephoto ? formdata.driviniglicencephoto : null,
+      drivingLicense: formdata.driviniglicencephoto
+        ? formdata.driviniglicencephoto
+        : null,
       IDproof: formdata.idProof,
       medicalCertificate: formdata.mediacalCertificate,
       bloodGroup: formdata.bloodgroup,
@@ -1496,23 +2079,21 @@ const User = ({ getNewCount, title }) => {
       Registrationtype: "counter",
     };
 
-
-    if (formdata.type == 'offline') {
+    if (formdata.type == "offline") {
       const datas = {
         cnid: formdata?.courseName,
         ctid: formdata?.courseType,
         vcid: formdata?.vehicleCategory,
         phone: formdata?.phone,
         tdid: formdata?.sloatId,
-      }
-      ApiPost('payment/checkPayment', datas).then((res) => {
-
+      };
+      ApiPost("payment/checkPayment", datas).then((res) => {
         if (res.data.result === 0) {
           ApiPost("register/addRegister", data)
             .then((res) => {
               if (res?.status == 200) {
                 toast.success(res?.data?.message);
-                handleAddAdminClose()
+                handleAddAdminClose();
 
                 getAllUser();
               } else {
@@ -1522,17 +2103,16 @@ const User = ({ getNewCount, title }) => {
             .catch((err) => {
               toast.error(err?.response?.data?.message);
             });
-        }
-        else {
+        } else {
           toast.error(res?.data?.message, { theme: "colored" });
         }
-      })
+      });
     } else {
       ApiPost("register/addRegister", data)
         .then((res) => {
           if (res?.status == 200) {
             toast.success(res?.data?.message);
-            handleAddAdminClose()
+            handleAddAdminClose();
 
             getAllUser();
           } else {
@@ -1543,37 +2123,48 @@ const User = ({ getNewCount, title }) => {
           toast.error(err?.response?.data?.message);
         });
     }
-
   };
+  const validateFormForAddAdmin = () => {
+    let formIsValid = true;
+    let errorsForAdd = {};
 
+    if (inputValueForAdd && !inputValueForAdd.paymentType) {
+      formIsValid = false;
+      errorsForAdd["paymentType"] = "*Please enter paymentType!";
+    }
+    setErrorsForAdd(errorsForAdd);
+    return formIsValid;
+  };
   const handleOfflinePayment = () => {
-
-    const data = {
-      receiptDate: new Date(),
-      receiptNumber: dataForPayment?._id,
-      isPaymentDone: true,
-      price: dataForPayment?.courseName[0].price,
-      cnid: dataForPayment?.courseName[0]._id,
-      vcid: dataForPayment.vehicleCategory[0]?._id,
-      ctid: dataForPayment.courseType[0]?._id,
-      tdid: dataForPayment.trainingDate[0]?._id,
-      type: "offline",
-      phone: dataForPayment?.phone
-    };
-    ApiPut("register/offlinePayment", data)
-      .then((res) => {
-        if (res?.status == 200) {
-          setIsPaymentPopUp(false);
-          toast.success(res?.data?.message);
-          setDataForPayment([]);
-          getAllUser();
-        } else {
-          toast.error(res?.data?.message);
-        }
-      })
-      .catch((err) => {
-        toast.error(err?.response?.data?.message);
-      });
+    if (validateFormForAddAdmin()) {
+      const data = {
+        receiptDate: new Date(),
+        receiptNumber: dataForPayment?._id,
+        isPaymentDone: true,
+        price: dataForPayment?.courseName[0].price,
+        cnid: dataForPayment?.courseName[0]._id,
+        vcid: dataForPayment.vehicleCategory[0]?._id,
+        ctid: dataForPayment.courseType[0]?._id,
+        tdid: dataForPayment.trainingDate[0]?._id,
+        type: "offline",
+        phone: dataForPayment?.phone,
+        paymentType: inputValueForAdd.paymentType,
+      };
+      ApiPut("register/offlinePayment", data)
+        .then((res) => {
+          if (res?.status == 200) {
+            setIsPaymentPopUp(false);
+            toast.success(res?.data?.message);
+            setDataForPayment([]);
+            getAllUser();
+          } else {
+            toast.error(res?.data?.message);
+          }
+        })
+        .catch((err) => {
+          toast.error(err?.response?.data?.message);
+        });
+    }
   };
 
   const updateData = () => {
@@ -1617,8 +2208,6 @@ const User = ({ getNewCount, title }) => {
       Registrationtype: "counter",
     };
 
-
-
     ApiPut(`register/updateRegister/${formdata._id}`, data)
       .then((res) => {
         if (res?.status == 200) {
@@ -1645,9 +2234,11 @@ const User = ({ getNewCount, title }) => {
     seterrorShow("");
     if (e.target.name === "issueDate") {
       setFormData((formdataAll) => {
-        return { ...formdataAll, "validDate": moment(e?.target?.value).add(6, 'M').format('YYYY-MM-DD') };
+        return {
+          ...formdataAll,
+          validDate: moment(e?.target?.value).add(6, "M").format("YYYY-MM-DD"),
+        };
       });
-
     }
   };
 
@@ -1704,27 +2295,21 @@ const User = ({ getNewCount, title }) => {
     },
   };
 
-
-
   const checkSlot = async () => {
-
-    await ApiGet(
-      `trainingDate/checkSlot/${formdata.sloatId}`
-    )
+    await ApiGet(`trainingDate/checkSlot/${formdata.sloatId}`)
       .then((res) => {
-        return true
-
+        return true;
       })
       .catch((err) => {
-        return false
+        return false;
       });
-  }
+  };
 
   const handleOnClick = (e, key) => {
     e.preventDefault();
 
     if (key === "personal") {
-      if (!checkSlot()) return
+      if (!checkSlot()) return;
       if (formdata.vehicleCategory == "") {
         seterrorShow("Vehicle Category");
         toast.error(`Sorry! Vehicle Category must be specified`);
@@ -1767,7 +2352,10 @@ const User = ({ getNewCount, title }) => {
         toast.error(`Sorry! License Authority City must be specified`);
         seterrorShow("License Authority City");
         settypeTrueFalseform(true);
-      } else if (formdata?.license != "N/A" && formdata.authoritydistrict === "") {
+      } else if (
+        formdata?.license != "N/A" &&
+        formdata.authoritydistrict === ""
+      ) {
         toast.error(`Sorry! License Authority District must be specified`);
         seterrorShow("License Authority Disctrict");
         settypeTrueFalseform(true);
@@ -1787,18 +2375,16 @@ const User = ({ getNewCount, title }) => {
         setTab(key);
       }
     } else if (key === "document") {
-      if (!checkSlot()) return
+      if (!checkSlot()) return;
       if (formdata.firstname === "") {
         toast.error(`Sorry! First name must be specified`);
         seterrorShow("First name");
         settypeTrueFalseform(true);
-      }
-      else if (formdata.lastname === "") {
+      } else if (formdata.lastname === "") {
         toast.error(`Sorry! Last name must be specified`);
         seterrorShow("Last name");
         settypeTrueFalseform(true);
-      }
-      else if (formdata.DateofBirth === "") {
+      } else if (formdata.DateofBirth === "") {
         toast.error(`Sorry! Date of Birth must be specified`);
         seterrorShow("Date of Birth");
         settypeTrueFalseform(true);
@@ -1832,14 +2418,11 @@ const User = ({ getNewCount, title }) => {
         toast.error(`Sorry! PIN must be specified`);
         seterrorShow("PIN");
         settypeTrueFalseform(true);
-
-      }
-      else if (formdata.pin.length !== 6) {
+      } else if (formdata.pin.length !== 6) {
         toast.error(`Sorry! PIN Not Valid must be specified`);
         seterrorShow("PIN Not Valid");
         settypeTrueFalseform(true);
-      }
-      else if (formdata.phone === "") {
+      } else if (formdata.phone === "") {
         toast.error(`Sorry! Phone must be specified`);
         seterrorShow("Phone");
         settypeTrueFalseform(true);
@@ -1853,12 +2436,17 @@ const User = ({ getNewCount, title }) => {
         setTab(key);
       }
     } else if (key === "payment") {
-      if (!checkSlot()) return
-      if (formdata.license !== 'Permanent' && formdata.passport === null) {
+      if (!checkSlot()) return;
+      if (formdata.license !== "Permanent" && formdata.passport === null) {
         toast.error("Select passport photo");
         seterrorShow("Passport Photo");
         settypeTrueFalseform(true);
-      } else if (formdata.license !== "N/A" && formdata.license !== "Learner" && formdata.license !== 'Permanent' && formdata.driviniglicencephoto === null) {
+      } else if (
+        formdata.license !== "N/A" &&
+        formdata.license !== "Learner" &&
+        formdata.license !== "Permanent" &&
+        formdata.driviniglicencephoto === null
+      ) {
         toast.error("Select driving license photo");
         seterrorShow("Driving license photo");
         settypeTrueFalseform(true);
@@ -1884,8 +2472,8 @@ const User = ({ getNewCount, title }) => {
     {
       startDate: new Date(),
       endDate: addDays(new Date(), 7),
-      key: 'selection'
-    }
+      key: "selection",
+    },
   ]);
   // const previousClick = (e, key) => {
   //   if (key === "course") {
@@ -1945,7 +2533,6 @@ const User = ({ getNewCount, title }) => {
     if (key === "course") {
       setTimeout(() => {
         setTab(key);
-
       }, 1500);
     } else if (key === "personal") {
       setTab(key);
@@ -2110,7 +2697,7 @@ const User = ({ getNewCount, title }) => {
       cnid: formdata.courseName,
       ccid: formdata.courseCategory,
       ctid: formdata.courseType,
-      vcid: formdata.vehicleCategory
+      vcid: formdata.vehicleCategory,
     };
     ApiGet(
       `trainingDate/getDatePrevious?date=${data.date}&vcid=${formdata.vehicleCategory}&ctid=${formdata.courseType}&ccid=${formdata.courseCategory}&cnid=${formdata.courseName}`
@@ -2181,32 +2768,37 @@ const User = ({ getNewCount, title }) => {
   const uploadCertificate = async () => {
     let urls = {};
     let data = [];
-    if (formdata?.license === 'N/A') {
+    if (formdata?.license === "N/A") {
       if (formdata.passport) {
         if (formdata.passport && typeof formdata.passport !== "string") {
           if (!formdata.passport.name.match(/\.(jpg|jpeg|png)$/)) {
             toast.error(`*${formdata.passport.name} file is not valid.`);
-            return
+            return;
           }
           if ((formdata.passport.size / 1048576).toFixed(2) > 1) {
             toast.error(`*Please Upload less than 1 MB Passport File.`);
-            return
+            return;
           }
           data.push(formdata.passport);
           let passport1 = await uploadS3bucket(formdata.passport);
           urls = { passport: passport1, ...urls };
-        }
-        else if (
+        } else if (
           formdata.driviniglicencephoto &&
           typeof formdata.driviniglicencephoto !== "string"
         ) {
-          if (!formdata.driviniglicencephoto.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
-            toast.error(`*${formdata.driviniglicencephoto.name} file is not valid.`);
-            return
+          if (
+            !formdata.driviniglicencephoto.name.match(/\.(jpg|jpeg|png|pdf)$/)
+          ) {
+            toast.error(
+              `*${formdata.driviniglicencephoto.name} file is not valid.`
+            );
+            return;
           }
           if ((formdata.driviniglicencephoto.size / 1048576).toFixed(2) > 5) {
-            toast.error(`*Please Upload less than 5 MB Drivinig Licence Photo File.`)
-            return
+            toast.error(
+              `*Please Upload less than 5 MB Drivinig Licence Photo File.`
+            );
+            return;
           }
           data.push(formdata.driviniglicencephoto);
           let driviniglicencephoto = await uploadS3bucket(
@@ -2218,13 +2810,19 @@ const User = ({ getNewCount, title }) => {
           formdata.mediacalCertificate &&
           typeof formdata.mediacalCertificate !== "string"
         ) {
-          if (!formdata.mediacalCertificate.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
-            toast.error(`*${formdata.mediacalCertificate.name} file is not valid.`);
-            return
+          if (
+            !formdata.mediacalCertificate.name.match(/\.(jpg|jpeg|png|pdf)$/)
+          ) {
+            toast.error(
+              `*${formdata.mediacalCertificate.name} file is not valid.`
+            );
+            return;
           }
           if ((formdata.mediacalCertificate.size / 1048576).toFixed(2) > 5) {
-            toast.error(`*Please Upload less than 5 MB Mediacal Certificate File.`)
-            return
+            toast.error(
+              `*Please Upload less than 5 MB Mediacal Certificate File.`
+            );
+            return;
           }
           data.push(formdata.mediacalCertificate);
           let mediacalCertificate = await uploadS3bucket(
@@ -2235,11 +2833,11 @@ const User = ({ getNewCount, title }) => {
         if (formdata.idProof && typeof formdata.idProof !== "string") {
           if (!formdata.idProof.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
             toast.error(`*${formdata.idProof.name} file is not valid.`);
-            return
+            return;
           }
           if ((formdata.idProof.size / 1048576).toFixed(2) > 5) {
-            toast.error(`*Please Upload less than 5 MB Id Proof File.`)
-            return
+            toast.error(`*Please Upload less than 5 MB Id Proof File.`);
+            return;
           }
           data.push(formdata.idProof);
 
@@ -2253,16 +2851,15 @@ const User = ({ getNewCount, title }) => {
       } else {
         toast.error("Please Select file before Uploading");
       }
-    }
-    else if (formdata.passport && formdata.driviniglicencephoto) {
+    } else if (formdata.passport && formdata.driviniglicencephoto) {
       if (formdata.passport && typeof formdata.passport !== "string") {
         if (!formdata.passport.name.match(/\.(jpg|jpeg|png)$/)) {
           toast.error(`*${formdata.passport.name} file is not valid.`);
-          return
+          return;
         }
         if ((formdata.passport.size / 1048576).toFixed(2) > 1) {
           toast.error(`*Please Upload less than 1 MB Passport File.`);
-          return
+          return;
         }
         data.push(formdata.passport);
         let passport1 = await uploadS3bucket(formdata.passport);
@@ -2272,13 +2869,19 @@ const User = ({ getNewCount, title }) => {
         formdata.driviniglicencephoto &&
         typeof formdata.driviniglicencephoto !== "string"
       ) {
-        if (!formdata.driviniglicencephoto.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
-          toast.error(`*${formdata.driviniglicencephoto.name} file is not valid.`);
-          return
+        if (
+          !formdata.driviniglicencephoto.name.match(/\.(jpg|jpeg|png|pdf)$/)
+        ) {
+          toast.error(
+            `*${formdata.driviniglicencephoto.name} file is not valid.`
+          );
+          return;
         }
         if ((formdata.driviniglicencephoto.size / 1048576).toFixed(2) > 5) {
-          toast.error(`*Please Upload less than 5 MB Drivinig Licence Photo File.`)
-          return
+          toast.error(
+            `*Please Upload less than 5 MB Drivinig Licence Photo File.`
+          );
+          return;
         }
         data.push(formdata.driviniglicencephoto);
         let driviniglicencephoto = await uploadS3bucket(
@@ -2291,12 +2894,16 @@ const User = ({ getNewCount, title }) => {
         typeof formdata.mediacalCertificate !== "string"
       ) {
         if (!formdata.mediacalCertificate.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
-          toast.error(`*${formdata.mediacalCertificate.name} file is not valid.`);
-          return
+          toast.error(
+            `*${formdata.mediacalCertificate.name} file is not valid.`
+          );
+          return;
         }
         if ((formdata.mediacalCertificate.size / 1048576).toFixed(2) > 5) {
-          toast.error(`*Please Upload less than 5 MB Mediacal Certificate File.`)
-          return
+          toast.error(
+            `*Please Upload less than 5 MB Mediacal Certificate File.`
+          );
+          return;
         }
         data.push(formdata.mediacalCertificate);
         let mediacalCertificate = await uploadS3bucket(
@@ -2307,11 +2914,11 @@ const User = ({ getNewCount, title }) => {
       if (formdata.idProof && typeof formdata.idProof !== "string") {
         if (!formdata.idProof.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           toast.error(`*${formdata.idProof.name} file is not valid.`);
-          return
+          return;
         }
         if ((formdata.idProof.size / 1048576).toFixed(2) > 5) {
-          toast.error(`*Please Upload less than 5 MB Id Proof File.`)
-          return
+          toast.error(`*Please Upload less than 5 MB Id Proof File.`);
+          return;
         }
         data.push(formdata.idProof);
 
@@ -2325,9 +2932,7 @@ const User = ({ getNewCount, title }) => {
     } else {
       toast.error("Please Select file before Uploading");
     }
-  }
-
-
+  };
 
   const uploadS3bucket = async (file) => {
     let config = AwsConfig;
@@ -2344,13 +2949,12 @@ const User = ({ getNewCount, title }) => {
     let data = await Reacts3Client.uploadFile(f, filename);
     try {
       if (data.status === 204) {
-
         urls = data.location;
         return urls;
       } else {
         toast.error("Failed to upload image:", f.name);
       }
-    } catch (err) { }
+    } catch (err) {}
   };
 
   const handleSearch = (e) => {
@@ -2412,7 +3016,7 @@ const User = ({ getNewCount, title }) => {
               <button
                 onClick={() => {
                   setIsAddAnnouncement(true);
-                  setSeconds(300)
+                  setSeconds(300);
                 }}
                 className="btn btn-success mr-2"
               >
@@ -2424,7 +3028,9 @@ const User = ({ getNewCount, title }) => {
               <Modal.Header closeButton>
                 <Modal.Title className="text-danger">Alert!</Modal.Title>
               </Modal.Header>
-              <Modal.Body>Are You Sure To Want To delete this registered user</Modal.Body>
+              <Modal.Body>
+                Are You Sure To Want To delete this registered user
+              </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                   cancel
@@ -2480,7 +3086,7 @@ const User = ({ getNewCount, title }) => {
           <DateRangePickerComponent
             onChange={(e) => {
               handleSetDateData(e.target.value);
-              setDateForFilter(e.target.value)
+              setDateForFilter(e.target.value);
             }}
             showSelectionPreview={true}
             moveRangeOnFirstSelection={false}
@@ -2520,7 +3126,6 @@ const User = ({ getNewCount, title }) => {
       {/* view more */}
 
       {isAddAnnouncement ? (
-
         <List className="modelFixed">
           <Toolbar>
             <IconButton
@@ -2592,9 +3197,10 @@ const User = ({ getNewCount, title }) => {
                         </label>
                         {(editMode ? defaultValue.courseType : true) && (
                           <Select
-                            options={getAllCourceType?.courseType?.map(
-                              (e) => ({ label: e.courseType, value: e._id })
-                            )}
+                            options={getAllCourceType?.courseType?.map((e) => ({
+                              label: e.courseType,
+                              value: e._id,
+                            }))}
                             name="courseType"
                             onChange={(e) => {
                               setCourceType("");
@@ -2616,7 +3222,7 @@ const User = ({ getNewCount, title }) => {
                         <label>
                           Course Category<span>*</span>
                         </label>
-                        {(editMode ? defaultValue?.courseCategory : true) &&
+                        {(editMode ? defaultValue?.courseCategory : true) && (
                           <Select
                             // isClearable
                             options={getAllCourceCategory?.courseCategory?.map(
@@ -2642,7 +3248,7 @@ const User = ({ getNewCount, title }) => {
                               defaultValue.courseCategory
                             }
                           />
-                        }
+                        )}
                       </div>
 
                       {/* end test */}
@@ -2651,7 +3257,7 @@ const User = ({ getNewCount, title }) => {
                         <label>
                           Course Name<span>*</span>
                         </label>
-                        {(editMode ? defaultValue?.courseName : true) &&
+                        {(editMode ? defaultValue?.courseName : true) && (
                           <Select
                             // isClearable
                             options={getAllCourceName?.courseName?.map((e) => ({
@@ -2683,8 +3289,7 @@ const User = ({ getNewCount, title }) => {
                               defaultValue.courseName && defaultValue.courseName
                             }
                           />
-                        }
-
+                        )}
                       </div>
                       <div className="register-grid-items12 ">
                         <label>
@@ -2703,8 +3308,8 @@ const User = ({ getNewCount, title }) => {
                           }}
                         />
                       </div>
-                      {
-                        formdata?.license === 'Learner' && <>
+                      {formdata?.license === "Learner" && (
+                        <>
                           <div className="register-grid-items ">
                             <label>
                               Learner's License No.<span>*</span>
@@ -2725,7 +3330,11 @@ const User = ({ getNewCount, title }) => {
                               placeholder=""
                               name="issueDate"
                               max={moment(new Date()).format("YYYY-MM-DD")}
-                              value={formdata.issueDate ? formdata.issueDate.slice(0, 10) : formdata.issueDate}
+                              value={
+                                formdata.issueDate
+                                  ? formdata.issueDate.slice(0, 10)
+                                  : formdata.issueDate
+                              }
                               onChange={(e) => onChnageForm(e)}
                             />
                           </div>
@@ -2739,58 +3348,72 @@ const User = ({ getNewCount, title }) => {
                               placeholder=""
                               name="validDate"
                               min={moment(new Date()).format("YYYY-MM-DD")}
-                              value={formdata?.issueDate ? moment(formdata?.issueDate).add(6, 'M').format('YYYY-MM-DD') : ''}
+                              value={
+                                formdata?.issueDate
+                                  ? moment(formdata?.issueDate)
+                                      .add(6, "M")
+                                      .format("YYYY-MM-DD")
+                                  : ""
+                              }
                               onChange={(e) => onChnageForm(e)}
                               disabled="true"
                             />
                           </div>
                         </>
-                      }
-                      {formdata?.license != "N/A" && formdata?.license != 'Learner' &&
-                        <>
-                          <div className="register-grid-items ">
-                            <label>
-                              Driver's License No.<span>*</span>
-                            </label>
-                            <input
-                              type="text"
-                              
-                              name="driverlicense"
-                              value={formdata.driverlicense}
-                              onChange={(e) => onChnageForm(e)}
-                            />
-                          </div>
-                          <div className="register-grid-items">
-                            <label>
-                              Issue Date<span>*</span>
-                            </label>
-                            <input
-                              type="date"
-                              placeholder=""
-                              name="issueDate"
-                              max={moment(new Date()).format("YYYY-MM-DD")}
-                              value={formdata.issueDate ? formdata.issueDate.slice(0, 10) : formdata.issueDate}
-                              onChange={(e) => onChnageForm(e)}
-                            />
-                          </div>
-                          <div className="register-grid-items">
-                            <label>
-                              Valid Till<span>*</span>
-                            </label>
-                            <input
-                              type="date"
-                              placeholder=""
-                              name="validDate"
-                              min={moment(new Date()).format("YYYY-MM-DD")}
-                              value={formdata.validDate ? formdata.validDate.slice(0, 10) : formdata.validDate}
-                              onChange={(e) => onChnageForm(e)}
-                            />
-                          </div>
-                        </>
-                      }
+                      )}
+                      {formdata?.license != "N/A" &&
+                        formdata?.license != "Learner" && (
+                          <>
+                            <div className="register-grid-items ">
+                              <label>
+                                Driver's License No.<span>*</span>
+                              </label>
+                              <input
+                                type="text"
+                                name="driverlicense"
+                                value={formdata.driverlicense}
+                                onChange={(e) => onChnageForm(e)}
+                              />
+                            </div>
+                            <div className="register-grid-items">
+                              <label>
+                                Issue Date<span>*</span>
+                              </label>
+                              <input
+                                type="date"
+                                placeholder=""
+                                name="issueDate"
+                                max={moment(new Date()).format("YYYY-MM-DD")}
+                                value={
+                                  formdata.issueDate
+                                    ? formdata.issueDate.slice(0, 10)
+                                    : formdata.issueDate
+                                }
+                                onChange={(e) => onChnageForm(e)}
+                              />
+                            </div>
+                            <div className="register-grid-items">
+                              <label>
+                                Valid Till<span>*</span>
+                              </label>
+                              <input
+                                type="date"
+                                placeholder=""
+                                name="validDate"
+                                min={moment(new Date()).format("YYYY-MM-DD")}
+                                value={
+                                  formdata.validDate
+                                    ? formdata.validDate.slice(0, 10)
+                                    : formdata.validDate
+                                }
+                                onChange={(e) => onChnageForm(e)}
+                              />
+                            </div>
+                          </>
+                        )}
 
                       <div className="register-grid-items"></div>
-                      {formdata?.license != "N/A" &&
+                      {formdata?.license != "N/A" && (
                         <>
                           <div className="register-grid-items12">
                             <label>
@@ -2803,7 +3426,9 @@ const User = ({ getNewCount, title }) => {
                                 value: e.name,
                               }))}
                               name="authority"
-                              onChange={(e) => onChnagSelectField(e, "authority")}
+                              onChange={(e) =>
+                                onChnagSelectField(e, "authority")
+                              }
                               defaultValue={{
                                 label: "Haryana",
                                 value: "Haryana",
@@ -2851,16 +3476,13 @@ const User = ({ getNewCount, title }) => {
                             />
                           </div>
                         </>
-                      }
-
+                      )}
                     </div>
                     <div className="full-fill-information">
                       {CourceType ? (
                         <div>
                           <div>
-                            <div className="sub-title">
-
-                            </div>
+                            <div className="sub-title"></div>
                             <div className="information">
                               <p>
                                 <span>Course Name:</span>{" "}
@@ -2871,12 +3493,10 @@ const User = ({ getNewCount, title }) => {
                                 {getCourseNameByID?.duration}
                               </p>
                               <p>
-                                <span>Timing:</span>{" "}
-                                {getCourseNameByID?.timing}
+                                <span>Timing:</span> {getCourseNameByID?.timing}
                               </p>
                               <p>
-                                <span>Fees:</span> {" "}
-                                {getCourseNameByID?.price}
+                                <span>Fees:</span> {getCourseNameByID?.price}
                               </p>
                               <p>
                                 <span>Mode of Payment:</span>{" "}
@@ -2961,10 +3581,11 @@ const User = ({ getNewCount, title }) => {
                             return (
                               <div
                                 key={key}
-                                className={`calender-box un-active-background ${formdata.sloatId === data._id
-                                  ? "activeSlot"
-                                  : ""
-                                  }`}
+                                className={`calender-box un-active-background ${
+                                  formdata.sloatId === data._id
+                                    ? "activeSlot"
+                                    : ""
+                                }`}
                                 name="trainddateid"
                                 value={formdata.trainddateid}
                                 onClick={(e) => {
@@ -2985,13 +3606,10 @@ const User = ({ getNewCount, title }) => {
                                     Time:{" "}
                                     {moment(data.startTime).format(
                                       "h:mm "
-                                    )} -{" "}
-                                    {moment(data.endTime).format("h:mm ")}{" "}
+                                    )} - {moment(data.endTime).format("h:mm ")}{" "}
                                   </p>
 
-                                  <p>
-                                    Seat: {data?.seat ? data?.seat : "N.A"}
-                                  </p>
+                                  <p>Seat: {data?.seat ? data?.seat : "N.A"}</p>
                                 </div>
                               </div>
                             );
@@ -3070,7 +3688,9 @@ const User = ({ getNewCount, title }) => {
                           />
                         </div>
                         <div className="register-grid-items">
-                          <label>Last Name <span>*</span></label>
+                          <label>
+                            Last Name <span>*</span>
+                          </label>
                           <input
                             type="text"
                             placeholder="Last Name"
@@ -3098,7 +3718,9 @@ const User = ({ getNewCount, title }) => {
                             //   new Date(formdata.DateofBirth).getMonth() + 1
                             // }-${new Date(formdata.DateofBirth).getDate()}`}
                             value={formdata.DateofBirth}
-                            max={moment(new Date()).subtract(18, 'years').format("YYYY-MM-DD")}
+                            max={moment(new Date())
+                              .subtract(18, "years")
+                              .format("YYYY-MM-DD")}
                             // max={moment(new Date()).format("YYYY-MM-DD")}
                             onChange={(e) => onChnageForm(e)}
                           />
@@ -3147,8 +3769,8 @@ const User = ({ getNewCount, title }) => {
                       <div className="two-col-grid">
                         <div className="register-grid-items register-full-width">
                           <label>
-                            Address as per License<span>*</span> (Flat/House
-                            No, Locality, Street Name, Locality)
+                            Address as per License<span>*</span> (Flat/House No,
+                            Locality, Street Name, Locality)
                           </label>
                           <input
                             type="text"
@@ -3189,9 +3811,7 @@ const User = ({ getNewCount, title }) => {
                               value: e.name,
                             }))}
                             name="district"
-                            onChange={(e) =>
-                              onChnagSelectField(e, "district")
-                            }
+                            onChange={(e) => onChnagSelectField(e, "district")}
                             defaultValue={{
                               label: formdata.district,
                               value: formdata.district,
@@ -3307,8 +3927,7 @@ const User = ({ getNewCount, title }) => {
                           mb(jpg, jpeg, png)
                         </li>
                         <li>
-                          Rest all documents less than 5 mb(jpg, jpeg, png,
-                          pdf)
+                          Rest all documents less than 5 mb(jpg, jpeg, png, pdf)
                         </li>
                         <li>
                           Name of document should not contain any special
@@ -3316,25 +3935,25 @@ const User = ({ getNewCount, title }) => {
                         </li>
                       </ul>
                     </div>
-                    {
-                        formdata?.license === 'Permanent' ? 
-                        <div className="photo-upload-from">
-                     
+                    {formdata?.license === "Permanent" ? (
+                      <div className="photo-upload-from">
                         <p>
                           {" "}
-                          1. Passport Photo
-                          : less than 1 mb.(jpg, jpeg, PNG)/ Rest all documents
-                          less than 5 mb (jpg, jpeg, PNG, pdf)
+                          1. Passport Photo : less than 1 mb.(jpg, jpeg, PNG)/
+                          Rest all documents less than 5 mb (jpg, jpeg, PNG,
+                          pdf)
                         </p>
                         <input
                           type="file"
                           name="passport"
                           accept="image/png,image/jpeg,image/jpg"
-                          onChange={(e) => onChangImage(e.target.files[0], "passport")}
+                          onChange={(e) =>
+                            onChangImage(e.target.files[0], "passport")
+                          }
                         />
-                      </div> : 
-                        <div className="photo-upload-from">
-                     
+                      </div>
+                    ) : (
+                      <div className="photo-upload-from">
                         <p>
                           {" "}
                           1. Passport Photo<span className="star-color">*</span>
@@ -3345,17 +3964,19 @@ const User = ({ getNewCount, title }) => {
                           type="file"
                           name="passport"
                           accept="image/png,image/jpeg,image/jpg"
-                          onChange={(e) => onChangImage(e.target.files[0], "passport")}
+                          onChange={(e) =>
+                            onChangImage(e.target.files[0], "passport")
+                          }
                         />
                       </div>
-                      }
-                  
-                    {
-                      formdata?.license === 'N/A' || formdata?.license === 'Permanent' ? <div className="photo-upload-from">
+                    )}
+
+                    {formdata?.license === "N/A" ||
+                    formdata?.license === "Permanent" ? (
+                      <div className="photo-upload-from">
                         <p>
-                          2. Driving License
-                          (Not valid
-                          incase of N/A and Learner)
+                          2. Driving License (Not valid incase of N/A and
+                          Learner)
                         </p>
                         <input
                           type="file"
@@ -3368,7 +3989,9 @@ const User = ({ getNewCount, title }) => {
                             )
                           }
                         />
-                      </div> : <div className="photo-upload-from">
+                      </div>
+                    ) : (
+                      <div className="photo-upload-from">
                         <p>
                           2. Driving License
                           <span className="star-color">*</span> (Not valid
@@ -3386,12 +4009,12 @@ const User = ({ getNewCount, title }) => {
                           }
                         />
                       </div>
-                    }
+                    )}
 
                     <div className="photo-upload-from">
                       <p>
-                        3. ID Proof: Acceptable formats - Utility Bills
-                        (water, electricity, phone or gas bill)/ Aadhaar Card
+                        3. ID Proof: Acceptable formats - Utility Bills (water,
+                        electricity, phone or gas bill)/ Aadhaar Card
                         (UID)/Voter ID Card or Election Commission Photo ID
                         Card/Ration Card
                       </p>
@@ -3406,18 +4029,15 @@ const User = ({ getNewCount, title }) => {
                     </div>
                     <div className="photo-upload-from">
                       <p>
-                        4. Upload Medical certificate: For Eye vision and
-                        color blindness{" "}
+                        4. Upload Medical certificate: For Eye vision and color
+                        blindness{" "}
                       </p>
                       <input
                         type="file"
                         name="mediacalCertificate"
                         accept="image/png,image/jpeg,image/jpg,application/pdf"
                         onChange={(e) =>
-                          onChangImage(
-                            e.target.files[0],
-                            "mediacalCertificate"
-                          )
+                          onChangImage(e.target.files[0], "mediacalCertificate")
                         }
                       />
                     </div>
@@ -3431,9 +4051,7 @@ const User = ({ getNewCount, title }) => {
                             value: e.name,
                           }))}
                           name="bloodgroup"
-                          onChange={(e) =>
-                            onChnagSelectField(e, "bloodgroup")
-                          }
+                          onChange={(e) => onChnagSelectField(e, "bloodgroup")}
                           defaultValue={{
                             label: formdata.bloodgroup,
                             value: formdata.bloodgroup,
@@ -3448,8 +4066,8 @@ const User = ({ getNewCount, title }) => {
                         </div>
                       </div>
                     )}
-                    {formdata?.license === 'N/A'  ?
-                      formdata?.passport ?
+                    {formdata?.license === "N/A" ? (
+                      formdata?.passport ? (
                         <div className="next-step-alignment">
                           <button
                             className="fill-button"
@@ -3458,30 +4076,27 @@ const User = ({ getNewCount, title }) => {
                             Upload
                           </button>
                         </div>
-                        :
+                      ) : (
                         <div className="next-step-alignment">
                           <button className="fill-button disabled">
                             Upload
                           </button>
                         </div>
-
-                      :
-                      formdata.driviniglicencephoto && formdata.passport ?
-                        <div className="next-step-alignment">
-                          <button
-                            className="fill-button"
-                            onClick={() => uploadCertificate()}
-                          >
-                            Upload
-                          </button>
-                        </div>
-                        :
-                        <div className="next-step-alignment">
-                          <button className="fill-button disabled">
-                            Upload
-                          </button>
-                        </div>
-                    }
+                      )
+                    ) : formdata.driviniglicencephoto && formdata.passport ? (
+                      <div className="next-step-alignment">
+                        <button
+                          className="fill-button"
+                          onClick={() => uploadCertificate()}
+                        >
+                          Upload
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="next-step-alignment">
+                        <button className="fill-button disabled">Upload</button>
+                      </div>
+                    )}
 
                     <div className="next-step-alignment">
                       <button
@@ -3504,7 +4119,7 @@ const User = ({ getNewCount, title }) => {
                     <div className="payment-title">Payment Type</div>
 
                     <div className="d-flex ">
-                      <div className="d-flex aligncenetr margin-right-20">
+                      {/* <div className="d-flex aligncenetr margin-right-20">
                         <input
                           type="radio"
                           placeholder="online"
@@ -3516,7 +4131,7 @@ const User = ({ getNewCount, title }) => {
                         <label className="labes" htmlFor="online">
                           Online
                         </label>
-                      </div>
+                      </div> */}
                       <div className="d-flex aligncenetr">
                         <input
                           type="radio"
@@ -3594,25 +4209,23 @@ const User = ({ getNewCount, title }) => {
 
                       {!editMode
                         ? dicloser &&
-                        (formdata.type === "offline"
-                        ) && (
-                          <button
-                            className="fill-button"
-                            onClick={() => register()}
-                          >
-                            Submit
-                          </button>
-                        )
+                          formdata.type === "offline" && (
+                            <button
+                              className="fill-button"
+                              onClick={() => register()}
+                            >
+                              Submit
+                            </button>
+                          )
                         : dicloser &&
-                        (formdata.type === "offline"
-                        ) && (
-                          <button
-                            className="fill-button"
-                            onClick={() => updateData()}
-                          >
-                            Update
-                          </button>
-                        )}
+                          formdata.type === "offline" && (
+                            <button
+                              className="fill-button"
+                              onClick={() => updateData()}
+                            >
+                              Update
+                            </button>
+                          )}
                     </div>
                   </div>
                 )}
@@ -3637,11 +4250,11 @@ const User = ({ getNewCount, title }) => {
                           This Site contains statements that constitute
                           forward-looking statements within the meaning of the
                           Private Securities Litigation Reform Act of 1995. In
-                          addition, in the future we, and others on our
-                          behalf, may make statements that constitute
-                          forward-looking statements. Such forward-looking
-                          statements may include, without limitation,
-                          statements relating to the following:
+                          addition, in the future we, and others on our behalf,
+                          may make statements that constitute forward-looking
+                          statements. Such forward-looking statements may
+                          include, without limitation, statements relating to
+                          the following:
                         </p>
                         <ul>
                           <li>
@@ -3656,8 +4269,8 @@ const User = ({ getNewCount, title }) => {
                           <li>
                             <p>
                               {" "}
-                              the potential effect on our future performance
-                              of certain contingencies; and
+                              the potential effect on our future performance of
+                              certain contingencies; and
                             </p>
                           </li>
                           <li>
@@ -3672,16 +4285,16 @@ const User = ({ getNewCount, title }) => {
                           statements. We do not intend to update these
                           forward-looking statements except as may be required
                           by applicable securities laws. By their very nature,
-                          forward-looking statements involve inherent risks
-                          and uncertainties, both general and specific, and
-                          risks exist that predictions, forecasts, projections
-                          and other outcomes described or implied in
-                          forward-looking statements will not be achieved. We
-                          caution you that a number of important factors could
-                          cause results to differ materially from the plans,
-                          objectives, expectations, estimates and intentions
-                          expressed in such forward-looking statements. These
-                          factors include:
+                          forward-looking statements involve inherent risks and
+                          uncertainties, both general and specific, and risks
+                          exist that predictions, forecasts, projections and
+                          other outcomes described or implied in forward-looking
+                          statements will not be achieved. We caution you that a
+                          number of important factors could cause results to
+                          differ materially from the plans, objectives,
+                          expectations, estimates and intentions expressed in
+                          such forward-looking statements. These factors
+                          include:
                         </p>
                         <ul>
                           <li>
@@ -3694,19 +4307,19 @@ const User = ({ getNewCount, title }) => {
                           <li>
                             <p>
                               {" "}
-                              market and interest rate fluctuations and
-                              interest rate levels;
+                              market and interest rate fluctuations and interest
+                              rate levels;
                             </p>
                           </li>
                           <li>
                             <p>
                               {" "}
-                              the strength of the global economy in general
-                              and the strength of the economies of the
-                              countries in which we conduct our operations, in
-                              particular the risk of continued slow economic
-                              recovery or downturn in the US or other
-                              developed countries in the future;
+                              the strength of the global economy in general and
+                              the strength of the economies of the countries in
+                              which we conduct our operations, in particular the
+                              risk of continued slow economic recovery or
+                              downturn in the US or other developed countries in
+                              the future;
                             </p>
                           </li>
                           <li>
@@ -3720,9 +4333,8 @@ const User = ({ getNewCount, title }) => {
                           <li>
                             <p>
                               adverse rating actions by credit rating agencies
-                              in respect of sovereign issuers, structured
-                              credit products or other credit-related
-                              exposures;
+                              in respect of sovereign issuers, structured credit
+                              products or other credit-related exposures;
                             </p>
                           </li>
                           <li>
@@ -3741,32 +4353,31 @@ const User = ({ getNewCount, title }) => {
                           </li>
                           <li>
                             <p>
-                              the effects of, and changes in, fiscal,
-                              monetary, trade and tax policies, and currency
-                              fluctuations;
+                              the effects of, and changes in, fiscal, monetary,
+                              trade and tax policies, and currency fluctuations;
                             </p>
                           </li>
 
                           <li>
                             <p>
-                              political and social developments, including
-                              war, civil unrest or terrorist activity;
+                              political and social developments, including war,
+                              civil unrest or terrorist activity;
                             </p>
                           </li>
                           <li>
                             <p>
                               the possibility of foreign exchange controls,
-                              expropriation, nationalization or confiscation
-                              of assets in countries in which we conduct our
+                              expropriation, nationalization or confiscation of
+                              assets in countries in which we conduct our
                               operations;
                             </p>
                           </li>
 
                           <li>
                             <p>
-                              operational factors such as systems failure,
-                              human error, or the failure to implement
-                              procedures properly;
+                              operational factors such as systems failure, human
+                              error, or the failure to implement procedures
+                              properly;
                             </p>
                           </li>
                           <li>
@@ -3797,8 +4408,8 @@ const User = ({ getNewCount, title }) => {
                           </li>
                           <li>
                             <p>
-                              the ability to maintain our reputation and
-                              promote our brand;
+                              the ability to maintain our reputation and promote
+                              our brand;
                             </p>
                           </li>
                           <li>
@@ -3839,8 +4450,8 @@ const User = ({ getNewCount, title }) => {
                           </li>
                           <li>
                             <p>
-                              our success at managing the risks involved in
-                              the foregoing.
+                              our success at managing the risks involved in the
+                              foregoing.
                             </p>
                           </li>
                         </ul>
@@ -3848,10 +4459,10 @@ const User = ({ getNewCount, title }) => {
                           We caution you that the foregoing list of important
                           factors is not exclusive. When evaluating
                           forward-looking statements, you should carefully
-                          consider the foregoing factors and other
-                          uncertainties and events, including the information
-                          set forth in our most recent Annual Report under
-                          “Risk Factors” and in our other public filings
+                          consider the foregoing factors and other uncertainties
+                          and events, including the information set forth in our
+                          most recent Annual Report under “Risk Factors” and in
+                          our other public filings
                         </p>
 
                         <p>
@@ -3862,12 +4473,11 @@ const User = ({ getNewCount, title }) => {
                           </b>
                         </p>
                         <p>
-                          This Site may contain non-GAAP financial
-                          information. If such non-GAAP financial information
-                          is disclosed, the most directly comparable measures
-                          under generally accepted accounting principles is
-                          provided in our most recent periodic report or in
-                          our other public filings.
+                          This Site may contain non-GAAP financial information.
+                          If such non-GAAP financial information is disclosed,
+                          the most directly comparable measures under generally
+                          accepted accounting principles is provided in our most
+                          recent periodic report or in our other public filings.
                         </p>
                         <p>
                           <b>
@@ -3877,8 +4487,8 @@ const User = ({ getNewCount, title }) => {
                         </p>
                         <p>
                           On this Site, adjusted cost run-rate results are
-                          measured against our annualized 6M11 expense run
-                          rate measured at constant foreign exchange rates and
+                          measured against our annualized 6M11 expense run rate
+                          measured at constant foreign exchange rates and
                           adjusted to exclude business realignment and other
                           significant non-operating expenses and variable
                           compensation expenses.
@@ -3890,24 +4500,24 @@ const User = ({ getNewCount, title }) => {
                           legislation and regulations thereunder. Our related
                           disclosures are in accordance with our current
                           interpretation of such requirements, including
-                          relevant assumptions. Changes in the interpretation
-                          of these requirements in Switzerland or in any of
-                          our assumptions or estimates could result in
-                          different numbers from those shown herein. Capital
-                          and ratio numbers for periods prior to 2013 herein
-                          are based on estimates, which are calculated as if
-                          the Basel III framework had been in place in
-                          Switzerland during such periods.
+                          relevant assumptions. Changes in the interpretation of
+                          these requirements in Switzerland or in any of our
+                          assumptions or estimates could result in different
+                          numbers from those shown herein. Capital and ratio
+                          numbers for periods prior to 2013 herein are based on
+                          estimates, which are calculated as if the Basel III
+                          framework had been in place in Switzerland during such
+                          periods.
                         </p>
                         <p>
                           Unless otherwise noted, leverage ratio, leverage
-                          exposure and total capital amounts included herein
-                          are based on the current FINMA framework. The Swiss
-                          Total Capital leverage ratio is calculated as Swiss
-                          Total Capital, divided by a three-month average
-                          leverage exposure, which consists of balance sheet
-                          assets, off-balance sheet exposures, which consist
-                          of guarantees and commitments, and regulatory
+                          exposure and total capital amounts included herein are
+                          based on the current FINMA framework. The Swiss Total
+                          Capital leverage ratio is calculated as Swiss Total
+                          Capital, divided by a three-month average leverage
+                          exposure, which consists of balance sheet assets,
+                          off-balance sheet exposures, which consist of
+                          guarantees and commitments, and regulatory
                           adjustments, which include cash collateral netting
                           reversals and derivative add-ons.
                         </p>
@@ -3931,7 +4541,6 @@ const User = ({ getNewCount, title }) => {
             </div>
           ) : null}
         </List>
-
       ) : null}
 
       {isViewMoreUser ? (
@@ -3958,15 +4567,14 @@ const User = ({ getNewCount, title }) => {
                   <h2>Registered User Information</h2>
                 </div>
                 <div className="honda-text-grid honda-text-grid-border">
-
                   <div className="honda-text-grid-items">
                     <span>First Name:</span>
                     <p
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.fname === null ||
-                            dataViewMore?.fname === "" ||
-                            !dataViewMore?.fname
+                          dataViewMore?.fname === "" ||
+                          !dataViewMore?.fname
                             ? "No data"
                             : dataViewMore?.fname,
                       }}
@@ -3979,8 +4587,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.mname === null ||
-                            dataViewMore?.mname === "" ||
-                            !dataViewMore?.mname
+                          dataViewMore?.mname === "" ||
+                          !dataViewMore?.mname
                             ? "No data"
                             : dataViewMore?.mname,
                       }}
@@ -3993,8 +4601,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.lname === null ||
-                            dataViewMore?.lname === "" ||
-                            !dataViewMore?.lname
+                          dataViewMore?.lname === "" ||
+                          !dataViewMore?.lname
                             ? "No data"
                             : dataViewMore?.lname,
                       }}
@@ -4007,8 +4615,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.DoB === null ||
-                            dataViewMore?.DoB === "" ||
-                            !dataViewMore?.DoB
+                          dataViewMore?.DoB === "" ||
+                          !dataViewMore?.DoB
                             ? "No data"
                             : moment(dataViewMore?.DoB).format("ll"),
                       }}
@@ -4021,8 +4629,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.qualification === null ||
-                            dataViewMore?.qualification === "" ||
-                            !dataViewMore?.qualification
+                          dataViewMore?.qualification === "" ||
+                          !dataViewMore?.qualification
                             ? "No data"
                             : dataViewMore?.qualification,
                       }}
@@ -4035,8 +4643,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.gender === null ||
-                            dataViewMore?.gender === "" ||
-                            !dataViewMore?.gender
+                          dataViewMore?.gender === "" ||
+                          !dataViewMore?.gender
                             ? "No data"
                             : dataViewMore?.gender,
                       }}
@@ -4049,8 +4657,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.address === null ||
-                            dataViewMore?.address === "" ||
-                            !dataViewMore?.address
+                          dataViewMore?.address === "" ||
+                          !dataViewMore?.address
                             ? "No data"
                             : dataViewMore?.address,
                       }}
@@ -4063,8 +4671,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.state === null ||
-                            dataViewMore?.state === "" ||
-                            !dataViewMore?.state
+                          dataViewMore?.state === "" ||
+                          !dataViewMore?.state
                             ? "No data"
                             : dataViewMore?.state,
                       }}
@@ -4077,8 +4685,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.city === null ||
-                            dataViewMore?.city === "" ||
-                            !dataViewMore?.city
+                          dataViewMore?.city === "" ||
+                          !dataViewMore?.city
                             ? "No data"
                             : dataViewMore?.city,
                       }}
@@ -4091,8 +4699,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.district === null ||
-                            dataViewMore?.district === "" ||
-                            !dataViewMore?.district
+                          dataViewMore?.district === "" ||
+                          !dataViewMore?.district
                             ? "No data"
                             : dataViewMore?.district,
                       }}
@@ -4105,8 +4713,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.email === null ||
-                            dataViewMore?.email === "" ||
-                            !dataViewMore?.email
+                          dataViewMore?.email === "" ||
+                          !dataViewMore?.email
                             ? "No data"
                             : dataViewMore?.email,
                       }}
@@ -4119,8 +4727,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.phone === null ||
-                            dataViewMore?.phone === "" ||
-                            !dataViewMore?.phone
+                          dataViewMore?.phone === "" ||
+                          !dataViewMore?.phone
                             ? "No data"
                             : dataViewMore?.phone,
                       }}
@@ -4133,8 +4741,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.pincode === null ||
-                            dataViewMore?.pincode === "" ||
-                            !dataViewMore?.pincode
+                          dataViewMore?.pincode === "" ||
+                          !dataViewMore?.pincode
                             ? "No data"
                             : dataViewMore?.pincode,
                       }}
@@ -4147,8 +4755,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.permanentDLnumber === null ||
-                            dataViewMore?.permanentDLnumber === "" ||
-                            !dataViewMore?.permanentDLnumber
+                          dataViewMore?.permanentDLnumber === "" ||
+                          !dataViewMore?.permanentDLnumber
                             ? "No data"
                             : dataViewMore?.permanentDLnumber,
                       }}
@@ -4161,8 +4769,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.issueDate === null ||
-                            dataViewMore?.issueDate === "" ||
-                            !dataViewMore?.issueDate
+                          dataViewMore?.issueDate === "" ||
+                          !dataViewMore?.issueDate
                             ? "No data"
                             : dataViewMore?.issueDate,
                       }}
@@ -4175,8 +4783,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.validTill === null ||
-                            dataViewMore?.validTill === "" ||
-                            !dataViewMore?.validTill
+                          dataViewMore?.validTill === "" ||
+                          !dataViewMore?.validTill
                             ? "No data"
                             : dataViewMore?.validTill,
                       }}
@@ -4189,8 +4797,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.Authority === null ||
-                            dataViewMore?.Authority === "" ||
-                            !dataViewMore?.Authority
+                          dataViewMore?.Authority === "" ||
+                          !dataViewMore?.Authority
                             ? "No data"
                             : dataViewMore?.Authority,
                       }}
@@ -4203,8 +4811,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.bloodGroup === null ||
-                            dataViewMore?.bloodGroup === "" ||
-                            !dataViewMore?.bloodGroup
+                          dataViewMore?.bloodGroup === "" ||
+                          !dataViewMore?.bloodGroup
                             ? "No data"
                             : dataViewMore?.bloodGroup,
                       }}
@@ -4218,8 +4826,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.authoritycity === null ||
-                            dataViewMore?.authoritycity === "" ||
-                            !dataViewMore?.authoritycity
+                          dataViewMore?.authoritycity === "" ||
+                          !dataViewMore?.authoritycity
                             ? "No data"
                             : dataViewMore?.authoritycity,
                       }}
@@ -4232,8 +4840,8 @@ const User = ({ getNewCount, title }) => {
                       dangerouslySetInnerHTML={{
                         __html:
                           dataViewMore?.authoritydistrict === null ||
-                            dataViewMore?.authoritydistrict === "" ||
-                            !dataViewMore?.authoritydistrict
+                          dataViewMore?.authoritydistrict === "" ||
+                          !dataViewMore?.authoritydistrict
                             ? "No data"
                             : dataViewMore?.authoritydistrict,
                       }}
@@ -4249,14 +4857,11 @@ const User = ({ getNewCount, title }) => {
                     <span>Photo:</span>
                     <div className="card-main-border-image">
                       {dataViewMore?.passportPhoto === null ||
-                        dataViewMore?.passportPhoto === "" ||
-                        !dataViewMore?.passportPhoto ? (
+                      dataViewMore?.passportPhoto === "" ||
+                      !dataViewMore?.passportPhoto ? (
                         "No Data"
                       ) : (
-                        <img
-                          src={dataViewMore?.passportPhoto}
-                          alt="No Image"
-                        />
+                        <img src={dataViewMore?.passportPhoto} alt="No Image" />
                       )}
                     </div>
                   </div>
@@ -4264,8 +4869,8 @@ const User = ({ getNewCount, title }) => {
                     <span>Driving License Image:</span>
                     <div className="card-main-border-image">
                       {dataViewMore?.drivingLicense === null ||
-                        dataViewMore?.drivingLicense === "" ||
-                        !dataViewMore?.drivingLicense ? (
+                      dataViewMore?.drivingLicense === "" ||
+                      !dataViewMore?.drivingLicense ? (
                         "No Data"
                       ) : (
                         <img
@@ -4279,14 +4884,11 @@ const User = ({ getNewCount, title }) => {
                     <span>ID Proof:</span>
                     <div className="card-main-border-image">
                       {dataViewMore?.IDproof === null ||
-                        dataViewMore?.IDproof === "" ||
-                        !dataViewMore?.IDproof ? (
+                      dataViewMore?.IDproof === "" ||
+                      !dataViewMore?.IDproof ? (
                         "No Data"
                       ) : (
-                        <img
-                          src={dataViewMore?.IDproof}
-                          alt="No Image"
-                        />
+                        <img src={dataViewMore?.IDproof} alt="No Image" />
                       )}
                     </div>
                   </div>
@@ -4294,8 +4896,8 @@ const User = ({ getNewCount, title }) => {
                     <span>Medical Certificate:</span>
                     <div className="card-main-border-image">
                       {dataViewMore?.medicalCertificate === null ||
-                        dataViewMore?.medicalCertificate === "" ||
-                        !dataViewMore?.medicalCertificate ? (
+                      dataViewMore?.medicalCertificate === "" ||
+                      !dataViewMore?.medicalCertificate ? (
                         "No Data"
                       ) : (
                         <img
@@ -4306,7 +4908,6 @@ const User = ({ getNewCount, title }) => {
                     </div>
                   </div>
                 </div>
-
               </div>
             ) : null}
           </List>
@@ -4341,8 +4942,8 @@ const User = ({ getNewCount, title }) => {
                         dangerouslySetInnerHTML={{
                           __html:
                             dataForPayment?.courseName[0]?.price === null ||
-                              dataForPayment?.courseName[0]?.price === "" ||
-                              !dataForPayment?.courseName[0]?.price
+                            dataForPayment?.courseName[0]?.price === "" ||
+                            !dataForPayment?.courseName[0]?.price
                               ? "No data"
                               : dataForPayment?.courseName[0]?.price,
                         }}
@@ -4355,8 +4956,8 @@ const User = ({ getNewCount, title }) => {
                         dangerouslySetInnerHTML={{
                           __html:
                             dataForPayment?._id === null ||
-                              dataForPayment?._id === "" ||
-                              !dataForPayment?._id
+                            dataForPayment?._id === "" ||
+                            !dataForPayment?._id
                               ? "No data"
                               : dataForPayment?._id,
                         }}
@@ -4370,6 +4971,33 @@ const User = ({ getNewCount, title }) => {
                         {dataForPayment?.lname}
                       </p>
                     </div>
+                    <select
+                      className={`form-control form-control-lg form-control-solid`}
+                      name="paymentType"
+                      value={inputValueForAdd.paymentType}
+                      onChange={(e) => {
+                        handleOnChnageAdd(e);
+                      }}
+                    >
+                      <option>Select Type</option>
+                      <option value="Cash">Cash </option>
+                      <option value="UPI">UPI</option>
+                      <option value="Credit Card">Credit Card</option>
+                      <option value="Debit Card">Debit Card</option>
+                      <option value="Prepaid card">Prepaid card</option>
+                      <option value="Net banking">Net banking </option>
+                      <option value="Mobile wallet">Mobile wallet </option>
+                      <option value="ETC">ETC.. </option>
+                    </select>
+                    <span
+                      style={{
+                        color: "red",
+                        top: "5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errorsForAdd["paymentType"]}
+                    </span>
                   </div>
                 </div>
                 <div className="d-flex align-items-center justify-content-center">
@@ -4406,7 +5034,6 @@ const User = ({ getNewCount, title }) => {
             </IconButton>
           </Toolbar>
           <List>
-
             {modelForUserLogs === true ? (
               <>
                 <div className="honda-container">
@@ -4419,9 +5046,9 @@ const User = ({ getNewCount, title }) => {
                         Pre Login
                       </li> */}
                       <li
-                        className={tabs === 'post' ? "tab-active" : ""}
-
-                        onClick={(e) => handleOnClicks(e, "post")} >
+                        className={tabs === "post" ? "tab-active" : ""}
+                        onClick={(e) => handleOnClicks(e, "post")}
+                      >
                         Post Login
                       </li>
                     </ul>
@@ -4483,15 +5110,13 @@ const User = ({ getNewCount, title }) => {
                       </div>
                     </div>
                   )} */}
-                  {tabs === 'post' && (
+                  {tabs === "post" && (
                     <div>
                       <div className="other-information-child-text-style1">
                         <h2>User Post Login Log</h2>
                       </div>
                       <div className="honda-container-height">
-                        <div
-                          className="cursor-pointer pl-2"
-                        >
+                        <div className="cursor-pointer pl-2">
                           <CsvDownload
                             className={``}
                             data={dataCSVPostLogs}
@@ -4513,7 +5138,6 @@ const User = ({ getNewCount, title }) => {
                           </CsvDownload>
                         </div>
                         <div className="honda-text-grid">
-
                           <div className="honda-text-grid-items">
                             <DataTable
                               columns={columnsForUserLogsPost}
@@ -4539,7 +5163,6 @@ const User = ({ getNewCount, title }) => {
                     </div>
                   )}
                 </div>
-
               </>
             ) : null}
           </List>

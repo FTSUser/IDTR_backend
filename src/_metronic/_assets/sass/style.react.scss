@@ -81,7 +81,74 @@ select.sc-iwjdpV.gKsGGb{
   padding-top: 10px;
   padding-left: 13px;
 }
+table {
+  width: 793px;
+  margin: 0 auto;
+  background-color: #fff;
+  /* padding: 30px; */
+  border-radius: 6px;
+}
 
+table.new-table-design,
+.new-table-design th,
+.new-table-design td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+/* @media screen and (max-width: 1024px) {
+  table {
+      max-width: 100%;
+      padding: 0 40px;
+  }
+} */
+.first-grid {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 0;
+  border-bottom: 1px solid #131313;
+}
+
+.sec-grid {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 0;
+}
+
+.first-grid-items {
+  padding: 0 0 8px 0;
+}
+
+.three-grid {
+  display: grid;
+  grid-template-columns: 1fr 120px;
+  gap: 10px;
+  align-items: center;
+}
+
+.new-table-design-style th,
+.new-table-design-style td {
+  padding: 12px;
+}
+
+.new-table-design-style th {
+  font-size: 13px;
+  line-height: 16px;
+  color: #000;
+}
+
+.new-table-design-style td {
+  font-size: 13px;
+  line-height: 16px;
+  color: #000;
+}
+
+.thee-col-alignment {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  align-items: center;
+}
 
 ////////////////////////////////////////////////////////////////
 ///////////// DO NOT MODIFY ABOVE INCLUDE ORDER ////////////////

@@ -714,8 +714,9 @@ const Announcement = ({ getNewCount, title }) => {
               <Modal.Title className="text-danger">Alert!</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              Are You Sure To Want To{" "}
-              {statusDisplay === true ? "De-active" : "Active"} this Annoucemet
+            Are you sure you want to {statusDisplay === true ? "De-active" : "Active"}  this Announcement...?
+           
+              
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleCloseShowStatus}>
@@ -738,7 +739,7 @@ const Announcement = ({ getNewCount, title }) => {
               <Modal.Title className="text-danger">Alert!</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              Are You Sure To Want To delete this Announcement
+            Are you sure you want to delete this Announcement ?
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>

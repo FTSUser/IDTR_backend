@@ -438,7 +438,7 @@ const FAQ = ({ getNewCount, title }) => {
               <Modal.Title className="text-danger">Alert!</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              Are You Sure To Want To delete this Announcement
+            Are you sure you want to delete this FAQ ?
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
