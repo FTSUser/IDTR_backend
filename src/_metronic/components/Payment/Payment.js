@@ -93,13 +93,120 @@ const Payment = ({ getNewCount, title }) => {
 
   useEffect(() => {
   }, [inputValue]);
-
+  var a = [
+    "",
+    "one ",
+    "two ",
+    "three ",
+    "four ",
+    "five ",
+    "six ",
+    "seven ",
+    "eight ",
+    "nine ",
+    "ten ",
+    "eleven ",
+    "twelve ",
+    "thirteen ",
+    "fourteen ",
+    "fifteen ",
+    "sixteen ",
+    "seventeen ",
+    "eighteen ",
+    "nineteen ",
+  ];
+  var b = [
+    "",
+    "",
+    "twenty",
+    "thirty",
+    "forty",
+    "fifty",
+    "sixty",
+    "seventy",
+    "eighty",
+    "ninety",
+  ];
+  
+  function inWords(num) {
+    if (!num) return;
+    if ((num?.toString()).length > 9) return;
+    let n = ("000000000" + num)
+      .substr(-9)
+      .match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+    if (!n) return;
+    var str = "";
+    str +=
+      n[1] != 0
+        ? (a[Number(n[1])] || b[n[1][0]] + " " + a[n[1][1]]) + "crore "
+        : "";
+    str +=
+      n[2] != 0
+        ? (a[Number(n[2])] || b[n[2][0]] + " " + a[n[2][1]]) + "lakh "
+        : "";
+    str +=
+      n[3] != 0
+        ? (a[Number(n[3])] || b[n[3][0]] + " " + a[n[3][1]]) + "thousand "
+        : "";
+    str +=
+      n[4] != 0
+        ? (a[Number(n[4])] || b[n[4][0]] + " " + a[n[4][1]]) + "hundred "
+        : "";
+    str +=
+      n[5] != 0
+        ? (str != "" ? "and " : "") +
+          (a[Number(n[5])] || b[n[5][0]] + " " + a[n[5][1]]) +
+          "only "
+        : "";
+    return str;
+  }
   let i = 0;
   const columns = [
     {
       name: "SNo",
       cell: (row, index) => (page - 1) * countPerPage + (index + 1),
       width: "65px",
+    },
+    {
+      name: "Taxable Total Amount ",
+      cell: (row) => {
+        return <span>{row?.price === null ? "-" : inWords(row?.price)}</span>;
+      },
+      selector: (row) => row?.createdAt,
+      sortable: true,
+
+      // width: "65px",
+    },
+    {
+      name: "Final Total Amount ",
+      cell: (row) => {
+        return <span>{row?.price === null ? "-" : row?.price}</span>;
+      },
+      selector: (row) => row?.createdAt,
+      sortable: true,
+
+      // width: "65px",
+    },
+    {
+      name: "CGST",
+      cell: (row) => {
+        return <span>{row?.cgst === null ? "-" : row?.cgst}</span>;
+      },
+     
+      sortable: true,
+
+      // width: "65px",
+    },
+   
+    {
+      name: "SGST",
+      cell: (row) => {
+        return <span>{row?.sgst === null ? "-" : row?.sgst}</span>;
+      },
+     
+      sortable: true,
+
+      // width: "65px",
     },
     {
       name: "User ID",
@@ -185,37 +292,7 @@ const Payment = ({ getNewCount, title }) => {
 
       // width: "65px",
     },
-    {
-      name: "Final Total Amount ",
-      cell: (row) => {
-        return <span>{row?.price === null ? "-" : row?.price}</span>;
-      },
-      selector: (row) => row?.createdAt,
-      sortable: true,
-
-      // width: "65px",
-    },
-    {
-      name: "CGST",
-      cell: (row) => {
-        return <span>{row?.cgst === null ? "-" : row?.cgst}</span>;
-      },
-     
-      sortable: true,
-
-      // width: "65px",
-    },
-   
-    {
-      name: "SGST",
-      cell: (row) => {
-        return <span>{row?.sgst === null ? "-" : row?.sgst}</span>;
-      },
-     
-      sortable: true,
-
-      // width: "65px",
-    },
+  
    
     {
       name: "Payment Type",
@@ -361,6 +438,11 @@ const Payment = ({ getNewCount, title }) => {
           Number: key + 1,
           email: registerUser?.uid?.email,
           name: registerUser?.uid?.firstName,
+          TaxableAmount:inWords(registerUser?.price), 
+          CGST: registerUser?.cgst,
+          SGST: registerUser?.sgst,
+          Total: registerUser?.price,
+
           UserID: registerUser?.uid?._id,
           certificate: registerUser?.cnid?.certificate,
           courseName: registerUser?.cnid?.courseName,

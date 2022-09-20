@@ -227,7 +227,10 @@ class ComponentToPrints extends React.Component {
                         </span>
                       </div>
                     </div>
-                    <div>
+                    <div   style={{
+                         
+                          margin: "20px 0 15px 0",
+                        }}>
                       <p
                         style={{
                           fontSize: "18px",
@@ -251,19 +254,9 @@ class ComponentToPrints extends React.Component {
                             margin: "0 0 5px 0",
                           }}
                         >
-                          Receipt No. <span>text here..</span>
+                          Receipt No. <span>{`${this.props?.data?._id} `}</span>
                         </p>
-                        <p
-                          style={{
-                            fontSize: "13px",
-                            lineHeight: "14px",
-                            fontWeight: "600",
-                            color: "#000",
-                            margin: "0 0 5px 0",
-                          }}
-                        >
-                          Receipt No. <span>text here..</span>
-                        </p>
+                      
                         <p
                           style={{
                             fontSize: "13px",
@@ -292,7 +285,12 @@ class ComponentToPrints extends React.Component {
                       <div class="sec-grid-items">
                         <div class="three-grid">
                           <div>
-                            <p>Cancellation Receipt Date:</p>
+                            <p>Cancellation Receipt Date:
+                            {" "}
+                          <span>{`${moment(this.props?.data?.receiptDate).format(
+                            "DD-MM-YYYY "
+                          )} `}</span>
+                            </p>
                             <p
                               style={{
                                 fontSize: "13px",
@@ -1254,7 +1252,7 @@ const User = ({ getNewCount, title }) => {
       selector: "issueDate",
       width: "160px",
       cell: (row) => {
-        return <span>{moment(row?.issueDate).format("ll")}</span>;
+        return <span>{row?.issueDate === null ? "-" : moment(row?.issueDate).format("ll")}</span>;
       },
 
       sortable: true,
@@ -1264,7 +1262,7 @@ const User = ({ getNewCount, title }) => {
       selector: "validTill",
       width: "160px",
       cell: (row) => {
-        return <span>{moment(row?.validTill).format("ll")}</span>;
+        return <span>{row?.validTill === null ? "-" : moment(row?.validTill).format("ll")}</span>;
       },
 
       sortable: true,
@@ -4987,7 +4985,7 @@ const User = ({ getNewCount, title }) => {
                       <option value="Prepaid card">Prepaid card</option>
                       <option value="Net banking">Net banking </option>
                       <option value="Mobile wallet">Mobile wallet </option>
-                      <option value="ETC">ETC.. </option>
+                      <option value="Other">Other.. </option>
                     </select>
                     <span
                       style={{

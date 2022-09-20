@@ -50,6 +50,9 @@ class ComponentToPrints extends React.Component {
   render() {
     return (
       <>
+      
+   
+    
         <div class="invoice-box">
           <table>
             <tr class="top">
@@ -228,7 +231,165 @@ class ComponentToPrintsForUser extends React.Component {
   render() {
     return (
       <>
-        <div class="invoice-box">
+
+
+<div class="certificate-box-center-alignment">
+        <div class="certificate-box">
+            <div class="sl-no-box-alignment">
+                <div>
+                    <label>SL NO: </label>
+                    <input type="text"/>
+                </div>
+            </div>
+            <div class="header-alignment">
+                <div>
+                    <img src="https://i.ibb.co/87cN78k/aa.png" />
+                </div>
+                <div>
+                    <h1>Institute of Deriving Training & Research</h1>
+                    <p>A Joint Venture of Transport Department Goverment of Haryana & Honda</p>
+                    <span>UCHANI VILLAGE, Near New Bus Stand, Tehsil and District Kamal Haryana, 132001</span>
+                </div>
+                <div>
+                    <img src="https://i.ibb.co/XLg1jLn/rre.png" />
+                </div>
+            </div>
+            <div class="drivers-certificate-text">
+                <h2>Driver’s CERTIFICATE</h2>
+                <span>Form V</span>
+                <p>See Rule 14(e), 17(1) b, 27(d) and 31A(2)</p>
+            </div>
+            <div class="first-row-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>Certificate NO: </label>
+                        <input type="text" value={`${this?.props?.data?._id} `}/>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>REG NO: IDTR </label>
+                        <input type="text" value={`${this?.props?.data?._id} `}/ >
+                    </div>
+                </div>
+            </div>
+            <div class="sec-row-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>This is to Certift that Sh/ Smt/ Kumari/ NO: </label>
+                        <input type="text" value={`${this?.props?.data?.fname } `}/>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>Sh./Smt. SON/ Wife / Daughter / of </label>
+                        <input type="text" value={`${this?.props?.data?.lname} `}/>
+                    </div>
+                </div>
+            </div>
+            <div class="three-row-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>Residling at </label>
+                        <input type="text" value={`${this?.props?.data?.address} `}/>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>was enrolled in this institule on</label>
+                        <input type="text"value={`${this?.props?.data?.Authority} `}/>
+                    </div>
+                </div>
+            </div>
+            <div class="fourth-row-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>end his/ her name is registerred at serial number</label>
+                        <input type="text"/>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>in our register in Form 14 and that</label>
+                    </div>
+                </div>
+            </div>
+            <div class="fifth-row-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>he/ she has undergone the course of training in driving of</label>
+                        <input type="text" value={`${this?.props?.data?.cnid?.courseName} `}/>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>(mention class of vehicle )</label>
+                    </div>
+                </div>
+            </div>
+            <div class="six-row-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>according to the syllabus prescribed for a perload from</label>
+                        <input type="text"/>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>To</label>
+                        <input type="text"/>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>Satisfactorily.</label>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-content-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <input type="text" value={moment(this?.props?.data?.dateofCourse).format("DD-MM-YYYY ")}/>
+                        <label>Date</label>
+                    </div>
+                </div>
+                <div>
+                    <div class="photographer-printed-class"></div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <input type="text"/>
+                        <label>Authorized Signatory</label>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <input type="text"/>
+                        <label>Principal, IDTR karnal</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="certificate-box-center-alignment">
+        <div class="certificate-box" style={{display:"flex",alignItems:"center",padding:"80px 120px"}}>
+            <div>
+                <div class="box-title">
+                    <h1>INSTRUCTIONS</h1>
+                    <p>IF THIS CERTIFICATE IS LOST, A DUPLCATE COPY WILL BE ISSUED AGANIST PROCESSING CHARGES.</p>
+                    <span>THIS GRADATION PATTERN IS GIVEN BELOW</span>
+                </div>
+                <div class="content-text-style">
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        {/* <div class="invoice-box">
           <table>
             <tr class="top">
               <td colspan="2">
@@ -374,33 +535,9 @@ class ComponentToPrintsForUser extends React.Component {
               </td>
             </tr>
 
-            {/* <tr className="">
-              <td>
-                <td>Examiner Phone: {`${this.props?.data?.Examiner?.phone} `} </td>
-              </td>
-            </tr> */}
-
-            {/* <tr class="heading">
-              <td>Payment Method</td>
-            </tr> */}
-
-            {/* <tr class="details">
-              <td>{this.props?.data?.type}</td>
-            </tr> */}
-
-            {/* <tr class="heading">
-              <td>Item</td>
-              <td>GST</td>
-              <td>COST</td>
-            </tr>
-
-            <tr class="item">
-              <td>{this.props?.data?.courseName[0]?.courseName}</td>
-              <td>12FC34343433</td>
-              <td>&#x20b9;{this.props?.data?.courseName[0]?.price}</td>
-            </tr> */}
+       
           </table>
-        </div>
+        </div> */}
       </>
     );
   }
