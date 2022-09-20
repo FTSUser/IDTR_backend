@@ -1060,7 +1060,7 @@ img.view {
     width: 900px;
     background-image: url("https://i.ibb.co/nmw8264/IDTR-Certificate-1.png");
     background-repeat: no-repeat;
-    height: 600px;
+    min-height: 600px;
     padding: 60px;
     background-size: contain;
 }
@@ -1240,6 +1240,11 @@ input:focus {
     border: 1px solid #010101;
     width: 60px;
     height: 60px;
+    img{
+        height: 50px;
+        width: 50px;
+        object-fit: contain;
+    }
 }
 
 

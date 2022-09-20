@@ -354,7 +354,9 @@ class ComponentToPrintsForUser extends React.Component {
                     </div>
                 </div>
                 <div>
-                    <div class="photographer-printed-class"></div>
+                    <div class="photographer-printed-class">
+                      <img src={this?.props?.data?.passportPhoto}/>
+                    </div>
                 </div>
                 <div class="sl-no-box-alignment">
                     <div>

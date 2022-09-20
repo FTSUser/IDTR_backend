@@ -240,7 +240,7 @@ class ComponentToPrints extends React.Component {
                           margin: "0 0 5px 0",
                         }}
                       >
-                        CANCELLATION RECEIPT
+                        PAYMENT RECEIPT
                       </p>
                     </div>
                     <div class="sec-grid">
@@ -321,7 +321,13 @@ class ComponentToPrints extends React.Component {
                               width: "100%",
                               backgroundColor: "#000",
                             }}
-                          ></div>
+                          >
+                             <img  style={{
+                              height: "120px",
+                              width: "100%",
+                              backgroundColor: "#000",
+                            }} src={this?.props?.data?.passportPhoto}/>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1022,7 +1028,7 @@ const User = ({ getNewCount, title }) => {
       },
     },
     {
-      name: "Booking ID",
+      name: "Tracking ID",
       selector: "id",
       width: "220px",
       sortable: true,
