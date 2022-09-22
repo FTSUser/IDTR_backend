@@ -285,7 +285,7 @@ class ComponentToPrints extends React.Component {
                       <div class="sec-grid-items">
                         <div class="three-grid">
                           <div>
-                            <p>Cancellation Receipt Date:
+                            <p> Receipt Date:
                             {" "}
                           <span>{`${moment(this.props?.data?.receiptDate).format(
                             "DD-MM-YYYY "
@@ -432,7 +432,7 @@ class ComponentToPrints extends React.Component {
                         >
                           Amount in Words:
                           <span>
-                            {inWords(this.props?.data?.paymentHistory?.price)}
+                            {inWords(Math.round(this.props?.data?.paymentHistory?.price))}
                           </span>
                         </p>
                       </div>
@@ -1403,7 +1403,8 @@ const User = ({ getNewCount, title }) => {
                 <InfoOutlinedIcon />
               </Tooltip>
             </div>
-            <div className="cursor-pointer pl-2">
+            {
+              row?.isPaymentDone == true &&   <div className="cursor-pointer pl-2">
               <ReactToPrint
                 trigger={() => (
                   <Tooltip title="Generate Pdf" arrow>
@@ -1421,6 +1422,8 @@ const User = ({ getNewCount, title }) => {
                 </div>
               </div>
             </div>
+            }
+         
 
             <div className="cursor-pointer pl-2">
               {!row?.uid ? (

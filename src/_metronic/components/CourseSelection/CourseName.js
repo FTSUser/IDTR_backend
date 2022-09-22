@@ -272,10 +272,10 @@ const CourseName = ({ getNewCount, title }) => {
     //   errorsForAdd["SystemRequirement"] = "*Please Enter System Requirement!";
     // }
 
-    if (inputValueForAdd && !inputValueForAdd.Certificate) {
-      formIsValid = false;
-      errorsForAdd["Certificate"] = "*Please Enter Certificate!";
-    }
+    // if (inputValueForAdd && !inputValueForAdd.Certificate) {
+    //   formIsValid = false;
+    //   errorsForAdd["Certificate"] = "*Please Enter Certificate!";
+    // }
 
     if (inputValueForAdd && !inputValueForAdd.Price) {
       formIsValid = false;
@@ -294,7 +294,7 @@ const CourseName = ({ getNewCount, title }) => {
         displayName: inputValueForAdd.displayName,
         description: inputValueForAdd.Description,
         isActive: true,
-        certificate: inputValueForAdd.Certificate,
+        // certificate: inputValueForAdd.Certificate,
         documentRequired: inputValueForAdd.DocumentRequired,
         mode: inputValueForAdd.Mode,
         // systemRequirement: inputValueForAdd.SystemRequirement,
@@ -349,7 +349,7 @@ const CourseName = ({ getNewCount, title }) => {
         courseName: inputValueForAdd?.CourseName,
         description: inputValueForAdd?.Description,
         displayName: inputValueForAdd?.displayName,
-        certificate: inputValueForAdd?.Certificate,
+        // certificate: inputValueForAdd?.Certificate,
         documentRequired: inputValueForAdd?.DocumentRequired,
         mode: inputValueForAdd?.Mode,
         // systemRequirement: inputValueForAdd?.SystemRequirement,
@@ -490,7 +490,7 @@ const CourseName = ({ getNewCount, title }) => {
                   setInputValueForAdd({
                     CourseName: row?.courseName,
                     Description: row?.description,
-                    Certificate: row?.certificate,
+                    // Certificate: row?.certificate,
                     DocumentRequired: row?.documentRequired,
                     displayName: row?.displayName,
                     Mode: row?.mode,
@@ -653,7 +653,7 @@ const CourseName = ({ getNewCount, title }) => {
           Duration: registerUser?.duration,
           CourseDisplayName: registerUser?.displayName,
           Timing: registerUser?.timing,
-          Certificate: registerUser?.certificate,
+          // Certificate: registerUser?.certificate,
           // Validity: registerUser?.validity,
           DocumentRequired: registerUser?.documentRequired,
           CourseName: registerUser?.courseName,
@@ -1306,7 +1306,7 @@ const CourseName = ({ getNewCount, title }) => {
                   </div>
                 </div> */}
 
-                <div className="form-group row">
+                {/* <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter certificate
                   </label>
@@ -1333,7 +1333,7 @@ const CourseName = ({ getNewCount, title }) => {
                       {errorsForAdd["Certificate"]}
                     </span>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
