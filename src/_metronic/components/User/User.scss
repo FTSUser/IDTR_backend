@@ -780,6 +780,105 @@ $icon-background: rgba(204, 0, 1, 0.18);
         }
     }
 }
+.feedback-modals {
+    // width: 650px;
+    background-color: #fff;
+    border-radius: 6px;
+    // height: calc(100vh - 100px);
+    overflow: scroll;
+    overflow-x: hidden;
+    .modal-body {
+        padding: 30px 60px;
+        span {
+            color: #cc0001;
+        }
+        .button-center-align {
+            display: flex;
+            justify-content: center;
+            button {
+                border: none;
+                min-width: 120px;
+                padding: 8px 15px;
+                background-color: #cc0001;
+                cursor: pointer;
+                color: $white;
+                @include text;
+                letter-spacing: 1px;
+                border-radius: 4px;
+                height: 40px;
+            }
+        }
+        .star-rating {
+            i {
+                font-size: 20px;
+                color: orange;
+                margin-right: 12px;
+                cursor: pointer;
+            }
+        }
+        .contact-form-control {
+            padding-bottom: 20px;
+            label {
+                @include text-sm;
+                color: $gray;
+                letter-spacing: 1px;
+                font-weight: 500;
+                display: block;
+            }
+            ::placeholder {
+                @include text-sm;
+                color: $gray;
+            }
+            textarea {
+                width: -webkit-fill-available;
+                border: 1px solid #d0d0d0;
+                padding: 16px;
+                @include text-sm;
+                color: $gray;
+                height: 80px;
+                border-radius: 4px;
+                &:focus {
+                    outline: none;
+                }
+            }
+            input,
+            select {
+                width: -webkit-fill-available;
+                border: 1px solid #d0d0d0;
+                padding: 0 16px;
+                @include text-sm;
+                color: #000;
+                height: 35px;
+                border-radius: 4px;
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+    }
+    .modal-header {
+        display: flex;
+        padding:  20px;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #d0d0d0;
+        h1 {
+            font-size: 25px;
+            line-height: 28px;
+            font-family: "Helvetica-Bold";
+            font-weight: 700;
+            color: #333333;
+            letter-spacing: 1px;
+            font-family: "Helvetica";
+            font-weight: 400;
+        }
+        i {
+            cursor: pointer;
+            color: #cc0001;
+            font-size: 20px;
+        }
+    }
+}
 
 .mobile-sidebar-design {
     position: fixed;
@@ -1279,3 +1378,22 @@ input:focus {
     font-weight: 600;
     display: block;
 }
+.cancel-booking {
+    margin-right: 10px;
+    padding: 6px 20px;
+    border-radius: 4px;
+    background-color: #cc0001;
+    color: #fff;
+    font-size: 16px;
+    line-height: 21px;
+    font-family: "Helvetica";
+    font-weight: 400;
+    letter-spacing: 1px;
+    line-height: 31px;
+  
+    margin-top: 15px;
+    cursor: pointer;
+    height: auto;
+    width: max-content;
+    border: none;
+  }

@@ -41,37 +41,37 @@ import ReactToPrint from "react-to-print";
 import { addDays } from "date-fns";
 var a = [
   "",
-  "one ",
-  "two ",
-  "three ",
-  "four ",
-  "five ",
-  "six ",
-  "seven ",
-  "eight ",
-  "nine ",
-  "ten ",
-  "eleven ",
-  "twelve ",
-  "thirteen ",
-  "fourteen ",
-  "fifteen ",
-  "sixteen ",
-  "seventeen ",
-  "eighteen ",
-  "nineteen ",
+  "One ",
+  "Two ",
+  "Three ",
+  "Four ",
+  "Five ",
+  "Six ",
+  "Seven ",
+  "Eight ",
+  "Nine ",
+  "Ten ",
+  "Eleven ",
+  "Twelve ",
+  "Thirteen ",
+  "Fourteen ",
+  "Fifteen ",
+  "Sixteen ",
+  "Seventeen ",
+  "Eighteen ",
+  "Nineteen ",
 ];
 var b = [
   "",
   "",
-  "twenty",
-  "thirty",
-  "forty",
-  "fifty",
-  "sixty",
-  "seventy",
-  "eighty",
-  "ninety",
+  "Twenty",
+  "Thirty",
+  "Forty",
+  "Fifty",
+  "Sixty",
+  "Seventy",
+  "Eighty",
+  "Ninety",
 ];
 
 function inWords(num) {
@@ -84,25 +84,25 @@ function inWords(num) {
   var str = "";
   str +=
     n[1] != 0
-      ? (a[Number(n[1])] || b[n[1][0]] + " " + a[n[1][1]]) + "crore "
+      ? (a[Number(n[1])] || b[n[1][0]] + " " + a[n[1][1]]) + "Crore "
       : "";
   str +=
     n[2] != 0
-      ? (a[Number(n[2])] || b[n[2][0]] + " " + a[n[2][1]]) + "lakh "
+      ? (a[Number(n[2])] || b[n[2][0]] + " " + a[n[2][1]]) + "Lakh "
       : "";
   str +=
     n[3] != 0
-      ? (a[Number(n[3])] || b[n[3][0]] + " " + a[n[3][1]]) + "thousand "
+      ? (a[Number(n[3])] || b[n[3][0]] + " " + a[n[3][1]]) + "Thousand "
       : "";
   str +=
     n[4] != 0
-      ? (a[Number(n[4])] || b[n[4][0]] + " " + a[n[4][1]]) + "hundred "
+      ? (a[Number(n[4])] || b[n[4][0]] + " " + a[n[4][1]]) + "Hundred "
       : "";
   str +=
     n[5] != 0
-      ? (str != "" ? "and " : "") +
+      ? (str != "" ? " And " : "") +
         (a[Number(n[5])] || b[n[5][0]] + " " + a[n[5][1]]) +
-        "only "
+        " Only "
       : "";
   return str;
 }
@@ -679,6 +679,8 @@ const User = ({ getNewCount, title }) => {
   const [dataViewMore, setDataViewMore] = useState({});
   const [isViewMoreUser, setIsViewMoreUser] = useState(false);
   const [dataForEdit, setDataForEdit] = useState();
+  const [modalOpens, setModalOpens] = useState(false);
+  const [allData, setData] = useState();
 
   //new data
 
@@ -952,7 +954,19 @@ const User = ({ getNewCount, title }) => {
   }, [updateCall]);
 
   //end test
-
+  const cancelBooking = (data) => {
+    setModalOpens(false);
+    if (data?._id) {
+      ApiPut(`register/cancleBooking?uid=${data?._id}`)
+        .then((res) => {
+          toast.success("Your booking cancel successfully");
+         
+        })
+        .catch((err) => {
+          toast.error(err, { theme: "colored" });
+        });
+    }
+  };
   useEffect(() => {
     if (dateForFilter) {
       handleSetDateData(dateForFilter);
@@ -1388,7 +1402,7 @@ const User = ({ getNewCount, title }) => {
 
     {
       name: "Actions",
-      width: "145px",
+    
       cell: (row) => {
         return (
           <>
@@ -1541,6 +1555,17 @@ const User = ({ getNewCount, title }) => {
                 )}
               </div>
             </Tooltip>
+            {
+              row?.recordType == 'upcomming' &&
+              
+              
+              
+              <button className="ml-3 mr-3 btn btn-success"  onClick={() => {
+                setModalOpens(!modalOpens);
+                setData(row);
+              }}>Cancel Booking</button>
+            }
+        
           </>
         );
       },
@@ -5175,6 +5200,38 @@ const User = ({ getNewCount, title }) => {
           </List>
         </Dialog>
       ) : null}
+        {modalOpens && (
+        <div className="feedback-background-blur">
+          <div className="feedback-modals">
+            <div className="modal-header">
+              <h1>Cancel Booking</h1>
+              <i
+                onClick={() => setModalOpens(false)}
+                className="fas fa-times"
+              ></i>
+            </div>
+            <div className="modal-body">
+              <h2 className="text-center">
+                Please confirm cancellation{" "}
+              </h2>
+              <div className="d-flex center">
+                <div
+                  className="cancel-booking ml3"
+                  onClick={(e) => cancelBooking(allData)}
+                >
+                  Continue
+                </div>
+                <div
+                  className="cancel-booking"
+                  onClick={() => setModalOpens(!modalOpens)}
+                >
+                  Back
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

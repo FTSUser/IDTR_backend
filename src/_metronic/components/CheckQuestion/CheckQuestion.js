@@ -909,9 +909,9 @@ const CheckTest = ({ getNewCount, title }) => {
                           {/* {data?.Qname} */}Question
                         </div>
                         <div>
-                          {
+                          {/* {
                             data?.image ? <img src={data?.image} alt="" /> : null
-                          }
+                          } */}
 
                         </div>
                         <div className="paddingautos">
