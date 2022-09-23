@@ -125,6 +125,12 @@ table.new-table-design,
   gap: 10px;
   align-items: center;
 }
+table.new-table-design,
+.new-table-design th,
+.new-table-design td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
 
 .new-table-design-style th,
 .new-table-design-style td {

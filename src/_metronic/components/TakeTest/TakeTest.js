@@ -755,11 +755,14 @@ const TakeTest = ({ getNewCount, title }) => {
       cell: (row) => {
         return (
           <>
-            <div className="cursor-pointer pl-2">
-              <Tooltip title="Generate Pdf" arrow >
-                <img src="media/allIconsForTable/invoice.png" onClick={(e) => genereateAllPDF(row?._id)} />
-              </Tooltip>
-            </div>
+          {
+            row?.isExamGenerate &&   <div className="cursor-pointer pl-2">
+            <Tooltip title="Generate Pdf" arrow >
+              <img src="media/allIconsForTable/invoice.png" onClick={(e) => genereateAllPDF(row?._id)} />
+            </Tooltip>
+          </div>
+          }
+          
           </>
         );
       },

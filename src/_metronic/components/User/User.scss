@@ -819,21 +819,21 @@ $icon-background: rgba(204, 0, 1, 0.18);
         .contact-form-control {
             padding-bottom: 20px;
             label {
-                @include text-sm;
+              
                 color: $gray;
                 letter-spacing: 1px;
                 font-weight: 500;
                 display: block;
             }
             ::placeholder {
-                @include text-sm;
+              
                 color: $gray;
             }
             textarea {
                 width: -webkit-fill-available;
                 border: 1px solid #d0d0d0;
                 padding: 16px;
-                @include text-sm;
+              
                 color: $gray;
                 height: 80px;
                 border-radius: 4px;
@@ -846,7 +846,7 @@ $icon-background: rgba(204, 0, 1, 0.18);
                 width: -webkit-fill-available;
                 border: 1px solid #d0d0d0;
                 padding: 0 16px;
-                @include text-sm;
+               
                 color: #000;
                 height: 35px;
                 border-radius: 4px;
@@ -865,11 +865,11 @@ $icon-background: rgba(204, 0, 1, 0.18);
         h1 {
             font-size: 25px;
             line-height: 28px;
-            font-family: "Helvetica-Bold";
+           
             font-weight: 700;
             color: #333333;
             letter-spacing: 1px;
-            font-family: "Helvetica";
+          
             font-weight: 400;
         }
         i {

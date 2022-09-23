@@ -417,7 +417,7 @@ class ComponentToPrints extends React.Component {
                             margin: "0 0 5px 0",
                           }}
                         >
-                          Amount in Words:
+                          Amount in Words:{' '}
                           <span>
                             {inWords(Math.round(this.props?.data?.paymentHistory?.price))}
                           </span>

@@ -430,7 +430,7 @@ class ComponentToPrints extends React.Component {
                             margin: "0 0 5px 0",
                           }}
                         >
-                          Amount in Words:
+                          Amount in Words:{' '}
                           <span>
                             {inWords(Math.round(this.props?.data?.paymentHistory?.price))}
                           </span>
@@ -1555,17 +1555,32 @@ const User = ({ getNewCount, title }) => {
                 )}
               </div>
             </Tooltip>
+           
+        
+          </>
+        );
+      },
+    },
+    {
+      name: "Cancel Booking",
+      width:'200px',
+      cell: (row) => {
+        let subTractDate = moment(row?.trainingDate[0]?.date).subtract(3, "days").format("YYYY-MM-DD");
+        let isCancleButton = moment(subTractDate).isAfter(moment(new Date()).format("YYYY-MM-DD"));
+        return (
+          <>
+          
             {
-              row?.recordType == 'upcomming' &&
+              
+              row?.recordType == 'upcomming' && isCancleButton && 
               
               
               
-              <button className="ml-3 mr-3 btn btn-success"  onClick={() => {
+              <button className=" btn btn-success"  onClick={() => {
                 setModalOpens(!modalOpens);
                 setData(row);
               }}>Cancel Booking</button>
             }
-        
           </>
         );
       },
