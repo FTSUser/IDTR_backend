@@ -668,6 +668,562 @@ class ComponentToPrints extends React.Component {
   }
 }
 
+class ComponentToPrintss extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = this.props;
+  }
+
+  componentDidMount() {
+    this.setState({ ...this.props });
+  }
+
+  render() {
+    return (
+      <>
+        <table
+          cellpadding="0"
+          cellspacing="0"
+          width="100%"
+          style={{ padding: "30px" }}
+        >
+          <tr>
+            <td style={{ padding: "0px 0 0px 0" }}>
+              <table align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignContent: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <img
+                        style={{ maxWidth: "100px" }}
+                        src="https://i.ibb.co/87cN78k/aa.png"
+                      />
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <img
+                        style={{ maxWidth: "50px" }}
+                        src="https://i.ibb.co/XLg1jLn/rre.png"
+                      />
+                    </div>
+                  </div>
+                </tr>
+                <tr>
+                  <td>
+                    <div style={{ padding: "20px 0 20px 0" }}>
+                      <p
+                        style={{
+                          fontSize: "13px",
+                          lineHeight: "14px",
+                          fontWeight: "600",
+                          color: "#000",
+                          margin: "0 0 5px 0",
+                        }}
+                      >
+                        Institute of Driving Training & Research
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "13px",
+                          lineHeight: "14px",
+                          fontWeight: "600",
+                          color: "#000",
+                          margin: "0 0 5px 0",
+                          maxWidth: "330px",
+                        }}
+                      >
+                        Uchani Village, Baldhi part, Near New Bus Stand Teshil
+                        and District Karnal, Haryana-122001
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "13px",
+                          lineHeight: "14px",
+                          fontWeight: "600",
+                          color: "#000",
+                          margin: "0 0 5px 0",
+                        }}
+                      >
+                        Phone No:
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="first-grid">
+                      <div class="first-grid-items">
+                        <span
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          GST No
+                        </span>
+                      </div>
+                      <div class="first-grid-items">
+                        <span
+                          style={{
+                            fontSize: "14px",
+                            lineHeight: "16px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          SAC Code
+                        </span>
+                      </div>
+                    </div>
+                    <div   style={{
+                         
+                          margin: "20px 0 15px 0",
+                        }}>
+                      <p
+                        style={{
+                          fontSize: "18px",
+                          lineHeight: "14px",
+                          fontWeight: "600",
+                          color: "#000",
+                          margin: "0 0 5px 0",
+                        }}
+                      >
+                        CANCELLATION RECEIPT
+                      </p>
+                    </div>
+                    <div class="sec-grid">
+                      <div class="sec-grid-items">
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Receipt No. <span>{`${this.props?.data?._id} `}</span>
+                        </p>
+                      
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Trainee Name:{" "}
+                          <span>{`${this.props?.data?.fname} `}</span>
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Address:{" "}
+                          <span>{`${this.props?.data?.address} `}</span>
+                        </p>
+                      </div>
+                      <div class="sec-grid-items">
+                        <div class="three-grid">
+                          <div>
+                            <p> CANCELLATION Receipt Date:
+                            {" "}
+                          <span>{`${moment(this.props?.data?.receiptDate).format(
+                            "DD-MM-YYYY "
+                          )} `}</span>
+                            </p>
+                            <p
+                              style={{
+                                fontSize: "13px",
+                                lineHeight: "14px",
+                                fontWeight: "600",
+                                color: "#000",
+                                margin: "0 0 5px 0",
+                              }}
+                            >
+                              S/o
+                            </p>
+                            <p
+                              style={{
+                                fontSize: "13px",
+                                lineHeight: "14px",
+                                fontWeight: "600",
+                                color: "#000",
+                                margin: "0 0 5px 0",
+                              }}
+                            >
+                              Mobile No:{" "}
+                              <span>{`${this.props?.data?.phone} `}</span>
+                            </p>
+                          </div>
+                          <div
+                            style={{
+                              height: "120px",
+                              width: "100%",
+                              backgroundColor: "#000",
+                            }}
+                          >
+                             <img  style={{
+                              height: "120px",
+                              width: "100%",
+                              backgroundColor: "#000",
+                            }} src={this?.props?.data?.passportPhoto}/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style={{ padding: "30px 0 0px 0" }}></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <table class="new-table-design new-table-design-style">
+                      <thead style={{ border: "1px solid red" }}>
+                        <tr>
+                          <th align="center" width="8%">
+                            Regn No
+                          </th>
+                          <th align="center" width="30%">
+                            Regn Date
+                          </th>
+                          <th align="center" width="20.66">
+                            Course Description/ Name
+                          </th>
+                          <th align="center" width="20.66">
+                            Theory Date <br /> (Time- 8:45 AM)
+                          </th>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td align="center">1</td>
+                        <td>
+                          {moment(this?.props?.data?.createdAt).format(
+                            "DD-MM-YYYY "
+                          )}
+                        </td>
+                        <td align="center">
+                          <span>
+                            {this.props?.data?.cnid?.courseName}
+                          </span>
+                        </td>
+                        <td align="center">
+                          {this?.props?.data?.cnid?.duration}
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style={{ padding: "30px 0 0px 0" }}></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="thee-col-alignment">
+                      <div>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Amount (RS):
+                          <span>{this.props?.data?.cnid?.price}</span>
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Taxable Amount:
+                          <span>{this.props?.data?.paymentHistory?.price}</span>
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Rounded Off:
+                          <span>{this.props?.data?.paymentHistory?.price}</span>
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Amount in Words:{' '}
+                          <span>
+                            {inWords(Math.round(this.props?.data?.paymentHistory?.price))}
+                          </span>
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Discount (Rs):<span>-</span>
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          CGST 9% ( Rs) :
+                          <span>{this.props?.data?.paymentHistory?.cgst}</span>
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Payable Amount :
+                          <span>{this.props?.data?.paymentHistory?.price}</span>
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          SGST 9% ( Rs) :
+                          <span>{this.props?.data?.paymentHistory?.sgst}</span>
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: "14px",
+                            fontWeight: "600",
+                            color: "#000",
+                            margin: "0 0 5px 0",
+                          }}
+                        >
+                          Pay Mode:
+                          <span>{this.props?.data?.paymentType}</span>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style={{ padding: "40px 0 0px 0" }}>
+                      <p>Fot IDTR Karnal:</p>
+                      <span>Note:</span>
+                      <p
+                        style={{
+                          fontSize: "13px",
+                          lineHeight: "14px",
+                          fontWeight: "600",
+                          color: "#000",
+                          margin: "0 0 5px 0",
+                        }}
+                      >
+                        1. 100% refund if cancellation is made 3 days prior to
+                        course commencement
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "13px",
+                          lineHeight: "14px",
+                          fontWeight: "600",
+                          color: "#000",
+                          margin: "0 0 5px 0",
+                        }}
+                      >
+                        2. offline cancellation is not allowed for online
+                        bookings
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "13px",
+                          lineHeight: "14px",
+                          fontWeight: "600",
+                          color: "#000",
+                          margin: "0 0 5px 0",
+                        }}
+                      >
+                        3. Refunds will be processed to customer with in 10-15
+                        days
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "13px",
+                          lineHeight: "14px",
+                          fontWeight: "600",
+                          color: "#000",
+                          margin: "0 0 5px 0",
+                        }}
+                      >
+                        4. No Change/modification is allowed for allocared
+                        training slot.
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style={{ padding: "30px 0 0px 0" }}>
+                      <p
+                        style={{
+                          fontSize: "14px",
+                          lineHeight: "18px",
+                          fontWeight: "600",
+                          color: "#000",
+                          textAlign: "center",
+                        }}
+                      >
+                        ***** This is a computer-generated Invoice and signature
+                        not required *****
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        {/* <div class="invoice-box">
+          <table>
+            <tr class="top">
+              <td colspan="2">
+                <table>
+                  <tr>
+                    <td>
+                      <b>Institute of Driving and Traffic Research (IDTR)</b>
+                      <p>
+                        A joint venture of Transport Department, <br />{" "}
+                        Government of Haryana & Honda IDTR
+                      </p>
+                      <p>GST Number:121222</p>
+                    </td>
+                    <td class="title">
+                      <img src={Logo} />
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr class="information">
+              <td colspan="2">
+                <table>
+                  <tr>
+                    <td>
+                      Created:{" "}
+                      {moment(this?.props?.data?.createdAt).format(
+                        "DD-MM-YYYY "
+                      )}
+                    </td>
+                    <td>
+                      <h3>TAX INVOICE</h3>
+                      Invoice #: {this.props?.data?._id}
+                      <br />
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr className="">
+              <td>
+                <td>Invoice To: {`${this.props?.data?.fname} `} </td>
+                <td>{this.props?.data?.lname}</td>
+              </td>
+            </tr>
+
+            <tr class="heading">
+              <td>Payment Method</td>
+            </tr>
+
+            <tr class="details">
+              <td>{this.props?.data?.type}</td>
+            </tr>
+
+            <tr class="heading">
+              <td>Item</td>
+              <td>GST</td>
+              <td>COST</td>
+            </tr>
+
+            <tr class="item">
+              <td>{this.props?.data?.courseName[0]?.courseName}</td>
+              <td>12FC34343433</td>
+              <td>&#x20b9;{this.props?.data?.courseName[0]?.price}</td>
+            </tr>
+
+            <tr></tr>
+            <tr class="total top">
+              <td></td>
+
+              <td>Total: &#x20b9;{this.props?.data?.courseName[0]?.price}</td>
+            </tr>
+            <tr class="total">
+              <td></td>
+
+              <td>
+                Grand Total: &#x20b9;{this.props?.data?.courseName[0]?.price}
+              </td>
+            </tr>
+          </table>
+        </div> */}
+      </>
+    );
+  }
+}
+
 //testing end
 
 const User = ({ getNewCount, title }) => {
@@ -1580,6 +2136,30 @@ const User = ({ getNewCount, title }) => {
                 setModalOpens(!modalOpens);
                 setData(row);
               }}>Cancel Booking</button>
+            }
+            {
+              row?.isCancle && <>
+              <div>Booking Canceled</div>
+              <div className="cursor-pointer pl-2">
+              <ReactToPrint
+                trigger={() => (
+                  <Tooltip title="Generate Pdf" arrow>
+                  <img src="media/allIconsForTable/invoice.png" />
+                </Tooltip>
+                )}
+                content={() => itemsRef.current[row._id]}
+              />
+              <div style={{ display: "none" }}>
+                <div
+                  ref={(el) => (itemsRef.current[row._id] = el)}
+                  id={row?._id}
+                >
+                  <ComponentToPrintss data={row} />
+                </div>
+              </div>
+            </div>
+              
+              </>
             }
           </>
         );
