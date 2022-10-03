@@ -159,13 +159,13 @@ class ComponentToPrintsForUser extends React.Component {
             <div class="sec-row-alignment">
                 <div class="sl-no-box-alignment">
                     <div>
-                        <label>This is to certify that Sh/ Smt/ Kumari</label>
+                        <label>This is to certify that Sh./ Smt./ Kumari</label>
                         <input type="text" value={`${this?.props?.data?.fname } `}/>
                     </div>
                 </div>
                 <div class="sl-no-box-alignment">
                     <div>
-                        <label>Sh./Smt. /Son/ Wife / Daughter / of </label>
+                        <label>Son/ Wife / Daughter / of </label>
                         <input type="text" value={`${this?.props?.data?.lname} `}/>
                     </div>
                 </div>
@@ -204,11 +204,11 @@ class ComponentToPrintsForUser extends React.Component {
                         <input type="text" value={`${this?.props?.data?.cnid?.courseName} `}/>
                     </div>
                 </div>
-                <div class="sl-no-box-alignment">
+                {/* <div class="sl-no-box-alignment">
                     <div>
                         <label>(mention class of vehicle )</label>
                     </div>
-                </div>
+                </div> */}
             </div>
             <div class="six-row-alignment">
                 <div class="sl-no-box-alignment">
@@ -846,14 +846,14 @@ const TakeTest = ({ getNewCount, title }) => {
                 )}
                 content={() => itemsRefForUser.current[row._id]}
               />
-              <div style={{ display: "none" }}>
+              {/* <div style={{ display: "none" }}> */}
                 <div
                   ref={(el) => (itemsRefForUser.current[row._id] = el)}
                   id={row?._id}
                 >
                   <ComponentToPrintsForUser data={row} />
                 </div>
-              </div>
+              {/* </div> */}
             </div>
           </>
         );
