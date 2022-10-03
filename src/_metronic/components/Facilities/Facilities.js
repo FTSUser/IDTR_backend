@@ -165,7 +165,7 @@ const Facilities = ({ getNewCount, title }) => {
         description: description,
         image: inputValueImage,
         content: inputValueForAdd.content,
-        language: inputValueForAdd.content,
+        language: inputValueForAdd.language,
       };
 
       ApiPost(`facility/addFacility`, Data)
@@ -173,7 +173,8 @@ const Facilities = ({ getNewCount, title }) => {
           if (res?.status == 200) {
             setIsAddHelpfulTips(false);
             toast.success(res?.data?.message);
-            setInputValueForAdd({});
+            setInputValueForAdd([]);
+            setInputValueImage([])
             setDescription("");
             getAllHelpfulTips();
           } else {

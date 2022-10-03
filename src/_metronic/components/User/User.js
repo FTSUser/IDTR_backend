@@ -223,7 +223,7 @@ class ComponentToPrints extends React.Component {
                             margin: "0 0 5px 0",
                           }}
                         >
-                          SAC Code
+                          SAC Code:999293
                         </span>
                       </div>
                     </div>
@@ -528,7 +528,7 @@ class ComponentToPrints extends React.Component {
                           margin: "0 0 5px 0",
                         }}
                       >
-                        2. offline cancellation is not allowed for online
+                        2. Offline cancellation is not allowed for online
                         bookings
                       </p>
                       <p
@@ -540,7 +540,7 @@ class ComponentToPrints extends React.Component {
                           margin: "0 0 5px 0",
                         }}
                       >
-                        3. Refunds will be processed to customer with in 10-15
+                        3. Refunds will be processed to customer within 10-15
                         days
                       </p>
                       <p
@@ -552,7 +552,7 @@ class ComponentToPrints extends React.Component {
                           margin: "0 0 5px 0",
                         }}
                       >
-                        4. No Change/modification is allowed for allocared
+                        4. No Change/modification is allowed for allocated
                         training slot.
                       </p>
                     </div>
@@ -779,7 +779,7 @@ class ComponentToPrintss extends React.Component {
                             margin: "0 0 5px 0",
                           }}
                         >
-                          SAC Code
+                          SAC Code:999293
                         </span>
                       </div>
                     </div>

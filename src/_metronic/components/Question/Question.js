@@ -716,8 +716,10 @@ const Question = (props) => {
 
             let formData = new FormData();
             formData.append("csv", e.target.files[0]);
+           
             await ApiPost("question/uploadcsv", formData)
                 .then((res) => {
+                
                     if (res.data?.result === 0) {
                         getAllQuestionSet();
                         toast.success(res.data.message);
@@ -728,6 +730,7 @@ const Question = (props) => {
                     img.value = null
                 })
                 .catch((err) => {
+                    toast.error("Invalid Format")
                     toast.error(err);
                 });
         } else {

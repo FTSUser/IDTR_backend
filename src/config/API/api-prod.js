@@ -2,7 +2,7 @@
 // const host = "192.168.29.165:8001/api/v1";
 
 const protocol = "https";
-const host = "api.honda.rejoicehub.com/api/v1";
+const host = "backend.idtrkarnal.com/api/v1";
 
 const port = "";
 const trailUrl = "";

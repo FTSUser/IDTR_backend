@@ -116,179 +116,163 @@ class ComponentToPrintsForUser extends React.Component {
   render() {
     return (
       <>
-        <div class="invoice-box">
-          <table>
-            <tr class="top">
-              <td colspan="2">
-                <table>
-                  <tr>
-                    <td>
-                      <b>Institute of Driving and Traffic Research (IDTR)</b>
-                      <p>
-                        A joint venture of Transport Department, <br />{" "}
-                        Government of Haryana & Honda IDTR
-                      </p>
-                    </td>
-                    <td class="title">
-                      <img src={Logo} />
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-
-            <tr class="information">
-              <td colspan="2">
-                <table>
-                  <tr>
-                    <td>
-                      Created:{" "}
-                      {moment(this?.props?.data?.createdAt).format(
-                        "DD-MM-YYYY "
-                      )}
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>First Name: {`${this?.props?.data?.fname} `} </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>Middle Name: {`${this?.props?.data?.mname} `} </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>Last Name: {`${this?.props?.data?.lname} `} </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>Email: {`${this?.props?.data?.email} `} </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>
-                  Phone:{" "}
-                  {`${this?.props?.data?.phone
-                    ? this?.props?.data?.phone
-                    : "No Data"
-                    } `}{" "}
-                </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>Gender: {`${this?.props?.data?.gender} `} </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>Address: {`${this?.props?.data?.address} `} </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>City: {`${this?.props?.data?.city} `} </td>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Created: {moment(this?.props?.data?.DoB).format("DD-MM-YYYY ")}
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>Address: {`${this?.props?.data?.address} `} </td>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Date of course:{" "}
-                {moment(this?.props?.data?.dateofCourse).format("DD-MM-YYYY ")}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Pass?:{" "}
-                {moment(this?.props?.data?.isPass ? "Pass" : "Fail").format(
-                  "DD-MM-YYYY "
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                LCID: {moment(this?.props?.data?.lcid).format("DD-MM-YYYY ")}
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>Percentage: {`${this?.props?.data?.percentage} `}% </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>TotalScore: {`${this?.props?.data?.totalScore} `} </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>Status: {`${this?.props?.data?.status} `} </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>Type: {`${this?.props?.data?.type} `} </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>
-                  Authoritydistrict:{" "}
-                  {`${this?.props?.data?.authoritydistrict} `}{" "}
-                </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>
-                  Authoritycity: {`${this?.props?.data?.authoritycity} `}{" "}
-                </td>
-              </td>
-            </tr>
-
-            {/* <tr className="">
-              <td>
-                <td>Examiner Phone: {`${this.props?.data?.Examiner?.phone} `} </td>
-              </td>
-            </tr> */}
-
-            {/* <tr class="heading">
-              <td>Payment Method</td>
-            </tr> */}
-
-            {/* <tr class="details">
-              <td>{this.props?.data?.type}</td>
-            </tr> */}
-
-            {/* <tr class="heading">
-              <td>Item</td>
-              <td>GST</td>
-              <td>COST</td>
-            </tr>
-
-            <tr class="item">
-              <td>{this.props?.data?.courseName[0]?.courseName}</td>
-              <td>12FC34343433</td>
-              <td>&#x20b9;{this.props?.data?.courseName[0]?.price}</td>
-            </tr> */}
-          </table>
+     <div class="certificate-box-center-alignment">
+        <div class="certificate-box">
+            <div class="sl-no-box-alignment">
+                <div>
+                    <label>SL NO: </label>
+                    <input type="text"/>
+                </div>
+            </div>
+            <div class="header-alignment">
+                <div>
+                    <img src="https://i.ibb.co/87cN78k/aa.png" />
+                </div>
+                <div>
+                    <h1>Institute of Driver’s Training & Research</h1>
+                    <p>A Joint Venture of Transport Department Government of Haryana & Honda</p>
+                    <span>UCHANI VILLAGE, Near New Bus Stand, Tehsil and District Kamal Haryana, 132001</span>
+                </div>
+                <div>
+                    <img src="https://i.ibb.co/XLg1jLn/rre.png" />
+                </div>
+            </div>
+            <div class="drivers-certificate-text">
+                <h2>DRIVER'S CERTIFICATE</h2>
+                <span>Form V</span>
+                <p>See Rule 14(e), 17(1) b, 27(d) and 31A(2)</p>
+            </div>
+            <div class="first-row-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>Certificate No.: </label>
+                        <input type="text" value={`${this?.props?.data?._id} `}/>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>REG NO: IDTR </label>
+                        <input type="text" value={`${this?.props?.data?._id} `}/ >
+                    </div>
+                </div>
+            </div>
+            <div class="sec-row-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>This is to certify that Sh/ Smt/ Kumari</label>
+                        <input type="text" value={`${this?.props?.data?.fname } `}/>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>Sh./Smt. /Son/ Wife / Daughter / of </label>
+                        <input type="text" value={`${this?.props?.data?.lname} `}/>
+                    </div>
+                </div>
+            </div>
+            <div class="three-row-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>Residing at </label>
+                        <input type="text" value={`${this?.props?.data?.address} `}/>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>was enrolled in this institute on</label>
+                        <input type="text"value={`${this?.props?.data?.Authority} `}/>
+                    </div>
+                </div>
+            </div>
+            <div class="fourth-row-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>and his/ her name is registered at serial number</label>
+                        <input type="text"/>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>in our register in Form 14 and that</label>
+                    </div>
+                </div>
+            </div>
+            <div class="fifth-row-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>he/ she has undergone the course of training in driving of</label>
+                        <input type="text" value={`${this?.props?.data?.cnid?.courseName} `}/>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>(mention class of vehicle )</label>
+                    </div>
+                </div>
+            </div>
+            <div class="six-row-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>according to the syllabus prescribed for a period from</label>
+                        <input type="text"/>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>To</label>
+                        <input type="text"/>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>satisfactorily.</label>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-content-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <input type="text" value={moment(this?.props?.data?.dateofCourse).format("DD-MM-YYYY ")}/>
+                        <label>Date</label>
+                    </div>
+                </div>
+                <div>
+                    <div class="photographer-printed-class">
+                      <img src={this?.props?.data?.passportPhoto}/>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <input type="text"/>
+                        <label>Authorized Signatory</label>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <input type="text"/>
+                        <label>Principal, IDTR karnal</label>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+    <div class="certificate-box-center-alignment">
+        <div class="certificate-box" style={{display:"flex",alignItems:"center",padding:"80px 120px"}}>
+            <div>
+                <div class="box-title">
+                    <h1>INSTRUCTIONS</h1>
+                    <p>IF THIS CERTIFICATE IS LOST, A DUPLCATE COPY WILL BE ISSUED AGANIST PROCESSING CHARGES.</p>
+                    <span>THIS GRADATION PATTERN IS GIVEN BELOW</span>
+                </div>
+                <div class="content-text-style">
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                </div>
+            </div>
+        </div>
+    </div>
       </>
     );
   }
@@ -862,7 +846,7 @@ const TakeTest = ({ getNewCount, title }) => {
                 )}
                 content={() => itemsRefForUser.current[row._id]}
               />
-              <div style={{ display: "none" }}>
+              <div >
                 <div
                   ref={(el) => (itemsRefForUser.current[row._id] = el)}
                   id={row?._id}

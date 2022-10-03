@@ -246,8 +246,8 @@ class ComponentToPrintsForUser extends React.Component {
                     <img src="https://i.ibb.co/87cN78k/aa.png" />
                 </div>
                 <div>
-                    <h1>Institute of Deriving Training & Research</h1>
-                    <p>A Joint Venture of Transport Department Goverment of Haryana & Honda</p>
+                    <h1>Institute of Driver’s Training & Research</h1>
+                    <p>A Joint Venture of Transport Department Government of Haryana & Honda</p>
                     <span>UCHANI VILLAGE, Near New Bus Stand, Tehsil and District Kamal Haryana, 132001</span>
                 </div>
                 <div>
@@ -255,14 +255,14 @@ class ComponentToPrintsForUser extends React.Component {
                 </div>
             </div>
             <div class="drivers-certificate-text">
-                <h2>Driver’s CERTIFICATE</h2>
+                <h2>DRIVER'S CERTIFICATE</h2>
                 <span>Form V</span>
                 <p>See Rule 14(e), 17(1) b, 27(d) and 31A(2)</p>
             </div>
             <div class="first-row-alignment">
                 <div class="sl-no-box-alignment">
                     <div>
-                        <label>Certificate NO: </label>
+                        <label>Certificate No.: </label>
                         <input type="text" value={`${this?.props?.data?._id} `}/>
                     </div>
                 </div>
@@ -276,13 +276,13 @@ class ComponentToPrintsForUser extends React.Component {
             <div class="sec-row-alignment">
                 <div class="sl-no-box-alignment">
                     <div>
-                        <label>This is to Certift that Sh/ Smt/ Kumari/ NO: </label>
+                        <label>This is to certify that Sh/ Smt/ Kumari</label>
                         <input type="text" value={`${this?.props?.data?.fname } `}/>
                     </div>
                 </div>
                 <div class="sl-no-box-alignment">
                     <div>
-                        <label>Sh./Smt. SON/ Wife / Daughter / of </label>
+                        <label>Sh./Smt. /Son/ Wife / Daughter / of </label>
                         <input type="text" value={`${this?.props?.data?.lname} `}/>
                     </div>
                 </div>
@@ -290,13 +290,13 @@ class ComponentToPrintsForUser extends React.Component {
             <div class="three-row-alignment">
                 <div class="sl-no-box-alignment">
                     <div>
-                        <label>Residling at </label>
+                        <label>Residing at </label>
                         <input type="text" value={`${this?.props?.data?.address} `}/>
                     </div>
                 </div>
                 <div class="sl-no-box-alignment">
                     <div>
-                        <label>was enrolled in this institule on</label>
+                        <label>was enrolled in this institute on</label>
                         <input type="text"value={`${this?.props?.data?.Authority} `}/>
                     </div>
                 </div>
@@ -304,7 +304,7 @@ class ComponentToPrintsForUser extends React.Component {
             <div class="fourth-row-alignment">
                 <div class="sl-no-box-alignment">
                     <div>
-                        <label>end his/ her name is registerred at serial number</label>
+                        <label>and his/ her name is registered at serial number</label>
                         <input type="text"/>
                     </div>
                 </div>
@@ -330,7 +330,7 @@ class ComponentToPrintsForUser extends React.Component {
             <div class="six-row-alignment">
                 <div class="sl-no-box-alignment">
                     <div>
-                        <label>according to the syllabus prescribed for a perload from</label>
+                        <label>according to the syllabus prescribed for a period from</label>
                         <input type="text"/>
                     </div>
                 </div>
@@ -342,7 +342,7 @@ class ComponentToPrintsForUser extends React.Component {
                 </div>
                 <div class="sl-no-box-alignment">
                     <div>
-                        <label>Satisfactorily.</label>
+                        <label>satisfactorily.</label>
                     </div>
                 </div>
             </div>

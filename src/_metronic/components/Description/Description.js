@@ -193,10 +193,7 @@ const Description = ({ getNewCount, title }) => {
       formIsValid = false;
       errors["description"] = "*Please Enter Description!";
     }
-    if (inputValue && !inputValue.language) {
-      formIsValid = false;
-      errorsForAdd["language"] = "*Please Select language!";
-    }
+   
 
     setErrors(errors);
     return formIsValid;
@@ -335,7 +332,7 @@ const Description = ({ getNewCount, title }) => {
                 </Tooltip>
               </div>
             </div>
-            {/* <div
+            <div
               className="cursor-pointer"
               onClick={() => {
                 setShow(true);
@@ -345,7 +342,7 @@ const Description = ({ getNewCount, title }) => {
               <Tooltip title="Delete Announcement" arrow>
                 <DeleteIcon />
               </Tooltip>
-            </div> */}
+            </div>
             <div
               className="cursor-pointer pl-2"
               onClick={() => {

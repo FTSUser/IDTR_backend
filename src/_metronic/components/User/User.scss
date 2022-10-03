@@ -1171,9 +1171,9 @@ img.view {
 }
 
 .sl-no-box-alignment div label {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
-    line-height: 16px;
+    line-height: 14px;
     color: #323232;
 
 }
@@ -1185,7 +1185,7 @@ input:focus {
 .sl-no-box-alignment div input {
     border: none;
     border-bottom: 1px solid #010101;
-    font-size: 14px;
+    font-size: 12px;
     width: 100px;
     color: #505050;
 }
@@ -1212,7 +1212,7 @@ input:focus {
     padding: 5px 20px;
     border-radius: 9999px;
     /* background-color: #cc0001; */
-    font-size: 16px;
+    font-size: 14px;
     color: #000;
     cursor: pointer;
     width: fit-content;
@@ -1221,8 +1221,8 @@ input:focus {
 }
 
 .header-alignment p {
-    font-size: 14px;
-    margin: 10px 0;
+    font-size: 12px;
+    margin: 6px 0;
     font-weight: 500;
     color: #101010;
     text-align: center;
@@ -1237,15 +1237,15 @@ input:focus {
 }
 
 .drivers-certificate-text h2 {
-    font-size: 25px;
-    line-height: 30px;
+    font-size: 14px;
+    line-height: 20px;
     color: #cc0001;
     font-weight: 600;
     text-align: center;
 }
 
 .drivers-certificate-text {
-    padding: 10px 0;
+    padding: 6px 0;
 }
 
 .drivers-certificate-text span {
@@ -1268,7 +1268,7 @@ input:focus {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 5px 0 15px 0;
+    padding: 5px 0 5px 0;
 }
 
 .sec-row-alignment {
