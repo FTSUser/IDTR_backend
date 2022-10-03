@@ -173,7 +173,7 @@ class ComponentToPrintsForUser extends React.Component {
             <div class="three-row-alignment">
                 <div class="sl-no-box-alignment">
                     <div>
-                        <label>Residing at </label>
+                        <label>residing at </label>
                         <input type="text" value={`${this?.props?.data?.address} `}/>
                     </div>
                 </div>
