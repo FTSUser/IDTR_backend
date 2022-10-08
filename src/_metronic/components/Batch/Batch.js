@@ -383,9 +383,9 @@ class ComponentToPrintsForUser extends React.Component {
                 </div>
                 <div class="content-text-style">
                     <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
-                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
-                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
-                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                    <span>GRADE "B" ( 80% - 89% ) : VERY GOOD</span>
+                    <span>GRADE "C" ( 70% - 79% ) : GOOD</span>
+                    <span>GRADE "D" ( 60% - 69% ) : PASS</span>
                 </div>
             </div>
         </div>

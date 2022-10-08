@@ -43,60 +43,75 @@ class ComponentToPrintss extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.props;
-  
   }
 
   componentDidMount() {
     if (this.props?.id) {
-      ApiGet(
-        `batch/getExamsetByBatch/${this.props?.id}`
-      )
+      ApiGet(`batch/getExamsetByBatch/${this.props?.id}`)
         .then((res) => {
           this.setState(res?.data?.payload);
         })
-        .catch((err) => { });
+        .catch((err) => {});
       this.setState({ ...this.props });
     }
   }
 
   render() {
-
-
     return (
       <>
-
         <div class="invoice-box">
           {
             <div>
-
-              <h2 style={{ fontSize: "30px", lineHeight: "40px" }}>Batch Name: {this.state?.Examset?.batchId?.name}</h2>
-              <h2 style={{ fontSize: "30px", lineHeight: "40px" }}>Date: {moment(this.state?.Examset?.batchId?.createdAt).format("ll")}</h2>
+              <h2 style={{ fontSize: "30px", lineHeight: "40px" }}>
+                Batch Name: {this.state?.Examset?.batchId?.name}
+              </h2>
+              <h2 style={{ fontSize: "30px", lineHeight: "40px" }}>
+                Date:{" "}
+                {moment(this.state?.Examset?.batchId?.createdAt).format("ll")}
+              </h2>
             </div>
           }
-          {
-            this.state?.Examset?.questionsList?.map((data, key) => (
-              <>
-                <div key={key} style={{ padding: "10px 0 40px 0" }}>
-                  <h2 style={{ fontSize: "30px", lineHeight: "40px" }}> <b>Question{key + 1}</b> :{data?.Qname}</h2>
-                  <div style={{ padding: "10px 0 0px 0" }}>
-                    <img src={this.state.Examset[key]?.image ? this.state.Examset[key]?.image : ''} className="img-fluid" style={{ height: "200px" }} alt="" />
-                  </div>
-                  <div>
-                    {data?.Option.map((data, key) => {
-                      return (
-                        <div className="d-flex  mx-3 mb-4 ques-text-design-style" style={{ padding: "20px 0 0 0" }}>
-                          <div className="mr-2" >
-                            <b style={{ fontSize: "25px", lineHeight: "30px" }}>Option{[key + 1]}:</b>
-                          </div>
-                          <div style={{ fontSize: "25px", lineHeight: "30px" }}>{data?.name}</div>
-                        </div>
-                      );
-                    })}
-                  </div>
+          {this.state?.Examset?.questionsList?.map((data, key) => (
+            <>
+              <div key={key} style={{ padding: "10px 0 40px 0" }}>
+                <h2 style={{ fontSize: "30px", lineHeight: "40px" }}>
+                  {" "}
+                  <b>Question{key + 1}</b> :{data?.Qname}
+                </h2>
+                <div style={{ padding: "10px 0 0px 0" }}>
+                  <img
+                    src={
+                      this.state.Examset[key]?.image
+                        ? this.state.Examset[key]?.image
+                        : ""
+                    }
+                    className="img-fluid"
+                    style={{ height: "200px" }}
+                    alt=""
+                  />
                 </div>
-              </>
-            ))
-          }
+                <div>
+                  {data?.Option.map((data, key) => {
+                    return (
+                      <div
+                        className="d-flex  mx-3 mb-4 ques-text-design-style"
+                        style={{ padding: "20px 0 0 0" }}
+                      >
+                        <div className="mr-2">
+                          <b style={{ fontSize: "25px", lineHeight: "30px" }}>
+                            Option{[key + 1]}:
+                          </b>
+                        </div>
+                        <div style={{ fontSize: "25px", lineHeight: "30px" }}>
+                          {data?.name}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </>
+          ))}
         </div>
       </>
     );
@@ -116,163 +131,196 @@ class ComponentToPrintsForUser extends React.Component {
   render() {
     return (
       <>
-     <div class="certificate-box-center-alignment">
-        <div class="certificate-box">
+        <div class="certificate-box-center-alignment">
+          <div class="certificate-box">
             <div class="sl-no-box-alignment">
-                <div>
-                    <label>SL NO: </label>
-                    <input type="text"/>
-                </div>
+              <div>
+                <label>SL NO: </label>
+                <input type="text" />
+              </div>
             </div>
             <div class="header-alignment">
-                <div>
-                    <img src="https://i.ibb.co/87cN78k/aa.png" />
-                </div>
-                <div>
-                    <h1>Institute of Driver’s Training & Research</h1>
-                    <p>A Joint Venture of Transport Department Government of Haryana & Honda</p>
-                    <span>UCHANI VILLAGE, Near New Bus Stand, Tehsil and District Kamal Haryana, 132001</span>
-                </div>
-                <div>
-                    <img src="https://i.ibb.co/XLg1jLn/rre.png" />
-                </div>
+              <div>
+                <img src="https://i.ibb.co/87cN78k/aa.png" />
+              </div>
+              <div>
+                <h1>Institute of Driver’s Training & Research</h1>
+                <p>
+                  A Joint Venture of Transport Department Government of Haryana
+                  & Honda
+                </p>
+                <span>
+                  UCHANI VILLAGE, Near New Bus Stand, Tehsil and District Kamal
+                  Haryana, 132001
+                </span>
+              </div>
+              <div>
+                <img src="https://i.ibb.co/XLg1jLn/rre.png" />
+              </div>
             </div>
             <div class="drivers-certificate-text">
-                <h2>DRIVER'S CERTIFICATE</h2>
-                <span>Form V</span>
-                <p>See Rule 14(e), 17(1) b, 27(d) and 31A(2)</p>
+              <h2>DRIVER'S CERTIFICATE</h2>
+              <span>Form V</span>
+              <p>See Rule 14(e), 17(1) b, 27(d) and 31A(2)</p>
             </div>
             <div class="first-row-alignment">
-                <div class="sl-no-box-alignment">
-                    <div>
-                        <label>Certificate No.: </label>
-                        <input type="text" value={`${this?.props?.data?._id} `}/>
-                    </div>
+              <div class="sl-no-box-alignment">
+                <div>
+                  <label>Certificate No.: </label>
+                  <input type="text" value={`${this?.props?.data?._id} `} />
                 </div>
-                <div class="sl-no-box-alignment">
-                    <div>
-                        <label>REG NO: IDTR </label>
-                        <input type="text" value={`${this?.props?.data?._id} `}/ >
-                    </div>
+              </div>
+              <div class="sl-no-box-alignment">
+                <div>
+                  <label>REG NO: IDTR </label>
+                  <input type="text" value={`${this?.props?.data?._id} `} />
                 </div>
+              </div>
             </div>
             <div class="sec-row-alignment">
-                <div class="sl-no-box-alignment">
-                    <div>
-                        <label>This is to certify that Sh./ Smt./ Kumari</label>
-                        <input type="text" value={`${this?.props?.data?.fname } `}/>
-                    </div>
+              <div class="sl-no-box-alignment">
+                <div>
+                  <label>This is to certify that Sh./ Smt./ Kumari</label>
+                  <input type="text" value={`${this?.props?.data?.fname} `} />
                 </div>
-                <div class="sl-no-box-alignment">
-                    <div>
-                        <label>Son/ Wife / Daughter / of </label>
-                        <input type="text" value={`${this?.props?.data?.lname} `}/>
-                    </div>
+              </div>
+              <div class="sl-no-box-alignment">
+                <div>
+                  <label>Son/ Wife / Daughter / of </label>
+                  <input type="text" value={`${this?.props?.data?.lname} `} />
                 </div>
+              </div>
             </div>
             <div class="three-row-alignment">
-                <div class="sl-no-box-alignment">
-                    <div>
-                        <label>residing at </label>
-                        <input type="text" value={`${this?.props?.data?.address} `}/>
-                    </div>
+              <div class="sl-no-box-alignment">
+                <div>
+                  <label>residing at </label>
+                  <input type="text" value={`${this?.props?.data?.address} `} />
                 </div>
-                <div class="sl-no-box-alignment">
-                    <div>
-                        <label>was enrolled in this institute on</label>
-                        <input type="text"value={`${this?.props?.data?.Authority} `}/>
-                    </div>
+              </div>
+              <div class="sl-no-box-alignment">
+                <div>
+                  <label>was enrolled in this institute on</label>
+                  <input
+                    type="text"
+                    value={`${this?.props?.data?.Authority} `}
+                  />
                 </div>
+              </div>
             </div>
             <div class="fourth-row-alignment">
-                <div class="sl-no-box-alignment">
-                    <div>
-                        <label>and his/ her name is registered at serial number</label>
-                        <input type="text"/>
-                    </div>
+              <div class="sl-no-box-alignment">
+                <div>
+                  <label>
+                    and his/ her name is registered at serial number
+                  </label>
+                  <input type="text" />
                 </div>
-                <div class="sl-no-box-alignment">
-                    <div>
-                        <label>in our register in Form 14 and that</label>
-                    </div>
+              </div>
+              <div class="sl-no-box-alignment">
+                <div>
+                  <label>in our register in Form 14 and that</label>
                 </div>
+              </div>
             </div>
             <div class="fifth-row-alignment">
-                <div class="sl-no-box-alignment">
-                    <div>
-                        <label>he/ she has undergone the course of training in driving of</label>
-                        <input type="text" value={`${this?.props?.data?.cnid?.courseName} `}/>
-                    </div>
+              <div class="sl-no-box-alignment">
+                <div>
+                  <label>
+                    he/ she has undergone the course of training in driving of
+                  </label>
+                  <input
+                    type="text"
+                    value={`${this?.props?.data?.cnid?.courseName} `}
+                  />
                 </div>
-                {/* <div class="sl-no-box-alignment">
+              </div>
+              {/* <div class="sl-no-box-alignment">
                     <div>
                         <label>(mention class of vehicle )</label>
                     </div>
                 </div> */}
             </div>
             <div class="six-row-alignment">
-                <div class="sl-no-box-alignment">
-                    <div>
-                        <label>according to the syllabus prescribed for a period from</label>
-                        <input type="text"/>
-                    </div>
+              <div class="sl-no-box-alignment">
+                <div>
+                  <label>
+                    according to the syllabus prescribed for a period from
+                  </label>
+                  <input type="text" />
                 </div>
-                <div class="sl-no-box-alignment">
-                    <div>
-                        <label>To</label>
-                        <input type="text"/>
-                    </div>
+              </div>
+              <div class="sl-no-box-alignment">
+                <div>
+                  <label>To</label>
+                  <input type="text" />
                 </div>
-                <div class="sl-no-box-alignment">
-                    <div>
-                        <label>satisfactorily.</label>
-                    </div>
+              </div>
+              <div class="sl-no-box-alignment">
+                <div>
+                  <label>satisfactorily.</label>
                 </div>
+              </div>
             </div>
             <div class="footer-content-alignment">
-                <div class="sl-no-box-alignment">
-                    <div>
-                        <input type="text" value={moment(this?.props?.data?.dateofCourse).format("DD-MM-YYYY ")}/>
-                        <label>Date</label>
-                    </div>
-                </div>
+              <div class="sl-no-box-alignment">
                 <div>
-                    <div class="photographer-printed-class">
-                      <img src={this?.props?.data?.passportPhoto}/>
-                    </div>
+                  <input
+                    type="text"
+                    value={moment(this?.props?.data?.dateofCourse).format(
+                      "DD-MM-YYYY "
+                    )}
+                  />
+                  <label>Date</label>
                 </div>
-                <div class="sl-no-box-alignment">
-                    <div>
-                        <input type="text"/>
-                        <label>Authorized Signatory</label>
-                    </div>
+              </div>
+              <div>
+                <div class="photographer-printed-class">
+                  <img src={this?.props?.data?.passportPhoto} />
                 </div>
-                <div class="sl-no-box-alignment">
-                    <div>
-                        <input type="text"/>
-                        <label>Principal, IDTR karnal</label>
-                    </div>
+              </div>
+              <div class="sl-no-box-alignment">
+                <div>
+                  <input type="text" />
+                  <label>Authorized Signatory</label>
                 </div>
+              </div>
+              <div class="sl-no-box-alignment">
+                <div>
+                  <input type="text" />
+                  <label>Principal, IDTR karnal</label>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-    <div class="certificate-box-center-alignment">
-        <div class="certificate-box" style={{display:"flex",alignItems:"center",padding:"80px 120px"}}>
+        <div class="certificate-box-center-alignment">
+          <div
+            class="certificate-box"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              padding: "80px 120px",
+            }}
+          >
             <div>
-                <div class="box-title">
-                    <h1>INSTRUCTIONS</h1>
-                    <p>IF THIS CERTIFICATE IS LOST, A DUPLCATE COPY WILL BE ISSUED AGANIST PROCESSING CHARGES.</p>
-                    <span>THIS GRADATION PATTERN IS GIVEN BELOW</span>
-                </div>
-                <div class="content-text-style">
-                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
-                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
-                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
-                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
-                </div>
+              <div class="box-title">
+                <h1>INSTRUCTIONS</h1>
+                <p>
+                  IF THIS CERTIFICATE IS LOST, A DUPLCATE COPY WILL BE ISSUED
+                  AGANIST PROCESSING CHARGES.
+                </p>
+                <span>THIS GRADATION PATTERN IS GIVEN BELOW</span>
+              </div>
+              <div class="content-text-style">
+                <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                <span>GRADE "B" ( 80% - 89% ) : VERY GOOD</span>
+                <span>GRADE "C" ( 70% - 79% ) : GOOD</span>
+                <span>GRADE "D" ( 60% - 69% ) : PASS</span>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
       </>
     );
   }
@@ -318,8 +366,12 @@ const TakeTest = ({ getNewCount, title }) => {
   const [isPaperViewModel, setIsPaperViewModel] = useState(false);
   const [paperSet, setPaperSet] = useState([]);
   const [responseByBatch, setResponseByBatch] = useState([]);
-  const [filteredVehicleSubCategory, setFilteredVehicleSubCategory] = useState();
-  const [filteredCategoryByVehicleSubCategory, setFilteredCategoryByVehicleSubCategory] = useState();
+  const [filteredVehicleSubCategory, setFilteredVehicleSubCategory] =
+    useState();
+  const [
+    filteredCategoryByVehicleSubCategory,
+    setFilteredCategoryByVehicleSubCategory,
+  ] = useState();
   const [optionsForRecipe, setOptionsForRecipe] = useState([]);
   const [selectedIngredientsFinal, setSelectedIngredientsFinal] = useState([]);
   const [datanumber, setData] = useState([]);
@@ -333,19 +385,18 @@ const TakeTest = ({ getNewCount, title }) => {
         return {
           id: item?._id,
           no: null,
-          name: item?.name
-        }
+          name: item?.name,
+        };
       });
       setCTID(
         storeData.map((i) => {
-          return i?.id
+          return i?.id;
         })
       );
 
-      setData(storeData)
-
+      setData(storeData);
     } else {
-      setData([])
+      setData([]);
     }
   }, [filteredCategoryByVehicleSubCategory]);
   useEffect(() => {
@@ -354,19 +405,17 @@ const TakeTest = ({ getNewCount, title }) => {
         datanumber?.map((ids) => {
           return {
             id: ids?.id,
-            no: Number(ids?.no)
-          }
+            no: Number(ids?.no),
+          };
         })
-      )
+      );
     }
-  }, [datanumber])
+  }, [datanumber]);
   const [questionKEY, setQuestionKEY] = useState(0);
   let userInfo = getUserInfo();
   useEffect(() => {
     document.title = "Honda | Take test";
   }, []);
-
-
 
   const handleViewMorePaper = () => {
     setIsPaperViewModel(false);
@@ -381,60 +430,64 @@ const TakeTest = ({ getNewCount, title }) => {
         setCount(res?.data?.payload?.count);
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
+        toast.error(err?.response?.data?.message);
       });
   };
 
   useEffect(() => {
     if (inputValueForAdd.vcid) {
-      getAllVehicleSubCategory()
+      getAllVehicleSubCategory();
     }
-  }, [inputValueForAdd.vcid])
-
+  }, [inputValueForAdd.vcid]);
 
   const getAllVehicleSubCategory = async () => {
     setIsLoaderVisible(true);
 
-    await ApiGet(`vehicleSubCategory/getVehicleSubCategoryByVcid/${inputValueForAdd.vcid}`)
+    await ApiGet(
+      `vehicleSubCategory/getVehicleSubCategoryByVcid/${inputValueForAdd.vcid}`
+    )
       .then((res) => {
         setIsLoaderVisible(false);
         setFilteredVehicleSubCategory(res?.data?.payload?.vehicleSubCategory);
         // setCount(res?.data?.payload?.count);
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
+        toast.error(err?.response?.data?.message);
       });
   };
 
   useEffect(() => {
-    setOptionsForRecipe(filteredVehicleSubCategory?.length > 0 && filteredVehicleSubCategory?.map((item, index) => {
-      return { label: item?.vehicleSubCategory, value: item?._id }
-    }))
-  }, [filteredVehicleSubCategory])
+    setOptionsForRecipe(
+      filteredVehicleSubCategory?.length > 0 &&
+        filteredVehicleSubCategory?.map((item, index) => {
+          return { label: item?.vehicleSubCategory, value: item?._id };
+        })
+    );
+  }, [filteredVehicleSubCategory]);
 
   useEffect(() => {
     if (selectedIngredientsFinal) {
-      getCategoryByVehicleSubCategory()
-
+      getCategoryByVehicleSubCategory();
     }
-  }, [selectedIngredientsFinal])
+  }, [selectedIngredientsFinal]);
 
-  let SubIds = []
+  let SubIds = [];
   const getCategoryByVehicleSubCategory = async () => {
-    selectedIngredientsFinal?.length > 0 && selectedIngredientsFinal.map((item, index) => {
-      return SubIds.push(item?.value)
-    })
+    selectedIngredientsFinal?.length > 0 &&
+      selectedIngredientsFinal.map((item, index) => {
+        return SubIds.push(item?.value);
+      });
     let Data = {
       vcid: inputValueForAdd.vcid,
-      vscid: SubIds
-    }
-    setVscId(SubIds)
+      vscid: SubIds,
+    };
+    setVscId(SubIds);
     await ApiPost(`category/getCategoryByVscid`, Data)
       .then((res) => {
         setFilteredCategoryByVehicleSubCategory(res?.data?.payload?.category);
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
+        toast.error(err?.response?.data?.message);
       });
   };
 
@@ -448,11 +501,7 @@ const TakeTest = ({ getNewCount, title }) => {
       });
   };
 
-
-
-
   //getResponseByBatch
-
 
   const getResponseByBatchs = async (id) => {
     await ApiGet(
@@ -470,10 +519,8 @@ const TakeTest = ({ getNewCount, title }) => {
     await ApiGet(`response/getResponseByUserWithoutPagination/${id}`)
       .then((res) => {
         setAllDataForResultDownload(res?.data?.payload?.findResponse);
-
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   };
   const handleViewMoreClose = () => {
     setIsViewMoreAboutus(false);
@@ -510,7 +557,6 @@ const TakeTest = ({ getNewCount, title }) => {
     getAllRoleData();
   }, [page, countPerPage]);
 
-
   const getAllUserIdWise = async (id) => {
     await ApiGet(`register/getRegisterByBatch/${id}`)
       .then((res) => {
@@ -519,7 +565,6 @@ const TakeTest = ({ getNewCount, title }) => {
         setAttendenceId(id);
       })
       .catch((err) => {
-       
         toast.error(err);
       });
   };
@@ -527,7 +572,6 @@ const TakeTest = ({ getNewCount, title }) => {
   const viewPeperSet = async (id) => {
     await ApiGet(`batch/getExamsetByBatch/${id}`)
       .then((res) => {
-
         setQuestionData(res?.data?.payload?.Examset?.questionsList);
         setSuucessBatchId(res?.data?.payload?.Examset?.batchId?._id);
       })
@@ -536,36 +580,23 @@ const TakeTest = ({ getNewCount, title }) => {
       });
   };
   const saveFile = (data, name) => {
-
-    saveAs(
-      data, name + '.zip'
-    );
+    saveAs(data, name + ".zip");
   };
 
   const genereateAllPDF = async (data) => {
-
     setIsLoaderVisible(true);
     await ApiGet(`generatepdf/generate-pdf/${data}`)
       .then((res) => {
-
-
-        saveFile(res.data?.payload?.ZipLink, res.data?.payload?.batch?.name)
+        saveFile(res.data?.payload?.ZipLink, res.data?.payload?.batch?.name);
         setIsLoaderVisible(false);
-
       })
       .catch((err) => {
         setIsLoaderVisible(false);
-
-      
       });
-  }
+  };
 
   const showToast = async () => {
-
-
-
     toast.error("There is no user in this batch");
-
   };
 
   const getAllCourseName = async () => {
@@ -583,9 +614,7 @@ const TakeTest = ({ getNewCount, title }) => {
           setFilteredCourseName(res?.data?.payload?.Batch);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {
-         
-        });
+        .catch((err) => {});
     } else {
       const data = {
         Examiner: userInfo?.admin?._id,
@@ -598,12 +627,9 @@ const TakeTest = ({ getNewCount, title }) => {
           setFilteredCourseName(res?.data?.payload?.Batch);
           setCount(res?.data?.payload?.count);
         })
-        .catch((err) => {
-         
-        });
+        .catch((err) => {});
     }
   };
-
 
   let i = 0;
   const columns = [
@@ -634,9 +660,9 @@ const TakeTest = ({ getNewCount, title }) => {
     },
     {
       name: "User",
-      selector: (row) => row?.totalUser === "" || !row?.totalUser ? "-" : row?.totalUser,
+      selector: (row) =>
+        row?.totalUser === "" || !row?.totalUser ? "-" : row?.totalUser,
       sortable: true,
-
     },
     {
       name: "Actions",
@@ -652,7 +678,7 @@ const TakeTest = ({ getNewCount, title }) => {
                     setIsAddCourseName(true);
                     setBatchId(row?._id);
                     setTdId(row?.tdid);
-                    getAllVehicleCategory()
+                    getAllVehicleCategory();
                     // setDataViewMore(row);
                   }}
                 >
@@ -666,7 +692,6 @@ const TakeTest = ({ getNewCount, title }) => {
                 <div
                   className="btn btn-success ml-2"
                   onClick={() => {
-
                     setIsAddQuestion(true);
                     viewPeperSet(row?._id);
                   }}
@@ -684,9 +709,9 @@ const TakeTest = ({ getNewCount, title }) => {
                 <div
                   className="cursor-pointer pl-2"
                   onClick={() => {
-                    row?.User.length === 0 ? showToast() :
-
-                      setIsAddAttedence(true);
+                    row?.User.length === 0
+                      ? showToast()
+                      : setIsAddAttedence(true);
                     getAllUserIdWise(row?._id);
                   }}
                 >
@@ -704,7 +729,7 @@ const TakeTest = ({ getNewCount, title }) => {
                   setDataViewMore(row);
                   getAllResponseByBatch(row?._id);
                   getAllResponseByBatchForUser(row?._id);
-                  getResponseByBatchs(row?._id)
+                  getResponseByBatchs(row?._id);
                 }}
               >
                 <Tooltip title="Show More" arrow>
@@ -739,14 +764,16 @@ const TakeTest = ({ getNewCount, title }) => {
       cell: (row) => {
         return (
           <>
-          {
-            row?.isExamGenerate &&   <div className="cursor-pointer pl-2">
-            <Tooltip title="Generate Pdf" arrow >
-              <img src="media/allIconsForTable/invoice.png" onClick={(e) => genereateAllPDF(row?._id)} />
-            </Tooltip>
-          </div>
-          }
-          
+            {row?.isExamGenerate && (
+              <div className="cursor-pointer pl-2">
+                <Tooltip title="Generate Pdf" arrow>
+                  <img
+                    src="media/allIconsForTable/invoice.png"
+                    onClick={(e) => genereateAllPDF(row?._id)}
+                  />
+                </Tooltip>
+              </div>
+            )}
           </>
         );
       },
@@ -823,10 +850,9 @@ const TakeTest = ({ getNewCount, title }) => {
                 <div
                   className="cursor-pointer pl-2"
                   onClick={() => {
-                    setIsViewMoreAnnouncement(true)
+                    setIsViewMoreAnnouncement(true);
                     setIsPaperViewModel(true);
                     getPapersetByUserId(row?._id);
-
                   }}
                 >
                   <div className="cus-medium-button-style">
@@ -954,9 +980,7 @@ const TakeTest = ({ getNewCount, title }) => {
       .then((res) => {
         setAllCourseNameExcel(res?.data?.payload?.Examiner);
       })
-      .catch((err) => {
-       
-      });
+      .catch((err) => {});
     // }
   };
 
@@ -966,9 +990,6 @@ const TakeTest = ({ getNewCount, title }) => {
       batch: attendenceId,
     };
     await ApiPut(`test/attendence`, data)
-
-
-
       .then((res) => {
         if (res?.status == 200) {
           setSelectedTopSubjects([]);
@@ -979,9 +1000,8 @@ const TakeTest = ({ getNewCount, title }) => {
         }
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message)
+        toast.error(err?.response?.data?.message);
       });
-
   };
 
   useEffect(() => {
@@ -1003,8 +1023,6 @@ const TakeTest = ({ getNewCount, title }) => {
       if (selectedTopSubjects.length === data.length) {
         setSelectedTopSubjects([]);
       } else {
-
-
         let newArr = [];
         data &&
           data?.map((res, key) => {
@@ -1028,7 +1046,6 @@ const TakeTest = ({ getNewCount, title }) => {
     setInputValueForAdd({ ...inputValueForAdd, [name]: value });
     setErrorsForAdd({ ...errorsForAdd, [name]: "" });
   };
-
 
   const validateFormForAddAdmin = () => {
     let formIsValid = true;
@@ -1060,20 +1077,17 @@ const TakeTest = ({ getNewCount, title }) => {
         vcid: inputValueForAdd.vcid,
         vscid: VSCID,
         ctid: CTID,
-        ctidData: CTIDDATA
-
+        ctidData: CTIDDATA,
       };
 
       let tempNumber = datanumber.map((i) => {
-        return Number(i.no)
-      })
+        return Number(i.no);
+      });
       const reducer = (accumulator, curr) => accumulator + curr;
       if (inputValueForAdd?.no == tempNumber.reduce(reducer)) {
-
         await ApiPost(`question/getgenerateQuestion`, data)
           .then((res) => {
             if (res?.status == 200) {
-
               setSelectedTopSubjects([]);
               setIsAddAttedence(false);
               setInputValueForAdd({});
@@ -1088,22 +1102,17 @@ const TakeTest = ({ getNewCount, title }) => {
             toast.error(err?.response?.data?.message);
           });
       } else {
-
         setData(
           datanumber?.map((ids) => {
             return {
               id: ids?.id,
               name: ids?.name,
-              no: ''
-            }
+              no: "",
+            };
           })
-        )
+        );
         toast.error(`Please Select Total ${inputValueForAdd?.no} Question `);
-
-
       }
-
-
     }
   };
 
@@ -1113,7 +1122,7 @@ const TakeTest = ({ getNewCount, title }) => {
         if (res?.status == 200) {
           toast.success(res?.data?.message);
           setIsAddQuestion(false);
-          getAllCourseName()
+          getAllCourseName();
         } else {
           toast.error(res?.message);
         }
@@ -1127,13 +1136,11 @@ const TakeTest = ({ getNewCount, title }) => {
       .then((res) => {
         setAllDataForAttendance(res?.data?.payload?.findResponse);
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   };
   useEffect(() => {
     if (allDataForAttendance) {
       allDataForAttendance.map((registerUser, key) => {
-      
         let data = {
           Number: key + 1,
           UserID: registerUser?.uid?._id,
@@ -1158,7 +1165,9 @@ const TakeTest = ({ getNewCount, title }) => {
           ExaminerUserID: registerUser?.batch?.Examiner?._id,
           TestAttendanceStatus: registerUser?.uid?.isAttendence,
           TestAttendanceStatus: registerUser?.uid?.isAttendence,
-          TestAttendanceTimeStamp: moment(registerUser?.uid?.updatedAt).format("lll"),
+          TestAttendanceTimeStamp: moment(registerUser?.uid?.updatedAt).format(
+            "lll"
+          ),
           TestLanguage: registerUser?.Esid?.language,
           TotalQuestions: registerUser?.Esid?.no,
         };
@@ -1324,7 +1333,6 @@ const TakeTest = ({ getNewCount, title }) => {
                         >
                           <option value="" disabled selected hidden>
                             Select Vehicle Category Type
-
                           </option>
                           {filteredVehicleCategory?.length > 0 &&
                             filteredVehicleCategory?.map((item) => {
@@ -1357,36 +1365,38 @@ const TakeTest = ({ getNewCount, title }) => {
                     </div>
                   </div>
 
-
-
                   <div className="form-group row">
                     <label className="col-xl-2 col-lg-2 col-form-label">
                       Select Vehicle Sub-Category
                     </label>
                     <div className="col-lg-9 col-xl-6">
-                      {filteredVehicleSubCategory?.length > 0 ?
+                      {filteredVehicleSubCategory?.length > 0 ? (
                         <div>
                           <MultiSelect
                             options={optionsForRecipe}
                             value={selectedIngredientsFinal}
                             onChange={(selectedIngredientsFinal) => {
-                              setSelectedIngredientsFinal(selectedIngredientsFinal)
-                              setErrorsForAdd({ ...errorsForAdd, selectedIngredientsFinal: "" });
+                              setSelectedIngredientsFinal(
+                                selectedIngredientsFinal
+                              );
+                              setErrorsForAdd({
+                                ...errorsForAdd,
+                                selectedIngredientsFinal: "",
+                              });
                             }}
                             labelledBy="name"
-                          // isLoading={loaderIsRunning}
+                            // isLoading={loaderIsRunning}
                           />
                         </div>
-                        :
+                      ) : (
                         <div>
                           <input
                             className={`form-control form-control-lg form-control-solid `}
                             value="no vehicle sub-category found"
                             disabled
                           />
-
                         </div>
-                      }
+                      )}
 
                       <span
                         style={{
@@ -1430,13 +1440,17 @@ const TakeTest = ({ getNewCount, title }) => {
                         <option>Select Number Of Question...</option>
                         <option
                           value="20"
-                          selected={inputValueForAdd?.no === "20" ? true : false}
+                          selected={
+                            inputValueForAdd?.no === "20" ? true : false
+                          }
                         >
                           20{" "}
                         </option>
                         <option
                           value="40"
-                          selected={inputValueForAdd?.no === "40" ? true : false}
+                          selected={
+                            inputValueForAdd?.no === "40" ? true : false
+                          }
                         >
                           40
                         </option>
@@ -1506,28 +1520,35 @@ const TakeTest = ({ getNewCount, title }) => {
                             datanumber?.map((item, key) => {
                               return (
                                 <>
-                                  <div className="d-flex" style={{ justifyContent: "space-between" }} key={key}>
+                                  <div
+                                    className="d-flex"
+                                    style={{ justifyContent: "space-between" }}
+                                    key={key}
+                                  >
                                     <div>{item?.name}</div>
-                                    <input value={item?.no} className="inputboxes"
+                                    <input
+                                      value={item?.no}
+                                      className="inputboxes"
                                       onChange={(e) => {
                                         setData((curVal) => {
                                           return produce(curVal, (data) => {
-
                                             data[key].no =
                                               e.target?.value || null;
                                           });
                                         });
                                       }}
-                                      type="text" maxLength={1} onKeyPress={(event) => {
+                                      type="text"
+                                      maxLength={1}
+                                      onKeyPress={(event) => {
                                         if (!/[0-5]/.test(event.key)) {
                                           event.preventDefault();
                                         }
-                                      }} />
+                                      }}
+                                    />
                                   </div>
                                 </>
-                              )
-                            })
-                          }
+                              );
+                            })}
                         </div>
                       </div>
                     </div>
@@ -1571,27 +1592,49 @@ const TakeTest = ({ getNewCount, title }) => {
                   <div className="centerAlign">
                     <div className="take-test-height-qus">
                       <div className="d-flex ">
-                        <h4 className="mr-3" style={{ fontSize: "30px" }}>Question {questionKEY + 1}</h4>
-                        <h4 style={{ fontSize: "30px" }}>{questionData[questionKEY]?.Qname}</h4>
+                        <h4 className="mr-3" style={{ fontSize: "30px" }}>
+                          Question {questionKEY + 1}
+                        </h4>
+                        <h4 style={{ fontSize: "30px" }}>
+                          {questionData[questionKEY]?.Qname}
+                        </h4>
                       </div>
                       <div style={{ padding: "20px 0 0 0" }}>
-                        <img src={questionData[questionKEY]?.image ? questionData[questionKEY]?.image : ''} className="img-fluid" style={{ height: "200px" }} alt="" />
+                        <img
+                          src={
+                            questionData[questionKEY]?.image
+                              ? questionData[questionKEY]?.image
+                              : ""
+                          }
+                          className="img-fluid"
+                          style={{ height: "200px" }}
+                          alt=""
+                        />
                       </div>
                       <div>
                         <div className="mb-4">
-                          {questionData[questionKEY]?.Option.map((data, key) => {
-                            return (
-                              <div className="d-flex  mx-3 mb-4 ques-text-design-style" style={{ padding: "20px 0 0 0" }}>
-                                <div className="mr-2" style={{ fontSize: "20px" }}>
-                                  <b>{ABC[key]}:</b>
+                          {questionData[questionKEY]?.Option.map(
+                            (data, key) => {
+                              return (
+                                <div
+                                  className="d-flex  mx-3 mb-4 ques-text-design-style"
+                                  style={{ padding: "20px 0 0 0" }}
+                                >
+                                  <div
+                                    className="mr-2"
+                                    style={{ fontSize: "20px" }}
+                                  >
+                                    <b>{ABC[key]}:</b>
+                                  </div>
+                                  <div style={{ fontSize: "20px" }}>
+                                    {data?.name}
+                                  </div>
                                 </div>
-                                <div style={{ fontSize: "20px" }}>{data?.name}</div>
-                              </div>
-                            );
-                          })}
+                              );
+                            }
+                          )}
                         </div>
                       </div>
-
                     </div>
                     <div className="take-test-all-button-alignment">
                       {questionKEY === 0 ? (
@@ -1665,8 +1708,7 @@ const TakeTest = ({ getNewCount, title }) => {
                         <h2>Take Test</h2>
                       </div>
 
-
-                      <table className="table table-bordered" >
+                      <table className="table table-bordered">
                         <thead>
                           <tr>
                             <th>
@@ -1678,17 +1720,16 @@ const TakeTest = ({ getNewCount, title }) => {
                                 }
                                 checked={
                                   selectedTopSubjects?.length ==
-                                    userByAttendece.length
+                                  userByAttendece.length
                                     ? true
                                     : false
                                 }
                               />
                             </th>
-                            <th >Email</th>
-                            <th >Name</th>
-                            <th >Phone</th>
-                            <th >Course Name</th>
-
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Course Name</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -1708,21 +1749,27 @@ const TakeTest = ({ getNewCount, title }) => {
                                       }
                                       // onChange={(e) => addAttendence(e)} />
                                       onChange={() =>
-                                        handleSubjectSelect(data, data?._id, "e")
+                                        handleSubjectSelect(
+                                          data,
+                                          data?._id,
+                                          "e"
+                                        )
                                       }
                                     />
                                   </td>
-                                  <td>{data?.email ? data?.email : '-'}</td>
+                                  <td>{data?.email ? data?.email : "-"}</td>
                                   <td>{data?.fname ? data?.fname : "-"}</td>
-                                  <td>{data?.phone ? data?.phone : '-'}</td>
-                                  <td>{data?.cnid?.courseName ? data?.cnid?.courseName : '-'}</td>
-
+                                  <td>{data?.phone ? data?.phone : "-"}</td>
+                                  <td>
+                                    {data?.cnid?.courseName
+                                      ? data?.cnid?.courseName
+                                      : "-"}
+                                  </td>
                                 </tr>
                               );
                             })}
                         </tbody>
                       </table>
-
 
                       {/* {userByAttendece?.length > 0 &&
                         userByAttendece?.map((data, key) => {
@@ -1785,7 +1832,6 @@ const TakeTest = ({ getNewCount, title }) => {
                           );
                         })} */}
 
-
                       {selectedTopSubjects?.length > 0 && (
                         <div className="text-center mb-3">
                           <div
@@ -1829,17 +1875,10 @@ const TakeTest = ({ getNewCount, title }) => {
                   <h2>Take Test</h2>
                 </div>
                 <div className="honda-text-grid12 honda-text-grid-border">
-                  <div className="honda-text-grid-items">
-
-
-                  </div>
+                  <div className="honda-text-grid-items"></div>
                   <div className="honda-text-grid-items">
                     <span>Date:</span>
-                    {
-                      <div>
-                        {moment(dataViewMore?.createdAt).format("ll")}
-                      </div>
-                    }
+                    {<div>{moment(dataViewMore?.createdAt).format("ll")}</div>}
                   </div>
                   <div className="honda-text-grid-items">
                     <span>Batch Name:</span>
@@ -1909,9 +1948,7 @@ const TakeTest = ({ getNewCount, title }) => {
                         Download Attendance Data
                       </CsvDownload>
                     ) : (
-
                       <span className="mr-3">No Attendance Data</span>
-
                     )}
                   </div>
                   <DataTable
@@ -1971,7 +2008,6 @@ const TakeTest = ({ getNewCount, title }) => {
             {isViewMoreAnnouncement === true ? (
               <div className="honda-container">
                 <div className="">
-
                   <div className="questionGrid12121">
                     {paperSet?.ListofQA?.map((data, key) => (
                       <div className="questionGridItems">
@@ -1982,10 +2018,10 @@ const TakeTest = ({ getNewCount, title }) => {
                           </div>
                           <p>{data?.Qname}</p>
                         </div>
-                        <div>{
-
-                          data?.image ? <img src={data?.image} alt="" /> : null}
-
+                        <div>
+                          {data?.image ? (
+                            <img src={data?.image} alt="" />
+                          ) : null}
                         </div>
                         <div className="">
                           Right / Wrong:{" "}
