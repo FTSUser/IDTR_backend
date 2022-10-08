@@ -846,14 +846,14 @@ const TakeTest = ({ getNewCount, title }) => {
                 )}
                 content={() => itemsRefForUser.current[row._id]}
               />
-              {/* <div style={{ display: "none" }}> */}
+              <div style={{ display: "none" }}>
                 <div
                   ref={(el) => (itemsRefForUser.current[row._id] = el)}
                   id={row?._id}
                 >
                   <ComponentToPrintsForUser data={row} />
                 </div>
-              {/* </div> */}
+              </div>
             </div>
           </>
         );
