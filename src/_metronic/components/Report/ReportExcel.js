@@ -191,7 +191,7 @@ export const ReportExcel = (props) => {
                 Price: registerUser?.price,
                 Mode: registerUser?.mode,
                 Duration: registerUser?.duration,
-                Timing: registerUser?.timing,
+                // Timing: registerUser?.timing,
                 Certificate: registerUser?.certificate,
                 Validity: registerUser?.validity,
                 DocumentRequired: registerUser?.documentRequired,

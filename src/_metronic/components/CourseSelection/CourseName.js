@@ -247,10 +247,10 @@ const CourseName = ({ getNewCount, title }) => {
       errorsForAdd["Duration"] = "*Please Enter Duration!";
     }
 
-    if (inputValueForAdd && !inputValueForAdd.Timing) {
-      formIsValid = false;
-      errorsForAdd["Timing"] = "*Please Enter Timing!";
-    }
+    // if (inputValueForAdd && !inputValueForAdd.Timing) {
+    //   formIsValid = false;
+    //   errorsForAdd["Timing"] = "*Please Enter Timing!";
+    // }
 
     if (inputValueForAdd && !inputValueForAdd.Mode) {
       formIsValid = false;
@@ -298,7 +298,7 @@ const CourseName = ({ getNewCount, title }) => {
         documentRequired: inputValueForAdd.DocumentRequired,
         mode: inputValueForAdd.Mode,
         // systemRequirement: inputValueForAdd.SystemRequirement,
-        timing: inputValueForAdd.Timing,
+        // timing: inputValueForAdd.Timing,
         duration: inputValueForAdd.Duration,
         // validity: inputValueForAdd.Validity,
         price: inputValueForAdd.Price,
@@ -353,7 +353,7 @@ const CourseName = ({ getNewCount, title }) => {
         documentRequired: inputValueForAdd?.DocumentRequired,
         mode: inputValueForAdd?.Mode,
         // systemRequirement: inputValueForAdd?.SystemRequirement,
-        timing: inputValueForAdd?.Timing,
+        // timing: inputValueForAdd?.Timing,
         duration: inputValueForAdd?.Duration,
         // validity: inputValueForAdd?.Validity,
         price: inputValueForAdd?.Price,
@@ -495,7 +495,7 @@ const CourseName = ({ getNewCount, title }) => {
                     displayName: row?.displayName,
                     Mode: row?.mode,
                     // SystemRequirement: row?.systemRequirement,
-                    Timing: row?.timing,
+                    // Timing: row?.timing,
                     Duration: row?.duration,
                     // Validity: row?.validity,
                     Price: row?.price,
@@ -652,7 +652,7 @@ const CourseName = ({ getNewCount, title }) => {
           Mode: registerUser?.mode,
           Duration: registerUser?.duration,
           CourseDisplayName: registerUser?.displayName,
-          Timing: registerUser?.timing,
+          // Timing: registerUser?.timing,
           // Certificate: registerUser?.certificate,
           // Validity: registerUser?.validity,
           DocumentRequired: registerUser?.documentRequired,
@@ -1118,7 +1118,7 @@ const CourseName = ({ getNewCount, title }) => {
                   </div>
                 </div>
 
-                <div className="form-group row">
+                {/* <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
                     Enter duration (in Hours)
                   </label>
@@ -1150,7 +1150,7 @@ const CourseName = ({ getNewCount, title }) => {
                       {errorsForAdd["Timing"]}
                     </span>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="form-group row">
                   <label className="col-xl-3 col-lg-3 col-form-label">
@@ -1440,7 +1440,7 @@ const CourseName = ({ getNewCount, title }) => {
                       className=""
                     />
                   </div>
-                  <div className="honda-text-grid-items">
+                  {/* <div className="honda-text-grid-items">
                     <p>Timing:</p>
                     <span
                       dangerouslySetInnerHTML={{
@@ -1448,7 +1448,7 @@ const CourseName = ({ getNewCount, title }) => {
                       }}
                       className=""
                     />
-                  </div>
+                  </div> */}
                   <div className="honda-text-grid-items">
                     <p>Mode:</p>
                     <span

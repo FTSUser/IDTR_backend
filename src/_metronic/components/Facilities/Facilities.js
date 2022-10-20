@@ -186,6 +186,7 @@ const Facilities = ({ getNewCount, title }) => {
   };
 
   const uploadS3bucket = async (file) => {
+    console.log("@@@@",file)
     if (file.type.includes("image")) {
       let config = AwsConfig;
       config = {
@@ -216,6 +217,7 @@ const Facilities = ({ getNewCount, title }) => {
   };
 
   const uploadS3bucketForUpdate = async (file) => {
+    console.log("@@@@",file)
     if (file.type.includes("image")) {
       let config = AwsConfig;
       config = {
@@ -226,8 +228,9 @@ const Facilities = ({ getNewCount, title }) => {
       const Reacts3Client = new S3(config);
       let urls;
       let f = file;
-      let filename = "AboutImage(" + new Date().getTime() + ")";
+      let filename = f.name;
       let data = await Reacts3Client.uploadFile(f, filename);
+      console.log("@@@@@@@@@@@@data",data)
       // try {
       // if (data.status === 204) {
       urls = data.location;

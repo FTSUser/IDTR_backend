@@ -4119,9 +4119,9 @@ const User = ({ getNewCount, title }) => {
                                 <span>Duration:</span>{" "}
                                 {getCourseNameByID?.duration}
                               </p>
-                              <p>
+                              {/* <p>
                                 <span>Timing:</span> {getCourseNameByID?.timing}
-                              </p>
+                              </p> */}
                               <p>
                                 <span>Fees:</span> {getCourseNameByID?.price}
                               </p>
@@ -4746,7 +4746,7 @@ const User = ({ getNewCount, title }) => {
                     <div className="payment-title">Payment Type</div>
 
                     <div className="d-flex ">
-                      {/* <div className="d-flex aligncenetr margin-right-20">
+                      <div className="d-flex aligncenetr margin-right-20">
                         <input
                           type="radio"
                           placeholder="online"
@@ -4758,7 +4758,7 @@ const User = ({ getNewCount, title }) => {
                         <label className="labes" htmlFor="online">
                           Online
                         </label>
-                      </div> */}
+                      </div>
                       <div className="d-flex aligncenetr">
                         <input
                           type="radio"

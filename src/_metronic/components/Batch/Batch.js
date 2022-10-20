@@ -238,7 +238,7 @@ class ComponentToPrintsForUser extends React.Component {
             <div class="sl-no-box-alignment">
                 <div>
                     <label>SL NO: </label>
-                    <input type="text"/>
+                    <input type="text" value={`${this?.props?.data?._id} `}/>
                 </div>
             </div>
             <div class="header-alignment">
@@ -283,7 +283,7 @@ class ComponentToPrintsForUser extends React.Component {
                 <div class="sl-no-box-alignment">
                     <div>
                         <label>Sh./Smt. /Son/ Wife / Daughter / of </label>
-                        <input type="text" value={`${this?.props?.data?.lname} `}/>
+                        <input type="text" value={`${this?.props?.data?.mname} `}/>
                     </div>
                 </div>
             </div>
@@ -291,7 +291,7 @@ class ComponentToPrintsForUser extends React.Component {
                 <div class="sl-no-box-alignment">
                     <div>
                         <label>Residing at </label>
-                        <input type="text" value={`${this?.props?.data?.address} `}/>
+                        <input type="text" value={moment(this?.props?.data?.dateofCourse).format("DD-MM-YYYY ")}/>
                     </div>
                 </div>
                 <div class="sl-no-box-alignment">
@@ -331,13 +331,13 @@ class ComponentToPrintsForUser extends React.Component {
                 <div class="sl-no-box-alignment">
                     <div>
                         <label>according to the syllabus prescribed for a period from</label>
-                        <input type="text"/>
+                        <input type="text" value={moment(this?.props?.data?.dateofCourse).format("DD-MM-YYYY ")}/>
                     </div>
                 </div>
                 <div class="sl-no-box-alignment">
                     <div>
                         <label>To</label>
-                        <input type="text"/>
+                        <input type="text" value={moment(this?.props?.data?.dateofCourse).format("DD-MM-YYYY ")}/>
                     </div>
                 </div>
                 <div class="sl-no-box-alignment">
@@ -378,7 +378,7 @@ class ComponentToPrintsForUser extends React.Component {
             <div>
                 <div class="box-title">
                     <h1>INSTRUCTIONS</h1>
-                    <p>IF THIS CERTIFICATE IS LOST, A DUPLCATE COPY WILL BE ISSUED AGANIST PROCESSING CHARGES.</p>
+                    <p>IF THIS CERTIFICATE IS LOST, A DUPLICATE COPY WILL BE ISSUED AGANIST PROCESSING CHARGES.</p>
                     <span>THIS GRADATION PATTERN IS GIVEN BELOW</span>
                 </div>
                 <div class="content-text-style">
