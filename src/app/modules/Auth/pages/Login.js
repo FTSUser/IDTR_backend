@@ -56,26 +56,20 @@ export default function Login() {
       };
       await ApiPostNoAuth("admin/login", data)
         .then((res) => {
-          if (res.data.result === -1) {
+          console.log("ssssss",res)
+          if (res.data.status === 422) {
             toast.error(res.data.message);
           } else {
             authUtil.setToken(res.data.payload.token);
             userUtil.setUserInfo(res.data.payload);
-
             window.location.reload();
             setLoading(true);
             setSubmitting(false);
-
-            // history.push({
-            //     pathname:"/dashboard",
-            //     state:{phone:data?.phone},
-            //     state:{password:data?.password}
-            // })
-
           }
         })
         .catch((error) => {
-          toast.error(error?.response?.data?.message);
+        console.log("ee",error?.email[0])
+          toast.error(error?.email);
         });
     },
   });
